@@ -1,0 +1,7 @@
+.git
+.github
+.vscode
+# Node Files #
+node_modules
+npm-debug.log
+npm-debug.log.*

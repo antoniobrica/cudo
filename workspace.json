@@ -1,0 +1,1700 @@
+{
+  "version": 2,
+  "projects": {
+    "mf-container-app": {
+      "root": "apps/mf-container-app",
+      "sourceRoot": "apps/mf-container-app/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/mf-container-app",
+            "index": "apps/mf-container-app/src/index.html",
+            "main": "apps/mf-container-app/src/main.tsx",
+            "polyfills": "apps/mf-container-app/src/polyfills.ts",
+            "tsConfig": "apps/mf-container-app/tsconfig.app.json",
+            "assets": [
+              "apps/mf-container-app/src/favicon.ico",
+              "apps/mf-container-app/src/assets"
+            ],
+            "styles": [
+              "apps/mf-container-app/src/styles.scss"
+            ],
+            "scripts": [],
+            "webpackConfig": "apps/mf-container-app/webpack.config.js"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/mf-container-app/src/environments/environment.ts",
+                  "with": "apps/mf-container-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "mf-container-app:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "mf-container-app:build:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/mf-container-app/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/mf-container-app"
+          ],
+          "options": {
+            "jestConfig": "apps/mf-container-app/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "mf-container-app-e2e": {
+      "root": "apps/mf-container-app-e2e",
+      "sourceRoot": "apps/mf-container-app-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/mf-container-app-e2e/cypress.json",
+            "tsConfig": "apps/mf-container-app-e2e/tsconfig.e2e.json",
+            "devServerTarget": "mf-container-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "mf-container-app:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/mf-container-app-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
+    },
+    "mf-account-app": {
+      "root": "apps/mf-account-app",
+      "sourceRoot": "apps/mf-account-app/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/mf-account-app",
+            "index": "apps/mf-account-app/src/index.html",
+            "main": "apps/mf-account-app/src/main.tsx",
+            "polyfills": "apps/mf-account-app/src/polyfills.ts",
+            "tsConfig": "apps/mf-account-app/tsconfig.app.json",
+            "assets": [
+              "apps/mf-account-app/src/favicon.ico",
+              "apps/mf-account-app/src/assets"
+            ],
+            "styles": [
+              "apps/mf-account-app/src/styles.scss"
+            ],
+            "scripts": [],
+            "webpackConfig": "apps/mf-account-app/webpack.config.js"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/mf-account-app/src/environments/environment.ts",
+                  "with": "apps/mf-account-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "mf-account-app:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "mf-account-app:build:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/mf-account-app/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/mf-account-app"
+          ],
+          "options": {
+            "jestConfig": "apps/mf-account-app/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "storybook": {
+          "executor": "@nrwl/storybook:storybook",
+          "options": {
+            "uiFramework": "@storybook/react",
+            "port": 4400,
+            "config": {
+              "configFolder": "apps/mf-account-app/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "build-storybook": {
+          "executor": "@nrwl/storybook:build",
+          "options": {
+            "uiFramework": "@storybook/react",
+            "outputPath": "dist/storybook/mf-account-app",
+            "config": {
+              "configFolder": "apps/mf-account-app/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        }
+      }
+    },
+    "mf-account-app-e2e": {
+      "root": "apps/mf-account-app-e2e",
+      "sourceRoot": "apps/mf-account-app-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/mf-account-app-e2e/cypress.json",
+            "tsConfig": "apps/mf-account-app-e2e/tsconfig.e2e.json",
+            "devServerTarget": "mf-account-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "mf-account-app:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/mf-account-app-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
+    },
+    "ms-account": {
+      "root": "apps/ms-account",
+      "sourceRoot": "apps/ms-account/src",
+      "projectType": "application",
+      "prefix": "ms-account",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/ms-account",
+            "main": "apps/ms-account/src/main.ts",
+            "tsConfig": "apps/ms-account/tsconfig.app.json",
+            "assets": [
+              "apps/ms-account/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/ms-account/src/environments/environment.ts",
+                  "with": "apps/ms-account/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "ms-account:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/ms-account/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/ms-account"
+          ],
+          "options": {
+            "jestConfig": "apps/ms-account/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "mf-project-app": {
+      "root": "apps/mf-project-app",
+      "sourceRoot": "apps/mf-project-app/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/mf-project-app",
+            "index": "apps/mf-project-app/src/index.html",
+            "main": "apps/mf-project-app/src/main.tsx",
+            "polyfills": "apps/mf-project-app/src/polyfills.ts",
+            "tsConfig": "apps/mf-project-app/tsconfig.app.json",
+            "assets": [
+              "apps/mf-project-app/src/favicon.ico",
+              "apps/mf-project-app/src/assets"
+            ],
+            "styles": [
+              "apps/mf-project-app/src/styles.scss"
+            ],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/mf-project-app/src/environments/environment.ts",
+                  "with": "apps/mf-project-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "mf-project-app:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "mf-project-app:build:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/mf-project-app/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/mf-project-app"
+          ],
+          "options": {
+            "jestConfig": "apps/mf-project-app/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "storybook": {
+          "executor": "@nrwl/storybook:storybook",
+          "options": {
+            "uiFramework": "@storybook/react",
+            "port": 4400,
+            "config": {
+              "configFolder": "apps/mf-project-app/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "build-storybook": {
+          "executor": "@nrwl/storybook:build",
+          "options": {
+            "uiFramework": "@storybook/react",
+            "outputPath": "dist/storybook/mf-project-app",
+            "config": {
+              "configFolder": "apps/mf-project-app/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        }
+      }
+    },
+    "mf-project-app-e2e": {
+      "root": "apps/mf-project-app-e2e",
+      "sourceRoot": "apps/mf-project-app-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/mf-project-app-e2e/cypress.json",
+            "tsConfig": "apps/mf-project-app-e2e/tsconfig.e2e.json",
+            "devServerTarget": "mf-project-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "mf-project-app:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/mf-project-app-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
+    },
+    "ms-project": {
+      "root": "apps/ms-project",
+      "sourceRoot": "apps/ms-project/src",
+      "projectType": "application",
+      "prefix": "ms-project",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/ms-project",
+            "main": "apps/ms-project/src/main.ts",
+            "tsConfig": "apps/ms-project/tsconfig.app.json",
+            "assets": [
+              "apps/ms-project/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/ms-project/src/environments/environment.ts",
+                  "with": "apps/ms-project/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "ms-project:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/ms-project/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/ms-project"
+          ],
+          "options": {
+            "jestConfig": "apps/ms-project/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ui": {
+      "root": "libs/ui",
+      "sourceRoot": "libs/ui/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ui/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/ui"
+          ],
+          "options": {
+            "jestConfig": "libs/ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "shared": {
+      "root": "libs/shared",
+      "sourceRoot": "libs/shared/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/shared"
+          ],
+          "options": {
+            "jestConfig": "libs/shared/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "data": {
+      "root": "libs/data",
+      "sourceRoot": "libs/data/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/data/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/data"
+          ],
+          "options": {
+            "jestConfig": "libs/data/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "generate": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "npx graphql-codegen --config libs/data/codegen.yml"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "ms-task": {
+      "root": "apps/ms-task",
+      "sourceRoot": "apps/ms-task/src",
+      "projectType": "application",
+      "prefix": "ms-task",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/ms-task",
+            "main": "apps/ms-task/src/main.ts",
+            "tsConfig": "apps/ms-task/tsconfig.app.json",
+            "assets": [
+              "apps/ms-task/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/ms-task/src/environments/environment.ts",
+                  "with": "apps/ms-task/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "ms-task:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/ms-task/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/ms-task"
+          ],
+          "options": {
+            "jestConfig": "apps/ms-task/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ms-tender": {
+      "root": "apps/ms-tender",
+      "sourceRoot": "apps/ms-tender/src",
+      "projectType": "application",
+      "prefix": "ms-tender",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/ms-tender",
+            "main": "apps/ms-tender/src/main.ts",
+            "tsConfig": "apps/ms-tender/tsconfig.app.json",
+            "assets": [
+              "apps/ms-tender/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/ms-tender/src/environments/environment.ts",
+                  "with": "apps/ms-tender/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "ms-tender:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/ms-tender/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/ms-tender"
+          ],
+          "options": {
+            "jestConfig": "apps/ms-tender/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ms-cost": {
+      "root": "apps/ms-cost",
+      "sourceRoot": "apps/ms-cost/src",
+      "projectType": "application",
+      "prefix": "ms-cost",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/ms-cost",
+            "main": "apps/ms-cost/src/main.ts",
+            "tsConfig": "apps/ms-cost/tsconfig.app.json",
+            "assets": [
+              "apps/ms-cost/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/ms-cost/src/environments/environment.ts",
+                  "with": "apps/ms-cost/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "ms-cost:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/ms-cost/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/ms-cost"
+          ],
+          "options": {
+            "jestConfig": "apps/ms-cost/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ms-meeting": {
+      "root": "apps/ms-meeting",
+      "sourceRoot": "apps/ms-meeting/src",
+      "projectType": "application",
+      "prefix": "ms-meeting",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/ms-meeting",
+            "main": "apps/ms-meeting/src/main.ts",
+            "tsConfig": "apps/ms-meeting/tsconfig.app.json",
+            "assets": [
+              "apps/ms-meeting/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/ms-meeting/src/environments/environment.ts",
+                  "with": "apps/ms-meeting/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "ms-meeting:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/ms-meeting/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/ms-meeting"
+          ],
+          "options": {
+            "jestConfig": "apps/ms-meeting/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ms-document": {
+      "root": "apps/ms-document",
+      "sourceRoot": "apps/ms-document/src",
+      "projectType": "application",
+      "prefix": "ms-document",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/ms-document",
+            "main": "apps/ms-document/src/main.ts",
+            "tsConfig": "apps/ms-document/tsconfig.app.json",
+            "assets": [
+              "apps/ms-document/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/ms-document/src/environments/environment.ts",
+                  "with": "apps/ms-document/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "ms-document:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/ms-document/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/ms-document"
+          ],
+          "options": {
+            "jestConfig": "apps/ms-document/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ms-protocol": {
+      "root": "apps/ms-protocol",
+      "sourceRoot": "apps/ms-protocol/src",
+      "projectType": "application",
+      "prefix": "ms-protocol",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/ms-protocol",
+            "main": "apps/ms-protocol/src/main.ts",
+            "tsConfig": "apps/ms-protocol/tsconfig.app.json",
+            "assets": [
+              "apps/ms-protocol/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/ms-protocol/src/environments/environment.ts",
+                  "with": "apps/ms-protocol/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "ms-protocol:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/ms-protocol/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/ms-protocol"
+          ],
+          "options": {
+            "jestConfig": "apps/ms-protocol/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "mf-task-app": {
+      "root": "apps/mf-task-app",
+      "sourceRoot": "apps/mf-task-app/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/mf-task-app",
+            "index": "apps/mf-task-app/src/index.html",
+            "main": "apps/mf-task-app/src/main.tsx",
+            "polyfills": "apps/mf-task-app/src/polyfills.ts",
+            "tsConfig": "apps/mf-task-app/tsconfig.app.json",
+            "assets": [
+              "apps/mf-task-app/src/favicon.ico",
+              "apps/mf-task-app/src/assets"
+            ],
+            "styles": [
+              "apps/mf-task-app/src/styles.scss"
+            ],
+            "scripts": [],
+            "webpackConfig": "apps/mf-task-app/webpack.config.js"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/mf-task-app/src/environments/environment.ts",
+                  "with": "apps/mf-task-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "mf-task-app:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "mf-task-app:build:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/mf-task-app/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/mf-task-app"
+          ],
+          "options": {
+            "jestConfig": "apps/mf-task-app/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "storybook": {
+          "executor": "@nrwl/storybook:storybook",
+          "options": {
+            "uiFramework": "@storybook/react",
+            "port": 4400,
+            "config": {
+              "configFolder": "apps/mf-task-app/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "build-storybook": {
+          "executor": "@nrwl/storybook:build",
+          "options": {
+            "uiFramework": "@storybook/react",
+            "outputPath": "dist/storybook/mf-task-app",
+            "config": {
+              "configFolder": "apps/mf-task-app/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        }
+      }
+    },
+    "mf-task-app-e2e": {
+      "root": "apps/mf-task-app-e2e",
+      "sourceRoot": "apps/mf-task-app-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/mf-task-app-e2e/cypress.json",
+            "tsConfig": "apps/mf-task-app-e2e/tsconfig.e2e.json",
+            "devServerTarget": "mf-task-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "mf-task-app:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/mf-task-app-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
+    },
+    "mf-tender-app": {
+      "root": "apps/mf-tender-app",
+      "sourceRoot": "apps/mf-tender-app/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/mf-tender-app",
+            "index": "apps/mf-tender-app/src/index.html",
+            "main": "apps/mf-tender-app/src/main.tsx",
+            "polyfills": "apps/mf-tender-app/src/polyfills.ts",
+            "tsConfig": "apps/mf-tender-app/tsconfig.app.json",
+            "assets": [
+              "apps/mf-tender-app/src/favicon.ico",
+              "apps/mf-tender-app/src/assets"
+            ],
+            "styles": [
+              "apps/mf-tender-app/src/styles.scss"
+            ],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/mf-tender-app/src/environments/environment.ts",
+                  "with": "apps/mf-tender-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "mf-tender-app:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "mf-tender-app:build:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/mf-tender-app/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/mf-tender-app"
+          ],
+          "options": {
+            "jestConfig": "apps/mf-tender-app/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "storybook": {
+          "executor": "@nrwl/storybook:storybook",
+          "options": {
+            "uiFramework": "@storybook/react",
+            "port": 4400,
+            "config": {
+              "configFolder": "apps/mf-tender-app/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "build-storybook": {
+          "executor": "@nrwl/storybook:build",
+          "options": {
+            "uiFramework": "@storybook/react",
+            "outputPath": "dist/storybook/mf-tender-app",
+            "config": {
+              "configFolder": "apps/mf-tender-app/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        }
+      }
+    },
+    "mf-tender-app-e2e": {
+      "root": "apps/mf-tender-app-e2e",
+      "sourceRoot": "apps/mf-tender-app-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/mf-tender-app-e2e/cypress.json",
+            "tsConfig": "apps/mf-tender-app-e2e/tsconfig.e2e.json",
+            "devServerTarget": "mf-tender-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "mf-tender-app:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/mf-tender-app-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
+    },
+    "mf-cost-app": {
+      "root": "apps/mf-cost-app",
+      "sourceRoot": "apps/mf-cost-app/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/mf-cost-app",
+            "index": "apps/mf-cost-app/src/index.html",
+            "main": "apps/mf-cost-app/src/main.tsx",
+            "polyfills": "apps/mf-cost-app/src/polyfills.ts",
+            "tsConfig": "apps/mf-cost-app/tsconfig.app.json",
+            "assets": [
+              "apps/mf-cost-app/src/favicon.ico",
+              "apps/mf-cost-app/src/assets"
+            ],
+            "styles": [
+              "apps/mf-cost-app/src/styles.scss"
+            ],
+            "scripts": [],
+            "webpackConfig": "apps/mf-cost-app/webpack.config.js"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/mf-cost-app/src/environments/environment.ts",
+                  "with": "apps/mf-cost-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "mf-cost-app:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "mf-cost-app:build:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/mf-cost-app/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/mf-cost-app"
+          ],
+          "options": {
+            "jestConfig": "apps/mf-cost-app/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "storybook": {
+          "executor": "@nrwl/storybook:storybook",
+          "options": {
+            "uiFramework": "@storybook/react",
+            "port": 4400,
+            "config": {
+              "configFolder": "apps/mf-cost-app/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "build-storybook": {
+          "executor": "@nrwl/storybook:build",
+          "options": {
+            "uiFramework": "@storybook/react",
+            "outputPath": "dist/storybook/mf-cost-app",
+            "config": {
+              "configFolder": "apps/mf-cost-app/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        }
+      }
+    },
+    "mf-cost-app-e2e": {
+      "root": "apps/mf-cost-app-e2e",
+      "sourceRoot": "apps/mf-cost-app-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/mf-cost-app-e2e/cypress.json",
+            "tsConfig": "apps/mf-cost-app-e2e/tsconfig.e2e.json",
+            "devServerTarget": "mf-cost-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "mf-cost-app:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/mf-cost-app-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
+    },
+    "mf-meeting-app": {
+      "root": "apps/mf-meeting-app",
+      "sourceRoot": "apps/mf-meeting-app/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/mf-meeting-app",
+            "index": "apps/mf-meeting-app/src/index.html",
+            "main": "apps/mf-meeting-app/src/main.tsx",
+            "polyfills": "apps/mf-meeting-app/src/polyfills.ts",
+            "tsConfig": "apps/mf-meeting-app/tsconfig.app.json",
+            "assets": [
+              "apps/mf-meeting-app/src/favicon.ico",
+              "apps/mf-meeting-app/src/assets"
+            ],
+            "styles": [
+              "apps/mf-meeting-app/src/styles.scss"
+            ],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/mf-meeting-app/src/environments/environment.ts",
+                  "with": "apps/mf-meeting-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "mf-meeting-app:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "mf-meeting-app:build:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/mf-meeting-app/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/mf-meeting-app"
+          ],
+          "options": {
+            "jestConfig": "apps/mf-meeting-app/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "storybook": {
+          "executor": "@nrwl/storybook:storybook",
+          "options": {
+            "uiFramework": "@storybook/react",
+            "port": 4400,
+            "config": {
+              "configFolder": "apps/mf-meeting-app/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "build-storybook": {
+          "executor": "@nrwl/storybook:build",
+          "options": {
+            "uiFramework": "@storybook/react",
+            "outputPath": "dist/storybook/mf-meeting-app",
+            "config": {
+              "configFolder": "apps/mf-meeting-app/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        }
+      }
+    },
+    "mf-meeting-app-e2e": {
+      "root": "apps/mf-meeting-app-e2e",
+      "sourceRoot": "apps/mf-meeting-app-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/mf-meeting-app-e2e/cypress.json",
+            "tsConfig": "apps/mf-meeting-app-e2e/tsconfig.e2e.json",
+            "devServerTarget": "mf-meeting-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "mf-meeting-app:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/mf-meeting-app-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
+    },
+    "interfaces": {
+      "root": "libs/interfaces",
+      "sourceRoot": "libs/interfaces/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/interfaces/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/interfaces"
+          ],
+          "options": {
+            "jestConfig": "libs/interfaces/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "data-access": {
+      "root": "libs/data-access",
+      "sourceRoot": "libs/data-access/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/data-access/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/data-access"
+          ],
+          "options": {
+            "jestConfig": "libs/data-access/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "generate": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "npx graphql-codegen --config libs/data-access/codegen.yml"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "ms-core": {
+      "root": "libs/ms-core",
+      "sourceRoot": "libs/ms-core/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ms-core/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/ms-core"
+          ],
+          "options": {
+            "jestConfig": "libs/ms-core/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "shared-components": {
+      "root": "libs/shared-components",
+      "sourceRoot": "libs/shared-components/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared-components/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/shared-components"
+          ],
+          "options": {
+            "jestConfig": "libs/shared-components/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "storybook": {
+          "executor": "@nrwl/storybook:storybook",
+          "options": {
+            "uiFramework": "@storybook/react",
+            "port": 4400,
+            "config": {
+              "configFolder": "libs/shared-components/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "build-storybook": {
+          "executor": "@nrwl/storybook:build",
+          "options": {
+            "uiFramework": "@storybook/react",
+            "outputPath": "dist/storybook/shared-components",
+            "config": {
+              "configFolder": "libs/shared-components/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        }
+      }
+    },
+    "shared-components-e2e": {
+      "root": "apps/shared-components-e2e",
+      "sourceRoot": "apps/shared-components-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/shared-components-e2e/cypress.json",
+            "tsConfig": "apps/shared-components-e2e/tsconfig.e2e.json",
+            "devServerTarget": "shared-components:storybook"
+          },
+          "configurations": {
+            "ci": {
+              "devServerTarget": "shared-components:storybook:ci"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/shared-components-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/react"
+  },
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "scss"
+      },
+      "library": {
+        "style": "scss",
+        "linter": "eslint"
+      }
+    }
+  },
+  "defaultProject": "mf-container-app"
+}
