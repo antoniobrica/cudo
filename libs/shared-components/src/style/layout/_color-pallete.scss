@@ -1,0 +1,72 @@
+.color-palette {
+    @include flexbox;
+    @include flex-wrap(wrap);
+    .column {
+        margin: 0 2rem 2rem 0;
+        text-align: center;
+        max-width: 10rem;
+        .box {
+            width: 10rem;
+            height: 10rem;
+            border-radius: 0.6rem;
+            @include flexbox;
+            @include align-items(center);
+            @include justify-content(center);
+            font-size: 1.5rem;
+            text-transform: uppercase;
+        }
+        span {
+            text-align: center;
+            font-size: 1.5rem;
+            color: color("shades", "black");
+            margin: 5px 0 0;
+            width: 100%;
+            text-align: center;
+            display: block;
+        }
+    }
+}
+
+.grey-60-cl {
+    background: color("grey", "lighten-9");
+}
+
+.grey-mb {
+    background-color: color("grey", "base");
+}
+
+.blue-mb {
+    background-color: color("blue", "base");
+}
+
+.yellow-mb {
+    background-color: color("yellow", "base");
+}
+
+.yellow-mb-3 {
+    background-color: color("yellow", "lighten-3");
+}
+
+.green-mb {
+    background-color: color("green", "base");
+}
+
+.green-dark {
+    background-color: color("green", "dark");
+}
+
+.red-mb {
+    background-color: color("red", "base");
+}
+
+.white-smoke-mb {
+    background-color: color("grey", "lighten-6");
+}
+
+.lavender-blue {
+    background-color: color("blue", "lighten");
+}
+
+.black-mb {
+    background-color: color("shades", "black");
+}
