@@ -37,7 +37,7 @@ To save the changes to the file, hit Ctrl+X and Y when prompted to save changes.
 
 3. Start the Docker container
 
-docker-compose -f /home/deploy/docker-compose.sql.yml up -d
+docker-compose -f .\deploy\docker-compose-sql\docker-compose-sql.yml up -d
 This may take a few minutes depending on the internet connection. Also, it has to pull the Sql Server 2017 image from Docker Hub which is about 1.5GB.
 
 4. Confirm its running
@@ -92,3 +92,6 @@ Since I'm using DigitalOcean, it will just simply be the public ip address that 
 If, however, you are running this locally on either Windows or Mac, we need to obtain the ip address. Generally, localhost will work fine, however when I was testing on windows, I had to run ipconfig on windows.
 
 https://docs.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio?view=sql-server-2017
+
+## To clear sql db setup
+docker-compose -f .\deploy\docker-compose-sql\docker-compose-sql.yml down

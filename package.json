@@ -63,6 +63,7 @@
     "graphql-voyager": "^1.0.0-rc.31",
     "i18next": "^19.8.4",
     "mongodb": "^3.6.3",
+    "mssql": "^6.3.1",
     "react": "17.0.1",
     "react-apollo": "^3.1.5",
     "react-dom": "17.0.1",
@@ -74,7 +75,7 @@
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.3",
     "tslib": "^2.0.0",
-    "typeorm": "^0.2.29",
+    "typeorm": "^0.2.30",
     "typescript-optional": "^2.0.1",
     "webpack-notifier": "^1.12.0"
   },
