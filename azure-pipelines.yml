@@ -1,7 +1,7 @@
 
 
 trigger:
-- Dev
+- testsudo
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -12,7 +12,7 @@ steps:
     containerRegistry: 'spforacr'
     repository: 'cudotender'
     command: 'build'
-    Dockerfile: '/Dockerfile'
+    Dockerfile: '**/Dockerfile'
 
 - task: Docker@2
   inputs:
