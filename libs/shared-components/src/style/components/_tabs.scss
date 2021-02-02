@@ -1,0 +1,38 @@
+.cs-tab {
+    .ui.pointing.secondary.menu {
+        border: 0;
+        margin: 0;
+        border-bottom: 1px solid color("grey", "lighten-4");
+        .item {
+            font-size: 1.8rem;
+            color: color("shades", "black");
+            opacity: 0.54;
+            border-top: 0.3rem solid transparent;
+            border-bottom: 0;
+            padding: 1.4rem 2.5rem;
+            font-weight: 600;
+            margin: 0 !important;
+            margin-bottom: -1px !important;
+            @media (max-width:#{$small-screen}) {
+                font-size: 1.6rem;
+            }
+            &.active {
+                opacity: 1;
+                border-top-color: color("blue", "base");
+                border-bottom: 1px solid color("shades", "white");
+                border-left: 1px solid color("grey", "lighten-4");
+                border-right: 1px solid color("grey", "lighten-4");
+            }
+        }
+    }
+    .ui.segment {
+        font-size: 1.5rem;
+        border: 0;
+        padding: 3rem;
+        border: 1px solid color("grey", "lighten-4");
+        border-top: 0;
+        @media (max-width:#{$small-screen}) {
+            padding: 2rem;
+        }
+    }
+}

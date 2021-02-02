@@ -91,3 +91,6 @@ nx run mf-project-app:storybook
 
 ### To run test case shared-component storybook
 nx run shared-components-e2e:e2e
+
+### To run ui-design
+npm run start ui-design

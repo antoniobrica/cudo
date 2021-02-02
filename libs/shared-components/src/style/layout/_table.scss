@@ -1,0 +1,98 @@
+.ui.segment {
+    &.table-view {
+        margin: 1rem 0 2rem;
+        .segment-heading {
+            @include flex(flex);
+            @include justify(space-between);
+            padding: 10px 20px;
+            height: 60px;
+            i {
+                color: color("blue", "base");
+                margin-right: 0.4em;
+                font-size: 1em;
+                height: auto;
+                width: auto;
+            }
+            .ui.header {
+                @include flex(flex);
+                @include align-items(center);
+            }
+        }
+    }
+}
+
+.table-inner-con {
+    margin-left: 0;
+    padding: 20px;
+    .table-area {
+        table {
+            border: 1px solid $tableBorder;
+            thead {
+                tr {
+                    th {
+                        background: $none;
+                        color: $tableHeadingTextColor;
+                        font-weight: $font-medium;
+                        font-size: 1.5rem;
+                        text-transform: uppercase;
+                    }
+                }
+            }
+            tbody {
+                tr {
+                    td {
+                        color: $tableTextColor;
+                        font-weight: $font-medium;
+                        font-size: 1.5rem;
+                    }
+                }
+            }
+            a {
+                margin: 0 3px;
+                span.table-icon {
+                    svg {
+                        font-size: 1.2rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.ui.dropdown {
+    &.table-dropdown {
+        .menu {
+            span {
+                @include flex(flex);
+                @include align-items(center);
+                @include relative();
+                padding: 0.3rem 1rem 0.3rem 2rem;
+                font-size: 1.5rem;
+                &:before {
+                    @include absolute(left 0);
+                    display: inline-block;
+                    font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
+                    font-size: inherit;
+                    text-rendering: auto;
+                    -webkit-font-smoothing: antialiased;
+                    -moz-osx-font-smoothing: grayscale;
+                    font-size: 2rem;
+                }
+            }
+            .change-plan-icon {
+                span {
+                    &:before {
+                        content: "\f30d";
+                    }
+                }
+            }
+            .cancel-icon {
+                span {
+                    &:before {
+                        content: "\f136";
+                    }
+                }
+            }
+        }
+    }
+}

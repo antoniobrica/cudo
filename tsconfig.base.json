@@ -21,7 +21,8 @@
       "@cudo/interfaces": ["libs/interfaces/src/index.ts"],
       "@cudo/data-access": ["libs/data-access/src/index.ts"],
       "@cudo/ms-core": ["libs/ms-core/src/index.ts"],
-      "@cudo/shared-components": ["libs/shared-components/src/index.ts"]
+      "@cudo/shared-components": ["libs/shared-components/src/index.ts"],
+      "@cudo/mf-core": ["libs/mf-core/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
