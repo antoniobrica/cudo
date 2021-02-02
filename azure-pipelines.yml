@@ -1,0 +1,19 @@
+
+trigger:
+- cudo-test
+
+pool:
+  vmImage: 'ubuntu-latest'
+steps:
+- task: Docker@2
+  inputs:
+    containerRegistry: 'spforacr'
+    repository: 'cudotender'
+    command: 'build'
+    Dockerfile: '**/Dockerfile'
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'spforacr'
+    repository: 'sudotender'
+    command: 'push'
