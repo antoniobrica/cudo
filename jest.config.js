@@ -23,5 +23,6 @@ module.exports = {
     '<rootDir>/libs/ms-core',
     '<rootDir>/libs/shared-components',
     '<rootDir>/apps/ui-design',
+    '<rootDir>/libs/mf-core',
   ],
 };

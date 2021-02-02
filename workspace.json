@@ -1785,6 +1785,31 @@
           }
         }
       }
+    },
+    "mf-core": {
+      "root": "libs/mf-core",
+      "sourceRoot": "libs/mf-core/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/mf-core/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/mf-core"
+          ],
+          "options": {
+            "jestConfig": "libs/mf-core/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {

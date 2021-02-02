@@ -133,6 +133,9 @@
     "ui-design-e2e": {
       "tags": [],
       "implicitDependencies": ["ui-design"]
+    },
+    "mf-core": {
+      "tags": []
     }
   }
 }

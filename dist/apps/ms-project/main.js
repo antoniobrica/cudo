@@ -147,9 +147,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _nestjs_typeorm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @nestjs/typeorm */ "@nestjs/typeorm");
 /* harmony import */ var _nestjs_typeorm__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_nestjs_typeorm__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _config_typeorm_type_orm_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../config/typeorm/type-orm.service */ "./apps/ms-project/src/config/typeorm/type-orm.service.ts");
-/* harmony import */ var _app_controller__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./app.controller */ "./apps/ms-project/src/app/app.controller.ts");
-/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app.service */ "./apps/ms-project/src/app/app.service.ts");
-/* harmony import */ var _components_projects_projects_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/projects/projects.module */ "./apps/ms-project/src/app/components/projects/projects.module.ts");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! path */ "path");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _app_controller__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app.controller */ "./apps/ms-project/src/app/app.controller.ts");
+/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app.service */ "./apps/ms-project/src/app/app.service.ts");
+/* harmony import */ var _components_projects_projects_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/projects/projects.module */ "./apps/ms-project/src/app/components/projects/projects.module.ts");
+/* harmony import */ var nestjs_i18n__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! nestjs-i18n */ "nestjs-i18n");
+/* harmony import */ var nestjs_i18n__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(nestjs_i18n__WEBPACK_IMPORTED_MODULE_9__);
+
+
 
 
 
@@ -163,16 +169,26 @@ let AppModule = class AppModule {
 AppModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Module"])({
         imports: [
+            nestjs_i18n__WEBPACK_IMPORTED_MODULE_9__["I18nModule"].forRoot({
+                fallbackLanguage: 'en',
+                parser: nestjs_i18n__WEBPACK_IMPORTED_MODULE_9__["I18nJsonParser"],
+                parserOptions: {
+                    path: path__WEBPACK_IMPORTED_MODULE_5__["join"](__dirname, '/assets/i18n/'),
+                    // add this to enable live translations
+                    watch: true,
+                },
+            }),
             _nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["GraphQLModule"].forRoot({
+                context: ({ req, connection }) => connection ? { req: connection.context } : { req },
                 autoSchemaFile: true,
             }),
-            _components_projects_projects_module__WEBPACK_IMPORTED_MODULE_7__["ProjectsModule"],
+            _components_projects_projects_module__WEBPACK_IMPORTED_MODULE_8__["ProjectsModule"],
             _nestjs_typeorm__WEBPACK_IMPORTED_MODULE_3__["TypeOrmModule"].forRootAsync({
                 useClass: _config_typeorm_type_orm_service__WEBPACK_IMPORTED_MODULE_4__["TypeOrmService"],
             }),
         ],
-        controllers: [_app_controller__WEBPACK_IMPORTED_MODULE_5__["AppController"]],
-        providers: [_app_service__WEBPACK_IMPORTED_MODULE_6__["AppService"]],
+        controllers: [_app_controller__WEBPACK_IMPORTED_MODULE_6__["AppController"]],
+        providers: [_app_service__WEBPACK_IMPORTED_MODULE_7__["AppService"]],
     })
 ], AppModule);
 
@@ -415,30 +431,23 @@ __webpack_require__.r(__webpack_exports__);
 let ProjectEntity = class ProjectEntity {
 };
 Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["ObjectIdColumn"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["PrimaryGeneratedColumn"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
 ], ProjectEntity.prototype, "_id", void 0);
 Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({
-        type: 'string',
-        unique: true,
-    }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "email", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({
-        type: 'number',
-    }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
-], ProjectEntity.prototype, "age", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["PrimaryColumn"])({
-        type: 'string',
-    }),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
 ], ProjectEntity.prototype, "projectId", void 0);
 Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ type: 'boolean', }),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ length: 500 }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectEntity.prototype, "email", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])('int'),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
+], ProjectEntity.prototype, "age", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Boolean)
 ], ProjectEntity.prototype, "isSubscribed", void 0);
 ProjectEntity = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
@@ -845,7 +854,7 @@ const orm = {
     development: {
         type: process.env.DATABASE_TYPE,
         host: process.env.DATABASE_HOST,
-        port: process.env.DATABASE_PORT,
+        port: Number(process.env.DATABASE_PORT),
         username: process.env.DATABASE_USERNAME,
         password: process.env.DATABASE_PASSWORD,
         database: process.env.DATABASE_NAME
@@ -1020,6 +1029,28 @@ module.exports = require("@nestjs/typeorm");
 /***/ (function(module, exports) {
 
 module.exports = require("class-validator");
+
+/***/ }),
+
+/***/ "nestjs-i18n":
+/*!******************************!*\
+  !*** external "nestjs-i18n" ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("nestjs-i18n");
+
+/***/ }),
+
+/***/ "path":
+/*!***********************!*\
+  !*** external "path" ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("path");
 
 /***/ }),
 

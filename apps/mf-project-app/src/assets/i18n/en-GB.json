@@ -1,0 +1,14 @@
+{
+  "header": {
+    "logo": "Cudo Logo",
+    "title": "Cudo"
+  },
+  "loading": "Loading...",
+  "messages": {
+    "test": "Oops~ Something went wrong. Please refresh the page."
+  },
+  "language": {
+    "en-GB": "English",
+    "de-DE":"Deutsche"
+  }
+}
