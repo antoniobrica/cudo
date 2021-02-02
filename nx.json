@@ -1,0 +1,131 @@
+{
+  "npmScope": "cudo",
+  "affected": {
+    "defaultBase": "master"
+  },
+  "implicitDependencies": {
+    "workspace.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    "tsconfig.base.json": "*",
+    "tslint.json": "*",
+    ".eslintrc.json": "*",
+    "nx.json": "*"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e",
+          "build-storybook"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "mf-container-app": {
+      "tags": []
+    },
+    "mf-container-app-e2e": {
+      "tags": [],
+      "implicitDependencies": ["mf-container-app"]
+    },
+    "mf-account-app": {
+      "tags": []
+    },
+    "mf-account-app-e2e": {
+      "tags": [],
+      "implicitDependencies": ["mf-account-app"]
+    },
+    "ms-account": {
+      "tags": []
+    },
+    "mf-project-app": {
+      "tags": []
+    },
+    "mf-project-app-e2e": {
+      "tags": [],
+      "implicitDependencies": ["mf-project-app"]
+    },
+    "ms-project": {
+      "tags": []
+    },
+    "ui": {
+      "tags": []
+    },
+    "shared": {
+      "tags": []
+    },
+    "data": {
+      "tags": []
+    },
+    "ms-task": {
+      "tags": []
+    },
+    "ms-tender": {
+      "tags": []
+    },
+    "ms-cost": {
+      "tags": []
+    },
+    "ms-meeting": {
+      "tags": []
+    },
+    "ms-document": {
+      "tags": []
+    },
+    "ms-protocol": {
+      "tags": []
+    },
+    "mf-task-app": {
+      "tags": []
+    },
+    "mf-task-app-e2e": {
+      "tags": [],
+      "implicitDependencies": ["mf-task-app"]
+    },
+    "mf-tender-app": {
+      "tags": []
+    },
+    "mf-tender-app-e2e": {
+      "tags": [],
+      "implicitDependencies": ["mf-tender-app"]
+    },
+    "mf-cost-app": {
+      "tags": []
+    },
+    "mf-cost-app-e2e": {
+      "tags": [],
+      "implicitDependencies": ["mf-cost-app"]
+    },
+    "mf-meeting-app": {
+      "tags": []
+    },
+    "mf-meeting-app-e2e": {
+      "tags": [],
+      "implicitDependencies": ["mf-meeting-app"]
+    },
+    "interfaces": {
+      "tags": []
+    },
+    "data-access": {
+      "tags": []
+    },
+    "ms-core": {
+      "tags": []
+    },
+    "shared-components": {
+      "tags": []
+    },
+    "shared-components-e2e": {
+      "tags": [],
+      "implicitDependencies": ["shared-components"]
+    }
+  }
+}
