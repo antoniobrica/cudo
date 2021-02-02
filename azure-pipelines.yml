@@ -3,19 +3,16 @@
 trigger:
 - testsudo
 
-pool:
-  vmImage: 'ubuntu-latest'
-
 steps:
 - task: Docker@2
   inputs:
-    containerRegistry: 'spforacr'
-    repository: 'cudotender'
+    containerRegistry: 'cudodockersp'
+    repository: 'mf-tinder'
     command: 'build'
     Dockerfile: '**/Dockerfile'
 
 - task: Docker@2
   inputs:
-    containerRegistry: 'spforacr'
-    repository: 'cudotender'
+    containerRegistry: 'cudodockersp'
+    repository: 'mf-tinder'
     command: 'push'
