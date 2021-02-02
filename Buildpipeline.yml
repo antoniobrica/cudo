@@ -1,6 +1,6 @@
 
 trigger:
-- cudo-test
+- testsudo
 
 pool:
   vmImage: 'ubuntu-latest'
