@@ -126,6 +126,16 @@
     "shared-components-e2e": {
       "tags": [],
       "implicitDependencies": ["shared-components"]
+    },
+    "ui-design": {
+      "tags": []
+    },
+    "ui-design-e2e": {
+      "tags": [],
+      "implicitDependencies": ["ui-design"]
+    },
+    "mf-core": {
+      "tags": []
     }
   }
 }
