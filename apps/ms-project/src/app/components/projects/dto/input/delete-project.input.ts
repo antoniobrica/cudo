@@ -5,5 +5,5 @@ import { IsNotEmpty } from 'class-validator';
 export class DeleteProjectInput {
   @Field()
   @IsNotEmpty()
-  projectId: string;
+  projectNum: number;
 }

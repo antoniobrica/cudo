@@ -1,40 +1,65 @@
-import { BeforeInsert, Column, Entity, ObjectIdColumn, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
-import { hashSync, genSaltSync } from 'bcrypt';
+import { BaseEntity, BeforeInsert, Column, Entity, ObjectIdColumn, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Field, Int, ObjectType } from "@nestjs/graphql";
 
+
+@ObjectType()
 @Entity({ name: 'projects' })
+
 export class ProjectEntity {
-  // @ObjectIdColumn()
-  // _id: string;
-  // @Column({
-  //   type: 'string',
-  //   unique: true,
-  // })
-  // email: string;
-
-  // @Column({
-  //   type: 'number',
-  // })
-  // age: number;
-  
-  // @PrimaryColumn({
-  //   type: 'string',
-  // })
-  // projectId: string;
-
-  // @Column({ type: 'boolean', })
-  // isSubscribed?: boolean;
-  @PrimaryGeneratedColumn()
-  _id: number;
-
- @Column({ nullable: true})
+  @Field()
+  @Column()
   projectId: string;
 
-  @Column({ length: 500 })
-  email: string;
+  @Field()
+  @Column({unique:true})
+  projectName: string;
+  
+  @Field()
+  @Column({unique:true})
+  @PrimaryColumn()
+  projectNum:number
 
-  @Column('int')
-  age: number;
+  @Field()
+  @Column()
+  client: string;
 
-  @Column({ nullable: true})
-  isSubscribed?: boolean;
+  @Field()
+  @Column({nullable: true})
+  buildingType?: string;
+
+  @Field()
+  @Column({nullable: true})
+  printingCom?: string;
+
+  @Field()
+  @Column({nullable: true})
+  workType?: string;
+
+  @Field()
+  @Column({nullable: true})
+  estCost?: number;
+
+  @Field()
+  @Column({nullable: true})
+  adressLine1?: string;
+
+  @Field()
+  @Column({nullable: true})
+  adressLine2?: string;
+
+  @Field()
+  @Column({nullable: true})
+  city?: string;
+
+  @Field()
+  @Column({nullable: true})
+  state?: string;
+
+  @Field()
+  @Column({nullable: true})
+  zip?: number;
+
+  @Field()
+  @Column({nullable: true})
+  country?: string;
 }

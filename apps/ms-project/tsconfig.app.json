@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "assets": ["i18n/**/*"],
+    // "assets": ["i18n/**/*"],
     "outDir": "../../dist/out-tsc",
     "types": ["node"],
     "emitDecoratorMetadata": true,
