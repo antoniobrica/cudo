@@ -1,6 +1,6 @@
 import React from 'react';
 import Leftmenu from './leftmenu';
-
+import '../../../style/index.scss';
 export default {
     title: 'LeftMenu',
     component: Leftmenu,

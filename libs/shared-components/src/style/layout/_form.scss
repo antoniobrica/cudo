@@ -1,0 +1,156 @@
+.field {
+    label {
+        display: $display-block;
+        color: #000000;
+        font-weight: $font-medium;
+        font-size: 1.5rem;
+        margin-bottom: 5px;
+    }
+    .ui.input {
+        input {
+            border-color: $inputBorder;
+            font-weight: $font-medium;
+            color: $inputTextColor;
+            font-size: 1.5rem;
+            height: 3.125rem;
+            &:focus {
+                border-color: color("blue", "base");
+            }
+        }
+    }
+}
+
+.ui.input {
+    input {
+        &:focus {
+            border-color: color("blue", "base");
+        }
+    }
+    &.loading.input {
+        i.icon {
+            font-size: 2rem;
+            opacity: 1;
+            &:after {
+                border-color: color("blue", "base") transparent transparent;
+            }
+        }
+    }
+}
+
+.ui {
+    &.form {
+        .field {
+            &>label {
+                font-weight: $font-medium;
+                font-size: 1.5rem;
+                color: #000000;
+            }
+        }
+    }
+}
+
+.ui.checkbox {
+    .box,
+    label {
+        padding-left: 1.65714em;
+        font-size: 1.5rem;
+        font-weight: $font-regular;
+    }
+    label,
+    +label {
+        color: #707070;
+        transition: color .1s ease;
+    }
+}
+
+.ui.checkbox {
+    .box,
+    label {
+        cursor: auto;
+        position: relative;
+        display: block;
+        padding-left: 2.85714rem;
+        outline: 0;
+        font-size: 1.5rem;
+    }
+    .box:before,
+    label:before {
+        border: 1px solid color("grey", "base");
+    }
+    input:checked~ {
+        .box:after,
+        label:after {
+            content: '\e800';
+            color: color("shades", "white");
+        }
+        .box:before,
+        label:before {
+            background: color("blue", "base");
+            border-color: color("blue", "base");
+        }
+    }
+    input {
+        &:checked:focus~ {
+            .box:before,
+            label:before {
+                background: color("blue", "base");
+                border-color: color("blue", "base");
+            }
+            .box:after,
+            label:after {
+                color: color("shades", "white");
+            }
+        }
+        &:not([type=radio]):indeterminate:focus~ {
+            .box:before,
+            label:before {
+                background: color("blue", "base");
+                border-color: color("blue", "base");
+            }
+            .box:after,
+            label:after {
+                color: color("shades", "white");
+            }
+        }
+    }
+    input:checked~ {
+        .box:after,
+        label:after {
+            content: '\f26b';
+            display: inline-block;
+            font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
+            font-size: inherit;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            border-radius: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}
+
+.input-with-icon {
+    position: relative;
+    .material-icons {
+        @include absolute(right 11px top 4.3rem);
+        cursor: pointer;
+        color: color("grey", "lighten-2");
+        z-index: 1;
+        font-size: 2.4rem;
+        @media (max-width:#{$large-desktop-up}) {
+            font-size: 2rem;
+            top: 4.1rem;
+        }
+    }
+    &.left-icon {
+        input {
+            padding-left: 4rem !important;
+        }
+        .icon {
+            left: 1rem;
+            right: inherit;
+        }
+    }
+}

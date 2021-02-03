@@ -3,6 +3,8 @@
   min-width: 300px;
   max-width: 600px;
   margin: 50px auto;
+  flex-direction: row;
+  display: flex;
 }
 
 .app :global(.gutter-left) {

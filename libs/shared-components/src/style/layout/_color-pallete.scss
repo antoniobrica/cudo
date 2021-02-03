@@ -1,0 +1,81 @@
+.color-palette {
+    @include flexbox;
+    @include flex-wrap(wrap);
+    .column {
+        margin: 0 2rem 2rem 0;
+        text-align: center;
+        max-width: 10rem;
+        .box {
+            width: 10rem;
+            height: 10rem;
+            border-radius: 0.6rem;
+            @include flexbox;
+            @include align-items(center);
+            @include justify-content(center);
+            font-size: 1.5rem;
+            text-transform: uppercase;
+        }
+        span {
+            text-align: center;
+            font-size: 1.5rem;
+            color: color("shades", "black");
+            margin: 5px 0 0;
+            width: 100%;
+            text-align: center;
+            display: block;
+        }
+    }
+}
+
+.grey-60-cl {
+    background: #2D62ED;
+}
+
+.grey-mb {
+    background-color: #1B1B40;
+}
+
+.blue-mb {
+    background-color: #718898;
+}
+
+.yellow-mb {
+    background-color: #9FB5C5;
+}
+
+.yellow-mb-3 {
+    background-color:#D0D8DF;
+}
+
+.green-mb {
+    background-color: #E0E6EB;
+}
+
+.green-dark {
+    background-color: #CEE8FF;
+}
+
+.red-mb {
+    background-color: #DCEFFF;
+}
+
+.white-smoke-mb {
+    background-color: #F1F5F8;
+}
+
+.lavender-blue {
+    background-color: #F3F3F3;
+}
+ .green-highlight{
+    background-color: #37BA77;
+ }
+ .pink-highlight{
+    background-color: #E99898
+ }
+ .light-orange-highlight{
+    background-color: #FFE6C7
+ }
+
+ .green-light-highlight{
+    background-color: #C8F6DF
+ }

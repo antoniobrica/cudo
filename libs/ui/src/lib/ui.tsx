@@ -1,4 +1,5 @@
 import React from 'react';
+import SetList from './set-lest/set-lest';
 
 import './ui.module.scss';
 
@@ -9,6 +10,7 @@ export function Ui(props: UiProps) {
   return (
     <div>
       <h1>Welcome to ui!</h1>
+      <SetList />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const rootWebpackConfig = require('../../../.storybook/webpack.config');
+const path = require('path'); 
 /**
  * Export a function. Accept the base config as the only param.
  *
@@ -70,6 +71,11 @@ module.exports = async ({ config, mode }) => {
           ],
         },
       ],
+    },
+    {
+      test: /\.scss$/,
+      use: ['style-loader', 'css-loader', 'sass-loader'],
+      include: path.resolve(__dirname, '../'),
     }
   );
 
