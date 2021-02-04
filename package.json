@@ -29,6 +29,9 @@
   "dependencies": {
     "@apollo/federation": "^0.20.7",
     "@apollo/gateway": "^0.21.4",
+    "@azure/identity": "^1.2.2",
+    "@azure/keyvault-keys": "^4.1.0",
+    "@azure/keyvault-secrets": "^4.1.0",
     "@babel/polyfill": "^7.12.1",
     "@hapi/joi": "^17.1.1",
     "@material-ui/core": "^4.11.2",
