@@ -1,15 +1,17 @@
 import React from 'react';
 
 import './project.module.scss';
-import { ITodo } from "../../interfaces/project";
+import { ITodo, IProject } from "../../interfaces/project";
 import '../../../assets/style/index.scss'
 /* eslint-disable-next-line */
 export interface ProjectProps {
-  todo: ITodo;
+  todo: IProject;
 }
 
 export function Project(props: ProjectProps) {
-  const { title, description } = props.todo;
+  const {  projectId,
+    projectName,
+    projectNum, } = props.todo;
   return (
     <div style={{margin:20}}>
        <div className="ui card">
@@ -19,9 +21,9 @@ export function Project(props: ProjectProps) {
                     
                     </span>
                 </div>
-                <div className="header">Burj Khalifa</div>
-                <div className="description">John & co.</div>
-                <div className="description">Type of building
+                <div className="header">{projectName}</div>
+                <div className="description">{projectNum}</div>
+                <div className="description">{projectId}
                 <span className="summary">Residential Buildings
                     </span>
                 </div>
@@ -50,8 +52,8 @@ export function Project(props: ProjectProps) {
                     </div>
    
       {/* <h1> project info!</h1>
-      <h1>{title}</h1>
-      <span>{description}</span> */}
+      <h1>{projectName}</h1>
+      <span>{projectNum}</span> */}
     </div>
   );
 }

@@ -10,7 +10,7 @@ import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
 
 import App from './app/app';
 const client = new ApolloClient({
-  uri: 'https://tyoku.sse.codesandbox.io/graphql',
+  uri: 'http://localhost:5005/graphql',
   cache: new InMemoryCache()
 });
 

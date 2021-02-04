@@ -11,6 +11,16 @@ export const GET_TODOS = gql`
   }
 `;
 
+export const GET_PROJECTS = gql`
+  {
+    getProjects {
+     projectId
+     projectName
+     projectNum
+    }
+  }
+`;
+
 export const ADD_TODO = gql`
   mutation AddTodo($title: String!, $description: String!) {
     addTodo(todoInput: { title: $title, description: $description }) {
@@ -21,3 +31,45 @@ export const ADD_TODO = gql`
     }
   }
 `;
+
+export const ADD_PROJECT = gql`
+mutation CreateProjectDatabase($projectName: String!, 
+  $projectNum: Float!,
+  $client: String!,
+  $buildingType: String,
+  $printingCom: String,
+  $workType: String,
+  $estCost: Float,
+  $adressLine1: String,
+  $adressLine2: String,
+  $city: String,
+  $state: String,
+  $zip: Float,
+  $country: String,){ 
+  createProjectDatabase(createProjectData: {
+     projectName: $projectName,
+     projectNum: $projectNum, 
+    client: $client,
+    buildingType: $buildingType,
+    printingCom: $printingCom,
+    workType: $workType,
+    estCost: $estCost,
+    adressLine1: $adressLine1,
+    adressLine2: $adressLine2,
+    city: $city,
+    state: $state,
+    zip: $zip,
+    country: $country
+   }){
+    projectId
+    projectName
+    projectNum
+    client
+  }
+}`;
+
+
+
+//dummy data
+
+

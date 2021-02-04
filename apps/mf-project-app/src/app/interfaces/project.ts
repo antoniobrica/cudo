@@ -4,16 +4,26 @@ export interface ITodo {
     description: string;
   }
   export interface IProject {
-    projectId: String;
-    email: String;
-    age: Number;
-    isSubscribed: Boolean
+    projectId?: string;
+    projectName?: string;
+    projectNum?: number;
+    client?: string;
+    buildingType?: string
+    printingCom?: string
+    workType?: string
+    estCost?: number
+    adressLine1?: string
+    adressLine2?: string
+    city?: string
+    state?: string
+    zip?: Number
+    country?: string
     }
   export interface ITodos {
     getTodos: ITodo[];
   }
   
-  export interface Projects {
+  export interface IProjects {
       getProjects: IProject[];
   }
 

@@ -1,11 +1,11 @@
 import React from 'react';
 
 import  './project-info.module.scss';
-import { GET_TODOS } from "../../graphql/graphql";
-import { useTodoQuery } from "../../services/useRequest";
+import { GET_TODOS, GET_PROJECTS } from "../../graphql/graphql";
+import { useTodoQuery, useProjectQuery } from "../../services/useRequest";
 import AddProject from "../add-project/add-project";
 import Project from "../project/project";
-import { ITodo } from "../../interfaces/project"; 
+import { ITodo, IProject } from "../../interfaces/project"; 
 import { Button, Header, Segment, Icon } from 'semantic-ui-react';
 import Modal from 'react-modal';
 
@@ -27,7 +27,8 @@ export function ProjectInfo(props: ProjectInfoProps) {
   };
   
   
-  const { loading, error, data } = useTodoQuery(GET_TODOS);
+  // const { loading, error, data } = useTodoQuery(GET_TODOS);
+  const { loading, error, data } = useProjectQuery(GET_PROJECTS);
   const [openForm, setopenForm] = React.useState(false);
   const [modalIsOpen,setIsOpen] = React.useState(false);
 
@@ -55,10 +56,10 @@ export function ProjectInfo(props: ProjectInfoProps) {
   return (
     <div className="App">
     <h1>Projects</h1>
-    <Button size='mini' className="grey-btn"onClick={addProject}>Add Project</Button>
     {/* <button onClick={addProject}>Add Project</button> */}
     <div>
-        <button onClick={openModal}>Open Modal</button>
+    <Button size='mini' className="grey-btn" onClick={openModal}>Add Project</Button>
+        {/* <button onClick={openModal}>Open Modal</button> */}
         <Modal
           isOpen={modalIsOpen}
           onAfterOpen={afterOpenModal}
@@ -79,8 +80,8 @@ export function ProjectInfo(props: ProjectInfoProps) {
     {/* {openForm?<AddProject />:null} */}
     
     <div style={{flexDirection:'row',display: 'flex'}}>
-    {data.getTodos.map((todo: ITodo) => (
-      <Project key={todo.id} todo={todo} />
+    {data.getProjects.map((todo: IProject) => (
+      <Project key={todo.projectId} todo={todo} />
     ))}
      </div>
   </div>
