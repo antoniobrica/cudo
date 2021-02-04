@@ -6,7 +6,9 @@ import { ITodo, ITodoMutation, ITodos } from "../../interfaces/project";
 import { useTodoMutation } from '../../services/useRequest';
 import { ApolloCache, FetchResult } from '@apollo/client';
 /* eslint-disable-next-line */
-export interface AddProjectProps {}
+export interface AddProjectProps {
+  close
+}
 
 export function AddProject(props: AddProjectProps) {
   const [formData, setFormData] = React.useState<ITodo | {}>();
@@ -24,6 +26,7 @@ export function AddProject(props: AddProjectProps) {
     { title, description }: ITodo | any
   ) => {
     e.preventDefault();
+    props.close();
     addTodo({
       variables: { title, description },
       update: (

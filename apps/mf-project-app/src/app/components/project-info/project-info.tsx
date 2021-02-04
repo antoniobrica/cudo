@@ -72,11 +72,11 @@ export function ProjectInfo(props: ProjectInfoProps) {
           <div>
            Add new Project
           </div>
-          <AddProject />
+          <AddProject close={closeModal} />
         </Modal>
       </div>
 
-    {openForm?<AddProject />:null}
+    {/* {openForm?<AddProject />:null} */}
     
     <div style={{flexDirection:'row',display: 'flex'}}>
     {data.getTodos.map((todo: ITodo) => (
