@@ -1,0 +1,41 @@
+.footer {
+    background: color("grey", "lighten-6");
+    padding: 3rem 0 2rem 0;
+    @media (max-width:#{$large}) {
+        padding: 2rem 1.5rem;
+    }
+    .copyright-text {
+        text-align: center;
+        margin: 1.5rem 0 0;
+        p {
+            letter-spacing: 0.13px;
+            color: color("grey", "lighten-2");
+            font-size: 1.3rem;
+        }
+    }
+    h4 {
+        letter-spacing: 1.12px;
+        color: color("shades", "black");
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 1.5rem;
+        @media (max-width:#{$small-screen}) {
+            margin: 0;
+            font-size: 1.6rem;
+        }
+    }
+    .list {
+        @media (max-width:#{$small-screen}) {
+            margin: 0;
+        }
+        .item {
+            color: color("grey", "lighten-2");
+            font-size: 1.4rem;
+            margin: 0.7rem 0;
+            cursor: pointer;
+            &:hover {
+                color: color("blue", "base");
+            }
+        }
+    }
+}

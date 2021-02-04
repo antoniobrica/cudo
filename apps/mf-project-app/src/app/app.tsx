@@ -25,10 +25,10 @@ export function App() {
       <ProjectInfo ></ProjectInfo>
    
     </div>
-        <header className="flex">
+        {/* <header className="flex">
           <h1>Welcome to mf-project-app!</h1>
         </header>
-        <TestComponent></TestComponent>
+        <TestComponent></TestComponent> */}
       </div> 
       </Suspense>
 
