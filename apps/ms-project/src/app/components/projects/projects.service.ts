@@ -18,18 +18,10 @@ export class ProjectsService implements ProjectServiceInterface {
   ) {}
 
   public async create(createProjectInput: CreateProjectInput): Promise<ProjectEntity> {
-
-    const projectIndex = this.projectRepository.findByCondition(
-      (project) => project.projectNum === createProjectInput.projectNum);
-
-    if(projectIndex){
-
     const projectEntity: ProjectEntity={
         projectId: uuidv4(),
       ...createProjectInput}
       return await this.projectRepository.create(projectEntity);
-  }
-  if(!projectIndex) throw new Error("Project Number Already Exist")
 }
 
 
@@ -37,7 +29,6 @@ export class ProjectsService implements ProjectServiceInterface {
     
     return await this.projectRepository.findAll();
   }
-
 
 
   // public async deleteProject(deleteProjectData: DeleteProjectInput): Promise<ProjectEntity> {

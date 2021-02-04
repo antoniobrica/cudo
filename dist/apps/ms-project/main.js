@@ -390,7 +390,8 @@ let ProjectEntity = class ProjectEntity {
 };
 Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ unique: true }),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["PrimaryColumn"])(),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
 ], ProjectEntity.prototype, "projectId", void 0);
 Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
@@ -401,7 +402,6 @@ Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
     Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ unique: true }),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["PrimaryColumn"])(),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
 ], ProjectEntity.prototype, "projectNum", void 0);
 Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
@@ -808,13 +808,8 @@ let ProjectsService = class ProjectsService {
     }
     create(createProjectInput) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const projectIndex = this.projectRepository.findByCondition((project) => project.projectNum === createProjectInput.projectNum);
-            if (projectIndex) {
-                const projectEntity = Object.assign({ projectId: Object(uuid__WEBPACK_IMPORTED_MODULE_2__["v4"])() }, createProjectInput);
-                return yield this.projectRepository.create(projectEntity);
-            }
-            if (!projectIndex)
-                throw new Error("Project Number Already Exist");
+            const projectEntity = Object.assign({ projectId: Object(uuid__WEBPACK_IMPORTED_MODULE_2__["v4"])() }, createProjectInput);
+            return yield this.projectRepository.create(projectEntity);
         });
     }
     findAll() {

@@ -6,13 +6,14 @@
 //     ValidationArguments,
 //   } from 'class-validator';
 // import { CreateDateColumn } from 'typeorm';
-// import { ProjectsRepositoryService } from '../projects-repository/projects-repository.service';
+// import { ProjectServiceInterface } from 'apps/ms-project/src/app/components/projects/interface/project.service.interface';
+
 
 //   @ValidatorConstraint({ async: true })
 //   export class IsProjectNameAlreadyExistConstraint implements ValidatorConstraintInterface {
 //     validate(projectName: string) {
 
-//       return ProjectRepositoryInterface.findOne({ where: { projectName }}).then(project =>{
+//       return ProjectServiceInterface.findOneById({ where: { projectName }}).then(project =>{
 //       // return CreateProjectInput.findOneByName(projectName).then(project => {
 //         if (project) return false;
 //         return true;
@@ -31,3 +32,4 @@
 //       });
 //     };
 //   }
+

@@ -7,7 +7,8 @@ import { Field, Int, ObjectType } from "@nestjs/graphql";
 
 export class ProjectEntity {
   @Field()
-  @Column()
+  @Column({unique:true})
+  @PrimaryColumn()
   projectId: string;
 
   @Field()
@@ -16,7 +17,6 @@ export class ProjectEntity {
   
   @Field()
   @Column({unique:true})
-  @PrimaryColumn()
   projectNum:number
 
   @Field()
