@@ -220,40 +220,6 @@ AppService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 /***/ }),
 
-/***/ "./apps/ms-project/src/app/components/projects/dto/args/get-project.args.ts":
-/*!**********************************************************************************!*\
-  !*** ./apps/ms-project/src/app/components/projects/dto/args/get-project.args.ts ***!
-  \**********************************************************************************/
-/*! exports provided: GetProjectArgs */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GetProjectArgs", function() { return GetProjectArgs; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/graphql */ "@nestjs/graphql");
-/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var class_validator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! class-validator */ "class-validator");
-/* harmony import */ var class_validator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(class_validator__WEBPACK_IMPORTED_MODULE_2__);
-
-
-
-let GetProjectArgs = class GetProjectArgs {
-};
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
-    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsNotEmpty"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], GetProjectArgs.prototype, "projectId", void 0);
-GetProjectArgs = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["ArgsType"])()
-], GetProjectArgs);
-
-
-
-/***/ }),
-
 /***/ "./apps/ms-project/src/app/components/projects/dto/input/create-project.input.ts":
 /*!***************************************************************************************!*\
   !*** ./apps/ms-project/src/app/components/projects/dto/input/create-project.input.ts ***!
@@ -670,13 +636,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nestjs/graphql */ "@nestjs/graphql");
 /* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _dto_args_get_project_args__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dto/args/get-project.args */ "./apps/ms-project/src/app/components/projects/dto/args/get-project.args.ts");
-/* harmony import */ var _dto_input_create_project_input__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./dto/input/create-project.input */ "./apps/ms-project/src/app/components/projects/dto/input/create-project.input.ts");
-/* harmony import */ var _entity_project_entity__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./entity/project.entity */ "./apps/ms-project/src/app/components/projects/entity/project.entity.ts");
-/* harmony import */ var _models_project__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./models/project */ "./apps/ms-project/src/app/components/projects/models/project.ts");
-/* harmony import */ var _projects_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./projects.service */ "./apps/ms-project/src/app/components/projects/projects.service.ts");
-var _a, _b, _c, _d, _e;
-
+/* harmony import */ var _dto_input_create_project_input__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dto/input/create-project.input */ "./apps/ms-project/src/app/components/projects/dto/input/create-project.input.ts");
+/* harmony import */ var _entity_project_entity__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./entity/project.entity */ "./apps/ms-project/src/app/components/projects/entity/project.entity.ts");
+/* harmony import */ var _models_project__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./models/project */ "./apps/ms-project/src/app/components/projects/models/project.ts");
+/* harmony import */ var _projects_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./projects.service */ "./apps/ms-project/src/app/components/projects/projects.service.ts");
+var _a, _b, _c;
 
 
 
@@ -688,28 +652,11 @@ let ProjectsResolver = class ProjectsResolver {
     constructor(projectsService) {
         this.projectsService = projectsService;
     }
-    getProject(getProjectArgs) {
-        return this.projectsService.getProject(getProjectArgs);
-    }
-    // @Query(() => [Project], { name: 'projects', nullable: 'items' })
-    // getProjects(@Args() getProjectsArgs: GetProjectsArgs): Project[] {
-    //   return this.projectsService.getProjects(getProjectsArgs);
-    // }
     getProjects() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             return yield this.projectsService.findAll();
         });
     }
-    //  @Query( ()) => [Project], { name: 'projects', nullable: 'items' })
-    //  async getprojects: Promise<Project[]> {
-    //    return await this.projectsService.findAll(),
-    //  }
-    // @Mutation(() => Project)
-    // createProject(
-    //   @Args('createProjectData') createProjectData: CreateProjectInput
-    // ): Project {
-    //   return this.projectsService.createProject(createProjectData);
-    // }
     createProjectDatabase(createProjectData) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             return this.projectsService.create(createProjectData);
@@ -717,29 +664,22 @@ let ProjectsResolver = class ProjectsResolver {
     }
 };
 Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Query"])(() => _models_project__WEBPACK_IMPORTED_MODULE_6__["Project"], { name: 'project', nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Args"])()),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_a = typeof _dto_args_get_project_args__WEBPACK_IMPORTED_MODULE_3__["GetProjectArgs"] !== "undefined" && _dto_args_get_project_args__WEBPACK_IMPORTED_MODULE_3__["GetProjectArgs"]) === "function" ? _a : Object]),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", typeof (_b = typeof _models_project__WEBPACK_IMPORTED_MODULE_6__["Project"] !== "undefined" && _models_project__WEBPACK_IMPORTED_MODULE_6__["Project"]) === "function" ? _b : Object)
-], ProjectsResolver.prototype, "getProject", null);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Query"])(() => [_entity_project_entity__WEBPACK_IMPORTED_MODULE_5__["ProjectEntity"]], { nullable: true }),
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Query"])(() => [_entity_project_entity__WEBPACK_IMPORTED_MODULE_4__["ProjectEntity"]], { nullable: true }),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", []),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", typeof (_c = typeof Promise !== "undefined" && Promise) === "function" ? _c : Object)
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", typeof (_a = typeof Promise !== "undefined" && Promise) === "function" ? _a : Object)
 ], ProjectsResolver.prototype, "getProjects", null);
 Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Mutation"])(() => _models_project__WEBPACK_IMPORTED_MODULE_6__["Project"]),
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Mutation"])(() => _models_project__WEBPACK_IMPORTED_MODULE_5__["Project"]),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Args"])('createProjectData')),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_d = typeof _dto_input_create_project_input__WEBPACK_IMPORTED_MODULE_4__["CreateProjectInput"] !== "undefined" && _dto_input_create_project_input__WEBPACK_IMPORTED_MODULE_4__["CreateProjectInput"]) === "function" ? _d : Object]),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_b = typeof _dto_input_create_project_input__WEBPACK_IMPORTED_MODULE_3__["CreateProjectInput"] !== "undefined" && _dto_input_create_project_input__WEBPACK_IMPORTED_MODULE_3__["CreateProjectInput"]) === "function" ? _b : Object]),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", Promise)
 ], ProjectsResolver.prototype, "createProjectDatabase", null);
 ProjectsResolver = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Resolver"])(() => _models_project__WEBPACK_IMPORTED_MODULE_6__["Project"]),
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Resolver"])(() => _models_project__WEBPACK_IMPORTED_MODULE_5__["Project"]),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Inject"])('ProjectServiceInterface')),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_e = typeof _projects_service__WEBPACK_IMPORTED_MODULE_7__["ProjectsService"] !== "undefined" && _projects_service__WEBPACK_IMPORTED_MODULE_7__["ProjectsService"]) === "function" ? _e : Object])
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_c = typeof _projects_service__WEBPACK_IMPORTED_MODULE_6__["ProjectsService"] !== "undefined" && _projects_service__WEBPACK_IMPORTED_MODULE_6__["ProjectsService"]) === "function" ? _c : Object])
 ], ProjectsResolver);
 
 
@@ -771,40 +711,6 @@ var _a;
 let ProjectsService = class ProjectsService {
     constructor(projectRepository) {
         this.projectRepository = projectRepository;
-        // public async deleteProject(deleteProjectData: DeleteProjectInput): Promise<ProjectEntity> {
-        //   const projectIndex = this.projectRepository.findByCondition(
-        //     (project) => project.projectNum === deleteProjectData.projectNum
-        //   );
-        //   const project =  await this.projectRepository.remove()
-        //   const project = this.projectRepository[projectIndex];
-        //   this.projects.splice(projectIndex);
-        //   return project;
-        // }
-        // public async updateProject(updateProjectData: UpdateProjectInput): Promise<ProjectEntity> {
-        //   const project = this.projectRepository.findByCondition(
-        //     (project) => project.projectNum === updateProjectData.projectNum
-        //   );
-        //   await Object.assign(project, updateProjectData);
-        //   return project;
-        // }
-        // public async deleteProject(deleteProjectData: DeleteProjectInput): Promise<ProjectEntity> {
-        //   // const projectIndex = this.projectRepository.findByCondition(
-        //   //   (project) => project.projectNum === deleteProjectData.projectNum
-        //   // );
-        //   const deleteproject = new DeleteProjectInput
-        //   const project = await this.projectRepository.findOneById(DeleteProjectInput);
-        //   // this.projects.splice(projectIndex);
-        //   if (!project) throw new Error("Project not found!");
-        //   (await project).remove()
-        //   return project;
-        // }
-        // public async deleteProject(projectNum: number ): Promise<ProjectEntity> {
-        //   try{
-        //     const result: DeleteResult = await this.projectRepository.remove(projectNum);
-        //     if(result.affected && result.affected>0)
-        //       return new ProjectEntity()
-        //   }catch(error){throw new Error("Not Found")}}
-        this.projects = [];
     }
     create(createProjectInput) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
@@ -816,27 +722,6 @@ let ProjectsService = class ProjectsService {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             return yield this.projectRepository.findAll();
         });
-    }
-    // public createProject(createProjectData: CreateProjectInput): Project {
-    //   const project: Project = {
-    //     projectId: uuidv4(),
-    //     ...createProjectData,
-    //   };
-    //   this.projects.push(project);
-    //   return project;
-    // }
-    // public updateProject(updateProjectData: UpdateProjectInput): Project {
-    //   const project = this.projects.find(
-    //     (project) => project.projectId === updateProjectData.projectId
-    //   );
-    //   Object.assign(project, updateProjectData);
-    //   return project;
-    // }
-    getProject(getProjectArgs) {
-        return this.projects.find((project) => project.projectId === getProjectArgs.projectId);
-    }
-    getProjects(getProjectsArgs) {
-        return getProjectsArgs.projectIds.map((projectId) => this.getProject({ projectId }));
     }
 };
 ProjectsService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
