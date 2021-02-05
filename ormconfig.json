@@ -1,0 +1,24 @@
+{
+  "type": "mssql",
+  "host": "127.0.0.1",
+  "port": 1433,
+  "username": "sa",
+  "password": "Welcome@1",
+  "database": "democudodevdb",
+ "synchronize": false,
+ "logging": false,
+  "entities": [
+     "apps/ms-task/src/app/entities/**/*.ts"
+  ],
+  "migrations": [
+     "apps/ms-task/src/app/migration/**/*.ts"
+  ],
+  "subscribers": [
+     "apps/ms-task/src/app/subscriber/**/*.ts"
+  ],
+  "cli": {
+     "entitiesDir": "apps/ms-task/src/app/entity",
+     "migrationsDir": "apps/ms-task/src/app/migration",
+     "subscribersDir": "apps/ms-task/src/app/subscriber"
+  }
+}

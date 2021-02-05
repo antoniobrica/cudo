@@ -90,21 +90,17 @@
 /*!***************************************************!*\
   !*** ./apps/ms-project/src/app/app.controller.ts ***!
   \***************************************************/
-/*! exports provided: AppController */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppController", function() { return AppController; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app.service */ "./apps/ms-project/src/app/app.service.ts");
+
 var _a;
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AppController = void 0;
+const tslib_1 = __webpack_require__(/*! tslib */ "tslib");
+const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
+const app_service_1 = __webpack_require__(/*! ./app.service */ "./apps/ms-project/src/app/app.service.ts");
 let AppController = class AppController {
     constructor(appService) {
         this.appService = appService;
@@ -113,17 +109,17 @@ let AppController = class AppController {
         return this.appService.getData();
     }
 };
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Get"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", []),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", void 0)
+tslib_1.__decorate([
+    common_1.Get(),
+    tslib_1.__metadata("design:type", Function),
+    tslib_1.__metadata("design:paramtypes", []),
+    tslib_1.__metadata("design:returntype", void 0)
 ], AppController.prototype, "getData", null);
-AppController = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Controller"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_a = typeof _app_service__WEBPACK_IMPORTED_MODULE_2__["AppService"] !== "undefined" && _app_service__WEBPACK_IMPORTED_MODULE_2__["AppService"]) === "function" ? _a : Object])
+AppController = tslib_1.__decorate([
+    common_1.Controller(),
+    tslib_1.__metadata("design:paramtypes", [typeof (_a = typeof app_service_1.AppService !== "undefined" && app_service_1.AppService) === "function" ? _a : Object])
 ], AppController);
-
+exports.AppController = AppController;
 
 
 /***/ }),
@@ -132,37 +128,26 @@ AppController = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 /*!***********************************************!*\
   !*** ./apps/ms-project/src/app/app.module.ts ***!
   \***********************************************/
-/*! exports provided: AppModule */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppModule", function() { return AppModule; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nestjs/graphql */ "@nestjs/graphql");
-/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _nestjs_typeorm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @nestjs/typeorm */ "@nestjs/typeorm");
-/* harmony import */ var _nestjs_typeorm__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_nestjs_typeorm__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _config_typeorm_type_orm_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../config/typeorm/type-orm.service */ "./apps/ms-project/src/config/typeorm/type-orm.service.ts");
-/* harmony import */ var _app_controller__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./app.controller */ "./apps/ms-project/src/app/app.controller.ts");
-/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app.service */ "./apps/ms-project/src/app/app.service.ts");
-/* harmony import */ var _components_projects_projects_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/projects/projects.module */ "./apps/ms-project/src/app/components/projects/projects.module.ts");
 
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AppModule = void 0;
+const tslib_1 = __webpack_require__(/*! tslib */ "tslib");
+const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
+const graphql_1 = __webpack_require__(/*! @nestjs/graphql */ "@nestjs/graphql");
+const typeorm_1 = __webpack_require__(/*! @nestjs/typeorm */ "@nestjs/typeorm");
+const type_orm_service_1 = __webpack_require__(/*! ../config/typeorm/type-orm.service */ "./apps/ms-project/src/config/typeorm/type-orm.service.ts");
+const app_controller_1 = __webpack_require__(/*! ./app.controller */ "./apps/ms-project/src/app/app.controller.ts");
+const app_service_1 = __webpack_require__(/*! ./app.service */ "./apps/ms-project/src/app/app.service.ts");
+const projects_module_1 = __webpack_require__(/*! ./components/projects/projects.module */ "./apps/ms-project/src/app/components/projects/projects.module.ts");
 // import { I18nModule, I18nJsonParser } from 'nestjs-i18n';
 let AppModule = class AppModule {
 };
-AppModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Module"])({
+AppModule = tslib_1.__decorate([
+    common_1.Module({
         imports: [
             // I18nModule.forRoot({
             //   fallbackLanguage: 'en',
@@ -173,20 +158,20 @@ AppModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
             //     watch: true,
             //   },
             // }),
-            _nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["GraphQLModule"].forRoot({
+            graphql_1.GraphQLModule.forRoot({
                 context: ({ req, connection }) => connection ? { req: connection.context } : { req },
                 autoSchemaFile: true,
             }),
-            _components_projects_projects_module__WEBPACK_IMPORTED_MODULE_7__["ProjectsModule"],
-            _nestjs_typeorm__WEBPACK_IMPORTED_MODULE_3__["TypeOrmModule"].forRootAsync({
-                useClass: _config_typeorm_type_orm_service__WEBPACK_IMPORTED_MODULE_4__["TypeOrmService"],
+            projects_module_1.ProjectsModule,
+            typeorm_1.TypeOrmModule.forRootAsync({
+                useClass: type_orm_service_1.TypeOrmService,
             }),
         ],
-        controllers: [_app_controller__WEBPACK_IMPORTED_MODULE_5__["AppController"]],
-        providers: [_app_service__WEBPACK_IMPORTED_MODULE_6__["AppService"]],
+        controllers: [app_controller_1.AppController],
+        providers: [app_service_1.AppService],
     })
 ], AppModule);
-
+exports.AppModule = AppModule;
 
 
 /***/ }),
@@ -195,27 +180,24 @@ AppModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 /*!************************************************!*\
   !*** ./apps/ms-project/src/app/app.service.ts ***!
   \************************************************/
-/*! exports provided: AppService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppService", function() { return AppService; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
 
-
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AppService = void 0;
+const tslib_1 = __webpack_require__(/*! tslib */ "tslib");
+const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
 let AppService = class AppService {
     getData() {
         return { message: 'Welcome to ms-project!' };
     }
 };
-AppService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Injectable"])()
+AppService = tslib_1.__decorate([
+    common_1.Injectable()
 ], AppService);
-
+exports.AppService = AppService;
 
 
 /***/ }),
@@ -224,212 +206,104 @@ AppService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 /*!***************************************************************************************!*\
   !*** ./apps/ms-project/src/app/components/projects/dto/input/create-project.input.ts ***!
   \***************************************************************************************/
-/*! exports provided: CreateProjectInput */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CreateProjectInput", function() { return CreateProjectInput; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/graphql */ "@nestjs/graphql");
-/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var class_validator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! class-validator */ "class-validator");
-/* harmony import */ var class_validator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(class_validator__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! typeorm */ "typeorm");
-/* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(typeorm__WEBPACK_IMPORTED_MODULE_3__);
 
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CreateProjectInput = void 0;
+const tslib_1 = __webpack_require__(/*! tslib */ "tslib");
+const graphql_1 = __webpack_require__(/*! @nestjs/graphql */ "@nestjs/graphql");
+const class_validator_1 = __webpack_require__(/*! class-validator */ "class-validator");
+const typeorm_1 = __webpack_require__(/*! typeorm */ "typeorm");
 let CreateProjectInput = class CreateProjectInput {
 };
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
-    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["Length"])(1, 20),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_3__["Column"])({ type: "text", unique: true }),
-    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsNotEmpty"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_3__["PrimaryColumn"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+tslib_1.__decorate([
+    graphql_1.Field(),
+    class_validator_1.Length(1, 20),
+    typeorm_1.Column({ type: "text", unique: true }),
+    class_validator_1.IsNotEmpty(),
+    typeorm_1.PrimaryColumn(),
+    tslib_1.__metadata("design:type", String)
 ], CreateProjectInput.prototype, "projectName", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_3__["Column"])({ type: "int", unique: true }),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_3__["PrimaryColumn"])(),
-    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsNotEmpty"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
+tslib_1.__decorate([
+    graphql_1.Field(),
+    typeorm_1.Column({ type: "int", unique: true }),
+    typeorm_1.PrimaryColumn(),
+    class_validator_1.IsNotEmpty(),
+    tslib_1.__metadata("design:type", Number)
 ], CreateProjectInput.prototype, "projectNum", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ description: `Client Name`, deprecationReason: 'Optional While Updating' }),
-    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["Length"])(1, 10),
-    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsNotEmpty"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+tslib_1.__decorate([
+    graphql_1.Field({ description: `Client Name`, deprecationReason: 'Optional While Updating' }),
+    class_validator_1.Length(1, 10),
+    class_validator_1.IsNotEmpty(),
+    tslib_1.__metadata("design:type", String)
 ], CreateProjectInput.prototype, "client", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ nullable: true }),
-    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["Length"])(0, 10),
-    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+tslib_1.__decorate([
+    graphql_1.Field({ nullable: true }),
+    class_validator_1.Length(0, 10),
+    class_validator_1.IsOptional(),
+    tslib_1.__metadata("design:type", String)
 ], CreateProjectInput.prototype, "buildingType", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ nullable: true }),
-    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["Length"])(0, 10),
-    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+tslib_1.__decorate([
+    graphql_1.Field({ nullable: true }),
+    class_validator_1.Length(0, 10),
+    class_validator_1.IsOptional(),
+    tslib_1.__metadata("design:type", String)
 ], CreateProjectInput.prototype, "printingCom", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ nullable: true }),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_3__["Column"])(),
-    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+tslib_1.__decorate([
+    graphql_1.Field({ nullable: true }),
+    typeorm_1.Column(),
+    class_validator_1.IsOptional(),
+    tslib_1.__metadata("design:type", String)
 ], CreateProjectInput.prototype, "workType", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ nullable: true }),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_3__["Column"])(),
-    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
+tslib_1.__decorate([
+    graphql_1.Field({ nullable: true }),
+    typeorm_1.Column(),
+    class_validator_1.IsOptional(),
+    tslib_1.__metadata("design:type", Number)
 ], CreateProjectInput.prototype, "estCost", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ nullable: true }),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_3__["Column"])(),
-    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+tslib_1.__decorate([
+    graphql_1.Field({ nullable: true }),
+    typeorm_1.Column(),
+    class_validator_1.IsOptional(),
+    tslib_1.__metadata("design:type", String)
 ], CreateProjectInput.prototype, "adressLine1", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ nullable: true }),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_3__["Column"])(),
-    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+tslib_1.__decorate([
+    graphql_1.Field({ nullable: true }),
+    typeorm_1.Column(),
+    class_validator_1.IsOptional(),
+    tslib_1.__metadata("design:type", String)
 ], CreateProjectInput.prototype, "adressLine2", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ nullable: true }),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_3__["Column"])(),
-    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+tslib_1.__decorate([
+    graphql_1.Field({ nullable: true }),
+    typeorm_1.Column(),
+    class_validator_1.IsOptional(),
+    tslib_1.__metadata("design:type", String)
 ], CreateProjectInput.prototype, "city", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ nullable: true }),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_3__["Column"])(),
-    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+tslib_1.__decorate([
+    graphql_1.Field({ nullable: true }),
+    typeorm_1.Column(),
+    class_validator_1.IsOptional(),
+    tslib_1.__metadata("design:type", String)
 ], CreateProjectInput.prototype, "state", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ nullable: true }),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_3__["Column"])(),
-    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
+tslib_1.__decorate([
+    graphql_1.Field({ nullable: true }),
+    typeorm_1.Column(),
+    class_validator_1.IsOptional(),
+    tslib_1.__metadata("design:type", Number)
 ], CreateProjectInput.prototype, "zip", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ nullable: true }),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_3__["Column"])(),
-    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+tslib_1.__decorate([
+    graphql_1.Field({ nullable: true }),
+    typeorm_1.Column(),
+    class_validator_1.IsOptional(),
+    tslib_1.__metadata("design:type", String)
 ], CreateProjectInput.prototype, "country", void 0);
-CreateProjectInput = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["InputType"])()
+CreateProjectInput = tslib_1.__decorate([
+    graphql_1.InputType()
 ], CreateProjectInput);
-
-
-
-/***/ }),
-
-/***/ "./apps/ms-project/src/app/components/projects/entity/project.entity.ts":
-/*!******************************************************************************!*\
-  !*** ./apps/ms-project/src/app/components/projects/entity/project.entity.ts ***!
-  \******************************************************************************/
-/*! exports provided: ProjectEntity */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProjectEntity", function() { return ProjectEntity; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! typeorm */ "typeorm");
-/* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(typeorm__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nestjs/graphql */ "@nestjs/graphql");
-/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__);
-
-
-
-let ProjectEntity = class ProjectEntity {
-};
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ unique: true }),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["PrimaryColumn"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "projectId", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ unique: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "projectName", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ unique: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
-], ProjectEntity.prototype, "projectNum", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "client", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "buildingType", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "printingCom", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "workType", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
-], ProjectEntity.prototype, "estCost", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "adressLine1", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "adressLine2", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "city", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "state", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
-], ProjectEntity.prototype, "zip", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "country", void 0);
-ProjectEntity = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["ObjectType"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Entity"])({ name: 'projects' })
-], ProjectEntity);
-
+exports.CreateProjectInput = CreateProjectInput;
 
 
 /***/ }),
@@ -438,12 +312,12 @@ ProjectEntity = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 /*!***********************************************************************************************!*\
   !*** ./apps/ms-project/src/app/components/projects/interface/project.repository.interface.ts ***!
   \***********************************************************************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
 
+Object.defineProperty(exports, "__esModule", { value: true });
 
 
 /***/ }),
@@ -452,80 +326,77 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************************************!*\
   !*** ./apps/ms-project/src/app/components/projects/models/project.ts ***!
   \***********************************************************************/
-/*! exports provided: Project */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Project", function() { return Project; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/graphql */ "@nestjs/graphql");
-/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__);
 
-
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Project = void 0;
+const tslib_1 = __webpack_require__(/*! tslib */ "tslib");
+const graphql_1 = __webpack_require__(/*! @nestjs/graphql */ "@nestjs/graphql");
 let Project = class Project {
 };
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+tslib_1.__decorate([
+    graphql_1.Field(),
+    tslib_1.__metadata("design:type", String)
 ], Project.prototype, "projectId", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+tslib_1.__decorate([
+    graphql_1.Field(),
+    tslib_1.__metadata("design:type", String)
 ], Project.prototype, "projectName", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(() => _nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Int"]),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
+tslib_1.__decorate([
+    graphql_1.Field(() => graphql_1.Int),
+    tslib_1.__metadata("design:type", Number)
 ], Project.prototype, "projectNum", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+tslib_1.__decorate([
+    graphql_1.Field(),
+    tslib_1.__metadata("design:type", String)
 ], Project.prototype, "client", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+tslib_1.__decorate([
+    graphql_1.Field({ nullable: true }),
+    tslib_1.__metadata("design:type", String)
 ], Project.prototype, "buildingType", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+tslib_1.__decorate([
+    graphql_1.Field({ nullable: true }),
+    tslib_1.__metadata("design:type", String)
 ], Project.prototype, "printingCom", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+tslib_1.__decorate([
+    graphql_1.Field({ nullable: true }),
+    tslib_1.__metadata("design:type", String)
 ], Project.prototype, "workType", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
+tslib_1.__decorate([
+    graphql_1.Field({ nullable: true }),
+    tslib_1.__metadata("design:type", Number)
 ], Project.prototype, "estCost", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+tslib_1.__decorate([
+    graphql_1.Field({ nullable: true }),
+    tslib_1.__metadata("design:type", String)
 ], Project.prototype, "adressLine1", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+tslib_1.__decorate([
+    graphql_1.Field({ nullable: true }),
+    tslib_1.__metadata("design:type", String)
 ], Project.prototype, "adressLine2", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+tslib_1.__decorate([
+    graphql_1.Field({ nullable: true }),
+    tslib_1.__metadata("design:type", String)
 ], Project.prototype, "city", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+tslib_1.__decorate([
+    graphql_1.Field({ nullable: true }),
+    tslib_1.__metadata("design:type", String)
 ], Project.prototype, "state", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
+tslib_1.__decorate([
+    graphql_1.Field({ nullable: true }),
+    tslib_1.__metadata("design:type", Number)
 ], Project.prototype, "zip", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+tslib_1.__decorate([
+    graphql_1.Field({ nullable: true }),
+    tslib_1.__metadata("design:type", String)
 ], Project.prototype, "country", void 0);
-Project = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["ObjectType"])()
+Project = tslib_1.__decorate([
+    graphql_1.ObjectType()
 ], Project);
-
+exports.Project = Project;
 
 
 /***/ }),
@@ -534,41 +405,32 @@ Project = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 /*!********************************************************************************************************!*\
   !*** ./apps/ms-project/src/app/components/projects/projects-repository/projects-repository.service.ts ***!
   \********************************************************************************************************/
-/*! exports provided: ProjectsRepositoryService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProjectsRepositoryService", function() { return ProjectsRepositoryService; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _nestjs_typeorm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nestjs/typeorm */ "@nestjs/typeorm");
-/* harmony import */ var _nestjs_typeorm__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nestjs_typeorm__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! typeorm */ "typeorm");
-/* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(typeorm__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _repositories_base_base_abstract_repository__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../repositories/base/base-abstract-repository */ "./apps/ms-project/src/app/repositories/base/base-abstract-repository.ts");
-/* harmony import */ var _entity_project_entity__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../entity/project.entity */ "./apps/ms-project/src/app/components/projects/entity/project.entity.ts");
+
 var _a;
-
-
-
-
-
-
-let ProjectsRepositoryService = class ProjectsRepositoryService extends _repositories_base_base_abstract_repository__WEBPACK_IMPORTED_MODULE_4__["BaseAbstractRepository"] {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ProjectsRepositoryService = void 0;
+const tslib_1 = __webpack_require__(/*! tslib */ "tslib");
+const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
+const typeorm_1 = __webpack_require__(/*! @nestjs/typeorm */ "@nestjs/typeorm");
+const typeorm_2 = __webpack_require__(/*! typeorm */ "typeorm");
+const project_entity_1 = __webpack_require__(/*! ../../../entities/project.entity */ "./apps/ms-project/src/app/entities/project.entity.ts");
+const base_abstract_repository_1 = __webpack_require__(/*! ../../../repositories/base/base-abstract-repository */ "./apps/ms-project/src/app/repositories/base/base-abstract-repository.ts");
+let ProjectsRepositoryService = class ProjectsRepositoryService extends base_abstract_repository_1.BaseAbstractRepository {
     constructor(projectRepository) {
         super(projectRepository);
         this.projectRepository = projectRepository;
     }
 };
-ProjectsRepositoryService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_typeorm__WEBPACK_IMPORTED_MODULE_2__["InjectRepository"])(_entity_project_entity__WEBPACK_IMPORTED_MODULE_5__["ProjectEntity"])),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_a = typeof typeorm__WEBPACK_IMPORTED_MODULE_3__["Repository"] !== "undefined" && typeorm__WEBPACK_IMPORTED_MODULE_3__["Repository"]) === "function" ? _a : Object])
+ProjectsRepositoryService = tslib_1.__decorate([
+    common_1.Injectable(),
+    tslib_1.__param(0, typeorm_1.InjectRepository(project_entity_1.ProjectEntity)),
+    tslib_1.__metadata("design:paramtypes", [typeof (_a = typeof typeorm_2.Repository !== "undefined" && typeorm_2.Repository) === "function" ? _a : Object])
 ], ProjectsRepositoryService);
-
+exports.ProjectsRepositoryService = ProjectsRepositoryService;
 
 
 /***/ }),
@@ -577,45 +439,36 @@ ProjectsRepositoryService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorat
 /*!************************************************************************!*\
   !*** ./apps/ms-project/src/app/components/projects/projects.module.ts ***!
   \************************************************************************/
-/*! exports provided: ProjectsModule */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProjectsModule", function() { return ProjectsModule; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _projects_resolver__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./projects.resolver */ "./apps/ms-project/src/app/components/projects/projects.resolver.ts");
-/* harmony import */ var _projects_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./projects.service */ "./apps/ms-project/src/app/components/projects/projects.service.ts");
-/* harmony import */ var _projects_repository_projects_repository_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./projects-repository/projects-repository.service */ "./apps/ms-project/src/app/components/projects/projects-repository/projects-repository.service.ts");
-/* harmony import */ var _nestjs_typeorm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @nestjs/typeorm */ "@nestjs/typeorm");
-/* harmony import */ var _nestjs_typeorm__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_nestjs_typeorm__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _entity_project_entity__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./entity/project.entity */ "./apps/ms-project/src/app/components/projects/entity/project.entity.ts");
 
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ProjectsModule = void 0;
+const tslib_1 = __webpack_require__(/*! tslib */ "tslib");
+const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
+const projects_resolver_1 = __webpack_require__(/*! ./projects.resolver */ "./apps/ms-project/src/app/components/projects/projects.resolver.ts");
+const projects_service_1 = __webpack_require__(/*! ./projects.service */ "./apps/ms-project/src/app/components/projects/projects.service.ts");
+const projects_repository_service_1 = __webpack_require__(/*! ./projects-repository/projects-repository.service */ "./apps/ms-project/src/app/components/projects/projects-repository/projects-repository.service.ts");
+const typeorm_1 = __webpack_require__(/*! @nestjs/typeorm */ "@nestjs/typeorm");
+const project_entity_1 = __webpack_require__(/*! ../../entities/project.entity */ "./apps/ms-project/src/app/entities/project.entity.ts");
 let ProjectsModule = class ProjectsModule {
 };
-ProjectsModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Module"])({
-        imports: [_nestjs_typeorm__WEBPACK_IMPORTED_MODULE_5__["TypeOrmModule"].forFeature([_entity_project_entity__WEBPACK_IMPORTED_MODULE_6__["ProjectEntity"]])],
-        providers: [_projects_resolver__WEBPACK_IMPORTED_MODULE_2__["ProjectsResolver"], {
+ProjectsModule = tslib_1.__decorate([
+    common_1.Module({
+        imports: [typeorm_1.TypeOrmModule.forFeature([project_entity_1.ProjectEntity])],
+        providers: [projects_resolver_1.ProjectsResolver, {
                 provide: 'ProjectRepositoryInterface',
-                useClass: _projects_repository_projects_repository_service__WEBPACK_IMPORTED_MODULE_4__["ProjectsRepositoryService"],
+                useClass: projects_repository_service_1.ProjectsRepositoryService,
             },
             {
                 provide: 'ProjectServiceInterface',
-                useClass: _projects_service__WEBPACK_IMPORTED_MODULE_3__["ProjectsService"],
+                useClass: projects_service_1.ProjectsService,
             }],
     })
 ], ProjectsModule);
-
+exports.ProjectsModule = ProjectsModule;
 
 
 /***/ }),
@@ -624,64 +477,55 @@ ProjectsModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 /*!**************************************************************************!*\
   !*** ./apps/ms-project/src/app/components/projects/projects.resolver.ts ***!
   \**************************************************************************/
-/*! exports provided: ProjectsResolver */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProjectsResolver", function() { return ProjectsResolver; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nestjs/graphql */ "@nestjs/graphql");
-/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _dto_input_create_project_input__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dto/input/create-project.input */ "./apps/ms-project/src/app/components/projects/dto/input/create-project.input.ts");
-/* harmony import */ var _entity_project_entity__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./entity/project.entity */ "./apps/ms-project/src/app/components/projects/entity/project.entity.ts");
-/* harmony import */ var _models_project__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./models/project */ "./apps/ms-project/src/app/components/projects/models/project.ts");
-/* harmony import */ var _projects_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./projects.service */ "./apps/ms-project/src/app/components/projects/projects.service.ts");
+
 var _a, _b, _c;
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ProjectsResolver = void 0;
+const tslib_1 = __webpack_require__(/*! tslib */ "tslib");
+const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
+const graphql_1 = __webpack_require__(/*! @nestjs/graphql */ "@nestjs/graphql");
+const project_entity_1 = __webpack_require__(/*! ../../entities/project.entity */ "./apps/ms-project/src/app/entities/project.entity.ts");
+const create_project_input_1 = __webpack_require__(/*! ./dto/input/create-project.input */ "./apps/ms-project/src/app/components/projects/dto/input/create-project.input.ts");
+const project_1 = __webpack_require__(/*! ./models/project */ "./apps/ms-project/src/app/components/projects/models/project.ts");
+const projects_service_1 = __webpack_require__(/*! ./projects.service */ "./apps/ms-project/src/app/components/projects/projects.service.ts");
 let ProjectsResolver = class ProjectsResolver {
     constructor(projectsService) {
         this.projectsService = projectsService;
     }
     getProjects() {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return yield this.projectsService.findAll();
         });
     }
-    createProjectDatabase(createProjectData) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            return this.projectsService.create(createProjectData);
+    createNewProject(newProjectInputObject) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return this.projectsService.create(newProjectInputObject);
         });
     }
 };
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Query"])(() => [_entity_project_entity__WEBPACK_IMPORTED_MODULE_4__["ProjectEntity"]], { nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", []),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", typeof (_a = typeof Promise !== "undefined" && Promise) === "function" ? _a : Object)
+tslib_1.__decorate([
+    graphql_1.Query(() => [project_entity_1.ProjectEntity], { nullable: true }),
+    tslib_1.__metadata("design:type", Function),
+    tslib_1.__metadata("design:paramtypes", []),
+    tslib_1.__metadata("design:returntype", typeof (_a = typeof Promise !== "undefined" && Promise) === "function" ? _a : Object)
 ], ProjectsResolver.prototype, "getProjects", null);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Mutation"])(() => _models_project__WEBPACK_IMPORTED_MODULE_5__["Project"]),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Args"])('createProjectData')),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_b = typeof _dto_input_create_project_input__WEBPACK_IMPORTED_MODULE_3__["CreateProjectInput"] !== "undefined" && _dto_input_create_project_input__WEBPACK_IMPORTED_MODULE_3__["CreateProjectInput"]) === "function" ? _b : Object]),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", Promise)
-], ProjectsResolver.prototype, "createProjectDatabase", null);
-ProjectsResolver = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Resolver"])(() => _models_project__WEBPACK_IMPORTED_MODULE_5__["Project"]),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Inject"])('ProjectServiceInterface')),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_c = typeof _projects_service__WEBPACK_IMPORTED_MODULE_6__["ProjectsService"] !== "undefined" && _projects_service__WEBPACK_IMPORTED_MODULE_6__["ProjectsService"]) === "function" ? _c : Object])
+tslib_1.__decorate([
+    graphql_1.Mutation(() => project_1.Project),
+    tslib_1.__param(0, graphql_1.Args('newProjectInputObject')),
+    tslib_1.__metadata("design:type", Function),
+    tslib_1.__metadata("design:paramtypes", [typeof (_b = typeof create_project_input_1.CreateProjectInput !== "undefined" && create_project_input_1.CreateProjectInput) === "function" ? _b : Object]),
+    tslib_1.__metadata("design:returntype", Promise)
+], ProjectsResolver.prototype, "createNewProject", null);
+ProjectsResolver = tslib_1.__decorate([
+    graphql_1.Resolver(() => project_1.Project),
+    tslib_1.__param(0, common_1.Inject('ProjectServiceInterface')),
+    tslib_1.__metadata("design:paramtypes", [typeof (_c = typeof projects_service_1.ProjectsService !== "undefined" && projects_service_1.ProjectsService) === "function" ? _c : Object])
 ], ProjectsResolver);
-
+exports.ProjectsResolver = ProjectsResolver;
 
 
 /***/ }),
@@ -690,46 +534,136 @@ ProjectsResolver = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 /*!*************************************************************************!*\
   !*** ./apps/ms-project/src/app/components/projects/projects.service.ts ***!
   \*************************************************************************/
-/*! exports provided: ProjectsService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProjectsService", function() { return ProjectsService; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! uuid */ "uuid");
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _interface_project_repository_interface__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./interface/project.repository.interface */ "./apps/ms-project/src/app/components/projects/interface/project.repository.interface.ts");
+
 var _a;
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ProjectsService = void 0;
+const tslib_1 = __webpack_require__(/*! tslib */ "tslib");
+const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
+const uuid_1 = __webpack_require__(/*! uuid */ "uuid");
+const project_repository_interface_1 = __webpack_require__(/*! ./interface/project.repository.interface */ "./apps/ms-project/src/app/components/projects/interface/project.repository.interface.ts");
 let ProjectsService = class ProjectsService {
     constructor(projectRepository) {
         this.projectRepository = projectRepository;
     }
     create(createProjectInput) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const projectEntity = Object.assign({ projectId: Object(uuid__WEBPACK_IMPORTED_MODULE_2__["v4"])() }, createProjectInput);
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            const projectEntity = Object.assign({ projectId: uuid_1.v4() }, createProjectInput);
             return yield this.projectRepository.create(projectEntity);
         });
     }
     findAll() {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return yield this.projectRepository.findAll();
         });
     }
 };
-ProjectsService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Inject"])('ProjectRepositoryInterface')),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_a = typeof _interface_project_repository_interface__WEBPACK_IMPORTED_MODULE_3__["ProjectRepositoryInterface"] !== "undefined" && _interface_project_repository_interface__WEBPACK_IMPORTED_MODULE_3__["ProjectRepositoryInterface"]) === "function" ? _a : Object])
+ProjectsService = tslib_1.__decorate([
+    common_1.Injectable(),
+    tslib_1.__param(0, common_1.Inject('ProjectRepositoryInterface')),
+    tslib_1.__metadata("design:paramtypes", [typeof (_a = typeof project_repository_interface_1.ProjectRepositoryInterface !== "undefined" && project_repository_interface_1.ProjectRepositoryInterface) === "function" ? _a : Object])
 ], ProjectsService);
+exports.ProjectsService = ProjectsService;
 
+
+/***/ }),
+
+/***/ "./apps/ms-project/src/app/entities/project.entity.ts":
+/*!************************************************************!*\
+  !*** ./apps/ms-project/src/app/entities/project.entity.ts ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ProjectEntity = void 0;
+const tslib_1 = __webpack_require__(/*! tslib */ "tslib");
+const typeorm_1 = __webpack_require__(/*! typeorm */ "typeorm");
+const graphql_1 = __webpack_require__(/*! @nestjs/graphql */ "@nestjs/graphql");
+let ProjectEntity = class ProjectEntity {
+};
+tslib_1.__decorate([
+    graphql_1.Field(),
+    typeorm_1.Column({ unique: true }),
+    typeorm_1.PrimaryColumn(),
+    tslib_1.__metadata("design:type", String)
+], ProjectEntity.prototype, "projectId", void 0);
+tslib_1.__decorate([
+    graphql_1.Field(),
+    typeorm_1.Column({ unique: true }),
+    tslib_1.__metadata("design:type", String)
+], ProjectEntity.prototype, "projectName", void 0);
+tslib_1.__decorate([
+    graphql_1.Field(),
+    typeorm_1.Column({ unique: true }),
+    tslib_1.__metadata("design:type", Number)
+], ProjectEntity.prototype, "projectNum", void 0);
+tslib_1.__decorate([
+    graphql_1.Field(),
+    typeorm_1.Column(),
+    tslib_1.__metadata("design:type", String)
+], ProjectEntity.prototype, "client", void 0);
+tslib_1.__decorate([
+    graphql_1.Field(),
+    typeorm_1.Column({ nullable: true }),
+    tslib_1.__metadata("design:type", String)
+], ProjectEntity.prototype, "buildingType", void 0);
+tslib_1.__decorate([
+    graphql_1.Field(),
+    typeorm_1.Column({ nullable: true }),
+    tslib_1.__metadata("design:type", String)
+], ProjectEntity.prototype, "printingCom", void 0);
+tslib_1.__decorate([
+    graphql_1.Field(),
+    typeorm_1.Column({ nullable: true }),
+    tslib_1.__metadata("design:type", String)
+], ProjectEntity.prototype, "workType", void 0);
+tslib_1.__decorate([
+    graphql_1.Field(),
+    typeorm_1.Column({ nullable: true }),
+    tslib_1.__metadata("design:type", Number)
+], ProjectEntity.prototype, "estCost", void 0);
+tslib_1.__decorate([
+    graphql_1.Field(),
+    typeorm_1.Column({ nullable: true }),
+    tslib_1.__metadata("design:type", String)
+], ProjectEntity.prototype, "adressLine1", void 0);
+tslib_1.__decorate([
+    graphql_1.Field(),
+    typeorm_1.Column({ nullable: true }),
+    tslib_1.__metadata("design:type", String)
+], ProjectEntity.prototype, "adressLine2", void 0);
+tslib_1.__decorate([
+    graphql_1.Field(),
+    typeorm_1.Column({ nullable: true }),
+    tslib_1.__metadata("design:type", String)
+], ProjectEntity.prototype, "city", void 0);
+tslib_1.__decorate([
+    graphql_1.Field(),
+    typeorm_1.Column({ nullable: true }),
+    tslib_1.__metadata("design:type", String)
+], ProjectEntity.prototype, "state", void 0);
+tslib_1.__decorate([
+    graphql_1.Field(),
+    typeorm_1.Column({ nullable: true }),
+    tslib_1.__metadata("design:type", Number)
+], ProjectEntity.prototype, "zip", void 0);
+tslib_1.__decorate([
+    graphql_1.Field(),
+    typeorm_1.Column({ nullable: true }),
+    tslib_1.__metadata("design:type", String)
+], ProjectEntity.prototype, "country", void 0);
+ProjectEntity = tslib_1.__decorate([
+    graphql_1.ObjectType(),
+    typeorm_1.Entity({ name: 'projects' })
+], ProjectEntity);
+exports.ProjectEntity = ProjectEntity;
 
 
 /***/ }),
@@ -738,50 +672,50 @@ ProjectsService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 /*!*******************************************************************************!*\
   !*** ./apps/ms-project/src/app/repositories/base/base-abstract-repository.ts ***!
   \*******************************************************************************/
-/*! exports provided: BaseAbstractRepository */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BaseAbstractRepository", function() { return BaseAbstractRepository; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
 
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.BaseAbstractRepository = void 0;
+const tslib_1 = __webpack_require__(/*! tslib */ "tslib");
 class BaseAbstractRepository {
     constructor(entity) {
         this.entity = entity;
     }
     create(data) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return yield this.entity.save(data);
         });
     }
     findOneById(id) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return yield this.entity.findOne(id);
         });
     }
     findByCondition(filterCondition) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return yield this.entity.findOne({ where: filterCondition });
         });
     }
     findWithRelations(relations) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return yield this.entity.find(relations);
         });
     }
     findAll() {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return yield this.entity.find();
         });
     }
     remove(id) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return yield this.entity.delete(id);
         });
     }
 }
+exports.BaseAbstractRepository = BaseAbstractRepository;
 
 
 /***/ }),
@@ -790,12 +724,13 @@ class BaseAbstractRepository {
 /*!*******************************************!*\
   !*** ./apps/ms-project/src/config.orm.ts ***!
   \*******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
+
 // import { NODE_ENV, MONGO_URL, MONGO_PORT, MONGO_DB } from '@environments'
+Object.defineProperty(exports, "__esModule", { value: true });
 const orm = {
     development: {
         type: process.env.DATABASE_TYPE,
@@ -819,7 +754,7 @@ const orm = {
         url: process.env.DATABASE_HOST
     }
 };
-/* harmony default export */ __webpack_exports__["default"] = (orm["development"]);
+exports.default = orm["development"];
 
 
 /***/ }),
@@ -828,44 +763,34 @@ const orm = {
 /*!****************************************************************!*\
   !*** ./apps/ms-project/src/config/typeorm/type-orm.service.ts ***!
   \****************************************************************/
-/*! exports provided: TypeOrmService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TypeOrmService", function() { return TypeOrmService; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! typeorm */ "typeorm");
-/* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(typeorm__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _config_orm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../config.orm */ "./apps/ms-project/src/config.orm.ts");
 
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.TypeOrmService = void 0;
+const tslib_1 = __webpack_require__(/*! tslib */ "tslib");
+const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
+const typeorm_1 = __webpack_require__(/*! typeorm */ "typeorm");
+const config_orm_1 = __webpack_require__(/*! ../../config.orm */ "./apps/ms-project/src/config.orm.ts");
 // import { logger } from '../../common'
 let TypeOrmService = class TypeOrmService {
     createTypeOrmOptions() {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const options = Object.assign(Object.assign({}, _config_orm__WEBPACK_IMPORTED_MODULE_3__["default"]), { entities: Object(typeorm__WEBPACK_IMPORTED_MODULE_2__["getMetadataArgsStorage"])().tables.map(tbl => tbl.target), 
-                // migrations: ['src/modules/**/migration/*.ts'],
-                // subscribers: ['src/modules/**/subscriber/*.ts'],
-                // cli: {
-                // 	entitiesDir: 'src/modules/**/entity',
-                // 	migrationsDir: 'src/modules/**/migration',
-                // 	subscribersDir: 'src/modules/**/subscriber'
-                // },
-                synchronize: true, autoLoadEntities: true, useNewUrlParser: true, useUnifiedTopology: true, keepConnectionAlive: true, logging: true });
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            const options = Object.assign(Object.assign({}, config_orm_1.default), { entities: typeorm_1.getMetadataArgsStorage().tables.map(tbl => tbl.target), migrations: ["src/app/migration/**/*.ts"], subscribers: ["src/app/subscriber/**/*.ts"], cli: {
+                    entitiesDir: "src/app/entity",
+                    migrationsDir: "src/app/migration",
+                    subscribersDir: "src/app/subscriber"
+                }, synchronize: false, autoLoadEntities: true, useNewUrlParser: true, useUnifiedTopology: true, keepConnectionAlive: true, logging: true });
             return options;
         });
     }
 };
-TypeOrmService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Injectable"])()
+TypeOrmService = tslib_1.__decorate([
+    common_1.Injectable()
 ], TypeOrmService);
-
+exports.TypeOrmService = TypeOrmService;
 
 
 /***/ }),
@@ -874,35 +799,29 @@ TypeOrmService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 /*!*************************************!*\
   !*** ./apps/ms-project/src/main.ts ***!
   \*************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _nestjs_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nestjs/core */ "@nestjs/core");
-/* harmony import */ var _nestjs_core__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nestjs_core__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _app_app_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app/app.module */ "./apps/ms-project/src/app/app.module.ts");
+
 /**
  * This is not a production server yet!
  * This is only a minimal backend to get started.
  */
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = __webpack_require__(/*! tslib */ "tslib");
+const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
+const core_1 = __webpack_require__(/*! @nestjs/core */ "@nestjs/core");
+const app_module_1 = __webpack_require__(/*! ./app/app.module */ "./apps/ms-project/src/app/app.module.ts");
 function bootstrap() {
-    return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-        const app = yield _nestjs_core__WEBPACK_IMPORTED_MODULE_2__["NestFactory"].create(_app_app_module__WEBPACK_IMPORTED_MODULE_3__["AppModule"]);
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
+        const app = yield core_1.NestFactory.create(app_module_1.AppModule);
         const globalPrefix = 'api';
         app.setGlobalPrefix(globalPrefix);
-        app.useGlobalPipes(new _nestjs_common__WEBPACK_IMPORTED_MODULE_1__["ValidationPipe"]());
+        app.useGlobalPipes(new common_1.ValidationPipe());
         const port = process.env.PORT || 3333;
         yield app.listen(port, () => {
-            _nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Logger"].log('Listening at http://localhost:' + port + '/' + globalPrefix);
+            common_1.Logger.log('Listening at http://localhost:' + port + '/' + globalPrefix);
         });
     });
 }
@@ -918,7 +837,7 @@ bootstrap();
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/dishant/Project%20Management/apps/ms-project/src/main.ts */"./apps/ms-project/src/main.ts");
+module.exports = __webpack_require__(/*! C:\Users\AshutoshMishra\Desktop\ProjectManagementTool\Development\azureDev\ashutosh\Project Management\apps\ms-project\src\main.ts */"./apps/ms-project/src/main.ts");
 
 
 /***/ }),

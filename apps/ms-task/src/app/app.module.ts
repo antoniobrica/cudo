@@ -7,7 +7,8 @@ import {
   TypeOrmService,
 } from '../config/typeorm/type-orm.service';
 import { TaskModule } from './task/task.module';
-import { UserModule } from './components/user/user.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ComponentsModule } from './components/components.module';
 
 @Module({
   imports: [
@@ -15,9 +16,13 @@ import { UserModule } from './components/user/user.module';
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmService,
     }),
-    UserModule,
+    GraphQLModule.forRoot({
+      context: ({ req, connection }) => connection ? { req: connection.context } : { req },
+      autoSchemaFile: true,
+    }),
+    ComponentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

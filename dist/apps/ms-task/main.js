@@ -148,7 +148,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./app.service */ "./apps/ms-task/src/app/app.service.ts");
 /* harmony import */ var _config_typeorm_type_orm_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../config/typeorm/type-orm.service */ "./apps/ms-task/src/config/typeorm/type-orm.service.ts");
 /* harmony import */ var _task_task_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./task/task.module */ "./apps/ms-task/src/app/task/task.module.ts");
-/* harmony import */ var _components_user_user_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/user/user.module */ "./apps/ms-task/src/app/components/user/user.module.ts");
+/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @nestjs/graphql */ "@nestjs/graphql");
+/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _components_components_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/components.module */ "./apps/ms-task/src/app/components/components.module.ts");
+
 
 
 
@@ -166,7 +169,11 @@ AppModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
             _nestjs_typeorm__WEBPACK_IMPORTED_MODULE_2__["TypeOrmModule"].forRootAsync({
                 useClass: _config_typeorm_type_orm_service__WEBPACK_IMPORTED_MODULE_5__["TypeOrmService"],
             }),
-            _components_user_user_module__WEBPACK_IMPORTED_MODULE_7__["UserModule"],
+            _nestjs_graphql__WEBPACK_IMPORTED_MODULE_7__["GraphQLModule"].forRoot({
+                context: ({ req, connection }) => connection ? { req: connection.context } : { req },
+                autoSchemaFile: true,
+            }),
+            _components_components_module__WEBPACK_IMPORTED_MODULE_8__["ComponentsModule"],
         ],
         controllers: [_app_controller__WEBPACK_IMPORTED_MODULE_3__["AppController"]],
         providers: [_app_service__WEBPACK_IMPORTED_MODULE_4__["AppService"]],
@@ -206,272 +213,597 @@ AppService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 /***/ }),
 
-/***/ "./apps/ms-task/src/app/components/user/dto/create-user.dto.ts":
-/*!*********************************************************************!*\
-  !*** ./apps/ms-task/src/app/components/user/dto/create-user.dto.ts ***!
-  \*********************************************************************/
-/*! exports provided: CreateUserDto */
+/***/ "./apps/ms-task/src/app/components/components.module.ts":
+/*!**************************************************************!*\
+  !*** ./apps/ms-task/src/app/components/components.module.ts ***!
+  \**************************************************************/
+/*! exports provided: ComponentsModule */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CreateUserDto", function() { return CreateUserDto; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var class_validator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! class-validator */ "class-validator");
-/* harmony import */ var class_validator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(class_validator__WEBPACK_IMPORTED_MODULE_1__);
-
-
-class CreateUserDto {
-}
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(class_validator__WEBPACK_IMPORTED_MODULE_1__["IsNotEmpty"])(),
-    Object(class_validator__WEBPACK_IMPORTED_MODULE_1__["IsEmail"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], CreateUserDto.prototype, "email", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(class_validator__WEBPACK_IMPORTED_MODULE_1__["IsNotEmpty"])(),
-    Object(class_validator__WEBPACK_IMPORTED_MODULE_1__["MinLength"])(8),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], CreateUserDto.prototype, "password", void 0);
-
-
-/***/ }),
-
-/***/ "./apps/ms-task/src/app/components/user/entity/user.entity.ts":
-/*!********************************************************************!*\
-  !*** ./apps/ms-task/src/app/components/user/entity/user.entity.ts ***!
-  \********************************************************************/
-/*! exports provided: User */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "User", function() { return User; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! typeorm */ "typeorm");
-/* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(typeorm__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var bcrypt__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! bcrypt */ "bcrypt");
-/* harmony import */ var bcrypt__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(bcrypt__WEBPACK_IMPORTED_MODULE_2__);
-
-
-
-let User = class User {
-    hashPassword() {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            this.password = yield Object(bcrypt__WEBPACK_IMPORTED_MODULE_2__["hashSync"])(this.password, Object(bcrypt__WEBPACK_IMPORTED_MODULE_2__["genSaltSync"])(10));
-        });
-    }
-};
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["ObjectIdColumn"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
-], User.prototype, "id", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({
-        type: 'string',
-        unique: true,
-    }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], User.prototype, "email", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({
-        type: 'string',
-    }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], User.prototype, "password", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({
-        type: 'date',
-    }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Object)
-], User.prototype, "createdAt", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({
-        type: 'date',
-    }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Object)
-], User.prototype, "updatedAt", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["BeforeInsert"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", []),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", Promise)
-], User.prototype, "hashPassword", null);
-User = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Entity"])({ name: 'users' })
-], User);
-
-
-
-/***/ }),
-
-/***/ "./apps/ms-task/src/app/components/user/interface/user.repository.interface.ts":
-/*!*************************************************************************************!*\
-  !*** ./apps/ms-task/src/app/components/user/interface/user.repository.interface.ts ***!
-  \*************************************************************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-
-
-/***/ }),
-
-/***/ "./apps/ms-task/src/app/components/user/interface/user.service.interface.ts":
-/*!**********************************************************************************!*\
-  !*** ./apps/ms-task/src/app/components/user/interface/user.service.interface.ts ***!
-  \**********************************************************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-
-
-/***/ }),
-
-/***/ "./apps/ms-task/src/app/components/user/user.controller.ts":
-/*!*****************************************************************!*\
-  !*** ./apps/ms-task/src/app/components/user/user.controller.ts ***!
-  \*****************************************************************/
-/*! exports provided: UserController */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserController", function() { return UserController; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ComponentsModule", function() { return ComponentsModule; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _dto_create_user_dto__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dto/create-user.dto */ "./apps/ms-task/src/app/components/user/dto/create-user.dto.ts");
-/* harmony import */ var _interface_user_service_interface__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./interface/user.service.interface */ "./apps/ms-task/src/app/components/user/interface/user.service.interface.ts");
-var _a, _b, _c;
+/* harmony import */ var _project_tasks_project_tasks_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./project-tasks/project-tasks.module */ "./apps/ms-task/src/app/components/project-tasks/project-tasks.module.ts");
 
 
 
-
-let UserController = class UserController {
-    constructor(userService) {
-        this.userService = userService;
-    }
-    create(userDto) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            return this.userService.create(userDto);
-        });
-    }
+let ComponentsModule = class ComponentsModule {
 };
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Post"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Body"])()),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_a = typeof _dto_create_user_dto__WEBPACK_IMPORTED_MODULE_2__["CreateUserDto"] !== "undefined" && _dto_create_user_dto__WEBPACK_IMPORTED_MODULE_2__["CreateUserDto"]) === "function" ? _a : Object]),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", typeof (_b = typeof Promise !== "undefined" && Promise) === "function" ? _b : Object)
-], UserController.prototype, "create", null);
-UserController = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Controller"])('users'),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Inject"])('UserServiceInterface')),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_c = typeof _interface_user_service_interface__WEBPACK_IMPORTED_MODULE_3__["UserServiceInterface"] !== "undefined" && _interface_user_service_interface__WEBPACK_IMPORTED_MODULE_3__["UserServiceInterface"]) === "function" ? _c : Object])
-], UserController);
+ComponentsModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Module"])({
+        imports: [_project_tasks_project_tasks_module__WEBPACK_IMPORTED_MODULE_2__["ProjectTasksModule"]],
+        providers: []
+    })
+], ComponentsModule);
 
 
 
 /***/ }),
 
-/***/ "./apps/ms-task/src/app/components/user/user.module.ts":
-/*!*************************************************************!*\
-  !*** ./apps/ms-task/src/app/components/user/user.module.ts ***!
-  \*************************************************************/
-/*! exports provided: UserModule */
+/***/ "./apps/ms-task/src/app/components/project-tasks/dto/input/create-project-task.input.ts":
+/*!**********************************************************************************************!*\
+  !*** ./apps/ms-task/src/app/components/project-tasks/dto/input/create-project-task.input.ts ***!
+  \**********************************************************************************************/
+/*! exports provided: CreateProjectTaskInput */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserModule", function() { return UserModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CreateProjectTaskInput", function() { return CreateProjectTaskInput; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/graphql */ "@nestjs/graphql");
+/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var class_validator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! class-validator */ "class-validator");
+/* harmony import */ var class_validator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(class_validator__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+let CreateProjectTaskInput = class CreateProjectTaskInput {
+};
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ description: `Client Name` }),
+    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], CreateProjectTaskInput.prototype, "ParentTaskID", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ description: `Client Name` }),
+    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], CreateProjectTaskInput.prototype, "ChildTaskID", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ description: `Client Name` }),
+    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], CreateProjectTaskInput.prototype, "TaskTitle", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ description: `Client Name` }),
+    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], CreateProjectTaskInput.prototype, "StartDate", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ description: `Client Name` }),
+    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], CreateProjectTaskInput.prototype, "EndDate", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ description: `Client Name` }),
+    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], CreateProjectTaskInput.prototype, "EstimatedDays", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ description: `Client Name` }),
+    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], CreateProjectTaskInput.prototype, "SendNotification", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ description: `Client Name` }),
+    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], CreateProjectTaskInput.prototype, "SaveTaskAsTemplate", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ description: `Client Name` }),
+    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], CreateProjectTaskInput.prototype, "BKPID", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ description: `Client Name` }),
+    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], CreateProjectTaskInput.prototype, "PhasesID", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ description: `Client Name` }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], CreateProjectTaskInput.prototype, "CreatedOn", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ description: `Client Name` }),
+    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], CreateProjectTaskInput.prototype, "CreatedBy", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ description: `Client Name` }),
+    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
+], CreateProjectTaskInput.prototype, "UpdatedOn", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ description: `Client Name` }),
+    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], CreateProjectTaskInput.prototype, "UpdatedBy", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ description: `Client Name` }),
+    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], CreateProjectTaskInput.prototype, "IsDeleted", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ description: `Client Name` }),
+    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], CreateProjectTaskInput.prototype, "ReferenceID", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ description: `Client Name` }),
+    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], CreateProjectTaskInput.prototype, "ReferenceTypeID", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ description: `Client Name` }),
+    Object(class_validator__WEBPACK_IMPORTED_MODULE_2__["IsOptional"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], CreateProjectTaskInput.prototype, "Status", void 0);
+CreateProjectTaskInput = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["InputType"])()
+], CreateProjectTaskInput);
+
+
+
+/***/ }),
+
+/***/ "./apps/ms-task/src/app/components/project-tasks/interface/project-tasks-repository.interface.ts":
+/*!*******************************************************************************************************!*\
+  !*** ./apps/ms-task/src/app/components/project-tasks/interface/project-tasks-repository.interface.ts ***!
+  \*******************************************************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+
+
+/***/ }),
+
+/***/ "./apps/ms-task/src/app/components/project-tasks/project-tasks.module.ts":
+/*!*******************************************************************************!*\
+  !*** ./apps/ms-task/src/app/components/project-tasks/project-tasks.module.ts ***!
+  \*******************************************************************************/
+/*! exports provided: ProjectTasksModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProjectTasksModule", function() { return ProjectTasksModule; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _service_project_tasks_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./service/project-tasks.service */ "./apps/ms-task/src/app/components/project-tasks/service/project-tasks.service.ts");
+/* harmony import */ var _resolver_project_tasks_resolver__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./resolver/project-tasks.resolver */ "./apps/ms-task/src/app/components/project-tasks/resolver/project-tasks.resolver.ts");
+/* harmony import */ var _repository_project_tasks_repository_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./repository/project-tasks-repository.service */ "./apps/ms-task/src/app/components/project-tasks/repository/project-tasks-repository.service.ts");
+/* harmony import */ var _nestjs_typeorm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @nestjs/typeorm */ "@nestjs/typeorm");
+/* harmony import */ var _nestjs_typeorm__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_nestjs_typeorm__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _entities_project_tasks_entity__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../entities/project-tasks.entity */ "./apps/ms-task/src/app/entities/project-tasks.entity.ts");
+
+
+
+
+
+
+
+let ProjectTasksModule = class ProjectTasksModule {
+};
+ProjectTasksModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Module"])({
+        imports: [_nestjs_typeorm__WEBPACK_IMPORTED_MODULE_5__["TypeOrmModule"].forFeature([_entities_project_tasks_entity__WEBPACK_IMPORTED_MODULE_6__["ProjectTasksEntity"]])],
+        providers: [_resolver_project_tasks_resolver__WEBPACK_IMPORTED_MODULE_3__["ProjectTasksResolver"],
+            {
+                provide: 'IProjectTasksRepository',
+                useClass: _repository_project_tasks_repository_service__WEBPACK_IMPORTED_MODULE_4__["ProjectTasksRepositoryService"],
+            },
+            {
+                provide: 'IProjectTasksService',
+                useClass: _service_project_tasks_service__WEBPACK_IMPORTED_MODULE_2__["ProjectTasksService"],
+            }]
+    })
+], ProjectTasksModule);
+
+
+
+/***/ }),
+
+/***/ "./apps/ms-task/src/app/components/project-tasks/repository/project-tasks-repository.service.ts":
+/*!******************************************************************************************************!*\
+  !*** ./apps/ms-task/src/app/components/project-tasks/repository/project-tasks-repository.service.ts ***!
+  \******************************************************************************************************/
+/*! exports provided: ProjectTasksRepositoryService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProjectTasksRepositoryService", function() { return ProjectTasksRepositoryService; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _nestjs_typeorm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nestjs/typeorm */ "@nestjs/typeorm");
 /* harmony import */ var _nestjs_typeorm__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nestjs_typeorm__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _repositories_base_user_user_repository_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../repositories/base/user/user-repository.service */ "./apps/ms-task/src/app/repositories/base/user/user-repository.service.ts");
-/* harmony import */ var _entity_user_entity__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./entity/user.entity */ "./apps/ms-task/src/app/components/user/entity/user.entity.ts");
-/* harmony import */ var _user_controller__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./user.controller */ "./apps/ms-task/src/app/components/user/user.controller.ts");
-/* harmony import */ var _user_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./user.service */ "./apps/ms-task/src/app/components/user/user.service.ts");
-
-
-
-
-
-
-
-let UserModule = class UserModule {
-};
-UserModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Module"])({
-        imports: [_nestjs_typeorm__WEBPACK_IMPORTED_MODULE_2__["TypeOrmModule"].forFeature([_entity_user_entity__WEBPACK_IMPORTED_MODULE_4__["User"]])],
-        providers: [
-            {
-                provide: 'UserRepositoryInterface',
-                useClass: _repositories_base_user_user_repository_service__WEBPACK_IMPORTED_MODULE_3__["UserRepositoryService"],
-            },
-            {
-                provide: 'UserServiceInterface',
-                useClass: _user_service__WEBPACK_IMPORTED_MODULE_6__["UserService"],
-            },
-        ],
-        controllers: [_user_controller__WEBPACK_IMPORTED_MODULE_5__["UserController"]],
-    })
-], UserModule);
-
-
-
-/***/ }),
-
-/***/ "./apps/ms-task/src/app/components/user/user.service.ts":
-/*!**************************************************************!*\
-  !*** ./apps/ms-task/src/app/components/user/user.service.ts ***!
-  \**************************************************************/
-/*! exports provided: UserService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserService", function() { return UserService; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _entity_user_entity__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./entity/user.entity */ "./apps/ms-task/src/app/components/user/entity/user.entity.ts");
-/* harmony import */ var _interface_user_repository_interface__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./interface/user.repository.interface */ "./apps/ms-task/src/app/components/user/interface/user.repository.interface.ts");
+/* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! typeorm */ "typeorm");
+/* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(typeorm__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _entities_project_tasks_entity__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../entities/project-tasks.entity */ "./apps/ms-task/src/app/entities/project-tasks.entity.ts");
+/* harmony import */ var _repositories_base_base_abstract_repository__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../repositories/base/base-abstract-repository */ "./apps/ms-task/src/app/repositories/base/base-abstract-repository.ts");
 var _a;
 
 
 
 
-let UserService = class UserService {
-    constructor(userRepository) {
-        this.userRepository = userRepository;
+
+
+let ProjectTasksRepositoryService = class ProjectTasksRepositoryService extends _repositories_base_base_abstract_repository__WEBPACK_IMPORTED_MODULE_5__["BaseAbstractRepository"] {
+    constructor(projectRepository) {
+        super(projectRepository);
+        this.projectRepository = projectRepository;
     }
-    create(userDto) {
+};
+ProjectTasksRepositoryService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_typeorm__WEBPACK_IMPORTED_MODULE_2__["InjectRepository"])(_entities_project_tasks_entity__WEBPACK_IMPORTED_MODULE_4__["ProjectTasksEntity"])),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_a = typeof typeorm__WEBPACK_IMPORTED_MODULE_3__["Repository"] !== "undefined" && typeorm__WEBPACK_IMPORTED_MODULE_3__["Repository"]) === "function" ? _a : Object])
+], ProjectTasksRepositoryService);
+
+
+
+/***/ }),
+
+/***/ "./apps/ms-task/src/app/components/project-tasks/resolver/project-tasks.resolver.ts":
+/*!******************************************************************************************!*\
+  !*** ./apps/ms-task/src/app/components/project-tasks/resolver/project-tasks.resolver.ts ***!
+  \******************************************************************************************/
+/*! exports provided: ProjectTasksResolver */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProjectTasksResolver", function() { return ProjectTasksResolver; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nestjs/graphql */ "@nestjs/graphql");
+/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _entities_project_tasks_entity__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../entities/project-tasks.entity */ "./apps/ms-task/src/app/entities/project-tasks.entity.ts");
+/* harmony import */ var _models_project_tasks_model__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../models/project-tasks.model */ "./apps/ms-task/src/app/models/project-tasks.model.ts");
+/* harmony import */ var _dto_input_create_project_task_input__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../dto/input/create-project-task.input */ "./apps/ms-task/src/app/components/project-tasks/dto/input/create-project-task.input.ts");
+/* harmony import */ var _service_project_tasks_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../service/project-tasks.service */ "./apps/ms-task/src/app/components/project-tasks/service/project-tasks.service.ts");
+var _a, _b, _c;
+
+
+
+
+
+
+
+let ProjectTasksResolver = class ProjectTasksResolver {
+    constructor(projectTasksService) {
+        this.projectTasksService = projectTasksService;
+    }
+    getProjectTasks() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const user = new _entity_user_entity__WEBPACK_IMPORTED_MODULE_2__["User"]();
-            user.email = userDto.email;
-            user.password = userDto.password;
-            return this.userRepository.create(user);
+            return yield this.projectTasksService.findAll();
+        });
+    }
+    createProjectTask(createProjectTaskInput) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            return this.projectTasksService.create(createProjectTaskInput);
         });
     }
 };
-UserService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Query"])(() => [_entities_project_tasks_entity__WEBPACK_IMPORTED_MODULE_3__["ProjectTasksEntity"]], { nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", []),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", typeof (_a = typeof Promise !== "undefined" && Promise) === "function" ? _a : Object)
+], ProjectTasksResolver.prototype, "getProjectTasks", null);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Mutation"])(() => _models_project_tasks_model__WEBPACK_IMPORTED_MODULE_4__["ProjectTasksModel"]),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Args"])('newTask')),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_b = typeof _dto_input_create_project_task_input__WEBPACK_IMPORTED_MODULE_5__["CreateProjectTaskInput"] !== "undefined" && _dto_input_create_project_task_input__WEBPACK_IMPORTED_MODULE_5__["CreateProjectTaskInput"]) === "function" ? _b : Object]),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", Promise)
+], ProjectTasksResolver.prototype, "createProjectTask", null);
+ProjectTasksResolver = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Resolver"])(() => _models_project_tasks_model__WEBPACK_IMPORTED_MODULE_4__["ProjectTasksModel"]),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Inject"])('IProjectTasksService')),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_c = typeof _service_project_tasks_service__WEBPACK_IMPORTED_MODULE_6__["ProjectTasksService"] !== "undefined" && _service_project_tasks_service__WEBPACK_IMPORTED_MODULE_6__["ProjectTasksService"]) === "function" ? _c : Object])
+], ProjectTasksResolver);
+
+
+
+/***/ }),
+
+/***/ "./apps/ms-task/src/app/components/project-tasks/service/project-tasks.service.ts":
+/*!****************************************************************************************!*\
+  !*** ./apps/ms-task/src/app/components/project-tasks/service/project-tasks.service.ts ***!
+  \****************************************************************************************/
+/*! exports provided: ProjectTasksService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProjectTasksService", function() { return ProjectTasksService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _interface_project_tasks_repository_interface__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../interface/project-tasks-repository.interface */ "./apps/ms-task/src/app/components/project-tasks/interface/project-tasks-repository.interface.ts");
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! uuid */ "uuid");
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_3__);
+var _a;
+
+
+
+
+let ProjectTasksService = class ProjectTasksService {
+    constructor(projectTasksRepository) {
+        this.projectTasksRepository = projectTasksRepository;
+    }
+    create(createProjectTaskInput) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const projectTasksEntity = Object.assign({ TaskID: Object(uuid__WEBPACK_IMPORTED_MODULE_3__["v4"])() }, createProjectTaskInput);
+            return yield this.projectTasksRepository.create(projectTasksEntity);
+        });
+    }
+    findAll() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            return yield this.projectTasksRepository.findAll();
+        });
+    }
+};
+ProjectTasksService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Inject"])('UserRepositoryInterface')),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_a = typeof _interface_user_repository_interface__WEBPACK_IMPORTED_MODULE_3__["UserRepositoryInterface"] !== "undefined" && _interface_user_repository_interface__WEBPACK_IMPORTED_MODULE_3__["UserRepositoryInterface"]) === "function" ? _a : Object])
-], UserService);
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Inject"])('IProjectTasksRepository')),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_a = typeof _interface_project_tasks_repository_interface__WEBPACK_IMPORTED_MODULE_2__["IProjectTasksRepository"] !== "undefined" && _interface_project_tasks_repository_interface__WEBPACK_IMPORTED_MODULE_2__["IProjectTasksRepository"]) === "function" ? _a : Object])
+], ProjectTasksService);
+
+
+
+/***/ }),
+
+/***/ "./apps/ms-task/src/app/entities/project-tasks.entity.ts":
+/*!***************************************************************!*\
+  !*** ./apps/ms-task/src/app/entities/project-tasks.entity.ts ***!
+  \***************************************************************/
+/*! exports provided: ProjectTasksEntity */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProjectTasksEntity", function() { return ProjectTasksEntity; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! typeorm */ "typeorm");
+/* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(typeorm__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nestjs/graphql */ "@nestjs/graphql");
+/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+let ProjectTasksEntity = class ProjectTasksEntity {
+};
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ unique: true }),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["PrimaryColumn"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksEntity.prototype, "TaskID", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksEntity.prototype, "ParentTaskID", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksEntity.prototype, "ChildTaskID", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksEntity.prototype, "TaskTitle", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksEntity.prototype, "StartDate", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksEntity.prototype, "EndDate", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksEntity.prototype, "EstimatedDays", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksEntity.prototype, "SendNotification", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksEntity.prototype, "SaveTaskAsTemplate", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksEntity.prototype, "BKPID", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksEntity.prototype, "PhasesID", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksEntity.prototype, "CreatedOn", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksEntity.prototype, "CreatedBy", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
+], ProjectTasksEntity.prototype, "UpdatedOn", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksEntity.prototype, "UpdatedBy", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksEntity.prototype, "IsDeleted", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksEntity.prototype, "ReferenceID", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksEntity.prototype, "ReferenceTypeID", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksEntity.prototype, "Status", void 0);
+ProjectTasksEntity = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["ObjectType"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Entity"])({ name: 'ProjectTasks' })
+], ProjectTasksEntity);
+
+
+
+/***/ }),
+
+/***/ "./apps/ms-task/src/app/models/project-tasks.model.ts":
+/*!************************************************************!*\
+  !*** ./apps/ms-task/src/app/models/project-tasks.model.ts ***!
+  \************************************************************/
+/*! exports provided: ProjectTasksModel */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProjectTasksModel", function() { return ProjectTasksModel; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/graphql */ "@nestjs/graphql");
+/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__);
+
+
+let ProjectTasksModel = class ProjectTasksModel {
+};
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksModel.prototype, "TaskID", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksModel.prototype, "ParentTaskID", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksModel.prototype, "ChildTaskID", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksModel.prototype, "TaskTitle", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksModel.prototype, "StartDate", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksModel.prototype, "EndDate", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksModel.prototype, "EstimatedDays", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksModel.prototype, "SendNotification", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksModel.prototype, "SaveTaskAsTemplate", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksModel.prototype, "BKPID", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksModel.prototype, "PhasesID", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksModel.prototype, "CreatedOn", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksModel.prototype, "CreatedBy", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
+], ProjectTasksModel.prototype, "UpdatedOn", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksModel.prototype, "UpdatedBy", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksModel.prototype, "IsDeleted", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksModel.prototype, "ReferenceID", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksModel.prototype, "ReferenceTypeID", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectTasksModel.prototype, "Status", void 0);
+ProjectTasksModel = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["ObjectType"])()
+], ProjectTasksModel);
 
 
 
@@ -525,49 +857,6 @@ class BaseAbstractRepository {
         });
     }
 }
-
-
-/***/ }),
-
-/***/ "./apps/ms-task/src/app/repositories/base/user/user-repository.service.ts":
-/*!********************************************************************************!*\
-  !*** ./apps/ms-task/src/app/repositories/base/user/user-repository.service.ts ***!
-  \********************************************************************************/
-/*! exports provided: UserRepositoryService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserRepositoryService", function() { return UserRepositoryService; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _nestjs_typeorm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nestjs/typeorm */ "@nestjs/typeorm");
-/* harmony import */ var _nestjs_typeorm__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nestjs_typeorm__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! typeorm */ "typeorm");
-/* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(typeorm__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _components_user_entity_user_entity__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../components/user/entity/user.entity */ "./apps/ms-task/src/app/components/user/entity/user.entity.ts");
-/* harmony import */ var _base_abstract_repository__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../base-abstract-repository */ "./apps/ms-task/src/app/repositories/base/base-abstract-repository.ts");
-var _a;
-
-
-
-
-
-
-let UserRepositoryService = class UserRepositoryService extends _base_abstract_repository__WEBPACK_IMPORTED_MODULE_5__["BaseAbstractRepository"] {
-    constructor(usersRepository) {
-        super(usersRepository);
-        this.usersRepository = usersRepository;
-    }
-};
-UserRepositoryService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_typeorm__WEBPACK_IMPORTED_MODULE_2__["InjectRepository"])(_components_user_entity_user_entity__WEBPACK_IMPORTED_MODULE_4__["User"])),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_a = typeof typeorm__WEBPACK_IMPORTED_MODULE_3__["Repository"] !== "undefined" && typeorm__WEBPACK_IMPORTED_MODULE_3__["Repository"]) === "function" ? _a : Object])
-], UserRepositoryService);
-
 
 
 /***/ }),
@@ -708,7 +997,6 @@ let TaskService = class TaskService {
     }
     find() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            // const response = await this.httpService.get('https://api.github.com/users/januwA').toPromise();
             const response = yield this.httpService
                 .get(_cudo_ms_core__WEBPACK_IMPORTED_MODULE_2__["Constants"].MS_TENDER_DAPR_URL)
                 .toPromise();
@@ -739,7 +1027,7 @@ const orm = {
     development: {
         type: process.env.DATABASE_TYPE,
         host: process.env.DATABASE_HOST,
-        port: process.env.DATABASE_PORT,
+        port: Number(process.env.DATABASE_PORT),
         username: process.env.DATABASE_USERNAME,
         password: process.env.DATABASE_PASSWORD,
         database: process.env.DATABASE_NAME
@@ -792,9 +1080,9 @@ let TypeOrmService = class TypeOrmService {
                 // migrations: ['src/modules/**/migration/*.ts'],
                 // subscribers: ['src/modules/**/subscriber/*.ts'],
                 // cli: {
-                // 	entitiesDir: 'src/modules/**/entity',
-                // 	migrationsDir: 'src/modules/**/migration',
-                // 	subscribersDir: 'src/modules/**/subscriber'
+                // 	entitiesDir: 'src/app/**/entity',
+                // 	migrationsDir: 'src/app/**/migration',
+                // 	subscribersDir: 'src/app/**/subscriber'
                 // },
                 synchronize: true, autoLoadEntities: true, useNewUrlParser: true, useUnifiedTopology: true, keepConnectionAlive: true, logging: true });
             return options;
@@ -855,7 +1143,7 @@ bootstrap();
 /*!***********************************!*\
   !*** ./libs/ms-core/src/index.ts ***!
   \***********************************/
-/*! exports provided: MsCoreModule, Constants */
+/*! exports provided: MsCoreModule, Constants, KeyVaultService, SecretService */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -865,6 +1153,14 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony import */ var _lib_common_constants_constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lib/common/constants/constants */ "./libs/ms-core/src/lib/common/constants/constants.ts");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Constants", function() { return _lib_common_constants_constants__WEBPACK_IMPORTED_MODULE_1__["Constants"]; });
+
+/* harmony import */ var _services_key_vault_key_vault_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services/key-vault/key-vault.service */ "./libs/ms-core/src/services/key-vault/key-vault.service.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "KeyVaultService", function() { return _services_key_vault_key_vault_service__WEBPACK_IMPORTED_MODULE_2__["KeyVaultService"]; });
+
+/* harmony import */ var _services_secret_secret_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./services/secret/secret.service */ "./libs/ms-core/src/services/secret/secret.service.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SecretService", function() { return _services_secret_secret_service__WEBPACK_IMPORTED_MODULE_3__["SecretService"]; });
+
+
 
 
 
@@ -1019,6 +1315,109 @@ CoreResolver = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 /***/ }),
 
+/***/ "./libs/ms-core/src/services/key-vault/key-vault.service.ts":
+/*!******************************************************************!*\
+  !*** ./libs/ms-core/src/services/key-vault/key-vault.service.ts ***!
+  \******************************************************************/
+/*! exports provided: KeyVaultService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "KeyVaultService", function() { return KeyVaultService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
+
+
+/**
+ * @desc Use this class to get secrets that are configured on cloud by default it uses environment variables i.e SM_REGION, SM_ACCESS_KEY_ID and SM_SECRET_ACCESS_KEY to connect with kms server
+ * you can also specify your configuration using constructor
+ */
+let KeyVaultService = class KeyVaultService {
+    //#endregion
+    //#region constructors
+    constructor() {
+        //#region fields
+        this.secretStore = new Map();
+        // this.credential = new DefaultAzureCredential();
+        // // Build the URL to reach your key vault
+        // const vaultName = process.env.VAULT_NAME;
+        // const url = `https://${vaultName}.vault.azure.net`;
+        // this.client = new KeyClient(url, this.credential);
+    }
+    //#endregion
+    //#region private methods
+    //#endregion
+    getSecretValue(secretName) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const result = yield this.client.getKey(secretName);
+            console.log(result);
+        });
+    }
+};
+KeyVaultService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [])
+], KeyVaultService);
+
+
+
+/***/ }),
+
+/***/ "./libs/ms-core/src/services/secret/secret.service.ts":
+/*!************************************************************!*\
+  !*** ./libs/ms-core/src/services/secret/secret.service.ts ***!
+  \************************************************************/
+/*! exports provided: SecretService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SecretService", function() { return SecretService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _azure_identity__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @azure/identity */ "@azure/identity");
+/* harmony import */ var _azure_identity__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_azure_identity__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _azure_keyvault_secrets__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @azure/keyvault-secrets */ "@azure/keyvault-secrets");
+/* harmony import */ var _azure_keyvault_secrets__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_azure_keyvault_secrets__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+let SecretService = class SecretService {
+    //#endregion
+    //#region constructors
+    constructor() {
+        this.credential = new _azure_identity__WEBPACK_IMPORTED_MODULE_1__["DefaultAzureCredential"]();
+        // Build the URL to reach your key vault
+        const vaultName = process.env.VAULT_NAME;
+        const url = `https://${vaultName}.vault.azure.net`;
+        this.client = new _azure_keyvault_secrets__WEBPACK_IMPORTED_MODULE_3__["SecretClient"](url, this.credential);
+    }
+    //#endregion
+    //#region private methods
+    //#endregion
+    //#region public methods
+    getSecretValue(secretName) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const result = yield this.client.getSecret(secretName);
+            console.log(result);
+        });
+    }
+};
+SecretService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_2__["Injectable"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [])
+], SecretService);
+
+
+
+/***/ }),
+
 /***/ 0:
 /*!****************************************!*\
   !*** multi ./apps/ms-task/src/main.ts ***!
@@ -1026,8 +1425,30 @@ CoreResolver = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\AshutoshMishra\Desktop\ProjectManagementTool\Development\azureDev\BoilerPlate\apps\ms-task\src\main.ts */"./apps/ms-task/src/main.ts");
+module.exports = __webpack_require__(/*! C:\Users\AshutoshMishra\Desktop\ProjectManagementTool\Development\azureDev\ashutosh\Project Management\apps\ms-task\src\main.ts */"./apps/ms-task/src/main.ts");
 
+
+/***/ }),
+
+/***/ "@azure/identity":
+/*!**********************************!*\
+  !*** external "@azure/identity" ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@azure/identity");
+
+/***/ }),
+
+/***/ "@azure/keyvault-secrets":
+/*!******************************************!*\
+  !*** external "@azure/keyvault-secrets" ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@azure/keyvault-secrets");
 
 /***/ }),
 
@@ -1097,17 +1518,6 @@ module.exports = require("@nestjs/typeorm");
 
 /***/ }),
 
-/***/ "bcrypt":
-/*!*************************!*\
-  !*** external "bcrypt" ***!
-  \*************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("bcrypt");
-
-/***/ }),
-
 /***/ "class-validator":
 /*!**********************************!*\
   !*** external "class-validator" ***!
@@ -1138,6 +1548,17 @@ module.exports = require("tslib");
 /***/ (function(module, exports) {
 
 module.exports = require("typeorm");
+
+/***/ }),
+
+/***/ "uuid":
+/*!***********************!*\
+  !*** external "uuid" ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("uuid");
 
 /***/ })
 
