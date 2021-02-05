@@ -17,7 +17,7 @@ export class ProjectEntity {
   
   @Field()
   @Column({unique:true})
-  projectNum:number
+  projectNum:string
 
   @Field()
   @Column()
@@ -37,7 +37,7 @@ export class ProjectEntity {
 
   @Field()
   @Column({nullable: true})
-  estCost?: number;
+  estCost?: string;
 
   @Field()
   @Column({nullable: true})
@@ -57,7 +57,7 @@ export class ProjectEntity {
 
   @Field()
   @Column({nullable: true})
-  zip?: number;
+  zip?: string;
 
   @Field()
   @Column({nullable: true})

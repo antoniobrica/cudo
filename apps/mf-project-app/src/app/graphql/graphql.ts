@@ -33,19 +33,21 @@ export const ADD_TODO = gql`
 `;
 
 export const ADD_PROJECT = gql`
-mutation CreateProjectDatabase($projectName: String!, 
-  $projectNum: Float!,
+mutation CreateProjectDatabase(
+  $projectName: String!, 
+  $projectNum: String!,
   $client: String!,
   $buildingType: String,
   $printingCom: String,
   $workType: String,
-  $estCost: Float,
+  $estCost: String,
   $adressLine1: String,
   $adressLine2: String,
   $city: String,
   $state: String,
-  $zip: Float,
-  $country: String,){ 
+  $zip: String,
+  $country: String
+  ){ 
   createProjectDatabase(createProjectData: {
      projectName: $projectName,
      projectNum: $projectNum, 

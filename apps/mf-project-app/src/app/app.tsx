@@ -21,7 +21,7 @@ export function App() {
     <Suspense fallback={<Loading />}>
       <div>
       <div className={styles.app}>
-      <Leftmenu />
+      {/* <Leftmenu /> */}
       <ProjectInfo ></ProjectInfo>
    
     </div>

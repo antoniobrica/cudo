@@ -12,10 +12,10 @@ export class CreateProjectInput {
   projectName: string;
 
   @Field()
-  @Column({type:"int", unique:true})
+  @Column({unique:true})
   @PrimaryColumn()
   @IsNotEmpty()
-  projectNum: number;
+  projectNum: string;
 
   @Field({ description: `Client Name`, deprecationReason: 'Optional While Updating' })
   @Length(1,10)
@@ -40,7 +40,7 @@ export class CreateProjectInput {
   @Field({nullable:true})
   @Column()
   @IsOptional()
-  estCost?: number;
+  estCost?: string;
 
   @Field({nullable:true})
   @Column()
@@ -65,7 +65,7 @@ export class CreateProjectInput {
   @Field({nullable:true})
   @Column()
   @IsOptional()
-  zip?: number;
+  zip?: string;
 
   @Field({nullable:true})
   @Column()

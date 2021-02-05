@@ -8,8 +8,8 @@ export class Project {
   @Field()
   projectName: string;
   
-  @Field(() => Int)
-  projectNum:number
+  @Field()
+  projectNum:string
   
   @Field()
   client: string;
@@ -24,7 +24,7 @@ export class Project {
   workType?: string;
   
   @Field({nullable:true})
-  estCost?: number;
+  estCost?: string;
   
   @Field({nullable:true})
   adressLine1?: string;
@@ -39,7 +39,7 @@ export class Project {
   state?: string;
   
   @Field({nullable:true})
-  zip?: number;
+  zip?: string;
   
   @Field({nullable:true})
   country?: string;

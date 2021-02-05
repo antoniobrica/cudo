@@ -6,17 +6,17 @@ export interface ITodo {
   export interface IProject {
     projectId?: string;
     projectName?: string;
-    projectNum?: number;
+    projectNum?: string;
     client?: string;
     buildingType?: string
     printingCom?: string
     workType?: string
-    estCost?: number
+    estCost?: string
     adressLine1?: string
     adressLine2?: string
     city?: string
     state?: string
-    zip?: Number
+    zip?: string
     country?: string
     }
   export interface ITodos {

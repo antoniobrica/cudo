@@ -23,8 +23,8 @@ export function Project(props: ProjectProps) {
                 </div>
                 <div className="header">{projectName}</div>
                 <div className="description">{projectNum}</div>
-                <div className="description">{projectId}
-                <span className="summary">Residential Buildings
+                <div className="description"> 
+                <span className="summary">Residential
                     </span>
                 </div>
                  
@@ -36,7 +36,7 @@ export function Project(props: ProjectProps) {
               
                 </div>
                 <div className="content">
-                    <div className="description"> This is description will be show sunt in culpa qui officia deserunt mollit anim id est laborum...</div>
+                    <div className="description"> This is description will be show officia .</div>
                     <div className="event">
                         <div className="label-green">
                            <span className="white-text">AB</span>

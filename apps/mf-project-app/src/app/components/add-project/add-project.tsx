@@ -1,9 +1,9 @@
 import React from 'react';
 
 import './add-project.module.scss';
-import { ADD_TODO, GET_TODOS , ADD_PROJECT,GET_PROJECTS} from "../../graphql/graphql";
-import { ITodo, ITodoMutation, ITodos,IProject, IProjects, ProjectMutation } from "../../interfaces/project";
-import { useTodoMutation , useProjectMutation} from '../../services/useRequest';
+import { ADD_PROJECT,GET_PROJECTS} from "../../graphql/graphql";
+import { IProject, IProjects, ProjectMutation } from "../../interfaces/project";
+import {  useProjectMutation} from '../../services/useRequest';
 import { ApolloCache, FetchResult } from '@apollo/client';
 /* eslint-disable-next-line */
 export interface AddProjectProps {
@@ -22,19 +22,22 @@ export function AddProject(props: AddProjectProps) {
     });
   };
 
-  const handleSaveTodo = (
+  const handleSaveProject = (
     e: React.FormEvent,
-    { projectName, projectNum,client }: IProject | any
+    { projectName, projectNum,client }: IProject 
   ) => {
     e.preventDefault();
-    props.close();
+    // props.close();
     console.log('projectCreated==>',projectName, projectNum, client)
+    // let projectNumber: number = + projectNum;
+    debugger
     addProject({
-      variables: {projectName, projectNum, client },
+      variables: {projectName, projectNum , client },
       update: (
         cache: ApolloCache<ProjectMutation>,
         { data: { addProject } }: FetchResult<ProjectMutation>
       ) => {
+        
         console.log('projectCreated successfully');
         const cacheData = cache.readQuery({ query: GET_PROJECTS }) as IProjects;
         cache.writeQuery({
@@ -45,9 +48,10 @@ export function AddProject(props: AddProjectProps) {
         });
       }
     });
+    props.close();
   };
   return (
-    <form className="Form" onSubmit={(e) => handleSaveTodo(e, formData)}>
+    <form className="Form" onSubmit={(e) => handleSaveProject(e, formData)}>
       <div>
         <div>
           <label htmlFor="name">projectName</label>

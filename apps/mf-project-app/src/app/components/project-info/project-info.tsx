@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import  './project-info.module.scss';
 import { GET_TODOS, GET_PROJECTS } from "../../graphql/graphql";
@@ -49,11 +49,13 @@ export function ProjectInfo(props: ProjectInfoProps) {
     //subtitle.style.color = '#f00';
   }
   // Modal.setAppElement('#yourAppElement')
-
+  const reload=()=>window.location.reload();
   function closeModal(){
+    console.log('close-modal-called')
     setIsOpen(false);
+    reload();
   }
-  return (
+   return (
     <div className="App">
     <h1>Projects</h1>
     {/* <button onClick={addProject}>Add Project</button> */}

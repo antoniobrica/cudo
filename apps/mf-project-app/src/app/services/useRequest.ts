@@ -10,12 +10,13 @@ export function useProjectQuery(gqlQuery: DocumentNode) {
   return { loading, error, data };
 }
 
-export function useTodoMutation(gqlQuery: DocumentNode) {
-  const [addTodo] = useMutation<ITodoMutation>(gqlQuery);
-  return [addTodo];
-}
+// export function useTodoMutation(gqlQuery: DocumentNode) {
+//   const [addTodo] = useMutation<ITodoMutation>(gqlQuery);
+//   return [addTodo];
+// }
 
 export function useProjectMutation(gqlQuery: DocumentNode){
   const [addProject] = useMutation<ProjectMutation>(gqlQuery);
+  console.log('query==>',gqlQuery);
   return [addProject];
 }
