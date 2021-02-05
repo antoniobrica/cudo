@@ -126,7 +126,7 @@
 
 .ui.mini.button {
     height: 2.8rem;
-    font-size: 1.1rem;
+    font-size: 14px;
     padding: 0 1rem;
     line-height: 2.8rem;
     border-radius: 3px;
@@ -436,3 +436,17 @@ div.ui.radio.checkbox label:before {
 }
 
 
+.ui.mini.button.secondary_btn{
+    float:right;
+    border-radius:0px
+}
+
+.ui.button.grey-btn, .ui.button.icon-border {
+    
+    border-radius: 0px;
+}
+.ui.button.icon-border {
+    background: none;
+      border:none; 
+    color: #9A9EA1;
+}

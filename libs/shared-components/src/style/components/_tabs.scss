@@ -1,20 +1,40 @@
-.material-icons{
-    font-size: 1.2rem;
-}
 
+
+.margin {
+	a.item {
+		margin: 0 10px 0;
+		font-weight: 500;
+	}
+}
+.preliminary{
+    font-size: 13px;
+    color: #718898;
+    font-weight: 600;
+}
+.ui.pointing.secondary.menu {
+	margin-top: 30px;
+}
 .ui.secondary.pointing.menu .active.item
 {
 color: #2D62ED; 
 border-color: #2d62ed;
+border-bottom: 2px solid #2d62ed;
+ padding: 10px;
 &:hover{
     color: #2D62ED; 
 }
 
+
 }
 .ui.secondary.pointing.menu .item{
     color: #718898;
-    font-size: 1.2rem;
+    font-size: 14px;
 }
+span.material-icons.middle {
+	vertical-align: middle;
+	margin-right: 10px;
+}
+
 .cs-tab {
     .ui.pointing.secondary.menu {
         border: 0;
