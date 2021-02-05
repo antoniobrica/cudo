@@ -30,7 +30,7 @@ export function AddProject(props: AddProjectProps) {
     // props.close();
     console.log('projectCreated==>',projectName, projectNum, client)
     // let projectNumber: number = + projectNum;
-    debugger
+  //  debugger
     addProject({
       variables: {projectName, projectNum , client },
       update: (

@@ -53,7 +53,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
   function closeModal(){
     console.log('close-modal-called')
     setIsOpen(false);
-    reload();
+    //reload();
   }
    return (
     <div className="App">
