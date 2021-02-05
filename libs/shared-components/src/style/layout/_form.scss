@@ -1,7 +1,7 @@
 .field {
     label {
         display: $display-block;
-        color: $fieldLabelColor;
+        color: #000000;
         font-weight: $font-medium;
         font-size: 1.5rem;
         margin-bottom: 5px;
@@ -43,7 +43,7 @@
             &>label {
                 font-weight: $font-medium;
                 font-size: 1.5rem;
-                color: color("shades", "black");
+                color: #000000;
             }
         }
     }
@@ -58,7 +58,7 @@
     }
     label,
     +label {
-        color: $darkTextColor;
+        color: #707070;
         transition: color .1s ease;
     }
 }

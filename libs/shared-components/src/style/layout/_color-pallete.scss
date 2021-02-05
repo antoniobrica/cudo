@@ -28,45 +28,54 @@
 }
 
 .grey-60-cl {
-    background: color("grey", "lighten-9");
+    background: #2D62ED;
 }
 
 .grey-mb {
-    background-color: color("grey", "base");
+    background-color: #1B1B40;
 }
 
 .blue-mb {
-    background-color: color("blue", "base");
+    background-color: #718898;
 }
 
 .yellow-mb {
-    background-color: color("yellow", "base");
+    background-color: #9FB5C5;
 }
 
 .yellow-mb-3 {
-    background-color: color("yellow", "lighten-3");
+    background-color:#D0D8DF;
 }
 
 .green-mb {
-    background-color: color("green", "base");
+    background-color: #E0E6EB;
 }
 
 .green-dark {
-    background-color: color("green", "dark");
+    background-color: #CEE8FF;
 }
 
 .red-mb {
-    background-color: color("red", "base");
+    background-color: #DCEFFF;
 }
 
 .white-smoke-mb {
-    background-color: color("grey", "lighten-6");
+    background-color: #F1F5F8;
 }
 
 .lavender-blue {
-    background-color: color("blue", "lighten");
+    background-color: #F3F3F3;
 }
+ .green-highlight{
+    background-color: #37BA77;
+ }
+ .pink-highlight{
+    background-color: #E99898
+ }
+ .light-orange-highlight{
+    background-color: #FFE6C7
+ }
 
-.black-mb {
-    background-color: color("shades", "black");
-}
+ .green-light-highlight{
+    background-color: #C8F6DF
+ }

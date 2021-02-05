@@ -77,7 +77,7 @@ input,
         padding: 0.5rem 1.5rem;
         font-size: 1.5rem;
         border: 1px solid color("grey", "lighten-2");
-        border-radius: 0.5rem !important;
+        
         min-width: inherit;
         @media (max-width:#{$large-desktop-up}) {
             min-height: 5rem;
@@ -129,6 +129,7 @@ input,
         }
         &:focus {
             border-color: color("blue", "base");
+            
         }
         &:before {
             left: 0;
@@ -149,7 +150,7 @@ input,
             font-weight: $font-regular !important;
             padding: 1.1rem 0 0;
             margin: .45rem 0 .45rem 0;
-            color: color("shades", "black")!important;
+            color: #565264;
             @media (max-width:#{$large-desktop-up}) {
                 padding: 0.7rem 0 0;
             }
@@ -204,10 +205,11 @@ div.error-message {
 .ui.form .field.error label,
 .ui.form .fields.error .field .input,
 .ui.form .fields.error .field label {
-    color: $inputSelectTextColor;
+    color: #000000;
     z-index: 1;
+    
 }
-
+ 
 .ui.form {
     .error.field {
         .MuiFormControl-root {
@@ -242,7 +244,7 @@ div.error-message {
             &[type=time],
             &[type=url] {
                 background: color("shades", "white");
-                border-color: color("red", "dark");
+                border-color: #2D62ED;
                 color: $inputSelectTextColor;
                 box-shadow: $none;
             }
@@ -325,7 +327,7 @@ div.error-message {
     &[type=time]:focus,
     &[type=url]:focus {
         color: $inputSelectTextColor;
-        border-radius: .28571429rem;
+        
         background: color("shades", "white");
         box-shadow: $none;
     }
@@ -390,11 +392,11 @@ select:-webkit-autofill:focus {
         font-size: 1.5rem;
         background: #fff;
         color: $inputSelectTextColor;
-        border-radius: 0.5rem !important;
+        
         box-shadow: $none;
         transition: color .1s ease, border-color .1s ease;
         height: 6rem;
-        border: 1px solid color("grey", "lighten-2");
+        border: 1px solid #D0D8DF;
         font-weight: 400;
         width: 100%;
         @media (max-width:#{$large-desktop-up}) {

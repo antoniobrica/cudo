@@ -1,93 +1,120 @@
 import React from 'react';
-import Leftmenu from './leftmenu';
-import '../../../style/index.scss';
 import { storiesOf } from '@storybook/react';
 import { Grid, Header, Segment, Form, Input } from 'semantic-ui-react';
+  
 
 
-storiesOf('components/colorscheme', module)
+storiesOf('components/Color Scheme', module)
     .add('with Palette ', () => <Segment className="ui-kit">
-        <Header as='h2' className="mt-1">Color Palette</Header>
+        <Header as='h2' className="mt-1 black-text">Text&Background Palette</Header>
         <div className="color-palette">
-
+            
             <div className="column ">
-                <div className="box grey-60-cl">
-                    #ebebeb
+                <div className="box grey-60-cl white-text">
+                    #2D62ED
                 </div>
-                <span>Grey 92</span>
+                 
             </div>
 
             <div className="column">
-                <div className="box grey-mb">
-                    #c0c0c0
+                <div className="box grey-mb white-text">
+                    #1B1B40
                 </div>
-                <span>Company Silver</span>
+                
             </div>
 
             <div className="column">
                 <div className="box blue-mb white-text">
-                    #0000cd
-                </div>
-                <span>Company Blue</span>
+                    #718898
+                </div> 
             </div>
 
             <div className="column">
                 <div className="box yellow-mb white-text">
-                    #CFB53B
+                    #9FB5C5
                 </div>
-                <span>Company Gold Star, Favorite On</span>
+               
             </div>
 
             <div className="column">
                 <div className="box yellow-mb-3">
-                    #f4f1d6
+                    #D0D8DF
                 </div>
-                <span>Spotlight Course Label</span>
+               
             </div>
 
             <div className="column">
                 <div className="box green-mb white-text">
-                    #32CD32
+                    #E0E6EB
                 </div>
-                <span>Lime / Green Call, Buy</span>
+               
             </div>
 
             <div className="column">
                 <div className="box green-dark white-text">
-                    #28A428
+                    #CEE8FF
                 </div>
-                <span>Dark Lime</span>
+              
             </div>
 
             <div className="column">
                 <div className="box red-mb white-text">
-                    #CC0000
+                    #DCEFFF
                 </div>
-                <span>Red Error</span>
+               
             </div>
 
             <div className="column">
                 <div className="box white-smoke-mb">
-                    #F5F5F5
+                    #F1F5F8
                 </div>
-                <span>White Smoke</span>
+               
             </div>
 
             <div className="column">
                 <div className="box lavender-blue">
-                    #CCCCFF
+                    #F3F3F3
                 </div>
-                <span>Lavender Blue</span>
+               
+            </div>
+ 
+        </div>
+
+        <Header as='h2' className="mt-1 black-text">Selection&Highlight Palette</Header>
+        <div className="color-palette">
+            
+            <div className="column ">
+                <div className="box green-highlight white-text">
+                    #37BA77
+                </div>
+                 
             </div>
 
             <div className="column">
-                <div className="box black-mb white-text">
-                    #232323
+                <div className="box pink-highlight white-text">
+                    #E99898
                 </div>
-                <span>Default Text Color</span>
+                
             </div>
 
+            <div className="column">
+                <div className="box light-orange-highlight white-text">
+                    #FFE6C7
+                </div> 
+            </div>
+
+            <div className="column">
+                <div className="box green-light-highlight white-text">
+                    #C8F6DF
+                </div>
+               
+            </div>
+ 
+ 
         </div>
 
     </Segment>
+
+        
+
     )

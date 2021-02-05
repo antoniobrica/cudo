@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import "sass-utils/color";
 @import "sass-utils/variable";
@@ -26,4 +26,6 @@
 @import "components/images";
 @import "components/card-block";
 @import "base/base";
+@import "layout/sidebar";
+@import "layout/modal"; 
 // Global

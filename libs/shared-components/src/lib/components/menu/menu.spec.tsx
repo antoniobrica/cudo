@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import Leftmenu from './leftmenu';
+import Menu from './menu';
 
-describe('Leftmenu', () => {
+describe('Menu', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Leftmenu />);
+    const { baseElement } = render(<Menu />);
     expect(baseElement).toBeTruthy();
   });
 });
