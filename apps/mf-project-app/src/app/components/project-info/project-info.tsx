@@ -8,8 +8,9 @@ import Project from "../project/project";
 import { ITodo, IProject } from "../../interfaces/project"; 
 import { Button, Header, Segment, Icon } from 'semantic-ui-react';
 import Modal from 'react-modal';
+// import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
 
-
+import ModalExampleModal from '../modal/modal'
 
 /* eslint-disable-next-line */
 export interface ProjectInfoProps {}
@@ -60,6 +61,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
     <h1>Projects</h1>
     {/* <button onClick={addProject}>Add Project</button> */}
     <div>
+    <ModalExampleModal></ModalExampleModal>
     <Button size='mini' className="grey-btn" onClick={openModal}>Add Project</Button>
         {/* <button onClick={openModal}>Open Modal</button> */}
         <Modal
@@ -81,9 +83,9 @@ export function ProjectInfo(props: ProjectInfoProps) {
 
     {/* {openForm?<AddProject />:null} */}
     
-    <div style={{flexDirection:'row',display: 'flex'}}>
-    {data.getProjects.map((todo: IProject) => (
-      <Project key={todo.projectId} todo={todo} />
+    <div style={{flexDirection:'row',display: 'flex',  flexWrap: "wrap"}}>
+    {data.getProjects.map((project: IProject) => (
+      <Project key={project.projectId} project={project} />
     ))}
      </div>
   </div>

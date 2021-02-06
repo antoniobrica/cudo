@@ -4,7 +4,7 @@ import styles from './app.module.scss';
 import {SetList} from '@cudo/ui';
 import { Route, Link } from 'react-router-dom';
 import ProjectInfo from './components/project-info/project-info';
-import { Leftmenu } from '@cudo/shared-components'
+// import { Leftmenu } from '@cudo/shared-components'
 
 // import React, { Suspense } from 'react';
 import { initI18n } from '@cudo/mf-core';
@@ -13,6 +13,10 @@ import { Loading } from '@cudo/ui'
 import { TestComponent } from './test-component/test-component';
 const defaultLanguage = 'de-DE';
 const supportedLanguages = [defaultLanguage, 'en-GB'];
+import {Menubar} from '@cudo/shared-components';  
+  
+import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
+
 
 initI18n('./assets/i18n/{{lng}}.json', defaultLanguage);
 export function App() {
@@ -22,6 +26,8 @@ export function App() {
       <div>
       <div className={styles.app}>
       {/* <Leftmenu /> */}
+      <Menubar></Menubar> 
+    {/* <ModalExampleModal></ModalExampleModal>  */}
       <ProjectInfo ></ProjectInfo>
    
     </div>

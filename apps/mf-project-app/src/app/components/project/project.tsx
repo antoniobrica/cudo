@@ -5,13 +5,13 @@ import { ITodo, IProject } from "../../interfaces/project";
 import '../../../assets/style/index.scss'
 /* eslint-disable-next-line */
 export interface ProjectProps {
-  todo: IProject;
+  project: IProject;
 }
 
 export function Project(props: ProjectProps) {
   const {  projectId,
     projectName,
-    projectNum, } = props.todo;
+    projectNum,buildingType,workType } = props.project;
   return (
     <div style={{margin:20}}>
        <div className="ui card">
@@ -24,10 +24,10 @@ export function Project(props: ProjectProps) {
                 <div className="header">{projectName}</div>
                 <div className="description">{projectNum}</div>
                 <div className="description"> 
-                <span className="summary">Residential
+                <span className="summary">{buildingType}
                     </span>
                 </div>
-                 
+                 {workType}
                 <div className="description">Level of building
                 <span className="summary">3rd
                     

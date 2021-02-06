@@ -67,6 +67,16 @@ mutation CreateProjectDatabase(
     projectName
     projectNum
     client
+    buildingType
+    printingCom
+    workType
+    estCost
+    adressLine1
+    adressLine2
+    city
+    state
+    zip
+    country
   }
 }`;
 
