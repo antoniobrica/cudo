@@ -321,9 +321,8 @@ function ModalExampleModal() {
             
             </Form.Field>
              </Table.Cell>
-             <Table.Cell>
-            
-           <a href="" > <i aria-hidden="true" className="  alternate outline icon"></i></a>
+             <Table.Cell> 
+           <a href="" > <i aria-hidden="true" className="trash alternate outline icon"></i></a>
          </Table.Cell>         
       </Table.Row>
       <Table.Row>
@@ -338,9 +337,8 @@ function ModalExampleModal() {
             <Select placeholder='Select' className="small" options={countryOptions} />
             </Form.Field>
          </Table.Cell>
-         <Table.Cell>
-           
-           <a href="" > <i aria-hidden="true" className="  alternate outline icon"></i></a>
+         <Table.Cell> 
+           <a href="" > <i aria-hidden="true" className="trash alternate outline icon"></i></a>
          </Table.Cell> 
       </Table.Row>
     </Table.Body>
