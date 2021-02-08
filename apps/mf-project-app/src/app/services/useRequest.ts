@@ -17,6 +17,6 @@ export function useProjectQuery(gqlQuery: DocumentNode) {
 
 export function useProjectMutation(gqlQuery: DocumentNode){
   const [addProject] = useMutation<ProjectMutation>(gqlQuery);
-  console.log('query==>',gqlQuery);
+  // console.log('query==>',gqlQuery);
   return [addProject];
 }

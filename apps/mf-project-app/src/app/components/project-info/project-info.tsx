@@ -44,7 +44,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
   function openModal() {
     setIsOpen(true);
   }
- 
+  
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
     //subtitle.style.color = '#f00';

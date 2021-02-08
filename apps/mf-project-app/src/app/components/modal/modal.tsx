@@ -11,11 +11,29 @@ import { ADD_PROJECT, GET_PROJECTS } from "../../graphql/graphql";
 
 
 function ModalExampleModal() {
+  const clientOption = [
+    { key: 'co', value: 'Company one name', text: 'Company one name' },
+    { key: 'ct', value: 'Company two name', text: 'Company two name' },
+    { key: 'cth', value: 'Company three name', text: 'Company two name' },
+
+  ]
+  const buildingOption = [
+    { key: 'bo', value: 'ABC type', text: 'ABC type' },
+    { key: 'bt', value: 'item 1', text: 'item 2' },
+    { key: 'bth', value: 'item 3', text: 'item 4' },
+
+  ]
+  const workTypeOptions = [
+    { key: 'wo', value: 'work type 1', text: 'work type 1' },
+    { key: 'wt', value: 'work type 2', text: 'work type 2' },
+
+  ]
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
 
   ]
+
   const [open, setOpen] = React.useState(false)
   const [projectName, setProjectName] = React.useState("")
   const [projectNum, setProjectNum] = React.useState("")
@@ -95,8 +113,6 @@ function ModalExampleModal() {
         cache: ApolloCache<ProjectMutation>,
         { data: { addProject } }: FetchResult<ProjectMutation>
       ) => {
-
-        console.log('projectCreated successfully');
         const cacheData = cache.readQuery({ query: GET_PROJECTS }) as IProjects;
         cache.writeQuery({
           query: GET_PROJECTS,
@@ -119,10 +135,6 @@ function ModalExampleModal() {
           <Button className="secondary_btn" size='mini' primary>Click to upload</Button>
           <p className="paragraph">Click the upload button to upload the client logo</p>
         </div>
-
-
-
-
         <div>
 
           <Header className="header" >Project Information</Header>
@@ -163,7 +175,7 @@ function ModalExampleModal() {
                 <Form.Field>
                   <label>Client <span className="danger">*</span></label>
                   <Select placeholder='Select' className="small"
-                    options={countryOptions}
+                    options={clientOption}
                     value={client}
                     onChange={onprojectClient}
                   />
@@ -173,7 +185,7 @@ function ModalExampleModal() {
               <Grid.Column>
                 <Form.Field>
                   <label>Type of building <span className="danger">*</span></label>
-                  <Select placeholder='Select' className="small" options={countryOptions}
+                  <Select placeholder='Select' className="small" options={buildingOption}
                     value={buildingType}
                     onChange={onBuildingType}
                   />
@@ -220,7 +232,7 @@ function ModalExampleModal() {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <Select placeholder='Select' className="small" options={countryOptions}
+                          <Select placeholder='Select' className="small" options={workTypeOptions}
                             value={workType}
                             onChange={onWorkType}
                           />
@@ -254,7 +266,7 @@ function ModalExampleModal() {
               </Table.Cell>
 
             </Table.Row>
-            <Table.Row>
+            {/* <Table.Row>
               <Table.Cell>
                 <Form>
                   <Grid columns={1}>
@@ -288,8 +300,8 @@ function ModalExampleModal() {
 
               </Table.Cell>
 
-            </Table.Row>
-            <Table.Row>
+            </Table.Row> */}
+            {/* <Table.Row>
               <Table.Cell>
                 <a href="">+ Add more </a>
 
@@ -298,7 +310,7 @@ function ModalExampleModal() {
               <Table.Cell>
 
               </Table.Cell>
-            </Table.Row>
+            </Table.Row> */}
           </Table.Body>
         </Table>
 
