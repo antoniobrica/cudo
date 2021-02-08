@@ -5,6 +5,12 @@ module.exports = (config, context) => {
   nrwlConfig(config); // first call it so that it @nrwl/react plugin adds its configs,
 
   // then override your config.
+  config.optimization.runtimeChunk = false;
+  config.optimization.splitChunks = {
+    cacheGroups: {
+      default: false,
+    },
+  };
   return {
     ...config,
     devServer: {

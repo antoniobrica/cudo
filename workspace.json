@@ -302,7 +302,7 @@
             ],
             "styles": ["apps/mf-project-app/src/styles.scss"],
             "scripts": [],
-            "webpackConfig": "@nrwl/react/plugins/webpack"
+            "webpackConfig": "apps/mf-project-app/webpack.config.js"
           },
           "configurations": {
             "production": {
@@ -1052,7 +1052,7 @@
             ],
             "styles": ["apps/mf-tender-app/src/styles.scss"],
             "scripts": [],
-            "webpackConfig": "@nrwl/react/plugins/webpack"
+            "webpackConfig": "apps/mf-tender-app/webpack.config.js"
           },
           "configurations": {
             "production": {
@@ -1312,7 +1312,7 @@
             ],
             "styles": ["apps/mf-meeting-app/src/styles.scss"],
             "scripts": [],
-            "webpackConfig": "@nrwl/react/plugins/webpack"
+            "webpackConfig": "apps/mf-meeting-app/webpack.config.js"
           },
           "configurations": {
             "production": {

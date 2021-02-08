@@ -3,4 +3,5 @@
 
 export const environment = {
   production: false,
+  mfProductsUrl: "http://localhost:6005/main.js"
 };
