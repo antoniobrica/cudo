@@ -6,8 +6,9 @@ import { useTodoQuery, useProjectQuery } from "../../services/useRequest";
 import AddProject from "../add-project/add-project";
 import Project from "../project/project";
 import { ITodo, IProject } from "../../interfaces/project"; 
-import { Button, Header, Segment, Icon } from 'semantic-ui-react';
 import Modal from 'react-modal';
+import { Card, Icon,Form, Grid } from 'semantic-ui-react'
+
 // import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
 
 import ModalExampleModal from '../modal/modal'
@@ -16,19 +17,6 @@ import ModalExampleModal from '../modal/modal'
 export interface ProjectInfoProps {}
 
 export function ProjectInfo(props: ProjectInfoProps) {
-  const customStyles = {
-    content : {
-      //top                   : '50%',
-      left                  : '50%',
-      right                 : 0,
-      bottom                : 'auto',
-    //  marginRight           : '-50%',
-      //transform             : 'translate(-50%, -50%)'
-    }
-  };
-  
-  
-  // const { loading, error, data } = useTodoQuery(GET_TODOS);
   const { loading, error, data } = useProjectQuery(GET_PROJECTS);
   const [openForm, setopenForm] = React.useState(false);
   const [modalIsOpen,setIsOpen] = React.useState(false);
@@ -44,49 +32,80 @@ export function ProjectInfo(props: ProjectInfoProps) {
   function openModal() {
     setIsOpen(true);
   }
-  
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    //subtitle.style.color = '#f00';
-  }
-  // Modal.setAppElement('#yourAppElement')
-  const reload=()=>window.location.reload();
-  function closeModal(){
-    console.log('close-modal-called')
-    setIsOpen(false);
-    //reload();
-  }
    return (
-    <div className="App">
-    <h1>Projects</h1>
-    {/* <button onClick={addProject}>Add Project</button> */}
+    <div>
+    {/* <h1>Projects</h1> */}
     <div>
     <ModalExampleModal></ModalExampleModal>
-    <Button size='mini' className="grey-btn" onClick={openModal}>Add Project</Button>
-        {/* <button onClick={openModal}>Open Modal</button> */}
-        <Modal
-          isOpen={modalIsOpen}
-          onAfterOpen={afterOpenModal}
-          onRequestClose={closeModal}
-          style={customStyles}
-          contentLabel="Example Modal"
-        >
- 
-          {/* <h2 ref={_subtitle => (subtitle = _subtitle)}>Hello</h2> */}
-          <button onClick={closeModal}>close</button>
-          <div>
-           Add new Project
-          </div>
-          <AddProject close={closeModal} />
-        </Modal>
-      </div>
+        </div>   
 
-    {/* {openForm?<AddProject />:null} */}
-    
+        <div className="app-content-body ">
+    <div>
+        <h2 className="project">All Projects</h2>
+        <span className="total">Total {data.getProjects.length} project added</span>
+     </div>
+ 
+     <Form>
+     <Grid columns={4}>
+
+<Grid.Row>
+{data.getProjects.map((project: IProject) => (
+<Grid.Column className="card-margin">
+<Card>
+  <div className="ui card">
+        <div className="content">
+        <div className="description"><img src="" alt="Logo"></img>
+            <span className="summary"><span className="dot">...</span>
+                 </span>
+            </div>
+            <div className="header font-header">{project.projectName}</div>
+            <div className="description">{project.client}</div>
+            <div className="data-built">Type of building
+            <span className="summary">Residential Buildings
+                
+                </span>
+            </div>
+             
+            <div className="data-built">Level of building
+            <span className="summary">3rd
+                
+                </span>
+            </div>
+          
+            </div>
+            <div className="content">
+                <div className="data-built"> This is description will be show sunt in culpa qui officia deserunt mollit anim id est laborum...</div>
+                <div className="event">
+                    <div className="label-green label-spacer">
+                       <span className="white-text">AB</span>
+                        </div>
+                        <div className="label-purple label-spacer">
+                       <span className="white-text ">RJ</span>
+                        </div>
+                        <div className="label-blue label-spacer">
+                       <span className="white-text">JB</span>
+                        </div>
+                   </div>
+                </div>  
+                </div>
+                
+    </Card>
+  
+</Grid.Column>
+   ))}
+</Grid.Row>
+
+</Grid>
+
+  </Form>
+
+</div>
+
+
     <div style={{flexDirection:'row',display: 'flex',  flexWrap: "wrap"}}>
-    {data.getProjects.map((project: IProject) => (
+    {/* {data.getProjects.map((project: IProject) => (
       <Project key={project.projectId} project={project} />
-    ))}
+    ))} */}
      </div>
   </div>
   );

@@ -14,9 +14,10 @@ export const GET_TODOS = gql`
 export const GET_PROJECTS = gql`
   {
     getProjects {
-     projectId
-     projectName
-     projectNum
+      projectId
+      projectName
+      projectNum
+      client
     }
   }
 `;
