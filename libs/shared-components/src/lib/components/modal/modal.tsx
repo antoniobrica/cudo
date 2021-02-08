@@ -1,6 +1,6 @@
 import { radios } from '@storybook/addon-knobs';
 import React from 'react';
-import { Button, Header,   Modal,  Tab,Table,  Input, Form, Grid,  Select, TextArea} from 'semantic-ui-react';
+import { Button, Header,   Modal,  Tab,Table,  Input, Form, Grid, Image, Select, TextArea} from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
  
  
@@ -244,7 +244,15 @@ function ModalExampleModal() {
   
 </Grid.Row>
 </Grid>
-
+<Button
+          content="Click to continue" 
+          onClick={() => setOpen(false)}
+          positive
+          size='mini' className="grey-btn"
+        />
+        <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+        X  Cancel
+        </Button>
 </Form>
 
 
@@ -255,7 +263,110 @@ function ModalExampleModal() {
     },
     {
       menuItem: 'People',
-      render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane>
+      render: () => <Tab.Pane attached={false}> 
+
+
+      
+      <Form>
+        
+<Grid columns={1}>
+<Grid.Row>
+  <Grid.Column>
+    <Form.Field>
+      <label>Add people to this project? </label>
+      <Input placeholder='Search existing user' size='small' className="full-width" type="text" />
+    </Form.Field>
+  </Grid.Column>
+
+  
+</Grid.Row>
+<Grid.Row>
+<Grid.Column>
+<div className="content">
+                 
+                <p className="paragraph center"> <i aria-hidden="true" className="envelope outline icon"></i> Can't find who you are looking for? <a href="" className="anchor">Click here to invite a new user </a> </p>
+            </div>
+</Grid.Column>
+
+</Grid.Row>
+ 
+
+<Grid.Row>
+
+<Grid.Column >
+<Form.Field>
+      <label className="top-area">Add people to this project? </label>
+        </Form.Field>
+<Table celled>
+    <Table.Header>
+      <Table.Row>
+        <Table.HeaderCell className="table-head">People</Table.HeaderCell>
+        <Table.HeaderCell className="table-head">Work Type</Table.HeaderCell>
+        <Table.HeaderCell > </Table.HeaderCell>
+      </Table.Row>
+    </Table.Header>
+
+    <Table.Body>
+      
+      <Table.Row>
+        <Table.Cell>
+        <div>
+    <Image src='https://react.semantic-ui.com/images/wireframe/square-image.png' avatar />
+    <span>Gleb Kuznetsov</span>
+  </div>
+        </Table.Cell>
+        <Table.Cell>
+        <Form.Field>
+            <Select placeholder='Select' className="small" options={countryOptions} />
+            
+            </Form.Field>
+             </Table.Cell>
+             <Table.Cell> 
+           <a href="" > <i aria-hidden="true" className="trash alternate outline icon"></i></a>
+         </Table.Cell>         
+      </Table.Row>
+      <Table.Row>
+        <Table.Cell>
+        <div>
+    <Image src='https://react.semantic-ui.com/images/wireframe/square-image.png' avatar />
+    <span>Zhenya Rynzhuk</span>
+  </div>
+        </Table.Cell>
+        <Table.Cell>
+        <Form.Field>
+            <Select placeholder='Select' className="small" options={countryOptions} />
+            </Form.Field>
+         </Table.Cell>
+         <Table.Cell> 
+           <a href="" > <i aria-hidden="true" className="trash alternate outline icon"></i></a>
+         </Table.Cell> 
+      </Table.Row>
+    </Table.Body>
+  </Table>
+</Grid.Column>
+
+</Grid.Row>
+</Grid>
+<Button size='mini' className="disabled" onClick={() => setOpen(false)}>
+          Skip
+        </Button>
+        <div className="float-area">
+        <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+        X  Cancel
+        </Button>
+      <Button
+          content="Submit" 
+          onClick={() => setOpen(false)}
+          positive
+          size='mini' className="grey-btn"
+        />
+
+        </div>
+     
+      </Form>
+     
+      
+      </Tab.Pane>
     }
      
   ]
@@ -286,15 +397,7 @@ function ModalExampleModal() {
        
       </Modal.Content>
       <Modal.Actions>
-      <Button
-          content="Click to continue" 
-          onClick={() => setOpen(false)}
-          positive
-          size='mini' className="grey-btn"
-        />
-        <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
-        X  Cancel
-        </Button>
+    
         
       </Modal.Actions>
     </Modal>

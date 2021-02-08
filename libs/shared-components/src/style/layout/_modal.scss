@@ -92,3 +92,27 @@ th{
 .ui.modal{
 	border-radius: 0px;
 }
+.ui.form input:not([type]), .ui.form input[type=date], .ui.form input[type=datetime-local], .ui.form input[type=email], .ui.form input[type=file], .ui.form input[type=number], .ui.form input[type=password], .ui.form input[type=search], .ui.form input[type=tel], .ui.form input[type=text], .ui.form input[type=time], .ui.form input[type=url]{
+	color:#000000;
+}
+.ui.form input:not([type]):focus, .ui.form input[type=date]:focus, .ui.form input[type=datetime-local]:focus, .ui.form input[type=email]:focus, .ui.form input[type=file]:focus, .ui.form input[type=number]:focus, .ui.form input[type=password]:focus, .ui.form input[type=search]:focus, .ui.form input[type=tel]:focus, .ui.form input[type=text]:focus, .ui.form input[type=time]:focus, .ui.form input[type=url]:focus{
+	color:#000000;
+}
+.float-area{
+	float: right;
+}
+.center{
+	text-align: center;
+}
+.anchor{
+	text-decoration: underline;
+	color:#2D62ED;
+}
+.table-head{
+	font-size: 14px;
+	font-weight: 400;
+}
+label.top-area{
+	margin-top: -15px;
+}
+ 
