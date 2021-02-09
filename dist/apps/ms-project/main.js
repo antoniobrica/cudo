@@ -339,123 +339,6 @@ CreateProjectInput = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 /***/ }),
 
-/***/ "./apps/ms-project/src/app/components/projects/entity/project.entity.ts":
-/*!******************************************************************************!*\
-  !*** ./apps/ms-project/src/app/components/projects/entity/project.entity.ts ***!
-  \******************************************************************************/
-/*! exports provided: ProjectEntity */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProjectEntity", function() { return ProjectEntity; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! typeorm */ "typeorm");
-/* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(typeorm__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nestjs/graphql */ "@nestjs/graphql");
-/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__);
-var _a, _b;
-
-
-
-let ProjectEntity = class ProjectEntity {
-};
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ unique: true }),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["PrimaryColumn"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "projectId", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ unique: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "projectName", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ unique: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
-], ProjectEntity.prototype, "projectNum", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "client", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "buildingType", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "printingCom", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "workType", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
-], ProjectEntity.prototype, "estCost", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "adressLine1", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "adressLine2", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "city", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "state", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
-], ProjectEntity.prototype, "zip", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "country", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
-], ProjectEntity.prototype, "description", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["CreateDateColumn"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", typeof (_a = typeof Date !== "undefined" && Date) === "function" ? _a : Object)
-], ProjectEntity.prototype, "createdAt", void 0);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["UpdateDateColumn"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", typeof (_b = typeof Date !== "undefined" && Date) === "function" ? _b : Object)
-], ProjectEntity.prototype, "updatedAt", void 0);
-ProjectEntity = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["ObjectType"])(),
-    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Entity"])({ name: 'projects' })
-], ProjectEntity);
-
-
-
-/***/ }),
-
 /***/ "./apps/ms-project/src/app/components/projects/interface/project.repository.interface.ts":
 /*!***********************************************************************************************!*\
   !*** ./apps/ms-project/src/app/components/projects/interface/project.repository.interface.ts ***!
@@ -588,8 +471,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _nestjs_typeorm__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nestjs_typeorm__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! typeorm */ "typeorm");
 /* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(typeorm__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _repositories_base_base_abstract_repository__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../repositories/base/base-abstract-repository */ "./apps/ms-project/src/app/repositories/base/base-abstract-repository.ts");
-/* harmony import */ var _entity_project_entity__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../entity/project.entity */ "./apps/ms-project/src/app/components/projects/entity/project.entity.ts");
+/* harmony import */ var _entities_project_entity__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../entities/project.entity */ "./apps/ms-project/src/app/entities/project.entity.ts");
+/* harmony import */ var _repositories_base_base_abstract_repository__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../repositories/base/base-abstract-repository */ "./apps/ms-project/src/app/repositories/base/base-abstract-repository.ts");
 var _a;
 
 
@@ -597,7 +480,7 @@ var _a;
 
 
 
-let ProjectsRepositoryService = class ProjectsRepositoryService extends _repositories_base_base_abstract_repository__WEBPACK_IMPORTED_MODULE_4__["BaseAbstractRepository"] {
+let ProjectsRepositoryService = class ProjectsRepositoryService extends _repositories_base_base_abstract_repository__WEBPACK_IMPORTED_MODULE_5__["BaseAbstractRepository"] {
     constructor(projectRepository) {
         super(projectRepository);
         this.projectRepository = projectRepository;
@@ -605,7 +488,7 @@ let ProjectsRepositoryService = class ProjectsRepositoryService extends _reposit
 };
 ProjectsRepositoryService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_typeorm__WEBPACK_IMPORTED_MODULE_2__["InjectRepository"])(_entity_project_entity__WEBPACK_IMPORTED_MODULE_5__["ProjectEntity"])),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_typeorm__WEBPACK_IMPORTED_MODULE_2__["InjectRepository"])(_entities_project_entity__WEBPACK_IMPORTED_MODULE_4__["ProjectEntity"])),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_a = typeof typeorm__WEBPACK_IMPORTED_MODULE_3__["Repository"] !== "undefined" && typeorm__WEBPACK_IMPORTED_MODULE_3__["Repository"]) === "function" ? _a : Object])
 ], ProjectsRepositoryService);
 
@@ -632,7 +515,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _projects_repository_projects_repository_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./projects-repository/projects-repository.service */ "./apps/ms-project/src/app/components/projects/projects-repository/projects-repository.service.ts");
 /* harmony import */ var _nestjs_typeorm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @nestjs/typeorm */ "@nestjs/typeorm");
 /* harmony import */ var _nestjs_typeorm__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_nestjs_typeorm__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _entity_project_entity__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./entity/project.entity */ "./apps/ms-project/src/app/components/projects/entity/project.entity.ts");
+/* harmony import */ var _entities_project_entity__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../entities/project.entity */ "./apps/ms-project/src/app/entities/project.entity.ts");
 
 
 
@@ -644,7 +527,7 @@ let ProjectsModule = class ProjectsModule {
 };
 ProjectsModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Module"])({
-        imports: [_nestjs_typeorm__WEBPACK_IMPORTED_MODULE_5__["TypeOrmModule"].forFeature([_entity_project_entity__WEBPACK_IMPORTED_MODULE_6__["ProjectEntity"]])],
+        imports: [_nestjs_typeorm__WEBPACK_IMPORTED_MODULE_5__["TypeOrmModule"].forFeature([_entities_project_entity__WEBPACK_IMPORTED_MODULE_6__["ProjectEntity"]])],
         providers: [_projects_resolver__WEBPACK_IMPORTED_MODULE_2__["ProjectsResolver"], {
                 provide: 'ProjectRepositoryInterface',
                 useClass: _projects_repository_projects_repository_service__WEBPACK_IMPORTED_MODULE_4__["ProjectsRepositoryService"],
@@ -695,9 +578,9 @@ let ProjectsResolver = class ProjectsResolver {
             return yield this.projectsService.findAll();
         });
     }
-    createProjectDatabase(createProjectData) {
+    createNewProject(newProjectInputObject) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            return this.projectsService.create(createProjectData);
+            return this.projectsService.create(newProjectInputObject);
         });
     }
 };
@@ -709,11 +592,11 @@ Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 ], ProjectsResolver.prototype, "getProjects", null);
 Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Mutation"])(() => _models_project__WEBPACK_IMPORTED_MODULE_4__["Project"]),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Args"])('createProjectData')),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Args"])('newProjectInputObject')),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_b = typeof _dto_input_create_project_input__WEBPACK_IMPORTED_MODULE_3__["CreateProjectInput"] !== "undefined" && _dto_input_create_project_input__WEBPACK_IMPORTED_MODULE_3__["CreateProjectInput"]) === "function" ? _b : Object]),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", Promise)
-], ProjectsResolver.prototype, "createProjectDatabase", null);
+], ProjectsResolver.prototype, "createNewProject", null);
 ProjectsResolver = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Resolver"])(() => _models_project__WEBPACK_IMPORTED_MODULE_4__["Project"]),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Inject"])('ProjectServiceInterface')),
@@ -772,6 +655,123 @@ ProjectsService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Inject"])('ProjectRepositoryInterface')),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_a = typeof _interface_project_repository_interface__WEBPACK_IMPORTED_MODULE_3__["ProjectRepositoryInterface"] !== "undefined" && _interface_project_repository_interface__WEBPACK_IMPORTED_MODULE_3__["ProjectRepositoryInterface"]) === "function" ? _a : Object])
 ], ProjectsService);
+
+
+
+/***/ }),
+
+/***/ "./apps/ms-project/src/app/entities/project.entity.ts":
+/*!************************************************************!*\
+  !*** ./apps/ms-project/src/app/entities/project.entity.ts ***!
+  \************************************************************/
+/*! exports provided: ProjectEntity */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProjectEntity", function() { return ProjectEntity; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! typeorm */ "typeorm");
+/* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(typeorm__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nestjs/graphql */ "@nestjs/graphql");
+/* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__);
+var _a, _b;
+
+
+
+let ProjectEntity = class ProjectEntity {
+};
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ unique: true }),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["PrimaryColumn"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectEntity.prototype, "projectId", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ unique: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectEntity.prototype, "projectName", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ unique: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
+], ProjectEntity.prototype, "projectNum", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectEntity.prototype, "client", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectEntity.prototype, "buildingType", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectEntity.prototype, "printingCom", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectEntity.prototype, "workType", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
+], ProjectEntity.prototype, "estCost", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectEntity.prototype, "adressLine1", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectEntity.prototype, "adressLine2", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectEntity.prototype, "city", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectEntity.prototype, "state", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
+], ProjectEntity.prototype, "zip", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectEntity.prototype, "country", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+], ProjectEntity.prototype, "description", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["CreateDateColumn"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", typeof (_a = typeof Date !== "undefined" && Date) === "function" ? _a : Object)
+], ProjectEntity.prototype, "createdAt", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["UpdateDateColumn"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", typeof (_b = typeof Date !== "undefined" && Date) === "function" ? _b : Object)
+], ProjectEntity.prototype, "updatedAt", void 0);
+ProjectEntity = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["ObjectType"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Entity"])({ name: 'projects' })
+], ProjectEntity);
 
 
 
@@ -859,7 +859,12 @@ const orm = {
         database: process.env.DATABASE_NAME
     },
     production: {
-        url: process.env.DATABASE_HOST
+        type: process.env.DATABASE_TYPE,
+        host: process.env.DATABASE_HOST,
+        port: Number(process.env.DATABASE_PORT),
+        username: process.env.DATABASE_USERNAME,
+        password: process.env.DATABASE_PASSWORD,
+        database: process.env.DATABASE_NAME
     }
 };
 /* harmony default export */ __webpack_exports__["default"] = (orm["development"]);
@@ -892,15 +897,11 @@ __webpack_require__.r(__webpack_exports__);
 let TypeOrmService = class TypeOrmService {
     createTypeOrmOptions() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const options = Object.assign(Object.assign({}, _config_orm__WEBPACK_IMPORTED_MODULE_3__["default"]), { entities: Object(typeorm__WEBPACK_IMPORTED_MODULE_2__["getMetadataArgsStorage"])().tables.map(tbl => tbl.target), 
-                // migrations: ['src/modules/**/migration/*.ts'],
-                // subscribers: ['src/modules/**/subscriber/*.ts'],
-                // cli: {
-                // 	entitiesDir: 'src/modules/**/entity',
-                // 	migrationsDir: 'src/modules/**/migration',
-                // 	subscribersDir: 'src/modules/**/subscriber'
-                // },
-                synchronize: true, autoLoadEntities: true, useNewUrlParser: true, useUnifiedTopology: true, keepConnectionAlive: true, logging: true });
+            const options = Object.assign(Object.assign({}, _config_orm__WEBPACK_IMPORTED_MODULE_3__["default"]), { entities: Object(typeorm__WEBPACK_IMPORTED_MODULE_2__["getMetadataArgsStorage"])().tables.map(tbl => tbl.target), migrations: ["src/app/migration/**/*.ts"], subscribers: ["src/app/subscriber/**/*.ts"], cli: {
+                    entitiesDir: "src/app/entity",
+                    migrationsDir: "src/app/migration",
+                    subscribersDir: "src/app/subscriber"
+                }, synchronize: false, autoLoadEntities: true, useNewUrlParser: true, useUnifiedTopology: true, keepConnectionAlive: true, logging: true });
             return options;
         });
     }

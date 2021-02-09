@@ -18,6 +18,7 @@ Below are our core plugins:
   - `npm install --save-dev @nrwl/react`
 - [Nest](https://nestjs.com)
   - `npm install --save-dev @nrwl/nest`
+
 ## Generate an application
 
 Run `nx g @nrwl/react:app my-app` to generate an application.
@@ -68,29 +69,62 @@ Visit the [Nx Documentation](https://nx.dev) to learn more.
 
 ## storybook
 
-### Intall nx globally  
+### Intall nx globally
+
 npm install -g nx
 
 ### To Generate react shared component
+
 nx generate @nrwl/react:library shared-components
 
 ### To install dev storybook
+
 npm install --dev @nrwl/storybook
 
 ### To Integrate storybook with shared-component lib
+
 nx g @nrwl/react:storybook-configuration shared-components
 
 ### To create leftmenu component in shared-component lib
+
 nx g component leftmenu --project=shared-components --directory=lib/components
 
 ### To run shared-component storybook
+
 nx run shared-components:storybook
 
 ### To run shared-component storybook
+
 nx run mf-project-app:storybook
 
 ### To run test case shared-component storybook
+
 nx run shared-components-e2e:e2e
 
 ### To run ui-design
+
 npm run start ui-design
+
+## Database migration using typeorm migration CLI
+
+In Every Project ormconfig.json is only used for database migration
+Migration custom CLI created in workspace for every backend project
+
+### Change tsconfig.base.json compiler module
+
+from "exnext" to "None"
+
+### To Generate Migration file
+
+nx run {projectName}:migration-generate --name={fileName} --mode={mode}
+ex. nx run ms-project:migration-generate --name=test --mode=development
+
+### To run Migration file
+
+nx run {projectName}:migration-run --mode={mode}
+ex. nx run ms-project:migration-run --mode=development
+
+### To revert Migration file
+
+nx run {projectName}:migration-revert --mode={mode}
+ex. nx run ms-project:migration-revert --mode=development

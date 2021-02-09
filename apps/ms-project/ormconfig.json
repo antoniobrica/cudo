@@ -1,0 +1,60 @@
+[
+  {
+    "name": "development",
+    "type": "mssql",
+    "host": "127.0.0.1",
+    "port": 1433,
+    "username": "sa",
+    "password": "Welcome@1",
+    "database": "democudodevdb",
+    "synchronize": false,
+    "logging": false,
+    "entities": ["src/app/entities/**/*.ts"],
+    "migrations": ["src/app/migration/**/*.ts"],
+    "subscribers": ["src/app/subscriber/**/*.ts"],
+    "cli": {
+      "entitiesDir": "src/app/entity",
+      "migrationsDir": "src/app/migration",
+      "subscribersDir": "src/app/subscriber"
+    }
+  },
+  {
+    "name": "default",
+    "type": "mssql",
+    "host": "127.0.0.1",
+    "port": 1433,
+    "username": "sa",
+    "password": "Welcome@1",
+    "database": "democudodevdb",
+    "synchronize": false,
+    "logging": false,
+    "entities": ["src/app/entities/**/*.ts"],
+    "migrations": ["src/app/migration/**/*.ts"],
+    "subscribers": ["src/app/subscriber/**/*.ts"],
+    "cli": {
+      "entitiesDir": "src/app/entity",
+      "migrationsDir": "src/app/migration",
+      "subscribersDir": "src/app/subscriber"
+    }
+  },
+  {
+    "name": "test",
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "postgres",
+    "password": "postgres",
+    "database": "graphql-ts-server-boilerplate-test",
+    "synchronize": true,
+    "logging": false,
+    "dropSchema": true,
+    "entities": ["../**/*.entity.{ts,js}"],
+    "migrations": ["../**/*.entity.{ts,js}"],
+    "subscribers": ["../**/*.entity.{ts,js}"],
+    "cli": {
+      "entitiesDir": "../apps/ms-task/src/entity",
+      "migrationsDir": "../apps/ms-task/src/migration",
+      "subscribersDir": "../apps/ms-task/src/subscriber"
+    }
+  }
+]
