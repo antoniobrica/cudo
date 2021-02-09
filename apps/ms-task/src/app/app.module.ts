@@ -1,23 +1,29 @@
 import { Module } from '@nestjs/common';
+import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { TaskModule } from 'apps/ms-task/src/app/component/task/task.module'
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import {
-  TypeOrmService,
-} from '../config/typeorm/type-orm.service';
-import { TaskModule } from './task/task.module';
-import { UserModule } from './components/user/user.module';
+// import { AppController } from './app.controller';
+// import { AppService } from './app.service';
+import {TypeOrmService } from '../config/typeorm/type-orm.service';
+// import { TasksModule } from './task/task.module';
+// import { UserModule } from './components/user/user.module';
 
 @Module({
   imports: [
+    GraphQLModule.forRoot({
+      context: ({ req, connection }) => connection ? { req: connection.context } : { req },
+      autoSchemaFile: true,
+    }),
+
     TaskModule,
+    // TasksModule,
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmService,
     }),
-    UserModule,
+    // UserModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  // controllers: [AppController],
+  // providers: [AppService],
 })
 export class AppModule {}

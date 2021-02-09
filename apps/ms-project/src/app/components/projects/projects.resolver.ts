@@ -16,8 +16,8 @@ export class ProjectsResolver {
     private readonly projectsService: ProjectsService) {}
 
 
-  @Query(() => [ProjectEntity], { nullable: true } )
-   async getProjects(): Promise<ProjectEntity[]>  {
+  @Query(() => [Project], { nullable: true } )
+   async getProjects(): Promise<Project[]>  {
      return await this.projectsService.findAll()
    }
 

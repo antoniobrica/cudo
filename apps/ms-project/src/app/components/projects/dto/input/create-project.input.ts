@@ -71,5 +71,10 @@ export class CreateProjectInput {
   @Column()
   @IsOptional()
   country?: string;
+
+  @Field({nullable:true})
+  @Column()
+  @IsOptional()
+  description?: string;
 }
 

@@ -43,6 +43,9 @@ export class Project {
   
   @Field({nullable:true})
   country?: string;
+
+  @Field({nullable:true})
+  description?: string;
 }
 
 
