@@ -18,6 +18,7 @@ export interface ITodo {
     state?: string
     zip?: string
     country?: string
+    description?: string
     }
   export interface ITodos {
     getTodos: ITodo[];

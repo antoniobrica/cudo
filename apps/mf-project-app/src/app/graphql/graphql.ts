@@ -15,9 +15,20 @@ export const GET_PROJECTS = gql`
   {
     getProjects {
       projectId
-      projectName
-      projectNum
-      client
+    projectName
+    projectNum
+    client
+    buildingType
+    printingCom
+    workType
+    estCost
+    adressLine1
+    adressLine2
+    city
+    state
+    zip
+    country
+    description
     }
   }
 `;
@@ -34,7 +45,7 @@ export const ADD_TODO = gql`
 `;
 
 export const ADD_PROJECT = gql`
-mutation CreateProjectDatabase(
+mutation CreateNewProject(
   $projectName: String!, 
   $projectNum: String!,
   $client: String!,
@@ -48,8 +59,9 @@ mutation CreateProjectDatabase(
   $state: String,
   $zip: String,
   $country: String
+  $description: String
   ){ 
-  createProjectDatabase(createProjectData: {
+    createNewProject(newProjectInputObject: {
      projectName: $projectName,
      projectNum: $projectNum, 
     client: $client,
@@ -63,6 +75,7 @@ mutation CreateProjectDatabase(
     state: $state,
     zip: $zip,
     country: $country
+    description: $description
    }){
     projectId
     projectName
@@ -78,6 +91,7 @@ mutation CreateProjectDatabase(
     state
     zip
     country
+    description
   }
 }`;
 

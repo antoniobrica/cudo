@@ -56,6 +56,7 @@ function ModalExampleModal() {
   const [state, setState] = React.useState("")
   const [zip, setZip] = React.useState("")
   const [country, setCountry] = React.useState("")
+  const [description, setDescription] = React.useState("")
   const [addProject] = useProjectMutation(ADD_PROJECT);
 
   const onprojectNameChange = e => {
@@ -106,6 +107,10 @@ function ModalExampleModal() {
   const onCountry = (event, data) => {
     setCountry(data.value)
   }
+ const onDescription =e =>{
+     setDescription(e.target.value)
+     console.log('desicription', description)
+   }
   const handleSaveProject = () => {
     setOpen(false);
     // props.close();
@@ -115,7 +120,7 @@ function ModalExampleModal() {
     addProject({
       variables: {
         projectName, projectNum, client, buildingType,
-        printingCom, workType, estCost, adressLine1, adressLine2, city, state, country
+        printingCom, workType, estCost, adressLine1, adressLine2, city, state, country, description
       },
       update: (
         cache: ApolloCache<ProjectMutation>,
@@ -404,7 +409,10 @@ function ModalExampleModal() {
               <Grid.Column>
                 <Form.Field>
                   <label>Description </label>
-                  <TextArea placeholder='Tell us more' />
+                  <TextArea placeholder='Tell us more' 
+                   value={description}
+                   onChange={onDescription}
+                    />
                 </Form.Field>
               </Grid.Column>
 

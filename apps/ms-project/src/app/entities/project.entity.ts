@@ -68,11 +68,11 @@ export class ProjectEntity {
   @Column({nullable: true})
   description?: string;
 
-  @Field()
-  @CreateDateColumn()
-  createdAt: Date
+  // @Field()
+  // @CreateDateColumn()
+  // createdAt: Date
 
-  @Field()
-  @UpdateDateColumn()
-  updatedAt: Date
+  // @Field()
+  // @UpdateDateColumn()
+  // updatedAt: Date
 }

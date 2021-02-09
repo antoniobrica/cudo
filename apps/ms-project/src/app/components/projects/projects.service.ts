@@ -18,8 +18,8 @@ export class ProjectsService implements ProjectServiceInterface {
     try{
     const projectEntity: ProjectEntity={
         projectId: uuidv4(),
-        createdAt: new Date,
-        updatedAt: new Date,
+        // createdAt: new Date,
+        // updatedAt: new Date,
       ...createProjectInput}
       return await this.projectRepository.create(projectEntity);
     }catch(error){throw 'Invalid Input'; }

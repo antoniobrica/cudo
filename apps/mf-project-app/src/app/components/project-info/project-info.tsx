@@ -61,20 +61,20 @@ export function ProjectInfo(props: ProjectInfoProps) {
             <div className="header font-header">{project.projectName}</div>
             <div className="description">{project.client}</div>
             <div className="data-built">Type of building
-            <span className="summary">Residential Buildings
+            <span className="summary">{project.buildingType}
                 
                 </span>
             </div>
              
-            <div className="data-built">Level of building
+            {/* <div className="data-built">Level of building
             <span className="summary">3rd
                 
                 </span>
-            </div>
+            </div> */}
           
             </div>
             <div className="content">
-                <div className="data-built"> This is description will be show sunt in culpa qui officia deserunt mollit anim id est laborum...</div>
+                <div className="data-built">{project.description}</div>
                 <div className="event">
                     <div className="label-green label-spacer">
                        <span className="white-text">AB</span>
