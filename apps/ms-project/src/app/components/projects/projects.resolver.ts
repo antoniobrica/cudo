@@ -16,10 +16,10 @@ export class ProjectsResolver {
     private readonly projectsService: ProjectsService) { }
 
 
-  @Query(() => [ProjectEntity], { nullable: true })
-  async getProjects(): Promise<ProjectEntity[]> {
-    return await this.projectsService.findAll()
-  }
+  @Query(() => [Project], { nullable: true } )
+   async getProjects(): Promise<Project[]>  {
+     return await this.projectsService.findAll()
+   }
 
   @Mutation(() => Project)
   async createNewProject(
