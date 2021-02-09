@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 
 import { Route, Link } from 'react-router-dom';
 import MfAccountAppMount from './mf-account-app-mount/mf-account-app-mount';
+import { MfMeetingAppMount } from './mf-meeting-app-mount/mf-meeting-app-mount';
 
 export function App() {
   return (
@@ -23,6 +24,9 @@ export function App() {
           </li>
           <li>
             <Link to="/page-2">Page 2</Link>
+          </li>
+          <li>
+            <Link to="/page-3">Page 3</Link>
           </li>
         </ul>
       </div>
@@ -41,18 +45,29 @@ export function App() {
         exact
         render={() => (
           <main>
-          <Grid  >
-           <MfAccountAppMount></MfAccountAppMount>
-          </Grid>
-        </main>
+            <Grid  >
+              <MfAccountAppMount></MfAccountAppMount>
+            </Grid>
+          </main>
+        )}
+      />
+      <Route
+        path="/page-3"
+        exact
+        render={() => (
+          <main>
+            <Grid  >
+              <MfMeetingAppMount></MfMeetingAppMount>
+            </Grid>
+          </main>
         )}
       />
       <body>
-        
-    </body>
+
+      </body>
       {/* END: routes */}
     </div>
-    
+
   );
 }
 

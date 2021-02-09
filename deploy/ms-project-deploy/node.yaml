@@ -1,0 +1,44 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ms-project
+  labels:
+    app: ms-project
+spec:
+  selector:
+    app: ms-project
+  ports:
+    - protocol: TCP
+      port: 5005
+      targetPort: 5005
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-project
+  labels:
+    app: ms-project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-project
+  template:
+    metadata:
+      labels:
+        app: ms-project
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "ms-project"
+        dapr.io/app-port: "5005"
+        dapr.io/dapr-http-port: "3501"
+        dapr.io/config: "appconfig"
+    spec:
+      containers:
+        - name: ms-project-container
+          image: localhost:5000/ms-project
+          ports:
+            - containerPort: 5005
+          imagePullPolicy: Always

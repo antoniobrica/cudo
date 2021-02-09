@@ -4,7 +4,7 @@ import { Itask } from '../interfaces/tender.interface';
 
 @Injectable()
 export class TaskService {
-  constructor(private httpService: HttpService) {}
+  constructor(private httpService: HttpService) { }
   async findAll(): Promise<Itask[]> {
     return new Promise<Itask[]>((resolve) => {
       resolve([
@@ -18,7 +18,6 @@ export class TaskService {
     });
   }
   async find() {
-    // const response = await this.httpService.get('https://api.github.com/users/januwA').toPromise();
     const response = await this.httpService
       .get(Constants.MS_TENDER_DAPR_URL)
       .toPromise();

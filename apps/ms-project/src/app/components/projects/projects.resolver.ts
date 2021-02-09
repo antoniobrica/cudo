@@ -1,9 +1,9 @@
 import { Inject } from '@nestjs/common';
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
+import { ProjectEntity } from '../../entities/project.entity';
 import { GetProjectArgs } from './dto/args/get-project.args';
 import { GetProjectsArgs } from './dto/args/get-projects.args';
 import { CreateProjectInput } from './dto/input/create-project.input';
-import { ProjectEntity } from './entity/project.entity';
 import { ProjectServiceInterface } from './interface/project.service.interface';
 
 import { Project } from './models/project';
@@ -13,20 +13,19 @@ import { ProjectsService } from './projects.service';
 export class ProjectsResolver {
   constructor(
     @Inject('ProjectServiceInterface')
-    private readonly projectsService: ProjectsService) {}
+    private readonly projectsService: ProjectsService) { }
 
 
-  @Query(() => [ProjectEntity], { nullable: true } )
-   async getProjects(): Promise<ProjectEntity[]>  {
-     return await this.projectsService.findAll()
-   }
+  @Query(() => [ProjectEntity], { nullable: true })
+  async getProjects(): Promise<ProjectEntity[]> {
+    return await this.projectsService.findAll()
+  }
 
-  
   @Mutation(() => Project)
-  async createProjectDatabase(
-    @Args('createProjectData') createProjectData: CreateProjectInput
+  async createNewProject(
+    @Args('newProjectInputObject') newProjectInputObject: CreateProjectInput
   ) {
-    return this.projectsService.create(createProjectData);
+    return this.projectsService.create(newProjectInputObject);
   }
 
 }

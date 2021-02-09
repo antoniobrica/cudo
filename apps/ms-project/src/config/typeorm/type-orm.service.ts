@@ -15,14 +15,14 @@ export class TypeOrmService implements TypeOrmOptionsFactory {
 		const options = {
 			...config,
 			entities: getMetadataArgsStorage().tables.map(tbl => tbl.target),
-			// migrations: ['src/modules/**/migration/*.ts'],
-			// subscribers: ['src/modules/**/subscriber/*.ts'],
-			// cli: {
-			// 	entitiesDir: 'src/modules/**/entity',
-			// 	migrationsDir: 'src/modules/**/migration',
-			// 	subscribersDir: 'src/modules/**/subscriber'
-			// },
-			synchronize: true,
+			migrations: ["src/app/migration/**/*.ts"],
+			subscribers: ["src/app/subscriber/**/*.ts"],
+			cli: {
+				entitiesDir: "src/app/entity",
+				migrationsDir: "src/app/migration",
+				subscribersDir: "src/app/subscriber"
+			},
+			synchronize: false,
 			autoLoadEntities: true,
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
