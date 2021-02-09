@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @ObjectType()
 export class Project {
@@ -46,6 +47,14 @@ export class Project {
 
   @Field({nullable:true})
   description?: string;
+
+  @Field()
+  @CreateDateColumn()
+  createdAt: Date
+
+  @Field()
+  @UpdateDateColumn()
+  updatedAt: Date
 }
 
 

@@ -355,6 +355,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(typeorm__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nestjs/graphql */ "@nestjs/graphql");
 /* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__);
+var _a, _b;
 
 
 
@@ -436,6 +437,16 @@ Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Column"])({ nullable: true }),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
 ], ProjectEntity.prototype, "description", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["CreateDateColumn"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", typeof (_a = typeof Date !== "undefined" && Date) === "function" ? _a : Object)
+], ProjectEntity.prototype, "createdAt", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["UpdateDateColumn"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", typeof (_b = typeof Date !== "undefined" && Date) === "function" ? _b : Object)
+], ProjectEntity.prototype, "updatedAt", void 0);
 ProjectEntity = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_2__["ObjectType"])(),
     Object(typeorm__WEBPACK_IMPORTED_MODULE_1__["Entity"])({ name: 'projects' })
@@ -473,6 +484,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/graphql */ "@nestjs/graphql");
 /* harmony import */ var _nestjs_graphql__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! typeorm */ "typeorm");
+/* harmony import */ var typeorm__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(typeorm__WEBPACK_IMPORTED_MODULE_2__);
+var _a, _b;
+
 
 
 let Project = class Project {
@@ -537,6 +552,16 @@ Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])({ nullable: true }),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
 ], Project.prototype, "description", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_2__["CreateDateColumn"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", typeof (_a = typeof Date !== "undefined" && Date) === "function" ? _a : Object)
+], Project.prototype, "createdAt", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["Field"])(),
+    Object(typeorm__WEBPACK_IMPORTED_MODULE_2__["UpdateDateColumn"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", typeof (_b = typeof Date !== "undefined" && Date) === "function" ? _b : Object)
+], Project.prototype, "updatedAt", void 0);
 Project = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_nestjs_graphql__WEBPACK_IMPORTED_MODULE_1__["ObjectType"])()
 ], Project);
@@ -727,10 +752,13 @@ let ProjectsService = class ProjectsService {
     }
     create(createProjectInput) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            // try{
-            const projectEntity = Object.assign({ projectId: Object(uuid__WEBPACK_IMPORTED_MODULE_2__["v4"])() }, createProjectInput);
-            return yield this.projectRepository.create(projectEntity);
-            // }catch(error){throw "Invalid input"}
+            try {
+                const projectEntity = Object.assign({ projectId: Object(uuid__WEBPACK_IMPORTED_MODULE_2__["v4"])(), createdAt: new Date, updatedAt: new Date }, createProjectInput);
+                return yield this.projectRepository.create(projectEntity);
+            }
+            catch (error) {
+                throw 'Invalid Input';
+            }
         });
     }
     findAll() {

@@ -1,4 +1,4 @@
-import { BaseEntity, BeforeInsert, Column, Entity, ObjectIdColumn, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, ObjectIdColumn, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Field, Int, ObjectType } from "@nestjs/graphql";
 import { IsOptional } from 'class-validator';
 
@@ -67,4 +67,12 @@ export class ProjectEntity {
   @Field()
   @Column({nullable: true})
   description?: string;
+
+  @Field()
+  @CreateDateColumn()
+  createdAt: Date
+
+  @Field()
+  @UpdateDateColumn()
+  updatedAt: Date
 }

@@ -15,12 +15,14 @@ export class ProjectsService implements ProjectServiceInterface {
   ) {}
 
   public async create(createProjectInput: CreateProjectInput): Promise<ProjectEntity> {
-    // try{
+    try{
     const projectEntity: ProjectEntity={
         projectId: uuidv4(),
+        createdAt: new Date,
+        updatedAt: new Date,
       ...createProjectInput}
       return await this.projectRepository.create(projectEntity);
-    // }catch(error){throw "Invalid input"}
+    }catch(error){throw 'Invalid Input'; }
 } 
 
 
