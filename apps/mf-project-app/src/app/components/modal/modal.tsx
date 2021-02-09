@@ -12,22 +12,30 @@ import { ADD_PROJECT, GET_PROJECTS } from "../../graphql/graphql";
 
 function ModalExampleModal() {
   const clientOption = [
-    { key: 'co', value: 'Company one name', text: 'Company one name' },
-    { key: 'ct', value: 'Company two name', text: 'Company two name' },
-    { key: 'cth', value: 'Company three name', text: 'Company two name' },
+    { key: 'c1', value: 'c1', text: 'Client 1' },
+    { key: 'c2', value: 'c2', text: 'Client 2' },
+    { key: 'c3', value: 'c3', text: 'Client 3' },
+    { key: 'c4', value: 'c4', text: 'Client 4' },
+
 
   ]
   const buildingOption = [
-    { key: 'bo', value: 'ABC type', text: 'ABC type' },
-    { key: 'bt', value: 'item 1', text: 'item 2' },
-    { key: 'bth', value: 'item 3', text: 'item 4' },
+    { key: 'b1', value: 'b1', text: 'Building type 1' },
+    { key: 'b2', value: 'b2', text: 'Building type 2' },
+    { key: 'b3', value: 'b3', text: 'Building type 3' },
+
+  ]
+  const printingCompanyOption = [
+    { key: 'b1', value: 'b1', text: 'Vista Print' },
+    { key: 'b2', value: 'b2', text: 'Flawless Copies' },
+    { key: 'b3', value: 'b3', text: 'Rappid Copies' },
 
   ]
   const workTypeOptions = [
-    { key: 'wo', value: 'work type 1', text: 'work type 1' },
-    { key: 'wt', value: 'work type 2', text: 'work type 2' },
-
+    { key: 'w1', value: 'w1', text: 'Electrical work' },
+    { key: 'w2', value: 'w2', text: 'HAVC work' },
   ]
+
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
@@ -198,7 +206,7 @@ function ModalExampleModal() {
               <Grid.Column>
                 <Form.Field>
                   <label>Printing Company </label>
-                  <Select placeholder='Select' className="small" options={countryOptions}
+                  <Select placeholder='Select' className="small" options={printingCompanyOption}
                     value={printingCom}
                     onChange={onPrintingCom}
                   />
