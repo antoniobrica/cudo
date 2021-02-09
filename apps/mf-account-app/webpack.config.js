@@ -18,7 +18,6 @@ module.exports = (config, context) => {
     plugins: [
       ...config.plugins,
       new WebpackNotifierPlugin({ title: 'Frontend Project build completed' }),
-      new BundleAnalyzerPlugin(),
     ],
     output: {
       ...config.output,
