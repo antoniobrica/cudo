@@ -1,5 +1,6 @@
-import { BaseEntity, BeforeInsert, Column, Entity, ObjectIdColumn, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, ObjectIdColumn, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Field, Int, ObjectType } from "@nestjs/graphql";
+import { IsOptional } from 'class-validator';
 
 
 @ObjectType()
@@ -24,7 +25,7 @@ export class ProjectEntity {
   client: string;
 
   @Field()
-  @Column({ nullable: true })
+  @Column({nullable:true})
   buildingType?: string;
 
   @Field()
@@ -62,4 +63,16 @@ export class ProjectEntity {
   @Field()
   @Column({ nullable: true })
   country?: string;
+
+  @Field()
+  @Column({nullable: true})
+  description?: string;
+
+  // @Field()
+  // @CreateDateColumn()
+  // createdAt: Date
+
+  // @Field()
+  // @UpdateDateColumn()
+  // updatedAt: Date
 }

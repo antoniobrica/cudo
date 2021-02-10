@@ -5,7 +5,9 @@
 img {
     max-width: 100%;
 }
-
+content {
+    margin-left: 200px;
+}
 .d-flex {
     display: -ms-flexbox;
     display: -webkit-flex;
@@ -140,7 +142,10 @@ p.input-info {
 .white-text {
     color: color("shades", "white") !important;
 }
+.black-text {
+    color: #000000 !important;
 
+}
 .green-text {
     color: $greenTextColor !important;
 }
@@ -471,6 +476,7 @@ p.input-info {
             padding: 0;
             font-size: 1.5rem;
             font-weight: 400;
+            
         }
     }
 }
@@ -809,7 +815,7 @@ li {
     box-shadow: 0 1px 2px 0 rgba(34, 36, 38, .15);
     margin: 1rem 0;
     padding: 1.5rem 1.5rem 3rem;
-    border-radius: .28571429rem;
+    
     border: 1px solid rgba(34, 36, 38, .15);
     h2 {
         margin: 3rem 0 2rem 0;

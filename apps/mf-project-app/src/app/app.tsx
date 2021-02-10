@@ -1,21 +1,42 @@
-import React, { Suspense } from 'react';
+import React, { Suspense }  from 'react';
+
+import styles from './app.module.scss';
+import {SetList} from '@cudo/ui';
+import { Route, Link } from 'react-router-dom';
+import ProjectInfo from './components/project-info/project-info';
+// import { Leftmenu } from '@cudo/shared-components'
+
+// import React, { Suspense } from 'react';
 import { initI18n } from '@cudo/mf-core';
 import { Loading } from '@cudo/ui'
-import { Route, Link } from 'react-router-dom';
+// import { Route, Link } from 'react-router-dom';
 import { TestComponent } from './test-component/test-component';
 const defaultLanguage = 'de-DE';
 const supportedLanguages = [defaultLanguage, 'en-GB'];
+import {Menubar} from '@cudo/shared-components';  
+  
+import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
+
 
 initI18n('./assets/i18n/{{lng}}.json', defaultLanguage);
 export function App() {
   return (
+  
     <Suspense fallback={<Loading />}>
       <div>
-        <header className="flex">
+      <div className={styles.app}>
+      {/* <Leftmenu /> */}
+      <Menubar></Menubar> 
+    {/* <ModalExampleModal></ModalExampleModal>  */}
+      <ProjectInfo ></ProjectInfo>
+   
+    </div>
+        {/* <header className="flex">
           <h1>Welcome to mf-project-app!</h1>
         </header>
-        <TestComponent></TestComponent>
-      </div></Suspense>
+        <TestComponent></TestComponent> */}
+      </div> 
+      </Suspense>
 
   );
 }

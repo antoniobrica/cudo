@@ -126,7 +126,7 @@
 
 .ui.mini.button {
     height: 2.8rem;
-    font-size: 1.1rem;
+    font-size: 14px;
     padding: 0 1rem;
     line-height: 2.8rem;
     border-radius: 3px;
@@ -266,6 +266,7 @@
     }
 }
 
+ 
 // Disabled
 .ui {
     &.basic.buttons .disabled.button,
@@ -326,6 +327,24 @@
     }
 }
 
+
+
+.ui.button.border-btn {
+    background: none;
+    border: 1px solid #b5bcc8;
+    color: #718898;
+}
+.ui.button.icon-btn{
+    background: #2D62ED;
+     color: #ffffff;
+}
+.ui.button.icon-border{
+   
+     background: none;
+    border: 1px solid #2D62ED;
+    color: #2D62ED;
+}
+
 .ui.basic.button.grey-btn {
     background: color("shades", "white");
     border: 1px solid color("grey", "base");
@@ -337,6 +356,10 @@
         background: color("grey", "base");
     }
 }
+
+
+ 
+
 
 .ui.button.light-grey-btn {
     background: color("grey", "lighten-9");
@@ -410,4 +433,20 @@ div.ui.checkbox.checkbox-with-onoff input:checked~label:before {
 div.ui.radio.checkbox .box:before,
 div.ui.radio.checkbox label:before {
     border: 1px solid color("grey", "base");
+}
+
+
+.ui.mini.button.secondary_btn{
+    float:right;
+    border-radius:0px
+}
+
+.ui.button.grey-btn, .ui.button.icon-border {
+    
+    border-radius: 0px;
+}
+.ui.button.icon-border {
+    background: none;
+      border:none; 
+    color: #9A9EA1;
 }

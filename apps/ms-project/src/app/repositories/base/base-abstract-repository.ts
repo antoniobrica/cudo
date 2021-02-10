@@ -33,9 +33,4 @@ export abstract class BaseAbstractRepository<T>
     return await this.entity.delete(id);
   }
 
-  // public async findPosition(filterCondition: any):Promise<T> {
-  //   return await this.entity.findIndex({ where: filterCondition });
-
-
-
 }

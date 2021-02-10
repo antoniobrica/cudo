@@ -1,3 +1,69 @@
+ .label-green {
+    width: 9%;
+    height: auto;
+    border-radius: 500rem;
+    background-color: #6FC968;
+    padding: 0 0 0 3px;
+}
+.label-purple {
+    width: 8%;
+    height: auto;
+    border-radius: 500rem;
+    background-color: #1B1B40;
+    padding: 0 0 0 3px;
+}
+.label-blue {
+    width: 8%;
+    height: auto;
+    border-radius: 500rem;
+    background-color: #2D62ED;
+    padding: 0 0 0 3px;
+
+  
+}
+.label-orange {
+    width: 8%;
+    height: auto;
+    border-radius: 500rem;
+    background-color: #FEC159;
+    padding: 0 0 0 3px;
+  
+}
+.label-light-blue {
+    width: 8%;
+    height: auto;
+    border-radius: 500rem;
+    background-color: #6DD6E2;
+    padding: 0 0 0 3px;
+  
+}
+.label-light-purple {
+    width: 8%;
+    height: auto;
+    border-radius: 500rem;
+    background-color: #AE8DCE;
+    padding: 0 0 0 3px;
+  
+}
+
+.ui.card>.content>.header:not(.ui)  {
+    
+    margin-top: 1.78575em; 
+}
+.dot {
+    height: 25px;
+    width: 25px;
+    background-color: #F1F5FF;
+    border-radius: 50%;
+    display: inline-block;
+    color: #2D62ED;
+    padding: 0 6px 0 6px;
+  }
+
+.event{
+    @include flexbox;
+    margin-top: 20px;
+}
 .card-block-listing {
     @include flexbox;
     margin: 0 -1rem;
@@ -5,49 +71,14 @@
     margin-bottom: 2.5rem;
     flex-wrap: wrap;
 }
+.ui.card{
+    .summary{
+        float: right;
+        font-weight: 700;
+    }
+ 
 
-.react-multi-carousel-list {
-    margin: 0 -1rem;
-    .react-multi-carousel-track {
-        .react-multi-carousel-item {
-            padding: 0 1rem;
-            position: relative;
-            // width: calc(25% - 2rem);
-            min-width: inherit;
-            margin: 0 0rem 1rem;
-            .card-block-area {
-                width: 100%;
-                // border: 0;
-                // padding: 0;
-                margin: 0;
-                background: color("shades", "white");
-                border: 1px solid color("grey", "lighten-5");
-            }
-        }
-    }
-    .react-multiple-carousel__arrow {
-        font-family: Icons;
-        left: 1rem;
-        &.react-multiple-carousel__arrow--right {
-            left: inherit;
-            right: 1rem;
-        }
-        @media (max-width:#{$large-desktop-middle-down}) {
-            transform: scale(0.8);
-        }
-    }
-    .react-multiple-carousel__arrow--left::before {
-        content: "play_arrow";
-        font-family: 'Material Icons';
-        font-size: 2.4rem;
-        transform: rotate(-180deg);
-    }
-    .react-multiple-carousel__arrow--right::before {
-        content: "play_arrow";
-        font-family: 'Material Icons';
-        font-size: 2.4rem;
-    }
-}
+} 
 
 .card-block-area {
     background: color("shades", "white");
@@ -131,11 +162,7 @@
                 width: 100%;
                 height: 6.5rem;
             }
-            .live-dot {
-                top: 5rem;
-                left: 4rem;
-                transform: scale(0.9);
-            }
+           
         }
         .card-info {
             @include flexbox;
@@ -306,3 +333,38 @@
         }
     }
 }
+
+.app-content-body{
+    position: relative;
+    margin-left: 100px;
+    top: 10px;
+    .project{
+        color:#1B1B40;
+    }
+    .total{font-size: 14px;
+        font-weight: 400;}
+}
+ 
+.ui.card>.content>.header:not(.ui), .ui.cards>.card>.content>.header:not(.ui){
+    font-size: 20px;
+    font-weight: normal;
+}
+.ui.card>.content>.header+.description{
+    font-size: 13px;
+  
+}
+.content .data-built {
+    font-size: 12px;
+    color: #000000;
+}
+
+.label-spacer {
+    /*display:table-cell; Remove this*/
+    font-size: 12px;
+    float: left; /*Add this*/
+    margin-right: 5px; /*Add this*/
+  }
+
+  .card-margin{
+    margin-bottom: 20px !important;
+  }
