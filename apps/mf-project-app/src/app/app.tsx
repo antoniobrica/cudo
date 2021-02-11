@@ -25,10 +25,8 @@ export function App() {
     <Suspense fallback={<Loading />}>
       <div>
       <div className={styles.app}>
-      {/* <Leftmenu /> */}
-      <Menubar></Menubar> 
-    {/* <ModalExampleModal></ModalExampleModal>  */}
-      <ProjectInfo ></ProjectInfo>
+       <Menubar></Menubar> 
+       <ProjectInfo ></ProjectInfo>
    
     </div>
         {/* <header className="flex">
