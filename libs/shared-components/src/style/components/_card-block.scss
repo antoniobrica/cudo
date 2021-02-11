@@ -353,11 +353,16 @@
     font-size: 13px;
   
 }
-.content .data-built {
+ 
+.content .data-built p{
     font-size: 12px;
     color: #000000;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
-
 .label-spacer {
     /*display:table-cell; Remove this*/
     font-size: 12px;
