@@ -115,15 +115,27 @@ function ProjectApp(history: any) {
 
 function Home({ history }) {
   const [input, setInput] = useState("");
-
+  const [isProject, setIsProject] = useState(false);
+  const data = "parrent"
+  const callbackFunction = (childData) => {
+    setInput(childData);
+    if(childData == "project"){
+      setIsProject(true);
+    }
+    else {
+      setIsProject(false);
+    }
+};
+console.log("child data in parrent ", input)
   return (
     <div>
       {/* <Header /> */}
-      {/* <Menubar></Menubar>  */}
+      <Menubar data={data} parentCallback = {callbackFunction}></Menubar> 
       <div className="home">
-          <div>
+        {isProject?<div>
             <ProjectApp></ProjectApp>
-          </div>
+          </div>: null}
+          
       </div>
     </div>
   );

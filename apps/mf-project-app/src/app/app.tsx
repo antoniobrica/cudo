@@ -25,7 +25,7 @@ export function App() {
     <Suspense fallback={<Loading />}>
       <div>
       <div className={styles.app}>
-       <Menubar></Menubar> 
+       {/* <Menubar></Menubar>  */}
        <ProjectInfo ></ProjectInfo>
    
     </div>
