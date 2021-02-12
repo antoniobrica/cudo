@@ -82,13 +82,13 @@ import MicroFrontend from "../MicroFrontend";
 import "./app.module.scss";
 import { environment } from "../environments/environment";
 import Login from './login/login'
-import {Menubar} from '@cudo/shared-components';  
+import { Menubar } from '@cudo/shared-components';
 
 // import Home from './home/home'
 const defaultHistory = createBrowserHistory();
 
 const {
- // EACT_APP_COST_HOST: costHost,
+  // EACT_APP_COST_HOST: costHost,
   REACT_APP_PROJECT_HOST: projectHost,
 } = environment;
 
@@ -119,23 +119,25 @@ function Home({ history }) {
   const data = "parrent"
   const callbackFunction = (childData) => {
     setInput(childData);
-    if(childData == "project"){
+    if (childData == "project") {
       setIsProject(true);
     }
     else {
       setIsProject(false);
     }
-};
-console.log("child data in parrent ", input)
+  };
+  console.log("child data in parrent ", input)
   return (
     <div>
       {/* <Header /> */}
-      <Menubar data={data} parentCallback = {callbackFunction}></Menubar> 
+      <Menubar data={data} parentCallback={callbackFunction}></Menubar>
       <div className="home">
-        {isProject?<div>
+        {isProject ?
+          <div>
             <ProjectApp></ProjectApp>
-          </div>: null}
-          
+          </div> :
+          null}
+
       </div>
     </div>
   );
@@ -145,12 +147,12 @@ function App() {
   return (
     <React.StrictMode>
       <Router>
-        <Switch> 
+        <Switch>
           <Route exact path="/" component={Login} />
-          <Route exact path="/home" component={Home} /> 
+          <Route exact path="/home" component={Home} />
         </Switch>
       </Router>
-      </React.StrictMode>
+    </React.StrictMode>
   );
 }
 

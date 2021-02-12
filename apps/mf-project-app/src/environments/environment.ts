@@ -3,4 +3,7 @@
 
 export const environment = {
   production: false,
+  EACT_APP_COST_HOST: "http://localhost:6004",
+  REACT_APP_MEETING_HOST: "http://localhost:6005",
+  API_URL:'http://localhost:5005/graphql',
 };
