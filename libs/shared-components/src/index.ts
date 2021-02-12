@@ -5,3 +5,4 @@ export * from './lib/components/modal/modal';
 export * from './lib/components/cards/cards';
 export * from './lib/components/tabs/tabs'; 
 export * from './lib/components/messages/messages'; 
+export * from './lib/components/modal/modal2'; 
