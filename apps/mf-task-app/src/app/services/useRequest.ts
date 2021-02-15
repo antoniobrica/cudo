@@ -1,13 +1,13 @@
 import { DocumentNode, useQuery, useMutation } from "@apollo/react-hooks";
-import { ITodos, ITodoMutation, ProjectMutation, IProject, IProjects } from "../interfaces/project";
+import { ITodos, TaskMutation, ITask, ITasks } from "../interfaces/task";
 
-export function useProjectQuery(gqlQuery: DocumentNode) {
-  const { loading, error, data } = useQuery<IProjects>(gqlQuery);
+export function useTaskQuery(gqlQuery: DocumentNode) {
+  const { loading, error, data } = useQuery<ITasks>(gqlQuery);
   return { loading, error, data };
 }
 
 
-export function useProjectMutation(gqlQuery: DocumentNode){
-  const [addProject] = useMutation<ProjectMutation>(gqlQuery);
-  return [addProject];
+export function useTaskMutation(gqlQuery: DocumentNode){
+  const [addTask] = useMutation<TaskMutation>(gqlQuery);
+  return [addTask];
 }

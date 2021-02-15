@@ -1,6 +1,11 @@
 import React from 'react';
 import { Button, Header,   Modal,  Tab,Table,  Input, Form, Grid, Image, Select, TextArea} from 'semantic-ui-react';
 import { radios } from '@storybook/addon-knobs';
+import { ITask, ITasks, TaskMutation } from "../../interfaces/task";
+import { useTaskMutation } from '../../services/useRequest';
+import { ApolloCache, FetchResult } from '@apollo/client';
+import { ADD_TASK, GET_TASKS } from "../../graphql/graphql";
+
 
 import './create-task.module.scss';
 
@@ -16,6 +21,77 @@ export function CreateTask(props: CreateTaskProps) {
 
 
 const [open, setOpen] = React.useState(false)
+const [taskTitle, setTaskTitle] = React.useState("")
+const [startDate, setStartDate] = React.useState("2021-03-15T06:31:14.000Z")
+const [endDate, setEndDate] = React.useState("2021-02-15T06:31:14.000Z")
+const [estimatedDays, setEstimatedDays] = React.useState("")
+const [sendNotification, setEendNotification] = React.useState("")
+const [BKPID, setBKPID] = React.useState("")
+const [saveTaskAsTemplate, setSaveTaskAsTemplate] = React.useState("")
+const [phasesID, setPhasesID] = React.useState("")
+const [status, setStatus] = React.useState("")
+
+const [addTask] = useTaskMutation(ADD_TASK);
+
+const onTaskTitleChange = e => {
+  setTaskTitle(e.target.value)
+  console.log('taskTitle', taskTitle)
+}
+const setStartDateChange = e => {
+  setStartDate(e.target.value)
+}
+const setEndDateChange = e => {
+  setEndDate(e.target.value)
+}
+const onsetEstimatedDays = (event, data) => {
+  setEstimatedDays(data.value)
+  console.log('setEstimatedDays', estimatedDays)
+}
+
+const sendNotificationChange = (event) => {
+  setEendNotification(event.target.value)
+}
+
+const setBKPIDChange = (event, data) => {
+  setBKPID(data.value)
+}
+
+const setSaveTaskAsTemplateChange = (event, data) => {
+  setSaveTaskAsTemplate(data.value)
+}
+
+const onsetPhasesID = (event, data) => {
+  setPhasesID(data.value);
+}
+const onsetStatus = e => {
+  setStatus(e.target.value)
+}
+
+ const handleSaveTask = () => {
+  setOpen(false);
+  addTask({
+    variables: {
+      taskTitle, startDate, endDate, estimatedDays,
+      sendNotification, BKPID, saveTaskAsTemplate, phasesID, status
+    },
+    update: (
+      cache: ApolloCache<TaskMutation>,
+      { data: { addTask } }: FetchResult<TaskMutation>
+    ) => {
+      const cacheData = cache.readQuery({ query: GET_TASKS}) as ITasks;
+      cache.writeQuery({
+        query: GET_TASKS,
+        data: {
+          getTasks: [...cacheData.getTasks, addTask]
+        }
+      });
+    }
+  });
+
+};
+
+
+
   return (
     <div id="navbar">
     <Modal className="modal_media"
@@ -36,7 +112,9 @@ const [open, setOpen] = React.useState(false)
   <Grid.Column>
     <Form.Field>
       <label>Task Title <span className="danger">*</span></label>
-      <Input placeholder='Swtichboard fitting' size='small' className="full-width" type="text" />
+      <Input placeholder='Swtichboard fitting' size='small' className="full-width" type="text" 
+       value={taskTitle}
+       onChange={onTaskTitleChange}/>
     </Form.Field>
   </Grid.Column>
  
@@ -175,7 +253,7 @@ const [open, setOpen] = React.useState(false)
 </Form>
 <Button
           content="Submit" 
-          onClick={() => setOpen(false)}
+          onClick={handleSaveTask}
           positive
           size='mini' className="grey-btn"
         />
