@@ -1,84 +1,113 @@
-import { BaseEntity, BeforeInsert, Column, Entity, ObjectIdColumn, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
-import { Field, Int, ObjectType } from "@nestjs/graphql";
+import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, ObjectIdColumn, PrimaryColumn, PrimaryGeneratedColumn, getMongoRepository } from 'typeorm';
+import ReferanceTypeEntity from './reference-type.entity';
+import TaskAssigneessEntity from './task-assignees.entity';
+import TaskFllowersEntity from './task-followers.entity';
+import * as uuid from 'uuid'
+import { Expose, plainToClass } from 'class-transformer'
+import { Logger } from '@nestjs/common';
 
+@Entity({
+  name: 'ProjectTasks',
+  orderBy: {
+    createdAt: 'ASC'
+  }
+})
+export class ProjectTasksEntity extends BaseEntity {
+  @Expose()
+  @PrimaryGeneratedColumn('uuid')
+  _id: string;
 
-@ObjectType()
-@Entity({ name: 'ProjectTasks' })
-export class ProjectTasksEntity {
-  @Field()
+  @Expose()
   @Column({ unique: true })
-  @PrimaryColumn()
-  TaskID: string;
+  taskID: string;
 
-  @Field()
+  @Expose()
   @Column({ nullable: true })
-  ParentTaskID?: string;
+  taskTitle?: string;
 
-  @Field()
+  @Expose()
   @Column({ nullable: true })
-  ChildTaskID?: string;
+  startDate?: Date;
 
-  @Field()
+  @Expose()
   @Column({ nullable: true })
-  TaskTitle?: string;
+  endDate?: Date;
 
-  @Field()
+  @Expose()
   @Column({ nullable: true })
-  StartDate?: string;
+  estimatedDays?: string;
 
-  @Field()
+  @Expose()
   @Column({ nullable: true })
-  EndDate?: string;
+  sendNotification?: string;
 
-  @Field()
+  @Expose()
   @Column({ nullable: true })
-  EstimatedDays?: string;
+  saveTaskAsTemplate?: string;
 
-  @Field()
-  @Column({ nullable: true })
-  SendNotification?: string;
-
-  @Field()
-  @Column({ nullable: true })
-  SaveTaskAsTemplate?: string;
-
-  @Field()
+  @Expose()
   @Column({ nullable: true })
   BKPID?: string;
 
-  @Field()
+  @Expose()
   @Column({ nullable: true })
-  PhasesID?: string;
+  phasesID?: string;
 
-  @Field()
-  @Column({ nullable: true })
-  CreatedOn?: string;
+  @Expose()
+  @Column()
+  createdAt?: Date;
 
-  @Field()
+  @Expose()
   @Column({ nullable: true })
-  CreatedBy?: string;
+  createdBy?: string;
 
-  @Field()
-  @Column({ nullable: true })
-  UpdatedOn?: number;
+  @Expose()
+  @Column()
+  updatedAt?: Date;
 
-  @Field()
+  @Expose()
   @Column({ nullable: true })
-  UpdatedBy?: string;
+  updatedBy?: string;
 
-  @Field()
+  @Expose()
   @Column({ nullable: true })
-  IsDeleted?: string;
+  isDeleted?: boolean;
 
-  @Field()
+  @Expose()
   @Column({ nullable: true })
-  ReferenceID?: string;
+  status?: string;
 
-  @Field()
-  @Column({ nullable: true })
-  ReferenceTypeID?: string;
+  @Expose()
+  // n:1 relation with ReferanceTypeEntity
+  @ManyToOne(type => ReferanceTypeEntity, referance => referance.tasks)
+  referance: ReferanceTypeEntity;
 
-  @Field()
-  @Column({ nullable: true })
-  Status?: string;
+  @Expose()
+  // n:n relation with TaskAssigneessEntity
+  @ManyToMany(type => TaskAssigneessEntity)
+  @JoinTable()
+  assignees: TaskAssigneessEntity[];
+
+  @Expose()
+  // n:n relation with TaskFllowersEntity
+  @ManyToMany(type => TaskFllowersEntity)
+  @JoinTable()
+  followers: TaskFllowersEntity[];
+
+  constructor(projectTasksEntity: Partial<ProjectTasksEntity>) {
+    super();
+    if (projectTasksEntity) {
+      Object.assign(
+        this,
+        plainToClass(ProjectTasksEntity, projectTasksEntity, {
+          excludeExtraneousValues: true
+        })
+      )
+      this._id = this._id || uuid.v1();
+      this.taskID = this.taskID || uuid.v1();
+      this.createdAt = this.createdAt || new Date(new Date().toUTCString());
+      this.updatedAt = new Date(new Date().toUTCString());
+    }
+  }
+
 }

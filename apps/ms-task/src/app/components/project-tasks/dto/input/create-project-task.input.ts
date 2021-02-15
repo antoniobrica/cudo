@@ -2,74 +2,31 @@ import { Field, InputType } from "@nestjs/graphql";
 import { IsNotEmpty, IsOptional, Length } from 'class-validator';
 @InputType()
 export class CreateProjectTaskInput {
-    @Field({ description: `Client Name` })
-    @IsOptional()
-    ParentTaskID?: string;
+
+    @Field({ description: `This is for title task title` })
+    taskTitle?: string;
+
+    @Field({ description: `This is for start date in UTC` })
+    startDate?: Date;
 
     @Field({ description: `Client Name` })
-    @IsOptional()
-    ChildTaskID?: string;
+    endDate?: Date;
 
     @Field({ description: `Client Name` })
-    @IsOptional()
-    TaskTitle?: string;
+    estimatedDays?: string;
 
     @Field({ description: `Client Name` })
-    @IsOptional()
-    StartDate?: string;
+    sendNotification?: string;
 
     @Field({ description: `Client Name` })
-    @IsOptional()
-    EndDate?: string;
+    saveTaskAsTemplate?: string;
 
     @Field({ description: `Client Name` })
-    @IsOptional()
-    EstimatedDays?: string;
-
-    @Field({ description: `Client Name` })
-    @IsOptional()
-    SendNotification?: string;
-
-    @Field({ description: `Client Name` })
-    @IsOptional()
-    SaveTaskAsTemplate?: string;
-
-    @Field({ description: `Client Name` })
-    @IsOptional()
     BKPID?: string;
 
     @Field({ description: `Client Name` })
-    @IsOptional()
-    PhasesID?: string;
+    phasesID?: string;
 
     @Field({ description: `Client Name` })
-    CreatedOn?: string;
-
-    @Field({ description: `Client Name` })
-    @IsOptional()
-    CreatedBy?: string;
-
-    @Field({ description: `Client Name` })
-    @IsOptional()
-    UpdatedOn?: number;
-
-    @Field({ description: `Client Name` })
-    @IsOptional()
-    UpdatedBy?: string;
-
-    @Field({ description: `Client Name` })
-    @IsOptional()
-    IsDeleted?: string;
-
-    @Field({ description: `Client Name` })
-    @IsOptional()
-    ReferenceID?: string;
-
-    @Field({ description: `Client Name` })
-    @IsOptional()
-    ReferenceTypeID?: string;
-
-    @Field({ description: `Client Name` })
-    @IsOptional()
-    Status?: string;
+    status?: string;
 }
