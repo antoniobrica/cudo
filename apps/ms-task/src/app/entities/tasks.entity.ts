@@ -12,7 +12,7 @@ import { Logger } from '@nestjs/common';
     createdAt: 'ASC'
   }
 })
-export class ProjectTasksEntity extends BaseEntity {
+export class TasksEntity extends BaseEntity {
   @Expose()
   @PrimaryGeneratedColumn('uuid')
   _id: string;
@@ -94,12 +94,12 @@ export class ProjectTasksEntity extends BaseEntity {
   @JoinTable()
   followers: TaskFllowersEntity[];
 
-  constructor(projectTasksEntity: Partial<ProjectTasksEntity>) {
+  constructor(projectTasksEntity: Partial<TasksEntity>) {
     super();
     if (projectTasksEntity) {
       Object.assign(
         this,
-        plainToClass(ProjectTasksEntity, projectTasksEntity, {
+        plainToClass(TasksEntity, projectTasksEntity, {
           excludeExtraneousValues: true
         })
       )

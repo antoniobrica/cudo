@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn } from 'typeorm';
-import { ProjectTasksEntity } from './project-tasks.entity';
+import { TasksEntity } from './tasks.entity';
 
 /**
  * 
@@ -33,7 +33,7 @@ export default class ReferanceTypeEntity extends BaseEntity {
     isDeleted?: boolean;
 
 
-    // 1:n relation with ProjectTasksEntity 
-    @OneToMany(type => ProjectTasksEntity, task => task.taskID)
-    tasks: ProjectTasksEntity[];
+    // 1:n relation with TasksEntity 
+    @OneToMany(type => TasksEntity, task => task.taskID)
+    tasks: TasksEntity[];
 }

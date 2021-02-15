@@ -1,7 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
-export class ProjectTasksModel {
+export class TasksModel {
 
   @Field({ nullable: true, description: `This is for title task title` })
   taskTitle?: string;
