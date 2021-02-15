@@ -38,6 +38,6 @@ class SubscriberWidgetElement extends HTMLElement {
     }
 }
 
-customElements.define("subscriber-widget-cost", SubscriberWidgetElement);
+customElements.define("subscriber-widget-cost-app", SubscriberWidgetElement);
 
 export default SubscriberWidgetElement;

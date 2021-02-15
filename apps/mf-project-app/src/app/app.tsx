@@ -16,21 +16,24 @@ const supportedLanguages = [defaultLanguage, 'en-GB'];
 import {Menubar} from '@cudo/shared-components';  
   
 import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
+import Tabsbar from 'libs/shared-components/src/lib/components/tabs/tabs'
 import { environment } from "../environments/environment";
 initI18n('./assets/i18n/{{lng}}.json', defaultLanguage);
+
 
 const defaultHistory = createBrowserHistory();
 
 const {
   EACT_APP_COST_HOST: costHost,
   REACT_APP_MEETING_HOST: meetingHost,
+  REACT_APP_TASK_HOST: taskHost,
 } = environment;
 
 
 function Header() {
   return (
     <div className="banner">
-      <h1 className="banner-title"> Welcome mf-tender-app</h1>
+      <h1 className="banner-title"> Welcome project</h1>
     </div>
   );
 }
@@ -47,6 +50,12 @@ function CostApp(history: any) {
   );
 }
 
+function TaskApp(history: any) {
+  return (
+    <MicroFrontend history={history} host={taskHost} name="TaskApp" />
+  );
+}
+
 function Home({ history }) {
   const [input, setInput] = useState("");
 
@@ -56,7 +65,7 @@ function Home({ history }) {
       <div className="home">
         <div className="content">
           <div className="meetingClass">
-            <MeetingApp></MeetingApp>
+            <TaskApp></TaskApp>
           </div>
 
         </div>
@@ -71,12 +80,13 @@ function Home({ history }) {
   );
 }
 
- function App() {
+ function loadApp() {
   return (
     <Suspense fallback={<Loading />}>
       <div>
       <div className={styles.app}>
-       {/* <Menubar></Menubar>  */}
+       {/* <Tabsbar></Tabsbar> */}
+       {/* <TaskApp></TaskApp> */}
        <ProjectInfo ></ProjectInfo>
     </div>
       </div> 
@@ -88,16 +98,16 @@ function Home({ history }) {
   
 
 
-// function App() {
-//   return (
-//     <React.StrictMode>
-//       <BrowserRouter>
-//         <Switch>
-//           <Route exact path="/" component={loadApp} />
-//         </Switch>
-//       </BrowserRouter></React.StrictMode>
-//   );
-// }
+function App() {
+  return (
+    <React.StrictMode>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={loadApp} />
+        </Switch>
+      </BrowserRouter></React.StrictMode>
+  );
+}
 
-export default App;
+export default loadApp;
 
