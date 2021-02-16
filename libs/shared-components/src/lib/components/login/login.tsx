@@ -2,7 +2,8 @@ import React from 'react';
  
 import '../../../style/index.scss';
 import { Input, Segment,Form, Grid ,Image,Checkbox,Button,Icon } from 'semantic-ui-react'
- 
+import logo from 'libs/shared-components/src/slider.png';
+import img from 'libs/shared-components/src/Shape 2.png';
 /* eslint-disable-next-line */
 export interface LoginProps { }
 
@@ -16,13 +17,14 @@ export function Loginbar(props: LoginProps) {
         
         <div className="main-outer-area">
  
-            <Grid>
+            <Grid className="ui-login">
                     
             <Grid.Row columns={2}  >
       <Grid.Column>
              <Segment>
              <div className="ln-form-outer">
-             <img src="" alt="logo"></img>
+             
+             <img src={img}   />
                     <div className="form-header">
                     
                         <span className="welcome">Welcome Back</span>
@@ -59,7 +61,9 @@ export function Loginbar(props: LoginProps) {
             </Segment>
             </Grid.Column>
             <Grid.Column>
-        <Image src='~/../Project Management/apps/ui-design/src/app/slider.png' size='massive' />
+       
+        <img src={logo} className="massive" />
+       
       </Grid.Column>
             </Grid.Row>
              

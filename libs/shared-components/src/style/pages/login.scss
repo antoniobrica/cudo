@@ -2,7 +2,7 @@
     position: relative;
     width: 100%;
     height: auto;
-    padding: 0 0 1rem 0;
+     
     background-color: #ffffff;
     min-height: 100vh;
     @include flexbox;
@@ -236,3 +236,8 @@
 .btn-large {
     width: 100%;
 }
+.ui.grid.ui-login{
+    margin-top: -1rem; 
+     margin-bottom: 0rem;
+}
+ 
