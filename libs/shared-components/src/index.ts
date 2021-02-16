@@ -6,3 +6,5 @@ export * from './lib/components/cards/cards';
 export * from './lib/components/tabs/tabs'; 
 export * from './lib/components/messages/messages'; 
 export * from './lib/components/modal/modal2'; 
+export * from './lib/components/menu/sidebar'; 
+export * from './lib/components/login/login'; 

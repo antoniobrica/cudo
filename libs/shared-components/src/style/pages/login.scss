@@ -3,12 +3,15 @@
     width: 100%;
     height: auto;
     padding: 0 0 1rem 0;
-    background: color("grey", "lighten-9");
+    background-color: #ffffff;
     min-height: 100vh;
     @include flexbox;
     @include align-items(center);
-}
 
+}
+.login{
+    color: #000000;
+}
 .login-header {
     background: color("grey", "lighten-6");
     box-shadow: 0px 3px 4px #00000017;
@@ -20,6 +23,7 @@
     @include justify-content(space-between);
     @include absolute(top 0px);
     width: 100%;
+    
     @media (max-width:#{$large-desktop-up}) {
         padding: 1rem 6rem;
     }
@@ -56,8 +60,7 @@
 
 .ln-form-outer {
     background: color("shades", "white");
-    box-shadow: 30px 30px 50px #01153B0F;
-    margin: 12rem auto;
+     
     max-width: 90%;
     width: 85rem;
     position: relative;
@@ -83,6 +86,10 @@
                 padding: 0;
                 line-height: 2rem;
             }
+        }
+        .welcome{
+            font-size: 16px;
+            text-transform: uppercase;
         }
     }
     .agree-checkbox {
@@ -221,4 +228,11 @@
             display: inline-block;
         }
     }
+}
+.forgot{
+    float: right;
+    color: #2D62ED;
+}
+.btn-large {
+    width: 100%;
 }
