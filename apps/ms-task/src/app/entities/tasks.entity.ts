@@ -2,8 +2,8 @@ import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, JoinTable, 
 import ReferanceTypeEntity from './reference-type.entity';
 import TaskAssigneessEntity from './task-assignees.entity';
 import TaskFllowersEntity from './task-followers.entity';
-import * as uuid from 'uuid'
-import { Expose, plainToClass } from 'class-transformer'
+import * as uuid from 'uuid';
+import { Expose, plainToClass } from 'class-transformer';
 import { Logger } from '@nestjs/common';
 
 @Entity({
@@ -13,7 +13,7 @@ import { Logger } from '@nestjs/common';
   }
 })
 export class TasksEntity extends BaseEntity {
-  @Expose()
+
   @PrimaryGeneratedColumn('uuid')
   _id: string;
 
@@ -76,11 +76,6 @@ export class TasksEntity extends BaseEntity {
   @Expose()
   @Column({ nullable: true })
   status?: string;
-
-  @Expose()
-  // n:1 relation with ReferanceTypeEntity
-  @ManyToOne(type => ReferanceTypeEntity, referance => referance.tasks)
-  referance: ReferanceTypeEntity;
 
   @Expose()
   // n:n relation with TaskAssigneessEntity

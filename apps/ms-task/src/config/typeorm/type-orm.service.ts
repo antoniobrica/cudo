@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { TypeOrmOptionsFactory, TypeOrmModuleOptions } from '@nestjs/typeorm'
+import { truncate } from 'fs'
 import {
 	getMetadataArgsStorage,
 	createConnection,
@@ -22,7 +23,7 @@ export class TypeOrmService implements TypeOrmOptionsFactory {
 				migrationsDir: "src/app/migration",
 				subscribersDir: "src/app/subscriber"
 			},
-			synchronize: false,
+			synchronize: true,
 			autoLoadEntities: true,
 			useNewUrlParser: true,
 			useUnifiedTopology: true,

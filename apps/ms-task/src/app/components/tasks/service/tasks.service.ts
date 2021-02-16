@@ -3,8 +3,6 @@ import { TasksEntity } from '../../../entities/tasks.entity';
 import { TaskDetailsInput } from '../dto/input/task-details.input';
 import { ITasksRepository } from '../interface/tasks-repository.interface';
 import { IProjectTasksService } from '../interface/tasks-service.interface';
-import { v4 as uuidv4 } from 'uuid';
-import { TasksModel } from '../models/tasks.model';
 
 @Injectable()
 export class TasksService implements IProjectTasksService {
