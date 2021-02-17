@@ -3,14 +3,16 @@ import React from 'react';
 import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Select, TextArea } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 import { IProject, IProjects, ProjectMutation } from "../../interfaces/project";
-import { useProjectMutation } from '../../services/useRequest';
+import { useProjectMutation, useProjectQuery } from '../../services/useRequest';
 import { ApolloCache, FetchResult } from '@apollo/client';
 import { ADD_PROJECT, GET_PROJECTS } from "../../graphql/graphql";
 
 
 
-
 function ModalExampleModal() {
+  // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
+
+
   const clientOption = [
     { key: 'c1', value: 'c1', text: 'Client 1' },
     { key: 'c2', value: 'c2', text: 'Client 2' },
@@ -57,7 +59,27 @@ function ModalExampleModal() {
   const [zip, setZip] = React.useState("")
   const [country, setCountry] = React.useState("")
   const [description, setDescription] = React.useState("")
+  const [items, setItems] = React.useState([]);
   const [addProject] = useProjectMutation(ADD_PROJECT);
+  // const [items] = React.useState([
+  //   {
+  //     label: "Luke Skywalker",
+  //     value: "Luke Skywalker"
+  //   },
+  //   { label: "C-3PO", value: "C-3PO" },
+  //   { label: "R2-D2", value: "R2-D2" }
+  // ]);
+
+  React.useEffect(() => {
+     async function getCharacters() {
+      console.log('modal component called')
+      const response = await fetch("https://swapi.co/api/people");
+      const body = await response.json();
+      setItems(body.results.map(({ name }) => ({ label: name, value: name })));
+      console.log('dropdown items', items)
+    }
+    getCharacters();
+  }, []);
 
   const onprojectNameChange = e => {
     setProjectName(e.target.value)

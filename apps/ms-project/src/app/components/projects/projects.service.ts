@@ -25,7 +25,7 @@ export class ProjectsService implements ProjectServiceInterface {
     }catch(error){throw 'Invalid Input'; }
 } 
 
-  public  async findAll(): Promise<Project[]> {
+  public  async findAll(): Promise<ProjectEntity[]> {
     
     return await this.projectRepository.findAll();
   }
