@@ -21,13 +21,6 @@ export class PhasesResolver {
     return await this.phaseService.create({ phaseTitle, companyId,clientId })
   }
 
-
-  // @Mutation(() => Phases)
-  // async createMovie(@Args("options", () => CreatePhaseInput) options: CreatePhaseInput) {
-  //   const phase = await Phases.create(options).save();
-  //   return movie;
-  // }
-
   @Query(returns => Phases)
   async phase(@Args('id') id: number): Promise<Phases> {
     return await this.phaseService.findOne(id);
