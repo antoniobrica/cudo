@@ -8,6 +8,8 @@ import star from './star.svg';
   
 import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
 import ModalExampleModal2 from 'libs/shared-components/src/lib/components/modal/modal2';
+import ModalExampleCompany from 'libs/shared-components/src/lib/components/modal/companypopup'; 
+import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
 import AccordionExampleMenu from 'libs/shared-components/src/lib/components/menu/sidebar';
 // import { Sidebar } from 'semantic-ui-react';
 
@@ -22,7 +24,9 @@ export function App() {
     <Messagebar></Messagebar><br/>
     <Loginbar></Loginbar>
      <ModalExampleModal2></ModalExampleModal2><br/>
-    
+    <ModalExampleCompany></ModalExampleCompany><br/>
+    <ModalExamplePrinting></ModalExamplePrinting><br/>
+
     </div>
     
    

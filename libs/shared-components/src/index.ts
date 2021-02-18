@@ -8,3 +8,5 @@ export * from './lib/components/messages/messages';
 export * from './lib/components/modal/modal2'; 
 export * from './lib/components/menu/sidebar'; 
 export * from './lib/components/login/login'; 
+export * from './lib/components/modal/companypopup'; 
+export * from './lib/components/modal/addprintingpopup'; 
