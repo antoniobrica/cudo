@@ -1,12 +1,13 @@
+import { plainToClass } from 'class-transformer';
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn } from 'typeorm';
-
+import * as uuid from 'uuid';
 /**
  * 
  */
-@Entity({ name: 'TaskFollowers' })
+@Entity({ name: 'taskFollowers' })
 export default class TaskFllowersEntity extends BaseEntity {
 
-    @PrimaryGeneratedColumn('uuid')
+    @PrimaryGeneratedColumn()
     id: number;
 
     @Column({ unique: true })
@@ -15,18 +16,32 @@ export default class TaskFllowersEntity extends BaseEntity {
     @Column()
     PeopleName: string;
 
-    @CreateDateColumn()
-    createdAt?: string;
+    @Column()
+    createdAt?: Date;
 
     @Column({ nullable: true })
     createdBy?: string;
 
-    @CreateDateColumn()
-    updatedAt?: number;
+    @Column()
+    updatedAt?: Date;
 
     @Column({ nullable: true })
     updatedBy?: string;
 
     @Column({ nullable: true })
     isDeleted?: boolean;
+
+    constructor(taskFllowersEntity: Partial<TaskFllowersEntity>) {
+        super();
+        if (taskFllowersEntity) {
+            Object.assign(
+                this,
+                plainToClass(TaskFllowersEntity, taskFllowersEntity, {
+                    excludeExtraneousValues: true
+                })
+            )
+            this.createdAt = this.createdAt || new Date(new Date().toUTCString());
+            this.updatedAt = new Date(new Date().toUTCString());
+        }
+    }
 }
