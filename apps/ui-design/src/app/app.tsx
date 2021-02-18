@@ -19,7 +19,7 @@ export function App() {
    <Menubar></Menubar> 
    <AccordionExampleMenu></AccordionExampleMenu>
    <Tabsbar></Tabsbar>
-    <ModalExampleModal></ModalExampleModal>  
+    <ModalExampleModal></ModalExampleModal> <br/> <br/><br/>  
     <Cardbar></Cardbar> 
     <Messagebar></Messagebar><br/>
     <Loginbar></Loginbar>

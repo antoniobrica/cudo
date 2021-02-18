@@ -29,6 +29,7 @@ border-bottom: 2px solid #2d62ed;
 .ui.secondary.pointing.menu .item{
     color: #718898;
     font-size: 14px;
+    padding: 10px;
 }
 span.material-icons.middle {
 	vertical-align: middle;
@@ -89,9 +90,10 @@ $white: #ffffff;
 }
 .preliminary-font{
     font-size: 14px;
+    font-weight: 600;
 }
 .ui-tabs{
-    margin-top: 30px;
+    margin-top: 10px;
 }
 .project-sub{
     font-size: 14px;
@@ -105,9 +107,9 @@ $white: #ffffff;
     background: #F9F8FF;
 }
 .app-content-body-dash{
-    position: relative;
-    margin-left: 200px;
-    top: -120px;
+     
+    margin-left: 275px;
+    
     width: 100%;
 }
 .margin-top{
