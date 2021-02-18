@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { CreatePhaseInput } from "./create-phases.input";
-import { Phases } from "./phases.entity";
+import { Phases } from "../../../entities/phases.entity";
+import { CreatePhaseInput } from "../dto/input/create-phases.input";
 
 
 @Injectable()
