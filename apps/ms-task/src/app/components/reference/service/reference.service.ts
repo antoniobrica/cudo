@@ -2,8 +2,9 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, MoreThan, Repository } from 'typeorm';
 import ReferanceTypeEntity from '../../../entities/reference-type.entity';
-import { GetReferenceArgs } from '../dto/args/get-reference.arg.dto';
+import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceInputDto } from '../dto/input/reference.input.dto';
+import { ReferenceUpdateInputDto } from '../dto/input/reference.upate.input.dto';
 import ProjectNotFoundException from '../exceptions/projectNotFound.exception';
 
 @Injectable()
@@ -44,33 +45,33 @@ export class ReferenceService {
     }
 
 
-    async getReferenceById(getReferenceArgs: GetReferenceArgs) {
-        const reference = await this.referancesRepository.findOne({ where: { ...getReferenceArgs.referenceDto } });
+    async getReferenceById(refFilter: ReferenceFilterParams) {
+        const reference = await this.referancesRepository.findOne({ where: { ...refFilter } });
         if (reference) {
             return reference;
         }
-        throw new ProjectNotFoundException(getReferenceArgs.referenceDto.projectID);
+        throw new ProjectNotFoundException(refFilter.projectID);
     }
 
 
-    async updateReference(referenceDetails: ReferenceInputDto) {
+    async updateReference(refFilter: ReferenceFilterParams, referenceDetails: ReferenceUpdateInputDto) {
 
-        const { id } = await this.referancesRepository.findOne({ where: { projectID: referenceDetails.projectID } });
-        if (id) {
-            await this.referancesRepository.update(id, { ...referenceDetails });
-            const updatedPost = await this.referancesRepository.findOne(id);
+        const reference = await this.referancesRepository.findOne({ where: { ...refFilter } });
+        if (reference) {
+            await this.referancesRepository.update(reference.id, { ...referenceDetails });
+            const updatedPost = await this.referancesRepository.findOne(reference.id);
             return updatedPost;
         }
-        throw new ProjectNotFoundException(referenceDetails.projectID);
+        throw new ProjectNotFoundException(refFilter.projectID);
     }
 
-    async deleteReference(getReferenceArgs: GetReferenceArgs) {
-        const { id } = await this.referancesRepository.findOne({ where: { ...getReferenceArgs.referenceDto } });
+    async deleteReference(refFilter: ReferenceFilterParams) {
+        const { id } = await this.referancesRepository.findOne({ where: { ...refFilter } });
         const deleteResponse = await this.referancesRepository.delete(id);
         if (deleteResponse) {
             return deleteResponse;
         }
-        throw new ProjectNotFoundException(getReferenceArgs.referenceDto.projectID);
+        throw new ProjectNotFoundException(refFilter.projectID);
     }
 
 }

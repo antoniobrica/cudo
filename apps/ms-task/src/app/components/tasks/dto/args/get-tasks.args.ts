@@ -1,8 +1,8 @@
 import { ArgsType, Field } from "@nestjs/graphql";
-import ObjectWithIdStringDto from "../../../../utils/types/objectWithIdString.dto";
+import ReferenceFilterParams from "../../../../utils/types/referenceFilterParams";
 
 @ArgsType()
 export class GetTasksArgs {
     @Field({ description: `This is for title task title` })
-    referenceDto?: ObjectWithIdStringDto;
+    referenceFilter?: ReferenceFilterParams;
 }

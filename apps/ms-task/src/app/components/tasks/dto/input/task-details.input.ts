@@ -1,5 +1,4 @@
 import { Field, InputType } from "@nestjs/graphql";
-import ObjectWithIdStringDto from '../../../../utils/types/objectWithIdString.dto';
 @InputType()
 export class TaskDetailsInput {
 
@@ -29,7 +28,4 @@ export class TaskDetailsInput {
 
     @Field({ description: `Status of task` })
     status?: string;
-
-    @Field(() => ObjectWithIdStringDto)
-    reference: ObjectWithIdStringDto;
 }

@@ -2,8 +2,9 @@ import { Inject } from '@nestjs/common';
 import { Args, Info, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GraphQLResolveInfo } from 'graphql';
 import { parseResolveInfo, ResolveTree, simplifyParsedResolveInfoFragmentWithType } from 'graphql-parse-resolve-info';
-import { GetReferenceArgs } from '../dto/args/get-reference.arg.dto';
+import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceInputDto } from '../dto/input/reference.input.dto';
+import { ReferenceUpdateInputDto } from '../dto/input/reference.upate.input.dto';
 import { ReferenceModel } from '../model/reference.model';
 import { ReferenceService } from '../service/reference.service';
 
@@ -15,16 +16,16 @@ export class ReferenceResolver {
     ) { }
 
     @Query(() => [ReferenceModel])
-    async references(
+    async allReferences(
     ) {
         const posts = await this.referenceService.getReference();
         return posts.items;
     }
 
     @Query(() => ReferenceModel)
-    async referencesByProjectID(@Args() getReferenceArgs: GetReferenceArgs
+    async referenceDeatailByFilter(@Args("referenceFilter") refFilter: ReferenceFilterParams
     ) {
-        const posts = await this.referenceService.getReferenceById(getReferenceArgs);
+        const posts = await this.referenceService.getReferenceById(refFilter);
         return posts;
     }
 
@@ -36,15 +37,15 @@ export class ReferenceResolver {
     }
 
     @Mutation(() => ReferenceModel)
-    async updateReference(
-        @Args('referenceDetails') referenceInput: ReferenceInputDto,
+    async updateReference(@Args("referenceFilter") refFilter: ReferenceFilterParams,
+        @Args('referenceUpdateDto') referenceUpdateInput: ReferenceUpdateInputDto,
     ) {
-        return this.referenceService.updateReference(referenceInput);
+        return this.referenceService.updateReference(refFilter, referenceUpdateInput);
     }
 
     @Mutation(() => ReferenceModel)
-    async deleteReference(@Args() getReferenceArgs: GetReferenceArgs
+    async deleteReference(@Args("referenceFilter") refFilter: ReferenceFilterParams
     ) {
-        return this.referenceService.deleteReference(getReferenceArgs);
+        return this.referenceService.deleteReference(refFilter);
     }
 }

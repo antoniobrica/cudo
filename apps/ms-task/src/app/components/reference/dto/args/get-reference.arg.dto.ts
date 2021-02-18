@@ -1,8 +1,8 @@
 import { ArgsType, Field } from "@nestjs/graphql";
-import ObjectWithIdStringDto from "../../../../utils/types/objectWithIdString.dto";
+import ReferenceFilterParams from "../../../../utils/types/referenceFilterParams";
 
 @ArgsType()
 export class GetReferenceArgs {
     @Field({ description: `Filter refrence dto` })
-    referenceDto: ObjectWithIdStringDto;
+    referenceFilter: ReferenceFilterParams;
 }

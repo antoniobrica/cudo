@@ -2,8 +2,8 @@ import { Field, InputType } from '@nestjs/graphql';
 import { IsString } from 'class-validator';
 
 @InputType()
-class ObjectWithIdStringDto {
-  @Field({ description: `Proejct ID` })
+class ReferenceFilterParams {
+  @Field({ description: `Project ID` })
   projectID?: string;
 
   @Field({ description: `Company ID` })
@@ -12,8 +12,8 @@ class ObjectWithIdStringDto {
   @Field({ description: `Refrence Type` })
   referenceType?: string;
 
-  @Field({ description: `Refrence Type` })
+  @Field({ description: `Refrence ID` })
   referenceID?: string;
 }
 
-export default ObjectWithIdStringDto;
+export default ReferenceFilterParams;
