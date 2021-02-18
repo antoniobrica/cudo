@@ -5,7 +5,7 @@ import { TypeOrmService } from '../config/typeorm/type-orm.service';
 import * as path from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ProjectsModule } from './components/projects/projects.module';
+import { ComponentsModule } from './components/components.module';
 // import { I18nModule, I18nJsonParser } from 'nestjs-i18n';
 
 @Module({
@@ -23,7 +23,7 @@ import { ProjectsModule } from './components/projects/projects.module';
       context: ({ req, connection }) => connection ? { req: connection.context } : { req },
       autoSchemaFile: true,
     }),
-    ProjectsModule,
+    ComponentsModule,
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmService,
     }),
