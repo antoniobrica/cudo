@@ -3,13 +3,22 @@ import { IsNotEmpty, IsOptional, Length } from 'class-validator';
 import { OneToMany } from "typeorm";
 
 @InputType()
-export class ReferenceInput {
+export class ReferenceInputDto {
 
-    @Field({ description: `This is for title task title` })
+    @Field({ description: `ReferenceID is for work` })
     referenceID: string;
 
-    @Field({ description: `This is for title task title` })
+    @Field({ description: `Refrence type Project or WorkType` })
     referenceType: string;
+
+    @Field({ description: `Reference type name` })
+    name: string;
+
+    @Field({ description: `This is for title task title` })
+    projectID: string;
+
+    @Field({ description: `This is for title task title` })
+    companyID: string;
 
     @Field({ description: `This is for title task title` })
     createdBy?: string;
@@ -20,7 +29,4 @@ export class ReferenceInput {
     @Field({ description: `This is for title task title` })
     isDeleted?: boolean;
 
-    // 1:n relation with TasksEntity 
-    @Field({ description: `This is for title task title` })
-    tasks: string[];
 }

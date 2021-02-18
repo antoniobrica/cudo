@@ -6,11 +6,11 @@ import * as uuid from 'uuid';
 /**
  * 
  */
-@Entity({ name: 'ReferenceTypes' })
+@Entity({ name: 'referenceTypes' })
 export default class ReferanceTypeEntity extends BaseEntity {
 
-    @PrimaryGeneratedColumn('uuid')
-    _id: string;
+    @PrimaryGeneratedColumn()
+    id: number;
 
     @Expose()
     @Column({ unique: true })
@@ -19,6 +19,18 @@ export default class ReferanceTypeEntity extends BaseEntity {
     @Expose()
     @Column({ nullable: true })
     referenceType: string;
+
+    @Expose()
+    @Column()
+    projectID: string;
+
+    @Expose()
+    @Column()
+    name: string;
+
+    @Expose()
+    @Column()
+    companyID: string;
 
     @Expose()
     @Column()
@@ -42,7 +54,7 @@ export default class ReferanceTypeEntity extends BaseEntity {
 
     // 1:n relation with TasksEntity 
     @Expose()
-    @OneToMany(type => TasksEntity, task => task.taskID)
+    @OneToMany(() => TasksEntity, (task: TasksEntity) => task.reference)
     tasks: TasksEntity[];
 
     constructor(referanceTypeEntity: Partial<ReferanceTypeEntity>) {
@@ -54,7 +66,6 @@ export default class ReferanceTypeEntity extends BaseEntity {
                     excludeExtraneousValues: true
                 })
             )
-            this._id = this._id || uuid.v1();
             this.createdAt = this.createdAt || new Date(new Date().toUTCString());
             this.updatedAt = new Date(new Date().toUTCString());
         }

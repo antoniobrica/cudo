@@ -25,7 +25,7 @@ export class ProjectEntity {
   client: string;
 
   @Field()
-  @Column({nullable:true})
+  @Column({ nullable: true })
   buildingType?: string;
 
   @Field()
@@ -65,7 +65,7 @@ export class ProjectEntity {
   country?: string;
 
   @Field()
-  @Column({nullable: true})
+  @Column({ nullable: true })
   description?: string;
 
   // @Field()

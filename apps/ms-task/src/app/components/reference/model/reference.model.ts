@@ -1,5 +1,6 @@
-import { Field } from "@nestjs/graphql";
+import { Field, ObjectType } from "@nestjs/graphql";
 
+@ObjectType()
 export class ReferenceModel {
 
     @Field({ nullable: true, description: `referenceID` })
@@ -7,6 +8,15 @@ export class ReferenceModel {
 
     @Field({ nullable: true, description: `referenceType` })
     referenceType?: string;
+
+    @Field({ nullable: true, description: `referenceType` })
+    projectID?: string;
+
+    @Field({ nullable: true, description: `referenceType` })
+    companyID?: string;
+
+    @Field({ nullable: true, description: `referenceType` })
+    name?: string;
 
     @Field({ description: `Reference updated at` })
     updatedAt?: Date;

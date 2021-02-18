@@ -1,7 +1,7 @@
-import { ReferenceInput } from './reference.input';
+import { ReferenceInputDto } from './reference.input.dto';
 
 describe('ReferenceInput', () => {
   it('should be defined', () => {
-    expect(new ReferenceInput()).toBeDefined();
+    expect(new ReferenceInputDto()).toBeDefined();
   });
 });

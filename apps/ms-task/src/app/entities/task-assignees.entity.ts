@@ -4,11 +4,11 @@ import * as uuid from 'uuid';
 /**
  * 
  */
-@Entity({ name: 'TaskAssignees' })
+@Entity({ name: 'taskAssignees' })
 export default class TaskAssigneessEntity extends BaseEntity {
 
-    @PrimaryGeneratedColumn('uuid')
-    _id: string;
+    @PrimaryGeneratedColumn()
+    id: number;
 
     @Column({ unique: true })
     PeopleID: string;
@@ -40,7 +40,6 @@ export default class TaskAssigneessEntity extends BaseEntity {
                     excludeExtraneousValues: true
                 })
             )
-            this._id = this._id || uuid.v1();
             this.createdAt = this.createdAt || new Date(new Date().toUTCString());
             this.updatedAt = new Date(new Date().toUTCString());
         }
