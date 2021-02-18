@@ -76,7 +76,9 @@ export function ProjectInfo(props: ProjectInfoProps) {
 
                       </div>
                       <div className="content">
-                        <div className="data-built">{project.description}</div>
+                        <div className="data-built">
+                          <p>{project.description}
+                          </p></div>
                         <div className="event">
                           <div className="label-green label-spacer">
                             <span className="white-text">AB</span>

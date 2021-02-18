@@ -61,24 +61,18 @@ function ModalExampleModal() {
   const [description, setDescription] = React.useState("")
   const [items, setItems] = React.useState([]);
   const [addProject] = useProjectMutation(ADD_PROJECT);
-  // const [items] = React.useState([
-  //   {
-  //     label: "Luke Skywalker",
-  //     value: "Luke Skywalker"
-  //   },
-  //   { label: "C-3PO", value: "C-3PO" },
-  //   { label: "R2-D2", value: "R2-D2" }
-  // ]);
+  const { loading, error, data } = useProjectQuery(GET_PROJECTS);
 
   React.useEffect(() => {
-     async function getCharacters() {
-      console.log('modal component called')
+    console.log('data==>', data.getProjects);
+    setItems(data.getProjects.map(({projectName }) => ({ key: projectName, value: projectName, text: projectName })));
+     async function getWorkType() {
       const response = await fetch("https://swapi.co/api/people");
       const body = await response.json();
-      setItems(body.results.map(({ name }) => ({ label: name, value: name })));
+      // setItems(body.results.map(({ name }) => ({ label: name, value: name })));
       console.log('dropdown items', items)
     }
-    getCharacters();
+    getWorkType();
   }, []);
 
   const onprojectNameChange = e => {
@@ -210,7 +204,7 @@ function ModalExampleModal() {
                 <Form.Field>
                   <label>Client <span className="danger">*</span></label>
                   <Select placeholder='Select' className="small"
-                    options={clientOption}
+                    options={items}
                     value={client}
                     onChange={onprojectClient}
                   />
