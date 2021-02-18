@@ -51,8 +51,8 @@ export function ProjectInfo(props: ProjectInfoProps) {
           <Grid columns={4}>
 
             <Grid.Row>
-              {data.getProjects.map((project: IProject) => (
-                <Grid.Column className="card-margin">
+              {data.getProjects.map((project: IProject, i) => (
+                <Grid.Column className="card-margin" key={i}>
                   <Card>
                     <div className="ui card">
                       <div className="content">

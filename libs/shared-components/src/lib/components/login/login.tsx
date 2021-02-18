@@ -5,7 +5,9 @@ import {Select, Input, Segment,Form, Grid ,Image,Checkbox,Button,Icon } from 'se
 import logo from 'libs/shared-components/src/slider.png';
 import img from 'libs/shared-components/src/Shape 2.png';
 /* eslint-disable-next-line */
-export interface LoginProps { }
+export interface LoginProps { 
+    login
+}
 
 export function Loginbar(props: LoginProps) {
     const countryOptions = [
@@ -16,6 +18,9 @@ export function Loginbar(props: LoginProps) {
     const description = [
          
       ] 
+      const handleLogin =()=>{
+        props.login();
+      }
   return (
     <div className="app-content-body ">
         
@@ -43,7 +48,9 @@ export function Loginbar(props: LoginProps) {
                             
                             <Input placeholder='example@domain.com' className="full-width" icon='at' />
                         </Form.Field>
-                        <Button size='large' className="grey-btn btn-large">Next <Icon name='arrow right' />   </Button>
+                        <Button size='large'
+                        onClick={handleLogin}
+                        className="grey-btn btn-large">Next <Icon name='arrow right' />   </Button>
                         
                        
                         <Form.Field>

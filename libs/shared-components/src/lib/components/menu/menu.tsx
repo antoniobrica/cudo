@@ -2,6 +2,7 @@ import React from 'react';
  
 import '../../../style/index.scss';
 import { Header, Icon, Image, Menu, Segment, Sidebar } from 'semantic-ui-react'
+import logo from 'libs/shared-components/src/slider.png';
 
 /* eslint-disable-next-line */
 export interface MenuProps {
@@ -34,7 +35,7 @@ export function Menubar(props: MenuProps) {
       
     >
       <Menu.Item as='a'>
-         <img src="" alt="logo"></img>
+         <img src={logo} alt="logo"></img>
         
       </Menu.Item>
       <Menu.Item as='a' onClick={()=>handleOpenProject('project')}>

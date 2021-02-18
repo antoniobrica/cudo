@@ -1,5 +1,7 @@
 import React from 'react';
-
+ 
+import {Loginbar} from '@cudo/shared-components';  
+import ProjectMenu  from '../../../../mf-project-app/src/app/project-menu/project-menu'
 import './login.module.scss';
 import { useHistory } from "react-router";
 /* eslint-disable-next-line */
@@ -14,7 +16,8 @@ export function Login(props: LoginProps) {
   };
   return (
     <div>
-      <h1>Welcome to login!</h1>
+      <Loginbar login={handleLogin} />
+      {/* <ProjectMenu /> */}
       <button onClick={handleLogin}>Login</button>
     </div>
   );
