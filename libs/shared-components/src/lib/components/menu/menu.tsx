@@ -76,11 +76,13 @@ export function Menubar(props: MenuProps) {
 
     </Sidebar>
 
-    
+  
   </Sidebar.Pushable>
+ 
+
       </div>
-   
-    
+
+  
  
   );
 }
