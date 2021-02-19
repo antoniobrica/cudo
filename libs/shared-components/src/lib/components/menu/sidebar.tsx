@@ -38,7 +38,12 @@ export default class AccordionExampleMenu extends Component {
 
           
         <div className="sidebar-wrapper sidebar-theme">
-            <Accordion className="ui-accordion">
+          <div className="sidebar-top"> 
+          <span className="burj">Burj Khalifa</span> 
+          <span className="summary"><span className="dot">...</span></span>
+          </div>
+          <div className="description"><span className="subdescription">John &amp; co. </span></div>
+           <Accordion className="ui-accordion accordion-top">
         <Accordion.Title
           active={activeIndex === 0}
           index={0}
@@ -50,11 +55,20 @@ export default class AccordionExampleMenu extends Component {
         </Accordion.Title>
         <Accordion.Content  active={activeIndex === 0}>
           <ul>
-          <li>Strategic Planning </li>
-          <li>Preliminary Studies</li>
-          <li>Project Planning</li>
-          <li>Tender</li>
-          <li>Realization</li>
+          <li className="active-li">
+            <span className="strategic_plan">Strategic Planning</span> <span className="dots_area">...</span> </li>
+          <li>
+          <span className="strategic_plan">Preliminary Studies</span> <span className="dots_area">...</span>
+          </li>
+          <li> 
+          <span className="strategic_plan">Project Plannings</span> <span className="dots_area">...</span>
+          </li>
+          <li>
+          <span className="strategic_plan">Tender</span> <span className="dots_area">...</span>
+          </li>
+          <li>
+          <span className="strategic_plan">Realization</span> <span className="dots_area">...</span>
+          </li>
           </ul>
         </Accordion.Content>
 
@@ -68,11 +82,20 @@ export default class AccordionExampleMenu extends Component {
         </Accordion.Title>
         <Accordion.Content className="active-title" active={activeIndex === 1}>
         <ul>
-          <li>Strategic Planning </li>
-          <li>Preliminary Studies</li>
-          <li>Project Planning</li>
-          <li>Tender</li>
-          <li>Realization</li>
+          <li className="active-li">
+            <span className="strategic_plan">Strategic Planning</span> <span className="dots_area">...</span> </li>
+          <li>
+          <span className="strategic_plan">Preliminary Studies</span> <span className="dots_area">...</span>
+          </li>
+          <li> 
+          <span className="strategic_plan">Project Plannings</span> <span className="dots_area">...</span>
+          </li>
+          <li>
+          <span className="strategic_plan">Tender</span> <span className="dots_area">...</span>
+          </li>
+          <li>
+          <span className="strategic_plan">Realization</span> <span className="dots_area">...</span>
+          </li>
           </ul>
         </Accordion.Content>
 
@@ -87,11 +110,20 @@ export default class AccordionExampleMenu extends Component {
         </Accordion.Title>
         <Accordion.Content className="active-title" active={activeIndex === 2}>
         <ul>
-          <li>Strategic Planning </li>
-          <li>Preliminary Studies</li>
-          <li>Project Planning</li>
-          <li>Tender</li>
-          <li>Realization</li>
+          <li className="active-li">
+            <span className="strategic_plan">Strategic Planning</span> <span className="dots_area">...</span> </li>
+          <li>
+          <span className="strategic_plan">Preliminary Studies</span> <span className="dots_area">...</span>
+          </li>
+          <li> 
+          <span className="strategic_plan">Project Plannings</span> <span className="dots_area">...</span>
+          </li>
+          <li>
+          <span className="strategic_plan">Tender</span> <span className="dots_area">...</span>
+          </li>
+          <li>
+          <span className="strategic_plan">Realization</span> <span className="dots_area">...</span>
+          </li>
           </ul>
         </Accordion.Content>
 
@@ -106,11 +138,20 @@ export default class AccordionExampleMenu extends Component {
         </Accordion.Title>
         <Accordion.Content className="active-title" active={activeIndex === 3}>
         <ul>
-          <li>Strategic Planning </li>
-          <li>Preliminary Studies</li>
-          <li>Project Planning</li>
-          <li>Tender</li>
-          <li>Realization</li>
+          <li className="active-li">
+            <span className="strategic_plan">Strategic Planning</span> <span className="dots_area">...</span> </li>
+          <li>
+          <span className="strategic_plan">Preliminary Studies</span> <span className="dots_area">...</span>
+          </li>
+          <li> 
+          <span className="strategic_plan">Project Plannings</span> <span className="dots_area">...</span>
+          </li>
+          <li>
+          <span className="strategic_plan">Tender</span> <span className="dots_area">...</span>
+          </li>
+          <li>
+          <span className="strategic_plan">Realization</span> <span className="dots_area">...</span>
+          </li>
           </ul>
         </Accordion.Content>
         
@@ -125,11 +166,20 @@ export default class AccordionExampleMenu extends Component {
         </Accordion.Title>
         <Accordion.Content className="active-title" active={activeIndex === 4}>
         <ul>
-          <li>Strategic Planning </li>
-          <li>Preliminary Studies</li>
-          <li>Project Planning</li>
-          <li>Tender</li>
-          <li>Realization</li>
+          <li className="active-li">
+            <span className="strategic_plan">Strategic Planning</span> <span className="dots_area">...</span> </li>
+          <li>
+          <span className="strategic_plan">Preliminary Studies</span> <span className="dots_area">...</span>
+          </li>
+          <li> 
+          <span className="strategic_plan">Project Plannings</span> <span className="dots_area">...</span>
+          </li>
+          <li>
+          <span className="strategic_plan">Tender</span> <span className="dots_area">...</span>
+          </li>
+          <li>
+          <span className="strategic_plan">Realization</span> <span className="dots_area">...</span>
+          </li>
           </ul>
         </Accordion.Content>
         
@@ -144,11 +194,20 @@ export default class AccordionExampleMenu extends Component {
         </Accordion.Title>
         <Accordion.Content className="active-title" active={activeIndex === 5}>
         <ul>
-          <li>Strategic Planning </li>
-          <li>Preliminary Studies</li>
-          <li>Project Planning</li>
-          <li>Tender</li>
-          <li>Realization</li>
+          <li className="active-li">
+            <span className="strategic_plan">Strategic Planning</span> <span className="dots_area">...</span> </li>
+          <li>
+          <span className="strategic_plan">Preliminary Studies</span> <span className="dots_area">...</span>
+          </li>
+          <li> 
+          <span className="strategic_plan">Project Plannings</span> <span className="dots_area">...</span>
+          </li>
+          <li>
+          <span className="strategic_plan">Tender</span> <span className="dots_area">...</span>
+          </li>
+          <li>
+          <span className="strategic_plan">Realization</span> <span className="dots_area">...</span>
+          </li>
           </ul>
         </Accordion.Content>
         
@@ -163,11 +222,20 @@ export default class AccordionExampleMenu extends Component {
         </Accordion.Title>
         <Accordion.Content className="active-title" active={activeIndex === 6}>
         <ul>
-          <li>Strategic Planning </li>
-          <li>Preliminary Studies</li>
-          <li>Project Planning</li>
-          <li>Tender</li>
-          <li>Realization</li>
+          <li className="active-li">
+            <span className="strategic_plan">Strategic Planning</span> <span className="dots_area">...</span> </li>
+          <li>
+          <span className="strategic_plan">Preliminary Studies</span> <span className="dots_area">...</span>
+          </li>
+          <li> 
+          <span className="strategic_plan">Project Plannings</span> <span className="dots_area">...</span>
+          </li>
+          <li>
+          <span className="strategic_plan">Tender</span> <span className="dots_area">...</span>
+          </li>
+          <li>
+          <span className="strategic_plan">Realization</span> <span className="dots_area">...</span>
+          </li>
           </ul>
          
         </Accordion.Content>
