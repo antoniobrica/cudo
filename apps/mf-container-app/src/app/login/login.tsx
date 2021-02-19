@@ -18,7 +18,7 @@ export function Login(props: LoginProps) {
     <div>
       <Loginbar login={handleLogin} />
       {/* <ProjectMenu /> */}
-      <button onClick={handleLogin}>Login</button>
+      {/* <button onClick={handleLogin}>Login</button> */}
     </div>
   );
 }

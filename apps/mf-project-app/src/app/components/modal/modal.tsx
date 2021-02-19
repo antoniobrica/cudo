@@ -6,6 +6,7 @@ import { IProject, IProjects, ProjectMutation } from "../../interfaces/project";
 import { useProjectMutation, useProjectQuery } from '../../services/useRequest';
 import { ApolloCache, FetchResult } from '@apollo/client';
 import { ADD_PROJECT, GET_PROJECTS } from "../../graphql/graphql";
+import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
 
 
 
@@ -28,6 +29,8 @@ function ModalExampleModal() {
 
   ]
   const printingCompanyOption = [
+    
+    { key: 'add', value: 'add', text: '+ add new' },
     { key: 'b1', value: 'b1', text: 'Vista Print' },
     { key: 'b2', value: 'b2', text: 'Flawless Copies' },
     { key: 'b3', value: 'b3', text: 'Rappid Copies' },
@@ -59,7 +62,7 @@ function ModalExampleModal() {
   const [zip, setZip] = React.useState("")
   const [country, setCountry] = React.useState("")
   const [description, setDescription] = React.useState("")
-  const [items, setItems] = React.useState([]);
+  const [items, setItems] = React.useState([{ key: 'add_new', value: 'add_new', text: '+ add new' }]);
   const [addProject] = useProjectMutation(ADD_PROJECT);
   const { loading, error, data } = useProjectQuery(GET_PROJECTS);
 
@@ -69,7 +72,6 @@ function ModalExampleModal() {
      async function getWorkType() {
       const response = await fetch("https://swapi.co/api/people");
       const body = await response.json();
-      // setItems(body.results.map(({ name }) => ({ label: name, value: name })));
       console.log('dropdown items', items)
     }
     getWorkType();
@@ -93,7 +95,16 @@ function ModalExampleModal() {
   }
 
   const onPrintingCom = (event, data) => {
-    setPrintingCom(data.value)
+    if(data.value == 'add'){
+      console.log('add new==>')
+      return(
+        <ModalExamplePrinting />
+      )
+    }
+    else{
+      setPrintingCom(data.value)
+    }
+   
   }
 
   const onWorkType = (event, data) => {
