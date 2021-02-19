@@ -1,6 +1,7 @@
 import { Expose, plainToClass } from 'class-transformer';
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import * as uuid from 'uuid';
+import { BuildingTypeEntity } from './building-type.entity';
 import { ProjectEntity } from './project.entity';
 import { WorkTypeEntity } from './work-type.entity';
 
@@ -55,6 +56,10 @@ export default class ReferanceTypeEntity extends BaseEntity {
     @OneToMany(() => WorkTypeEntity, (workType: WorkTypeEntity) => workType.reference)
     workTypes: WorkTypeEntity[];
 
+    @Expose()
+    @OneToMany(() => BuildingTypeEntity, (buildingType: BuildingTypeEntity) => buildingType.reference)
+    buildingTypes: BuildingTypeEntity[];
+
     constructor(referanceTypeEntity: Partial<ReferanceTypeEntity>) {
         super();
         if (referanceTypeEntity) {
@@ -68,4 +73,8 @@ export default class ReferanceTypeEntity extends BaseEntity {
             // this.updatedAt = new Date(new Date().toUTCString());
         }
     }
+
+   
+
+    
 }
