@@ -2,10 +2,10 @@ import { radios } from '@storybook/addon-knobs';
 import React from 'react';
 import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Select, TextArea } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
-import { IProject, IProjects, ProjectMutation } from "../../interfaces/project";
-import { useProjectMutation, useProjectQuery } from '../../services/useRequest';
+import { IProject, IProjects, ProjectMutation, IWorkTypes } from "../../interfaces/project";
+import { useProjectMutation, useProjectQuery, useWorkTypesQuery } from '../../services/useRequest';
 import { ApolloCache, FetchResult } from '@apollo/client';
-import { ADD_PROJECT, GET_PROJECTS } from "../../graphql/graphql";
+import { ADD_PROJECT, GET_PROJECTS, GET_WORKTYPES } from "../../graphql/graphql";
 import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
 
 
@@ -49,12 +49,12 @@ function ModalExampleModal() {
 
   const [open, setOpen] = React.useState(false)
   const [projectName, setProjectName] = React.useState("")
-  const [projectNum, setProjectNum] = React.useState("")
+  const [projectNum, setProjectNum] = React.useState(0)
   const [client, setClient] = React.useState("")
   const [buildingType, setBuildingType] = React.useState("")
   const [printingCom, setPrintingCom] = React.useState("")
   const [workType, setWorkType] = React.useState("")
-  const [estCost, setEstCost] = React.useState("")
+  const [estCost, setEstCost] = React.useState(null)
   const [adressLine1, setAdressLine1] = React.useState("")
   const [adressLine2, setAdressLine2] = React.useState("")
   const [city, setCity] = React.useState("")
@@ -64,25 +64,24 @@ function ModalExampleModal() {
   const [description, setDescription] = React.useState("")
   const [items, setItems] = React.useState([{ key: 'add_new', value: 'add_new', text: '+ add new' }]);
   const [addProject] = useProjectMutation(ADD_PROJECT);
-  const { loading, error, data } = useProjectQuery(GET_PROJECTS);
-
+  // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
+  const { loading, error, data:worktypeData  } = useWorkTypesQuery(GET_WORKTYPES);
   React.useEffect(() => {
-    console.log('data==>', data.projects);
-    setItems(data.projects.map(({projectName }) => ({ key: projectName, value: projectName, text: projectName })));
-     async function getWorkType() {
-      const response = await fetch("https://swapi.co/api/people");
-      const body = await response.json();
-      console.log('dropdown items', items)
+    // setItems(data.workTypes.map(({projectName }) => ({ key: projectName, value: projectName, text: projectName })));
+    if(worktypeData){
+      console.log('data==>', worktypeData.workTypes);
+     setItems(worktypeData.workTypes.map(({name }) => ({ key: name, value: name, text: name })));
+
     }
-    getWorkType();
-  }, []);
+  }, [worktypeData]);
 
   const onprojectNameChange = e => {
     setProjectName(e.target.value)
     console.log('projectName', projectName)
   }
   const onprojectNumChange = e => {
-    setProjectNum(e.target.value)
+    const pn = Number(e.target.value)
+    setProjectNum(pn)
     console.log('project', projectNum)
   }
   const onprojectClient = (event, data) => {
@@ -112,7 +111,9 @@ function ModalExampleModal() {
   }
 
   const onEstCost = (event, data) => {
-    setEstCost(data.value)
+    const es = Number(data.value)
+    setEstCost(es)
+    console.log('estimated cost',estCost)
   }
 
   const onAdressLine1 = (e) => {
@@ -141,13 +142,13 @@ function ModalExampleModal() {
   const handleSaveProject = () => {
     setOpen(false);
     // props.close();
-    console.log('projectCreated==>', projectName, projectNum, client)
+    console.log('projectCreated==>', projectName,typeof(projectNum), client)
     // let projectNumber: number = + projectNum;
     //  debugger
     addProject({
       variables: {
         projectName, projectNum, client, buildingType,
-        printingCom, workType, estCost, adressLine1, adressLine2, city, state, country, description
+        printingCom, workType, estCost,description
       },
       update: (
         cache: ApolloCache<ProjectMutation>,
@@ -200,7 +201,7 @@ function ModalExampleModal() {
                   <label>Internal Project Number  <span className="danger">*</span></label>
                   <Input
                     placeholder='Default' size='small'
-                    className="full-width" type="text"
+                    className="full-width" type="number"
                     value={projectNum}
                     onChange={onprojectNumChange}
                   />
@@ -272,7 +273,7 @@ function ModalExampleModal() {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <Select placeholder='Select' className="small" options={workTypeOptions}
+                          <Select placeholder='Select' className="small" options={items}
                             value={workType}
                             onChange={onWorkType}
                           />
@@ -293,6 +294,7 @@ function ModalExampleModal() {
                         <Form.Field>
 
                           <Input label='$' size='small' className="full-width"
+                            type="number"
                             value={estCost}
                             onChange={onEstCost}
                           />

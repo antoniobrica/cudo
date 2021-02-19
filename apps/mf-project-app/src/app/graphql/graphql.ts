@@ -31,6 +31,20 @@ export const GET_PROJECTS = gql`
   }
 `;
 
+
+export const GET_WORKTYPES = gql`
+  {
+    workTypes(referenceFilter:{
+      referenceType:"Company",
+      referenceID:"Sftobiz_123"
+      })
+    {
+      name
+      workTypeID
+    }
+  }
+`;
+
 export const ADD_TODO = gql`
   mutation AddTodo($title: String!, $description: String!) {
     addTodo(todoInput: { title: $title, description: $description }) {
@@ -43,38 +57,28 @@ export const ADD_TODO = gql`
 `;
 
 export const ADD_PROJECT = gql`
-mutation CreateNewProject(
+mutation CreateProject(
   $projectName: String!, 
-  $projectNum: String!,
+  $projectNum: Float!,
   $client: String!,
   $buildingType: String,
   $printingCom: String,
   $workType: String,
-  $estCost: String,
-  $adressLine1: String,
-  $adressLine2: String,
-  $city: String,
-  $state: String,
-  $zip: String,
-  $country: String
+  $estCost: Float,
   $description: String
   ){ 
-    createNewProject(newProjectInputObject: {
-     projectName: $projectName,
-     projectNum: $projectNum, 
+    createProject(taskDetails: {
+    projectName: $projectName,
+    projectNum: $projectNum, 
     client: $client,
     buildingType: $buildingType,
     printingCom: $printingCom,
     workType: $workType,
     estCost: $estCost,
-    adressLine1: $adressLine1,
-    adressLine2: $adressLine2,
-    city: $city,
-    state: $state,
-    zip: $zip,
-    country: $country
     description: $description
-   }){
+   }
+   referenceFilter: { referenceType: "Company", referenceID: "Sftobiz_123" }
+   ){
     projectId
     projectName
     projectNum
@@ -83,12 +87,6 @@ mutation CreateNewProject(
     printingCom
     workType
     estCost
-    adressLine1
-    adressLine2
-    city
-    state
-    zip
-    country
     description
   }
 }`;
