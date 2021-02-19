@@ -5,48 +5,20 @@ import { Expose, plainToClass } from 'class-transformer';
 import * as uuid from 'uuid';
 import ReferanceTypeEntity from './reference-type.entity';
 
-@Entity({ name: 'projects' })
+@Entity({ name: 'workTypes' })
 
-export class ProjectEntity extends BaseEntity {
+export class WorkTypeEntity extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id: number;
 
   @Expose()
   @Column({ unique: true })
-  projectId: string;
-
-  @Expose()
-  @Column({ unique: true })
-  projectName: string;
-
-  @Expose()
-  @Column({ unique: true })
-  projectNum: number
+  workTypeID: string;
 
   @Expose()
   @Column()
-  client: string;
-
-  @Expose()
-  @Column({ nullable: true })
-  buildingType?: string;
-
-  @Expose()
-  @Column({ nullable: true })
-  printingCom?: string;
-
-  @Expose()
-  @Column({ nullable: true })
-  workType?: string;
-
-  @Expose()
-  @Column({ nullable: true })
-  estCost?: number;
-
-  @Expose()
-  @Column({ nullable: true })
-  description?: string;
+  name: string;
 
   @Expose()
   @CreateDateColumn()
@@ -57,20 +29,19 @@ export class ProjectEntity extends BaseEntity {
   updatedAt: Date
 
   @Expose()
-  @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.projects)
+  @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.workTypes)
   reference: ReferanceTypeEntity;
 
 
-  constructor(projectEntity: Partial<ProjectEntity>) {
+  constructor(workTypeEntity: Partial<WorkTypeEntity>) {
     super();
-    if (projectEntity) {
+    if (workTypeEntity) {
       Object.assign(
         this,
-        plainToClass(ProjectEntity, projectEntity, {
+        plainToClass(WorkTypeEntity, workTypeEntity, {
           excludeExtraneousValues: true
         })
       )
-      this.projectId = this.projectId || uuid.v1();
       // this.createdAt = this.createdAt || new Date(new Date().toUTCString());
       // this.updatedAt = new Date(new Date().toUTCString());
     }
