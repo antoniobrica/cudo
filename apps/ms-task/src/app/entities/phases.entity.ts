@@ -13,7 +13,6 @@ export class Phases {
     // @Column('uuid')
     // phaseId: string;
 
-    @Field()
     @Column()
     phaseTitle: string;
 
