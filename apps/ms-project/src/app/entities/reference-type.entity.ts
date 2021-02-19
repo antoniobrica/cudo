@@ -1,6 +1,7 @@
 import { Expose, plainToClass } from 'class-transformer';
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import * as uuid from 'uuid';
+import { CompanyEntity } from './company.entity';
 import { ProjectEntity } from './project.entity';
 import { WorkTypeEntity } from './work-type.entity';
 
@@ -54,6 +55,11 @@ export default class ReferanceTypeEntity extends BaseEntity {
     @Expose()
     @OneToMany(() => WorkTypeEntity, (workType: WorkTypeEntity) => workType.reference)
     workTypes: WorkTypeEntity[];
+
+    // 1:n relation with TasksEntity 
+    @Expose()
+    @OneToMany(() => CompanyEntity, (companyEntity: CompanyEntity) => companyEntity.reference)
+    companies: CompanyEntity[];
 
     constructor(referanceTypeEntity: Partial<ReferanceTypeEntity>) {
         super();
