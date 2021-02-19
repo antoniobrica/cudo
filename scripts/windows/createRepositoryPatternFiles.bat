@@ -10,5 +10,6 @@ nx g @nrwl/nest:class task-details.input --project=ms-task --directory=app/compo
 nx g @nrwl/nest:interface tasks-repository --project=ms-task --directory=app/components/tasks/interface --flat=true
 nx g @nrwl/nest:interface tasks-service --project=ms-task --directory=app/components/tasks/interface --flat=true   
 nx g @nrwl/nest:resolver tasks --project=ms-task --directory=app/components/tasks/resolver --flat=true
+nx g @nrwl/nest:service tasks-repository --project=ms-task --directory=app/components/tasks/repository --flat=true
 
 PAUSE

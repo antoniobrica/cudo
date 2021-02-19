@@ -25,7 +25,7 @@ export interface ITodo {
   }
   
   export interface IProjects {
-      getProjects: IProject[];
+      projects: IProject[];
   }
 
   export interface ProjectMutation {

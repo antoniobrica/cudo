@@ -13,22 +13,20 @@ export const GET_TODOS = gql`
 
 export const GET_PROJECTS = gql`
   {
-    getProjects {
+    projects(referenceFilter:{
+      referenceType:"Company",
+      referenceID:"Sftobiz_123"
+      })
+    {
       projectId
-    projectName
-    projectNum
-    client
-    buildingType
-    printingCom
-    workType
-    estCost
-    adressLine1
-    adressLine2
-    city
-    state
-    zip
-    country
-    description
+      projectName
+      projectNum
+      client
+      buildingType
+      printingCom
+      workType
+      estCost
+      description
     }
   }
 `;

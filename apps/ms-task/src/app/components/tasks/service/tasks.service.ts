@@ -1,26 +1,43 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { TasksEntity } from '../../../entities/tasks.entity';
+import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
+import { GetReferenceArgs } from '../../reference/dto/args/get-reference.arg.dto';
+import { ReferenceService } from '../../reference/service/reference.service';
+import { GetTasksArgs } from '../dto/args/get-tasks.args';
 import { TaskDetailsInput } from '../dto/input/task-details.input';
-import { ITasksRepository } from '../interface/tasks-repository.interface';
-import { IProjectTasksService } from '../interface/tasks-service.interface';
-import { v4 as uuidv4 } from 'uuid';
-import { TasksModel } from '../models/tasks.model';
 
 @Injectable()
-export class TasksService implements IProjectTasksService {
+export class TasksService {
     constructor(
-        @Inject('ITasksRepository')
-        private readonly projectTasksRepository: ITasksRepository
+        @InjectRepository(TasksEntity)
+        private projectTasksRepository: Repository<TasksEntity>,
+        private referenceService: ReferenceService
     ) { }
-    create(createProjectTaskInput: TaskDetailsInput): Promise<TasksEntity> {
-        const taskeDetails = new TasksEntity(createProjectTaskInput);
-
-        return this.projectTasksRepository.create(taskeDetails);
+    public async create(createProjectTaskInput: TaskDetailsInput, referenceFilter: ReferenceFilterParams): Promise<TasksEntity> {
+        try {
+            const taskeDetails = new TasksEntity({});
+            taskeDetails.taskTitle = createProjectTaskInput.taskTitle;
+            const selectedReference = await this.referenceService.getReferenceById(referenceFilter)
+            const newPost = await this.projectTasksRepository.create({
+                ...taskeDetails,
+                reference: { id: selectedReference.id }
+            });
+            await this.projectTasksRepository.save(newPost);
+            return newPost;
+        } catch (error) {
+            return error;
+        }
     }
 
-    public async findAll(): Promise<TasksEntity[]> {
-
-        return await this.projectTasksRepository.findAll();
+    public async findAll(refFilter: ReferenceFilterParams): Promise<TasksEntity[]> {
+        const selectedReference = await this.referenceService.getReferenceById(refFilter)
+        return await this.projectTasksRepository.find({
+            "reference": {
+                id: selectedReference.id
+            }
+        });
     }
 
 }

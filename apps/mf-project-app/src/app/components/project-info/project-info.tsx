@@ -44,14 +44,14 @@ export function ProjectInfo(props: ProjectInfoProps) {
       <div className="app-content-body ">
         <div>
           <h2 className="project">All Projects</h2>
-          <span className="total">Total {data.getProjects.length} project added</span>
+          <span className="total">Total {data.projects.length} project added</span>
         </div>
 
         <Form>
           <Grid columns={4}>
 
             <Grid.Row>
-              {data.getProjects.map((project: IProject, i) => (
+              {data.projects.map((project: IProject, i) => (
                 <Grid.Column className="card-margin" key={i}>
                   <Card>
                     <div className="ui card">

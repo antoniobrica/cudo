@@ -1,78 +1,78 @@
-import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, ObjectIdColumn, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, ManyToOne, ObjectIdColumn, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Field, Int, ObjectType } from "@nestjs/graphql";
 import { IsOptional } from 'class-validator';
+import { Expose, plainToClass } from 'class-transformer';
+import * as uuid from 'uuid';
+import ReferanceTypeEntity from './reference-type.entity';
 
-
-@ObjectType()
 @Entity({ name: 'projects' })
 
-export class ProjectEntity {
-  @Field()
+export class ProjectEntity extends BaseEntity {
+
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Expose()
   @Column({ unique: true })
-  @PrimaryColumn()
   projectId: string;
 
-  @Field()
+  @Expose()
   @Column({ unique: true })
   projectName: string;
 
-  @Field()
+  @Expose()
   @Column({ unique: true })
   projectNum: number
 
-  @Field()
+  @Expose()
   @Column()
   client: string;
 
-  @Field()
-  @Column({nullable:true})
+  @Expose()
+  @Column({ nullable: true })
   buildingType?: string;
 
-  @Field()
+  @Expose()
   @Column({ nullable: true })
   printingCom?: string;
 
-  @Field()
+  @Expose()
   @Column({ nullable: true })
   workType?: string;
 
-  @Field()
+  @Expose()
   @Column({ nullable: true })
   estCost?: number;
 
-  @Field()
+  @Expose()
   @Column({ nullable: true })
-  adressLine1?: string;
-
-  @Field()
-  @Column({ nullable: true })
-  adressLine2?: string;
-
-  @Field()
-  @Column({ nullable: true })
-  city?: string;
-
-  @Field()
-  @Column({ nullable: true })
-  state?: string;
-
-  @Field()
-  @Column({ nullable: true })
-  zip?: number;
-
-  @Field()
-  @Column({ nullable: true })
-  country?: string;
-
-  @Field()
-  @Column({nullable: true})
   description?: string;
 
-  // @Field()
-  // @CreateDateColumn()
-  // createdAt: Date
+  @Expose()
+  @CreateDateColumn()
+  createdAt: Date
 
-  // @Field()
-  // @UpdateDateColumn()
-  // updatedAt: Date
+  @Expose()
+  @UpdateDateColumn()
+  updatedAt: Date
+
+  @Expose()
+  @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.projects)
+  reference: ReferanceTypeEntity;
+
+
+  constructor(projectEntity: Partial<ProjectEntity>) {
+    super();
+    if (projectEntity) {
+      Object.assign(
+        this,
+        plainToClass(ProjectEntity, projectEntity, {
+          excludeExtraneousValues: true
+        })
+      )
+      this.projectId = this.projectId || uuid.v1();
+      // this.createdAt = this.createdAt || new Date(new Date().toUTCString());
+      // this.updatedAt = new Date(new Date().toUTCString());
+    }
+  }
 }

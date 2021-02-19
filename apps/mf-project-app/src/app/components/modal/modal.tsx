@@ -67,8 +67,8 @@ function ModalExampleModal() {
   const { loading, error, data } = useProjectQuery(GET_PROJECTS);
 
   React.useEffect(() => {
-    console.log('data==>', data.getProjects);
-    setItems(data.getProjects.map(({projectName }) => ({ key: projectName, value: projectName, text: projectName })));
+    console.log('data==>', data.projects);
+    setItems(data.projects.map(({projectName }) => ({ key: projectName, value: projectName, text: projectName })));
      async function getWorkType() {
       const response = await fetch("https://swapi.co/api/people");
       const body = await response.json();
@@ -157,7 +157,7 @@ function ModalExampleModal() {
         cache.writeQuery({
           query: GET_PROJECTS,
           data: {
-            getProjects: [...cacheData.getProjects, addProject]
+            getProjects: [...cacheData.projects, addProject]
           }
         });
       }
