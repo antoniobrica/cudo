@@ -1,19 +1,12 @@
 import { Module } from '@nestjs/common';
-import { ProjectsResolver } from './projects.resolver';
-import { ProjectsService } from './projects.service';
-import { ProjectsRepositoryService } from './projects-repository/projects-repository.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProjectEntity } from '../../entities/project.entity';
+import { ReferenceModule } from '../reference/reference.module';
+import { ProjectsResolver } from './resolver/projects.resolver';
+import { ProjectsService } from './service/projects.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ProjectEntity])],
-  providers: [ProjectsResolver, {
-    provide: 'ProjectRepositoryInterface',
-    useClass: ProjectsRepositoryService,
-  },
-    {
-      provide: 'ProjectServiceInterface',
-      useClass: ProjectsService,
-    }],
+  imports: [TypeOrmModule.forFeature([ProjectEntity]), ReferenceModule],
+  providers: [ProjectsResolver, ProjectsService],
 })
 export class ProjectsModule { }

@@ -23,7 +23,7 @@ export class TypeOrmService implements TypeOrmOptionsFactory {
 				migrationsDir: "src/app/migration",
 				subscribersDir: "src/app/subscriber"
 			},
-			synchronize: true,
+			synchronize: false,
 			autoLoadEntities: true,
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
