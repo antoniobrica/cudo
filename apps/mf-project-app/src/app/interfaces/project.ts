@@ -27,6 +27,13 @@ export interface ITodo {
       createdAt?: string
       updatedAt?: string
     }
+    export interface ICompany {
+      companyID?: string
+      companyName?: string
+      companyType?: string
+      createdAt?: string
+      updatedAt?: string
+    }
 
   export interface ITodos {
     getTodos: ITodo[];
@@ -39,6 +46,10 @@ export interface ITodo {
   export interface IWorkTypes {
     workTypes: IWorkType[];
 }
+
+  export interface ICompanies {
+    company: ICompany[];
+   }
 
   export interface ProjectMutation {
       addProject: IProject;

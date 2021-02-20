@@ -1,5 +1,5 @@
 import { DocumentNode, useQuery, useMutation } from "@apollo/react-hooks";
-import { ITodos, ITodoMutation, ProjectMutation, IProject, IProjects, IWorkType, IWorkTypes } from "../interfaces/project";
+import { ITodos, ITodoMutation, ProjectMutation, IProject, IProjects, IWorkType, IWorkTypes, ICompanies } from "../interfaces/project";
 
 export function useTodoQuery(gqlQuery: DocumentNode) {
   const { loading, error, data } = useQuery<ITodos>(gqlQuery);
@@ -11,6 +11,12 @@ export function useProjectQuery(gqlQuery: DocumentNode) {
 }
 export function useWorkTypesQuery(gqlQuery: DocumentNode) {
   const { loading, error, data } = useQuery<IWorkTypes>(gqlQuery);
+  console.log('workypesdata==>', data)
+  return { loading, error, data };
+}
+
+export function useCompanyQuery(gqlQuery: DocumentNode) {
+  const { loading, error, data } = useQuery<ICompanies>(gqlQuery);
   console.log('workypesdata==>', data)
   return { loading, error, data };
 }

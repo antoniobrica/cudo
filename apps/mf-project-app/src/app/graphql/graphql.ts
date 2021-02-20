@@ -45,6 +45,35 @@ export const GET_WORKTYPES = gql`
   }
 `;
 
+export const GET_PRINTING_COMPANY = gql`
+  {
+    company(referenceFilter:{
+      referenceType:"Company",
+      referenceID:"Sftobiz_123"
+}, companyType:PRINTING)
+    {
+     companyID
+     companyName
+     companyType
+    }
+  }
+`;
+
+export const GET_CLIENT_COMPANY = gql`
+  {
+    company(referenceFilter:{
+      referenceType:"Company",
+      referenceID:"Sftobiz_123"
+}, companyType:CLIENT)
+    {
+     companyID
+     companyName
+     companyType
+    }
+  }
+`;
+
+
 export const ADD_TODO = gql`
   mutation AddTodo($title: String!, $description: String!) {
     addTodo(todoInput: { title: $title, description: $description }) {

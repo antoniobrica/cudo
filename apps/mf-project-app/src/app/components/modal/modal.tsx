@@ -3,9 +3,9 @@ import React from 'react';
 import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Select, TextArea } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 import { IProject, IProjects, ProjectMutation, IWorkTypes } from "../../interfaces/project";
-import { useProjectMutation, useProjectQuery, useWorkTypesQuery } from '../../services/useRequest';
+import { useProjectMutation, useProjectQuery, useWorkTypesQuery, useCompanyQuery } from '../../services/useRequest';
 import { ApolloCache, FetchResult } from '@apollo/client';
-import { ADD_PROJECT, GET_PROJECTS, GET_WORKTYPES } from "../../graphql/graphql";
+import { ADD_PROJECT, GET_CLIENT_COMPANY, GET_PRINTING_COMPANY, GET_PROJECTS, GET_WORKTYPES } from "../../graphql/graphql";
 import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
 
 
@@ -63,17 +63,38 @@ function ModalExampleModal() {
   const [country, setCountry] = React.useState("")
   const [description, setDescription] = React.useState("")
   const [items, setItems] = React.useState([{ key: 'add_new', value: 'add_new', text: '+ add new' }]);
+  const [printingCompany, setPrintingCompany] = React.useState([]);
+  const [clientCompanies, setClientCompany] = React.useState([])
   const [addProject] = useProjectMutation(ADD_PROJECT);
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
-  const { loading, error, data:worktypeData  } = useWorkTypesQuery(GET_WORKTYPES);
+  const { loading: worktypeLoading, error, data:worktypeData  } = useWorkTypesQuery(GET_WORKTYPES);
+  const { loading:companyLoading, data:printingCompanyData } = useCompanyQuery(GET_PRINTING_COMPANY);
+  const { loading:clientLoading, data:clientCompany } = useCompanyQuery(GET_CLIENT_COMPANY);
+
+
   React.useEffect(() => {
-    // setItems(data.workTypes.map(({projectName }) => ({ key: projectName, value: projectName, text: projectName })));
     if(worktypeData){
       console.log('data==>', worktypeData.workTypes);
      setItems(worktypeData.workTypes.map(({name }) => ({ key: name, value: name, text: name })));
 
     }
   }, [worktypeData]);
+
+  React.useEffect(() => {
+    if(printingCompanyData){
+      console.log('setPrintingCompany==>', printingCompanyData.company);
+     setPrintingCompany(printingCompanyData.company.map(({companyName }) => ({ key: companyName, value: companyName, text: companyName })));
+
+    }
+  }, [printingCompanyData]);
+
+  React.useEffect(() => {
+    if(clientCompany){
+      console.log('setPrintingCompany==>', clientCompany.company);
+      setClientCompany(clientCompany.company.map(({companyName }) => ({ key: companyName, value: companyName, text: companyName })));
+
+    }
+  }, [clientCompany]);
 
   const onprojectNameChange = e => {
     setProjectName(e.target.value)
@@ -216,7 +237,7 @@ function ModalExampleModal() {
                 <Form.Field>
                   <label>Client <span className="danger">*</span></label>
                   <Select placeholder='Select' className="small"
-                    options={items}
+                    options={clientCompanies}
                     value={client}
                     onChange={onprojectClient}
                   />
@@ -239,7 +260,7 @@ function ModalExampleModal() {
               <Grid.Column>
                 <Form.Field>
                   <label>Printing Company </label>
-                  <Select placeholder='Select' className="small" options={printingCompanyOption}
+                  <Select placeholder='Select' className="small" options={printingCompany}
                     value={printingCom}
                     onChange={onPrintingCom}
                   />
