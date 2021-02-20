@@ -18,7 +18,7 @@ export class ProjectsResolver {
 
   @Mutation(() => Project)
   async createProject(
-    @Args('taskDetails') createProjectTaskInput: CreateProjectInput,
+    @Args('projectDetails') createProjectTaskInput: CreateProjectInput,
     @Args("referenceFilter") referenceFilter: ReferenceFilterParams
   ) {
     return this.projectsService.create(createProjectTaskInput, referenceFilter);
