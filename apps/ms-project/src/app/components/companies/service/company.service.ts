@@ -9,7 +9,7 @@ import { CompanyFilterArgs } from '../dto/args/company-filter.args';
 import { GetCompanyFilterArgs } from '../dto/args/get-company-filter.args';
 import { CreateCompanyInput } from '../dto/input/create-company.input';
 import { UpdateCompanyInput } from '../dto/input/update-company.input';
-import CompanyNotFoundException from '../exceptions/CompanyNotFound.exception';
+import CompanyNotFoundException from 'apps/ms-project/src/app/components/companies/exceptions/companyNotFound.exception';
 
 @Injectable()
 export class CompanyService {
