@@ -45,6 +45,19 @@ export const GET_WORKTYPES = gql`
   }
 `;
 
+
+export const GET_BUILDINGTYPES = gql`
+  {
+    buildingTypes(referenceFilter:{
+      referenceType:"Company",
+      referenceID:"Sftobiz_123"
+      }){
+      name
+      buildingTypeID
+      }
+  }
+`;
+
 export const GET_PRINTING_COMPANY = gql`
   {
     company(referenceFilter:{

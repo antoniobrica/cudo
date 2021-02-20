@@ -34,6 +34,12 @@ export interface ITodo {
       createdAt?: string
       updatedAt?: string
     }
+    export interface IBuildingType {
+      buildingTypeID: string
+      name: string
+      createdAt: string
+      updatedAt: string
+    }
 
   export interface ITodos {
     getTodos: ITodo[];
@@ -45,6 +51,10 @@ export interface ITodo {
 
   export interface IWorkTypes {
     workTypes: IWorkType[];
+}
+
+export interface IBuildingTypes {
+  buildingTypes: IBuildingType[];
 }
 
   export interface ICompanies {

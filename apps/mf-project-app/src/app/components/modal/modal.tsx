@@ -3,9 +3,9 @@ import React from 'react';
 import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Select, TextArea } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 import { IProject, IProjects, ProjectMutation, IWorkTypes } from "../../interfaces/project";
-import { useProjectMutation, useProjectQuery, useWorkTypesQuery, useCompanyQuery } from '../../services/useRequest';
+import { useProjectMutation, useProjectQuery, useWorkTypesQuery, useCompanyQuery, useBuildingTypesQuery } from '../../services/useRequest';
 import { ApolloCache, FetchResult } from '@apollo/client';
-import { ADD_PROJECT, GET_CLIENT_COMPANY, GET_PRINTING_COMPANY, GET_PROJECTS, GET_WORKTYPES } from "../../graphql/graphql";
+import { ADD_PROJECT, GET_BUILDINGTYPES, GET_CLIENT_COMPANY, GET_PRINTING_COMPANY, GET_PROJECTS, GET_WORKTYPES } from "../../graphql/graphql";
 import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
 
 
@@ -65,11 +65,15 @@ function ModalExampleModal() {
   const [items, setItems] = React.useState([{ key: 'add_new', value: 'add_new', text: '+ add new' }]);
   const [printingCompany, setPrintingCompany] = React.useState([]);
   const [clientCompanies, setClientCompany] = React.useState([])
+  const [buildingTypes, setBuildingTypes] = React.useState([])
+
   const [addProject] = useProjectMutation(ADD_PROJECT);
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
   const { loading: worktypeLoading, error, data:worktypeData  } = useWorkTypesQuery(GET_WORKTYPES);
   const { loading:companyLoading, data:printingCompanyData } = useCompanyQuery(GET_PRINTING_COMPANY);
   const { loading:clientLoading, data:clientCompany } = useCompanyQuery(GET_CLIENT_COMPANY);
+  const { loading:buildingTypesloading, data:buildingTypesData } = useBuildingTypesQuery(GET_BUILDINGTYPES);
+
 
 
   React.useEffect(() => {
@@ -79,6 +83,13 @@ function ModalExampleModal() {
 
     }
   }, [worktypeData]);
+
+  React.useEffect(() => {
+    if(buildingTypesData){
+      setBuildingTypes(buildingTypesData.buildingTypes.map(({name }) => ({ key: name, value: name, text: name })));
+
+    }
+  }, [buildingTypesData]);
 
   React.useEffect(() => {
     if(printingCompanyData){
@@ -247,7 +258,7 @@ function ModalExampleModal() {
               <Grid.Column>
                 <Form.Field>
                   <label>Type of building <span className="danger">*</span></label>
-                  <Select placeholder='Select' className="small" options={buildingOption}
+                  <Select placeholder='Select' className="small" options={buildingTypes}
                     value={buildingType}
                     onChange={onBuildingType}
                   />
