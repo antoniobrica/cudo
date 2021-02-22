@@ -40,7 +40,8 @@ export function Logindrop(props: LoginDropProps) {
 
                     <Form>
                       <Form.Field>
-                      <label>softobiz@gmail.in <span className="float-area"><Icon name='at' /> </span> </label>  
+                      <label>softobiz@gmail.in <span className="float-area"> 
+        <i className="ms-Icon ms-Icon--Accounts" aria-hidden="true"></i> </span> </label>  
                       </Form.Field>
                         <Form.Field>
                         <Select placeholder='Select' options={countryOptions} className="full-width" />

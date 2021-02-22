@@ -2,8 +2,7 @@ import React from 'react';
  
 import '../../../style/index.scss';
 import { Header, Icon, Image, Menu, Segment, Sidebar } from 'semantic-ui-react'
-
-/* eslint-disable-next-line */
+ /* eslint-disable-next-line */
 export interface MenuProps { }
 
 export function Menubar(props: MenuProps) {
@@ -31,39 +30,50 @@ export function Menubar(props: MenuProps) {
         
       </Menu.Item>
       <Menu.Item as='a'>
-        <Icon name='add' />
+       
+        <i className="ms-Icon ms-Icon--CirclePlus" aria-hidden="true"></i>
+      </Menu.Item>
+      <Menu.Item as='a'>
+      <i className="ms-Icon ms-Icon--Search" aria-hidden="true"></i>
+       
+      </Menu.Item>
+      <Menu.Item as='a'>
+      <i className="ms-Icon ms-Icon--ViewDashboard" aria-hidden="true"></i>
         
       </Menu.Item>
       <Menu.Item as='a'>
-        <Icon name='search' />
-         
-      </Menu.Item>
-      <Menu.Item as='a'>
-        <Icon name='dashboard' />
+      <i className="ms-Icon ms-Icon--FabricNewFolder" aria-hidden="true"></i>
        
       </Menu.Item>
       <Menu.Item as='a'>
-        <Icon name='calendar' />
+      <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i>
+      
        
       </Menu.Item>
       <Menu.Item as='a'>
-        <Icon name='bell' />
+      
+      <i className="ms-Icon ms-Icon--Ringer" aria-hidden="true"></i>
+      
        
       </Menu.Item>
       <Menu.Item as='a'>
-        <Icon name='user' />
+      <i className="ms-Icon ms-Icon--People" aria-hidden="true"></i>
        
       </Menu.Item>
       <Menu.Item as='a'>
-        <Icon name='users' />
+      <i className="ms-Icon ms-Icon--FollowUser" aria-hidden="true"></i>
+      
        
       </Menu.Item>
       <Menu.Item as='a'>
-        <Icon name='setting' />
+      <i className="ms-Icon ms-Icon--Settings" aria-hidden="true"></i>
+      
        
       </Menu.Item>
+      
       <Menu.Item as='a'>
-        <Icon name='angle double left' />
+     
+        <i className="ms-Icon ms-Icon--DoubleChevronRight" aria-hidden="true"></i>
        
       </Menu.Item>
 

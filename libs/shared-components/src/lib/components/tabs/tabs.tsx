@@ -30,7 +30,7 @@ export function Tabsbar(props: TabsProps) {
         {
           
           menuItem: { key: 'Task', icon: 'shield alternate', content: 'Task' },
-          render: () => <Tab.Pane attached={false}> <span className="material-icons">list_alt</span>Task</Tab.Pane>,
+          render: () => <Tab.Pane attached={false}>  Task</Tab.Pane>,
         },
         {
            
