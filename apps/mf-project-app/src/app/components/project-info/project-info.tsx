@@ -10,6 +10,7 @@ import Modal from 'react-modal';
 import { Card, Icon, Form, Grid } from 'semantic-ui-react'
 import '../../../../../../libs/shared-components/src/style/index.scss';
 
+import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
 
 // import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
 

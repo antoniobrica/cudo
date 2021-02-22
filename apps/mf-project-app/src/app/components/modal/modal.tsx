@@ -7,8 +7,7 @@ import { useProjectMutation, useProjectQuery, useWorkTypesQuery, useCompanyQuery
 import { ApolloCache, FetchResult } from '@apollo/client';
 import { ADD_PROJECT, GET_BUILDINGTYPES, GET_CLIENT_COMPANY, GET_PRINTING_COMPANY, GET_PROJECTS, GET_WORKTYPES } from "../../graphql/graphql";
 import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
-
-
+import ModalExampleCompany from 'libs/shared-components/src/lib/components/modal/companypopup'; 
 
 function ModalExampleModal() {
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
@@ -120,6 +119,14 @@ function ModalExampleModal() {
   }
   const onprojectClient = (event, data) => {
     setClient(data.value)
+    if(data.value == 'click'){
+      console.log('modal')
+      return (
+      <div>
+<ModalExampleCompany></ModalExampleCompany><br/>
+    {/* <ModalExamplePrinting></ModalExamplePrinting><br/> */}
+</div>)
+    }
     console.log('client', client)
   }
   const onBuildingType = (event, data) => {
@@ -296,7 +303,6 @@ function ModalExampleModal() {
         <div>
           <Header className="header" >Manage work type and estimated cost</Header>
         </div>
-
         <Table>
           <Table.Header>
             <Table.Row>
