@@ -9,11 +9,12 @@ export class Phases {
     @PrimaryGeneratedColumn()
     Id: string;
 
-    // @Field()
-    // @Column('uuid')
-    // phaseId: string;
+    @Field()
+    @Column('uuid')
+    phaseId: string;
 
     @Column()
+    @Field()
     phaseTitle: string;
 
     @Field()
