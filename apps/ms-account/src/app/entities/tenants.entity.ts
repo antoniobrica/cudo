@@ -5,19 +5,15 @@ import * as uuid from 'uuid';
 /**
  * 
  */
-@Entity({ name: 'referenceTypes' })
-export default class ReferanceTypeEntity extends BaseEntity {
+@Entity({ name: 'tenants' })
+export default class TenantsEntity extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;
 
     @Expose()
     @Column({ unique: true })
-    referenceID: string;
-
-    @Expose()
-    @Column({ nullable: true })
-    referenceType: string;
+    tenantID: string;
 
     @Expose()
     @Column()
@@ -44,15 +40,16 @@ export default class ReferanceTypeEntity extends BaseEntity {
     // @OneToMany(() => TasksEntity, (task: TasksEntity) => task.reference)
     // tasks: TasksEntity[];
 
-    constructor(referanceTypeEntity: Partial<ReferanceTypeEntity>) {
+    constructor(tenantsEntity: Partial<TenantsEntity>) {
         super();
-        if (referanceTypeEntity) {
+        if (tenantsEntity) {
             Object.assign(
                 this,
-                plainToClass(ReferanceTypeEntity, referanceTypeEntity, {
+                plainToClass(TenantsEntity, tenantsEntity, {
                     excludeExtraneousValues: true
                 })
             )
+            this.tenantID = this.tenantID || uuid.v1();
             this.createdAt = this.createdAt || new Date(new Date().toUTCString());
             this.updatedAt = new Date(new Date().toUTCString());
         }
