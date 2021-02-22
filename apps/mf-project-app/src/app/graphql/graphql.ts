@@ -127,7 +127,7 @@ mutation CreateProject(
   $estCost: Float,
   $description: String
   ){ 
-    createProject(taskDetails: {
+    createProject(projectDetails: {
     projectName: $projectName,
     projectNum: $projectNum, 
     client: $client,
