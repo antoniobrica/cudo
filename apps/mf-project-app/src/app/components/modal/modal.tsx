@@ -66,6 +66,8 @@ function ModalExampleModal() {
   const [printingCompany, setPrintingCompany] = React.useState([]);
   const [clientCompanies, setClientCompany] = React.useState([])
   const [buildingTypes, setBuildingTypes] = React.useState([])
+  const [addWorkTypes, setAddWorkTypes] = React.useState(1)
+
 
   const [addProject] = useProjectMutation(ADD_PROJECT);
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
@@ -171,6 +173,14 @@ function ModalExampleModal() {
      setDescription(e.target.value)
      console.log('desicription', description)
    }
+
+ const addWorkType =()=>{
+    setAddWorkTypes(prevCount => prevCount + 1);
+   console.log('addWorkType==>', addWorkTypes)    
+ }
+  const moreWorkTypes = () =>{
+    
+  }
   const handleSaveProject = () => {
     setOpen(false);
     // props.close();
@@ -298,7 +308,9 @@ function ModalExampleModal() {
           </Table.Header>
 
           <Table.Body>
-            <Table.Row>
+            {
+          [...Array(addWorkTypes)].map((k,i)=>  
+<Table.Row key={i}>
               <Table.Cell>
                 <Form>
                   <Grid columns={1}>
@@ -340,7 +352,10 @@ function ModalExampleModal() {
               </Table.Cell>
 
             </Table.Row>
-            {/* <Table.Row>
+           
+        
+        )
+        }            {/* <Table.Row>
               <Table.Cell>
                 <Form>
                   <Grid columns={1}>
@@ -375,16 +390,16 @@ function ModalExampleModal() {
               </Table.Cell>
 
             </Table.Row> */}
-            {/* <Table.Row>
+            <Table.Row>
               <Table.Cell>
-                <a href="">+ Add more </a>
+                <a onClick={addWorkType}>+ Add more </a>
 
               </Table.Cell>
               <Table.Cell></Table.Cell>
               <Table.Cell>
 
               </Table.Cell>
-            </Table.Row> */}
+            </Table.Row>
           </Table.Body>
         </Table>
 

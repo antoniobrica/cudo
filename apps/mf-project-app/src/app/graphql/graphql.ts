@@ -98,6 +98,24 @@ export const ADD_TODO = gql`
   }
 `;
 
+export const CREATE_COMPANY = gql`
+  mutation CreateCompany($companyName: String!, $companyType: String!) {
+    createCompany(
+      referenceFilter:{
+      referenceType:"Company",
+      referenceID:"Sftobiz_123"
+      },companyDetails:{
+      companyName: $companyName
+      companyType: CLIENT
+      }) {
+      id
+      title
+      description
+      status
+    }
+  }
+`;
+
 export const ADD_PROJECT = gql`
 mutation CreateProject(
   $projectName: String!, 
