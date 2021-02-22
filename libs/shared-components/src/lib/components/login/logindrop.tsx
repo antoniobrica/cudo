@@ -39,8 +39,10 @@ export function Logindrop(props: LoginDropProps) {
                     <div className="form-inner">
 
                     <Form>
+                      <Form.Field>
+                      <label>softobiz@gmail.in <span className="float-area"><Icon name='at' /> </span> </label>  
+                      </Form.Field>
                         <Form.Field>
-                           
                         <Select placeholder='Select' options={countryOptions} className="full-width" />
                         </Form.Field>
                         <Button size='large' className="grey-btn btn-large">Next <Icon name='arrow right' />   </Button>

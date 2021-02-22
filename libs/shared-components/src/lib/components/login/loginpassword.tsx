@@ -35,6 +35,9 @@ export function Loginpassword(props: LoginPasswordProps) {
                     <div className="form-inner">
 
                     <Form>
+                    <Form.Field>
+                      <label>softobiz@gmail.in <span className="float-area"><Icon name='at' /> </span> </label>  
+                      </Form.Field>
                         <Form.Field>
                             
                             <Input placeholder='password' className="full-width" icon='lock' />
