@@ -67,7 +67,7 @@ export function Menubar(props: MenuProps) {
       
     </Popup>
       </Menu.Item>
-      <Menu.Item as='a' onClick={()=>handleOpenProject('project')}>
+      <Menu.Item as='a' onClick={()=>handleOpenProject('project')} className="active">
       <Popup 
        content='Project'
       trigger={  <i className="ms-Icon ms-Icon--FabricNewFolder" aria-hidden="true"></i>
