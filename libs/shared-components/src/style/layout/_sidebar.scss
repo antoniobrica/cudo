@@ -258,3 +258,7 @@ i.angle.down.icon {
 	float: right;
 	margin-right: 20px;
 }
+.ui.inverted.menu .link.item:active, .ui.inverted.menu a.item:active {
+    background: #2D62ED;
+    color: #fff;
+}
