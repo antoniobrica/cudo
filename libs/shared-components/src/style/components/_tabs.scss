@@ -75,3 +75,41 @@ span.material-icons.middle {
         }
     }
 }
+//colors
+$white: #ffffff;
+
+.navbar-collapse {
+	padding: 20px;
+}
+.box-shadow {
+	 box-shadow: 0 2px 2px rgb(0 0 0 / 5%), 0 1px 0 rgb(0 0 0 / 5%);
+}
+.bg-white-only {
+	background-color: $white;
+}
+.preliminary-font{
+    font-size: 14px;
+}
+.ui-tabs{
+    margin-top: 30px;
+}
+.project-sub{
+    font-size: 14px;
+    color: #9A9EA1;
+}
+.found{
+    font-size: 24px;
+    color: #1B1B40;
+}
+.app-content-body-dash.navbar-collapse.box-shadow.bg-white-only .ui.segment.active.tab {
+    background: #F9F8FF;
+}
+.app-content-body-dash{
+    position: relative;
+    margin-left: 200px;
+    top: -120px;
+    width: 100%;
+}
+.margin-top{
+    margin-top: 20px;
+}

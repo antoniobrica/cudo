@@ -13,25 +13,79 @@ export const GET_TODOS = gql`
 
 export const GET_PROJECTS = gql`
   {
-    getProjects {
+    projects(referenceFilter:{
+      referenceType:"Company",
+      referenceID:"Sftobiz_123"
+      })
+    {
       projectId
-    projectName
-    projectNum
-    client
-    buildingType
-    printingCom
-    workType
-    estCost
-    adressLine1
-    adressLine2
-    city
-    state
-    zip
-    country
-    description
+      projectName
+      projectNum
+      client
+      buildingType
+      printingCom
+      workType
+      estCost
+      description
     }
   }
 `;
+
+
+export const GET_WORKTYPES = gql`
+  {
+    workTypes(referenceFilter:{
+      referenceType:"Company",
+      referenceID:"Sftobiz_123"
+      })
+    {
+      name
+      workTypeID
+    }
+  }
+`;
+
+
+export const GET_BUILDINGTYPES = gql`
+  {
+    buildingTypes(referenceFilter:{
+      referenceType:"Company",
+      referenceID:"Sftobiz_123"
+      }){
+      name
+      buildingTypeID
+      }
+  }
+`;
+
+export const GET_PRINTING_COMPANY = gql`
+  {
+    company(referenceFilter:{
+      referenceType:"Company",
+      referenceID:"Sftobiz_123"
+}, companyType:PRINTING)
+    {
+     companyID
+     companyName
+     companyType
+    }
+  }
+`;
+
+export const GET_CLIENT_COMPANY = gql`
+  {
+    company(referenceFilter:{
+      referenceType:"Company",
+      referenceID:"Sftobiz_123"
+}, companyType:CLIENT)
+    {
+     companyID
+     companyName
+     companyType
+    }
+  }
+`;
+
 
 export const ADD_TODO = gql`
   mutation AddTodo($title: String!, $description: String!) {
@@ -44,39 +98,47 @@ export const ADD_TODO = gql`
   }
 `;
 
+export const CREATE_COMPANY = gql`
+  mutation CreateCompany($companyName: String!, $companyType: String!) {
+    createCompany(
+      referenceFilter:{
+      referenceType:"Company",
+      referenceID:"Sftobiz_123"
+      },companyDetails:{
+      companyName: $companyName
+      companyType: CLIENT
+      }) {
+      id
+      title
+      description
+      status
+    }
+  }
+`;
+
 export const ADD_PROJECT = gql`
-mutation CreateNewProject(
+mutation CreateProject(
   $projectName: String!, 
-  $projectNum: String!,
+  $projectNum: Float!,
   $client: String!,
   $buildingType: String,
   $printingCom: String,
   $workType: String,
-  $estCost: String,
-  $adressLine1: String,
-  $adressLine2: String,
-  $city: String,
-  $state: String,
-  $zip: String,
-  $country: String
+  $estCost: Float,
   $description: String
   ){ 
-    createNewProject(newProjectInputObject: {
-     projectName: $projectName,
-     projectNum: $projectNum, 
+    createProject(projectDetails: {
+    projectName: $projectName,
+    projectNum: $projectNum, 
     client: $client,
     buildingType: $buildingType,
     printingCom: $printingCom,
     workType: $workType,
     estCost: $estCost,
-    adressLine1: $adressLine1,
-    adressLine2: $adressLine2,
-    city: $city,
-    state: $state,
-    zip: $zip,
-    country: $country
     description: $description
-   }){
+   }
+   referenceFilter: { referenceType: "Company", referenceID: "Sftobiz_123" }
+   ){
     projectId
     projectName
     projectNum
@@ -85,12 +147,6 @@ mutation CreateNewProject(
     printingCom
     workType
     estCost
-    adressLine1
-    adressLine2
-    city
-    state
-    zip
-    country
     description
   }
 }`;
