@@ -40,3 +40,26 @@
         color: color("shades", "black");
     }
 }
+
+.ui.popup{
+
+    border: 1px solid #1b1b40;
+    line-height: 0.4285em;
+    background: #1b1b40;
+    padding: 0.533em 1em;
+    color: rgba(0,0,0,.87);
+}
+.ui.popup .content {
+    background: #1b1b40;
+    color: #ffffff;
+}
+
+.ui.left.center.popup:before, .ui.right.center.popup:before {
+    background: #1b1b40;
+    box-shadow: -1px 1px 0 0 #1b1b40;
+}
+
+.ui.right.center.popup {
+    margin: 0 0 0 2.714286em;
+    transform-origin: left 50%;
+}
