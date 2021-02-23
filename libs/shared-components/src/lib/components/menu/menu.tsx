@@ -1,13 +1,11 @@
 import React from 'react';
  
 import '../../../style/index.scss';
-import { Header, Icon, Image, Menu, Segment, Sidebar } from 'semantic-ui-react'
-import logo from 'libs/shared-components/src/slider.png';
-
-/* eslint-disable-next-line */
+import { Header, Icon, Image, Menu, Segment, Sidebar,Button,Popup } from 'semantic-ui-react'
+ /* eslint-disable-next-line */
 export interface MenuProps {
-  data: string,
   parentCallback
+  data
  }
 
 export function Menubar(props: MenuProps) {
@@ -35,43 +33,103 @@ export function Menubar(props: MenuProps) {
       
     >
       <Menu.Item as='a'>
-         <img src={logo} alt="logo"></img>
+         {/* <img src={logo} alt="logo"></img> */}
         
       </Menu.Item>
-      <Menu.Item as='a' onClick={()=>handleOpenProject('project')}>
-        <Icon name='add' />
+       
+      <Menu.Item as='a'  onClick={()=>handleOpenProject('add')}>
+      
+      <Popup
+      content='Add Project'
         
+        trigger={<i className="ms-Icon ms-Icon--CirclePlus" aria-hidden="true"></i>}
+        size='small' position='right center'
+      />
+    
       </Menu.Item>
-      <Menu.Item as='a' onClick={()=>handleOpenProject('search')}>
-        <Icon name='search' />
-         
+      <Menu.Item as='a' onClick={()=>handleOpenProject('search')} >
+      
+      <Popup  
+       
+      
+     
+      content='Search'
+      trigger={<i className="ms-Icon ms-Icon--Search" aria-hidden="true"></i>} size='small' position='right center'>
+     
+    </Popup>
       </Menu.Item>
       <Menu.Item as='a' onClick={()=>handleOpenProject('dashboard')}>
-        <Icon name='dashboard' />
-       
-      </Menu.Item>
-      <Menu.Item as='a' onClick={()=>handleOpenProject('calender')}>
-        <Icon name='calendar' />
-       
-      </Menu.Item>
-      <Menu.Item as='a' onClick={()=>handleOpenProject('notification')}>
-        <Icon name='bell' />
-       
-      </Menu.Item>
-      <Menu.Item as='a' onClick={()=>handleOpenProject('user')}>
-        <Icon name='user' />
-       
-      </Menu.Item>
-      <Menu.Item as='a' onClick={()=>handleOpenProject('users')}>
-        <Icon name='users' />
-       
-      </Menu.Item>
-      <Menu.Item as='a' onClick={()=>handleOpenProject('setting')}>
-        <Icon name='setting' />
-       
+     
+        
+      <Popup
+       content=' '
+      trigger={ <i className="ms-Icon ms-Icon--ViewDashboard" aria-hidden="true"></i>} size='small' position='right center'>
+      
+    </Popup>
       </Menu.Item>
       <Menu.Item as='a' onClick={()=>handleOpenProject('project')}>
-        <Icon name='angle double left' />
+      <Popup 
+       content='Project'
+      trigger={  <i className="ms-Icon ms-Icon--FabricNewFolder" aria-hidden="true"></i>
+      } size='small' position='right center'>
+      
+      </Popup>
+      
+      </Menu.Item>
+      <Menu.Item as='a' onClick={()=>handleOpenProject('calendar')}>
+     
+      <Popup 
+      content='Calendar'
+      trigger={  <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i>
+      } size='small' position='right center'>
+      
+      </Popup>
+       
+      </Menu.Item>
+      <Menu.Item as='a'  onClick={()=>handleOpenProject('Notification')}>
+      
+      
+      <Popup
+      content='Notification'
+      trigger={ <i className="ms-Icon ms-Icon--Ringer" aria-hidden="true"></i>
+      } size='small' position='right center'>
+      
+      </Popup>
+       
+      </Menu.Item>
+      <Menu.Item as='a' onClick={()=>handleOpenProject('people')}>
+     
+      <Popup 
+      content='People'
+      trigger={  <i className="ms-Icon ms-Icon--People" aria-hidden="true"></i>
+      } size='small' position='right center'>
+      
+      </Popup>
+      </Menu.Item>
+      <Menu.Item as='a' onClick={()=>handleOpenProject('message')}>
+     
+      <Popup
+      content='Message'
+      trigger={  <i className="ms-Icon ms-Icon--FollowUser" aria-hidden="true"></i>
+      } size='small' position='right center'>
+      
+      </Popup>
+       
+      </Menu.Item>
+      <Menu.Item as='a' onClick={()=>handleOpenProject('Notification')}>
+      
+      
+      <Popup
+      content='Configuration'
+      trigger={  <i className="ms-Icon ms-Icon--Settings" aria-hidden="true"></i>
+      } size='small' position='right center'>
+     
+      </Popup>
+      </Menu.Item>
+      
+      <Menu.Item as='a' onClick={()=>handleOpenProject('project')}>
+     
+        <i className="ms-Icon ms-Icon--DoubleChevronRight" aria-hidden="true"></i>
        
       </Menu.Item>
 

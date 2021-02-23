@@ -5,18 +5,13 @@ import {Select, Input, Segment,Form, Grid ,Image,Checkbox,Button,Icon } from 'se
 import logo from 'libs/shared-components/src/slider.png';
 import img from 'libs/shared-components/src/Shape 2.png';
 /* eslint-disable-next-line */
-export interface LoginProps { 
-    login
-}
+export interface LoginPasswordProps { }
 
-export function Loginbar(props: LoginProps) {
+export function Loginpassword(props: LoginPasswordProps) {
  
     const description = [
          
       ] 
-      const handleLogin =()=>{
-        props.login();
-      }
   return (
     <div className="app-content-body ">
         
@@ -40,11 +35,14 @@ export function Loginbar(props: LoginProps) {
                     <div className="form-inner">
 
                     <Form>
+                    <Form.Field>
+                      <label>softobiz@gmail.in <span className="float-area"><i className="ms-Icon ms-Icon--Accounts" aria-hidden="true"></i></span> </label>  
+                      </Form.Field>
                         <Form.Field>
                             
-                            <Input placeholder='example@domain.com' className="full-width" icon='at' />
+                            <Input placeholder='password' className="full-width" icon='lock' />
                         </Form.Field>
-                        <Button size='large' className="grey-btn btn-large" onClick={handleLogin}>Next <Icon name='arrow right' />   </Button>
+                        <Button size='large' className="grey-btn btn-large">Login <Icon name='arrow right' />   </Button>
                          
  
                         </Form>
@@ -74,4 +72,4 @@ export function Loginbar(props: LoginProps) {
   );
 }
 
-export default Loginbar;
+export default Loginpassword;
