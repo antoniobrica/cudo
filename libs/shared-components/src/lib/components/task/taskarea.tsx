@@ -4,6 +4,9 @@ import '../../../style/index.scss';
 import { Segment } from 'semantic-ui-react'
 import img from 'libs/shared-components/src/user.png';
 import img2 from 'libs/shared-components/src/user2.png';
+import img3 from 'libs/shared-components/src/green_tick.png';
+
+import img4 from 'libs/shared-components/src/dots.png';
 /* eslint-disable-next-line */
 export interface Tasks { }
 
@@ -22,8 +25,8 @@ export function TaskArea(props: Tasks) {
 
 <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
 												 
-													<div className="d-flex align-items-center mr-2 py-2">
-													  
+													<div className="d-flex align-items-center py-2">
+                                                    <span> <img src={img4}  className="  mr-10 " />  </span>
 													 <span className="textt">T-001</span>
                                                      <span> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </span>
                                                      <span className="font-weight-bold mb-0 mr-10">This is task name here</span>
@@ -79,8 +82,8 @@ export function TaskArea(props: Tasks) {
 
 <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
 												 
-													<div className="d-flex align-items-center mr-2 py-2">
-													  
+													<div className="d-flex align-items-center   py-2">
+                                                    <span> <img src={img4}  className="  mr-10 " />  </span>
 													 <span className="textt">T-002</span>
                                                      <span> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </span>
                                                      <span className="font-weight-bold mb-0 mr-10">This is task name here</span>
@@ -136,8 +139,8 @@ export function TaskArea(props: Tasks) {
 
 <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
 												 
-													<div className="d-flex align-items-center mr-2 py-2">
-													  
+													<div className="d-flex align-items-center   py-2">
+                                                    <span> <img src={img4}  className="  mr-10 " />  </span>
 													 <span className="textt">T-003</span>
                                                      <span> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </span>
                                                      <span className="font-weight-bold mb-0 mr-10">This is task name here</span>
@@ -193,10 +196,10 @@ export function TaskArea(props: Tasks) {
 
 <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
 												 
-													<div className="d-flex align-items-center mr-2 py-2">
-													  
+													<div className="d-flex align-items-center  py-2">
+													  <span> <img src={img4}  className="  mr-10 " />  </span>
 													 <span className="textt">T-004</span>
-                                                     <span> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </span>
+                                                     <span>  <img src={img3}  className=" mr-2 mr-10 " />   </span>
                                                      <span className="font-weight-bold mb-0 mr-10 line-through">This is task name here</span>
 														<div className="d-flex mr-3">
 														 
