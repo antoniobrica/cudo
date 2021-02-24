@@ -5,8 +5,7 @@ import { ITask, ITasks, TaskMutation } from "../../interfaces/task";
 import { useTaskMutation } from '../../services/useRequest';
 import { ApolloCache, FetchResult } from '@apollo/client';
 import { ADD_TASK, GET_TASKS } from "../../graphql/graphql";
-
-
+import '../../../../../../libs/shared-components/src/style/index.scss';
 import './create-task.module.scss';
 
 /* eslint-disable-next-line */

@@ -8,6 +8,7 @@ import { ApolloCache, FetchResult } from '@apollo/client';
 import { ADD_PROJECT, GET_BUILDINGTYPES, GET_CLIENT_COMPANY, GET_PRINTING_COMPANY, GET_PROJECTS, GET_WORKTYPES } from "../../graphql/graphql";
 import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
 import ModalExampleCompany from 'libs/shared-components/src/lib/components/modal/companypopup'; 
+import WorkType from '../../work-type/work-type'
 
 function ModalExampleModal() {
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
@@ -67,7 +68,6 @@ function ModalExampleModal() {
   const [buildingTypes, setBuildingTypes] = React.useState([])
   const [addWorkTypes, setAddWorkTypes] = React.useState(1)
   const [secondOpen, setSecondOpen] = React.useState(false)
-
 
   const [addProject] = useProjectMutation(ADD_PROJECT);
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
@@ -310,6 +310,7 @@ function ModalExampleModal() {
         <div>
           <Header className="header" >Manage work type and estimated cost</Header>
         </div>
+        <WorkType  worktypes={items}/>
         <Table>
           <Table.Header>
             <Table.Row>
@@ -321,7 +322,8 @@ function ModalExampleModal() {
           </Table.Header>
 
           <Table.Body>
-            {
+            
+            {/* {
           [...Array(addWorkTypes)].map((k,i)=>  
 <Table.Row key={i}>
               <Table.Cell>
@@ -368,42 +370,8 @@ function ModalExampleModal() {
            
         
         )
-        }            {/* <Table.Row>
-              <Table.Cell>
-                <Form>
-                  <Grid columns={1}>
-                    <Grid.Row>
-                      <Grid.Column>
-                        <Form.Field>
-                          <Select placeholder='Select' className="small" options={countryOptions} />
-                        </Form.Field>
-                      </Grid.Column>
-
-                    </Grid.Row>
-                  </Grid>
-                </Form>
-
-              </Table.Cell>
-              <Table.Cell></Table.Cell>
-              <Table.Cell>
-                <Form>
-                  <Grid columns={1}>
-                    <Grid.Row>
-                      <Grid.Column>
-                        <Form.Field>
-
-                          <Input label='$' size='small' className="full-width" />
-                        </Form.Field>
-                      </Grid.Column>
-
-                    </Grid.Row>
-                  </Grid>
-                </Form>
-
-              </Table.Cell>
-
-            </Table.Row> */}
-            <Table.Row>
+        }          */}
+          {/* <Table.Row>
               <Table.Cell>
                 <a onClick={addWorkType}>+ Add more </a>
 
@@ -412,7 +380,7 @@ function ModalExampleModal() {
               <Table.Cell>
 
               </Table.Cell>
-            </Table.Row>
+            </Table.Row> */}
           </Table.Body>
         </Table>
 
