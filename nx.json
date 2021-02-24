@@ -136,6 +136,9 @@
     },
     "mf-core": {
       "tags": []
+    },
+    "mf-account-app-lib": {
+      "tags": []
     }
   }
 }
