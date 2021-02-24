@@ -61,10 +61,13 @@
 }
 
 .ui.grid {
-    margin-top: 1rem;
-    margin-bottom: 1rem; 
+    margin-top: 0rem;
+    margin-bottom: 0rem; 
 }
-
+.ui.grid+.grid{
+	margin-top: 0rem;
+    margin-bottom: 0rem; 
+}
 span.danger{
 	color:#FF0000;
 }
