@@ -24,5 +24,6 @@ module.exports = {
     '<rootDir>/libs/shared-components',
     '<rootDir>/apps/ui-design',
     '<rootDir>/libs/mf-core',
+    '<rootDir>/libs/mf-account-app-lib',
   ],
 };
