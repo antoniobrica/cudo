@@ -1,13 +1,15 @@
 import gql from "graphql-tag";
-
-
-
 export const GET_TASKS = gql`
   {
-    getTasks {
-      taskTitle
-      endDate
-    }
+    tasks(referenceFilter:{
+      referenceID: "Sftobiz_1234"
+      referenceType: "project"
+      projectID: "33"
+      companyID: "click"
+      }){
+          taskTitle
+          endDate
+        }
   }
 `;
 
@@ -24,7 +26,14 @@ mutation CreateTask(
   $phasesID: String!,
   $status: String!,
   ){ 
-    createTask(taskDetails: {
+    createTask(
+      referenceFilter:{
+        referenceID: "Sftobiz_1234"
+        referenceType: "project"
+        projectID: "33"
+        companyID: "click"
+        },
+      taskDetails: {
       taskTitle: $taskTitle,
       startDate: $startDate, 
       endDate: $endDate,
