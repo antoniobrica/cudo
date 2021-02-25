@@ -4,9 +4,9 @@ import '../../../style/index.scss';
 import { Segment } from 'semantic-ui-react'
 import img from 'libs/shared-components/src/user.png';
 import img2 from 'libs/shared-components/src/user2.png';
-import img3 from 'libs/shared-components/src/green_tick.png';
-
+import img3 from 'libs/shared-components/src/green_tick.png'; 
 import img4 from 'libs/shared-components/src/dots.png';
+import img5 from 'libs/shared-components/src/tasks.png';
 /* eslint-disable-next-line */
 export interface Tasks { }
 
@@ -178,9 +178,7 @@ export function TaskArea(props: Tasks) {
 														 
 														<div className="symbol symbol-30">
                                                         <span className="btn btn-default btn-icon btn-sm mr-2 mr-top">
-																 	 
-                                                                      <i className="ms-Icon ms-Icon--TaskManagerMirrored" aria-hidden="true"></i>     
-                                                                        
+																 	   <img src={img5}    /> 
                                                                   </span>
                                                         <img src={img2}  />
                                                         <span className="mr-2"  >...</span>
