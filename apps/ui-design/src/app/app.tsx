@@ -11,6 +11,7 @@ import ModalExampleModal2 from 'libs/shared-components/src/lib/components/modal/
 import ModalExampleCompany from 'libs/shared-components/src/lib/components/modal/companypopup'; 
 import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
 import AccordionExampleMenu from 'libs/shared-components/src/lib/components/menu/sidebar';
+import ListExampleFloated from 'libs/shared-components/src/lib/components/task/taskarea';
 // import { Sidebar } from 'semantic-ui-react';
 
 export function App() {
@@ -28,7 +29,7 @@ export function App() {
      <ModalExampleModal2></ModalExampleModal2><br/>
     <ModalExampleCompany></ModalExampleCompany><br/>
     <ModalExamplePrinting></ModalExamplePrinting><br/>
-
+    <ListExampleFloated></ListExampleFloated><br/><br/>
     </div>
     
    

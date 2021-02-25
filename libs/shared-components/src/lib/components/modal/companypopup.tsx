@@ -1,9 +1,7 @@
 import { radios } from '@storybook/addon-knobs';
 import React from 'react';
 import { Button, Header,   Modal,  Tab,Table,  Input, Form, Grid, Image, Select, TextArea} from 'semantic-ui-react';
-// import SampleModal from './sample-modal';
- 
- 
+  
 
 
 function ModalExampleCompany() {
@@ -130,6 +128,7 @@ function ModalExampleCompany() {
 <Grid.Row>
   <Grid.Column>
     <Form.Field>
+      
       <label>Address Line 1</label>
       <Input placeholder='Address Line 1' size='small' className="full-width" type="text" />
     </Form.Field>
