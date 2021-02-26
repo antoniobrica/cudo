@@ -11,13 +11,11 @@ export function useProjectQuery(gqlQuery: DocumentNode) {
 }
 export function useWorkTypesQuery(gqlQuery: DocumentNode) {
   const { loading, error, data } = useQuery<IWorkTypes>(gqlQuery);
-  console.log('workypesdata==>', data)
   return { loading, error, data };
 }
 
 export function useCompanyQuery(gqlQuery: DocumentNode) {
   const { loading, error, data } = useQuery<ICompanies>(gqlQuery);
-  console.log('workypesdata==>', data)
   return { loading, error, data };
 }
 
@@ -32,8 +30,7 @@ export function useBuildingTypesQuery(gqlQuery: DocumentNode) {
 //   return [addTodo];
 // }
 
-export function useProjectMutation(gqlQuery: DocumentNode){
+export function useProjectMutation(gqlQuery: DocumentNode) {
   const [addProject] = useMutation<ProjectMutation>(gqlQuery);
-  // console.log('query==>',gqlQuery);
   return [addProject];
 }

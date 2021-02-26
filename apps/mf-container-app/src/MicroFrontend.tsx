@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 
 function MicroFrontend({ name, host, history }) {
-  console.log('name==>',name)
   useEffect(() => {
     const scriptId = `render${name}`;
-    console.log(host, `render${name}`, `${name}-container`);
     const renderMicroFrontend = () => {
       window[`render${name}`](`${name}-container`, history);
     };
@@ -21,7 +19,6 @@ function MicroFrontend({ name, host, history }) {
     script.onload = () => {
       renderMicroFrontend();
     };
-    console.log(script.src);
     document.head.appendChild(script);
     return () => {
       window[`unmount${name}`] && window[`unmount${name}`](`${name}-container`);
