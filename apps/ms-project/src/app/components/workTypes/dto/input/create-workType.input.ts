@@ -3,10 +3,10 @@ import { Field, InputType } from '@nestjs/graphql';
 @InputType()
 export class CreateWorkTypeInput {
 
-  @Field()
+  @Field({description:'Work type ID for reference'})
   workTypeID: string;
 
-  @Field()
+  @Field({description:'title of the worktype'})
   name: string;
 }
 

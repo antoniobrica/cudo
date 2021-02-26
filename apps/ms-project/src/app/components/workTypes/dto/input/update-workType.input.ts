@@ -2,6 +2,6 @@ import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateWorkTypeInput {
-  @Field()
+  @Field({description: 'update the name/title of the worktype'})
   name: string;
 }

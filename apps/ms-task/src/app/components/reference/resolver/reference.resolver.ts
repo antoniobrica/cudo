@@ -22,7 +22,7 @@ export class ReferenceResolver {
     }
 
     @Query(() => ReferenceModel)
-    async referenceDeatailByFilter(@Args("referenceFilter") refFilter: ReferenceFilterParams
+    async references(@Args("referenceFilter") refFilter: ReferenceFilterParams
     ) {
         const posts = await this.referenceService.getReferenceById(refFilter);
         return posts;

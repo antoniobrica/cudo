@@ -17,10 +17,10 @@ export class ProjectsService {
 
   public async create(createProjectInput: CreateProjectInput, referenceFilter: ReferenceFilterParams): Promise<ProjectEntity> {
     try {
-      const taskeDetails = new ProjectEntity({ ...createProjectInput });
+      const projectDetails = new ProjectEntity({ ...createProjectInput });
       const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
       const newPost = await this.projectRepository.create({
-        ...taskeDetails,
+        ...projectDetails,
         reference: { id: selectedReference.id }
       });
       await this.projectRepository.save(newPost);

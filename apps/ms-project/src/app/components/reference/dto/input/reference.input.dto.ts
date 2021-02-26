@@ -5,22 +5,22 @@ import { OneToMany } from "typeorm";
 @InputType()
 export class ReferenceInputDto {
 
-    @Field({ description: `ReferenceID is for work` })
+    @Field({ description: `ReferenceID is for work and building` })
     referenceID: string;
 
-    @Field({ description: `Refrence type Project or WorkType` })
+    @Field({ description: `Refrence type Project or WorkType or BuildingType` })
     referenceType: string;
 
     @Field({ description: `Reference type name` })
     name: string;
 
-    @Field({ description: `This is for title task title` })
+    @Field({ description: `Who Created the Reference` })
     createdBy?: string;
 
-    @Field({ description: `This is for title task title` })
+    @Field({ description: `Who Updated the Reference` })
     updatedBy?: string;
 
-    @Field({ description: `This is for title task title` })
+    @Field({ description: `Reference Deleted or not` })
     isDeleted?: boolean;
 
 }
