@@ -5,7 +5,7 @@ import * as uuid from 'uuid';
 /**
  * 
  */
-@Entity({ name: 'referenceTypes' })
+@Entity({ name: 'references' })
 export default class ReferanceTypeEntity extends BaseEntity {
 
     @PrimaryGeneratedColumn()
@@ -38,11 +38,6 @@ export default class ReferanceTypeEntity extends BaseEntity {
     @Expose()
     @Column({ nullable: true })
     isDeleted?: boolean;
-
-    // 1:n relation with TasksEntity 
-    // @Expose()
-    // @OneToMany(() => TasksEntity, (task: TasksEntity) => task.reference)
-    // tasks: TasksEntity[];
 
     constructor(referanceTypeEntity: Partial<ReferanceTypeEntity>) {
         super();

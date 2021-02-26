@@ -8,17 +8,8 @@ export class ReferenceInputDto {
     @Field({ description: `ReferenceID is for work` })
     referenceID: string;
 
-    @Field({ description: `Refrence type Project or WorkType` })
+    @Field({ description: `Refrence type Company or WorkType` })
     referenceType: string;
-
-    @Field({ description: `Reference type name` })
-    name: string;
-
-    @Field({ description: `This is for title task title` })
-    projectID: string;
-
-    @Field({ description: `This is for title task title` })
-    companyID: string;
 
     @Field({ description: `This is for title task title` })
     createdBy?: string;

@@ -3,17 +3,11 @@ import { IsString } from 'class-validator';
 
 @InputType()
 class ReferenceFilterParams {
-  @Field({ description: `Project ID` })
-  projectID?: string;
-
-  @Field({ description: `Company ID` })
-  companyID?: string;
-
   @Field({ description: `Refrence Type` })
-  referenceType?: string;
+  referenceType: string;
 
   @Field({ description: `Refrence ID` })
-  referenceID?: string;
+  referenceID: string;
 }
 
 export default ReferenceFilterParams;

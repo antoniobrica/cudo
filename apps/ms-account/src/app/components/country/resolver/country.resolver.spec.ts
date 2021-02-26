@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ReferenceResolver } from './country.resolver';
+import { CountryResolver } from './country.resolver';
 
 describe('ReferenceResolver', () => {
-  let resolver: ReferenceResolver;
+  let resolver: CountryResolver;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [ReferenceResolver],
+      providers: [CountryResolver],
     }).compile();
 
-    resolver = module.get<ReferenceResolver>(ReferenceResolver);
+    resolver = module.get<CountryResolver>(CountryResolver);
   });
 
   it('should be defined', () => {

@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ReferenceResolver } from './resolver/reference.resolver';
 import { ReferenceService } from './service/reference.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import ReferanceTypeEntity from '../../entities/reference-type.entity';
+import ReferanceTypeEntity from '../../entities/references.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([ReferanceTypeEntity])],

@@ -3,9 +3,12 @@ import { IsNotEmpty, IsOptional, Length } from 'class-validator';
 import { OneToMany } from "typeorm";
 
 @InputType()
-export class ReferenceUpdateInputDto {
+export class CountryInputDto {
 
     @Field({ description: `Reference type name` })
-    name: string;
+    countryName: string;
+
+    @Field({ description: `Reference type name` })
+    countryCode: string;
 
 }

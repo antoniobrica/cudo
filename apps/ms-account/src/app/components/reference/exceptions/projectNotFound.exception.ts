@@ -1,9 +1,9 @@
 import { NotFoundException } from '@nestjs/common';
 
-class ProjectNotFoundException extends NotFoundException {
-  constructor(projectID: string) {
-    super(`Project with id ${projectID} not found`);
+class ReferenceNotFoundException extends NotFoundException {
+  constructor(referenceID: string) {
+    super(`Reference with id ${referenceID} not found`);
   }
 }
 
-export default ProjectNotFoundException;
+export default ReferenceNotFoundException;
