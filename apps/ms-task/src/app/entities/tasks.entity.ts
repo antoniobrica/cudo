@@ -1,7 +1,8 @@
-import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, ObjectIdColumn, PrimaryColumn, PrimaryGeneratedColumn, getMongoRepository } from 'typeorm';
+import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, ObjectIdColumn, PrimaryColumn, PrimaryGeneratedColumn, getMongoRepository, OneToOne, JoinColumn } from 'typeorm';
 import ReferanceTypeEntity from './reference-type.entity';
 import * as uuid from 'uuid';
 import { Expose, plainToClass } from 'class-transformer';
+import { BKP } from './bkp.entity';
 
 @Entity({
   name: 'tasks',
@@ -42,9 +43,9 @@ export class TasksEntity extends BaseEntity {
   @Column({ nullable: true })
   saveTaskAsTemplate?: string;
 
-  @Expose()
-  @Column({ nullable: true })
-  BKPID?: string;
+  // @Expose()
+  // @Column({ nullable: true })
+  // BKPID?: string;
 
   @Expose()
   @Column({ nullable: true })
@@ -77,6 +78,15 @@ export class TasksEntity extends BaseEntity {
 
   @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.tasks)
   reference: ReferanceTypeEntity;
+
+  @ManyToOne(type => BKP, bkp => bkp.task) // specify inverse side as a second parameter
+  @JoinColumn()
+  bkp: BKP;
+
+
+  // @OneToOne(() => BKP, bkp => bkp.task)
+  // bkp: BKP;
+
 
   // @Expose()
   // // n:n relation with TaskAssigneessEntity

@@ -1,11 +1,7 @@
-
 import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
 import { Inject } from '@nestjs/common';
 import { Phases } from '../../../entities/phases.entity';
 import { PhasesService } from '../service/phases.service';
-
-
-
 
 @Resolver(of => Phases)
 export class PhasesResolver {

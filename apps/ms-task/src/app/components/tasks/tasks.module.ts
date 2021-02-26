@@ -4,9 +4,11 @@ import { TasksResolver } from './resolver/tasks.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TasksEntity } from '../../entities/tasks.entity';
 import { ReferenceModule } from '../reference/reference.module';
+import { BkpModule } from './module/bkp.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([TasksEntity]), ReferenceModule],
-  providers: [TasksResolver, TasksService]
+  imports: [TypeOrmModule.forFeature([TasksEntity]), ReferenceModule, BkpModule],
+  providers: [TasksResolver, TasksService],
+  exports: [TasksService]
 })
 export class TasksModule { }
