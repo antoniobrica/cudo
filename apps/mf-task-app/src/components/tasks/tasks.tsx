@@ -5,6 +5,8 @@ import { GET_TASKS } from '../../app/graphql/graphql';
 import { useTaskQuery } from "../../app/services/useRequest";
 import './tasks.module.scss';
 import ListExampleFloated from 'libs/shared-components/src/lib/components/task/taskarea';
+import {MfAccountAppLib} from '@cudo/mf-account-app-lib';
+
 
 /* eslint-disable-next-line */
 export interface TasksProps {}
@@ -17,14 +19,10 @@ export function Tasks(props: TasksProps) {
   if(data){
     console.log('tasks=>', data.tasks)
   }
-//   React.useEffect(() => {
-//     if(data){
-//  console.log('tasks', data.tasks)
-//     }
-//   }, [data]);
   return (
     <div>
       <CreateTask />
+      {/* <MfAccountAppLib/> */}
       <div>
         <h2>Tasks</h2>
         {data.tasks.map((task, id)=>{

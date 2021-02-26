@@ -8,7 +8,8 @@ import { ApolloCache, FetchResult } from '@apollo/client';
 import { ADD_PROJECT, GET_BUILDINGTYPES, GET_CLIENT_COMPANY, GET_PRINTING_COMPANY, GET_PROJECTS, GET_WORKTYPES } from "../../graphql/graphql";
 import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
 import ModalExampleCompany from 'libs/shared-components/src/lib/components/modal/companypopup'; 
-import WorkType from '../../work-type/work-type'
+import WorkType from '../../work-type/work-type';
+import {MfAccountAppLib} from '@cudo/mf-account-app-lib';
 
 function ModalExampleModal() {
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
@@ -450,14 +451,15 @@ function ModalExampleModal() {
                 </Form.Field>
               </Grid.Column>
               <Grid.Column>
-                <Form.Field>
+                {/* <Form.Field>
                   <label>Country</label>
                   <Select
                     placeholder='Select' className="small" options={countryOptions}
                     value={country}
                     onChange={onCountry}
                   />
-                </Form.Field>
+                </Form.Field> */}
+                <MfAccountAppLib/>
               </Grid.Column>
             </Grid.Row>
           </Grid>
