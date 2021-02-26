@@ -3,6 +3,6 @@ import ReferenceFilterParams from "../../../../utils/types/referenceFilterParams
 
 @ArgsType()
 export class GetReferenceArgs {
-    @Field({ description: `Filter refrence dto` })
+    @Field({ description: `Filter reference dto` })
     referenceFilter: ReferenceFilterParams;
 }

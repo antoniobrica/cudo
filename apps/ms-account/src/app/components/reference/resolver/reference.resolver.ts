@@ -4,7 +4,6 @@ import { GraphQLResolveInfo } from 'graphql';
 import { parseResolveInfo, ResolveTree, simplifyParsedResolveInfoFragmentWithType } from 'graphql-parse-resolve-info';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceInputDto } from '../dto/input/reference.input.dto';
-import { ReferenceUpdateInputDto } from '../dto/input/reference.upate.input.dto';
 import { ReferenceModel } from '../model/reference.model';
 import { ReferenceService } from '../service/reference.service';
 
@@ -12,8 +11,7 @@ import { ReferenceService } from '../service/reference.service';
 export class ReferenceResolver {
 
     constructor(
-        private referenceService: ReferenceService,
-
+        private referenceService: ReferenceService
     ) { }
 
     @Query(() => [ReferenceModel])
@@ -24,7 +22,7 @@ export class ReferenceResolver {
     }
 
     @Query(() => ReferenceModel)
-    async references(@Args("referenceFilter") refFilter: ReferenceFilterParams
+    async references(@Args("referenceFilter") refFilter?: ReferenceFilterParams
     ) {
         const posts = await this.referenceService.getReferenceById(refFilter);
         return posts;
@@ -35,13 +33,6 @@ export class ReferenceResolver {
         @Args('referenceDetails') referenceInput: ReferenceInputDto,
     ) {
         return this.referenceService.createReference(referenceInput);
-    }
-
-    @Mutation(() => ReferenceModel)
-    async updateReference(@Args("referenceFilter") refFilter: ReferenceFilterParams,
-        @Args('referenceUpdateDto') referenceUpdateInput: ReferenceUpdateInputDto,
-    ) {
-        return this.referenceService.updateReference(refFilter, referenceUpdateInput);
     }
 
     @Mutation(() => ReferenceModel)
