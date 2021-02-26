@@ -29,7 +29,7 @@ export function App() {
      <ModalExampleModal2></ModalExampleModal2><br/>
     <ModalExampleCompany></ModalExampleCompany><br/>
     <ModalExamplePrinting></ModalExamplePrinting><br/>
-    <ListExampleFloated></ListExampleFloated><br/><br/>
+    <ListExampleFloated  task={'task'}></ListExampleFloated><br/><br/>
     </div>
     
    

@@ -4,13 +4,17 @@ import React from 'react';
 import Tabsbar from 'libs/shared-components/src/lib/components/tabs/tabs'
 import CreateTask from './components/create-task/create-task';
 import Tasks from '../components/tasks/tasks';
+import AccordionExampleMenu from 'libs/shared-components/src/lib/components/menu/sidebar';
+import { Menubar } from '@cudo/shared-components';
+
 
 
 export function App() {
   return (
     <div>
-    {/* <Tabsbar></Tabsbar>
-    <CreateTask /> */}
+    {/* <Tabsbar></Tabsbar> */}
+    <Menubar data={'data'} parentCallback={''}></Menubar>
+    <AccordionExampleMenu/>
     <Tasks/>
     </div>
        

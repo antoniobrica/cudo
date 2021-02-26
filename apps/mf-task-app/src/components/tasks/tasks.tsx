@@ -4,6 +4,7 @@ import CreateTask from '../../app/components/create-task/create-task';
 import { GET_TASKS } from '../../app/graphql/graphql';
 import { useTaskQuery } from "../../app/services/useRequest";
 import './tasks.module.scss';
+import ListExampleFloated from 'libs/shared-components/src/lib/components/task/taskarea';
 
 /* eslint-disable-next-line */
 export interface TasksProps {}
@@ -25,12 +26,16 @@ export function Tasks(props: TasksProps) {
     <div>
       <CreateTask />
       <div>
+        <h2>Tasks</h2>
         {data.tasks.map((task, id)=>{
           return(
-            <h2>{task.taskTitle}</h2>
+            <div key={id}>
+             <ListExampleFloated task={task}></ListExampleFloated>
+            </div>
           )
         })}
       </div>
+      <button className="ui large button btn-dashed  btn-large"><i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> Add new task    </button>
     </div>
   );
 }
