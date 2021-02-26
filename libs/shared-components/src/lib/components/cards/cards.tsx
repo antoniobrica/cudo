@@ -44,7 +44,10 @@ export function Cardbar(props: CardProps) {
               
                 </div>
                 <div className="content">
-                    <div className="data-built"> This is description will be show sunt in culpa qui officia deserunt mollit anim id est laborum...</div>
+                    <div className="data-built"> 
+                   
+                    <p> This is description will be show sunt in culpa qui officia deserunt mollit anim id est laborum...</p>
+                    </div>
                     <div className="event">
                         <div className="label-green label-spacer">
                            <span className="white-text">AB</span>
@@ -87,7 +90,10 @@ export function Cardbar(props: CardProps) {
               
                 </div>
                 <div className="content">
-                    <div className="data-built"> This is description will be show sunt in culpa qui officia deserunt mollit anim id est laborum...</div>
+                    <div className="data-built">  
+                    
+                    <p> This is description will be show sunt in culpa qui officia deserunt mollit anim id est laborum...</p>
+                    </div>
                     <div className="event">
                         <div className="label-light-blue label-spacer">
                            <span className="white-text">NP</span>
@@ -129,7 +135,12 @@ export function Cardbar(props: CardProps) {
               
                 </div>
                 <div className="content">
-                    <div className="data-built"> This is description will be show sunt in culpa qui officia deserunt mollit anim id est laborum...</div>
+                    <div className="data-built"> 
+                    
+                    <p> This is description will be show sunt in culpa qui officia deserunt mollit anim id est laborum...This is description will be show sunt in culpa qui officia deserunt mollit anim id est laborum
+                    qui officia deserunt mollit anim id est laborum...This is description will be show sunt in culpa qui officia deserunt mollit anim id est laborum
+                    </p>
+                    </div>
                     <div className="event">
                         <div className="label-light-purple label-spacer">
                            <span className="white-text ">ZP</span>

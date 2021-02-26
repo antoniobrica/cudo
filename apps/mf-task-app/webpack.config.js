@@ -9,11 +9,17 @@ module.exports = (config, context) => {
 
   // then override your config.
   console.log(JSON.stringify(config.output.path));
+  config.optimization.runtimeChunk = false;
+  config.optimization.splitChunks = {
+    cacheGroups: {
+      default: false,
+    },
+  };
   return {
     ...config,
     devServer: {
       ...config.devServer,
-      port: 6006,
+      port: 6009,
     },
     plugins: [
       ...config.plugins,

@@ -2,15 +2,17 @@ import { radios } from '@storybook/addon-knobs';
 import React from 'react';
 import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Select, TextArea } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
-import { IProject, IProjects, ProjectMutation } from "../../interfaces/project";
-import { useProjectMutation } from '../../services/useRequest';
+import { IProject, IProjects, ProjectMutation, IWorkTypes } from "../../interfaces/project";
+import { useProjectMutation, useProjectQuery, useWorkTypesQuery, useCompanyQuery, useBuildingTypesQuery } from '../../services/useRequest';
 import { ApolloCache, FetchResult } from '@apollo/client';
-import { ADD_PROJECT, GET_PROJECTS } from "../../graphql/graphql";
-
-
-
+import { ADD_PROJECT, GET_BUILDINGTYPES, GET_CLIENT_COMPANY, GET_PRINTING_COMPANY, GET_PROJECTS, GET_WORKTYPES } from "../../graphql/graphql";
+import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
+import ModalExampleCompany from 'libs/shared-components/src/lib/components/modal/companypopup'; 
 
 function ModalExampleModal() {
+  // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
+
+
   const clientOption = [
     { key: 'c1', value: 'c1', text: 'Client 1' },
     { key: 'c2', value: 'c2', text: 'Client 2' },
@@ -26,6 +28,8 @@ function ModalExampleModal() {
 
   ]
   const printingCompanyOption = [
+    
+    { key: 'add', value: 'add', text: '+ add new' },
     { key: 'b1', value: 'b1', text: 'Vista Print' },
     { key: 'b2', value: 'b2', text: 'Flawless Copies' },
     { key: 'b3', value: 'b3', text: 'Rappid Copies' },
@@ -44,12 +48,12 @@ function ModalExampleModal() {
 
   const [open, setOpen] = React.useState(false)
   const [projectName, setProjectName] = React.useState("")
-  const [projectNum, setProjectNum] = React.useState("")
+  const [projectNum, setProjectNum] = React.useState(0)
   const [client, setClient] = React.useState("")
   const [buildingType, setBuildingType] = React.useState("")
   const [printingCom, setPrintingCom] = React.useState("")
   const [workType, setWorkType] = React.useState("")
-  const [estCost, setEstCost] = React.useState("")
+  const [estCost, setEstCost] = React.useState(null)
   const [adressLine1, setAdressLine1] = React.useState("")
   const [adressLine2, setAdressLine2] = React.useState("")
   const [city, setCity] = React.useState("")
@@ -57,18 +61,73 @@ function ModalExampleModal() {
   const [zip, setZip] = React.useState("")
   const [country, setCountry] = React.useState("")
   const [description, setDescription] = React.useState("")
+  const [items, setItems] = React.useState([{ key: 'add_new', value: 'add_new', text: '+ add new' }]);
+  const [printingCompany, setPrintingCompany] = React.useState([]);
+  const [clientCompanies, setClientCompany] = React.useState([])
+  const [buildingTypes, setBuildingTypes] = React.useState([])
+  const [addWorkTypes, setAddWorkTypes] = React.useState(1)
+  const [secondOpen, setSecondOpen] = React.useState(false)
+
+
   const [addProject] = useProjectMutation(ADD_PROJECT);
+  // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
+  const { loading: worktypeLoading, error, data:worktypeData  } = useWorkTypesQuery(GET_WORKTYPES);
+  const { loading:companyLoading, data:printingCompanyData } = useCompanyQuery(GET_PRINTING_COMPANY);
+  const { loading:clientLoading, data:clientCompany } = useCompanyQuery(GET_CLIENT_COMPANY);
+  const { loading:buildingTypesloading, data:buildingTypesData } = useBuildingTypesQuery(GET_BUILDINGTYPES);
+
+
+
+  React.useEffect(() => {
+    if(worktypeData){
+      console.log('data==>', worktypeData.workTypes);
+     setItems(worktypeData.workTypes.map(({name }) => ({ key: name, value: name, text: name })));
+
+    }
+  }, [worktypeData]);
+
+  React.useEffect(() => {
+    if(buildingTypesData){
+      setBuildingTypes(buildingTypesData.buildingTypes.map(({name }) => ({ key: name, value: name, text: name })));
+
+    }
+  }, [buildingTypesData]);
+
+  React.useEffect(() => {
+    if(printingCompanyData){
+      console.log('setPrintingCompany==>', printingCompanyData.company);
+     setPrintingCompany(printingCompanyData.company.map(({companyName }) => ({ key: companyName, value: companyName, text: companyName })));
+
+    }
+  }, [printingCompanyData]);
+
+  React.useEffect(() => {
+    if(clientCompany){
+      console.log('setPrintingCompany==>', clientCompany.company);
+      setClientCompany(clientCompany.company.map(({companyName }) => ({ key: companyName, value: companyName, text: companyName })));
+
+    }
+  }, [clientCompany]);
 
   const onprojectNameChange = e => {
     setProjectName(e.target.value)
     console.log('projectName', projectName)
   }
   const onprojectNumChange = e => {
-    setProjectNum(e.target.value)
+    const pn = Number(e.target.value)
+    setProjectNum(pn)
     console.log('project', projectNum)
   }
   const onprojectClient = (event, data) => {
     setClient(data.value)
+    if(data.value == 'click'){
+      console.log('modal')
+      return (
+      <div>
+<ModalExampleCompany></ModalExampleCompany><br/>
+    {/* <ModalExamplePrinting></ModalExamplePrinting><br/> */}
+</div>)
+    }
     console.log('client', client)
   }
   const onBuildingType = (event, data) => {
@@ -77,7 +136,16 @@ function ModalExampleModal() {
   }
 
   const onPrintingCom = (event, data) => {
-    setPrintingCom(data.value)
+    if(data.value == 'add'){
+      console.log('add new==>')
+      return(
+        <ModalExamplePrinting />
+      )
+    }
+    else{
+      setPrintingCom(data.value)
+    }
+   
   }
 
   const onWorkType = (event, data) => {
@@ -85,7 +153,9 @@ function ModalExampleModal() {
   }
 
   const onEstCost = (event, data) => {
-    setEstCost(data.value)
+    const es = Number(data.value)
+    setEstCost(es)
+    console.log('estimated cost',estCost)
   }
 
   const onAdressLine1 = (e) => {
@@ -111,16 +181,24 @@ function ModalExampleModal() {
      setDescription(e.target.value)
      console.log('desicription', description)
    }
+
+ const addWorkType =()=>{
+    setAddWorkTypes(prevCount => prevCount + 1);
+   console.log('addWorkType==>', addWorkTypes)    
+ }
+  const moreWorkTypes = () =>{
+    
+  }
   const handleSaveProject = () => {
     setOpen(false);
     // props.close();
-    console.log('projectCreated==>', projectName, projectNum, client)
+    console.log('projectCreated==>', projectName,typeof(projectNum), client)
     // let projectNumber: number = + projectNum;
     //  debugger
     addProject({
       variables: {
         projectName, projectNum, client, buildingType,
-        printingCom, workType, estCost, adressLine1, adressLine2, city, state, country, description
+        printingCom, workType, estCost,description
       },
       update: (
         cache: ApolloCache<ProjectMutation>,
@@ -130,7 +208,7 @@ function ModalExampleModal() {
         cache.writeQuery({
           query: GET_PROJECTS,
           data: {
-            getProjects: [...cacheData.getProjects, addProject]
+            getProjects: [...cacheData.projects, addProject]
           }
         });
       }
@@ -173,7 +251,7 @@ function ModalExampleModal() {
                   <label>Internal Project Number  <span className="danger">*</span></label>
                   <Input
                     placeholder='Default' size='small'
-                    className="full-width" type="text"
+                    className="full-width" type="number"
                     value={projectNum}
                     onChange={onprojectNumChange}
                   />
@@ -181,24 +259,27 @@ function ModalExampleModal() {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-
+         
           <Grid columns={2}>
             <Grid.Row>
               <Grid.Column>
                 <Form.Field>
                   <label>Client <span className="danger">*</span></label>
                   <Select placeholder='Select' className="small"
-                    options={clientOption}
+                    options={clientCompanies}
                     value={client}
                     onChange={onprojectClient}
                   />
+                </Form.Field>
+                <Form.Field>
+                   <a className="anchor-color" onClick={() => setSecondOpen(true)}>+ Add New</a>
                 </Form.Field>
               </Grid.Column>
 
               <Grid.Column>
                 <Form.Field>
                   <label>Type of building <span className="danger">*</span></label>
-                  <Select placeholder='Select' className="small" options={buildingOption}
+                  <Select placeholder='Select' className="small" options={buildingTypes}
                     value={buildingType}
                     onChange={onBuildingType}
                   />
@@ -211,10 +292,13 @@ function ModalExampleModal() {
               <Grid.Column>
                 <Form.Field>
                   <label>Printing Company </label>
-                  <Select placeholder='Select' className="small" options={printingCompanyOption}
+                  <Select placeholder='Select' className="small" options={printingCompany}
                     value={printingCom}
                     onChange={onPrintingCom}
                   />
+                </Form.Field>
+                <Form.Field>
+                   <a className="anchor-color" onClick={() => setSecondOpen(true)}>+ Add New</a>
                 </Form.Field>
               </Grid.Column>
 
@@ -226,7 +310,6 @@ function ModalExampleModal() {
         <div>
           <Header className="header" >Manage work type and estimated cost</Header>
         </div>
-
         <Table>
           <Table.Header>
             <Table.Row>
@@ -238,14 +321,16 @@ function ModalExampleModal() {
           </Table.Header>
 
           <Table.Body>
-            <Table.Row>
+            {
+          [...Array(addWorkTypes)].map((k,i)=>  
+<Table.Row key={i}>
               <Table.Cell>
                 <Form>
                   <Grid columns={1}>
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <Select placeholder='Select' className="small" options={workTypeOptions}
+                          <Select placeholder='Select' className="small" options={items}
                             value={workType}
                             onChange={onWorkType}
                           />
@@ -266,6 +351,7 @@ function ModalExampleModal() {
                         <Form.Field>
 
                           <Input label='$' size='small' className="full-width"
+                            type="number"
                             value={estCost}
                             onChange={onEstCost}
                           />
@@ -279,7 +365,10 @@ function ModalExampleModal() {
               </Table.Cell>
 
             </Table.Row>
-            {/* <Table.Row>
+           
+        
+        )
+        }            {/* <Table.Row>
               <Table.Cell>
                 <Form>
                   <Grid columns={1}>
@@ -314,16 +403,16 @@ function ModalExampleModal() {
               </Table.Cell>
 
             </Table.Row> */}
-            {/* <Table.Row>
+            <Table.Row>
               <Table.Cell>
-                <a href="">+ Add more </a>
+                <a onClick={addWorkType}>+ Add more </a>
 
               </Table.Cell>
               <Table.Cell></Table.Cell>
               <Table.Cell>
 
               </Table.Cell>
-            </Table.Row> */}
+            </Table.Row>
           </Table.Body>
         </Table>
 
@@ -460,7 +549,205 @@ function ModalExampleModal() {
 
 
         </Modal.Content>
-        <Modal.Actions>
+        {/* <Modal.Actions>
+          <Button
+            content="Click to continue"
+            onClick={handleSaveProject}
+            positive
+            size='mini' className="grey-btn"
+          />
+          <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+            X  Cancel
+        </Button>
+
+        </Modal.Actions> */}
+          <Modal
+          onClose={() => setSecondOpen(false)}
+          open={secondOpen}
+          size='small'
+        >
+
+          <Modal.Header><h3>Add Company</h3></Modal.Header>
+          <Modal.Content body>
+
+            <div>
+              <div className="content">
+                <div className="description">Upload Client logo  <span className="danger">*</span></div>
+                <Button className="secondary_btn" size='mini' primary>Click to upload</Button>
+                <p className="paragraph">Click the upload button to upload the client logo</p>
+              </div>
+
+              <Form>
+                <Grid columns={1}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>What's the Company name? <span className="danger">*</span></label>
+                        <Input placeholder='Al Hamra Company' size='small' className="full-width" type="text" />
+                      </Form.Field>
+                    </Grid.Column>
+
+                  </Grid.Row>
+                </Grid>
+
+                <Grid columns={1}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>Company Name </label>
+                        <Select placeholder='Select' className="small" options={countryOptions} />
+
+                      </Form.Field>
+                    </Grid.Column>
+
+                  </Grid.Row>
+                </Grid>
+
+                <Grid columns={2}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>Email </label>
+                        <Input placeholder='Email' size='small' className="full-width" type="text" />
+                      </Form.Field>
+                    </Grid.Column>
+
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>Type  </label>
+                        <Select placeholder='Select' className="small" options={countryOptions} />
+
+                      </Form.Field>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+                <Grid columns={1} className="grid-add-new">
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <a href="" className="anchor-color">+ Add New</a>
+                      </Form.Field>
+                    </Grid.Column>
+
+
+                  </Grid.Row>
+                </Grid>
+
+
+                <Grid columns={2} >
+                  <Grid.Row>
+                    <Grid.Column >
+                      <Form.Field >
+                        <label>Phone </label>
+                        <Grid columns={2} className="form-field">
+                          <Grid.Row>
+                            <Grid.Column>
+                              <Form.Field>
+                                <Select placeholder='Select' className="small" options={countryOptions} />
+                              </Form.Field>
+                              <Form.Field>
+                                <a href="" className="anchor-color">+ Add New</a>
+                              </Form.Field>
+                            </Grid.Column>
+                            <Grid.Column>
+                              <Form.Field>
+                                <Select placeholder='Select' className="small" options={countryOptions} />
+                              </Form.Field>
+
+                            </Grid.Column>
+                          </Grid.Row>
+                        </Grid>
+
+                      </Form.Field>
+                    </Grid.Column>
+
+                    <Grid.Column  >
+                      <Form.Field>
+                        <label>Type  </label>
+                        <Select placeholder='Select' className="small" options={countryOptions} />
+                      </Form.Field>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+                <Grid columns={1}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>Address Line 1</label>
+                        <Input placeholder='Address Line 1' size='small' className="full-width" type="text" />
+                      </Form.Field>
+                    </Grid.Column>
+
+                  </Grid.Row>
+
+                </Grid>
+                <Grid columns={1}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>Address Line 2</label>
+                        <Input placeholder='Address Line 2' size='small' className="full-width" type="text" />
+                      </Form.Field>
+                    </Grid.Column>
+
+                  </Grid.Row>
+
+                </Grid>
+
+                <Grid columns={3}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>City  </label>
+                        <Input placeholder='City' size='small' className="full-width" type="text" />
+
+                      </Form.Field>
+                    </Grid.Column>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>State Pin </label>
+                        <Input placeholder='State Pin' size='small' className="full-width" type="text" />
+
+                      </Form.Field>
+                    </Grid.Column>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>Country  </label>
+                        <Select placeholder='Select' className="small" options={countryOptions} />
+
+                      </Form.Field>
+                    </Grid.Column>
+                  </Grid.Row>
+                  <Grid.Row>
+                  </Grid.Row>
+
+                </Grid>
+              </Form>
+              <Button
+                content="Add Company"
+                onClick={() => setOpen(false)}
+                positive
+                size='mini' className="grey-btn"
+              />
+              <Button size='mini' className="icon-border" onClick={() => setSecondOpen(false)}>
+                X  Cancel
+        </Button>
+
+
+
+
+            </div>
+
+
+          </Modal.Content>
+
+
+
+
+
+
+        </Modal>
+    <Modal.Actions>
           <Button
             content="Click to continue"
             onClick={handleSaveProject}
