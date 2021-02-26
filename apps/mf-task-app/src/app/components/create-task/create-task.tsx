@@ -7,6 +7,7 @@ import { ApolloCache, FetchResult } from '@apollo/client';
 import { ADD_TASK, GET_TASKS } from "../../graphql/graphql";
 import '../../../../../../libs/shared-components/src/style/index.scss';
 import './create-task.module.scss';
+import moment, { calendarFormat } from 'moment';
 
 /* eslint-disable-next-line */
 export interface CreateTaskProps {}
@@ -21,7 +22,7 @@ export function CreateTask(props: CreateTaskProps) {
 
 const [open, setOpen] = React.useState(false)
 const [taskTitle, setTaskTitle] = React.useState("")
-const [startDate, setStartDate] = React.useState("2021-03-15T06:31:14.000Z")
+const [startDate, setStartDate] = React.useState('')
 const [endDate, setEndDate] = React.useState("2021-02-15T06:31:14.000Z")
 const [estimatedDays, setEstimatedDays] = React.useState("")
 const [sendNotification, setEendNotification] = React.useState("")
@@ -36,11 +37,15 @@ const onTaskTitleChange = e => {
   setTaskTitle(e.target.value)
   console.log('taskTitle', taskTitle)
 }
-const setStartDateChange = e => {
+const onStartDateChange = e => {
+  const date= moment.utc(moment(e.target.value).utc()).format();
   setStartDate(e.target.value)
+  console.log('start-date', startDate)
 }
-const setEndDateChange = e => {
-  setEndDate(e.target.value)
+const onEndDateChange = e => {
+  const date= moment.utc(moment(e.target.value).utc()).format();
+  setEndDate(e.target.value);
+  console.log('end-date', endDate)
 }
 const onsetEstimatedDays = (event, data) => {
   setEstimatedDays(data.value)
@@ -81,7 +86,7 @@ const onsetStatus = e => {
       cache.writeQuery({
         query: GET_TASKS,
         data: {
-          getTasks: [...cacheData.getTasks, addTask]
+          getTasks: [...cacheData.tasks, addTask]
         }
       });
     }
@@ -208,15 +213,23 @@ const onsetStatus = e => {
   <Grid.Column>
     <Form.Field>
       <label>Start Date  </label>
-      <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" />
-      
+      {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
+      <Input placeholder='Default' size='small' className="full-width"
+       type="date" 
+       value={startDate}
+       onChange={onStartDateChange}
+       />
+
     </Form.Field>
   </Grid.Column>
   <Grid.Column>
     <Form.Field>
       <label>End Date </label>
-      <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" />
-      
+      {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
+      <Input placeholder='Default' size='small' className="full-width" type="date"
+       value={endDate}
+       onChange={onEndDateChange}
+      />
     </Form.Field>
   </Grid.Column>
   <Grid.Column>
