@@ -23,12 +23,12 @@ export class CompanyService {
     try {
       const taskeDetails = new CompanyEntity({ ...createCompanyInput });
       const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
-      const newPost = await this.CompanyRepository.create({
+      const newCompany = await this.CompanyRepository.create({
         ...taskeDetails,
         reference: { id: selectedReference.id }
       });
-      await this.CompanyRepository.save(newPost);
-      return newPost;
+      await this.CompanyRepository.save(newCompany);
+      return newCompany;
     } catch (error) {
       return error;
     }

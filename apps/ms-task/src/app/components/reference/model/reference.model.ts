@@ -1,4 +1,5 @@
 import { Field, ObjectType } from "@nestjs/graphql";
+import { TasksModel } from "../../tasks/models/tasks.model";
 
 @ObjectType()
 export class ReferenceModel {
@@ -29,4 +30,7 @@ export class ReferenceModel {
 
     @Field({ nullable: true, description: `Reference created by` })
     createdBy?: string;
+
+    @Field(type => [TasksModel])
+    tasks: TasksModel[]
 }

@@ -20,12 +20,12 @@ export class WorkTypesService {
     try {
       const taskeDetails = new WorkTypeEntity({ ...createWorkTypeInput });
       const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
-      const newPost = await this.WorkTypeRepository.create({
+      const newWorkType = await this.WorkTypeRepository.create({
         ...taskeDetails,
         reference: { id: selectedReference.id }
       });
-      await this.WorkTypeRepository.save(newPost);
-      return newPost;
+      await this.WorkTypeRepository.save(newWorkType);
+      return newWorkType;
     } catch (error) {
       return error;
     }

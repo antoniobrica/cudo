@@ -1,4 +1,5 @@
 import { Field, InputType } from "@nestjs/graphql";
+import { ReferenceTypeEnum } from "../../../../enums/reference-type.enum";
 import { IsNotEmpty, IsOptional, Length } from 'class-validator';
 import { OneToMany } from "typeorm";
 
@@ -8,8 +9,8 @@ export class ReferenceInputDto {
     @Field({ description: `ReferenceID is for work` })
     referenceID: string;
 
-    @Field({ description: `Refrence type Project or WorkType` })
-    referenceType: string;
+    @Field(type => ReferenceTypeEnum, { description: `Refrence type Project or WorkType` })
+    referenceType: ReferenceTypeEnum;
 
     @Field({ description: `Reference type name` })
     name: string;
