@@ -1,6 +1,7 @@
 import { Expose, plainToClass } from 'class-transformer';
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, ManyToMany, UpdateDateColumn } from 'typeorm';
 import * as uuid from 'uuid';
+import UsersEntity from './users.entity';
 
 /**
  * 
@@ -20,7 +21,7 @@ export default class ReferanceTypeEntity extends BaseEntity {
     referenceType: string;
 
     @Expose()
-    @Column()
+    @CreateDateColumn()
     createdAt?: Date;
 
     @Expose()
@@ -28,7 +29,7 @@ export default class ReferanceTypeEntity extends BaseEntity {
     createdBy?: string;
 
     @Expose()
-    @Column()
+    @UpdateDateColumn()
     updatedAt?: Date;
 
     @Expose()
@@ -38,6 +39,10 @@ export default class ReferanceTypeEntity extends BaseEntity {
     @Expose()
     @Column({ nullable: true })
     isDeleted?: boolean;
+
+    @Expose()
+    @ManyToMany(() => UsersEntity, usersEntity => usersEntity.references)
+    users: UsersEntity[];
 
     constructor(referanceTypeEntity: Partial<ReferanceTypeEntity>) {
         super();

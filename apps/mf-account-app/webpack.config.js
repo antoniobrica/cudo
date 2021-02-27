@@ -8,7 +8,6 @@ module.exports = (config, context) => {
   nrwlConfig(config); // first call it so that it @nrwl/react plugin adds its configs,
 
   // then override your config.
-  console.log(JSON.stringify(config.output.path));
   return {
     ...config,
     devServer: {

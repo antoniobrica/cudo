@@ -25,7 +25,6 @@ export class SecretService {
     //#region public methods
     public async getSecretValue(secretName: string) {
         const result = await this.client.getSecret(secretName);
-        console.log(result);
     }
     //#endregion
 }

@@ -1,6 +1,8 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import TaskAssigneessEntity from '../../../entities/task-assignees.entity';
+import TaskFllowersEntity from '../../../entities/task-followers.entity';
 import { TasksEntity } from '../../../entities/tasks.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { GetReferenceArgs } from '../../reference/dto/args/get-reference.arg.dto';
@@ -13,19 +15,37 @@ export class TasksService {
     constructor(
         @InjectRepository(TasksEntity)
         private projectTasksRepository: Repository<TasksEntity>,
+        @InjectRepository(TaskAssigneessEntity)
+        private tasksAssigneeRepository: Repository<TaskAssigneessEntity>,
+        @InjectRepository(TaskFllowersEntity)
+        private tasksFollowersRepository: Repository<TaskFllowersEntity>,
         private referenceService: ReferenceService
     ) { }
     public async create(createProjectTaskInput: TaskDetailsInput, referenceFilter: ReferenceFilterParams): Promise<TasksEntity> {
         try {
-            const taskeDetails = new TasksEntity({});
-            taskeDetails.taskTitle = createProjectTaskInput.taskTitle;
+            const taskeDetails = new TasksEntity({ ...createProjectTaskInput.taskBasics });
+            taskeDetails.assignees = [];
+            taskeDetails.followers = [];
+            const { assignees, followers } = createProjectTaskInput;
+            for (let index = 0; index < assignees.length; index++) {
+                const assigneesentity = new TaskAssigneessEntity(assignees[index])
+                const newAssignee = await this.tasksAssigneeRepository.create({ ...assigneesentity });
+                const savedAssignee = await this.tasksAssigneeRepository.save(newAssignee);
+                taskeDetails.assignees.push(savedAssignee)
+            }
+            for (let index = 0; index < followers.length; index++) {
+                const followersentity = new TaskFllowersEntity(followers[index])
+                const newFollowers = await this.tasksFollowersRepository.create({ ...followersentity });
+                const savedFollower = await this.tasksFollowersRepository.save(newFollowers);
+                taskeDetails.followers.push(savedFollower)
+            }
             const selectedReference = await this.referenceService.getReferenceById(referenceFilter)
-            const newPost = await this.projectTasksRepository.create({
+            const newTask = await this.projectTasksRepository.create({
                 ...taskeDetails,
                 reference: { id: selectedReference.id }
             });
-            await this.projectTasksRepository.save(newPost);
-            return newPost;
+            await this.projectTasksRepository.save(newTask);
+            return newTask;
         } catch (error) {
             return error;
         }
@@ -34,9 +54,13 @@ export class TasksService {
     public async findAll(refFilter: ReferenceFilterParams): Promise<TasksEntity[]> {
         const selectedReference = await this.referenceService.getReferenceById(refFilter)
         return await this.projectTasksRepository.find({
-            "reference": {
-                id: selectedReference.id
+            where: {
+                "reference": {
+                    id: selectedReference.id
+                }
             }
+            ,
+            relations: ['reference', 'assignees', 'followers']
         });
     }
 

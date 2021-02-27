@@ -9,7 +9,7 @@ import { CompanyFilterArgs } from '../dto/args/company-filter.args';
 import { GetCompanyFilterArgs } from '../dto/args/get-company-filter.args';
 import { CreateCompanyInput } from '../dto/input/create-company.input';
 import { UpdateCompanyInput } from '../dto/input/update-company.input';
-import CompanyNotFoundException from 'apps/ms-project/src/app/components/companies/exceptions/companyNotFound.exception';
+import CompanyNotFoundException from '../../companies/exceptions/companyNotFound.exception';
 
 @Injectable()
 export class CompanyService {
@@ -23,12 +23,12 @@ export class CompanyService {
     try {
       const taskeDetails = new CompanyEntity({ ...createCompanyInput });
       const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
-      const newPost = await this.CompanyRepository.create({
+      const newCompany = await this.CompanyRepository.create({
         ...taskeDetails,
         reference: { id: selectedReference.id }
       });
-      await this.CompanyRepository.save(newPost);
-      return newPost;
+      await this.CompanyRepository.save(newCompany);
+      return newCompany;
     } catch (error) {
       return error;
     }
@@ -43,7 +43,6 @@ export class CompanyService {
         companyID: companyFilterArgs.companyID, reference: { id: selectedReference.id }
       }
     });
-    console.log(company)
     if (company) {
       await this.CompanyRepository.update({
         id: company.id,
@@ -59,7 +58,6 @@ export class CompanyService {
 
   public async findCompany(getCompanyFilterArgs: GetCompanyFilterArgs, refFilter: ReferenceFilterParams): Promise<CompanyEntity[]> {
     const selectedReference = await this.referenceService.getReferenceById(refFilter)
-    console.log(getCompanyFilterArgs);
     return await this.CompanyRepository.find({
       companyType: getCompanyFilterArgs.companyType,
       "reference": {

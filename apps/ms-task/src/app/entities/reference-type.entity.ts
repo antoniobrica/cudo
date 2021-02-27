@@ -1,5 +1,5 @@
 import { Expose, plainToClass } from 'class-transformer';
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { TasksEntity } from './tasks.entity';
 import * as uuid from 'uuid';
 
@@ -33,7 +33,7 @@ export default class ReferanceTypeEntity extends BaseEntity {
     companyID: string;
 
     @Expose()
-    @Column()
+    @CreateDateColumn()
     createdAt?: Date;
 
     @Expose()
@@ -41,7 +41,7 @@ export default class ReferanceTypeEntity extends BaseEntity {
     createdBy?: string;
 
     @Expose()
-    @Column()
+    @UpdateDateColumn()
     updatedAt?: Date;
 
     @Expose()
@@ -66,8 +66,6 @@ export default class ReferanceTypeEntity extends BaseEntity {
                     excludeExtraneousValues: true
                 })
             )
-            this.createdAt = this.createdAt || new Date(new Date().toUTCString());
-            this.updatedAt = new Date(new Date().toUTCString());
         }
     }
 }

@@ -7,7 +7,7 @@ import { useProjectMutation, useProjectQuery, useWorkTypesQuery, useCompanyQuery
 import { ApolloCache, FetchResult } from '@apollo/client';
 import { ADD_PROJECT, GET_BUILDINGTYPES, GET_CLIENT_COMPANY, GET_PRINTING_COMPANY, GET_PROJECTS, GET_WORKTYPES } from "../../graphql/graphql";
 import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
-import ModalExampleCompany from 'libs/shared-components/src/lib/components/modal/companypopup'; 
+import ModalExampleCompany from 'libs/shared-components/src/lib/components/modal/companypopup';
 
 function ModalExampleModal() {
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
@@ -28,7 +28,7 @@ function ModalExampleModal() {
 
   ]
   const printingCompanyOption = [
-    
+
     { key: 'add', value: 'add', text: '+ add new' },
     { key: 'b1', value: 'b1', text: 'Vista Print' },
     { key: 'b2', value: 'b2', text: 'Flawless Copies' },
@@ -71,81 +71,72 @@ function ModalExampleModal() {
 
   const [addProject] = useProjectMutation(ADD_PROJECT);
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
-  const { loading: worktypeLoading, error, data:worktypeData  } = useWorkTypesQuery(GET_WORKTYPES);
-  const { loading:companyLoading, data:printingCompanyData } = useCompanyQuery(GET_PRINTING_COMPANY);
-  const { loading:clientLoading, data:clientCompany } = useCompanyQuery(GET_CLIENT_COMPANY);
-  const { loading:buildingTypesloading, data:buildingTypesData } = useBuildingTypesQuery(GET_BUILDINGTYPES);
+  const { loading: worktypeLoading, error, data: worktypeData } = useWorkTypesQuery(GET_WORKTYPES);
+  const { loading: companyLoading, data: printingCompanyData } = useCompanyQuery(GET_PRINTING_COMPANY);
+  const { loading: clientLoading, data: clientCompany } = useCompanyQuery(GET_CLIENT_COMPANY);
+  const { loading: buildingTypesloading, data: buildingTypesData } = useBuildingTypesQuery(GET_BUILDINGTYPES);
 
 
 
   React.useEffect(() => {
-    if(worktypeData){
-      console.log('data==>', worktypeData.workTypes);
-     setItems(worktypeData.workTypes.map(({name }) => ({ key: name, value: name, text: name })));
+    if (worktypeData) {
+      setItems(worktypeData.workTypes.map(({ name }) => ({ key: name, value: name, text: name })));
 
     }
   }, [worktypeData]);
 
   React.useEffect(() => {
-    if(buildingTypesData){
-      setBuildingTypes(buildingTypesData.buildingTypes.map(({name }) => ({ key: name, value: name, text: name })));
+    if (buildingTypesData) {
+      setBuildingTypes(buildingTypesData.buildingTypes.map(({ name }) => ({ key: name, value: name, text: name })));
 
     }
   }, [buildingTypesData]);
 
   React.useEffect(() => {
-    if(printingCompanyData){
-      console.log('setPrintingCompany==>', printingCompanyData.company);
-     setPrintingCompany(printingCompanyData.company.map(({companyName }) => ({ key: companyName, value: companyName, text: companyName })));
+    if (printingCompanyData) {
+      setPrintingCompany(printingCompanyData.company.map(({ companyName }) => ({ key: companyName, value: companyName, text: companyName })));
 
     }
   }, [printingCompanyData]);
 
   React.useEffect(() => {
-    if(clientCompany){
-      console.log('setPrintingCompany==>', clientCompany.company);
-      setClientCompany(clientCompany.company.map(({companyName }) => ({ key: companyName, value: companyName, text: companyName })));
+    if (clientCompany) {
+      setClientCompany(clientCompany.company.map(({ companyName }) => ({ key: companyName, value: companyName, text: companyName })));
 
     }
   }, [clientCompany]);
 
   const onprojectNameChange = e => {
     setProjectName(e.target.value)
-    console.log('projectName', projectName)
   }
   const onprojectNumChange = e => {
     const pn = Number(e.target.value)
     setProjectNum(pn)
-    console.log('project', projectNum)
   }
   const onprojectClient = (event, data) => {
     setClient(data.value)
-    if(data.value == 'click'){
-      console.log('modal')
+    if (data.value == 'click') {
       return (
-      <div>
-<ModalExampleCompany></ModalExampleCompany><br/>
-    {/* <ModalExamplePrinting></ModalExamplePrinting><br/> */}
-</div>)
+        <div>
+          <ModalExampleCompany></ModalExampleCompany><br />
+          {/* <ModalExamplePrinting></ModalExamplePrinting><br/> */}
+        </div>)
     }
-    console.log('client', client)
   }
   const onBuildingType = (event, data) => {
     setBuildingType(data.value)
-    console.log('building type', buildingType)
   }
 
   const onPrintingCom = (event, data) => {
-    if(data.value == 'add'){
-      console.log('add new==>')
-      return(
+    if (data.value == 'add') {
+      return (
         <ModalExamplePrinting />
       )
     }
-    else{
+    else {
       setPrintingCom(data.value)
     }
-   
+
   }
 
   const onWorkType = (event, data) => {
@@ -155,7 +146,6 @@ function ModalExampleModal() {
   const onEstCost = (event, data) => {
     const es = Number(data.value)
     setEstCost(es)
-    console.log('estimated cost',estCost)
   }
 
   const onAdressLine1 = (e) => {
@@ -177,28 +167,25 @@ function ModalExampleModal() {
   const onCountry = (event, data) => {
     setCountry(data.value)
   }
- const onDescription =e =>{
-     setDescription(e.target.value)
-     console.log('desicription', description)
-   }
+  const onDescription = e => {
+    setDescription(e.target.value)
+  }
 
- const addWorkType =()=>{
+  const addWorkType = () => {
     setAddWorkTypes(prevCount => prevCount + 1);
-   console.log('addWorkType==>', addWorkTypes)    
- }
-  const moreWorkTypes = () =>{
-    
+  }
+  const moreWorkTypes = () => {
+
   }
   const handleSaveProject = () => {
     setOpen(false);
     // props.close();
-    console.log('projectCreated==>', projectName,typeof(projectNum), client)
     // let projectNumber: number = + projectNum;
     //  debugger
     addProject({
       variables: {
         projectName, projectNum, client, buildingType,
-        printingCom, workType, estCost,description
+        printingCom, workType, estCost, description
       },
       update: (
         cache: ApolloCache<ProjectMutation>,
@@ -259,7 +246,7 @@ function ModalExampleModal() {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-         
+
           <Grid columns={2}>
             <Grid.Row>
               <Grid.Column>
@@ -272,7 +259,7 @@ function ModalExampleModal() {
                   />
                 </Form.Field>
                 <Form.Field>
-                   <a className="anchor-color" onClick={() => setSecondOpen(true)}>+ Add New</a>
+                  <a className="anchor-color" onClick={() => setSecondOpen(true)}>+ Add New</a>
                 </Form.Field>
               </Grid.Column>
 
@@ -298,7 +285,7 @@ function ModalExampleModal() {
                   />
                 </Form.Field>
                 <Form.Field>
-                   <a className="anchor-color" onClick={() => setSecondOpen(true)}>+ Add New</a>
+                  <a className="anchor-color" onClick={() => setSecondOpen(true)}>+ Add New</a>
                 </Form.Field>
               </Grid.Column>
 
@@ -322,53 +309,53 @@ function ModalExampleModal() {
 
           <Table.Body>
             {
-          [...Array(addWorkTypes)].map((k,i)=>  
-<Table.Row key={i}>
-              <Table.Cell>
-                <Form>
-                  <Grid columns={1}>
-                    <Grid.Row>
-                      <Grid.Column>
-                        <Form.Field>
-                          <Select placeholder='Select' className="small" options={items}
-                            value={workType}
-                            onChange={onWorkType}
-                          />
-                        </Form.Field>
-                      </Grid.Column>
+              [...Array(addWorkTypes)].map((k, i) =>
+                <Table.Row key={i}>
+                  <Table.Cell>
+                    <Form>
+                      <Grid columns={1}>
+                        <Grid.Row>
+                          <Grid.Column>
+                            <Form.Field>
+                              <Select placeholder='Select' className="small" options={items}
+                                value={workType}
+                                onChange={onWorkType}
+                              />
+                            </Form.Field>
+                          </Grid.Column>
 
-                    </Grid.Row>
-                  </Grid>
-                </Form>
+                        </Grid.Row>
+                      </Grid>
+                    </Form>
 
-              </Table.Cell>
-              <Table.Cell></Table.Cell>
-              <Table.Cell>
-                <Form>
-                  <Grid columns={1}>
-                    <Grid.Row>
-                      <Grid.Column>
-                        <Form.Field>
+                  </Table.Cell>
+                  <Table.Cell></Table.Cell>
+                  <Table.Cell>
+                    <Form>
+                      <Grid columns={1}>
+                        <Grid.Row>
+                          <Grid.Column>
+                            <Form.Field>
 
-                          <Input label='$' size='small' className="full-width"
-                            type="number"
-                            value={estCost}
-                            onChange={onEstCost}
-                          />
-                        </Form.Field>
-                      </Grid.Column>
+                              <Input label='$' size='small' className="full-width"
+                                type="number"
+                                value={estCost}
+                                onChange={onEstCost}
+                              />
+                            </Form.Field>
+                          </Grid.Column>
 
-                    </Grid.Row>
-                  </Grid>
-                </Form>
+                        </Grid.Row>
+                      </Grid>
+                    </Form>
 
-              </Table.Cell>
+                  </Table.Cell>
 
-            </Table.Row>
-           
-        
-        )
-        }            {/* <Table.Row>
+                </Table.Row>
+
+
+              )
+            }            {/* <Table.Row>
               <Table.Cell>
                 <Form>
                   <Grid columns={1}>
@@ -498,10 +485,10 @@ function ModalExampleModal() {
               <Grid.Column>
                 <Form.Field>
                   <label>Description </label>
-                  <TextArea placeholder='Tell us more' 
-                   value={description}
-                   onChange={onDescription}
-                    />
+                  <TextArea placeholder='Tell us more'
+                    value={description}
+                    onChange={onDescription}
+                  />
                 </Form.Field>
               </Grid.Column>
 
@@ -561,7 +548,7 @@ function ModalExampleModal() {
         </Button>
 
         </Modal.Actions> */}
-          <Modal
+        <Modal
           onClose={() => setSecondOpen(false)}
           open={secondOpen}
           size='small'
@@ -747,7 +734,7 @@ function ModalExampleModal() {
 
 
         </Modal>
-    <Modal.Actions>
+        <Modal.Actions>
           <Button
             content="Click to continue"
             onClick={handleSaveProject}

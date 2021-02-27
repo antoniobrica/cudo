@@ -1,6 +1,7 @@
-import { plainToClass } from 'class-transformer';
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn } from 'typeorm';
+import { Expose, plainToClass } from 'class-transformer';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToMany } from 'typeorm';
 import * as uuid from 'uuid';
+import { TasksEntity } from './tasks.entity';
 /**
  * 
  */
@@ -10,26 +11,37 @@ export default class TaskAssigneessEntity extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ unique: true })
-    PeopleID: string;
-
+    @Expose()
     @Column()
-    PeopleName: string;
+    userID: string;
 
+    @Expose()
     @Column()
+    userName: string;
+
+    @Expose()
+    @CreateDateColumn()
     createdAt?: Date;
 
-    @Column()
+    @Expose()
+    @Column({ nullable: true })
     createdBy?: string;
 
-    @Column()
+    @Expose()
+    @UpdateDateColumn()
     updatedAt?: Date;
 
-    @Column()
+    @Expose()
+    @Column({ nullable: true })
     updatedBy?: string;
 
+    @Expose()
     @Column({ nullable: true })
     isDeleted?: boolean;
+
+    @Expose()
+    @ManyToMany(() => TasksEntity, tasksEntity => tasksEntity.assignees)
+    tasks?: TasksEntity[];
 
     constructor(taskAssigneessEntity: Partial<TaskAssigneessEntity>) {
         super();
@@ -40,8 +52,6 @@ export default class TaskAssigneessEntity extends BaseEntity {
                     excludeExtraneousValues: true
                 })
             )
-            this.createdAt = this.createdAt || new Date(new Date().toUTCString());
-            this.updatedAt = new Date(new Date().toUTCString());
         }
     }
 }
