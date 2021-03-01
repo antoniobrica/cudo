@@ -175,7 +175,8 @@ function ModalExampleModal() {
   const onZip = e => {
     setZip(e.target.vale)
   }
-  const onCountry = (event, data) => {
+  const onCountry = ( data) => {
+    console.log('selected_country',data)
     setCountry(data.value)
   }
  const onDescription =e =>{
@@ -459,7 +460,7 @@ function ModalExampleModal() {
                     onChange={onCountry}
                   />
                 </Form.Field> */}
-                <MfAccountAppLib/>
+                <MfAccountAppLib parentCallback={onCountry}/>
               </Grid.Column>
             </Grid.Row>
           </Grid>

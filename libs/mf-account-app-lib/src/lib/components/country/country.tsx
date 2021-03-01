@@ -5,7 +5,10 @@ import { GET_COUNTRY } from '../../graphql/graphql';
 import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Select, TextArea } from 'semantic-ui-react';
 
 /* eslint-disable-next-line */
-export interface CountryProps {}
+export interface CountryProps {
+  parentCallback
+
+}
 
 export function Country(props: CountryProps) {
   const [items, setItems] = React.useState([])
@@ -19,10 +22,11 @@ export function Country(props: CountryProps) {
 
     }
   }, [data]);
+
   const onCountry = (event, data) => {
     setCountry(data.value)
-    console.log('country==>', country)
-  }
+    props.parentCallback(data.value)
+   }
   return (
     <Form.Field>
     <label>Country</label>
