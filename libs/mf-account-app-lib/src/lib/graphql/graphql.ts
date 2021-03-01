@@ -1,10 +1,23 @@
 import gql from "graphql-tag";
 export const GET_COUNTRY = gql`
   {
-    Countries{
+    countries{
       countryName
       countryCode
       }
+  }
+`;
+
+export const GET_USERS= gql`
+{
+  users(userID:"1") {
+  userID
+  userName
+  references {
+  referenceID
+  referenceType
+  }
+  }
   }
 `;
 

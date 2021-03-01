@@ -8,7 +8,7 @@ import { ADD_TASK, GET_TASKS } from "../../graphql/graphql";
 import '../../../../../../libs/shared-components/src/style/index.scss';
 import './create-task.module.scss';
 import moment, { calendarFormat } from 'moment';
-
+import {FollowersIndex} from "@cudo/mf-account-app-lib"
 /* eslint-disable-next-line */
 export interface CreateTaskProps { }
 
@@ -178,16 +178,17 @@ const onsetEstimatedDays = (event, data) => {
   </Grid.Column>
  
 </Grid.Row>
-
+ 
 </Grid>
 <Grid columns={2}>
 <Grid.Row>
   <Grid.Column>
-    <Form.Field>
+    {/* <Form.Field>
       <label>Followers  </label>
       <Select placeholder='Select' className="small" options={countryOptions} />
       
-    </Form.Field>
+    </Form.Field> */}
+    <FollowersIndex />
   </Grid.Column>
   <Grid.Column>
     <Form.Field>

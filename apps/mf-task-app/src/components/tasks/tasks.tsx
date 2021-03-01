@@ -7,7 +7,6 @@ import './tasks.module.scss';
 import ListExampleFloated from 'libs/shared-components/src/lib/components/task/taskarea';
 import {MfAccountAppLib} from '@cudo/mf-account-app-lib';
 
-
 /* eslint-disable-next-line */
 export interface TasksProps {}
 

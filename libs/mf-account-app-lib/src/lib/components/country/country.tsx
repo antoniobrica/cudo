@@ -17,8 +17,7 @@ export function Country(props: CountryProps) {
   const { loading, error, data } = useCountrykQuery(GET_COUNTRY);
   React.useEffect(() => {
     if(data){
-      console.log('data==>', data.Countries);
-     setItems(data.Countries.map(({countryName }) => ({ key: countryName, value: countryName, text: countryName })));
+     setItems(data.countries.map(({countryName }) => ({ key: countryName, value: countryName, text: countryName })));
 
     }
   }, [data]);

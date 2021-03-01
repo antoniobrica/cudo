@@ -38,7 +38,7 @@ export function TaskArea(props: Tasks) {
 
 								<div className="navi-item mr-2">
 									<a href=" " className="navi-link active">
-										<span className="navi-text">( Starts Tomorrow ↦ Due Fri Aug 28th )</span>
+										<span className="navi-text">( {props.task.startDate} ↦ Due {props.task.endDate})</span>
 									</a>
 								</div>
 

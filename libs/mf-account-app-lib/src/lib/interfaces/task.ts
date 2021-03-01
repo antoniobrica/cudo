@@ -4,7 +4,15 @@ export interface ICountry {
   }
    
   export interface ICountries {
-    Countries: ICountry[];
+    countries: ICountry[];
   }
   
+  export interface IUser {
+    userID: string
+    userName: string
+    }
+     
+    export interface IUsers {
+      users: IUser[];
+    }
   
