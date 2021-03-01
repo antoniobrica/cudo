@@ -1,10 +1,11 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
 import ReferanceTypeEntity from '../../entities/reference-type.entity';
 import { ProjectEntity } from '../../entities/project.entity';
+import { WorkTypeEntity } from '../../entities/work-type.entity';
 
 
-@Entity({ name: 'workTypes' })
+@Entity({ name: 'projectWorkTypes' })
 
 export class ProjectWorkTypeEntity extends BaseEntity {
 
@@ -33,9 +34,12 @@ export class ProjectWorkTypeEntity extends BaseEntity {
 
 
   @Expose()
-  @ManyToOne(() => ProjectEntity, (reference: ProjectEntity) => reference.projectwork)
+  @ManyToOne(() => ProjectEntity, (project: ProjectEntity) => project.projectwork)
   project: ProjectEntity;
 
+  @Expose()
+  @OneToOne(() => WorkTypeEntity)
+  work: WorkTypeEntity;
 
   constructor(proejctWorkTypeEntity: Partial<ProjectWorkTypeEntity>) {
     super();
@@ -46,8 +50,8 @@ export class ProjectWorkTypeEntity extends BaseEntity {
           excludeExtraneousValues: true
         })
       )
-      // this.createdAt = this.createdAt || new Date(new Date().toUTCString());
-      // this.updatedAt = new Date(new Date().toUTCString());
+      this.createdAt = this.createdAt || new Date(new Date().toUTCString());
+      this.updatedAt = new Date(new Date().toUTCString());
     }
   }
 }

@@ -63,7 +63,7 @@ export class ProjectEntity extends BaseEntity {
 
   @Expose()
   @OneToMany(() => ProjectWorkTypeEntity, (projectwork: ProjectWorkTypeEntity) => projectwork.project)
-  projectwork: ProjectWorkTypeEntity;
+  projectwork: ProjectWorkTypeEntity[];
 
 
   constructor(projectEntity: Partial<ProjectEntity>) {
@@ -76,8 +76,8 @@ export class ProjectEntity extends BaseEntity {
         })
       )
       this.projectId = this.projectId || uuid.v1();
-      // this.createdAt = this.createdAt || new Date(new Date().toUTCString());
-      // this.updatedAt = new Date(new Date().toUTCString());
+      this.createdAt = this.createdAt || new Date(new Date().toUTCString());
+      this.updatedAt = new Date(new Date().toUTCString());
     }
   }
 }
