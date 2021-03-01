@@ -1,9 +1,10 @@
 
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Module, forwardRef } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { PhasesService } from '../service/phases.service';
 import { Phases } from '../../../entities/phases.entity';
 import { PhasesResolver } from '../resolver/phases.resolver';
+import { TasksModule } from '../tasks.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Phases])],

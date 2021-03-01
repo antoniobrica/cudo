@@ -28,10 +28,6 @@ export class BKP {
     @Column()
     clientId: number;
 
-
-    // @OneToOne(() => TasksEntity, task => task.bkp)
-    // task: TasksEntity;
-
     @OneToMany(type => TasksEntity, task => task.bkp) // specify inverse side as a second parameter
     task: TasksEntity[];
 }

@@ -1,6 +1,7 @@
 import { Expose, plainToClass } from 'class-transformer';
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn } from 'typeorm';
 import * as uuid from 'uuid';
+import { BkpEntity } from './bkp.entity';
 
 /**
  * 
@@ -38,6 +39,10 @@ export default class ReferanceTypeEntity extends BaseEntity {
     @Expose()
     @Column({ nullable: true })
     isDeleted?: boolean;
+
+    @Expose()
+    @OneToMany(() => BkpEntity, (bkp: BkpEntity) => bkp.reference)
+    bkp: BkpEntity[];
 
     constructor(referanceTypeEntity: Partial<ReferanceTypeEntity>) {
         super();

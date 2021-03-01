@@ -1,17 +1,19 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import * as uuid from 'uuid';
+import {  Column, Entity,  OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { TasksEntity } from "./tasks.entity";
 
 @ObjectType()
 @Entity({name: 'phases'})
 export class Phases {
 
-    @Field(() => ID)
-    @PrimaryGeneratedColumn()
-    Id: string;
-
     @Field()
-    @Column('uuid')
-    phaseId: string;
+    @PrimaryGeneratedColumn()
+    Id: number;
+
+    // @Field()
+    // @Column({unique: true})
+    // phaseId: string;
 
     @Column()
     @Field()
@@ -24,5 +26,7 @@ export class Phases {
     @Field()
     @Column()
     clientId: number;
-    
+
+    @OneToMany(type => TasksEntity, task => task.phase) 
+    task: TasksEntity[];
 }

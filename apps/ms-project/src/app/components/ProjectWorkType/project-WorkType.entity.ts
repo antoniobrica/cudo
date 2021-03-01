@@ -19,13 +19,13 @@ export class ProjectWorkTypeEntity extends BaseEntity {
   @Column()
   estimatedCost: number;
 
-  // @Expose()
-  // @CreateDateColumn()
-  // createdAt: Date
+  @Expose()
+  @CreateDateColumn()
+  createdAt: Date
 
-  // @Expose()
-  // @UpdateDateColumn()
-  // updatedAt: Date
+  @Expose()
+  @UpdateDateColumn()
+  updatedAt: Date
 
   @Expose()
   @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.projectworkTypes)

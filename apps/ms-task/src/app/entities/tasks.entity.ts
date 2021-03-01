@@ -3,6 +3,7 @@ import ReferanceTypeEntity from './reference-type.entity';
 import * as uuid from 'uuid';
 import { Expose, plainToClass } from 'class-transformer';
 import { BKP } from './bkp.entity';
+import { Phases } from './phases.entity';
 
 @Entity({
   name: 'tasks',
@@ -47,9 +48,9 @@ export class TasksEntity extends BaseEntity {
   // @Column({ nullable: true })
   // BKPID?: string;
 
-  @Expose()
-  @Column({ nullable: true })
-  phasesID?: string;
+  // @Expose()
+  // @Column({ nullable: true })
+  // phasesID?: string;
 
   @Expose()
   @Column()
@@ -84,8 +85,9 @@ export class TasksEntity extends BaseEntity {
   bkp: BKP;
 
 
-  // @OneToOne(() => BKP, bkp => bkp.task)
-  // bkp: BKP;
+  @ManyToOne(type => Phases, phase => phase.task) // specify inverse side as a second parameter
+  @JoinColumn()
+  phase: Phases;
 
 
   // @Expose()
