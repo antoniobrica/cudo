@@ -13,10 +13,10 @@ export class CountryResolver {
     ) { }
 
     @Query(() => [CountryModel])
-    async Countries(
+    async countries(
     ) {
-        const posts = await this.countryService.getCountry();
-        return posts.items;
+        const countries = await this.countryService.getCountry();
+        return countries.items;
     }
 
     @Mutation(() => CountryModel)

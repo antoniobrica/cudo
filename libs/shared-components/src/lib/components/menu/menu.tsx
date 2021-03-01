@@ -1,5 +1,5 @@
 import React from 'react';
- 
+
 import '../../../style/index.scss';
 import { Header, Icon, Image, Menu, Segment, Sidebar,Button,Popup } from 'semantic-ui-react'
  /* eslint-disable-next-line */
@@ -11,16 +11,15 @@ export interface MenuProps {
 export function Menubar(props: MenuProps) {
 
   const [visible, setVisible] = React.useState(false)
-        
-  const handleOpenProject =(item)=>{
-    console.log('open project', props.data)
+
+  const handleOpenProject = (item) => {
     props.parentCallback(item)
   }
 
   return (
-    
 
-      <div id="sidebar">
+
+    <div id="sidebar">
       <Sidebar.Pushable as={Segment}>
     <Sidebar
       as={Menu}

@@ -1,9 +1,9 @@
 import React from 'react';
 
 import './add-project.module.scss';
-import { ADD_PROJECT,GET_PROJECTS} from "../../graphql/graphql";
+import { ADD_PROJECT, GET_PROJECTS } from "../../graphql/graphql";
 import { IProject, IProjects, ProjectMutation } from "../../interfaces/project";
-import {  useProjectMutation} from '../../services/useRequest';
+import { useProjectMutation } from '../../services/useRequest';
 import { ApolloCache, FetchResult } from '@apollo/client';
 /* eslint-disable-next-line */
 export interface AddProjectProps {
@@ -14,7 +14,7 @@ export function AddProject(props: AddProjectProps) {
   const [formData, setFormData] = React.useState<IProject | {}>();
   // const [addTodo] = useTodoMutation(ADD_TODO);
   const [addProject] = useProjectMutation(ADD_PROJECT);
-  
+
   const handleForm = (e: React.FormEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -24,20 +24,19 @@ export function AddProject(props: AddProjectProps) {
 
   const handleSaveProject = (
     e: React.FormEvent,
-    { projectName, projectNum,client }: IProject 
+    { projectName, projectNum, client }: IProject
   ) => {
     e.preventDefault();
     // props.close();
-    console.log('projectCreated==>',projectName, projectNum, client)
     // let projectNumber: number = + projectNum;
-  //  debugger
+    //  debugger
     addProject({
-      variables: {projectName, projectNum , client },
+      variables: { projectName, projectNum, client },
       update: (
         cache: ApolloCache<ProjectMutation>,
         { data: { addProject } }: FetchResult<ProjectMutation>
       ) => {
-        
+
         console.log('projectCreated successfully');
         const cacheData = cache.readQuery({ query: GET_PROJECTS }) as IProjects;
         cache.writeQuery({

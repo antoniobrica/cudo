@@ -103,7 +103,6 @@ function Header() {
 }
 
 function ProjectApp(history: any) {
-  console.log('project-app', projectHost)
   return (
     <MicroFrontend history={history} host={projectHost} name="ProjectApp" />
   );
@@ -128,7 +127,6 @@ function Home({ history }) {
       setIsProject(false);
     }
   };
-  console.log("child data in parrent ", input)
   return (
     <div>
       {/* <Header /> */}

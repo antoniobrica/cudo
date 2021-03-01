@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Header,   Modal,  Tab,Table,  Input, Form, Grid, Image, Select, TextArea} from 'semantic-ui-react';
+import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
 import { radios } from '@storybook/addon-knobs';
 import { ITask, ITasks, TaskMutation } from "../../interfaces/task";
 import { useTaskMutation } from '../../services/useRequest';
@@ -10,13 +10,13 @@ import './create-task.module.scss';
 import moment, { calendarFormat } from 'moment';
 
 /* eslint-disable-next-line */
-export interface CreateTaskProps {}
+export interface CreateTaskProps { }
 
 export function CreateTask(props: CreateTaskProps) {
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
-     
+
   ]
 
 
@@ -31,7 +31,7 @@ const [saveTaskAsTemplate, setSaveTaskAsTemplate] = React.useState("")
 const [phasesID, setPhasesID] = React.useState("")
 const [status, setStatus] = React.useState("")
 
-const [addTask] = useTaskMutation(ADD_TASK);
+  const [addTask] = useTaskMutation(ADD_TASK);
 
 const onTaskTitleChange = e => {
   setTaskTitle(e.target.value)
@@ -52,24 +52,24 @@ const onsetEstimatedDays = (event, data) => {
   console.log('setEstimatedDays', estimatedDays)
 }
 
-const sendNotificationChange = (event) => {
-  setEendNotification(event.target.value)
-}
+  const sendNotificationChange = (event) => {
+    setEendNotification(event.target.value)
+  }
 
-const setBKPIDChange = (event, data) => {
-  setBKPID(data.value)
-}
+  const setBKPIDChange = (event, data) => {
+    setBKPID(data.value)
+  }
 
-const setSaveTaskAsTemplateChange = (event, data) => {
-  setSaveTaskAsTemplate(data.value)
-}
+  const setSaveTaskAsTemplateChange = (event, data) => {
+    setSaveTaskAsTemplate(data.value)
+  }
 
-const onsetPhasesID = (event, data) => {
-  setPhasesID(data.value);
-}
-const onsetStatus = e => {
-  setStatus(e.target.value)
-}
+  const onsetPhasesID = (event, data) => {
+    setPhasesID(data.value);
+  }
+  const onsetStatus = e => {
+    setStatus(e.target.value)
+  }
 
  const handleSaveTask = () => {
   setOpen(false);
@@ -272,24 +272,23 @@ const onsetStatus = e => {
         <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
         X  Cancel
         </Button>
-  
-             
- 
-           
-            </div>
-        
-       
-      </Modal.Content>
-      <Modal.Actions>
-    
-        
-      </Modal.Actions>
-    </Modal>
-  </div>
-  
+
+
+
+
+          </div>
+
+
+        </Modal.Content>
+        <Modal.Actions>
+
+
+        </Modal.Actions>
+      </Modal>
+    </div>
+
   );
 }
 
 export default CreateTask;
- 
- 
+

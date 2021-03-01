@@ -7,7 +7,6 @@ const useMicrofrontend = (id, url) => {
     const handleLoad = () => setLoaded(true);
     useEffect(() => {
         const existingScript = document.getElementById(scriptId);
-        console.log(existingScript);
         if (existingScript) {
             existingScript.addEventListener("load", handleLoad);
 
