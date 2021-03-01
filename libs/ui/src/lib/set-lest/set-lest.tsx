@@ -11,7 +11,6 @@ export const SetList = (props: SetListProps) => {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
-  console.log(data);
   return (
     <ul>
       {data.allSets.map(({ id, name, numParts, year }) => (

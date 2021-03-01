@@ -21,12 +21,12 @@ export class BuildingTypesService {
     try {
       const taskeDetails = new BuildingTypeEntity({ ...createBuildingTypeInput });
       const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
-      const newPost = await this.BuildingTypeRepository.create({
+      const newbuildingType = await this.BuildingTypeRepository.create({
         ...taskeDetails,
         reference: { id: selectedReference.id }
       });
-      await this.BuildingTypeRepository.save(newPost);
-      return newPost;
+      await this.BuildingTypeRepository.save(newbuildingType);
+      return newbuildingType;
     } catch (error) {
       return error;
     }

@@ -46,7 +46,7 @@ export class ReferenceService {
 
 
     async getReferenceById(refFilter: ReferenceFilterParams) {
-        const reference = await this.referancesRepository.findOne({ where: { ...refFilter } });
+        const reference = await this.referancesRepository.findOne({ where: { ...refFilter }, relations: ['tasks'] });
         if (reference) {
             return reference;
         }

@@ -1,4 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { ReferenceModel } from '../../reference/model/reference.model';
+import { UserModel } from './user.model';
 
 @ObjectType()
 export class TasksModel {
@@ -41,6 +43,15 @@ export class TasksModel {
 
   @Field({ nullable: true, description: `Task created by` })
   createdBy?: string;
+
+  @Field()
+  reference?: ReferenceModel
+
+  @Field(type => [UserModel])
+  assignees?: UserModel[]
+
+  @Field(type => [UserModel])
+  followers?: UserModel[]
 
 }
 

@@ -1,4 +1,5 @@
 import { Field, ObjectType } from "@nestjs/graphql";
+import { UserModel } from "../../users/model/user.model";
 
 @ObjectType()
 export class ReferenceModel {
@@ -20,4 +21,7 @@ export class ReferenceModel {
 
     @Field({ nullable: true, description: `Reference created by` })
     createdBy?: string;
+
+    @Field(type => [UserModel])
+    users: UserModel[]
 }

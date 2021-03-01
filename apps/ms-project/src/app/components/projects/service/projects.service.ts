@@ -19,12 +19,12 @@ export class ProjectsService {
     try {
       const projectDetails = new ProjectEntity({ ...createProjectInput });
       const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
-      const newPost = await this.projectRepository.create({
+      const newProject = await this.projectRepository.create({
         ...projectDetails,
         reference: { id: selectedReference.id }
       });
-      await this.projectRepository.save(newPost);
-      return newPost;
+      await this.projectRepository.save(newProject);
+      return newProject;
     } catch (error) {
       return error;
     }

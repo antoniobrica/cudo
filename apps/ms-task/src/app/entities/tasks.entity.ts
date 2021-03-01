@@ -1,9 +1,11 @@
-import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, ObjectIdColumn, PrimaryColumn, PrimaryGeneratedColumn, getMongoRepository, OneToOne, JoinColumn } from 'typeorm';
-import ReferanceTypeEntity from './reference-type.entity';
+import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, ObjectIdColumn, PrimaryColumn, PrimaryGeneratedColumn, getMongoRepository, UpdateDateColumn, JoinColumn } from 'typeorm';
 import * as uuid from 'uuid';
 import { Expose, plainToClass } from 'class-transformer';
 import { BKP } from './bkp.entity';
 import { Phases } from './phases.entity';
+import ReferanceTypeEntity from './reference-type.entity';
+import TaskAssigneessEntity from './task-assignees.entity';
+import TaskFllowersEntity from './task-followers.entity';
 
 @Entity({
   name: 'tasks',
@@ -53,7 +55,7 @@ export class TasksEntity extends BaseEntity {
   // phasesID?: string;
 
   @Expose()
-  @Column()
+  @CreateDateColumn()
   createdAt?: Date;
 
   @Expose()
@@ -61,7 +63,7 @@ export class TasksEntity extends BaseEntity {
   createdBy?: string;
 
   @Expose()
-  @Column()
+  @UpdateDateColumn()
   updatedAt?: Date;
 
   @Expose()
@@ -95,12 +97,17 @@ export class TasksEntity extends BaseEntity {
   // @ManyToMany(type => TaskAssigneessEntity)
   // @JoinTable()
   // assignees: TaskAssigneessEntity[];
+  @Expose()
+  // n:n relation with TaskAssigneessEntity
+  @ManyToMany(type => TaskAssigneessEntity)
+  @JoinTable()
+  assignees: TaskAssigneessEntity[];
 
-  // @Expose()
-  // // n:n relation with TaskFllowersEntity
-  // @ManyToMany(type => TaskFllowersEntity)
-  // @JoinTable()
-  // followers: TaskFllowersEntity[];
+  @Expose()
+  // n:n relation with TaskFllowersEntity
+  @ManyToMany(type => TaskFllowersEntity)
+  @JoinTable()
+  followers: TaskFllowersEntity[];
 
   constructor(projectTasksEntity: Partial<TasksEntity>) {
     super();
@@ -112,8 +119,6 @@ export class TasksEntity extends BaseEntity {
         })
       )
       this.taskID = this.taskID || uuid.v1();
-      this.createdAt = this.createdAt || new Date(new Date().toUTCString());
-      this.updatedAt = new Date(new Date().toUTCString());
     }
   }
 

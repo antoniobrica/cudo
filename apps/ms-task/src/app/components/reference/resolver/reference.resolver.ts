@@ -17,15 +17,15 @@ export class ReferenceResolver {
     @Query(() => [ReferenceModel])
     async allReferences(
     ) {
-        const posts = await this.referenceService.getReference();
-        return posts.items;
+        const references = await this.referenceService.getReference();
+        return references.items;
     }
 
     @Query(() => ReferenceModel)
     async references(@Args("referenceFilter") refFilter: ReferenceFilterParams
     ) {
-        const posts = await this.referenceService.getReferenceById(refFilter);
-        return posts;
+        const references = await this.referenceService.getReferenceById(refFilter);
+        return references;
     }
 
     @Mutation(() => ReferenceModel)

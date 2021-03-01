@@ -16,7 +16,6 @@ const loadDynamicScript = (callback) => {
     document.body.appendChild(script);
 
     script.onload = () => {
-      console.log("Script loaded1");
       if (callback) callback();
     };
   }
@@ -33,7 +32,6 @@ export class MfAccountAppMount extends Component<MfAccountAppMountProps> {
 
   componentWillMount() {
     loadDynamicScript(() => {
-      console.log("Script loaded");
       (window as { [key: string]: any })["mfProducts"]("todo");
     });
   }
