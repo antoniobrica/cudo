@@ -50,7 +50,7 @@ export function TaskArea(props: Tasks) {
 
 								<div className="navi-item mr-2">
 									<a href="" className="navi-link">
-										<span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> 5 days  - </span>
+										<span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> {props.task.estimatedDays} Days- </span>
 									</a>
 								</div>
 								<div className="navi-item mr-2">

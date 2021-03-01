@@ -1,17 +1,16 @@
 import React from 'react';
-
-import './followers.module.scss';
 import {  Form,  Select } from 'semantic-ui-react';
 import { useUsersQuery } from '../../services/useRequest';
 import { GET_USERS } from '../../graphql/graphql';
 
+import './assignee.module.scss';
 
 /* eslint-disable-next-line */
-export interface FollowersProps {}
+export interface AssigneeProps {}
 
-export function Followers(props: FollowersProps) {
+export function Assignee(props: AssigneeProps) {
   const [items, setItems] = React.useState([])
-  const [followers, setFollowers] = React.useState("")
+  const [assignee, setAssignee] = React.useState("")
 
   const { loading, error, data } = useUsersQuery(GET_USERS);
   React.useEffect(() => {
@@ -21,21 +20,20 @@ export function Followers(props: FollowersProps) {
     }
   }, [data]);
 
-  const onFollowers = (event, data) => {
-    setFollowers(data.value)
+  const onAssignee = (event, data) => {
+    setAssignee(data.value)
    }
   return (
     <Form.Field>
-      <label>Followers  </label>
+      <label>Assignee  </label>
       <Select placeholder='Select' className="small" 
       options={items}
-      value={followers}
-      onChange={onFollowers}
+      value={assignee}
+      onChange={onAssignee}
       />
       
     </Form.Field>
   );
 }
 
-export default Followers;
-
+export default Assignee;

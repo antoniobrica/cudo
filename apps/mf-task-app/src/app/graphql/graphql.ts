@@ -11,6 +11,7 @@ export const GET_TASKS = gql`
   createdBy
   startDate
   endDate
+  estimatedDays
   reference{
   referenceID
   }

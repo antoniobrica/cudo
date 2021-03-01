@@ -8,7 +8,7 @@ import { ADD_TASK, GET_TASKS } from "../../graphql/graphql";
 import '../../../../../../libs/shared-components/src/style/index.scss';
 import './create-task.module.scss';
 import moment, { calendarFormat } from 'moment';
-import {FollowersIndex} from "@cudo/mf-account-app-lib"
+import {FollowersIndex, AssigneeIndex} from "@cudo/mf-account-app-lib"
 /* eslint-disable-next-line */
 export interface CreateTaskProps { }
 
@@ -19,6 +19,16 @@ export function CreateTask(props: CreateTaskProps) {
 
   ]
 
+  const phaseOptions = [
+    { key: 'Phase_1', value: 'Phase_1', text: 'Phase 1' },
+    { key: 'Phase_2', value: 'Phase_2', text: 'Phase 2' },
+
+  ]
+  const bkpOptions = [
+    { key: 'BKP_1', value: 'BKP_1', text: 'BKP 1' },
+    { key: 'BKP_2', value: 'BKP_2', text: 'BKP 2' },
+
+  ]
 
 const [open, setOpen] = React.useState(false)
 const [taskTitle, setTaskTitle] = React.useState("")
@@ -154,7 +164,7 @@ const onsetEstimatedDays = (event, data) => {
   <Grid.Column>
     <Form.Field>
       <label>Select Phase </label>
-      <Select placeholder='Select' className="small" options={countryOptions} />
+      <Select placeholder='Select' className="small" options={phaseOptions} />
             
     </Form.Field>
   </Grid.Column>
@@ -162,7 +172,7 @@ const onsetEstimatedDays = (event, data) => {
   <Grid.Column>
     <Form.Field>
       <label>Select BKP   </label>
-      <Select placeholder='Select' className="small" options={countryOptions} />
+      <Select placeholder='Select' className="small" options={bkpOptions} />
             
     </Form.Field>
   </Grid.Column>
@@ -171,10 +181,11 @@ const onsetEstimatedDays = (event, data) => {
 <Grid columns={1}>
 <Grid.Row>
   <Grid.Column>
-    <Form.Field>
+    {/* <Form.Field>
       <label>Assignee <span className="danger">*</span></label>
       <Input placeholder='Electrical work' size='small' className="full-width" type="text" />
-    </Form.Field>
+    </Form.Field> */}
+    <AssigneeIndex />
   </Grid.Column>
  
 </Grid.Row>
@@ -236,7 +247,10 @@ const onsetEstimatedDays = (event, data) => {
   <Grid.Column>
     <Form.Field>
       <label>Estimated Days  </label>
-      <Select placeholder='Select' className="small" options={countryOptions} />
+      <Input placeholder='Enter days' className="small" 
+        value={estimatedDays}
+        onChange={onsetEstimatedDays}
+      />
      
     </Form.Field>
   </Grid.Column>
