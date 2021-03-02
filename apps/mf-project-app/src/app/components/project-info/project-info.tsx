@@ -32,6 +32,10 @@ export function ProjectInfo(props: ProjectInfoProps) {
     console.log('add=project')
     setopenForm(!openForm);
   }
+
+  const openTask  = (project) =>{
+    console.log('task open==>', project)
+  }
   function openModal() {
     setIsOpen(true);
   }
@@ -53,7 +57,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
 
             <Grid.Row>
               {data.projects.map((project: IProject, i) => (
-                <Grid.Column className="card-margin" key={i}>
+                <Grid.Column className="card-margin" key={i} onClick={()=>openTask(project)}>
                   <Card>
                     <div className="ui card">
                       <div className="content">
