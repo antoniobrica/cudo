@@ -39,7 +39,7 @@ export function Loginbar(props: LoginProps) {
                             
                             <Input placeholder='example@domain.com' className="full-width" icon='at' />
                         </Form.Field>
-                        <Button size='large' className="grey-btn btn-large">Next <Icon name='arrow right' />   </Button>
+                        <Button size='large' className="grey-btn btn-large">Continue <Icon name='arrow right' />   </Button>
                          
  
                         </Form>

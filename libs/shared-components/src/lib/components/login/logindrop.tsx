@@ -1,9 +1,12 @@
 import React from 'react';
  
 import '../../../style/index.scss';
-import {Select, Input, Segment,Form, Grid ,Image,Checkbox,Button,Icon } from 'semantic-ui-react'
+import {Select, Input, Segment,Form, Grid ,Image,Checkbox,Button,Icon,Dropdown } from 'semantic-ui-react'
 import logo from 'libs/shared-components/src/slider.png';
 import img from 'libs/shared-components/src/Shape 2.png';
+import img3 from 'libs/shared-components/src/green_tick.png';  
+
+ 
 /* eslint-disable-next-line */
 export interface LoginDropProps { }
 
@@ -16,6 +19,21 @@ export function Logindrop(props: LoginDropProps) {
     const description = [
          
       ] 
+      const friendOptions = [
+        {
+          key: 'Company 1',
+          text: 'Company 1',
+          value: 'Company 1',
+          image: { avatar: true, src: 'libs/shared-components/src/company1.png' },
+        },
+        {
+          key: 'Company 2',
+          text: 'Company 2',
+          value: 'Company 2',
+          image: { avatar: true, src: '/images/avatar/small/elliot.jpg' },
+        },
+         
+      ]
   return (
     <div className="app-content-body ">
         
@@ -39,14 +57,14 @@ export function Logindrop(props: LoginDropProps) {
                     <div className="form-inner">
 
                     <Form>
-                      <Form.Field>
-                      <label>softobiz@gmail.in <span className="float-area"> 
-        <i className="ms-Icon ms-Icon--Accounts" aria-hidden="true"></i> </span> </label>  
+                      <Form.Field className="login-user">
+                      <label>  <span><img src={img3}  className="img-src" /> </span> <span>softobiz@gmail.in  </span><span className="float-area"> 
+                    <i className="ms-Icon ms-Icon--Accounts" aria-hidden="true"></i> </span> </label>  
                       </Form.Field>
                         <Form.Field>
-                        <Select placeholder='Select' options={countryOptions} className="full-width" />
+                     <Select placeholder='Select Company' options={friendOptions} defaultValue={friendOptions[0].value} className="full-width" />
                         </Form.Field>
-                        <Button size='large' className="grey-btn btn-large">Next <Icon name='arrow right' />   </Button>
+                        <Button size='large' className="grey-btn btn-large">Continue <Icon name='arrow right' />   </Button>
                          
  
                         </Form>
