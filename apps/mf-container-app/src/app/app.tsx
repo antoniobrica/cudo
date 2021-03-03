@@ -149,7 +149,7 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/" component={Login} />
-          <Route exact path="/home" component={Home} />
+          <Route  path="/home" component={Home} />
         </Switch>
       </Router>
     </React.StrictMode>

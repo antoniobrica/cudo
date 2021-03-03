@@ -4,13 +4,19 @@ import '../../../style/index.scss';
 import { Tab,Image } from 'semantic-ui-react'
  
 /* eslint-disable-next-line */
-export interface TabsProps { }
+export interface TabsProps {
+  parentCallback
+ }
 
 export function Tabsbar(props: TabsProps) {
+
+  const handleOpenProject = (item) => {
+    props.parentCallback(item)
+  }
     const panes = [
         {
           menuItem: { key: 'Overview', icon: 'file alternate outline', content: 'Overview' },
-          render: () => <Tab.Pane attached={false}>
+          render: () => <Tab.Pane attached={false} onClick={handleOpenProject('overview')}>
               
               <div className="ui-tabs">
               <div className="text-center ">
@@ -29,52 +35,52 @@ export function Tabsbar(props: TabsProps) {
         },
         {
           menuItem: { key: 'Task', icon: 'shield alternate', content: 'Task' },
-          render: () => <Tab.Pane attached={false}>  Task</Tab.Pane>,
+          render: () => <Tab.Pane  onClick={handleOpenProject('task')}>All Task</Tab.Pane>,
         },
         {
            
           menuItem: { key: 'Planning', icon: 'flag outline', content: 'Planning' },
-          render: () => <Tab.Pane attached={false}>Planning</Tab.Pane>,
+          render: () => <Tab.Pane attached={false} onClick={handleOpenProject('planning')}>Planning</Tab.Pane>,
         },
         {
              
             menuItem: { key: 'Cost', icon: 'money bill alternate outline', content: 'Cost' },
-            render: () => <Tab.Pane attached={false}>Cost</Tab.Pane>,
+            render: () => <Tab.Pane attached={false} onClick={handleOpenProject('cost')}>Cost</Tab.Pane>,
           },
           {
             
             menuItem: { key: 'Tender', icon: 'gavel', content: 'Tender' },
-            render: () => <Tab.Pane attached={false}>Tender</Tab.Pane>,
+            render: () => <Tab.Pane attached={false} onClick={handleOpenProject('tender')}>Tender</Tab.Pane>,
           },
           {
             
             menuItem: { key: 'Meetings', icon: 'calendar outline', content: 'Meetings' },
-            render: () => <Tab.Pane attached={false}>Meetings</Tab.Pane>,
+            render: () => <Tab.Pane attached={false} onClick={handleOpenProject('meetings')}>Meetings</Tab.Pane>,
           },
           {
              
             menuItem: { key: 'Files', icon: 'folder open outline', content: 'Files' },
-            render: () => <Tab.Pane attached={false}>Files</Tab.Pane>,
+            render: () => <Tab.Pane attached={false} onClick={handleOpenProject('files')}>Files</Tab.Pane>,
           },
           {
              
             menuItem: { key: 'Questions', icon: 'question circle outline', content: 'Questions' },
-            render: () => <Tab.Pane attached={false}>Questions</Tab.Pane>,
+            render: () => <Tab.Pane attached={false} onClick={handleOpenProject('questions')}>Questions</Tab.Pane>,
           },
           {
              
             menuItem: { key: 'People', icon: 'user outline', content: 'People' },
-            render: () => <Tab.Pane attached={false}>People</Tab.Pane>,
+            render: () => <Tab.Pane attached={false} onClick={handleOpenProject('people')}>People</Tab.Pane>,
           },
           {
              
             menuItem: { key: 'Settings', icon: 'setting', content: 'Settings' },
-            render: () => <Tab.Pane attached={false}>Settings</Tab.Pane>,
+            render: () => <Tab.Pane attached={false} onClick={handleOpenProject('settings')}>Settings</Tab.Pane>,
           },
           {
             
             menuItem: { key: 'Messages', icon: 'envelope open outline', content: 'Messages' },
-            render: () => <Tab.Pane attached={false}>Messages</Tab.Pane>,
+            render: () => <Tab.Pane attached={false} onClick={handleOpenProject('messages')}>Messages</Tab.Pane>,
           },
       ]
       

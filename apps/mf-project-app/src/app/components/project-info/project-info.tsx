@@ -8,6 +8,7 @@ import Project from "../project/project";
 import { ITodo, IProject } from "../../interfaces/project";
 import Modal from 'react-modal';
 import { Card, Icon, Form, Grid } from 'semantic-ui-react'
+import { useHistory } from "react-router";
 import '../../../../../../libs/shared-components/src/style/index.scss';
 
 import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
@@ -24,7 +25,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
   const [openForm, setopenForm] = React.useState(false);
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
-
+  const history = useHistory();
   if (loading) return <h1>Loading...</h1>;
   if (error) return <h1>Something went wrong!</h1>;
 
@@ -34,7 +35,8 @@ export function ProjectInfo(props: ProjectInfoProps) {
   }
 
   const openTask  = (project) =>{
-    console.log('task open==>', project)
+    console.log('task open==>', history)
+    history.push('/home/tabs');
   }
   function openModal() {
     setIsOpen(true);
