@@ -4,6 +4,8 @@ import { DeleteResult, Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { WorkTypeEntity } from '../../../entities/work-type.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
+import WorkParams from '../../../utils/types/workParam';
+import WorkParam from '../../../utils/types/workParam';
 import { ReferenceService } from '../../reference/service/reference.service';
 import { CreateWorkTypeInput } from '../dto/input/create-workType.input';
 import WorkTypeNotFoundException from '../exceptions/workTypeNotFound.exception';
@@ -52,5 +54,13 @@ export class WorkTypesService {
     });
 
   }
+
+  async getWorktypeByWorkTypeID(workFilter: WorkParams) {
+    const worktype = await this.WorkTypeRepository.findOne({ where: { ...workFilter} });
+    if (worktype) {
+        return worktype;
+    }
+    throw new WorkTypeNotFoundException(worktype.workTypeID);
+}
 
 }

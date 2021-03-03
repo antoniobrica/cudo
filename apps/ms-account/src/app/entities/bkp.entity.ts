@@ -20,13 +20,26 @@ export class BkpEntity extends BaseEntity {
   @Expose()
   bkpTitle: string;
 
-  // @Expose()
-  // @Column()
-  // companyId: number;
 
-  // @Expose()
-  // @Column()
-  // clientId: number;
+  @Expose()
+  @CreateDateColumn()
+  createdAt?: Date;
+
+  @Expose()
+  @Column({ nullable: true })
+  createdBy?: string;
+
+  @Expose()
+  @UpdateDateColumn()
+  updatedAt?: Date;
+
+  @Expose()
+  @Column({ nullable: true })
+  updatedBy?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  isDeleted?: boolean;
 
   @Expose()
   @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.bkp)

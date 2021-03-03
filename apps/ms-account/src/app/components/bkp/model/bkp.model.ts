@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { ReferenceModel } from '../../reference/model/reference.model';
 
 @ObjectType()
 export class BkpModel {
@@ -9,11 +10,8 @@ export class BkpModel {
   @Field()
   bkpTitle: string;
 
-  @Field()
-  companyId: number;
-
-  @Field()
-  clientId: number;
+  @Field(type => [ReferenceModel])
+  references: ReferenceModel[]
 
 }
 

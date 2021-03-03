@@ -89,7 +89,7 @@ export class TasksEntity extends BaseEntity {
 
   @ManyToOne(type => Phases, phase => phase.task) // specify inverse side as a second parameter
   @JoinColumn()
-  phase: Phases;
+  phase: Phases[];
 
 
   // @Expose()

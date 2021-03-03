@@ -1,4 +1,3 @@
-import { Inject } from '@nestjs/common';
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { BkpEntity } from '../../../entities/bkp.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
@@ -19,7 +18,7 @@ export class BkpResolver {
 
   @Mutation(() => BkpModel)
   async createBkp(
-    @Args('bkpeDetails') createBkpInput: CreateBkpInput,
+    @Args('bkpDetails') createBkpInput: CreateBkpInput,
     @Args("referenceFilter") referenceFilter: ReferenceFilterParams
   ) {
     return this.bkpService.createBkp(createBkpInput, referenceFilter);

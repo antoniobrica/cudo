@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ProjectWorkTypeEntity } from '../../entities/project-WorkType.entity';
 import { ReferenceModule } from '../reference/reference.module';
-import { ProjectWorkTypeEntity } from './project-WorkType.entity';
-import { ProjectWorkTypesService } from './ProjectWorkType.service';
-import { ProjectWorkTypesResolver } from './projectWorkTypes.resolver';
+import { ProjectWorkTypesResolver } from './resolver/projectWorkTypes.resolver';
+import { ProjectWorkTypesService } from './service/ProjectWorkType.service';
+
 
 
 @Module({

@@ -8,5 +8,6 @@ import { BkpService } from './service/bkp.service';
 @Module({
   imports: [TypeOrmModule.forFeature([BkpEntity]), ReferenceModule],
   providers: [BkpResolver, BkpService],
+  exports: [BkpResolver, BkpService]
 })
 export class BkpModule { }

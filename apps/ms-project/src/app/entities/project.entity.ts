@@ -1,10 +1,9 @@
-import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, ManyToOne, ObjectIdColumn, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { Field, Int, ObjectType } from "@nestjs/graphql";
-import { IsOptional } from 'class-validator';
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
 import * as uuid from 'uuid';
 import ReferanceTypeEntity from './reference-type.entity';
-import { ProjectWorkTypeEntity } from '../components/ProjectWorkType/project-WorkType.entity';
+import { WorkTypeEntity } from './work-type.entity';
+import { ProjectWorkTypeEntity } from './project-WorkType.entity';
 
 @Entity({ name: 'projects' })
 
@@ -35,15 +34,7 @@ export class ProjectEntity extends BaseEntity {
 
   @Expose()
   @Column({ nullable: true })
-  printingCom?: string;
-
-  @Expose()
-  @Column({ nullable: true })
-  workType?: string;
-
-  @Expose()
-  @Column({ nullable: true })
-  estCost?: number;
+  printingCompany?: string;
 
   @Expose()
   @Column({ nullable: true })
@@ -54,16 +45,32 @@ export class ProjectEntity extends BaseEntity {
   createdAt: Date
 
   @Expose()
+  @Column({ nullable: true })
+  createdBy?: string;
+
+
+  @Expose()
   @UpdateDateColumn()
   updatedAt: Date
 
   @Expose()
+  @Column({ nullable: true })
+  updatedBy?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  isDeleted?: boolean;
+
+
+  @Expose()
   @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.projects)
+ 
   reference: ReferanceTypeEntity;
+
 
   @Expose()
   @OneToMany(() => ProjectWorkTypeEntity, (projectwork: ProjectWorkTypeEntity) => projectwork.project)
-  projectwork: ProjectWorkTypeEntity[];
+  projectWorkTypes: ProjectWorkTypeEntity[];
 
 
   constructor(projectEntity: Partial<ProjectEntity>) {

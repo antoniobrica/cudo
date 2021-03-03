@@ -1,16 +1,19 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { ProjectWorkTypeModel } from '../../ProjectWorkType/model/projecWorkTypes.model';
+import { ReferenceModel } from '../../reference/model/reference.model';
+import { WorkTypeModel } from '../../workTypes/model/workTypes.model';
 
 @ObjectType()
-export class Project {
-  @Field()
-  projectId: string;
+export class ProjectModel {
+  // @Field()
+  // projectId: string;
 
   @Field()
   projectName: string;
 
   @Field()
-  projectNum: string
+  projectNum: number
 
   @Field()
   client: string;
@@ -21,11 +24,11 @@ export class Project {
   @Field({ nullable: true })
   printingCom?: string;
 
-  @Field({ nullable: true })
-  workType?: string;
+  @Field(()=>[WorkTypeModel])
+  workType?: WorkTypeModel[] ;
 
-  @Field({ nullable: true })
-  estCost?: string;
+  @Field(() => [ProjectWorkTypeModel])
+  ProjectWork?: ProjectWorkTypeModel[];
 
   @Field({ nullable: true })
   description?: string;
@@ -37,6 +40,13 @@ export class Project {
   @Field()
   @UpdateDateColumn()
   updatedAt: Date
+
+
+  @Field()
+  reference?: ReferenceModel
+
+  @Field(type => [ProjectWorkTypeModel])
+  projectWorkTypes: ProjectWorkTypeModel[]
 }
 
 

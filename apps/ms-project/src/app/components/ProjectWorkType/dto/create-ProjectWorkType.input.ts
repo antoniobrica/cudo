@@ -4,9 +4,6 @@ import { Field, InputType } from '@nestjs/graphql';
 export class CreateProjectWorkTypeInput {
 
   @Field()
-  projectWorkTypeID: string;
-
-  @Field()
   estimatedCost: number;
 }
 
