@@ -5,7 +5,7 @@ import {Select, Input, Segment,Form, Grid ,Image,Checkbox,Button,Icon,Dropdown }
 import logo from 'libs/shared-components/src/slider.png';
 import img from 'libs/shared-components/src/Shape 2.png';
 import img3 from 'libs/shared-components/src/green_tick.png';  
-
+import img4 from 'libs/shared-components/src/company1.png';  
  
 /* eslint-disable-next-line */
 export interface LoginDropProps { }
@@ -24,13 +24,13 @@ export function Logindrop(props: LoginDropProps) {
           key: 'Company 1',
           text: 'Company 1',
           value: 'Company 1',
-          image: { avatar: true, src: 'libs/shared-components/src/company1.png' },
+           image: img4,
         },
         {
           key: 'Company 2',
           text: 'Company 2',
           value: 'Company 2',
-          image: { avatar: true, src: '/images/avatar/small/elliot.jpg' },
+          image: img4,
         },
          
       ]
