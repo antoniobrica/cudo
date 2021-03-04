@@ -1,13 +1,28 @@
 import gql from "graphql-tag";
-
-
-
 export const GET_TASKS = gql`
-  {
-    getTasks {
-      taskTitle
-      endDate
-    }
+{
+  tasks(referenceFilter: {
+  projectID: "3"
+  companyID: "1"
+  referenceType: PROJECTTYPE
+  referenceID: "3"
+  }){
+  taskTitle
+  createdBy
+  startDate
+  endDate
+  estimatedDays
+  reference{
+  referenceID
+  }
+  assignees{
+  userID
+  userName
+  }
+  followers{
+  userID
+  }
+  }
   }
 `;
 
@@ -24,7 +39,15 @@ mutation CreateTask(
   $phasesID: String!,
   $status: String!,
   ){ 
-    createTask(taskDetails: {
+    createTask(
+      referenceFilter: {
+        projectID: "3"
+        companyID: "1"
+        referenceType: PROJECTTYPE
+        referenceID: "3"
+        },
+      taskDetails: {
+        taskBasics:{
       taskTitle: $taskTitle,
       startDate: $startDate, 
       endDate: $endDate,
@@ -34,8 +57,13 @@ mutation CreateTask(
       saveTaskAsTemplate: $saveTaskAsTemplate,
       phasesID: $phasesID,
       status: $status,
+        }
+      assignees:[{userID:"2",userName:"Ashutosh"},{userID:"3",userName:"Ashutosh"}]
+      followers:[{userID:"1",userName:"Ashutosh"}]
    }){
     taskTitle
+    startDate
+    endDate
   }
 }`;
 

@@ -12,10 +12,9 @@ function ModalExamplePrinting() {
         { key: 'ax', value: 'ax', text: 'Aland Islands' },
          
       ]
-
- 
+      
   const [open, setOpen] = React.useState(false)
-   
+
   return (
     <div id="navbar">
     <Modal className="modal_media modal_center"
@@ -32,6 +31,10 @@ function ModalExamplePrinting() {
                 <div className="description">Upload Client logo  <span className="danger">*</span></div> 
                 <Button className="secondary_btn" size='mini' primary>Click to upload</Button>
                 <p className="paragraph">Click the upload button to upload the client logo</p>
+
+                
+
+
             </div>
       
       <Form>
@@ -69,7 +72,7 @@ function ModalExamplePrinting() {
 <Grid.Row>
   <Grid.Column>
     <Form.Field>
-       <a href="" className="anchor-color">+ Add New</a>
+       <a className="anchor-color">+ Add New</a>
       </Form.Field>
   </Grid.Column>
 
@@ -187,7 +190,10 @@ function ModalExamplePrinting() {
       <Modal.Actions>
     
         
-      </Modal.Actions>
+      </Modal.Actions> 
+
+    
+
     </Modal>
   </div>
   

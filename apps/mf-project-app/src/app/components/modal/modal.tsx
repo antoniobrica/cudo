@@ -7,7 +7,9 @@ import { useProjectMutation, useProjectQuery, useWorkTypesQuery, useCompanyQuery
 import { ApolloCache, FetchResult } from '@apollo/client';
 import { ADD_PROJECT, GET_BUILDINGTYPES, GET_CLIENT_COMPANY, GET_PRINTING_COMPANY, GET_PROJECTS, GET_WORKTYPES } from "../../graphql/graphql";
 import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
-import ModalExampleCompany from 'libs/shared-components/src/lib/components/modal/companypopup';
+import ModalExampleCompany from 'libs/shared-components/src/lib/components/modal/companypopup'; 
+import WorkType from '../../work-type/work-type';
+import {MfAccountAppLib} from '@cudo/mf-account-app-lib';
 
 function ModalExampleModal() {
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
@@ -67,7 +69,6 @@ function ModalExampleModal() {
   const [buildingTypes, setBuildingTypes] = React.useState([])
   const [addWorkTypes, setAddWorkTypes] = React.useState(1)
   const [secondOpen, setSecondOpen] = React.useState(false)
-
 
   const [addProject] = useProjectMutation(ADD_PROJECT);
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
@@ -164,7 +165,8 @@ function ModalExampleModal() {
   const onZip = e => {
     setZip(e.target.vale)
   }
-  const onCountry = (event, data) => {
+  const onCountry = ( data) => {
+    console.log('selected_country',data)
     setCountry(data.value)
   }
   const onDescription = e => {
@@ -297,6 +299,7 @@ function ModalExampleModal() {
         <div>
           <Header className="header" >Manage work type and estimated cost</Header>
         </div>
+        <WorkType  worktypes={items}/>
         <Table>
           <Table.Header>
             <Table.Row>
@@ -308,61 +311,20 @@ function ModalExampleModal() {
           </Table.Header>
 
           <Table.Body>
-            {
-              [...Array(addWorkTypes)].map((k, i) =>
-                <Table.Row key={i}>
-                  <Table.Cell>
-                    <Form>
-                      <Grid columns={1}>
-                        <Grid.Row>
-                          <Grid.Column>
-                            <Form.Field>
-                              <Select placeholder='Select' className="small" options={items}
-                                value={workType}
-                                onChange={onWorkType}
-                              />
-                            </Form.Field>
-                          </Grid.Column>
-
-                        </Grid.Row>
-                      </Grid>
-                    </Form>
-
-                  </Table.Cell>
-                  <Table.Cell></Table.Cell>
-                  <Table.Cell>
-                    <Form>
-                      <Grid columns={1}>
-                        <Grid.Row>
-                          <Grid.Column>
-                            <Form.Field>
-
-                              <Input label='$' size='small' className="full-width"
-                                type="number"
-                                value={estCost}
-                                onChange={onEstCost}
-                              />
-                            </Form.Field>
-                          </Grid.Column>
-
-                        </Grid.Row>
-                      </Grid>
-                    </Form>
-
-                  </Table.Cell>
-
-                </Table.Row>
-
-
-              )
-            }            {/* <Table.Row>
+            
+            {/* {
+          [...Array(addWorkTypes)].map((k,i)=>  
+<Table.Row key={i}>
               <Table.Cell>
                 <Form>
                   <Grid columns={1}>
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <Select placeholder='Select' className="small" options={countryOptions} />
+                          <Select placeholder='Select' className="small" options={items}
+                            value={workType}
+                            onChange={onWorkType}
+                          />
                         </Form.Field>
                       </Grid.Column>
 
@@ -379,7 +341,11 @@ function ModalExampleModal() {
                       <Grid.Column>
                         <Form.Field>
 
-                          <Input label='$' size='small' className="full-width" />
+                          <Input label='$' size='small' className="full-width"
+                            type="number"
+                            value={estCost}
+                            onChange={onEstCost}
+                          />
                         </Form.Field>
                       </Grid.Column>
 
@@ -389,8 +355,12 @@ function ModalExampleModal() {
 
               </Table.Cell>
 
-            </Table.Row> */}
-            <Table.Row>
+            </Table.Row>
+           
+        
+        )
+        }          */}
+          {/* <Table.Row>
               <Table.Cell>
                 <a onClick={addWorkType}>+ Add more </a>
 
@@ -399,7 +369,7 @@ function ModalExampleModal() {
               <Table.Cell>
 
               </Table.Cell>
-            </Table.Row>
+            </Table.Row> */}
           </Table.Body>
         </Table>
 
@@ -469,14 +439,15 @@ function ModalExampleModal() {
                 </Form.Field>
               </Grid.Column>
               <Grid.Column>
-                <Form.Field>
+                {/* <Form.Field>
                   <label>Country</label>
                   <Select
                     placeholder='Select' className="small" options={countryOptions}
                     value={country}
                     onChange={onCountry}
                   />
-                </Form.Field>
+                </Form.Field> */}
+                <MfAccountAppLib parentCallback={onCountry}/>
               </Grid.Column>
             </Grid.Row>
           </Grid>

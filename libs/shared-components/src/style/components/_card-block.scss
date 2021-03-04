@@ -359,9 +359,9 @@
 }
 
 .app-content-body{
-    position: relative;
-    margin-left: 100px;
-    top: 10px;
+    
+    margin-left: 275px;
+    top: -120px;
     
     .project{
         color:#1B1B40;
@@ -390,7 +390,7 @@
 }
 .label-spacer {
     /*display:table-cell; Remove this*/
-    font-size: 12px;
+    // font-size: 12px;
     float: left; /*Add this*/
     margin-right: 5px; /*Add this*/
   }

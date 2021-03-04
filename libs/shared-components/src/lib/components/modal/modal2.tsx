@@ -131,15 +131,15 @@ function ModalExampleModal2() {
   <Grid.Column>
     <Form.Field>
       <label>Start Date  </label>
-      <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" />
-      
+        
+      <Input placeholder='Default' size='small' className="full-width" type="date" />
     </Form.Field>
   </Grid.Column>
   <Grid.Column>
     <Form.Field>
       <label>End Date </label>
-      <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" />
-      
+     
+      <Input placeholder='Default' size='small' className="full-width" type="date" />
     </Form.Field>
   </Grid.Column>
   <Grid.Column>

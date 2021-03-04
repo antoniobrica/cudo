@@ -23,7 +23,7 @@ export interface ITodo {
   }
   
   export interface ITasks {
-      getTasks: ITask[];
+    tasks: ITask[];
   }
 
   export interface TaskMutation {
