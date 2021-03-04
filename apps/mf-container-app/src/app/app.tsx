@@ -83,6 +83,8 @@ import "./app.module.scss";
 import { environment } from "../environments/environment";
 import Login from './login/login'
 import { Menubar } from '@cudo/shared-components';
+import '../../../../libs/shared-components/src/style/index.scss';
+
 
 // import Home from './home/home'
 const defaultHistory = createBrowserHistory();

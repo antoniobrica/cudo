@@ -10,11 +10,7 @@ export interface LoginProps {
 }
 
 export function Loginbar(props: LoginProps) {
-    const countryOptions = [
-        { key: 'af', value: 'af', text: 'Afghanistan' },
-        { key: 'ax', value: 'ax', text: 'Aland Islands' },
-        { key: 'al', value: 'al', text: 'Albania' }, 
-      ]
+ 
     const description = [
          
       ] 
@@ -48,31 +44,9 @@ export function Loginbar(props: LoginProps) {
                             
                             <Input placeholder='example@domain.com' className="full-width" icon='at' />
                         </Form.Field>
-                        <Button size='large'
-                        onClick={handleLogin}
-                        className="grey-btn btn-large">Next <Icon name='arrow right' />   </Button>
-                        
-                       
-                        <Form.Field>
-                            
-                           </Form.Field>
-                           <Form.Field className="input-with-icon">
-                            
-                            <Input placeholder='Password...' className="full-width" type="password" icon='lock' />
-                            
-                        </Form.Field>
-                        <Form.Field>
-                        <Checkbox label='Remember Me'   />
-                        <a href="" className="forgot">Forgot password?</a>
-                        </Form.Field>
-
-                        <Form.Field>
-                            
-                           </Form.Field>
-                        <Form.Field className="input-with-icon">
-                             
-                            <Select placeholder='Select' options={countryOptions} className="full-width" />
-                        </Form.Field>
+                        <Button size='large' className="grey-btn btn-large" onClick={handleLogin}>Next <Icon name='arrow right' />   </Button>
+                         
+ 
                         </Form>
                     </div>  
 

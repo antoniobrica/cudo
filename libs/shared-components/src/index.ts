@@ -10,3 +10,6 @@ export * from './lib/components/menu/sidebar';
 export * from './lib/components/login/login'; 
 export * from './lib/components/modal/companypopup'; 
 export * from './lib/components/modal/addprintingpopup'; 
+export * from './lib/components/login/logindrop'; 
+export * from './lib/components/login/loginpassword'; 
+export * from './lib/components/task/taskarea'; 
