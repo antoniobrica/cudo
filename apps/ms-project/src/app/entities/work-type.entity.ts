@@ -1,9 +1,8 @@
-import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, ManyToOne, ObjectIdColumn, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { Field, Int, ObjectType } from "@nestjs/graphql";
-import { IsOptional } from 'class-validator';
+import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
-import * as uuid from 'uuid';
 import ReferanceTypeEntity from './reference-type.entity';
+import { ProjectEntity } from './project.entity';
+import { ProjectWorkTypeEntity } from './project-WorkType.entity';
 
 @Entity({ name: 'workTypes' })
 
@@ -28,9 +27,18 @@ export class WorkTypeEntity extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date
 
+
+  @Expose()
+  @Column({ nullable: true })
+  isDeleted?: boolean;
+
   @Expose()
   @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.workTypes)
   reference: ReferanceTypeEntity;
+
+  @Expose()
+  @OneToMany(() => ProjectWorkTypeEntity, (project: ProjectWorkTypeEntity) => project.workType)
+  projectWorkTypes?: ProjectEntity[];
 
 
   constructor(workTypeEntity: Partial<WorkTypeEntity>) {
@@ -42,8 +50,6 @@ export class WorkTypeEntity extends BaseEntity {
           excludeExtraneousValues: true
         })
       )
-      // this.createdAt = this.createdAt || new Date(new Date().toUTCString());
-      // this.updatedAt = new Date(new Date().toUTCString());
     }
   }
 }

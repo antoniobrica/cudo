@@ -33,7 +33,7 @@ export function CreateTask(props: CreateTaskProps) {
 const [open, setOpen] = React.useState(false)
 const [taskTitle, setTaskTitle] = React.useState("")
 const [startDate, setStartDate] = React.useState('')
-const [endDate, setEndDate] = React.useState("2021-02-15T06:31:14.000Z")
+const [endDate, setEndDate] = React.useState("")
 const [estimatedDays, setEstimatedDays] = React.useState("")
 const [sendNotification, setEendNotification] = React.useState("")
 const [BKPID, setBKPID] = React.useState("")
