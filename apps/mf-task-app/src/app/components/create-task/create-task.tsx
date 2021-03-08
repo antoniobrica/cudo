@@ -8,7 +8,7 @@ import { ADD_TASK, GET_TASKS } from "../../graphql/graphql";
 import '../../../../../../libs/shared-components/src/style/index.scss';
 import './create-task.module.scss';
 import moment, { calendarFormat } from 'moment';
-import {FollowersIndex, AssigneeIndex, BkpIndex} from "@cudo/mf-account-app-lib"
+import {FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex} from "@cudo/mf-account-app-lib"
 /* eslint-disable-next-line */
 export interface CreateTaskProps { }
 
@@ -40,33 +40,33 @@ const [BKPID, setBKPID] = React.useState("")
 const [saveTaskAsTemplate, setSaveTaskAsTemplate] = React.useState("")
 const [phasesID, setPhasesID] = React.useState("")
 const [status, setStatus] = React.useState("")
+const [followers, setfollowers] = React.useState("")
 
   const [addTask] = useTaskMutation(ADD_TASK);
 
 const onTaskTitleChange = e => {
   setTaskTitle(e.target.value)
-  console.log('taskTitle', taskTitle)
 }
 const onStartDateChange = e => {
   const date= moment.utc(moment(e.target.value).utc()).format();
   setStartDate(e.target.value)
-  console.log('start-date', startDate)
 }
 const onEndDateChange = e => {
   const date= moment.utc(moment(e.target.value).utc()).format();
   setEndDate(e.target.value);
-  console.log('end-date', endDate)
 }
 const onsetEstimatedDays = (event, data) => {
   setEstimatedDays(data.value)
-  console.log('setEstimatedDays', estimatedDays)
 }
 
   const sendNotificationChange = (event) => {
     setEendNotification(event.target.value)
   }
 
-  const setBKPIDChange = (event, data) => {
+  const onFollowers=(data) =>{
+    setfollowers(data.value);
+  }
+  const setBKPIDChange = (data) => {
     setBKPID(data.value)
   }
 
@@ -74,7 +74,7 @@ const onsetEstimatedDays = (event, data) => {
     setSaveTaskAsTemplate(data.value)
   }
 
-  const onsetPhasesID = (event, data) => {
+  const onsetPhasesID = ( data) => {
     setPhasesID(data.value);
   }
   const onsetStatus = e => {
@@ -162,11 +162,12 @@ const onsetEstimatedDays = (event, data) => {
 <Grid columns={2}>
 <Grid.Row>
   <Grid.Column>
-    <Form.Field>
+    {/* <Form.Field>
       <label>Select Phase </label>
       <Select placeholder='Select' className="small" options={phaseOptions} />
             
-    </Form.Field>
+    </Form.Field> */}
+    <PhaseIndex  parentPhaseSelect={onsetPhasesID}/>
   </Grid.Column>
 
   <Grid.Column>
@@ -175,7 +176,7 @@ const onsetEstimatedDays = (event, data) => {
       <Select placeholder='Select' className="small" options={bkpOptions} />
             
     </Form.Field> */}
-    <BkpIndex />
+    <BkpIndex parentBKPSelect={setBKPIDChange}/>
   </Grid.Column>
 </Grid.Row>
 </Grid>
@@ -200,7 +201,7 @@ const onsetEstimatedDays = (event, data) => {
       <Select placeholder='Select' className="small" options={countryOptions} />
       
     </Form.Field> */}
-    <FollowersIndex />
+    <FollowersIndex  parentFollowersSelect ={onFollowers}/>
   </Grid.Column>
   <Grid.Column>
     <Form.Field>

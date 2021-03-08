@@ -7,7 +7,9 @@ import { useBkpQuery } from '../../services/useRequest';
 import './bkp.module.scss';
 
 /* eslint-disable-next-line */
-export interface BkpProps {}
+export interface BkpProps {
+  parentBKPSelect
+}
 
 export function Bkp(props: BkpProps) {
   const [items, setItems] = React.useState([])
@@ -24,7 +26,9 @@ export function Bkp(props: BkpProps) {
 
   const onBkp = (event, data) => {
     setBKPID(data.value)
+    props.parentBKPSelect(data);
    }
+
 
   return (
     <Form.Field>

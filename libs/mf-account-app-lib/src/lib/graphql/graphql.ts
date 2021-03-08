@@ -30,6 +30,14 @@ export const GET_BKP = gql`{
   
 }`
 
+export const GET_PHASE = gql`{
+  Phase(referenceFilter:{referenceType:COMPANY,referenceID:"3"})
+ {
+  id
+phaseTitle
+  }
+
+}`
 export const ADD_TASK = gql`
 mutation CreateTask(
   $taskTitle: String!, 
