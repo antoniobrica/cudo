@@ -2,7 +2,7 @@ import { radios } from '@storybook/addon-knobs';
 import React from 'react';
 import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Select, TextArea } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
-import { IProject, IProjects, ProjectMutation, IWorkTypes } from "../../interfaces/project";
+import { IProject, IProjects, ProjectMutation, IWorkTypes, IProjectWorktypes, ProjectWorkTypeModel } from "../../interfaces/project";
 import { useProjectMutation, useProjectQuery, useWorkTypesQuery, useCompanyQuery, useBuildingTypesQuery } from '../../services/useRequest';
 import { ApolloCache, FetchResult } from '@apollo/client';
 import { ADD_PROJECT, GET_BUILDINGTYPES, GET_CLIENT_COMPANY, GET_PRINTING_COMPANY, GET_PROJECTS, GET_WORKTYPES } from "../../graphql/graphql";
@@ -69,6 +69,7 @@ function ModalExampleModal() {
   const [buildingTypes, setBuildingTypes] = React.useState([])
   const [addWorkTypes, setAddWorkTypes] = React.useState(1)
   const [secondOpen, setSecondOpen] = React.useState(false)
+  const [projectWorkEstimates, setProjectWorkEstimates] = React.useState(null)
 
   const [addProject] = useProjectMutation(ADD_PROJECT);
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
@@ -176,7 +177,9 @@ function ModalExampleModal() {
   const addWorkType = () => {
     setAddWorkTypes(prevCount => prevCount + 1);
   }
-  const moreWorkTypes = () => {
+  const moreWorkTypes = (data: ProjectWorkTypeModel) => {
+    setProjectWorkEstimates(data);
+    console.log('selected-worktypes',projectWorkEstimates);
 
   }
   const handleSaveProject = () => {
@@ -299,7 +302,7 @@ function ModalExampleModal() {
         <div>
           <Header className="header" >Manage work type and estimated cost</Header>
         </div>
-        <WorkType  worktypes={items}/>
+        <WorkType  worktypes={items} workTypeData={moreWorkTypes}/>
         <Table>
           <Table.Header>
             <Table.Row>

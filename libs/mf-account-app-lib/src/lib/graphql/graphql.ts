@@ -21,6 +21,14 @@ export const GET_USERS= gql`
   }
 `;
 
+export const GET_BKP = gql`{
+    Bkp(referenceFilter:{referenceType:COMPANY,referenceID:"3"})
+   {
+    bkpID
+    bkpTitle
+    }
+  
+}`
 
 export const ADD_TASK = gql`
 mutation CreateTask(

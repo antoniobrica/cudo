@@ -18,14 +18,17 @@ export const GET_PROJECTS = gql`
       referenceID:"Sftobiz_123"
       })
     {
-      projectId
       projectName
       projectNum
       client
       buildingType
       printingCom
-      workType
-      estCost
+      projectWorkTypes{
+        workTypeName
+        projectWorkTypeID
+              workTypeName
+        estimatedCost
+        }
       description
     }
   }
@@ -127,7 +130,9 @@ mutation CreateProject(
   $estCost: Float,
   $description: String
   ){ 
-    createProject(projectDetails: {
+    createProject(
+    projectDetails: {
+    projectBasics:{
     projectName: $projectName,
     projectNum: $projectNum, 
     client: $client,
@@ -136,6 +141,14 @@ mutation CreateProject(
     workType: $workType,
     estCost: $estCost,
     description: $description
+   }
+   projectWorkEstimates: [
+     {
+      workTypeID: $workTypeID,
+      workTypeName: $workTypeName,
+      estimatedCost: $estimatedCost
+     }
+   ]
    }
    referenceFilter: { referenceType: "Company", referenceID: "Sftobiz_123" }
    ){

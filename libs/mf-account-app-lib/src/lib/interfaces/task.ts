@@ -11,7 +11,14 @@ export interface ICountry {
     userID: string
     userName: string
     }
-     
+    export interface IBkp {
+      bkpID: string
+      bkpTitle: string
+      }
+       
+      export interface IBkps {
+        Bkp: IBkp[];
+      }
     export interface IUsers {
       users: IUser[];
     }

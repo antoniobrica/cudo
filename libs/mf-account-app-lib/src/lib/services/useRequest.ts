@@ -1,5 +1,5 @@
 import { DocumentNode, useQuery, useMutation } from "@apollo/react-hooks";
-import { ICountries, ICountry, IUsers, } from "../interfaces/task";
+import { IBkps, ICountries, ICountry, IUsers, } from "../interfaces/task";
 
 export function useCountrykQuery(gqlQuery: DocumentNode) {
   const { loading, error, data } = useQuery<ICountries>(gqlQuery);
@@ -9,6 +9,11 @@ export function useCountrykQuery(gqlQuery: DocumentNode) {
 
 export function useUsersQuery(gqlQuery: DocumentNode) {
   const { loading, error, data } = useQuery<IUsers>(gqlQuery);
+  return { loading, error, data };
+}
+
+export function useBkpQuery(gqlQuery: DocumentNode) {
+  const { loading, error, data } = useQuery<IBkps>(gqlQuery);
   return { loading, error, data };
 }
 
