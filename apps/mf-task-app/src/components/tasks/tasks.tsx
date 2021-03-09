@@ -32,7 +32,7 @@ export function Tasks(props: TasksProps) {
           )
         })}
       </div>
-      <button className="ui large button btn-dashed  btn-large"><i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> Add new task    </button>
+      {/* <button className="ui large button btn-dashed  btn-large"><i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> Add new task    </button> */}
     </div>
   );
 }

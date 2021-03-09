@@ -11,7 +11,7 @@ export interface LoginProps {
 export function Login(props: LoginProps) {
   const history = useHistory();
   const handleLogin = () => {
-    history.push('/home');
+    history.push('/login-select');
   };
   return (
     <div>

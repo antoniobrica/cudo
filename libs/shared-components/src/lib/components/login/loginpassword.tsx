@@ -5,15 +5,20 @@ import {Select, Input, Segment,Form, Grid ,Image,Checkbox,Button,Icon } from 'se
 import logo from 'libs/shared-components/src/slider.png';
 import img from 'libs/shared-components/src/Shape 2.png';
 /* eslint-disable-next-line */
-export interface LoginPasswordProps { }
+export interface LoginPasswordProps { 
+  login
+}
 
 export function Loginpassword(props: LoginPasswordProps) {
  
     const description = [
          
       ] 
+      const handleLogin =()=>{
+        props.login();
+      }
   return (
-    <div className="app-content-body ">
+    <div className=" ">
         
         <div className="main-outer-area">
  
@@ -42,7 +47,7 @@ export function Loginpassword(props: LoginPasswordProps) {
                             
                             <Input placeholder='password' className="full-width" icon='lock' />
                         </Form.Field>
-                        <Button size='large' className="grey-btn btn-large">Login <Icon name='arrow right' />   </Button>
+                        <Button size='large' className="grey-btn btn-large" onClick={handleLogin}>Login <Icon name='arrow right' />   </Button>
                          
  
                         </Form>
