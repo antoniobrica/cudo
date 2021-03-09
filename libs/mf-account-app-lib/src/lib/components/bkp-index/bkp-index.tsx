@@ -1,32 +1,31 @@
+
 import React from 'react';
-
-import './followers-index.module.scss';
-
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
 import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
-import Followers from '../followers/followers';
+import Bkp from '../bkp/bkp';
 
 /* eslint-disable-next-line */
 const client = new ApolloClient({
   uri: 'http://localhost:5001/graphql',
   cache: new InMemoryCache()
 });
-export interface FollowersIndexProps {
-  parentFollowersSelect
+/* eslint-disable-next-line */
+export interface BkpIndexProps {
+  parentBKPSelect
 }
 
-export function FollowersIndex(props: FollowersIndexProps) {
-  const onSelectF=(data)=>{
-    props.parentFollowersSelect(data)
+export function BkpIndex(props: BkpIndexProps) {
+  const onSelectBkp=(data)=>{
+    props.parentBKPSelect(data)
   }
   return (
     <ApolloProvider client={client}>
     <ApolloHooksProvider client={client}>
-     <Followers parentFollowersSelect={onSelectF} />
+     <Bkp parentBKPSelect={onSelectBkp}/>
    </ApolloHooksProvider>
    </ApolloProvider>
   );
 }
 
-export default FollowersIndex;
+export default BkpIndex;

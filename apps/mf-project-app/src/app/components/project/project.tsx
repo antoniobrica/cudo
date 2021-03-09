@@ -53,7 +53,7 @@ export function Project(props: ProjectProps) {
     //                 </div>
     //                 </div>
     // </div>
-    <div className="app-content-body ">
+    <div className="app-content-body  ">
     <div>
         <h2 className="project">All Projects</h2>
         <span className="total">Total 3 project added</span>
@@ -64,6 +64,8 @@ export function Project(props: ProjectProps) {
 <Grid.Column>
 <Card>
   <div className="ui card">
+             
+
         <div className="content">
         <div className="description"><img src="" alt="Logo"></img>
             <span className="summary"><span className="dot">...</span>

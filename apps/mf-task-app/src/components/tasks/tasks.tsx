@@ -20,10 +20,14 @@ export function Tasks(props: TasksProps) {
   }
   return (
     <div>
+      <div style={{marginLeft:900}} >
       <CreateTask />
+      </div>
+    
       {/* <MfAccountAppLib/> */}
-      <div>
-        <h2>Tasks</h2>
+      <br/> 
+      <div className="TaskApp-container">
+      <h3 style={{color:"black"}}>All Tasks</h3>
         {data.tasks.map((task, id)=>{
           return(
             <div key={id}>
@@ -32,7 +36,7 @@ export function Tasks(props: TasksProps) {
           )
         })}
       </div>
-      <button className="ui large button btn-dashed  btn-large"><i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> Add new task    </button>
+      {/* <button className="ui large button btn-dashed  btn-large"><i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> Add new task    </button> */}
     </div>
   );
 }

@@ -12,9 +12,6 @@ import { Menubar } from '@cudo/shared-components';
 export function App() {
   return (
     <div>
-    {/* <Tabsbar></Tabsbar> */}
-    <Menubar data={'data'} parentCallback={''}></Menubar>
-    <AccordionExampleMenu/>
     <Tasks/>
     </div>
        

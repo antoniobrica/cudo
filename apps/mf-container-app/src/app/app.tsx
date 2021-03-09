@@ -84,6 +84,8 @@ import { environment } from "../environments/environment";
 import Login from './login/login'
 import { Menubar } from '@cudo/shared-components';
 import '../../../../libs/shared-components/src/style/index.scss';
+import LoginPassword from "./login-password/login-password";
+import LoginSelect from "./login-select/login-select";
 
 
 // import Home from './home/home'
@@ -149,7 +151,10 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/" component={Login} />
-          <Route exact path="/home" component={Home} />
+          <Route  path="/home" component={Home} />
+          <Route  path="/login-passwoord" component={LoginPassword} />
+          <Route  path="/login-select" component={LoginSelect} />
+        
         </Switch>
       </Router>
     </React.StrictMode>

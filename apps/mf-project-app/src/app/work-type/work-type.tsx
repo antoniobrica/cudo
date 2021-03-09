@@ -1,45 +1,37 @@
 import React from 'react';
 import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Select, TextArea } from 'semantic-ui-react';
+import WorkTypeDropdown from './work-type-dropdown';
 
 import './work-type.module.scss';
 
-
-/* eslint-disable-next-line */
 export interface WorkTypeProps { 
-  worktypes
+  worktypes,
+  workTypeData
 }
 
 export function WorkType(props: WorkTypeProps) {
-  const [fields, setFields] = React.useState([{ worktype: null, estCost: null }])
+  const [fields, setFields] = React.useState([{ workTypeName: null, estimatedCost: null }])
 
-  console.log('worktypes====>', props.worktypes)
-  const clientOption = [
-    { key: 'c1', value: 'c1', text: 'Client 1' },
-    { key: 'c2', value: 'c2', text: 'Client 2' },
-    { key: 'c3', value: 'c3', text: 'Client 3' },
-    { key: 'c4', value: 'c4', text: 'Client 4' },
-
-
-  ]
 
   function handleChangeInput(i, event, field) {
     console.log('field==>',field, i, event.target.value) 
     const values = [...fields];
     if(field === 'worktype'){
-      values[i].worktype = event.target.value;
+      values[i].workTypeName = event.target.value;
     }
     else  {
-      values[i].estCost = event.target.value;
+      values[i].estimatedCost = event.target.value;
     }
     setFields(values);
-    console.log("fields",fields);
+    props.workTypeData(fields)
+    //console.log("fields",fields);
   }
 
   function handleAddInput() {
     const values = [...fields];
     values.push({
-      worktype: '',
-      estCost: '',
+      workTypeName: '',
+      estimatedCost: '',
     });
     setFields(values);
   }
@@ -49,6 +41,10 @@ export function WorkType(props: WorkTypeProps) {
     values.splice(i, 1);
     setFields(values);
   }
+  const getWorktype = (data)=>{
+     console.log('selected-WorkType', data)
+  }
+
   return (
     <Table>
     <Table.Header>
@@ -71,12 +67,13 @@ export function WorkType(props: WorkTypeProps) {
                     <Grid columns={1}>
                       <Grid.Row>
                         <Grid.Column>
-                          <Form.Field>
+                          {/* <Form.Field>
                             <Select placeholder='Select' className="small"  options={props.worktypes}
-                              value={field.worktype}
-                              onChange={e =>handleChangeInput( idx, e, 'worktype' )}
+                              value={field.workTypeName}
+                              onChange={e =>handleChangeInput( idx, e, 'worktype')}
                             />
-                          </Form.Field>
+                          </Form.Field> */}
+                          <WorkTypeDropdown data={props.worktypes} selectedWorkType={getWorktype}/>
                         </Grid.Column>
 
                       </Grid.Row>
@@ -94,7 +91,7 @@ export function WorkType(props: WorkTypeProps) {
 
                             <Input label='$' size='small' className="full-width"
                               type="text"
-                              value={field.estCost}
+                              value={field.estimatedCost}
                               onChange={e =>handleChangeInput( idx, e, 'estCost')}
                             />
                           </Form.Field>

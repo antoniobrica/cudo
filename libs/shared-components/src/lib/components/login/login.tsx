@@ -18,7 +18,7 @@ export function Loginbar(props: LoginProps) {
         props.login();
       }
   return (
-    <div className="app-content-body ">
+    <div className=" ">
         
         <div className="main-outer-area">
  
@@ -54,8 +54,8 @@ export function Loginbar(props: LoginProps) {
             </Segment>
             </Grid.Column>
             <Grid.Column>
-       
-        <img src={logo} className="massive" />
+           
+        <img src={logo} className="massive "/>
        
       </Grid.Column>
             </Grid.Row>

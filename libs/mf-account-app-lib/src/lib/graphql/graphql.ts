@@ -21,7 +21,23 @@ export const GET_USERS= gql`
   }
 `;
 
+export const GET_BKP = gql`{
+    Bkp(referenceFilter:{referenceType:COMPANY,referenceID:"3"})
+   {
+    bkpID
+    bkpTitle
+    }
+  
+}`
 
+export const GET_PHASE = gql`{
+  Phase(referenceFilter:{referenceType:COMPANY,referenceID:"3"})
+ {
+  id
+phaseTitle
+  }
+
+}`
 export const ADD_TASK = gql`
 mutation CreateTask(
   $taskTitle: String!, 
