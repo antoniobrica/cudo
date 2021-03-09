@@ -1,9 +1,6 @@
 import { Expose, plainToClass } from 'class-transformer';
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, ManyToMany, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import * as uuid from 'uuid';
-import { BkpEntity } from './bkp.entity';
-import { PhaseEntity } from './phase.entity';
-import UsersEntity from './users.entity';
 
 /**
  * 
@@ -19,8 +16,12 @@ export default class ReferanceTypeEntity extends BaseEntity {
     referenceID: string;
 
     @Expose()
-    @Column({ nullable: true })
+    @Column()
     referenceType: string;
+
+    @Expose()
+    @Column()
+    name: string;
 
     @Expose()
     @CreateDateColumn()
@@ -42,16 +43,7 @@ export default class ReferanceTypeEntity extends BaseEntity {
     @Column({ nullable: true })
     isDeleted?: boolean;
 
-    @Expose()
-    @OneToMany(() => BkpEntity, (bkp: BkpEntity) => bkp.reference)
-    bkp: BkpEntity[];
-
-    @Expose()
-    @OneToMany(() => PhaseEntity, (phase: PhaseEntity) => phase.reference)
-    phase: PhaseEntity[];
-    
-    @ManyToMany(() => UsersEntity, usersEntity => usersEntity.references)
-    users: UsersEntity[];
+    // 1:n relation with TasksEntity 
 
     constructor(referanceTypeEntity: Partial<ReferanceTypeEntity>) {
         super();
@@ -62,8 +54,12 @@ export default class ReferanceTypeEntity extends BaseEntity {
                     excludeExtraneousValues: true
                 })
             )
-            this.createdAt = this.createdAt || new Date(new Date().toUTCString());
-            this.updatedAt = new Date(new Date().toUTCString());
+            // this.createdAt = this.createdAt || new Date(new Date().toUTCString());
+            // this.updatedAt = new Date(new Date().toUTCString());
         }
     }
+
+   
+
+    
 }
