@@ -48,7 +48,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
         <ModalExampleModal></ModalExampleModal>
       </div>
 
-      <div className="app-content-body ">
+      <div className="app-content-body body_cards_area">
         <div>
           <h2 className="project">All Projects</h2>
           <span className="total">Total {data.projects.length} project added</span>
@@ -67,8 +67,13 @@ export function ProjectInfo(props: ProjectInfoProps) {
                           <span className="summary"><span className="dot">...</span>
                           </span>
                         </div>
-                        <div className="header font-header">{project.projectName}</div>
-                        <div className="description">{project.client}</div>
+                        {project.projectName? <div className="header font-header">
+                          {project.projectName}</div>: <div className="header font-header">
+                          NA</div>}
+                        
+                        {project.client? <div className="description">{project.client}</div>:
+                         <div className="description">NA</div>}
+                       
                         <div className="data-built">Type of building
             <span className="summary">{project.buildingType}
 
@@ -84,8 +89,12 @@ export function ProjectInfo(props: ProjectInfoProps) {
                       </div>
                       <div className="content">
                         <div className="data-built">
-                          <p>{project.description}
-                          </p></div>
+                          {project.description?
+                           <p>{project.description}
+                           </p>:
+                           <p>NA</p>}
+                         
+                          </div>
                         <div className="event">
                           <div className="label-green label-spacer">
                             <span className="white-text">AB</span>

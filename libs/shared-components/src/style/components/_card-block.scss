@@ -1,5 +1,5 @@
  .label-green {
-    width: 9%;
+    width: 8%;
     height: auto;
     border-radius: 500rem;
     background-color: #6FC968;
@@ -362,12 +362,17 @@
     
     margin-left: 275px;
     top: -120px;
+
+ 
     
     .project{
         color:#1B1B40;
     }
     .total{font-size: 14px;
         font-weight: 400;}
+}
+.body_cards_area{
+    margin-left: 70px;
 }
  
 .ui.card>.content>.header:not(.ui), .ui.cards>.card>.content>.header:not(.ui){
@@ -378,7 +383,13 @@
     font-size: 13px;
   
 }
- 
+
+.TaskApp-container{
+    width: 80%;;
+}
+.float_right{
+    float: right;
+}
 .content .data-built p{
     font-size: 12px;
     color: #000000;

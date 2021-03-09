@@ -107,7 +107,7 @@ const onsetEstimatedDays = (event, data) => {
 
 
   return (
-    <div id="navbar">
+    <div >
     <Modal className="modal_media"
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
