@@ -14,3 +14,5 @@ export * from './lib/components/login/logindrop';
 export * from './lib/components/login/loginpassword'; 
 export * from './lib/components/task/taskarea'; 
 export * from './lib/components/modal/addfile'; 
+export * from './lib/components/modal/addedfile'; 
+export * from './lib/components/filestructure/filestask'; 
