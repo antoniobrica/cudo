@@ -4,6 +4,8 @@ import '../../../style/index.scss';
 import {Select, Input, Segment,Form, Grid ,Image,Checkbox,Button,Icon } from 'semantic-ui-react'
 import logo from 'libs/shared-components/src/slider.png';
 import img from 'libs/shared-components/src/Shape 2.png';
+import img3 from 'libs/shared-components/src/green_tick.png';  
+import img4 from 'libs/shared-components/src/company2.png'; 
 /* eslint-disable-next-line */
 export interface LoginPasswordProps { 
   login
@@ -40,9 +42,21 @@ export function Loginpassword(props: LoginPasswordProps) {
                     <div className="form-inner">
 
                     <Form>
-                    <Form.Field>
-                      <label>softobiz@gmail.in <span className="float-area"><i className="ms-Icon ms-Icon--Accounts" aria-hidden="true"></i></span> </label>  
+                 
+                  
+
+
+
+
+                      <Form.Field className="login-user" >
+                       <label><img src={img4} className="img-src"/> </label>  <label> <span><img src={img3}  className="img-src" /> </span> <span>softobiz@gmail.in  </span><span className="float-area"> 
+                    <i className="ms-Icon ms-Icon--Accounts" aria-hidden="true"></i> </span> </label>  
                       </Form.Field>
+                      
+
+
+
+                      
                         <Form.Field>
                             
                             <Input placeholder='password' className="full-width" icon='lock' />

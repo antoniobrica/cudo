@@ -12,6 +12,7 @@ import ModalExampleCompany from 'libs/shared-components/src/lib/components/modal
 import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
 import AccordionExampleMenu from 'libs/shared-components/src/lib/components/menu/sidebar';
 import ListExampleFloated from 'libs/shared-components/src/lib/components/task/taskarea';
+import ModalAddPrint from 'libs/shared-components/src/lib/components/modal/addfile';
 // import { Sidebar } from 'semantic-ui-react';
 
 export function App() {
@@ -28,8 +29,9 @@ export function App() {
     <Loginpassword></Loginpassword>
      <ModalExampleModal2></ModalExampleModal2><br/>
     <ModalExampleCompany></ModalExampleCompany><br/>
-    <ModalExamplePrinting></ModalExamplePrinting><br/>
-    <ListExampleFloated  task={'task'}></ListExampleFloated><br/><br/>
+    <ModalExamplePrinting></ModalExamplePrinting><br/> 
+    <ListExampleFloated></ListExampleFloated><br/><br/>
+    <ModalAddPrint></ModalAddPrint>
     </div>
     
    
