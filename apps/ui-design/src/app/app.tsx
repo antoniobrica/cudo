@@ -18,19 +18,19 @@ import ModalAddPrint from 'libs/shared-components/src/lib/components/modal/addfi
 export function App() {
   return (
     <div>
-   <Menubar></Menubar> 
+   {/* <Menubar></Menubar>  */}
    <AccordionExampleMenu></AccordionExampleMenu>
-   <Tabsbar></Tabsbar>
+   {/* <Tabsbar></Tabsbar> */}
     <ModalExampleModal></ModalExampleModal> <br/> <br/><br/>  
     <Cardbar></Cardbar> 
     <Messagebar></Messagebar><br/>
-    <Loginbar></Loginbar><br/>
+    {/* <Loginbar></Loginbar><br/>
     <Logindrop></Logindrop><br/>
-    <Loginpassword></Loginpassword>
+    <Loginpassword></Loginpassword> */}
      <ModalExampleModal2></ModalExampleModal2><br/>
     <ModalExampleCompany></ModalExampleCompany><br/>
     <ModalExamplePrinting></ModalExamplePrinting><br/> 
-    <ListExampleFloated></ListExampleFloated><br/><br/>
+    {/* <ListExampleFloated></ListExampleFloated><br/><br/> */}
     <ModalAddPrint></ModalAddPrint>
     </div>
     
