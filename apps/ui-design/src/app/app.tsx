@@ -15,6 +15,7 @@ import ListExampleFloated from 'libs/shared-components/src/lib/components/task/t
 import ModalAddPrint from 'libs/shared-components/src/lib/components/modal/addfile';
 import ModalAddFile from 'libs/shared-components/src/lib/components/modal/addedfile';
 import FileStructure from 'libs/shared-components/src/lib/components/filestructure/filestask';
+import ModalExampleSize from 'libs/shared-components/src/lib/components/modal/viewdetailsfile';
 // import { Sidebar } from 'semantic-ui-react';
 
 export function App() {
@@ -35,7 +36,8 @@ export function App() {
     <ListExampleFloated></ListExampleFloated><br/><br/>
     <ModalAddPrint></ModalAddPrint><br/>
     <ModalAddFile></ModalAddFile><br/>
-    <FileStructure></FileStructure>
+    <FileStructure></FileStructure><br/> 
+    <ModalExampleSize></ModalExampleSize>
     </div>
     
    
