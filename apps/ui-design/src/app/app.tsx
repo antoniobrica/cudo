@@ -16,6 +16,9 @@ import ModalAddPrint from 'libs/shared-components/src/lib/components/modal/addfi
 import ModalAddFile from 'libs/shared-components/src/lib/components/modal/addedfile';
 import FileStructure from 'libs/shared-components/src/lib/components/filestructure/filestask';
 import ModalExampleSize from 'libs/shared-components/src/lib/components/modal/viewdetailsfile';
+import UploadNewVersion from 'libs/shared-components/src/lib/components/modal/uploadnewversion'; 
+import AddNewFolder from 'libs/shared-components/src/lib/components/modal/addfolder';
+
 // import { Sidebar } from 'semantic-ui-react';
 
 export function App() {
@@ -37,7 +40,9 @@ export function App() {
     <ModalAddPrint></ModalAddPrint><br/>
     <ModalAddFile></ModalAddFile><br/>
     <FileStructure></FileStructure><br/> 
-    <ModalExampleSize></ModalExampleSize>
+    <ModalExampleSize></ModalExampleSize><br/>
+    <UploadNewVersion></UploadNewVersion><br/>
+    <AddNewFolder></AddNewFolder>
     </div>
     
    

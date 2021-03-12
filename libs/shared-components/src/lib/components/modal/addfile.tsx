@@ -66,8 +66,12 @@ function ModalAddPrint() {
 </Grid.Row>
 </Grid>
 </Form>
-<br/>
-<Button
+   </div>
+        
+       
+      </Modal.Content>
+      <Modal.Actions>
+      <Button
           content="Submit" 
           onClick={() => setOpen(false)}
           positive
@@ -78,14 +82,6 @@ function ModalAddPrint() {
         </Button>
   
              
- 
-           
-            </div>
-        
-       
-      </Modal.Content>
-      <Modal.Actions>
-    
         
       </Modal.Actions>
     </Modal>
