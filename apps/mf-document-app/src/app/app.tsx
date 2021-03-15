@@ -7,11 +7,14 @@ import star from './star.svg';
 
 import { Route, Link } from 'react-router-dom';
 import AddFile from './components/add-file/add-file';
+import FileListing from './components/file-listing/file-listing';
+
 
 export function App() {
   return (
-    <div className={styles.app}>
-      <AddFile></AddFile>       
+    <div >
+      <AddFile></AddFile>   
+      <FileListing></FileListing>
     </div>
   );
 }

@@ -3,9 +3,12 @@ import { Button, Header,   Modal,  Tab,Table,  Input, Form, Grid, Image, Select,
 // import SampleModal from './sample-modal';
  
 import img from 'libs/shared-components/src/upload.png';
+export interface FileProps {
+  fileData
+  onFileSubmit
+ }
 
-
-function ModalAddPrint() {
+function ModalAddPrint( props: FileProps) {
     const countryOptions = [
         { key: 'af', value: 'af', text: 'Afghanistan' },
         { key: 'ax', value: 'ax', text: 'Aland Islands' },
@@ -14,7 +17,19 @@ function ModalAddPrint() {
 
  
   const [open, setOpen] = React.useState(false)
-   
+  const [file, setFile] = React.useState("")
+
+  const onFileChange = event => {
+    const fl = event.target.files[0];
+    // console.log('file==>',fl)
+    setFile(fl);
+    props.fileData(fl);
+
+  };
+  const upload = () =>{
+    setOpen(false);
+    props.onFileSubmit();
+  }
   return (
     <div id="navbar">
     <Modal className="modal_media modal_center modal_media_1"
@@ -40,7 +55,7 @@ function ModalAddPrint() {
       <p className="file-upload-default-message">Drag & drop or click here to upload file</p>
       
       </div>
-  <Input  type="file" className="file-upload-input" />
+  <Input  type="file" className="file-upload-input" onChange={onFileChange}  />
   </div>
     
     </Form.Field>
@@ -69,7 +84,7 @@ function ModalAddPrint() {
 <br/>
 <Button
           content="Submit" 
-          onClick={() => setOpen(false)}
+          onClick={upload}
           positive
           size='mini' className="grey-btn"
         />
