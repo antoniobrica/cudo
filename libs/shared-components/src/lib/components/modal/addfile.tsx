@@ -81,8 +81,12 @@ function ModalAddPrint( props: FileProps) {
 </Grid.Row>
 </Grid>
 </Form>
-<br/>
-<Button
+   </div>
+        
+       
+      </Modal.Content>
+      <Modal.Actions>
+      <Button
           content="Submit" 
           onClick={upload}
           positive
@@ -93,14 +97,6 @@ function ModalAddPrint( props: FileProps) {
         </Button>
   
              
- 
-           
-            </div>
-        
-       
-      </Modal.Content>
-      <Modal.Actions>
-    
         
       </Modal.Actions>
     </Modal>

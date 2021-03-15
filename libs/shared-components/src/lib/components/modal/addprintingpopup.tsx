@@ -170,16 +170,7 @@ function ModalExamplePrinting() {
   
 </Grid> 
 </Form>
-<Button
-          content="Add Company" 
-          onClick={() => setOpen(false)}
-          positive
-          size='mini' className="grey-btn"
-        />
-        <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
-        X  Cancel
-        </Button>
-  
+
              
  
            
@@ -189,7 +180,16 @@ function ModalExamplePrinting() {
       </Modal.Content>
       <Modal.Actions>
     
-        
+      <Button
+          content="Add Company" 
+          onClick={() => setOpen(false)}
+          positive
+          size='mini' className="grey-btn"
+        />
+        <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+        X  Cancel
+        </Button>
+  
       </Modal.Actions> 
 
     

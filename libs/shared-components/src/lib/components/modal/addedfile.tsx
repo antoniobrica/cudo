@@ -400,8 +400,14 @@ function ModalAddFile() {
 </Grid.Row>
 </Grid>
 </Form>
-<br/>
-<Button
+  
+            </div>
+        
+       
+      </Modal.Content>
+      <Modal.Actions>
+    
+      <Button
           content="Submit" 
           onClick={() => setOpen(false)}
           positive
@@ -411,16 +417,6 @@ function ModalAddFile() {
         X  Cancel
         </Button>
   
-             
- 
-           
-            </div>
-        
-       
-      </Modal.Content>
-      <Modal.Actions>
-    
-        
       </Modal.Actions>
     </Modal>
   </div>
