@@ -75,17 +75,25 @@
 
 
 import React, { useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, BrowserRouter } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import MicroFrontend from "../MicroFrontend";
 
 import "./app.module.scss";
 import { environment } from "../environments/environment";
-import Login from './login/login'
+// import Login from './login/login'
 import { Menubar } from '@cudo/shared-components';
 import '../../../../libs/shared-components/src/style/index.scss';
-
-
+import { SessionProvider } from "./services/session";
+import { Dashboard } from "./containers/Dashboard";
+import { Callback } from "./containers/Callback";
+import { Settings } from "./containers/Settings";
+import { Verify } from "./containers/Verify";
+import { Recover } from "./containers/Recover";
+import { Register } from "./containers/Register";
+import { Error } from "./containers/Error"
+import { Login } from "./containers/Login"
+import config from "./config/kratos"
 // import Home from './home/home'
 const defaultHistory = createBrowserHistory();
 
@@ -143,17 +151,39 @@ function Home({ history }) {
   );
 }
 
+// function App() {
+//   return (
+//     <React.StrictMode>
+//       <Router>
+//         <Switch>
+//           <Route exact path="/" component={Login} />
+//           <Route exact path="/home" component={Home} />
+//         </Switch>
+//       </Router>
+//     </React.StrictMode>
+//   );
+// }
 function App() {
   return (
-    <React.StrictMode>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Login} />
-          <Route exact path="/home" component={Home} />
-        </Switch>
-      </Router>
-    </React.StrictMode>
-  );
+    <div className="App">
+      <BrowserRouter>
+        <SessionProvider>
+          <Switch>
+            {/* <Route exact path="/" component={Login} /> */}
+            {/* <Route exact path="/home" component={Home} /> */}
+            <Route exact path="/" component={Dashboard} />
+            <Route exact path="/callback" component={Callback} />
+            <Route exact path={config.routes.login.path} component={Login} />
+            <Route exact path={config.routes.settings.path} component={Settings} />
+            <Route exact path={config.routes.verification.path} component={Verify} />
+            <Route exact path={config.routes.recovery.path} component={Recover} />
+            <Route exact path={config.routes.registration.path} component={Register} />
+            <Route exact path={config.routes.error.path} component={Error} />
+          </Switch>
+        </SessionProvider>
+      </BrowserRouter>
+    </div>
+  )
 }
 
 export default App;

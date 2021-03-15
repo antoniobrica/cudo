@@ -4,7 +4,7 @@ const useMicrofrontend = (id, url) => {
     const scriptId = `${id}Bundle`;
     const [isLoaded, setLoaded] = useState(window[id]);
 
-    const handleLoad = () => setLoaded(true);
+    const handleLoad = () => setLoaded({} as Window);
     useEffect(() => {
         const existingScript = document.getElementById(scriptId);
         if (existingScript) {
