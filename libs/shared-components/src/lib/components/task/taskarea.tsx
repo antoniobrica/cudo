@@ -20,7 +20,7 @@ export function TaskArea(props: Tasks) {
 	]
 	return (
 
-		<div className="app-content-body ">
+		<div>
 
 
 			<div className="card1 card-custom gutter-b">

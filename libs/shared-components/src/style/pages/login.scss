@@ -66,6 +66,7 @@
     position: relative;
     padding: 4rem 5rem;
     border-radius: 0.6rem;
+    top: 90px;
     @media (max-width:#{$small-screen}) {
         padding: 2rem 3rem;
     }
@@ -240,4 +241,6 @@
     margin-top: -1rem; 
      margin-bottom: 0rem;
 }
- 
+ .massive {
+     height: 100vh;
+ }

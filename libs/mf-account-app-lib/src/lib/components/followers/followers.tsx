@@ -7,7 +7,9 @@ import { GET_USERS } from '../../graphql/graphql';
 
 
 /* eslint-disable-next-line */
-export interface FollowersProps {}
+export interface FollowersProps {
+  parentFollowersSelect
+}
 
 export function Followers(props: FollowersProps) {
   const [items, setItems] = React.useState([])
@@ -23,6 +25,7 @@ export function Followers(props: FollowersProps) {
 
   const onFollowers = (event, data) => {
     setFollowers(data.value)
+    props.parentFollowersSelect(data)
    }
   return (
     <Form.Field>

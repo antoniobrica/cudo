@@ -8,6 +8,7 @@ import Project from "../project/project";
 import { ITodo, IProject } from "../../interfaces/project";
 import Modal from 'react-modal';
 import { Card, Icon, Form, Grid } from 'semantic-ui-react'
+import { useHistory } from "react-router";
 import '../../../../../../libs/shared-components/src/style/index.scss';
 
 import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
@@ -24,13 +25,18 @@ export function ProjectInfo(props: ProjectInfoProps) {
   const [openForm, setopenForm] = React.useState(false);
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
-
+  const history = useHistory();
   if (loading) return <h1>Loading...</h1>;
   if (error) return <h1>Something went wrong!</h1>;
 
   const addProject = () => {
     console.log('add=project')
     setopenForm(!openForm);
+  }
+
+  const openTask  = (project) =>{
+    console.log('task open==>', history)
+    history.push('/home/tabs');
   }
   function openModal() {
     setIsOpen(true);
@@ -42,7 +48,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
         <ModalExampleModal></ModalExampleModal>
       </div>
 
-      <div className="app-content-body ">
+      <div className="app-content-body body_cards_area">
         <div>
           <h2 className="project">All Projects</h2>
           <span className="total">Total {data.projects.length} project added</span>
@@ -53,7 +59,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
 
             <Grid.Row>
               {data.projects.map((project: IProject, i) => (
-                <Grid.Column className="card-margin" key={i}>
+                <Grid.Column className="card-margin" key={i} onClick={()=>openTask(project)}>
                   <Card>
                     <div className="ui card">
                       <div className="content">
@@ -61,8 +67,13 @@ export function ProjectInfo(props: ProjectInfoProps) {
                           <span className="summary"><span className="dot">...</span>
                           </span>
                         </div>
-                        <div className="header font-header">{project.projectName}</div>
-                        <div className="description">{project.client}</div>
+                        {project.projectName? <div className="header font-header">
+                          {project.projectName}</div>: <div className="header font-header">
+                          NA</div>}
+                        
+                        {project.client? <div className="description">{project.client}</div>:
+                         <div className="description">NA</div>}
+                       
                         <div className="data-built">Type of building
             <span className="summary">{project.buildingType}
 
@@ -78,8 +89,12 @@ export function ProjectInfo(props: ProjectInfoProps) {
                       </div>
                       <div className="content">
                         <div className="data-built">
-                          <p>{project.description}
-                          </p></div>
+                          {project.description?
+                           <p>{project.description}
+                           </p>:
+                           <p>NA</p>}
+                         
+                          </div>
                         <div className="event">
                           <div className="label-green label-spacer">
                             <span className="white-text">AB</span>

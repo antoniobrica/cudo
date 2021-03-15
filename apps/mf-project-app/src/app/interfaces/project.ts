@@ -10,8 +10,9 @@ export interface ITodo {
     client?: string;
     buildingType?: string
     printingCom?: string
-    workType?: string
-    estCost?: number
+    // workType?: string
+    // estCost?: number
+    projectWorkEstimates?: IProjectWorktypes
     adressLine1?: string
     adressLine2?: string
     city?: string
@@ -40,6 +41,18 @@ export interface ITodo {
       createdAt: string
       updatedAt: string
     }
+
+  export interface ProjectWorkTypeModel {
+        projectWorkTypeID: string
+        workTypeName: string
+        estimatedCost: string
+        createdAt: string
+        updatedAt: string
+        }
+  export interface IProjectWorktypes {
+          projectWorkEstimates: ProjectWorkTypeModel []
+      }
+   
 
   export interface ITodos {
     getTodos: ITodo[];

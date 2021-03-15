@@ -94,6 +94,10 @@ import { Register } from "./containers/Register";
 import { Error } from "./containers/Error"
 import { Login } from "./containers/Login"
 import config from "./config/kratos"
+import LoginPassword from "./login-password/login-password";
+import LoginSelect from "./login-select/login-select";
+
+
 // import Home from './home/home'
 const defaultHistory = createBrowserHistory();
 
@@ -169,8 +173,10 @@ function App() {
       <BrowserRouter>
         <SessionProvider>
           <Switch>
-            {/* <Route exact path="/" component={Login} /> */}
-            {/* <Route exact path="/home" component={Home} /> */}
+            <Route exact path="/" component={Login} />
+            <Route path="/home" component={Home} />
+            <Route path="/login-passwoord" component={LoginPassword} />
+            <Route path="/login-select" component={LoginSelect} />
             <Route exact path="/" component={Dashboard} />
             <Route exact path="/callback" component={Callback} />
             <Route exact path={config.routes.login.path} component={Login} />
