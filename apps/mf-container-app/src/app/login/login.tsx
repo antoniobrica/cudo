@@ -1,14 +1,13 @@
 import React from 'react';
 
 import { Loginbar } from '@cudo/shared-components';
-import ProjectMenu from '../../../../mf-project-app/src/app/project-menu/project-menu'
 import './login.module.scss';
 import { useHistory } from "react-router";
 /* eslint-disable-next-line */
 export interface LoginProps {
 }
 
-export function Login(props: LoginProps) {
+export function email(props: LoginProps) {
   const history = useHistory();
   const handleLogin = () => {
     history.push('/login-select');
@@ -22,4 +21,4 @@ export function Login(props: LoginProps) {
   );
 }
 
-export default Login
+export default email

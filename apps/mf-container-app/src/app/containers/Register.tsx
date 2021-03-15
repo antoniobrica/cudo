@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react"
 import { initialiseRequest } from "../services/kratos"
 import { KratosMessages } from "../components/KratosMessages"
 import { KratosForm } from "../components/KratosForm"
-import { IconLogo } from "../components/IconLogo"
 import { login } from "../services/auth"
+import { Button } from "semantic-ui-react"
 
 export const Register = () => {
   const [requestResponse, setRequestResponse] = useState<any>()
@@ -21,8 +21,14 @@ export const Register = () => {
   return (
     <div className="auth">
       <div className="container">
-        <IconLogo />
-        <h5 className="subheading">Welcome to SecureApp! <br />Use the form below to sign up:</h5>
+        <div className="alternative-actions">
+          <p>
+            <Button size='large' className="grey-btn btn-large" onClick={() => login({ setReferer: false })}>
+              Already have an account? Log in instead
+            </Button>
+          </p>
+        </div>
+
         <div id="registration-password">
           {messages && <KratosMessages messages={messages} />}
           {form &&
@@ -31,14 +37,6 @@ export const Register = () => {
               action={form.action}
               fields={form.fields}
               messages={form.messages} />}
-        </div>
-        <hr className="divider" />
-        <div className="alternative-actions">
-          <p>
-            <button onClick={() => login({ setReferer: false })} className="a">
-              Already have an account? Log in instead
-            </button>
-          </p>
         </div>
       </div>
     </div>

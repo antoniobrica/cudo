@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { LoginFlow } from "@oryd/kratos-client"
 import { initialiseRequest } from "../services/kratos"
-import { IconLogo } from "../components/IconLogo"
 import { KratosMessages } from "../components/KratosMessages"
 import { KratosForm } from "../components/KratosForm"
 import { register } from "../services/auth"
 import config from "../config/kratos"
+import { Button } from "semantic-ui-react"
 
 export const Login = () => {
   const [requestResponse, setRequestResponse] = useState<LoginFlow>()
@@ -22,10 +22,19 @@ export const Login = () => {
   const form = requestResponse?.methods?.password?.config
 
   return (
-    <div className="auth">
-      <div className="container">
-        <IconLogo />
-        <h5 className="subheading">Welcome to this example login screen!</h5>
+    <div className="main-outer-area">
+      <div className="ui-login">
+        <div className="alternative-actions">
+          <p>
+            <Button size='large' className="grey-btn btn-large" onClick={() => register({ setReferer: false })} >
+              Register new account
+            </Button>
+          </p>
+          <p>
+            <Link to={config.routes.recovery.path}>Reset password</Link>
+          </p>
+        </div>
+
         <div id="login-password">
           {messages && <KratosMessages messages={messages} />}
           {form &&
@@ -34,17 +43,6 @@ export const Login = () => {
               action={form.action}
               fields={form.fields}
               messages={form.messages} />}
-        </div>
-        <hr className="divider" />
-        <div className="alternative-actions">
-          <p>
-            <button onClick={() => register({ setReferer: false })} className="a">
-              Register new account
-            </button>
-          </p>
-          <p>
-            <Link to={config.routes.recovery.path}>Reset password</Link>
-          </p>
         </div>
       </div>
     </div>

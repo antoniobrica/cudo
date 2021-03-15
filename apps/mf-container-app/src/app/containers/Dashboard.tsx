@@ -8,9 +8,8 @@ export const Dashboard = () => {
   const user = session?.identity?.traits as any
 
   useEffect(() => {
-    console.log(session);
     if (!isAuthenticated()) login()
-  }, [session])
+  }, [])
 
   // if (!user) return null
 
@@ -22,9 +21,6 @@ export const Dashboard = () => {
         <h3>This example app is secure by default</h3>
         <p>Hello, nice to have you! You signed up with this data:</p>
         <pre><code>{JSON.stringify(user, null, "  ")}</code></pre>
-        <a href="http://192.168.29.131:4433/self-service/login/browser">Sign in</a>
-        <a href="http://192.168.29.131:4433/self-service/browser/flows/logout">Logout</a>
-
         <p>Your current session:</p>
         <pre><code>{JSON.stringify(session, null, "  ")}</code></pre>
       </div>

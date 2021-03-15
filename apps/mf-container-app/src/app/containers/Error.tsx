@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { initialiseRequest } from "../services/kratos"
-import { IconLogo } from "../components/IconLogo"
 import { KratosMessages } from "../components/KratosMessages"
 import { KratosForm } from "../components/KratosForm"
 import { register } from "../services/auth"
@@ -17,13 +16,12 @@ export const Error = () => {
         setRequestResponse(request.data)
         console.log(request.data)
       })
-      .catch(() => { })
+      .catch((error) => { console.log(error) })
   }, [])
 
   return (
     <div className="auth">
       <div className="container">
-        <IconLogo />
         <div>
           {JSON.stringify(requestResponse)}
         </div>
