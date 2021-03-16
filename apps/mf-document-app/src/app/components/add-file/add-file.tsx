@@ -2,6 +2,7 @@ import React from 'react';
 
 import './add-file.module.scss';
 import ModalAddPrint from 'libs/shared-components/src/lib/components/modal/addfile';
+import FileSetting from './file-setting'
 import uploadFileToBlob, { isStorageConfigured } from './azure-storage-blob';
 
 /* eslint-disable-next-line */
@@ -16,6 +17,8 @@ export function AddFile(props: AddFileProps) {
 
   // UI/form management
   const [uploading, setUploading] = React.useState(false);
+  const [open, setOpen] = React.useState(false)
+
   const [inputKey, setInputKey] = React.useState(Math.random().toString(36));
 
   const onFile = (data) => {
@@ -24,6 +27,10 @@ export function AddFile(props: AddFileProps) {
     setFileSelected(data);
   };
 
+  const openSetting=()=>{
+    console.log('setting==')
+    setOpen(true)
+  }
   const onFileUpload = async () => {
     console.log('onFileUpload',fileSelected)
     // prepare UI
@@ -42,7 +49,16 @@ export function AddFile(props: AddFileProps) {
   };
   return (
     <div>
-      <ModalAddPrint fileData={onFile} onFileSubmit={onFileUpload}></ModalAddPrint>
+      {open? 
+       <div style={{marginLeft:900}} >
+      <FileSetting openSettingF={open} ></FileSetting>
+      </div>
+      :
+      <div style={{marginLeft:900}} >
+      <ModalAddPrint fileData={onFile} onFileSubmit={onFileUpload} setting={openSetting}></ModalAddPrint>
+      </div>
+    
+}
     </div>
   );
 }

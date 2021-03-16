@@ -4,16 +4,11 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ProjectInfo from './components/project-info/project-info';
  
 import { initI18n } from '@cudo/mf-core';
-import { Loading } from '@cudo/ui'
-import { TestComponent } from './test-component/test-component';
 import { createBrowserHistory } from "history";
 import MicroFrontend from "../MicroFrontend";
 const defaultLanguage = 'de-DE';
 const supportedLanguages = [defaultLanguage, 'en-GB'];
-import {Menubar,Cardbar} from '@cudo/shared-components';  
   
-import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
-import Tabsbar from 'libs/shared-components/src/lib/components/tabs/tabs'
 import TabMenu from '../app/components/tab-menu/tab-menu';
  
 import { environment } from "../environments/environment";
@@ -26,6 +21,7 @@ const {
   EACT_APP_COST_HOST: costHost,
   REACT_APP_MEETING_HOST: meetingHost,
   REACT_APP_TASK_HOST: taskHost,
+  REACT_APP_DOCUMENT_HOST: documentHost
 } = environment;
 
 

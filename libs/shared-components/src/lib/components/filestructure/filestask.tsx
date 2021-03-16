@@ -204,7 +204,7 @@ export function FileStructure(props: TabsProps) {
       ]
       
   return (
-    <div className="app-content-body-dash navbar-collapse box-shadow ">
+    <div className=" navbar-collapse box-shadow ">
         
             
          <Tab className="ui-tabs" menu={{ secondary: true, pointing: true }} panes={panes} />

@@ -6,6 +6,7 @@ import img from 'libs/shared-components/src/upload.png';
 export interface FileProps {
   fileData
   onFileSubmit
+  setting
  }
 
 function ModalAddPrint( props: FileProps) {
@@ -30,8 +31,11 @@ function ModalAddPrint( props: FileProps) {
     setOpen(false);
     props.onFileSubmit();
   }
+  const openSetting =()=>{
+    props.setting();
+  }
   return (
-    <div id="navbar">
+    <div id=" " >
     <Modal className="modal_media modal_center modal_media_1"
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
@@ -49,7 +53,7 @@ function ModalAddPrint( props: FileProps) {
 <Grid.Row>
   <Grid.Column>
     <Form.Field>
-  <div className="dashed_area md_upload">
+  <div className="dashed_area" style={{paddingTop:15}}>
   <div className="file-upload-message">
   <img src={img}  className="mr-10 " />
       <p className="file-upload-default-message">Drag & drop or click here to upload file</p>
@@ -63,12 +67,12 @@ function ModalAddPrint( props: FileProps) {
  
 </Grid.Row>
 </Grid>
-
+<br/><br/>
 <Grid columns={1}>
 <Grid.Row>
   <Grid.Column>
     <Form.Field>
-    <div className="content">
+    <div className="content" onClick={openSetting}>
                 <div className="description">File settings
                <span className="float_right"><i className="ms-Icon ms-Icon--ChevronRightMed" aria-hidden="true"></i> </span> 
                 </div> 
