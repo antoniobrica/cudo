@@ -24,12 +24,7 @@ function ModalExampleModal() {
           <Button className="secondary_btn" size='mini' primary>Click to upload</Button>
           <p className="paragraph">Click the upload button to upload the client logo</p>
         </div>
-
-
-
-
         <div>
-
           <Header className="header" >Project Information</Header>
         </div>
         <Form>
@@ -79,8 +74,6 @@ function ModalExampleModal() {
                   <Select placeholder='Select' className="small" options={countryOptions} />
                 </Form.Field>
               </Grid.Column>
-
-
             </Grid.Row>
           </Grid>
 
@@ -110,7 +103,6 @@ function ModalExampleModal() {
                           <Select placeholder='Select' className="small" options={countryOptions} />
                         </Form.Field>
                       </Grid.Column>
-
                     </Grid.Row>
                   </Grid>
                 </Form>
@@ -123,17 +115,13 @@ function ModalExampleModal() {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-
                           <Input label='$' size='small' className="full-width" />
                         </Form.Field>
                       </Grid.Column>
-
                     </Grid.Row>
                   </Grid>
                 </Form>
-
               </Table.Cell>
-
             </Table.Row>
             <Table.Row>
               <Table.Cell>
@@ -145,7 +133,6 @@ function ModalExampleModal() {
                           <Select placeholder='Select' className="small" options={countryOptions} />
                         </Form.Field>
                       </Grid.Column>
-
                     </Grid.Row>
                   </Grid>
                 </Form>
@@ -158,35 +145,28 @@ function ModalExampleModal() {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-
                           <Input label='$' size='small' className="full-width" />
                         </Form.Field>
                       </Grid.Column>
-
                     </Grid.Row>
                   </Grid>
                 </Form>
-
               </Table.Cell>
 
             </Table.Row>
             <Table.Row>
               <Table.Cell>
                 <a href="">+ Add more </a>
-
               </Table.Cell>
               <Table.Cell></Table.Cell>
               <Table.Cell>
-
               </Table.Cell>
             </Table.Row>
           </Table.Body>
         </Table>
 
         <div>
-
           <Header className="header" >Address Information</Header>
-
         </div>
         <Form>
           <Grid columns={2}>
@@ -244,8 +224,6 @@ function ModalExampleModal() {
                   <TextArea placeholder='Tell us more' />
                 </Form.Field>
               </Grid.Column>
-
-
             </Grid.Row>
           </Grid>
           <Button
@@ -258,21 +236,12 @@ function ModalExampleModal() {
             X  Cancel
         </Button>
         </Form>
-
-
-
-
-
       </Tab.Pane>,
     },
     {
       menuItem: 'People',
       render: () => <Tab.Pane attached={false}>
-
-
-
         <Form>
-
           <Grid columns={1}>
             <Grid.Row>
               <Grid.Column>
@@ -281,22 +250,15 @@ function ModalExampleModal() {
                   <Input placeholder='Search existing user' size='small' className="full-width" type="text" />
                 </Form.Field>
               </Grid.Column>
-
-
             </Grid.Row>
             <Grid.Row>
               <Grid.Column>
                 <div className="content">
-
                   <p className="paragraph center"> <i aria-hidden="true" className="envelope outline icon"></i> Can't find who you are looking for? <a href="" className="anchor">Click here to invite a new user </a> </p>
                 </div>
               </Grid.Column>
-
             </Grid.Row>
-
-
             <Grid.Row>
-
               <Grid.Column >
                 <Form.Field>
                   <label className="top-area">Add people to this project? </label>
@@ -309,9 +271,7 @@ function ModalExampleModal() {
                       <Table.HeaderCell > </Table.HeaderCell>
                     </Table.Row>
                   </Table.Header>
-
                   <Table.Body>
-
                     <Table.Row>
                       <Table.Cell>
                         <div>
@@ -322,7 +282,6 @@ function ModalExampleModal() {
                       <Table.Cell>
                         <Form.Field>
                           <Select placeholder='Select' className="small" options={countryOptions} />
-
                         </Form.Field>
                       </Table.Cell>
                       <Table.Cell>
@@ -348,7 +307,6 @@ function ModalExampleModal() {
                   </Table.Body>
                 </Table>
               </Grid.Column>
-
             </Grid.Row>
           </Grid>
           <Button size='mini' className="disabled" onClick={() => setOpen(false)}>
@@ -364,12 +322,8 @@ function ModalExampleModal() {
               positive
               size='mini' className="grey-btn"
             />
-
           </div>
-
         </Form>
-
-
       </Tab.Pane>
     }
 
@@ -383,54 +337,30 @@ function ModalExampleModal() {
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button size='mini' className="grey-btn">+ Add New</Button>}
-      >
+        trigger={<Button size='mini' className="grey-btn">+ Add New</Button>}      >
         <Modal.Header><h3>Add New Project </h3></Modal.Header>
         <Modal.Content body>
-
           <div>
             <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
-
-
             <Modal.Description>
-
             </Modal.Description>
-
           </div>
-
-
         </Modal.Content>
         <Modal.Actions>
-
-
         </Modal.Actions>
-
-
-
-
-
-
-
-
-
-
-
         <Modal
           onClose={() => setSecondOpen(false)}
           open={secondOpen}
           size='small'
         >
-
           <Modal.Header><h3>Add Company</h3></Modal.Header>
           <Modal.Content body>
-
             <div>
               <div className="content">
                 <div className="description">Upload Client logo  <span className="danger">*</span></div>
                 <Button className="secondary_btn" size='mini' primary>Click to upload</Button>
                 <p className="paragraph">Click the upload button to upload the client logo</p>
               </div>
-
               <Form>
                 <Grid columns={1}>
                   <Grid.Row>
@@ -440,23 +370,18 @@ function ModalExampleModal() {
                         <Input placeholder='Al Hamra Company' size='small' className="full-width" type="text" />
                       </Form.Field>
                     </Grid.Column>
-
                   </Grid.Row>
                 </Grid>
-
                 <Grid columns={1}>
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
                         <label>Company Name </label>
                         <Select placeholder='Select' className="small" options={countryOptions} />
-
                       </Form.Field>
                     </Grid.Column>
-
                   </Grid.Row>
                 </Grid>
-
                 <Grid columns={2}>
                   <Grid.Row>
                     <Grid.Column>
@@ -465,12 +390,10 @@ function ModalExampleModal() {
                         <Input placeholder='Email' size='small' className="full-width" type="text" />
                       </Form.Field>
                     </Grid.Column>
-
                     <Grid.Column>
                       <Form.Field>
                         <label>Type  </label>
                         <Select placeholder='Select' className="small" options={countryOptions} />
-
                       </Form.Field>
                     </Grid.Column>
                   </Grid.Row>
@@ -482,12 +405,8 @@ function ModalExampleModal() {
                         <a href="" className="anchor-color">+ Add New</a>
                       </Form.Field>
                     </Grid.Column>
-
-
                   </Grid.Row>
                 </Grid>
-
-
                 <Grid columns={2} >
                   <Grid.Row>
                     <Grid.Column >
@@ -507,14 +426,11 @@ function ModalExampleModal() {
                               <Form.Field>
                                 <Select placeholder='Select' className="small" options={countryOptions} />
                               </Form.Field>
-
                             </Grid.Column>
                           </Grid.Row>
                         </Grid>
-
                       </Form.Field>
                     </Grid.Column>
-
                     <Grid.Column  >
                       <Form.Field>
                         <label>Type  </label>
@@ -531,9 +447,7 @@ function ModalExampleModal() {
                         <Input placeholder='Address Line 1' size='small' className="full-width" type="text" />
                       </Form.Field>
                     </Grid.Column>
-
                   </Grid.Row>
-
                 </Grid>
                 <Grid columns={1}>
                   <Grid.Row>
@@ -543,38 +457,31 @@ function ModalExampleModal() {
                         <Input placeholder='Address Line 2' size='small' className="full-width" type="text" />
                       </Form.Field>
                     </Grid.Column>
-
                   </Grid.Row>
-
                 </Grid>
-
                 <Grid columns={3}>
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
                         <label>City  </label>
                         <Input placeholder='City' size='small' className="full-width" type="text" />
-
                       </Form.Field>
                     </Grid.Column>
                     <Grid.Column>
                       <Form.Field>
                         <label>State Pin </label>
                         <Input placeholder='State Pin' size='small' className="full-width" type="text" />
-
                       </Form.Field>
                     </Grid.Column>
                     <Grid.Column>
                       <Form.Field>
                         <label>Country  </label>
                         <Select placeholder='Select' className="small" options={countryOptions} />
-
                       </Form.Field>
                     </Grid.Column>
                   </Grid.Row>
                   <Grid.Row>
                   </Grid.Row>
-
                 </Grid>
               </Form>
               <Button
@@ -586,34 +493,11 @@ function ModalExampleModal() {
               <Button size='mini' className="icon-border" onClick={() => setSecondOpen(false)}>
                 X  Cancel
         </Button>
-
-
-
-
             </div>
-
-
           </Modal.Content>
-
-
-
-
-
-
         </Modal>
-
-
-
-
-
-
-
-
-
-
       </Modal>
     </div>
-
   )
 }
 

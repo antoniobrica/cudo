@@ -11,8 +11,6 @@ import { Card, Icon, Form, Grid } from 'semantic-ui-react'
 import { useHistory } from "react-router";
 import '../../../../../../libs/shared-components/src/style/index.scss';
 
-import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
-
 // import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
 
 import ModalExampleModal from '../modal/modal'
@@ -34,7 +32,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
     setopenForm(!openForm);
   }
 
-  const openTask  = (project) =>{
+  const openTask = (project) => {
     console.log('task open==>', history)
     history.push('/home/tabs');
   }
@@ -59,7 +57,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
 
             <Grid.Row>
               {data.projects.map((project: IProject, i) => (
-                <Grid.Column className="card-margin" key={i} onClick={()=>openTask(project)}>
+                <Grid.Column className="card-margin" key={i} onClick={() => openTask(project)}>
                   <Card>
                     <div className="ui card">
                       <div className="content">
@@ -67,13 +65,13 @@ export function ProjectInfo(props: ProjectInfoProps) {
                           <span className="summary"><span className="dot">...</span>
                           </span>
                         </div>
-                        {project.projectName? <div className="header font-header">
-                          {project.projectName}</div>: <div className="header font-header">
+                        {project.projectName ? <div className="header font-header">
+                          {project.projectName}</div> : <div className="header font-header">
                           NA</div>}
-                        
-                        {project.client? <div className="description">{project.client}</div>:
-                         <div className="description">NA</div>}
-                       
+
+                        {project.client ? <div className="description">{project.client}</div> :
+                          <div className="description">NA</div>}
+
                         <div className="data-built">Type of building
             <span className="summary">{project.buildingType}
 
@@ -89,12 +87,12 @@ export function ProjectInfo(props: ProjectInfoProps) {
                       </div>
                       <div className="content">
                         <div className="data-built">
-                          {project.description?
-                           <p>{project.description}
-                           </p>:
-                           <p>NA</p>}
-                         
-                          </div>
+                          {project.description ?
+                            <p>{project.description}
+                            </p> :
+                            <p>NA</p>}
+
+                        </div>
                         <div className="event">
                           <div className="label-green label-spacer">
                             <span className="white-text">AB</span>

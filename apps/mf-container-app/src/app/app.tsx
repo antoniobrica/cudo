@@ -1,91 +1,25 @@
-// import React from 'react';
-
-// import styles from './app.module.scss';
-
-// import { ReactComponent as Logo } from './logo.svg';
-// import star from './star.svg';
-// import Grid from '@material-ui/core/Grid';
-
-// import { Route, Link } from 'react-router-dom';
-// import MfAccountAppMount from './mf-account-app-mount/mf-account-app-mount';
-// import { MfMeetingAppMount } from './mf-meeting-app-mount/mf-meeting-app-mount';
-
-// export function App() {
-//   return (
-//     <div className={styles.app}>
-//       <header className="flex">
-//         <Logo width="75" height="75" />
-//         <h1>Welcome to mf-container-app!</h1>
-//       </header>
-//       <div role="navigation">
-//         <ul>
-//           <li>
-//             <Link to="/">Home</Link>
-//           </li>
-//           <li>
-//             <Link to="/page-2">Page 2</Link>
-//           </li>
-//           <li>
-//             <Link to="/page-3">Page 3</Link>
-//           </li>
-//         </ul>
-//       </div>
-//       <Route
-//         path="/"
-//         exact
-//         render={() => (
-//           <div>
-//             This is the generated root route.{' '}
-//             <Link to="/page-2">Click here for page 2.</Link>
-//           </div>
-//         )}
-//       />
-//       <Route
-//         path="/page-2"
-//         exact
-//         render={() => (
-//           <main>
-//             <Grid  >
-//               <MfAccountAppMount></MfAccountAppMount>
-//             </Grid>
-//           </main>
-//         )}
-//       />
-//       <Route
-//         path="/page-3"
-//         exact
-//         render={() => (
-//           <main>
-//             <Grid  >
-//               <MfMeetingAppMount></MfMeetingAppMount>
-//             </Grid>
-//           </main>
-//         )}
-//       />
-//       <body>
-
-//       </body>
-//       {/* END: routes */}
-//     </div>
-
-//   );
-// }
-
-// export default App;
-
-
-import React, { useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Switch, Route, BrowserRouter, Link } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import MicroFrontend from "../MicroFrontend";
-
 import "./app.module.scss";
 import { environment } from "../environments/environment";
-import Login from './login/login'
+import email from './login/login'
 import { Menubar } from '@cudo/shared-components';
 import '../../../../libs/shared-components/src/style/index.scss';
+import { SessionProvider } from "./services/session";
+import { Dashboard } from "./containers/Dashboard";
+import { Callback } from "./containers/Callback";
+import { Settings } from "./containers/Settings";
+import { Verify } from "./containers/Verify";
+import { Recover } from "./containers/Recover";
+import { Register } from "./containers/Register";
+import { Error } from "./containers/Error"
+import { Login } from "./containers/Login"
+import config from "./config/kratos"
 import LoginPassword from "./login-password/login-password";
 import LoginSelect from "./login-select/login-select";
+import { isAuthenticated, login, logout } from "./services/auth";
 
 
 // import Home from './home/home'
@@ -120,15 +54,35 @@ function Home({ history }) {
   const [input, setInput] = useState("");
   const [isProject, setIsProject] = useState(false);
   const data = "parrent"
+  useEffect(() => {
+    if (!isAuthenticated()) login()
+  }, [])
   const callbackFunction = (childData) => {
+    console.log("12312312312")
     setInput(childData);
-    if (childData == "project") {
+    if (childData === "project") {
+      console.log("12312312312##############")
       setIsProject(true);
+    }
+    else if (childData === "logout") {
+      setIsProject(false);
+      logout();
     }
     else {
       setIsProject(false);
     }
   };
+  // const isAuth = () => (<div>
+  //   {isAuthenticated() &&
+  //     <React.Fragment>
+  //       <div className="settings">
+  //         <Link to={config.routes.settings.path}>Setting</Link>
+  //       </div>
+  //       <div className="logout">
+  //         <button onClick={logout} className="a">Sign Out</button>
+  //       </div>
+  //     </React.Fragment>}
+  // </div>)
   return (
     <div>
       {/* <Header /> */}
@@ -147,18 +101,27 @@ function Home({ history }) {
 
 function App() {
   return (
-    <React.StrictMode>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Login} />
-          <Route  path="/home" component={Home} />
-          <Route  path="/login-passwoord" component={LoginPassword} />
-          <Route  path="/login-select" component={LoginSelect} />
-        
-        </Switch>
-      </Router>
-    </React.StrictMode>
-  );
+    <div className="App">
+      <BrowserRouter>
+        <SessionProvider>
+          <Switch>
+            {/* <Route exact path="/" component={email} /> */}
+            <Route path="/home" component={Home} />
+            {/* <Route path="/login-passwoord" component={LoginPassword} />
+            <Route path="/login-select" component={LoginSelect} /> */}
+            <Route exact path="/" component={Home} />
+            <Route exact path="/callback" component={Callback} />
+            <Route exact path={config.routes.login.path} component={Login} />
+            <Route exact path={config.routes.settings.path} component={Settings} />
+            <Route exact path={config.routes.verification.path} component={Verify} />
+            <Route exact path={config.routes.recovery.path} component={Recover} />
+            <Route exact path={config.routes.registration.path} component={Register} />
+            <Route exact path={config.routes.error.path} component={Error} />
+          </Switch>
+        </SessionProvider>
+      </BrowserRouter>
+    </div>
+  )
 }
 
 export default App;
