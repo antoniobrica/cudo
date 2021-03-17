@@ -1,24 +1,19 @@
-import React, { Suspense, useState }  from 'react';
+import React, { Suspense, useState } from 'react';
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ProjectInfo from './components/project-info/project-info';
- 
+
 import { initI18n } from '@cudo/mf-core';
 import { Loading } from '@cudo/ui'
 import { TestComponent } from './test-component/test-component';
 import { createBrowserHistory } from "history";
 import MicroFrontend from "../MicroFrontend";
+import { environment } from '../environments/environment';
+import TabMenu from './components/tab-menu/tab-menu';
+
 const defaultLanguage = 'de-DE';
 const supportedLanguages = [defaultLanguage, 'en-GB'];
-import {Menubar,Cardbar} from '@cudo/shared-components';  
-  
-import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
-import Tabsbar from 'libs/shared-components/src/lib/components/tabs/tabs'
-import TabMenu from '../app/components/tab-menu/tab-menu';
- 
-import { environment } from "../environments/environment";
 initI18n('./assets/i18n/{{lng}}.json', defaultLanguage);
-
 
 const defaultHistory = createBrowserHistory();
 
@@ -79,25 +74,24 @@ function Home({ history }) {
   );
 }
 
- function loadApp() {
+function loadApp() {
   return (
-      <div>
-       <ProjectInfo ></ProjectInfo>
-      </div>
+    <div>
+      <ProjectInfo ></ProjectInfo>
+    </div>
   );
 }
 
 function App() {
-  console.log('TabMenu',TabMenu)
   return (
     <React.StrictMode>
       <Router>
-       <Switch>
-          <Route exact path="/home/tabs" component={TabMenu} /> 
-          <Route exact path="/home" component={ProjectInfo} />
+        <Switch>
+          <Route exact path="/tabs" component={TabMenu} />
+          <Route exact path="/" component={ProjectInfo} />
         </Switch>
       </Router>
-      </React.StrictMode>
+    </React.StrictMode>
   );
 }
 

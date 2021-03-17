@@ -15,7 +15,9 @@ export const Login = () => {
     const request = initialiseRequest({ type: "login" }, { filterid: "flow" }) as Promise<LoginFlow>
     request
       .then(request => setRequestResponse(request))
-      .catch(() => { })
+      .catch((error) => {
+        console.log(error);
+      })
   }, [setRequestResponse])
 
   const messages = requestResponse?.messages

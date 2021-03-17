@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Switch, Route, BrowserRouter, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import MicroFrontend from "../MicroFrontend";
 import "./app.module.scss";
@@ -58,10 +58,8 @@ function Home({ history }) {
     if (!isAuthenticated()) login()
   }, [])
   const callbackFunction = (childData) => {
-    console.log("12312312312")
     setInput(childData);
     if (childData === "project") {
-      console.log("12312312312##############")
       setIsProject(true);
     }
     else if (childData === "logout") {
@@ -102,13 +100,9 @@ function Home({ history }) {
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
+      <Router>
         <SessionProvider>
           <Switch>
-            {/* <Route exact path="/" component={email} /> */}
-            <Route path="/home" component={Home} />
-            {/* <Route path="/login-passwoord" component={LoginPassword} />
-            <Route path="/login-select" component={LoginSelect} /> */}
             <Route exact path="/" component={Home} />
             <Route exact path="/callback" component={Callback} />
             <Route exact path={config.routes.login.path} component={Login} />
@@ -119,7 +113,7 @@ function App() {
             <Route exact path={config.routes.error.path} component={Error} />
           </Switch>
         </SessionProvider>
-      </BrowserRouter>
+      </Router>
     </div>
   )
 }
