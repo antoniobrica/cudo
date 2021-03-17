@@ -18,6 +18,12 @@ import FileStructure from 'libs/shared-components/src/lib/components/filestructu
 import ModalExampleSize from 'libs/shared-components/src/lib/components/modal/viewdetailsfile';
 import UploadNewVersion from 'libs/shared-components/src/lib/components/modal/uploadnewversion'; 
 import AddNewFolder from 'libs/shared-components/src/lib/components/modal/addfolder';
+import PeopleList from 'libs/shared-components/src/lib/components/people/peoplelist';
+import AddNewPeople from 'libs/shared-components/src/lib/components/people/addnewpeople';
+import ModalDelete from 'libs/shared-components/src/lib/components/people/deleteconfirm';
+
+
+
 
 // import { Sidebar } from 'semantic-ui-react';
 
@@ -42,7 +48,10 @@ export function App() {
     <FileStructure></FileStructure><br/> 
     <ModalExampleSize></ModalExampleSize><br/>
     <UploadNewVersion></UploadNewVersion><br/>
-    <AddNewFolder></AddNewFolder>
+    <AddNewFolder></AddNewFolder><br/>
+    <AddNewPeople></AddNewPeople><br/>
+    <PeopleList></PeopleList><br/>
+    <ModalDelete></ModalDelete>
     </div>
     
    
