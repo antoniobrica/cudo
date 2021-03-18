@@ -24,6 +24,7 @@ import ModalDelete from 'libs/shared-components/src/lib/components/people/delete
 import PremissionPeople from 'libs/shared-components/src/lib/components/people/premissionpeople';
 import AddPeoplePermission from 'libs/shared-components/src/lib/components/people/addpeoplepermission';
 
+import ProgressBar from 'libs/shared-components/src/lib/components/progress_bar/progressbar';
 
 // import { Sidebar } from 'semantic-ui-react';
 
@@ -53,7 +54,9 @@ export function App() {
     <PeopleList></PeopleList><br/>
     <ModalDelete></ModalDelete><br/>
     <PremissionPeople></PremissionPeople><br/>
-    <AddPeoplePermission></AddPeoplePermission>
+    <AddPeoplePermission></AddPeoplePermission><br/>
+    
+     <ProgressBar></ProgressBar>
     </div>
     
    
