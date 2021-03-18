@@ -21,8 +21,8 @@ import AddNewFolder from 'libs/shared-components/src/lib/components/modal/addfol
 import PeopleList from 'libs/shared-components/src/lib/components/people/peoplelist';
 import AddNewPeople from 'libs/shared-components/src/lib/components/people/addnewpeople';
 import ModalDelete from 'libs/shared-components/src/lib/components/people/deleteconfirm';
-
-
+import PremissionPeople from 'libs/shared-components/src/lib/components/people/premissionpeople';
+import AddPeoplePermission from 'libs/shared-components/src/lib/components/people/addpeoplepermission';
 
 
 // import { Sidebar } from 'semantic-ui-react';
@@ -51,7 +51,9 @@ export function App() {
     <AddNewFolder></AddNewFolder><br/>
     <AddNewPeople></AddNewPeople><br/>
     <PeopleList></PeopleList><br/>
-    <ModalDelete></ModalDelete>
+    <ModalDelete></ModalDelete><br/>
+    <PremissionPeople></PremissionPeople><br/>
+    <AddPeoplePermission></AddPeoplePermission>
     </div>
     
    

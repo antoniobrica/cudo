@@ -22,3 +22,5 @@ export * from './lib/components/modal/addfolder';
 export * from './lib/components/people/peoplelist'; 
 export * from './lib/components/people/deleteconfirm'; 
 export * from './lib/components/people/addnewpeople'; 
+export * from './lib/components/people/premissionpeople'; 
+export * from './lib/components/people/addnewpeople'; 
