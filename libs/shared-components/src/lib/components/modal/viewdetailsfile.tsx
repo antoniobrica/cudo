@@ -199,6 +199,8 @@ function exampleReducer(state, action) {
 </Grid> 
  
 </Form>
+         
+         
           </Modal.Content>
          
         </Modal>
