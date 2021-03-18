@@ -1,7 +1,7 @@
 import { BlobServiceClient, ContainerClient} from '@azure/storage-blob';
 
 // THIS IS SAMPLE CODE ONLY - DON'T STORE TOKEN IN PRODUCTION CODE
-const sasToken = "sv=2020-04-08&st=2021-03-15T04%3A08%3A17Z&se=2021-03-15T04%3A09%3A43Z&sr=b&sp=racwd&sig=ATzjjGrhblplrOLPkmgFrj%2FCycYut0%2FgPFwDwwdeU1Y%3D"
+const sasToken = "sv=2020-04-08&st=2021-03-16T10%3A57%3A17Z&se=2021-03-16T10%3A58%3A44Z&sr=b&sp=racwd&sig=ymLYxbSiQeOaxhscthIYm4UxTSa9dk0oSQ93qZhtJKo%3D"
 const containerName = "test";
 const storageAccountName = "cudo";  // Fill string with your Storage resource name
 
