@@ -22,9 +22,11 @@ import PeopleList from 'libs/shared-components/src/lib/components/people/peoplel
 import AddNewPeople from 'libs/shared-components/src/lib/components/people/addnewpeople';
 import ModalDelete from 'libs/shared-components/src/lib/components/people/deleteconfirm';
 import PremissionPeople from 'libs/shared-components/src/lib/components/people/premissionpeople';
-import AddPeoplePermission from 'libs/shared-components/src/lib/components/people/addpeoplepermission';
-
+import AddPeoplePermission from 'libs/shared-components/src/lib/components/people/addpeoplepermission'; 
 import ProgressBar from 'libs/shared-components/src/lib/components/progress_bar/progressbar';
+import ModalPin from 'libs/shared-components/src/lib/components/modal/pinaddfile';
+
+
 
 // import { Sidebar } from 'semantic-ui-react';
 
@@ -54,9 +56,9 @@ export function App() {
     <PeopleList></PeopleList><br/>
     <ModalDelete></ModalDelete><br/>
     <PremissionPeople></PremissionPeople><br/>
-    <AddPeoplePermission></AddPeoplePermission><br/>
-    
-     <ProgressBar></ProgressBar>
+    <AddPeoplePermission></AddPeoplePermission><br/> 
+     <ProgressBar></ProgressBar><br/>
+     <ModalPin></ModalPin>
     </div>
     
    
