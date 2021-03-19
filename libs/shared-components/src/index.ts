@@ -25,3 +25,4 @@ export * from './lib/components/people/addnewpeople';
 export * from './lib/components/people/premissionpeople'; 
 export * from './lib/components/people/addnewpeople'; 
 export * from './lib/components/modal/pinaddfile'; 
+export * from './lib/components/modal/managefilestructure'; 
