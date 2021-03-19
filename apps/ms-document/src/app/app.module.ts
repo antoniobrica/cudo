@@ -6,6 +6,7 @@ import * as path from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ComponentsModule } from './components/components.module';
+import { SecretService } from 'libs/ms-core/src/services/secret/secret.service';
 
 @Module({
   imports: [
@@ -19,6 +20,6 @@ import { ComponentsModule } from './components/components.module';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, SecretService],
 })
 export class AppModule { }
