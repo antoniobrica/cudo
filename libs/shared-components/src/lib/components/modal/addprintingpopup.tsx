@@ -1,38 +1,38 @@
 import { radios } from '@storybook/addon-knobs';
 import React from 'react';
-import { Button, Header,   Modal,  Tab,Table,  Input, Form, Grid, Image, Select, TextArea} from 'semantic-ui-react';
+import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
- 
- 
+
+
 
 
 function ModalExamplePrinting() {
-    const countryOptions = [
-        { key: 'af', value: 'af', text: 'Afghanistan' },
-        { key: 'ax', value: 'ax', text: 'Aland Islands' },
-         
-      ]
-      
+  const countryOptions = [
+    { key: 'af', value: 'af', text: 'Afghanistan' },
+    { key: 'ax', value: 'ax', text: 'Aland Islands' },
+
+  ]
+
   const [open, setOpen] = React.useState(false)
 
   return (
     <div id="navbar">
-    <Modal className="modal_media modal_center"
-      onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
-      open={open}
-      trigger={<Button size='mini' className="grey-btn">  Printing Company</Button> }
-    >
-      <Modal.Header><h3>Add Printing Company</h3></Modal.Header>
-      <Modal.Content body>
-        
-        <div>
-        <div className="content">
-                <div className="description">Upload Client logo  <span className="danger">*</span></div> 
-                <Button className="secondary_btn" size='mini' primary>Click to upload</Button>
-                <p className="paragraph">Click the upload button to upload the client logo</p>
+      <Modal className="modal_media modal_center"
+        onClose={() => setOpen(false)}
+        onOpen={() => setOpen(true)}
+        open={open}
+        trigger={<Button size='mini' className="grey-btn">  Printing Company</Button>}
+      >
+        <Modal.Header><h3>Add Printing Company</h3></Modal.Header>
+        <Modal.Content body>
 
-                
+          <div>
+            <div className="content">
+              <div className="description">Upload Client logo  <span className="danger">*</span></div>
+              <Button className="secondary_btn" size='mini' primary>Click to upload</Button>
+              <p className="paragraph">Click the upload button to upload the client logo</p>
+
+
 
 
             </div>
@@ -201,4 +201,3 @@ function ModalExamplePrinting() {
 }
 
 export default ModalExamplePrinting
- 

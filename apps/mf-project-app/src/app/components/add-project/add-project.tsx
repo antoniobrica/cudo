@@ -11,7 +11,7 @@ export interface AddProjectProps {
 }
 
 export function AddProject(props: AddProjectProps) {
-  const [formData, setFormData] = React.useState<IProject | {}>();
+  const [formData, setFormData] = React.useState<IProject>();
   // const [addTodo] = useTodoMutation(ADD_TODO);
   const [addProject] = useProjectMutation(ADD_PROJECT);
 

@@ -111,7 +111,7 @@ export class BlobStorageService {
 
   private buildConnectionString = (options: BlobStorageRequest) => {
     return (
-      `BlobEndpoint=https://cudo.blob.core.windows.net/;SharedAccessSignature=sv=2019-02-02&spr=https%2Chttp&st=2021-03-22T06%3A41%3A10Z&se=2021-03-22T06%3A42%3A37Z&sip=0.0.0.0-255.255.255.255&sr=c&sp=racwdl&sig=ROFC9Ijx1h5yiwCB%2BkXWlR8DPIoN1k5iod0IhVuPwV4%3D`
+      `BlobEndpoint=https://cudo.blob.core.windows.net/;SharedAccessSignature=sv=2019-02-02&ss=b&srt=sco&st=2021-03-19T14%3A15%3A15Z&se=2021-03-19T14%3A16%3A42Z&sip=0.0.0.0-255.255.255.255&sp=rwdlacup&sig=9HVP8%2FM1e2p5do6l6gnaK1DHALpH%2FeS5gT%2F0P2SgW38%3D`
       // `BlobEndpoint=${options.storageUri};` +
       // `SharedAccessSignature=${options.storageAccessToken}`
     );
