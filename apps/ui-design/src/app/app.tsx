@@ -28,6 +28,8 @@ import ModalPin from 'libs/shared-components/src/lib/components/modal/pinaddfile
 import ManageFileStructure from 'libs/shared-components/src/lib/components/modal/managefilestructure';  
 import ProjectSetting from 'libs/shared-components/src/lib/components/projectsetting/projectsetting';
 import EditProject from 'libs/shared-components/src/lib/components/projectsetting/editproject';
+import UserProfile from 'libs/shared-components/src/lib/components/userprofile/userprofile';
+
 
 // import { Sidebar } from 'semantic-ui-react';
 
@@ -62,7 +64,8 @@ export function App() {
      <ModalPin></ModalPin><br/>
      <ManageFileStructure></ManageFileStructure><br/>
     <ProjectSetting></ProjectSetting><br/>
-    <EditProject></EditProject>
+    <EditProject></EditProject><br/>
+    <UserProfile></UserProfile>
     </div>
     
    
