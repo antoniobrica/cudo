@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { SasGeneratorService } from './blob.service';
-import { BlobResolver } from './blob.resolver';
-import { BlobStorage } from './blobstorage';
+import { BlobStorage } from './dto/blobstorageClass/blobstorage';
+import { BlobResolver } from './resolver/blob.resolver';
+import { SasGeneratorService } from './service/blob.service';
 
 
 @Module({
