@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmService } from '../config/typeorm/type-orm.service';
 import { ComponentsModule } from './components/components.module';
+import { SecretService } from 'libs/ms-core/src/services/secret/secret.service'
 // import { I18nModule, I18nJsonParser } from 'nestjs-i18n';
 
 @Module({
@@ -28,6 +29,6 @@ import { ComponentsModule } from './components/components.module';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,SecretService],
 })
 export class AppModule { }
