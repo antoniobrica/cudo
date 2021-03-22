@@ -94,7 +94,7 @@ function UserProfile() {
   <Grid.Column>
     <Form.Field>
     <Button
-          content="Submit" 
+          content="update" 
           
           size='mini' className="grey-btn"
         />
