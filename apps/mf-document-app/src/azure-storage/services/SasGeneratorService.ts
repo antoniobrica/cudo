@@ -8,14 +8,14 @@ export class SasGeneratorService {
     console.log('sas token')
     const mocked: BlobStorageRequest = {
       storageUri: "https://cudo.blob.core.windows.net",
-      storageAccessToken: "sv=2020-06-12&st=2021-03-18T11%3A04%3A57Z&se=2021-03-18T11%3A06%3A23Z&sr=b&sp=racwd&sig=2FSuS8NtQG2VZdDP0SSiAxhi8nlIZKYOs5Jft28p51c%3D"
+      storageAccessToken: "sv=2019-02-02&spr=https%2Chttp&st=2021-03-19T06%3A11%3A55Z&se=2021-03-19T06%3A13%3A22Z&sip=0.0.0.0-255.255.255.255&sr=c&sp=racwdl&sig=IkW8KG2psFCzsoZ3RQ2VAyXoE23jJTRt8EZ7H2B6cGM%3D"
     }
     return of(mocked);
   }
  
   // getSasToken(): Observable<BlobStorageRequest> {
   //    return Axios.get<BlobStorageRequest>(
-  //     `https://cudo.blob.core.windows.net/api/${TOKEN}`
+  //     'https://stottle-blob-storage-api.azurewebsites.net/api/GenerateSasToken'
   //   ).pipe(map(
   //      res => res.data
   //     ));

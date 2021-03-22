@@ -16,6 +16,7 @@ export class BlobStorageService {
   }
 
   listBlobsInContainer(request: BlobContainerRequest) {
+    console.log('request',request);
     const containerClient = this.getContainerClient(request);
     return this.asyncToObservable(containerClient.listBlobsFlat());
   }
@@ -31,6 +32,7 @@ export class BlobStorageService {
   }
 
   uploadToBlobStorage(file: File, request: BlobFileRequest) {
+    console.log('uploadToBlobStorage', file, request)
     const blockBlobClient = this.getBlockBlobClient(request);
     return this.uploadFile(blockBlobClient, file);
   }
@@ -46,12 +48,14 @@ export class BlobStorageService {
   }
 
   private buildClient(options: BlobStorageRequest) {
+    console.log('options-buildClient', options);
     return BlobServiceClient.fromConnectionString(
       this.buildConnectionString(options)
     );
   }
 
   private uploadFile(blockBlobClient: BlockBlobClient, file: File) {
+    console.log('uploadFile====>>',blockBlobClient, file);
     return new Observable<number>(observer => {
       blockBlobClient
         .uploadBrowserData(file, {
@@ -107,8 +111,9 @@ export class BlobStorageService {
 
   private buildConnectionString = (options: BlobStorageRequest) => {
     return (
-      `BlobEndpoint=${options.storageUri};` +
-      `SharedAccessSignature=${options.storageAccessToken}`
+      `BlobEndpoint=https://cudo.blob.core.windows.net/;SharedAccessSignature=sv=2019-02-02&spr=https%2Chttp&st=2021-03-22T06%3A41%3A10Z&se=2021-03-22T06%3A42%3A37Z&sip=0.0.0.0-255.255.255.255&sr=c&sp=racwdl&sig=ROFC9Ijx1h5yiwCB%2BkXWlR8DPIoN1k5iod0IhVuPwV4%3D`
+      // `BlobEndpoint=${options.storageUri};` +
+      // `SharedAccessSignature=${options.storageAccessToken}`
     );
   };
 }

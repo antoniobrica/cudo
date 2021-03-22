@@ -18,18 +18,18 @@ function ModalAddPrint( props: FileProps) {
 
  
   const [open, setOpen] = React.useState(false)
-  const [file, setFile] = React.useState("")
+  const [file, setFile] = React.useState(null)
 
   const onFileChange = event => {
-    const fl = event.target.files[0];
-    // console.log('file==>',fl)
+    const fl = event.target.files;
+    // console.log('multiple==>',fl)
     setFile(fl);
     props.fileData(fl);
 
   };
   const upload = () =>{
     setOpen(false);
-    props.onFileSubmit();
+    props.onFileSubmit(file);
   }
   const openSetting =()=>{
     props.setting();
@@ -59,7 +59,7 @@ function ModalAddPrint( props: FileProps) {
       <p className="file-upload-default-message">Drag & drop or click here to upload file</p>
       
       </div>
-  <Input  type="file" className="file-upload-input" onChange={onFileChange}  />
+  <Input  type="file" className="file-upload-input" multiple={true} onChange={onFileChange}  />
   </div>
     
     </Form.Field>

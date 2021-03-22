@@ -27,12 +27,15 @@ export class BlobUploadsViewStateService {
   uploadItems(files: FileList): void {
     console.log('files==>', files)
     this.uploadQueueInner$.next(files);
+    console.log('uploadQueueInner')
   }
 
   private uploadFile = (file: File) =>
     this.blobState.getStorageOptionsWithContainer().pipe(
       switchMap(options =>
-        this.blobStorage
+     { 
+       console.log("options",options); 
+        return this.blobStorage
           .uploadToBlobStorage(file, {
             ...options,
             filename: file.name + new Date().getTime()
@@ -40,11 +43,11 @@ export class BlobUploadsViewStateService {
           .pipe(
             this.mapUploadResponse(file, options),
             this.blobState.finaliseBlobChange(options.containerName)
-          )
+          )}
       )
     );
 
-  private mapUploadResponse = (
+    private mapUploadResponse = (
     file: File,
     options: BlobContainerRequest
   ): OperatorFunction<number, BlobItemUpload> => source =>
