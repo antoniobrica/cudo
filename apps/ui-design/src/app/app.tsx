@@ -25,8 +25,9 @@ import PremissionPeople from 'libs/shared-components/src/lib/components/people/p
 import AddPeoplePermission from 'libs/shared-components/src/lib/components/people/addpeoplepermission'; 
 import ProgressBar from 'libs/shared-components/src/lib/components/progress_bar/progressbar';
 import ModalPin from 'libs/shared-components/src/lib/components/modal/pinaddfile';
-import ManageFileStructure from 'libs/shared-components/src/lib/components/modal/managefilestructure';
-
+import ManageFileStructure from 'libs/shared-components/src/lib/components/modal/managefilestructure';  
+import ProjectSetting from 'libs/shared-components/src/lib/components/projectsetting/projectsetting';
+import EditProject from 'libs/shared-components/src/lib/components/projectsetting/editproject';
 
 // import { Sidebar } from 'semantic-ui-react';
 
@@ -59,7 +60,9 @@ export function App() {
     <AddPeoplePermission></AddPeoplePermission><br/> 
      <ProgressBar></ProgressBar><br/>
      <ModalPin></ModalPin><br/>
-     <ManageFileStructure></ManageFileStructure>
+     <ManageFileStructure></ManageFileStructure><br/>
+    <ProjectSetting></ProjectSetting><br/>
+    <EditProject></EditProject>
     </div>
     
    
