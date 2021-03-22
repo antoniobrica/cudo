@@ -30,17 +30,30 @@
           "type": "object",
           "properties": {
             "first": {
-              "type": "string"
+              "type": "string",
+              "title": "First Name"
             },
             "last": {
-              "type": "string"
+              "type": "string",
+              "title": "Last Name"
+            }
+          }
+        },
+        "company": {
+          "type": "object",
+          "properties": {
+            "company_name": {
+              "type": "string",
+              "title": "Comapany Name"
+            },
+            "company_address": {
+              "type": "string",
+              "title": "Comapany Address"
             }
           }
         }
       },
-      "required": [
-        "email"
-      ],
+      "required": ["email"],
       "additionalProperties": false
     }
   }

@@ -8,9 +8,7 @@
       "targets": {
         "build": {
           "executor": "@nrwl/web:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/mf-container-app",
             "index": "apps/mf-container-app/src/index.html",
@@ -21,9 +19,7 @@
               "apps/mf-container-app/src/favicon.ico",
               "apps/mf-container-app/src/assets"
             ],
-            "styles": [
-              "apps/mf-container-app/src/styles.scss"
-            ],
+            "styles": ["apps/mf-container-app/src/styles.scss"],
             "scripts": [],
             "webpackConfig": "apps/mf-container-app/webpack.config.js"
           },
@@ -66,16 +62,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/mf-container-app/**/*.{ts,tsx,js,jsx}"
-            ]
+            "lintFilePatterns": ["apps/mf-container-app/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/mf-container-app"
-          ],
+          "outputs": ["coverage/apps/mf-container-app"],
           "options": {
             "jestConfig": "apps/mf-container-app/jest.config.js",
             "passWithNoTests": true
@@ -104,9 +96,7 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/mf-container-app-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/mf-container-app-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -118,9 +108,7 @@
       "targets": {
         "build": {
           "executor": "@nrwl/web:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/mf-account-app",
             "index": "apps/mf-account-app/src/index.html",
@@ -131,9 +119,7 @@
               "apps/mf-account-app/src/favicon.ico",
               "apps/mf-account-app/src/assets"
             ],
-            "styles": [
-              "apps/mf-account-app/src/styles.scss"
-            ],
+            "styles": ["apps/mf-account-app/src/styles.scss"],
             "scripts": [],
             "webpackConfig": "apps/mf-account-app/webpack.config.js"
           },
@@ -176,16 +162,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/mf-account-app/**/*.{ts,tsx,js,jsx}"
-            ]
+            "lintFilePatterns": ["apps/mf-account-app/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/mf-account-app"
-          ],
+          "outputs": ["coverage/apps/mf-account-app"],
           "options": {
             "jestConfig": "apps/mf-account-app/jest.config.js",
             "passWithNoTests": true
@@ -244,9 +226,7 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/mf-account-app-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/mf-account-app-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -259,16 +239,12 @@
       "targets": {
         "build": {
           "executor": "@nrwl/node:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/ms-account",
             "main": "apps/ms-account/src/main.ts",
             "tsConfig": "apps/ms-account/tsconfig.app.json",
-            "assets": [
-              "apps/ms-account/src/assets"
-            ]
+            "assets": ["apps/ms-account/src/assets"]
           },
           "configurations": {
             "production": {
@@ -293,16 +269,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/ms-account/**/*.ts"
-            ]
+            "lintFilePatterns": ["apps/ms-account/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/ms-account"
-          ],
+          "outputs": ["coverage/apps/ms-account"],
           "options": {
             "jestConfig": "apps/ms-account/jest.config.js",
             "passWithNoTests": true
@@ -317,9 +289,7 @@
       "targets": {
         "build": {
           "executor": "@nrwl/web:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/mf-project-app",
             "index": "apps/mf-project-app/src/index.html",
@@ -330,9 +300,7 @@
               "apps/mf-project-app/src/favicon.ico",
               "apps/mf-project-app/src/assets"
             ],
-            "styles": [
-              "apps/mf-project-app/src/styles.scss"
-            ],
+            "styles": ["apps/mf-project-app/src/styles.scss"],
             "scripts": [],
             "webpackConfig": "apps/mf-project-app/webpack.config.js"
           },
@@ -375,16 +343,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/mf-project-app/**/*.{ts,tsx,js,jsx}"
-            ]
+            "lintFilePatterns": ["apps/mf-project-app/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/mf-project-app"
-          ],
+          "outputs": ["coverage/apps/mf-project-app"],
           "options": {
             "jestConfig": "apps/mf-project-app/jest.config.js",
             "passWithNoTests": true
@@ -443,9 +407,7 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/mf-project-app-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/mf-project-app-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -458,16 +420,13 @@
       "targets": {
         "build": {
           "executor": "@nrwl/node:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/ms-project",
             "main": "apps/ms-project/src/main.ts",
             "tsConfig": "apps/ms-project/tsconfig.app.json",
-            "assets": [
-              "apps/ms-project/src/assets"
-            ]
+            "assets": ["apps/ms-project/src/assets"],
+            "generatePackageJson": true
           },
           "configurations": {
             "production": {
@@ -492,16 +451,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/ms-project/**/*.ts"
-            ]
+            "lintFilePatterns": ["apps/ms-project/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/ms-project"
-          ],
+          "outputs": ["coverage/apps/ms-project"],
           "options": {
             "jestConfig": "apps/ms-project/jest.config.js",
             "passWithNoTests": true
@@ -547,16 +502,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/ui/**/*.{ts,tsx,js,jsx}"
-            ]
+            "lintFilePatterns": ["libs/ui/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/ui"
-          ],
+          "outputs": ["coverage/libs/ui"],
           "options": {
             "jestConfig": "libs/ui/jest.config.js",
             "passWithNoTests": true
@@ -572,16 +523,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/shared/**/*.ts"
-            ]
+            "lintFilePatterns": ["libs/shared/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/shared"
-          ],
+          "outputs": ["coverage/libs/shared"],
           "options": {
             "jestConfig": "libs/shared/jest.config.js",
             "passWithNoTests": true
@@ -597,16 +544,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/data/**/*.ts"
-            ]
+            "lintFilePatterns": ["libs/data/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/data"
-          ],
+          "outputs": ["coverage/libs/data"],
           "options": {
             "jestConfig": "libs/data/jest.config.js",
             "passWithNoTests": true
@@ -632,16 +575,12 @@
       "targets": {
         "build": {
           "executor": "@nrwl/node:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/ms-task",
             "main": "apps/ms-task/src/main.ts",
             "tsConfig": "apps/ms-task/tsconfig.app.json",
-            "assets": [
-              "apps/ms-task/src/assets"
-            ]
+            "assets": ["apps/ms-task/src/assets"]
           },
           "configurations": {
             "production": {
@@ -666,16 +605,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/ms-task/**/*.ts"
-            ]
+            "lintFilePatterns": ["apps/ms-task/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/ms-task"
-          ],
+          "outputs": ["coverage/apps/ms-task"],
           "options": {
             "jestConfig": "apps/ms-task/jest.config.js",
             "passWithNoTests": true
@@ -721,16 +656,12 @@
       "targets": {
         "build": {
           "executor": "@nrwl/node:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/ms-tender",
             "main": "apps/ms-tender/src/main.ts",
             "tsConfig": "apps/ms-tender/tsconfig.app.json",
-            "assets": [
-              "apps/ms-tender/src/assets"
-            ]
+            "assets": ["apps/ms-tender/src/assets"]
           },
           "configurations": {
             "production": {
@@ -755,16 +686,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/ms-tender/**/*.ts"
-            ]
+            "lintFilePatterns": ["apps/ms-tender/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/ms-tender"
-          ],
+          "outputs": ["coverage/apps/ms-tender"],
           "options": {
             "jestConfig": "apps/ms-tender/jest.config.js",
             "passWithNoTests": true
@@ -780,16 +707,12 @@
       "targets": {
         "build": {
           "executor": "@nrwl/node:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/ms-cost",
             "main": "apps/ms-cost/src/main.ts",
             "tsConfig": "apps/ms-cost/tsconfig.app.json",
-            "assets": [
-              "apps/ms-cost/src/assets"
-            ]
+            "assets": ["apps/ms-cost/src/assets"]
           },
           "configurations": {
             "production": {
@@ -814,16 +737,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/ms-cost/**/*.ts"
-            ]
+            "lintFilePatterns": ["apps/ms-cost/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/ms-cost"
-          ],
+          "outputs": ["coverage/apps/ms-cost"],
           "options": {
             "jestConfig": "apps/ms-cost/jest.config.js",
             "passWithNoTests": true
@@ -839,16 +758,12 @@
       "targets": {
         "build": {
           "executor": "@nrwl/node:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/ms-meeting",
             "main": "apps/ms-meeting/src/main.ts",
             "tsConfig": "apps/ms-meeting/tsconfig.app.json",
-            "assets": [
-              "apps/ms-meeting/src/assets"
-            ]
+            "assets": ["apps/ms-meeting/src/assets"]
           },
           "configurations": {
             "production": {
@@ -873,16 +788,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/ms-meeting/**/*.ts"
-            ]
+            "lintFilePatterns": ["apps/ms-meeting/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/ms-meeting"
-          ],
+          "outputs": ["coverage/apps/ms-meeting"],
           "options": {
             "jestConfig": "apps/ms-meeting/jest.config.js",
             "passWithNoTests": true
@@ -898,16 +809,12 @@
       "targets": {
         "build": {
           "executor": "@nrwl/node:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/ms-document",
             "main": "apps/ms-document/src/main.ts",
             "tsConfig": "apps/ms-document/tsconfig.app.json",
-            "assets": [
-              "apps/ms-document/src/assets"
-            ]
+            "assets": ["apps/ms-document/src/assets"]
           },
           "configurations": {
             "production": {
@@ -932,16 +839,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/ms-document/**/*.ts"
-            ]
+            "lintFilePatterns": ["apps/ms-document/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/ms-document"
-          ],
+          "outputs": ["coverage/apps/ms-document"],
           "options": {
             "jestConfig": "apps/ms-document/jest.config.js",
             "passWithNoTests": true
@@ -957,16 +860,12 @@
       "targets": {
         "build": {
           "executor": "@nrwl/node:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/ms-protocol",
             "main": "apps/ms-protocol/src/main.ts",
             "tsConfig": "apps/ms-protocol/tsconfig.app.json",
-            "assets": [
-              "apps/ms-protocol/src/assets"
-            ]
+            "assets": ["apps/ms-protocol/src/assets"]
           },
           "configurations": {
             "production": {
@@ -991,16 +890,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/ms-protocol/**/*.ts"
-            ]
+            "lintFilePatterns": ["apps/ms-protocol/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/ms-protocol"
-          ],
+          "outputs": ["coverage/apps/ms-protocol"],
           "options": {
             "jestConfig": "apps/ms-protocol/jest.config.js",
             "passWithNoTests": true
@@ -1015,9 +910,7 @@
       "targets": {
         "build": {
           "executor": "@nrwl/web:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/mf-task-app",
             "index": "apps/mf-task-app/src/index.html",
@@ -1028,9 +921,7 @@
               "apps/mf-task-app/src/favicon.ico",
               "apps/mf-task-app/src/assets"
             ],
-            "styles": [
-              "apps/mf-task-app/src/styles.scss"
-            ],
+            "styles": ["apps/mf-task-app/src/styles.scss"],
             "scripts": [],
             "webpackConfig": "apps/mf-task-app/webpack.config.js"
           },
@@ -1073,16 +964,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/mf-task-app/**/*.{ts,tsx,js,jsx}"
-            ]
+            "lintFilePatterns": ["apps/mf-task-app/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/mf-task-app"
-          ],
+          "outputs": ["coverage/apps/mf-task-app"],
           "options": {
             "jestConfig": "apps/mf-task-app/jest.config.js",
             "passWithNoTests": true
@@ -1141,9 +1028,7 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/mf-task-app-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/mf-task-app-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -1155,9 +1040,7 @@
       "targets": {
         "build": {
           "executor": "@nrwl/web:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/mf-tender-app",
             "index": "apps/mf-tender-app/src/index.html",
@@ -1168,9 +1051,7 @@
               "apps/mf-tender-app/src/favicon.ico",
               "apps/mf-tender-app/src/assets"
             ],
-            "styles": [
-              "apps/mf-tender-app/src/styles.scss"
-            ],
+            "styles": ["apps/mf-tender-app/src/styles.scss"],
             "scripts": [],
             "webpackConfig": "apps/mf-tender-app/webpack.config.js"
           },
@@ -1213,16 +1094,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/mf-tender-app/**/*.{ts,tsx,js,jsx}"
-            ]
+            "lintFilePatterns": ["apps/mf-tender-app/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/mf-tender-app"
-          ],
+          "outputs": ["coverage/apps/mf-tender-app"],
           "options": {
             "jestConfig": "apps/mf-tender-app/jest.config.js",
             "passWithNoTests": true
@@ -1281,9 +1158,7 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/mf-tender-app-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/mf-tender-app-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -1295,9 +1170,7 @@
       "targets": {
         "build": {
           "executor": "@nrwl/web:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/mf-cost-app",
             "index": "apps/mf-cost-app/src/index.html",
@@ -1308,9 +1181,7 @@
               "apps/mf-cost-app/src/favicon.ico",
               "apps/mf-cost-app/src/assets"
             ],
-            "styles": [
-              "apps/mf-cost-app/src/styles.scss"
-            ],
+            "styles": ["apps/mf-cost-app/src/styles.scss"],
             "scripts": [],
             "webpackConfig": "apps/mf-cost-app/webpack.config.js"
           },
@@ -1353,16 +1224,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/mf-cost-app/**/*.{ts,tsx,js,jsx}"
-            ]
+            "lintFilePatterns": ["apps/mf-cost-app/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/mf-cost-app"
-          ],
+          "outputs": ["coverage/apps/mf-cost-app"],
           "options": {
             "jestConfig": "apps/mf-cost-app/jest.config.js",
             "passWithNoTests": true
@@ -1421,9 +1288,7 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/mf-cost-app-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/mf-cost-app-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -1435,9 +1300,7 @@
       "targets": {
         "build": {
           "executor": "@nrwl/web:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/mf-meeting-app",
             "index": "apps/mf-meeting-app/src/index.html",
@@ -1448,9 +1311,7 @@
               "apps/mf-meeting-app/src/favicon.ico",
               "apps/mf-meeting-app/src/assets"
             ],
-            "styles": [
-              "apps/mf-meeting-app/src/styles.scss"
-            ],
+            "styles": ["apps/mf-meeting-app/src/styles.scss"],
             "scripts": [],
             "webpackConfig": "apps/mf-meeting-app/webpack.config.js"
           },
@@ -1493,16 +1354,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/mf-meeting-app/**/*.{ts,tsx,js,jsx}"
-            ]
+            "lintFilePatterns": ["apps/mf-meeting-app/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/mf-meeting-app"
-          ],
+          "outputs": ["coverage/apps/mf-meeting-app"],
           "options": {
             "jestConfig": "apps/mf-meeting-app/jest.config.js",
             "passWithNoTests": true
@@ -1561,9 +1418,7 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/mf-meeting-app-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/mf-meeting-app-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -1576,16 +1431,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/interfaces/**/*.ts"
-            ]
+            "lintFilePatterns": ["libs/interfaces/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/interfaces"
-          ],
+          "outputs": ["coverage/libs/interfaces"],
           "options": {
             "jestConfig": "libs/interfaces/jest.config.js",
             "passWithNoTests": true
@@ -1601,16 +1452,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/data-access/**/*.{ts,tsx,js,jsx}"
-            ]
+            "lintFilePatterns": ["libs/data-access/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/data-access"
-          ],
+          "outputs": ["coverage/libs/data-access"],
           "options": {
             "jestConfig": "libs/data-access/jest.config.js",
             "passWithNoTests": true
@@ -1636,16 +1483,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/ms-core/**/*.ts"
-            ]
+            "lintFilePatterns": ["libs/ms-core/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/ms-core"
-          ],
+          "outputs": ["coverage/libs/ms-core"],
           "options": {
             "jestConfig": "libs/ms-core/jest.config.js",
             "passWithNoTests": true
@@ -1661,16 +1504,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/shared-components/**/*.{ts,tsx,js,jsx}"
-            ]
+            "lintFilePatterns": ["libs/shared-components/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/shared-components"
-          ],
+          "outputs": ["coverage/libs/shared-components"],
           "options": {
             "jestConfig": "libs/shared-components/jest.config.js",
             "passWithNoTests": true
@@ -1729,9 +1568,7 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/shared-components-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/shared-components-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -1743,9 +1580,7 @@
       "targets": {
         "build": {
           "executor": "@nrwl/web:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/ui-design",
             "index": "apps/ui-design/src/index.html",
@@ -1756,9 +1591,7 @@
               "apps/ui-design/src/favicon.ico",
               "apps/ui-design/src/assets"
             ],
-            "styles": [
-              "apps/ui-design/src/styles.scss"
-            ],
+            "styles": ["apps/ui-design/src/styles.scss"],
             "scripts": [],
             "webpackConfig": "@nrwl/react/plugins/webpack"
           },
@@ -1801,16 +1634,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/ui-design/**/*.{ts,tsx,js,jsx}"
-            ]
+            "lintFilePatterns": ["apps/ui-design/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/ui-design"
-          ],
+          "outputs": ["coverage/apps/ui-design"],
           "options": {
             "jestConfig": "apps/ui-design/jest.config.js",
             "passWithNoTests": true
@@ -1839,9 +1668,7 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/ui-design-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/ui-design-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -1854,16 +1681,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/mf-core/**/*.{ts,tsx,js,jsx}"
-            ]
+            "lintFilePatterns": ["libs/mf-core/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/mf-core"
-          ],
+          "outputs": ["coverage/libs/mf-core"],
           "options": {
             "jestConfig": "libs/mf-core/jest.config.js",
             "passWithNoTests": true
@@ -1879,16 +1702,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/mf-account-app-lib/**/*.{ts,tsx,js,jsx}"
-            ]
+            "lintFilePatterns": ["libs/mf-account-app-lib/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/mf-account-app-lib"
-          ],
+          "outputs": ["coverage/libs/mf-account-app-lib"],
           "options": {
             "jestConfig": "libs/mf-account-app-lib/jest.config.js",
             "passWithNoTests": true

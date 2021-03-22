@@ -27,5 +27,21 @@ export const FORM_LABELS: { [key: string]: FormLabel } = {
   password: {
     label: "Password",
     priority: 80
-  }
+  },
+  "traits.name.first": {
+    label: "First Name",
+    priority: 90,
+  },
+  "traits.name.last": {
+    label: "Last Name",
+    priority: 90,
+  },
+  "traits.company.company_name": {
+    label: "Comapny Name",
+    priority: 90,
+  },
+  "traits.company.company_address": {
+    label: "Address",
+    priority: 90,
+  },
 }

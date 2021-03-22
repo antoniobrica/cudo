@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useMicrofrontend = (id, url) => {
+const useMicrofrontend = (id: string, url: string) => {
     const scriptId = `${id}Bundle`;
     const [isLoaded, setLoaded] = useState(window[id]);
 

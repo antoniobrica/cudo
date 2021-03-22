@@ -123,10 +123,17 @@ export function Menubar(props: MenuProps) {
             <i className="ms-Icon ms-Icon--DoubleChevronRight" aria-hidden="true"></i>
           </Menu.Item>
 
-
           <Menu.Item as='a' onClick={() => handleOpenProject('logout')}>
             <Popup
               content='Logout'
+              trigger={<i className="ms-Icon ms-Icon--People" aria-hidden="true"></i>
+              } size='small' position='right center'>
+            </Popup>
+          </Menu.Item>
+
+          <Menu.Item as='a' onClick={() => handleOpenProject('profile')}>
+            <Popup
+              content='profile'
               trigger={<i className="ms-Icon ms-Icon--People" aria-hidden="true"></i>
               } size='small' position='right center'>
             </Popup>

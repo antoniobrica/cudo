@@ -34,6 +34,12 @@ export const logout = () => {
   window.location.href = `${base}/self-service/browser/flows/logout`
 }
 
+export const profile = () => {
+  if (!isAuthenticated)
+    return login();
+  window.location.href = config.routes.settings.path
+}
+
 export const refresh = () => {
   const base = config.kratos.browser
   unsetAuthenticated()

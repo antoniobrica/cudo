@@ -8,7 +8,6 @@ import email from './login/login'
 import { Menubar } from '@cudo/shared-components';
 import '../../../../libs/shared-components/src/style/index.scss';
 import { SessionProvider } from "./services/session";
-import { Dashboard } from "./containers/Dashboard";
 import { Callback } from "./containers/Callback";
 import { Settings } from "./containers/Settings";
 import { Verify } from "./containers/Verify";
@@ -19,7 +18,7 @@ import { Login } from "./containers/Login"
 import config from "./config/kratos"
 import LoginPassword from "./login-password/login-password";
 import LoginSelect from "./login-select/login-select";
-import { isAuthenticated, login, logout } from "./services/auth";
+import { isAuthenticated, login, logout, profile } from "./services/auth";
 
 
 // import Home from './home/home'
@@ -65,6 +64,10 @@ function Home({ history }) {
     else if (childData === "logout") {
       setIsProject(false);
       logout();
+    }
+    else if (childData === "profile") {
+      setIsProject(false);
+      profile();
     }
     else {
       setIsProject(false);
