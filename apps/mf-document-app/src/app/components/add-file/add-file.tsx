@@ -14,17 +14,23 @@ import ItemsDeleted from 'apps/mf-document-app/src/azure-storage/components/Item
 import { SharedViewStateContext, UploadsViewStateContext } from 'apps/mf-document-app/src/azure-storage/contexts/viewStateContext';
 import { tap } from 'rxjs/operators';
 import { ContainerItem } from '@azure/storage-blob';
+import { useTokenQuery } from '../../services/useRequest';
+import { GET_TOKEN } from '../../graphql/graphql';
 
 export interface AddFileProps { }
 
 export function AddFile(props: AddFileProps) {
   const [fileSelected, setFileSelected] = React.useState(null);
   const [items, setItems] = React.useState<ContainerItem[]>([]);
-
+  const { loading, error, data } = useTokenQuery(GET_TOKEN);
+  if(data){
+    console.log('access token=>', data)
+  }
   const [open, setOpen] = React.useState(false)
 
   const context1 = useContext(UploadsViewStateContext);
   const context2 = useContext(SharedViewStateContext);
+
 
   const getContainersEffect = () => {
     console.log('getContainersEffect')

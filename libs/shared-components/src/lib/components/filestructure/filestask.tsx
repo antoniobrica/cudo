@@ -21,7 +21,7 @@ export function FileStructure(props: TabsProps) {
 			menuItem: { key: 'Overview', icon: 'images', content: 'All files' },
 			render: () => <Tab.Pane attached={false}>
 				<div className="ui-tabs">
-					<div className="card1 card-custom gutter-b width_card">
+					{/* <div className="card1 card-custom gutter-b width_card">
 
 						<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
 
@@ -130,6 +130,7 @@ export function FileStructure(props: TabsProps) {
 
 						</div>
 					</div>
+					 */}
 					{props.files.map((file, i) => (
 						<div className="card1 card-custom gutter-b width_card">
 
@@ -141,7 +142,7 @@ export function FileStructure(props: TabsProps) {
 									<span className="font-weight-bold mb-0 mr-10">{file.name}</span>
 									<div className="d-flex mr-3">
 
-										<div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
+										{/* <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
 
 											<div className="navi-item mr-2">
 												<a className="navi-link">
@@ -157,7 +158,7 @@ export function FileStructure(props: TabsProps) {
 													<span className="navi-text"><i className="ms-Icon ms-Icon--CheckboxComposite" aria-hidden="true"></i> 2 tasks </span>
 												</a>
 											</div>
-										</div>
+										</div> */}
 
 									</div>
 

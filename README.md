@@ -131,7 +131,7 @@ ex. nx run ms-project:migration-revert --mode=development
 
 
 ## To Run Ory Kratos
-Change 192.168.29.131 to 'your-local-ip' in following files 1: apps\mf-container-app\src\app\config\kratos.tsx
+Change 192.168.1.5 to 'your-local-ip' in following files 1: apps\mf-container-app\src\app\config\kratos.tsx
 2: deploy\docker-compose-ory\.kratos-config\kratos.yml
 3: deploy\docker-compose-ory\.nginx\nginx.conf
  docker-compose -f .\deploy\docker-compose-ory\quickstart.yml -f .\deploy\docker-compose-ory\docker-compose-nginx.yml up --build

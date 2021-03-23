@@ -1,8 +1,11 @@
 import { TransferProgressEvent } from '@azure/core-http';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { BlobServiceClient, BlockBlobClient } from '@azure/storage-blob';
+import axios from 'axios';
 import { from, Observable, Subscriber } from 'rxjs';
 import { distinctUntilChanged, scan, startWith } from 'rxjs/operators';
+import { GET_TOKEN } from '../../app/graphql/graphql';
+import { useTokenQuery } from '../../app/services/useRequest';
 import {
   BlobContainerRequest,
   BlobFileRequest,
@@ -10,7 +13,7 @@ import {
 } from '../types/azure-storage';
 
 export class BlobStorageService {
-  getContainers(request: BlobStorageRequest) {
+   getContainers(request: BlobStorageRequest) {
     const blobServiceClient = this.buildClient(request);
     return this.asyncToObservable(blobServiceClient.listContainers());
   }
@@ -109,11 +112,12 @@ export class BlobStorageService {
     );
   }
 
-  private buildConnectionString = (options: BlobStorageRequest) => {
-    return (
-      `BlobEndpoint=https://cudo.blob.core.windows.net/;SharedAccessSignature=sv=2019-02-02&ss=b&srt=sco&st=2021-03-19T14%3A15%3A15Z&se=2021-03-19T14%3A16%3A42Z&sip=0.0.0.0-255.255.255.255&sp=rwdlacup&sig=9HVP8%2FM1e2p5do6l6gnaK1DHALpH%2FeS5gT%2F0P2SgW38%3D`
-      // `BlobEndpoint=${options.storageUri};` +
-      // `SharedAccessSignature=${options.storageAccessToken}`
+  private buildConnectionString = (options) => {
+    console.log('options==>', options)
+   return (
+     // `BlobEndpoint=https://cudo.blob.core.windows.net/;SharedAccessSignature=sv=2019-02-02&ss=b&srt=sco&spr=https%2Chttp&st=2021-03-22T09%3A06%3A45Z&se=2021-03-22T11%3A30%3A45Z&sip=0.0.0.0-255.255.255.255&sp=rwdlacup&sig=jQgVAf%2B%2B%2BdGRI1kR%2BGiI%2Fg5cNSnEaPQV1p3rteTRMls%3D`
+      `BlobEndpoint=https://cudo.blob.core.windows.net/;` +
+      `SharedAccessSignature=${options.data.sasAccountTocken}`
     );
   };
 }
