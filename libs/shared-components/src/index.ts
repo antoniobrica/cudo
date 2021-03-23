@@ -29,3 +29,4 @@ export * from './lib/components/modal/managefilestructure';
 export * from './lib/components/projectsetting/projectsetting'; 
 export * from './lib/components/projectsetting/editproject'; 
 export * from './lib/components/userprofile/userprofile'; 
+export * from './lib/components/login/register'; 

@@ -163,13 +163,113 @@ export function ProjectSetting(props: TabsProps) {
           </Tab.Pane>,
         },
         {
-          menuItem: { key: 'Task', icon: 'shield alternate', content: 'Project Structure' },
+          menuItem: { key: 'Task', icon: 'tasks', content: 'Project Structure' },
           render: () => <Tab.Pane attached={false}>  Task</Tab.Pane>,
         },
         {
            
-          menuItem: { key: 'Planning', icon: 'flag outline', content: 'File Naming Structure' },
-          render: () => <Tab.Pane attached={false}>Planning</Tab.Pane>,
+          menuItem: { key: 'Planning', icon: 'file alternate outline', content: 'File Naming Structure' },
+          render: () => <Tab.Pane attached={false}> 
+          
+          
+          <div className="ui-tabs">
+
+            <h5 className="colorfile">File Name Structure</h5>
+              <Grid>
+<Grid.Row>
+  <Grid.Column >
+ 
+    
+      <div className="ui card" style={{width:'100%'}}>
+            <div className="content">
+               
+            <div className="description"> 
+
+
+                          
+      <Form>
+ 
+<Grid columns={3}>
+<Grid.Row>
+  <Grid.Column>
+    <Form.Field>
+    <img src={img4}  />
+    </Form.Field>
+  </Grid.Column>
+
+  <Grid.Column>
+    <Form.Field className="field_left">
+    <span><strong>Burj Khalifa  </strong></span> <span><br/>John & Co.</span> <span style={{color:'#2D62ED'}}><br/> Estimate Cost: $5,000.00 - Total Cost: $5,000.00 </span>
+            
+    </Form.Field>
+  </Grid.Column>
+  <Grid.Column>
+    <Form.Field>
+    <span className="summary"><button className="ui mini button edit_btn">  <img src={img5}  /> Edit</button> 
+                     </span> </Form.Field>
+  </Grid.Column>
+</Grid.Row>
+</Grid>
+</Form>
+ 
+                </div>
+ 
+                </div>
+               
+                <div>
+
+                <Table celled className="default_table">
+    <Table.Header>
+      <Table.Row>
+        <Table.HeaderCell>City</Table.HeaderCell>
+        <Table.HeaderCell>State Pin</Table.HeaderCell>
+        <Table.HeaderCell>Country</Table.HeaderCell>
+        <Table.HeaderCell>Address</Table.HeaderCell>
+      </Table.Row>
+    </Table.Header>
+
+    <Table.Body>
+      <Table.Row>
+        <Table.Cell >Bern</Table.Cell>
+        <Table.Cell>8090</Table.Cell>
+        <Table.Cell>Switzerland</Table.Cell>
+        <Table.Cell> Müller Ltd, Mr R. Bürki Zollikerstrasse 788  
+8008 Zurich</Table.Cell>
+        
+      </Table.Row>
+
+   
+    </Table.Body>
+  </Table>
+
+                </div>
+                <div className="content" style={{borderTop:'none'}}>
+                    <div className="data-built"> 
+                   
+                    <p> The building utilizes wrapped glass facades on the east, north, and west both for aesthetics and to reduce the amount of reflective surface area on the south facade, which also features brushed Jura limestone. </p>
+                    </div>
+                    <div>
+                        <br/>
+                        <p style={{color:'#000'}}>Work Type</p>
+                        <button className="ui mini button btn_work_type  ">Electrical Work</button>
+                        <button className="ui mini button  btn_work_type">HVAC Work</button>
+                       
+                    </div>
+                    </div>
+                   
+                    </div>
+ 
+     
+                    
+        
+  </Grid.Column>
+  
+  </Grid.Row>
+  </Grid>
+              </div>
+          
+          
+          </Tab.Pane>,
         },
        
       ]

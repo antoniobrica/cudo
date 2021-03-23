@@ -4,12 +4,12 @@ import React from 'react';
 import { ReactComponent as Logo } from './logo.svg';
 import star from './star.svg';
 
-import { Cardbar, Menubar, Tabsbar, Messagebar, Loginbar, Logindrop, Loginpassword } from '@cudo/shared-components';
+import { AccordionExampleMenu, ModalExampleModal2, Cardbar, Menubar, Tabsbar, Messagebar, Loginbar, Logindrop, Loginpassword } from '@cudo/shared-components';
 
-import ModalExampleModal2 from 'libs/shared-components/src/lib/components/modal/modal2';
+// import ModalExampleModal2 from 'libs/shared-components/src/lib/components/modal/modal2';
 import ModalExampleCompany from 'libs/shared-components/src/lib/components/modal/companypopup';
 import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
-import AccordionExampleMenu from 'libs/shared-components/src/lib/components/menu/sidebar';
+// import AccordionExampleMenu from 'libs/shared-components/src/lib/components/menu/sidebar';
 import ListExampleFloated from 'libs/shared-components/src/lib/components/task/taskarea';
 import ModalAddPrint from 'libs/shared-components/src/lib/components/modal/addfile';
 import ModalAddFile from 'libs/shared-components/src/lib/components/modal/addedfile';
@@ -28,8 +28,7 @@ import ManageFileStructure from 'libs/shared-components/src/lib/components/modal
 import ProjectSetting from 'libs/shared-components/src/lib/components/projectsetting/projectsetting';
 import EditProject from 'libs/shared-components/src/lib/components/projectsetting/editproject';
 import UserProfile from 'libs/shared-components/src/lib/components/userprofile/userprofile';
-import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
-
+import RegisterPage from 'libs/shared-components/src/lib/components/login/register';
 
 // import { Sidebar } from 'semantic-ui-react';
 
@@ -65,7 +64,8 @@ export function App() {
       <ManageFileStructure></ManageFileStructure><br />
       <ProjectSetting></ProjectSetting><br />
       <EditProject></EditProject><br />
-      <UserProfile></UserProfile>
+      <UserProfile></UserProfile><br />
+      <RegisterPage></RegisterPage>
     </div>
 
 
