@@ -1,51 +1,44 @@
-import { radios } from '@storybook/addon-knobs';
 import React from 'react';
-import { Button, Select,   Modal,  Tab,Table,  Input, Form, Grid, Image, Segment, TextArea} from 'semantic-ui-react';
-// import SampleModal from './sample-modal';
  
-import img from 'libs/shared-components/src/user_profile.png'; 
+import '../../../style/index.scss';
+import {Select, Input, Segment,Form, Grid ,Image,Checkbox,Button,Icon } from 'semantic-ui-react'
+import logo from 'libs/shared-components/src/slider.png';
+import img from 'libs/shared-components/src/Shape 2.png';
+/* eslint-disable-next-line */
+export interface LoginProps { }
 
-
-function UserProfile() {
-    const countryOptions = [
+export function RegisterPage(props: LoginProps) {
+ 
+    const description = [
+         
+      ] 
+      const countryOptions = [
         { key: 'af', value: 'af', text: 'Afghanistan' },
         { key: 'ax', value: 'ax', text: 'Aland Islands' },
          
       ]
-
- 
-  const [open, setOpen] = React.useState(false)
-   
   return (
-    <div className="app-content-body-dash navbar-collapse box-shadow bg-white-only" style={{background:'#e6e6e6'}}>
-      <div style={{background:'#fff', padding:'10px'}}> 
-          <span className="preliminary-font">User Profile</span>
-      
-         </div>
-         <Grid columns={4}>
-    <Grid.Column>
-     
-  
-  <div className="card card-custom gutter-b">
+    <div className="app-content-body ">
+        
+        <div className="main-outer-area">
  
- <div className="card-body">
- <img src={img}   /><br/>
- <label className="text-center">Change Picture</label>
- <Input  type="file" className="file-upload-input"   placeholder='Firstname' />
-  
- </div>
-  
-    
- 
-</div>
+            <Grid className="ui-login" columns={1} >
+                    
+            <Grid.Row  >
+      <Grid.Column >
+            
+             <div className="ln-form-outer">
+             
+             <img src={img}   />
+                    <div className="form-header">
+                     
+                    <h2 className="login">Register your account</h2>
+                    
+                    </div>
 
-    </Grid.Column>
-    <Grid.Column>
+                    <div className="form-inner">
 
-    <div className="card card-custom gutter-b widthcard" >
-  
- <div className="card-body">
-<Form>
+                    <Form>
 <Grid columns={2}>
 <Grid.Row>
   <Grid.Column>
@@ -67,7 +60,7 @@ function UserProfile() {
   <Grid.Column>
     <Form.Field>
       <label>Email Address</label>
-      <Input placeholder='Email Address' size='small' className="full-width margin_email" type="text" />
+      <Input placeholder='Email Address' size='small' className="full-width  " type="text" />
     </Form.Field>
   </Grid.Column>
   <Grid.Column>
@@ -148,37 +141,32 @@ function UserProfile() {
   </Grid.Column>
 </Grid.Row>
 </Grid>
-<Grid columns={1}>
-<Grid.Row>
-  <Grid.Column>
-    <Form.Field>
-    <Button
-          content="update" 
-          
-          size='mini' className="grey-btn"
-        />
-        <Button size='mini' className="icon-border"  >
-        X  Cancel
-        </Button>
-    </Form.Field>
-  </Grid.Column>
- 
-</Grid.Row>
-</Grid>
+<button className="ui large button grey-btn btn-large">Register <i aria-hidden="true" className="arrow right icon"></i>   </button>
 
 
     </Form>
- </div>
-</div>
-   
-    </Grid.Column>
-  </Grid>
-   
-  </div>
+                 </div>  
 
-  
-  )
+              </div>
+        
+            </Grid.Column>
+
+             
+           
+            </Grid.Row>
+             
+            </Grid>
+ 
+          
+        </div>
+
+        
+
+    </div>
+        
+    
+ 
+  );
 }
 
-export default UserProfile
- 
+export default RegisterPage;

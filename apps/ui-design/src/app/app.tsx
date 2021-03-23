@@ -29,7 +29,7 @@ import ManageFileStructure from 'libs/shared-components/src/lib/components/modal
 import ProjectSetting from 'libs/shared-components/src/lib/components/projectsetting/projectsetting';
 import EditProject from 'libs/shared-components/src/lib/components/projectsetting/editproject';
 import UserProfile from 'libs/shared-components/src/lib/components/userprofile/userprofile';
-
+import RegisterPage from 'libs/shared-components/src/lib/components/login/register';
 
 // import { Sidebar } from 'semantic-ui-react';
 
@@ -65,7 +65,8 @@ export function App() {
      <ManageFileStructure></ManageFileStructure><br/>
     <ProjectSetting></ProjectSetting><br/>
     <EditProject></EditProject><br/>
-    <UserProfile></UserProfile>
+    <UserProfile></UserProfile><br/>
+    <RegisterPage></RegisterPage>
     </div>
     
    
