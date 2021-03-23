@@ -43,12 +43,38 @@
           "type": "object",
           "properties": {
             "company_name": {
-              "type": "string",
-              "title": "Comapany Name"
+              "type": "string"
+            }
+          }
+        },
+        "phone": {
+          "type": "object",
+          "properties": {
+            "country_code": {
+              "type": "string"
             },
-            "company_address": {
-              "type": "string",
-              "title": "Comapany Address"
+            "phone_number": {
+              "type": "string"
+            }
+          }
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "address_line_1": {
+              "type": "string"
+            },
+            "address_line_2": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "state_pin": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
             }
           }
         }

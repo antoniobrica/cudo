@@ -40,8 +40,32 @@ export const FORM_LABELS: { [key: string]: FormLabel } = {
     label: "Comapny Name",
     priority: 90,
   },
-  "traits.company.company_address": {
-    label: "Address",
+  "traits.phone.country_code": {
+    label: "Country Code",
+    priority: 90,
+  },
+  "traits.phone.phone_number": {
+    label: "Phone Number",
+    priority: 90,
+  },
+  "traits.address.address_line_1": {
+    label: "Address Line 1",
+    priority: 90,
+  },
+  "traits.address.address_line_2": {
+    label: "Address Line 2",
+    priority: 90,
+  },
+  "traits.address.city": {
+    label: "City",
+    priority: 90,
+  },
+  "traits.address.state_pin": {
+    label: "State Pin",
+    priority: 90,
+  },
+  "traits.address.country": {
+    label: "Country",
     priority: 90,
   },
 }
