@@ -4,8 +4,6 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ProjectInfo from './components/project-info/project-info';
 
 import { initI18n } from '@cudo/mf-core';
-import { Loading } from '@cudo/ui'
-import { TestComponent } from './test-component/test-component';
 import { createBrowserHistory } from "history";
 import MicroFrontend from "../MicroFrontend";
 import { environment } from '../environments/environment';
@@ -21,6 +19,7 @@ const {
   EACT_APP_COST_HOST: costHost,
   REACT_APP_MEETING_HOST: meetingHost,
   REACT_APP_TASK_HOST: taskHost,
+  REACT_APP_DOCUMENT_HOST: documentHost
 } = environment;
 
 

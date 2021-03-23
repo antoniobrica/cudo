@@ -13,6 +13,7 @@ const {
   EACT_APP_COST_HOST: costHost,
   REACT_APP_MEETING_HOST: meetingHost,
   REACT_APP_TASK_HOST: taskHost,
+  REACT_APP_DOCUMENT_HOST: documentHost
 } = environment;
 
 
@@ -27,6 +28,11 @@ export interface TabMenuProps {}
     );
   }
 
+  function DocumentApp(history: any) {
+    return (
+      <MicroFrontend history={history} host={documentHost} name="DocumentApp" />
+    );
+  }
 
   function Home() {
     const [input, setInput] = React.useState("");
@@ -92,8 +98,10 @@ export interface TabMenuProps {}
         },
         {
            
-          menuItem: { key: 'Files', icon: 'folder open outline', content: 'Files' },
-          render: () => <Tab.Pane attached={false} onClick={handleOpenProject('files')}>Files</Tab.Pane>,
+          menuItem: { key: ' ', icon: 'folder open outline', content: 'Files' },
+          render: () => <Tab.Pane attached={false} onClick={handleOpenProject('files')}>
+            <DocumentApp />
+            </Tab.Pane>,
         },
         {
            

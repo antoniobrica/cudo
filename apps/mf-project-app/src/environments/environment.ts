@@ -7,4 +7,6 @@ export const environment = {
   REACT_APP_MEETING_HOST: "http://localhost:6005",
   API_URL:'http://localhost:5005/graphql',
   REACT_APP_TASK_HOST: "http://localhost:6009",
+  REACT_APP_DOCUMENT_HOST: "http://localhost:6010",
+
 };
