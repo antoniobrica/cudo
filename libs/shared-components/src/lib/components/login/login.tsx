@@ -31,11 +31,15 @@ export function Loginbar(props: LoginProps) {
                   <div className="form-inner">
                     <Form>
                       <Form.Field>
+
                         <Input placeholder='example@domain.com' className="full-width" icon='at' />
                       </Form.Field>
-                      <Button size='large' className="grey-btn btn-large" onClick={handleLogin}>Next <Icon name='arrow right' />   </Button>
+                      <Button size='large' className="grey-btn btn-large">Continue <Icon name='arrow right' />   </Button>
+
+
                     </Form>
                   </div>
+
                 </div>
               </Segment>
             </Grid.Column>

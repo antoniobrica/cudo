@@ -173,15 +173,7 @@ function ModalExampleModal2() {
 </Grid>
 
 </Form>
-<Button
-          content="Submit" 
-          onClick={() => setOpen(false)}
-          positive
-          size='mini' className="grey-btn"
-        />
-        <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
-        X  Cancel
-        </Button>
+
   
              
  
@@ -191,7 +183,15 @@ function ModalExampleModal2() {
        
       </Modal.Content>
       <Modal.Actions>
-    
+      <Button
+          content="Submit" 
+          onClick={() => setOpen(false)}
+          positive
+          size='mini' className="grey-btn"
+        />
+        <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+        X  Cancel
+        </Button>
         
       </Modal.Actions>
     </Modal>

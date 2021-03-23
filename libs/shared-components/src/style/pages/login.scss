@@ -1,246 +1,250 @@
 .main-outer-area {
-    position: relative;
-    width: 100%;
-    height: auto;
-     
-    background-color: #ffffff;
-    min-height: 100vh;
-    @include flexbox;
-    @include align-items(center);
+  position: relative;
+  width: 100%;
+  height: auto;
 
+  background-color: #ffffff;
+  min-height: 100vh;
+  @include flexbox;
+  @include align-items(center);
 }
-.login{
-    color: #000000;
+.login {
+  color: #000000;
 }
 .login-header {
-    background: color("grey", "lighten-6");
-    box-shadow: 0px 3px 4px #00000017;
-    opacity: 1;
-    height: 8rem;
-    padding: 1rem 10rem;
+  background: color('grey', 'lighten-6');
+  box-shadow: 0px 3px 4px #00000017;
+  opacity: 1;
+  height: 8rem;
+  padding: 1rem 10rem;
+  @include flexbox;
+  @include align-items(center);
+  @include justify-content(space-between);
+  @include absolute(top 0px);
+  width: 100%;
+
+  @media (max-width:#{$large-desktop-up}) {
+    padding: 1rem 6rem;
+  }
+  @media (max-width:#{$small-screen}) {
+    padding: 1rem 2rem;
+  }
+  .logo {
+    width: 40%;
+    max-height: 4rem;
+    text-align: left;
     @include flexbox;
     @include align-items(center);
-    @include justify-content(space-between);
-    @include absolute(top 0px);
-    width: 100%;
-    
-    @media (max-width:#{$large-desktop-up}) {
-        padding: 1rem 6rem;
+    img {
+      max-width: 100%;
+      max-height: 4rem;
     }
-    @media (max-width:#{$small-screen}) {
-        padding: 1rem 2rem;
+  }
+  p {
+    color: color('grey', 'lighten-2') !important;
+    text-align: right;
+    font-size: 1.5rem;
+    a {
+      color: color('blue', 'base');
     }
-    .logo {
-        width: 40%;
-        max-height: 4rem;
-        text-align: left;
-        @include flexbox;
-        @include align-items(center);
-        img {
-            max-width: 100%;
-            max-height: 4rem;
-        }
-    }
-    p {
-        color: color("grey", "lighten-2") !important;
-        text-align: right;
-        font-size: 1.5rem;
-        a {
-            color: color("blue", "base");
-        }
-    }
+  }
 }
 
-.ln-form-outer .ui.stackable.grid>.row>.column {
-    // padding: 0 !important;
-    @media (max-width:#{$small-screen}) {
-        padding: 0 !important;
-    }
+.ln-form-outer .ui.stackable.grid > .row > .column {
+  // padding: 0 !important;
+  @media (max-width:#{$small-screen}) {
+    padding: 0 !important;
+  }
 }
 
 .ln-form-outer {
-    background: color("shades", "white");
-     
-    max-width: 90%;
-    width: 85rem;
-    position: relative;
-    padding: 4rem 5rem;
-    border-radius: 0.6rem;
-    top: 90px;
-    @media (max-width:#{$small-screen}) {
-        padding: 2rem 3rem;
+  background: color('shades', 'white');
+
+  max-width: 90%;
+  width: 85rem;
+  position: relative;
+  padding: 4rem 5rem;
+  border-radius: 0.6rem;
+  top: 90px;
+  @media (max-width:#{$small-screen}) {
+    padding: 2rem 3rem;
+  }
+  @media (max-width:#{$x-small}) {
+    padding: 2rem;
+  }
+  .form-header {
+    margin: 0 0 3rem 0;
+    h6 {
+      margin: 0 0 2rem 0;
     }
-    @media (max-width:#{$x-small}) {
-        padding: 2rem;
-    }
-    .form-header {
-        margin: 0 0 3rem 0;
-        h6 {
-            margin: 0 0 2rem 0;
-        }
-        p {
-            color: color("grey", "lighten-2");
-            letter-spacing: 0.56px;
-            line-height: 2.4rem;
-            padding: 0 3rem;
-            @media (max-width:#{$x-small}) {
-                padding: 0;
-                line-height: 2rem;
-            }
-        }
-        .welcome{
-            font-size: 16px;
-            text-transform: uppercase;
-        }
-    }
-    .agree-checkbox {
-        @include flex(flex);
-        @include align-items(center);
-        margin: 3rem 0 !important;
-        a {
-            font-weight: $font-regular;
-            text-decoration: underline;
-        }
-        p {
-            @media (max-width:#{$x-small}) {
-                margin-left: 1rem;
-            }
-        }
-    }
-    .ui.form .field {
-        margin: 0 0 3rem 0;
-        @media (max-width:#{$x-small}) {
-            margin: 0 0 2rem 0;
-        }
-    }
-    .ui.grid>.row {
+    p {
+      color: color('grey', 'lighten-2');
+      letter-spacing: 0.56px;
+      line-height: 2.4rem;
+      padding: 0 3rem;
+      @media (max-width:#{$x-small}) {
         padding: 0;
+        line-height: 2rem;
+      }
     }
+    .welcome {
+      font-size: 16px;
+      text-transform: uppercase;
+    }
+  }
+  .agree-checkbox {
+    @include flex(flex);
+    @include align-items(center);
+    margin: 3rem 0 !important;
+    a {
+      font-weight: $font-regular;
+      text-decoration: underline;
+    }
+    p {
+      @media (max-width:#{$x-small}) {
+        margin-left: 1rem;
+      }
+    }
+  }
+  .ui.form .field {
+    margin: 0 0 3rem 0;
+    @media (max-width:#{$x-small}) {
+      margin: 0 0 2rem 0;
+    }
+  }
+  .ui.grid > .row {
+    padding: 0;
+  }
 }
 
 .ln-submit {
-    @include flexbox;
-    @include align-items(center);
-    @include justify-content(space-between);
-    .ui.button.form-button {
-        min-width: 15rem;
-        width: auto;
-        @media (max-width:#{$x-small}) {
-            max-width: 100%;
-            margin: 0 0 1rem 0;
-        }
-    }
-    p {
-        font-weight: $font-medium;
-    }
+  @include flexbox;
+  @include align-items(center);
+  @include justify-content(space-between);
+  .ui.button.form-button {
+    min-width: 15rem;
+    width: auto;
     @media (max-width:#{$x-small}) {
-        flex-direction: column;
+      max-width: 100%;
+      margin: 0 0 1rem 0;
     }
+  }
+  p {
+    font-weight: $font-medium;
+  }
+  @media (max-width:#{$x-small}) {
+    flex-direction: column;
+  }
 }
 
 .profile-check {
+  position: relative;
+  width: 100%;
+  margin: 1rem 0;
+  @include flexbox;
+  @include justify-content(center);
+  .profile-checker {
     position: relative;
+    max-width: 11rem;
     width: 100%;
-    margin: 1rem 0;
-    @include flexbox;
-    @include justify-content(center);
-    .profile-checker {
-        position: relative;
-        max-width: 11rem;
-        width: 100%;
-        margin: 1rem 2rem;
-        text-align: center;
-        input {
-            @include absolute(left 0px top 0px);
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            cursor: pointer;
-            opacity: 0;
-        }
-        input:checked+.select-inner {
-            .img-area {
-                border: 3px solid color("blue", "base");
-                .material-icons {
-                    opacity: 1;
-                }
-            }
-        }
-        .img-area {
-            width: 11rem;
-            height: 11rem;
-            background: color("grey", "lighten-6");
-            border-radius: 100%;
-            margin: 0 0 1rem 0;
-            @include flexbox;
-            @include align-items(flex-end);
-            @include justify-content(center);
-            overflow: hidden;
-            border: 3px solid transparent;
-            transition: all 0.3s;
-            img {
-                max-width: 100%;
-            }
-            .material-icons {
-                background: color("blue", "base");
-                width: 2.8rem;
-                height: 2.8rem;
-                border-radius: 100%;
-                color: color("shades", "white");
-                z-index: 11;
-                @include absolute(right 7px top 4px);
-                font-size: 1.8rem;
-                @include flexbox;
-                @include align-items(center);
-                @include justify-content(center);
-                opacity: 0;
-                pointer-events: none;
-                transition: all 0.3s;
-            }
-        }
-        label {
-            font-size: 1.6rem;
-            font-weight: $font-medium;
-            color: color("shades", "black");
-        }
+    margin: 1rem 2rem;
+    text-align: center;
+    input {
+      @include absolute(left 0px top 0px);
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      cursor: pointer;
+      opacity: 0;
     }
+    input:checked + .select-inner {
+      .img-area {
+        border: 3px solid color('blue', 'base');
+        .material-icons {
+          opacity: 1;
+        }
+      }
+    }
+    .img-area {
+      width: 11rem;
+      height: 11rem;
+      background: color('grey', 'lighten-6');
+      border-radius: 100%;
+      margin: 0 0 1rem 0;
+      @include flexbox;
+      @include align-items(flex-end);
+      @include justify-content(center);
+      overflow: hidden;
+      border: 3px solid transparent;
+      transition: all 0.3s;
+      img {
+        max-width: 100%;
+      }
+      .material-icons {
+        background: color('blue', 'base');
+        width: 2.8rem;
+        height: 2.8rem;
+        border-radius: 100%;
+        color: color('shades', 'white');
+        z-index: 11;
+        @include absolute(right 7px top 4px);
+        font-size: 1.8rem;
+        @include flexbox;
+        @include align-items(center);
+        @include justify-content(center);
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.3s;
+      }
+    }
+    label {
+      font-size: 1.6rem;
+      font-weight: $font-medium;
+      color: color('shades', 'black');
+    }
+  }
 }
 
 .remeber-checkbox {
-    @include flex(flex);
-    @include align-items(center);
-    @include justify-content(space-between);
-    margin: 3rem 0 -1rem !important;
+  @include flex(flex);
+  @include align-items(center);
+  @include justify-content(space-between);
+  margin: 3rem 0 -1rem !important;
 }
 
 .verification-box {
+  text-align: center;
+  .ui.button {
+    margin: 2rem 0;
+    width: auto;
+    min-width: 18rem;
+  }
+  .logo {
+    width: 100%;
+    margin: 0 0 3rem 0;
     text-align: center;
-    .ui.button {
-        margin: 2rem 0;
-        width: auto;
-        min-width: 18rem;
+    img {
+      max-width: 180px;
+      display: inline-block;
     }
-    .logo {
-        width: 100%;
-        margin: 0 0 3rem 0;
-        text-align: center;
-        img {
-            max-width: 180px;
-            display: inline-block;
-        }
-    }
+  }
 }
-.forgot{
-    float: right;
-    color: #2D62ED;
+.forgot {
+  float: right;
+  color: #2d62ed;
 }
 .btn-large {
-    width: 100%;
+  width: 100%;
 }
-.ui.grid.ui-login{
-    margin-top: -1rem; 
-     margin-bottom: 0rem;
+.ui.grid.ui-login {
+  margin-top: -1rem;
+  margin-bottom: 0rem;
 }
- .massive {
-     height: 100vh;
- }
+.login-user {
+  background: #effff7;
+  padding: 10px;
+}
+.img-src {
+  margin-right: 4%;
+  float: left;
+}
