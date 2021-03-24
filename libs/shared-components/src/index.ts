@@ -30,3 +30,5 @@ export * from './lib/components/projectsetting/projectsetting';
 export * from './lib/components/projectsetting/editproject'; 
 export * from './lib/components/userprofile/userprofile'; 
 export * from './lib/components/login/register'; 
+export * from './lib/components/modal/addsublevel'; 
+ 

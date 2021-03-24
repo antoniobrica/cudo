@@ -1,21 +1,26 @@
 import React from 'react';
  
 import '../../../style/index.scss';
-import { Tab,Grid,Card,Table,Form   } from 'semantic-ui-react'
+import { Tab,Grid,Accordion,Table,Form   } from 'semantic-ui-react'
 import img4 from 'libs/shared-components/src/Burj-Khalifa.png';
 import img5 from 'libs/shared-components/src/edit.png';
-import img1 from 'libs/shared-components/src/green_people.png';
-
+import img1 from 'libs/shared-components/src/green_people.png'; 
 import img2 from 'libs/shared-components/src/online4.png';
 import img3 from 'libs/shared-components/src/online3.png';
 import img6 from 'libs/shared-components/src/online2.png';
 import img7 from 'libs/shared-components/src/online1.png';
+
+import img8 from 'libs/shared-components/src/Ellipse.png';
+import img9 from 'libs/shared-components/src/task_file.png';
+
+ 
 
 /* eslint-disable-next-line */
 export interface TabsProps { }
 
 export function ProjectSetting(props: TabsProps) {
  
+   
     const panes = [
         {
           menuItem: { key: 'Overview', icon: 'file alternate outline', content: 'Project Information' },
@@ -164,110 +169,124 @@ export function ProjectSetting(props: TabsProps) {
         },
         {
           menuItem: { key: 'Task', icon: 'tasks', content: 'Project Structure' },
-          render: () => <Tab.Pane attached={false}>  Task</Tab.Pane>,
+          render: () => <Tab.Pane attached={false}>   
+          
+          <div className="ui-tabs">
+ 
+
+
+<div className="ui card " style={{width: '80%'}}>
+ 
+    
+    <div className="content" style={{borderTop:'none'}}>
+        <div className="data-built"> 
+        <div className="content">
+                <div className="description"> <img src={img9}  /> General <span className="mr-2" style={{float:'right'}}>...</span></div> 
+                
+            </div>
+        
+        </div>
+     
+        </div>
+                
+        </div>
+
+        <button style={{width:'80%'}} className="ui large button btn-dashed  btn-large"><i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> Add Top Level  </button>
+  </div>
+
+
+
+          
+          
+          </Tab.Pane>,
         },
         {
            
-          menuItem: { key: 'Planning', icon: 'file alternate outline', content: 'File Naming Structure' },
+          menuItem: { key: 'File Naming Structure', icon: 'file alternate outline', content: 'File Naming Structure' },
           render: () => <Tab.Pane attached={false}> 
           
           
           <div className="ui-tabs">
 
             <h5 className="colorfile">File Name Structure</h5>
-              <Grid>
-<Grid.Row>
-  <Grid.Column >
+              
  
     
-      <div className="ui card" style={{width:'100%'}}>
-            <div className="content">
+      <div className="ui card " style={{width: '80%'}}>
+         
                
-            <div className="description"> 
+                <div className="content">
 
-
-                          
-      <Form>
- 
-<Grid columns={3}>
-<Grid.Row>
-  <Grid.Column>
-    <Form.Field>
-    <img src={img4}  />
-    </Form.Field>
-  </Grid.Column>
-
-  <Grid.Column>
-    <Form.Field className="field_left">
-    <span><strong>Burj Khalifa  </strong></span> <span><br/>John & Co.</span> <span style={{color:'#2D62ED'}}><br/> Estimate Cost: $5,000.00 - Total Cost: $5,000.00 </span>
-            
-    </Form.Field>
-  </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
-    <span className="summary"><button className="ui mini button edit_btn">  <img src={img5}  /> Edit</button> 
-                     </span> </Form.Field>
-  </Grid.Column>
-</Grid.Row>
-</Grid>
-</Form>
- 
-                </div>
- 
-                </div>
-               
-                <div>
-
-                <Table celled className="default_table">
-    <Table.Header>
-      <Table.Row>
-        <Table.HeaderCell>City</Table.HeaderCell>
-        <Table.HeaderCell>State Pin</Table.HeaderCell>
-        <Table.HeaderCell>Country</Table.HeaderCell>
-        <Table.HeaderCell>Address</Table.HeaderCell>
-      </Table.Row>
-    </Table.Header>
+                <Table>
+   
 
     <Table.Body>
       <Table.Row>
-        <Table.Cell >Bern</Table.Cell>
-        <Table.Cell>8090</Table.Cell>
-        <Table.Cell>Switzerland</Table.Cell>
-        <Table.Cell> Müller Ltd, Mr R. Bürki Zollikerstrasse 788  
-8008 Zurich</Table.Cell>
+        <Table.Cell >Position</Table.Cell>
+        <Table.Cell>1</Table.Cell>
+        <Table.Cell>2</Table.Cell>
+        <Table.Cell> 3</Table.Cell>
+        <Table.Cell> 4</Table.Cell>
+        <Table.Cell> 5</Table.Cell>
+        <Table.Cell> 6</Table.Cell>
+        <Table.Cell> 7</Table.Cell>
+        <Table.Cell> 8</Table.Cell>
+        <Table.Cell> 9</Table.Cell>
+        <Table.Cell> 10</Table.Cell>
+        <Table.Cell> 11</Table.Cell>
+        <Table.Cell> 12</Table.Cell>
         
       </Table.Row>
-
+      <Table.Row>
+        <Table.Cell className="position">Position</Table.Cell>
+        <Table.Cell className="table_background">1</Table.Cell>
+        <Table.Cell className="table_background">3</Table.Cell>
+        <Table.Cell className="table_background"> 2</Table.Cell>
+        <Table.Cell className="table_background"> 0</Table.Cell>
+        <Table.Cell> .</Table.Cell>
+        <Table.Cell className="table_background"> 3</Table.Cell>
+        <Table.Cell className="table_background"> 1</Table.Cell>
+        <Table.Cell className="table_background"> 3</Table.Cell>
+        <Table.Cell> .</Table.Cell>
+        <Table.Cell className="table_background"> 3</Table.Cell>
+        <Table.Cell className="table_background"> 2</Table.Cell>
+        <Table.Cell className="table_background"> A</Table.Cell>
+        
+      </Table.Row>
    
     </Table.Body>
   </Table>
 
                 </div>
+                
                 <div className="content" style={{borderTop:'none'}}>
                     <div className="data-built"> 
                    
-                    <p> The building utilizes wrapped glass facades on the east, north, and west both for aesthetics and to reduce the amount of reflective surface area on the south facade, which also features brushed Jura limestone. </p>
+                    <p><span className="mr-10 "> <img src={img8}  /></span> <span className="mr-10 ">Pos.1 </span> <span  className="mr-10 ">Internal Project Number</span>  </p>
+                   
+                    <p><span className="mr-10 "> <img src={img8}  /></span> <span className="mr-10 ">Pos.6</span> <span  className="mr-10 ">Phase Number</span>  </p>
+                   
+                    <p><span className="mr-10 "> <img src={img8}  /></span> <span className="mr-10 ">Pos.7</span> <span  className="mr-10 ">Type of Building </span>  </p>
+                   
+                    <p><span className="mr-10 "> <img src={img8}  /></span> <span className="mr-10 ">Pos.8</span> <span  className="mr-10 ">Sub-project Number</span>  </p>
+                   
+                    <p><span className="mr-10 "> <img src={img8}  /></span> <span className="mr-10 ">Pos.10</span> <span  className="mr-10 ">Level of the building</span>  </p>
+                   
+                    <p><span className="mr-10 "> <img src={img8}  /></span> <span className="mr-10 ">Pos.11</span> <span  className="mr-10 ">Document Type</span>  </p>
+                   
+                    <p><span className="mr-10 "> <img src={img8}  /></span> <span className="mr-10 ">Pos.12 </span> <span  className="mr-10 ">Increment value for the Document</span>  </p>
+                   
                     </div>
-                    <div>
-                        <br/>
-                        <p style={{color:'#000'}}>Work Type</p>
-                        <button className="ui mini button btn_work_type  ">Electrical Work</button>
-                        <button className="ui mini button  btn_work_type">HVAC Work</button>
-                       
-                    </div>
+                   
                     </div>
                    
                     </div>
  
-     
-                    
-        
-  </Grid.Column>
-  
-  </Grid.Row>
-  </Grid>
+      
               </div>
           
+ 
+           
           
           </Tab.Pane>,
         },
@@ -292,5 +311,5 @@ export function ProjectSetting(props: TabsProps) {
  
   );
 }
-
+ 
 export default ProjectSetting;
