@@ -4,7 +4,7 @@ import { Button, Select, Modal, Tab, Table, Input, Form, Grid, Image, Segment, T
 // import SampleModal from './sample-modal';
 
 import img from 'libs/shared-components/src/user_profile.png';
-
+import img5 from 'libs/shared-components/src/edit.png';
 
 function UserProfileView() {
   const countryOptions = [
@@ -155,11 +155,7 @@ function UserProfileView() {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <Button
-                          content="Edit Profile"
-
-                          size='mini' className="disabled"
-                        />
+                      <button className="ui mini button edit_btn">  <img src={img5} /> Edit</button>
 
                       </Form.Field>
                     </Grid.Column>
