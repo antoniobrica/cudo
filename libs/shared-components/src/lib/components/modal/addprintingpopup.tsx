@@ -32,6 +32,7 @@ export function ModalExamplePrinting() {
               <Button className="secondary_btn" size='mini' primary>Click to upload</Button>
               <p className="paragraph">Click the upload button to upload the client logo</p>
             </div>
+
             <Form>
               <Grid columns={1}>
                 <Grid.Row>
@@ -41,8 +42,10 @@ export function ModalExamplePrinting() {
                       <Input placeholder='Al Hamra Company' size='small' className="full-width" type="text" />
                     </Form.Field>
                   </Grid.Column>
+
                 </Grid.Row>
               </Grid>
+
               <Grid columns={2}>
                 <Grid.Row>
                   <Grid.Column>
@@ -51,10 +54,12 @@ export function ModalExamplePrinting() {
                       <Input placeholder='Email' size='small' className="full-width" type="text" />
                     </Form.Field>
                   </Grid.Column>
+
                   <Grid.Column>
                     <Form.Field>
                       <label>Type  </label>
                       <Select placeholder='Select' className="small" options={countryOptions} />
+
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -66,8 +71,12 @@ export function ModalExamplePrinting() {
                       <a className="anchor-color">+ Add New</a>
                     </Form.Field>
                   </Grid.Column>
+
+
                 </Grid.Row>
               </Grid>
+
+
               <Grid columns={2} >
                 <Grid.Row>
                   <Grid.Column >
@@ -87,12 +96,15 @@ export function ModalExamplePrinting() {
                             <Form.Field>
                               <Select placeholder='Select' className="small" options={countryOptions} />
                             </Form.Field>
+
                           </Grid.Column>
                         </Grid.Row>
                       </Grid>
+
                     </Form.Field>
                   </Grid.Column>
-                  <Grid.Column>
+
+                  <Grid.Column  >
                     <Form.Field>
                       <label>Type  </label>
                       <Select placeholder='Select' className="small" options={countryOptions} />
@@ -108,7 +120,9 @@ export function ModalExamplePrinting() {
                       <Input placeholder='Address Line 1' size='small' className="full-width" type="text" />
                     </Form.Field>
                   </Grid.Column>
+
                 </Grid.Row>
+
               </Grid>
               <Grid columns={1}>
                 <Grid.Row>
@@ -118,36 +132,50 @@ export function ModalExamplePrinting() {
                       <Input placeholder='Address Line 2' size='small' className="full-width" type="text" />
                     </Form.Field>
                   </Grid.Column>
+
                 </Grid.Row>
+
               </Grid>
+
               <Grid columns={3}>
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
                       <label>City  </label>
                       <Input placeholder='City' size='small' className="full-width" type="text" />
+
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
                       <label>State Pin </label>
                       <Input placeholder='State Pin' size='small' className="full-width" type="text" />
+
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
                       <label>Country  </label>
                       <Select placeholder='Select' className="small" options={countryOptions} />
+
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
                 </Grid.Row>
+
               </Grid>
             </Form>
+
+
+
+
           </div>
+
+
         </Modal.Content>
         <Modal.Actions>
+
           <Button
             content="Add Company"
             onClick={() => setOpen(false)}
@@ -157,9 +185,14 @@ export function ModalExamplePrinting() {
           <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
             X  Cancel
         </Button>
+
         </Modal.Actions>
+
+
+
       </Modal>
     </div>
+
   )
 }
 

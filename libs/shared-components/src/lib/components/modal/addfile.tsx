@@ -3,9 +3,13 @@ import { Button, Header,   Modal,  Tab,Table,  Input, Form, Grid, Image, Select,
 // import SampleModal from './sample-modal';
  
 import img from 'libs/shared-components/src/upload.png';
+export interface FileProps {
+  fileData
+  onFileSubmit
+  setting
+ }
 
-
-function ModalAddPrint() {
+function ModalAddPrint( props: FileProps) {
     const countryOptions = [
         { key: 'af', value: 'af', text: 'Afghanistan' },
         { key: 'ax', value: 'ax', text: 'Aland Islands' },
@@ -14,9 +18,24 @@ function ModalAddPrint() {
 
  
   const [open, setOpen] = React.useState(false)
-   
+  const [file, setFile] = React.useState(null)
+
+  const onFileChange = event => {
+    const fl = event.target.files;
+    // console.log('multiple==>',fl)
+    setFile(fl);
+    props.fileData(fl);
+
+  };
+  const upload = () =>{
+    setOpen(false);
+    props.onFileSubmit(file);
+  }
+  const openSetting =()=>{
+    props.setting();
+  }
   return (
-    <div id="navbar">
+    <div id=" " >
     <Modal className="modal_media modal_center modal_media_1"
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
@@ -34,13 +53,13 @@ function ModalAddPrint() {
 <Grid.Row>
   <Grid.Column>
     <Form.Field>
-  <div className="dashed_area md_upload">
+  <div className="dashed_area" style={{paddingTop:15}}>
   <div className="file-upload-message">
   <img src={img}  className="mr-10 " />
       <p className="file-upload-default-message">Drag & drop or click here to upload file</p>
       
       </div>
-  <Input  type="file" className="file-upload-input" />
+  <Input  type="file" className="file-upload-input" multiple={true} onChange={onFileChange}  />
   </div>
     
     </Form.Field>
@@ -48,12 +67,12 @@ function ModalAddPrint() {
  
 </Grid.Row>
 </Grid>
-
+<br/><br/>
 <Grid columns={1}>
 <Grid.Row>
   <Grid.Column>
     <Form.Field>
-    <div className="content">
+    <div className="content" onClick={openSetting}>
                 <div className="description">File settings
                <span className="float_right"><i className="ms-Icon ms-Icon--ChevronRightMed" aria-hidden="true"></i> </span> 
                 </div> 
@@ -73,7 +92,7 @@ function ModalAddPrint() {
       <Modal.Actions>
       <Button
           content="Submit" 
-          onClick={() => setOpen(false)}
+          onClick={upload}
           positive
           size='mini' className="grey-btn"
         />

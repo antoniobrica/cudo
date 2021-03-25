@@ -139,6 +139,16 @@
     },
     "mf-account-app-lib": {
       "tags": []
+    },
+    "mf-document-lib": {
+      "tags": []
+    },
+    "mf-document-app": {
+      "tags": []
+    },
+    "mf-document-app-e2e": {
+      "tags": [],
+      "implicitDependencies": ["mf-document-app"]
     }
   }
 }

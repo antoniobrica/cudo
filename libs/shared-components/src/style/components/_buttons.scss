@@ -448,9 +448,11 @@ div.ui.radio.checkbox label:before {
   border: 1px solid #2d62ed !important;
   border-radius: 10px !important;
 }
-
-.no_background {
-  background: #e6e6e6 !important;
+.btn_radius {
+  background: #fff !important;
+  color: #2d62ed !important;
+  border: 1px solid #2d62ed !important;
+  border-radius: 10px !important;
 }
 
 .edit_btn {
