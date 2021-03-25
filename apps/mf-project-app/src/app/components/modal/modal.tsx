@@ -6,10 +6,9 @@ import { IProject, IProjects, ProjectMutation, IWorkTypes, IProjectWorktypes, Pr
 import { useProjectMutation, useProjectQuery, useWorkTypesQuery, useCompanyQuery, useBuildingTypesQuery } from '../../services/useRequest';
 import { ApolloCache, FetchResult } from '@apollo/client';
 import { ADD_PROJECT, GET_BUILDINGTYPES, GET_CLIENT_COMPANY, GET_PRINTING_COMPANY, GET_PROJECTS, GET_WORKTYPES } from "../../graphql/graphql";
-import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
-import ModalExampleCompany from 'libs/shared-components/src/lib/components/modal/companypopup'; 
+import { ModalExamplePrinting, ModalExampleCompany } from '@cudo/shared-components'
 import WorkType from '../../work-type/work-type';
-import {MfAccountAppLib} from '@cudo/mf-account-app-lib';
+import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
 
 function ModalExampleModal() {
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
@@ -70,7 +69,6 @@ function ModalExampleModal() {
   const [addWorkTypes, setAddWorkTypes] = React.useState(1)
   const [secondOpen, setSecondOpen] = React.useState(false)
   const [projectWorkEstimates, setProjectWorkEstimates] = React.useState(null)
-
   const [addProject] = useProjectMutation(ADD_PROJECT);
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
   const { loading: worktypeLoading, error, data: worktypeData } = useWorkTypesQuery(GET_WORKTYPES);
@@ -78,33 +76,27 @@ function ModalExampleModal() {
   const { loading: clientLoading, data: clientCompany } = useCompanyQuery(GET_CLIENT_COMPANY);
   const { loading: buildingTypesloading, data: buildingTypesData } = useBuildingTypesQuery(GET_BUILDINGTYPES);
 
-
-
   React.useEffect(() => {
     if (worktypeData) {
       setItems(worktypeData.workTypes.map(({ name }) => ({ key: name, value: name, text: name })));
-
     }
   }, [worktypeData]);
 
   React.useEffect(() => {
     if (buildingTypesData) {
       setBuildingTypes(buildingTypesData.buildingTypes.map(({ name }) => ({ key: name, value: name, text: name })));
-
     }
   }, [buildingTypesData]);
 
   React.useEffect(() => {
     if (printingCompanyData) {
       setPrintingCompany(printingCompanyData.company.map(({ companyName }) => ({ key: companyName, value: companyName, text: companyName })));
-
     }
   }, [printingCompanyData]);
 
   React.useEffect(() => {
     if (clientCompany) {
       setClientCompany(clientCompany.company.map(({ companyName }) => ({ key: companyName, value: companyName, text: companyName })));
-
     }
   }, [clientCompany]);
 
@@ -121,7 +113,6 @@ function ModalExampleModal() {
       return (
         <div>
           <ModalExampleCompany></ModalExampleCompany><br />
-          {/* <ModalExamplePrinting></ModalExamplePrinting><br/> */}
         </div>)
     }
   }
@@ -166,8 +157,8 @@ function ModalExampleModal() {
   const onZip = e => {
     setZip(e.target.vale)
   }
-  const onCountry = ( data) => {
-    console.log('selected_country',data)
+  const onCountry = (data) => {
+    console.log('selected_country', data)
     setCountry(data.value)
   }
   const onDescription = e => {
@@ -179,14 +170,11 @@ function ModalExampleModal() {
   }
   const moreWorkTypes = (data: ProjectWorkTypeModel) => {
     setProjectWorkEstimates(data);
-    console.log('selected-worktypes',projectWorkEstimates);
+    console.log('selected-worktypes', projectWorkEstimates);
 
   }
   const handleSaveProject = () => {
     setOpen(false);
-    // props.close();
-    // let projectNumber: number = + projectNum;
-    //  debugger
     addProject({
       variables: {
         projectName, projectNum, client, buildingType,
@@ -293,8 +281,6 @@ function ModalExampleModal() {
                   <a className="anchor-color" onClick={() => setSecondOpen(true)}>+ Add New</a>
                 </Form.Field>
               </Grid.Column>
-
-
             </Grid.Row>
           </Grid>
 
@@ -302,19 +288,16 @@ function ModalExampleModal() {
         <div>
           <Header className="header" >Manage work type and estimated cost</Header>
         </div>
-        <WorkType  worktypes={items} workTypeData={moreWorkTypes}/>
+        <WorkType worktypes={items} workTypeData={moreWorkTypes} />
         <Table>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Work Type</Table.HeaderCell>
               <Table.HeaderCell> </Table.HeaderCell>
               <Table.HeaderCell>Estimate Cost</Table.HeaderCell>
-
             </Table.Row>
           </Table.Header>
-
           <Table.Body>
-            
             {/* {
           [...Array(addWorkTypes)].map((k,i)=>  
 <Table.Row key={i}>
@@ -363,7 +346,7 @@ function ModalExampleModal() {
         
         )
         }          */}
-          {/* <Table.Row>
+            {/* <Table.Row>
               <Table.Cell>
                 <a onClick={addWorkType}>+ Add more </a>
 
@@ -377,9 +360,7 @@ function ModalExampleModal() {
         </Table>
 
         <div>
-
           <Header className="header" >Address Information</Header>
-
         </div>
         <Form>
           <Grid columns={2}>
@@ -394,7 +375,6 @@ function ModalExampleModal() {
                   />
                 </Form.Field>
               </Grid.Column>
-
               <Grid.Column>
                 <Form.Field>
                   <label>Address Line 2   </label>
@@ -407,7 +387,6 @@ function ModalExampleModal() {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-
           <Grid columns={4}>
             <Grid.Row>
               <Grid.Column>
@@ -450,7 +429,7 @@ function ModalExampleModal() {
                     onChange={onCountry}
                   />
                 </Form.Field> */}
-                <MfAccountAppLib parentCallback={onCountry}/>
+                <MfAccountAppLib parentCallback={onCountry} />
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -469,7 +448,6 @@ function ModalExampleModal() {
 
             </Grid.Row>
           </Grid>
-
         </Form>
 
 

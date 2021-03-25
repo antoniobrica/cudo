@@ -27,10 +27,13 @@ export const Login = () => {
     <div className="main-outer-area">
       <div className="ui-login">
         <div className="alternative-actions">
-          <p>
+          {/* <p>
             <Button size='large' className="grey-btn btn-large" onClick={() => register({ setReferer: false })} >
               Register new account
             </Button>
+          </p> */}
+          <p>
+            <Link to={config.routes.registration.path}>Register</Link>
           </p>
           <p>
             <Link to={config.routes.recovery.path}>Reset password</Link>

@@ -29,6 +29,7 @@ import ProjectSetting from 'libs/shared-components/src/lib/components/projectset
 import EditProject from 'libs/shared-components/src/lib/components/projectsetting/editproject';
 import UserProfile from 'libs/shared-components/src/lib/components/userprofile/userprofile';
 import RegisterPage from 'libs/shared-components/src/lib/components/login/register';
+import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
 
 // import { Sidebar } from 'semantic-ui-react';
 

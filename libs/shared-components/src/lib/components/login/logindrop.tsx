@@ -10,6 +10,7 @@ import img4 from 'libs/shared-components/src/company1.png';
 /* eslint-disable-next-line */
 export interface LoginDropProps {
   login
+  email
 }
 
 export function Logindrop(props: LoginDropProps) {
@@ -18,6 +19,9 @@ export function Logindrop(props: LoginDropProps) {
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
     { key: 'al', value: 'al', text: 'Albania' },
   ]
+  const handleLogin = () => {
+    props.login();
+  }
   const description = [
 
   ]
@@ -52,18 +56,15 @@ export function Logindrop(props: LoginDropProps) {
                   <div className="form-inner">
                     <Form>
                       <Form.Field className="login-user">
-                        <label>  <span><img src={img3} className="img-src" /> </span> <span>softobiz@gmail.in  </span><span className="float-area">
+                        <label>  <span><img src={img3} className="img-src" /> </span> <span>{props.email}  </span><span className="float-area">
                           <i className="ms-Icon ms-Icon--Accounts" aria-hidden="true"></i> </span> </label>
                       </Form.Field>
                       <Form.Field>
                         <Select placeholder='Select Company' options={friendOptions} defaultValue={friendOptions[0].value} className="full-width" />
                       </Form.Field>
-                      <Button size='large' className="grey-btn btn-large">Continue <Icon name='arrow right' />   </Button>
-
-
+                      <Button onClick={handleLogin} size='large' className="grey-btn btn-large">Continue <Icon name='arrow right' />   </Button>
                     </Form>
                   </div>
-
                 </div>
               </Segment>
             </Grid.Column>

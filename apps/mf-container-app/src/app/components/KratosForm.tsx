@@ -1,6 +1,6 @@
 import React from "react"
 import { FormField, Message } from "@oryd/kratos-client"
-import { FORM_LABELS } from "../constants/kratos"
+import { FORM_LABELS } from "@cudo/mf-core"
 import { KratosMessages } from "../components/KratosMessages"
 import { Button, Form, Grid, Segment } from "semantic-ui-react"
 import logo from '../../assets/images/slider.png';
@@ -52,6 +52,7 @@ const sortFormFields = ({ fields }: { fields: FormField[] }) => {
 
 const renderFormFields = ({ fields = [] }: { fields: FormField[] }) => fields.map(field => {
   const { name, type, required, value, messages = [] } = field
+  console.log(name)
   const _required = required ? { required } : {}
   const _label = FORM_LABELS[name]?.label
   const style = type === "hidden" ? { display: "none" } : {}
