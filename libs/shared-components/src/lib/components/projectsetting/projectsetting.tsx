@@ -19,8 +19,24 @@ import img9 from 'libs/shared-components/src/task_file.png';
 export interface TabsProps { }
 
 export function ProjectSetting(props: TabsProps) {
- 
    
+  const level1Panels = [
+    { key: 'panel-1a', title: '1st floor', content: 'Create & edit tasks' },
+    
+  ]
+  
+  const Level1Content = (
+    <div>
+        <Accordion.Accordion panels={level1Panels} />
+    </div>
+  )
+  
+  
+  
+  const rootPanels = [
+    { key: 'panel-1', title: 'General', content: { content: <a href=''>+ Add item</a> },  },
+    { key: 'panel-2', title: 'Freehold Two Solar LLC', content: { content: <a href=''>+ Add item</a> } },
+  ]
     const panes = [
         {
           menuItem: { key: 'Overview', icon: 'file alternate outline', content: 'Project Information' },
@@ -176,27 +192,30 @@ export function ProjectSetting(props: TabsProps) {
 
 
 <div className="ui card " style={{width: '80%'}}>
- 
-    
-    <div className="content" style={{borderTop:'none'}}>
-        <div className="data-built"> 
-        <div className="content">
-                <div className="description"> <img src={img9}  /> General <span className="mr-2" style={{float:'right'}}>...</span></div> 
-                
-            </div>
+            
+<Accordion className="widtharea" defaultActiveIndex={0} panels={rootPanels} styled  >
+
+
+</Accordion>    
+      
         
-        </div>
      
         </div>
-                
+        <div className="ui card " style={{width: '80%'}}>
+            
+<Accordion className="widtharea" defaultActiveIndex={0} panels={rootPanels} styled  >
+
+
+</Accordion>    
+      
+        
+     
         </div>
 
         <button style={{width:'80%'}} className="ui large button btn-dashed  btn-large"><i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> Add Top Level  </button>
   </div>
 
-
-
-          
+ 
           
           </Tab.Pane>,
         },
