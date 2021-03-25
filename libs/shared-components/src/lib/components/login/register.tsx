@@ -85,6 +85,22 @@ export function RegisterPage(props: LoginProps) {
   </Grid.Column>
 </Grid.Row>
 </Grid>
+<Grid columns={2}>
+<Grid.Row>
+    <Grid.Column>
+    <Form.Field>
+      <label> Password</label>
+      <Input placeholder='new password' size='small' className="full-width  " type="password" />
+    </Form.Field>
+  </Grid.Column>
+  <Grid.Column>
+    <Form.Field>
+      <label>Re-Enter Password</label>
+      <Input placeholder='Re-enter password' size='small' className="full-width  " type="password" />
+    </Form.Field>
+  </Grid.Column>
+ </Grid.Row>
+</Grid>
 <Grid >
 <Grid.Row>
   <Grid.Column>

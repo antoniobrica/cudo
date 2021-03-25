@@ -57,7 +57,7 @@ export function Loginpassword(props: LoginPasswordProps) {
                             <Input placeholder='password' className="full-width" icon='lock' />
                         </Form.Field>
                         <Button size='large' className="grey-btn btn-large">Login <Icon name='arrow right' />   </Button>
-                         
+                        <span className="float_right "> <br/> <a href="" className="blue_color"> Forgot Password ?</a>  </span> 
  
                         </Form>
                     </div>  

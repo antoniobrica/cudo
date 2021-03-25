@@ -38,10 +38,14 @@ export function Loginbar(props: LoginProps) {
                         <Form.Field>
                             
                             <Input placeholder='example@domain.com' className="full-width" icon='at' />
+                          
                         </Form.Field>
+                        <Form.Field>
+                            
+                            </Form.Field>
                         <Button size='large' className="grey-btn btn-large">Continue <Icon name='arrow right' />   </Button>
-                         
- 
+                        
+                        <span className="float_right "> <br/> <a href="" className="blue_color"> Forgot Password ?</a>  </span>  
                         </Form>
                     </div>  
 

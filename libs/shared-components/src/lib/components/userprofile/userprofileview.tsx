@@ -6,7 +6,7 @@ import { Button, Select,   Modal,  Tab,Table,  Input, Form, Grid, Image, Segment
 import img from 'libs/shared-components/src/user_profile.png'; 
 
 
-function UserProfile() {
+function UserProfileView() {
     const countryOptions = [
         { key: 'af', value: 'af', text: 'Afghanistan' },
         { key: 'ax', value: 'ax', text: 'Aland Islands' },
@@ -51,13 +51,13 @@ function UserProfile() {
   <Grid.Column>
     <Form.Field>
       <label>First Name </label>
-      <Input placeholder='Firstname' size='small' className="full-width" type="text" />
+      <label>John  </label> 
     </Form.Field>
   </Grid.Column>
   <Grid.Column>
     <Form.Field>
       <label>Last Name </label>
-      <Input placeholder='Last Name ' size='small' className="full-width" type="text" />
+      <label>  Smith  </label> 
     </Form.Field>
   </Grid.Column>
 </Grid.Row>
@@ -67,76 +67,57 @@ function UserProfile() {
   <Grid.Column>
     <Form.Field>
       <label>Email Address</label>
-      <Input placeholder='Email Address' size='small' className="full-width margin_email" type="text" />
+       <label>johnsmith@gmail.com </label> 
     </Form.Field>
   </Grid.Column>
   <Grid.Column>
     <Form.Field>
       <label>Phone Number </label>
-      <Grid columns={2}>
-<Grid.Row>
-  <Grid.Column>
-    <Form.Field>
-    <Select placeholder='Select' className="small" options={countryOptions} /> 
-      </Form.Field>
-      </Grid.Column>
-      <Grid.Column>
-    <Form.Field>
-     <Input placeholder='Phone Number ' size='small' className="full-width" type="text" />
-      </Form.Field>
-      </Grid.Column>
-      </Grid.Row>
-      </Grid>
-    
-    </Form.Field>
+      <label>+1 987 325 9875 </label> 
+       </Form.Field>
   </Grid.Column>
 </Grid.Row>
 </Grid>
-<Grid columns={3}>
+<Grid columns={2}>
 <Grid.Row>
   <Grid.Column>
     <Form.Field>
       <label>Old Passord</label>
-      <Input placeholder='password' size='small' className="full-width  " type="password" />
+      <label>1111d</label>
     </Form.Field>
   </Grid.Column>
   <Grid.Column>
     <Form.Field>
       <label>New Passord</label>
-      <Input placeholder='new password' size='small' className="full-width  " type="password" />
+     <label>1111d</label>
     </Form.Field>
   </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
-      <label>Re-Enter Passord</label>
-      <Input placeholder='Re-enter password' size='small' className="full-width  " type="password" />
-    </Form.Field>
-  </Grid.Column>
+   
  </Grid.Row>
 </Grid>
 <Grid >
-<Grid.Row>
+ <Grid.Row>
   <Grid.Column>
     <Form.Field>
       <label>Company Name</label>
-      <Input placeholder='Company Name' size='small' className="full-width  " type="text" />
-    </Form.Field>
+      <label>Kiran Construction Co</label>
+     </Form.Field>
   </Grid.Column>
  </Grid.Row>
 </Grid>
-
 <Grid columns={2}>
 <Grid.Row>
   <Grid.Column>
     <Form.Field>
       <label>Address Line 1</label>
-      <Input placeholder='Address Line 1 ' size='small' className="full-width" type="text" />
+     
+      <label> 532 68th Street</label>
     </Form.Field>
   </Grid.Column>
   <Grid.Column>
     <Form.Field>
       <label>Address Line 2</label>
-      <Input placeholder='Address Line 2' size='small' className="full-width" type="text" />
+       <label> </label>
     </Form.Field>
   </Grid.Column>
 </Grid.Row>
@@ -147,27 +128,26 @@ function UserProfile() {
   <Grid.Column>
     <Form.Field>
       <label>City</label>
-      <Input placeholder='City ' size='small' className="full-width" type="text" />
-    </Form.Field>
+      <label>New York</label>
+     </Form.Field>
   </Grid.Column>
   <Grid.Column>
     <Form.Field>
       <label>State</label>
-      <Input placeholder='State' size='small' className="full-width" type="text" />
-    </Form.Field>
+      <label>NY</label>
+      </Form.Field>
   </Grid.Column>
   <Grid.Column>
     <Form.Field>
       <label>Zip</label>
-      <Input placeholder='Zip' size='small' className="full-width" type="text" />
-    </Form.Field>
+      <label>10605-78 156 </label>
+      </Form.Field>
   </Grid.Column>
   <Grid.Column>
     <Form.Field>
       <label>Country</label>
-     
-    <Select placeholder='Select' className="small" options={countryOptions} />
-    </Form.Field>
+      <label>USA</label>
+     </Form.Field>
   </Grid.Column>
 </Grid.Row>
 </Grid>
@@ -176,13 +156,11 @@ function UserProfile() {
   <Grid.Column>
     <Form.Field>
     <Button
-          content="update" 
+          content="Edit Profile" 
           
-          size='mini' className="grey-btn"
+          size='mini' className="disabled"
         />
-        <Button size='mini' className="icon-border"  >
-        X  Cancel
-        </Button>
+         
     </Form.Field>
   </Grid.Column>
  
@@ -203,5 +181,5 @@ function UserProfile() {
   )
 }
 
-export default UserProfile
+export default UserProfileView
  
