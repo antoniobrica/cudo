@@ -72,7 +72,8 @@ function Home({ history }) {
         <Menubar data={data} parentCallback={callbackFunction}></Menubar>
         <Switch>
           <Route path='/project' render={() => <ProjectApp history={history} />} />
-          <Route path='/profile' render={() => <UserProfileView />} />
+          <Route path='/profile' render={() => <UserProfile />} />
+          <Route path='/profile_edit' render={() => <UserProfile />} />
         </Switch>
         {/* <div className="home">
           {state === 'add-project' ?

@@ -10,7 +10,7 @@ import { ModalExamplePrinting, ModalExampleCompany } from '@cudo/shared-componen
 import WorkType from '../../work-type/work-type';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
 
-function ModalExampleModal() {
+export function ModalExampleModal() {
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
 
 

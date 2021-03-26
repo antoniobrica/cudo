@@ -10,7 +10,7 @@ import img1 from 'libs/shared-components/src/powerpoint.png';
 import img2 from 'libs/shared-components/src/pdf.png';
 /* eslint-disable-next-line */
 export interface FileStructureProps {
-	files
+	files?
 }
 
 export function FileStructure(props: FileStructureProps) {

@@ -7,24 +7,23 @@ import img from 'libs/shared-components/src/user_profile.png';
 
 export interface UserProfileProps {
   image?
-  history
+  history?
 }
 export function UserProfile(props: UserProfileProps) {
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
-
   ]
 
 
   const [open, setOpen] = React.useState(false)
 
   return (
-    <div className="app-content-body-dash navbar-collapse box-shadow bg-white-only" style={{ background: '#e6e6e6' }}>
+    <div className="app-content-body-dash dash_area navbar-collapse box-shadow bg-white-only" style={{ background: '#e6e6e6' }}>
       <div style={{ background: '#fff', padding: '10px' }}>
         <span className="preliminary-font">User Profile</span>
       </div>
-      <Grid columns={4}>
+      <Grid columns={2}>
         <Grid.Column>
           <div className="card card-custom gutter-b">
             <div className="card-body">

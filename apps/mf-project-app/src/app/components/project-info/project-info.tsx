@@ -11,9 +11,9 @@ import { Card, Icon, Form, Grid } from 'semantic-ui-react'
 import { useHistory } from "react-router";
 import '../../../../../../libs/shared-components/src/style/index.scss';
 
-// import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
+import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
 
-import ModalExampleModal from '../modal/modal'
+// import ModalExampleModal from '../modal/modal'
 
 /* eslint-disable-next-line */
 export interface ProjectInfoProps { }

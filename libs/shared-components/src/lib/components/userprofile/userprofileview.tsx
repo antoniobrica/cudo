@@ -17,13 +17,13 @@ export function UserProfileView() {
   const [open, setOpen] = React.useState(false)
 
   return (
-    <div className="app-content-body-dash navbar-collapse box-shadow bg-white-only" style={{ background: '#e6e6e6' }}>
+    <div className="app-content-body-dash dash_area navbar-collapse box-shadow bg-white-only" style={{ background: '#e6e6e6' }}>
       <div style={{ background: '#fff', padding: '10px' }}>
         <span className="preliminary-font">User Profile</span>
 
       </div>
-      <Grid columns={4}>
-        <Grid.Column>
+      <Grid columns={2}>
+        <Grid.Column style={{ height: '243px;' }}>
 
 
           <div className="card card-custom gutter-b">
