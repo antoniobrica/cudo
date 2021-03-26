@@ -16,15 +16,15 @@ export interface BkpIndexProps {
 }
 
 export function BkpIndex(props: BkpIndexProps) {
-  const onSelectBkp=(data)=>{
+  const onSelectBkp = (data) => {
     props.parentBKPSelect(data)
   }
   return (
     <ApolloProvider client={client}>
-    <ApolloHooksProvider client={client}>
-     <Bkp parentBKPSelect={onSelectBkp}/>
-   </ApolloHooksProvider>
-   </ApolloProvider>
+      <ApolloHooksProvider client={client as any}>
+        <Bkp parentBKPSelect={onSelectBkp} />
+      </ApolloHooksProvider>
+    </ApolloProvider>
   );
 }
 

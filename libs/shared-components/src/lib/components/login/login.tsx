@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import '../../../style/index.scss';
 import { Select, Input, Segment, Form, Grid, Image, Checkbox, Button, Icon } from 'semantic-ui-react'
@@ -6,15 +6,22 @@ import logo from 'libs/shared-components/src/slider.png';
 import img from 'libs/shared-components/src/Shape 2.png';
 /* eslint-disable-next-line */
 export interface LoginProps {
-  login
+  emailSubmitHandle
+  email
 }
 
 export function Loginbar(props: LoginProps) {
+  const [email, setEmail] = useState('');
   const description = [
   ]
   const handleLogin = () => {
-    props.login();
+    props.emailSubmitHandle();
   }
+  const handleChange = e => {
+    const { name, value } = e.target;
+    props.email(value);
+    setEmail(value);
+  };
   return (
     <div className=" ">
       <div className="main-outer-area">
@@ -31,9 +38,13 @@ export function Loginbar(props: LoginProps) {
                   <div className="form-inner">
                     <Form>
                       <Form.Field>
-                        <Input placeholder='example@domain.com' className="full-width" icon='at' />
+                        <Input placeholder='example@domain.com' className="full-width" icon='at' name="salary"
+                          onChange={handleChange}
+                          type="email"
+                          value={email} />
                       </Form.Field>
-                      <Button size='large' className="grey-btn btn-large" onClick={handleLogin}>Next <Icon name='arrow right' />   </Button>
+                      <Button onClick={handleLogin} size='large' className="grey-btn btn-large">Continue <Icon name='arrow right' />   </Button>
+                      <span className="float_right "> <br /> <a href="" className="blue_color"> Forgot Password ?</a>  </span>
                     </Form>
                   </div>
                 </div>

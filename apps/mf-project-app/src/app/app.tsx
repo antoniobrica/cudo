@@ -60,7 +60,6 @@ function Home({ history }) {
           <div className="meetingClass">
             <TaskApp></TaskApp>
           </div>
-
         </div>
         <div className="content">
           <div className="costClass">
@@ -83,14 +82,12 @@ function loadApp() {
 
 function App() {
   return (
-    <React.StrictMode>
-      <Router>
-        <Switch>
-          <Route exact path="/tabs" component={TabMenu} />
-          <Route exact path="/" component={ProjectInfo} />
-        </Switch>
-      </Router>
-    </React.StrictMode>
+    <Router>
+      <Switch>
+        <Route path="/tabs" component={TabMenu} />
+        <Route exact path="/project" component={ProjectInfo} />
+      </Switch>
+    </Router>
   );
 }
 
