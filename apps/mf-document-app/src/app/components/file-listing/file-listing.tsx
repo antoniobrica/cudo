@@ -21,7 +21,6 @@ export function FileListing(props: FileListingProps) {
     const sub = sharedContext.itemsInContainer$
       .pipe(tap(items => setFileData(items)))
       .subscribe();
-
     return () => sub.unsubscribe();
   };
   React.useEffect(getContainerItemsEffect, []);

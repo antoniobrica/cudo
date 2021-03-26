@@ -1,6 +1,7 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, Suspense, lazy } from 'react';
 import './add-file.module.scss';
-import ModalAddPrint from 'libs/shared-components/src/lib/components/modal/addfile';
+// import ModalAddPrint from 'libs/shared-components/src/lib/components/modal/addfile';
+import { ModalAddPrint } from '@cudo/shared-components'
 import ProgressBar from 'libs/shared-components/src/lib/components/progress_bar/progressbar';
 import FileSetting from './file-setting'
 import uploadFileToBlob, { isStorageConfigured } from './azure-storage-blob';
@@ -16,6 +17,7 @@ import { tap } from 'rxjs/operators';
 import { ContainerItem } from '@azure/storage-blob';
 import { useTokenQuery } from '../../services/useRequest';
 import { GET_TOKEN } from '../../graphql/graphql';
+// const ModalAddPrint = React.lazy(() => import('libs/shared-components/src/lib/components/modal/addfile'));
 
 export interface AddFileProps { }
 
@@ -64,7 +66,9 @@ export function AddFile(props: AddFileProps) {
         </div>
         :
         <div style={{ marginLeft: 900 }} >
+           <Suspense fallback={<div>Loading...</div>}>
           <ModalAddPrint fileData={onFile} onFileSubmit={onFileUpload} setting={openSetting}></ModalAddPrint>
+          </Suspense>
         </div>
 
       }

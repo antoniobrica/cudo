@@ -15,7 +15,6 @@ export interface TabsProps {
 
 export function FileStructure(props: TabsProps) {
 
-	console.log('files_list', props.files);
 	const panes = [
 		{
 			menuItem: { key: 'Overview', icon: 'images', content: 'All files' },
