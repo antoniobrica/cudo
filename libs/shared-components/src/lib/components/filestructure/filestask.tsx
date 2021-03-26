@@ -9,11 +9,11 @@ import img6 from 'libs/shared-components/src/eyeview.png';
 import img1 from 'libs/shared-components/src/powerpoint.png';
 import img2 from 'libs/shared-components/src/pdf.png';
 /* eslint-disable-next-line */
-export interface TabsProps {
+export interface FileStructureProps {
 	files
 }
 
-export function FileStructure(props: TabsProps) {
+export function FileStructure(props: FileStructureProps) {
 
 	console.log('files_list', props.files);
 	const panes = [

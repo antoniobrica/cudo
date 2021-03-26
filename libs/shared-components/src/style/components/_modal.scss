@@ -157,7 +157,7 @@ label.modallablearea{
     background: #F2F5F8;
 }
 .accordion {
-    background-color: #eee;
+     
     color: #444;
     cursor: pointer;
     padding: 18px;
@@ -169,9 +169,9 @@ label.modallablearea{
     transition: 0.4s;
   }
   
-  .active, .accordion:hover {
-    background-color: #ccc; 
-  }
+//   .active, .accordion:hover {
+//     background-color: #ccc; 
+//   }
   
   .panel {
     padding: 0 18px;
@@ -179,3 +179,7 @@ label.modallablearea{
     background-color: white;
     overflow: hidden;
   }
+
+ .margin_email{
+     margin-top: 10px;
+ }

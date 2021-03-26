@@ -20,15 +20,15 @@ export interface PhaseIndexProps {
 }
 
 export function PhaseIndex(props: PhaseIndexProps) {
-  const onSelectPhase=(data)=>{
+  const onSelectPhase = (data) => {
     props.parentPhaseSelect(data)
   }
   return (
     <ApolloProvider client={client}>
-    <ApolloHooksProvider client={client}>
-     <Phase  parentPhaseSelect={onSelectPhase}  />
-   </ApolloHooksProvider>
-   </ApolloProvider>
+      <ApolloHooksProvider client={client as any}>
+        <Phase parentPhaseSelect={onSelectPhase} />
+      </ApolloHooksProvider>
+    </ApolloProvider>
   );
 }
 

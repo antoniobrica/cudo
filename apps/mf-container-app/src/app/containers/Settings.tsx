@@ -18,7 +18,6 @@ export const Settings = () => {
   const formPassword = requestResponse?.methods?.password?.config
   const formProfile = requestResponse?.methods?.profile?.config
   const messages = requestResponse?.messages
-
   return (
     <div className="content">
       <Header />
@@ -35,7 +34,7 @@ export const Settings = () => {
               fields={formProfile.fields}
               messages={formProfile.messages} />}
         </div>
-        <div id="user-password">
+        {/* <div id="user-password">
           <h3>Password</h3>
           {formPassword &&
             <KratosForm
@@ -43,7 +42,7 @@ export const Settings = () => {
               action={formPassword.action}
               fields={formPassword.fields}
               messages={formPassword.messages} />}
-        </div>
+        </div> */}
       </div>
     </div>
   )

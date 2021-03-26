@@ -3,153 +3,154 @@
 *******************************/
 
 .ui.button {
-    @include justify(center);
-    cursor: pointer;
-    display: inline-block;
-    min-height: 1em;
-    outline: none;
-    border: none;
-    vertical-align: baseline;
-    background: color("blue", "base");
-    color: rgba(0, 0, 0, 0.6);
-    font-family: $font-family;
-    margin: 0 .25rem 0 0;
-    padding: 1.18rem 2rem 1.18rem;
-    text-transform: none;
-    text-shadow: none;
-    font-weight: 400;
-    line-height: 1rem;
-    font-style: normal;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 0.4rem;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-transition: opacity 0.1s ease, background-color 0.1s ease, color 0.1s ease, background 0.1s ease, -webkit-box-shadow 0.1s ease;
-    transition: opacity 0.1s ease, background-color 0.1s ease, color 0.1s ease, background 0.1s ease, -webkit-box-shadow 0.1s ease;
-    transition: opacity 0.1s ease, background-color 0.1s ease, color 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
-    transition: opacity 0.1s ease, background-color 0.1s ease, color 0.1s ease, box-shadow 0.1s ease, background 0.1s ease, -webkit-box-shadow 0.1s ease;
-    will-change: '';
-    -webkit-tap-highlight-color: transparent;
-    font-size: 1.5rem;
-    color: color("shades", "white");
-    font-family: $font-stack;
-    &.large {
-        height: 5.4rem;
-        font-size: 1.8rem;
-        min-width: 14rem;
-    }
-    &:focus {
-        color: color("shades", "white");
-    }
-    img {
-        display: $display-inline-block;
-        margin-left: 0.4rem;
-    }
+  @include justify(center);
+  cursor: pointer;
+  display: inline-block;
+  min-height: 1em;
+  outline: none;
+  border: none;
+  vertical-align: baseline;
+  background: color('blue', 'base');
+  color: rgba(0, 0, 0, 0.6);
+  font-family: $font-family;
+  margin: 0 0.25rem 0 0;
+  padding: 1.18rem 2rem 1.18rem;
+  text-transform: none;
+  text-shadow: none;
+  font-weight: 400;
+  line-height: 1rem;
+  font-style: normal;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 0.4rem;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: opacity 0.1s ease, background-color 0.1s ease,
+    color 0.1s ease, background 0.1s ease, -webkit-box-shadow 0.1s ease;
+  transition: opacity 0.1s ease, background-color 0.1s ease, color 0.1s ease,
+    background 0.1s ease, -webkit-box-shadow 0.1s ease;
+  transition: opacity 0.1s ease, background-color 0.1s ease, color 0.1s ease,
+    box-shadow 0.1s ease, background 0.1s ease;
+  transition: opacity 0.1s ease, background-color 0.1s ease, color 0.1s ease,
+    box-shadow 0.1s ease, background 0.1s ease, -webkit-box-shadow 0.1s ease;
+  will-change: '';
+  -webkit-tap-highlight-color: transparent;
+  font-size: 1.5rem;
+  color: color('shades', 'white');
+  font-family: $font-stack;
+  &.large {
+    height: 5.4rem;
+    font-size: 1.8rem;
+    min-width: 14rem;
+  }
+  &:focus {
+    color: color('shades', 'white');
+  }
+  img {
+    display: $display-inline-block;
+    margin-left: 0.4rem;
+  }
 }
-
 
 /*--------------
       Hover
 ---------------*/
 
 .ui.button:hover {
-    background-color: color("blue", "dark");
-    background-image: none;
-    -webkit-box-shadow: 0px 0px 0px 1px transparent inset, none;
-    box-shadow: 0px 0px 0px 1px transparent inset, none;
-    color: color("shades", "white");
+  background-color: color('blue', 'dark');
+  background-image: none;
+  -webkit-box-shadow: 0px 0px 0px 1px transparent inset, none;
+  box-shadow: 0px 0px 0px 1px transparent inset, none;
+  color: color('shades', 'white');
 }
 
 .ui.button:hover .icon {
-    opacity: 1;
+  opacity: 1;
 }
 
 .ui.button:focus .icon {
-    opacity: 1;
+  opacity: 1;
 }
 
 .ui.primary.button {
-    background: color("blue", "base");
-    &:hover {
-        background-color: color("blue", "dark");
-        color: color("shades", "white");
-    }
-    &:focus {
-        background-color: color("blue", "dark-1");
-        color: color("shades", "white");
-    }
+  background: color('blue', 'base');
+  &:hover {
+    background-color: color('blue', 'dark');
+    color: color('shades', 'white');
+  }
+  &:focus {
+    background-color: color('blue', 'dark-1');
+    color: color('shades', 'white');
+  }
 }
 
 .ui.basic.primary.button {
-    background: color("shades", "white");
-    border: 1px solid color("blue", "base");
-    color: color("blue", "base");
-    box-shadow: none;
-    &:hover,
-    &:focus {
-        background-color: color("blue", "base");
-        color: color("shades", "white");
-    }
+  background: color('shades', 'white');
+  border: 1px solid color('blue', 'base');
+  color: color('blue', 'base');
+  box-shadow: none;
+  &:hover,
+  &:focus {
+    background-color: color('blue', 'base');
+    color: color('shades', 'white');
+  }
 }
 
 .ui.secondary.button {
-    background: color("green", "base");
-    color: color("shades", "white");
-    &:hover {
-        background: color("green", "dark");
-    }
-    &:focus {
-        background: color("green", "dark-1");
-    }
+  background: color('green', 'base');
+  color: color('shades', 'white');
+  &:hover {
+    background: color('green', 'dark');
+  }
+  &:focus {
+    background: color('green', 'dark-1');
+  }
 }
 
 .ui.basic.secondary.button {
-    background: color("shades", "white");
-    border: 1px solid color("green", "base");
-    color: color("green", "base") !important;
-    box-shadow: none !important;
-    &:hover {
-        background-color: color("green", "dark");
-        color: color("shades", "white") !important;
-    }
-    &:active,
-    &:focus {
-        background-color: color("green", "dark-1");
-        color: color("shades", "white") !important;
-    }
+  background: color('shades', 'white');
+  border: 1px solid color('green', 'base');
+  color: color('green', 'base') !important;
+  box-shadow: none !important;
+  &:hover {
+    background-color: color('green', 'dark');
+    color: color('shades', 'white') !important;
+  }
+  &:active,
+  &:focus {
+    background-color: color('green', 'dark-1');
+    color: color('shades', 'white') !important;
+  }
 }
 
 .ui.mini.button {
-    height: 2.8rem;
-    font-size: 14px;
-    padding: 0 1rem;
-    line-height: 2.8rem;
-    border-radius: 3px;
+  height: 2.8rem;
+  font-size: 14px;
+  padding: 0 1rem;
+  line-height: 2.8rem;
+  border-radius: 3px;
 }
 
 .ui.red.button {
-    background: color("red", "base") !important;
-    &:hover {
-        background-color: color("red", "dark") !important;
-        color: color("shades", "white");
-    }
-    &:focus,
-    &:active {
-        background-color: color("red", "dark-1") !important;
-        color: color("shades", "white");
-    }
+  background: color('red', 'base') !important;
+  &:hover {
+    background-color: color('red', 'dark') !important;
+    color: color('shades', 'white');
+  }
+  &:focus,
+  &:active {
+    background-color: color('red', 'dark-1') !important;
+    color: color('shades', 'white');
+  }
 }
-
 
 /*-------------------
        Colors
 --------------------*/
-
 
 /*-------------------
         Sizes
@@ -158,306 +159,304 @@
 .ui.small.button,
 .ui.small.buttons .button,
 .ui.small.buttons .or {
-    font-weight: 500;
-    @include flex(inline-flex);
-    font-size: 1.5rem;
-    padding: 0 2em;
-    height: 3.6rem;
-    line-height: 3.6rem;
-    border-radius: 3px;
+  font-weight: 500;
+  @include flex(inline-flex);
+  font-size: 1.5rem;
+  padding: 0 2em;
+  height: 3.6rem;
+  line-height: 3.6rem;
+  border-radius: 3px;
 }
 
 .ui.small.button.btn-icon,
 .ui.small.buttons.btn-icon .button,
 .ui.small.buttons.btn-icon .or {
-    @include flex(inline-flex);
-    @include align-items(center);
-    height: 3.2rem;
-    padding: 0 1.1em 0 1em;
-    svg {
-        margin: 0 !important;
-        vertical-align: top;
-        font-size: 1.2rem;
-        display: inline-block;
-        width: 1.38em;
-        font-weight: 400;
-        text-decoration: inherit;
-        text-align: center;
-    }
+  @include flex(inline-flex);
+  @include align-items(center);
+  height: 3.2rem;
+  padding: 0 1.1em 0 1em;
+  svg {
+    margin: 0 !important;
+    vertical-align: top;
+    font-size: 1.2rem;
+    display: inline-block;
+    width: 1.38em;
+    font-weight: 400;
+    text-decoration: inherit;
+    text-align: center;
+  }
 }
 
 .ui.small.button.small-medium,
 .ui.small.buttons.small-medium .button,
 .ui.small.buttons.small-medium .or {
-    font-weight: 500;
-    @include flex(inline-flex);
-    font-size: 1.5rem;
-    padding: 0 2em;
-    height: 3.6rem;
-    line-height: 3.6rem;
+  font-weight: 500;
+  @include flex(inline-flex);
+  font-size: 1.5rem;
+  padding: 0 2em;
+  height: 3.6rem;
+  line-height: 3.6rem;
 }
 
 .ui.medium.button,
 .ui.medium.buttons .button,
 .ui.medium.buttons .or {
-    font-weight: 500;
-    @include flex(inline-flex);
-    font-size: 1.5rem;
-    padding: 0 2em;
-    height: 4.5rem;
-    line-height: 4.5rem;
+  font-weight: 500;
+  @include flex(inline-flex);
+  font-size: 1.5rem;
+  padding: 0 2em;
+  height: 4.5rem;
+  line-height: 4.5rem;
 }
 
 .ui.medium.button.btn-icon,
 .ui.medium.buttons.btn-icon .button,
 .ui.medium.buttons.btn-icon .or {
-    @include flex(inline-flex);
-    @include align-items(center);
-    height: 4.6rem;
-    padding: 0 2.1em 0 2em;
-    svg {
-        margin: 0 !important;
-        vertical-align: top;
-        font-size: 1.2rem;
-        display: inline-block;
-        width: 1.38em;
-        font-weight: 400;
-        text-decoration: inherit;
-        text-align: center;
-    }
+  @include flex(inline-flex);
+  @include align-items(center);
+  height: 4.6rem;
+  padding: 0 2.1em 0 2em;
+  svg {
+    margin: 0 !important;
+    vertical-align: top;
+    font-size: 1.2rem;
+    display: inline-block;
+    width: 1.38em;
+    font-weight: 400;
+    text-decoration: inherit;
+    text-align: center;
+  }
 }
 
 .ui.huge.button,
 .ui.huge.buttons .button,
 .ui.huge.buttons .or {
-    font-weight: $font-medium;
-    @include flex(inline-flex);
-    font-size: 1rem;
-    padding: 0 2em;
-    height: 50px;
+  font-weight: $font-medium;
+  @include flex(inline-flex);
+  font-size: 1rem;
+  padding: 0 2em;
+  height: 50px;
 }
 
 .ui.huge.button.btn-icon,
 .ui.huge.buttons.btn-icon .button,
 .ui.huge.buttons.btn-icon .or {
-    @include flex(inline-flex);
-    @include align-items(center);
-    height: 50px;
-    padding: 0 2.1em 0 2em;
-    svg {
-        margin: 0 !important;
-        vertical-align: top;
-        font-size: 1.2rem;
-        display: inline-block;
-        width: 1.38em;
-        font-weight: 400;
-        text-decoration: inherit;
-        text-align: center;
-    }
+  @include flex(inline-flex);
+  @include align-items(center);
+  height: 50px;
+  padding: 0 2.1em 0 2em;
+  svg {
+    margin: 0 !important;
+    vertical-align: top;
+    font-size: 1.2rem;
+    display: inline-block;
+    width: 1.38em;
+    font-weight: 400;
+    text-decoration: inherit;
+    text-align: center;
+  }
 }
 
 .ui.buttons .button.button-cancel,
 .ui.button.button-cancel {
-    color: color("grey", "lighten-1");
-    border-color: transparent;
-    background-color: color("grey", "lighten-6");
-    &:hover {
-        background: color("grey", "lighten-9");
-    }
+  color: color('grey', 'lighten-1');
+  border-color: transparent;
+  background-color: color('grey', 'lighten-6');
+  &:hover {
+    background: color('grey', 'lighten-9');
+  }
 }
 
- 
 // Disabled
 .ui {
-    &.basic.buttons .disabled.button,
-    &.basic.button:disabled {
-        border-color: $disabled !important;
+  &.basic.buttons .disabled.button,
+  &.basic.button:disabled {
+    border-color: $disabled !important;
+  }
+  &.button:disabled,
+  &.buttons .disabled.button {
+    cursor: default;
+    opacity: 1 !important;
+    background-image: none !important;
+    background-color: $disabled !important;
+    color: color('grey', 'lighten-2') !important;
+  }
+  &.disabled {
+    &.active.button {
+      cursor: default;
+      opacity: 1 !important;
+      background-color: $disabled !important;
+      color: color('grey', 'lighten-2') !important;
     }
-    &.button:disabled,
-    &.buttons .disabled.button {
+    &.button {
+      cursor: default;
+      opacity: 1 !important;
+      background-image: none !important;
+      background-color: $disabled !important;
+      color: color('grey', 'lighten-2') !important;
+      &:hover {
         cursor: default;
         opacity: 1 !important;
-        background-image: none !important;
         background-color: $disabled !important;
-        color: color("grey", "lighten-2") !important;
+        color: color('grey', 'lighten-2') !important;
+      }
     }
-    &.disabled {
-        &.active.button {
-            cursor: default;
-            opacity: 1 !important;
-            background-color: $disabled !important;
-            color: color("grey", "lighten-2") !important;
-        }
-        &.button {
-            cursor: default;
-            opacity: 1 !important;
-            background-image: none !important;
-            background-color: $disabled !important;
-            color: color("grey", "lighten-2") !important;
-            &:hover {
-                cursor: default;
-                opacity: 1 !important;
-                background-color: $disabled !important;
-                color: color("grey", "lighten-2") !important;
-            }
-        }
-    }
+  }
 }
 
 .ui.icon {
-    &.button>.icon,
-    &.buttons .button>.icon {
-        opacity: 1;
-        margin: 0 0 0 3px !important;
-        vertical-align: top;
-    }
+  &.button > .icon,
+  &.buttons .button > .icon {
+    opacity: 1;
+    margin: 0 0 0 3px !important;
+    vertical-align: top;
+  }
 }
 
 .ui.button.grey-btn {
-    background: color("grey", "base");
-    color: color("shades", "black");
-    &:hover {
-        background: color("grey", "dark");
-        color: color("shades", "black");
-    }
-    &:focus,
-    &:active {
-        background: color("grey", "dark-1");
-        color: color("shades", "black");
-    }
+  background: color('grey', 'base');
+  color: color('shades', 'black');
+  &:hover {
+    background: color('grey', 'dark');
+    color: color('shades', 'black');
+  }
+  &:focus,
+  &:active {
+    background: color('grey', 'dark-1');
+    color: color('shades', 'black');
+  }
 }
-
-
 
 .ui.button.border-btn {
-    background: none;
-    border: 1px solid #b5bcc8;
-    color: #718898;
+  background: none;
+  border: 1px solid #b5bcc8;
+  color: #718898;
 }
-.ui.button.icon-btn{
-    background: #2D62ED;
-     color: #ffffff;
+.ui.button.icon-btn {
+  background: #2d62ed;
+  color: #ffffff;
 }
-.ui.button.icon-border{
-   
-     background: none;
-    border: 1px solid #2D62ED;
-    color: #2D62ED;
+.ui.button.icon-border {
+  background: none;
+  border: 1px solid #2d62ed;
+  color: #2d62ed;
 }
 
 .ui.basic.button.grey-btn {
-    background: color("shades", "white");
-    border: 1px solid color("grey", "base");
-    color: color("grey", "lighten-2");
-    box-shadow: none;
-    &:hover,
-    &:focus {
-        color: color("shades", "black");
-        background: color("grey", "base");
-    }
+  background: color('shades', 'white');
+  border: 1px solid color('grey', 'base');
+  color: color('grey', 'lighten-2');
+  box-shadow: none;
+  &:hover,
+  &:focus {
+    color: color('shades', 'black');
+    background: color('grey', 'base');
+  }
 }
 
-
- 
-
-
 .ui.button.light-grey-btn {
-    background: color("grey", "lighten-9");
-    color: color("shades", "black");
-    &:hover,
-    &:focus {
-        color: color("shades", "black");
-        background: color("grey", "lighten-6");
-    }
+  background: color('grey', 'lighten-9');
+  color: color('shades', 'black');
+  &:hover,
+  &:focus {
+    color: color('shades', 'black');
+    background: color('grey', 'lighten-6');
+  }
 }
 
 div.ui.toggle.checkbox label:after {
-    top: 0.3rem;
-    width: 1.2rem;
-    height: 1.2rem;
-    left: 0.4rem;
-    background: color("grey", "base");
-    border: 0;
-    box-shadow: none;
+  top: 0.3rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  left: 0.4rem;
+  background: color('grey', 'base');
+  border: 0;
+  box-shadow: none;
 }
 
-div.ui.toggle.checkbox input:checked~.box:after,
-div.ui.toggle.checkbox input:checked~label:after {
-    left: 2.35rem;
-    box-shadow: none;
-    background: color("shades", "white");
+div.ui.toggle.checkbox input:checked ~ .box:after,
+div.ui.toggle.checkbox input:checked ~ label:after {
+  left: 2.35rem;
+  box-shadow: none;
+  background: color('shades', 'white');
 }
 
-div.ui.checkbox input:checked~label:after {
-    border-radius: 100%;
+div.ui.checkbox input:checked ~ label:after {
+  border-radius: 100%;
 }
 
-div.ui.toggle.checkbox input:checked~label:before,
-div.ui.toggle.checkbox input:checked~.box:before {
-    background: color("blue", "base") !important;
-    border: 1px solid color("blue", "base");
+div.ui.toggle.checkbox input:checked ~ label:before,
+div.ui.toggle.checkbox input:checked ~ .box:before {
+  background: color('blue', 'base') !important;
+  border: 1px solid color('blue', 'base');
 }
 
-div.ui.toggle.checkbox input:focus:checked~.box:before,
-div.ui.toggle.checkbox input:focus:checked~label:before {
-    background: color("blue", "base") !important;
-    border: 1px solid color("blue", "base");
+div.ui.toggle.checkbox input:focus:checked ~ .box:before,
+div.ui.toggle.checkbox input:focus:checked ~ label:before {
+  background: color('blue', 'base') !important;
+  border: 1px solid color('blue', 'base');
 }
 
 div.ui.toggle.checkbox .box:before,
 div.ui.toggle.checkbox label:before {
-    width: 4rem;
-    height: 1.8rem;
-    background: color("shades", "white");
-    border: 1px solid color("grey", "base");
+  width: 4rem;
+  height: 1.8rem;
+  background: color('shades', 'white');
+  border: 1px solid color('grey', 'base');
 }
 
-div.ui.toggle.checkbox input:focus~.box:before,
-div.ui.toggle.checkbox input:focus~label:before {
-    background-color: color("shades", "white");
-    border: 1px solid color("grey", "base");
+div.ui.toggle.checkbox input:focus ~ .box:before,
+div.ui.toggle.checkbox input:focus ~ label:before {
+  background-color: color('shades', 'white');
+  border: 1px solid color('grey', 'base');
 }
 
 div.ui.toggle.checkbox {
-    min-height: 1.8rem;
+  min-height: 1.8rem;
 }
 
-div.ui.checkbox.checkbox-with-onoff input:checked~label:before {
-    content: "On";
-    text-indent: 5px;
-    text-transform: uppercase;
-    color: color("shades", "white");
-    font-size: 1rem;
+div.ui.checkbox.checkbox-with-onoff input:checked ~ label:before {
+  content: 'On';
+  text-indent: 5px;
+  text-transform: uppercase;
+  color: color('shades', 'white');
+  font-size: 1rem;
 }
 
 div.ui.radio.checkbox .box:before,
 div.ui.radio.checkbox label:before {
-    border: 1px solid color("grey", "base");
+  border: 1px solid color('grey', 'base');
 }
 
-
-.ui.mini.button.secondary_btn{
-    float:right;
-    border-radius:0px
+.ui.mini.button.secondary_btn {
+  float: right;
+  border-radius: 0px;
 }
 
-.ui.button.grey-btn, .ui.button.icon-border {
-    
-    border-radius: 0px;
+.ui.button.grey-btn,
+.ui.button.icon-border {
+  border-radius: 0px;
 }
 .ui.button.icon-border {
-    background: none;
-      border:none; 
-    color: #9A9EA1;
+  background: none;
+  border: none;
+  color: #9a9ea1;
 }
-.btn_radius
-{
-    background: #fff   !important;
-    color: #2D62ED !important;
-    border: 1px solid #2D62ED !important;
-    border-radius: 10px !important;
+.btn_radius {
+  background: #fff !important;
+  color: #2d62ed !important;
+  border: 1px solid #2d62ed !important;
+  border-radius: 10px !important;
+}
+.btn_radius {
+  background: #fff !important;
+  color: #2d62ed !important;
+  border: 1px solid #2d62ed !important;
+  border-radius: 10px !important;
 }
 
-.no_background{
-    background: #e6e6e6 !important;
+.edit_btn {
+  background: #fff !important;
+  color: #718898 !important;
+  border: 1px solid #9fb5c5 !important;
 }

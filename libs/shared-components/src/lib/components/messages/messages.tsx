@@ -1,32 +1,37 @@
 import React from 'react';
- 
+
 import '../../../style/index.scss';
 import { Message } from 'semantic-ui-react'
 
 /* eslint-disable-next-line */
-export interface MessageProps { }
+export interface MessageProps {
+    warning?
+    error?
+    succes?
+}
 
-export function Messagebar(props: MessageProps) {
+export function Messagebar({
+    warning = "Warning Alert",
+    error = "Error Alert",
+    succes = "Success Alert"
+}: MessageProps) {
 
     const description = [
         <Message color='red'>Red</Message>
-      
-      ] 
-  return (
+    ]
+    return (
+        <div className="app-content-body ">
+            <div>
+                <div className="ui red message">{warning}</div>
+                <div className="ui yellow message">{error}</div>
+                <div className="ui green message">{succes}</div>
+            </div>
+        </div>
 
-      <div className="app-content-body ">
-      <div>
-          <div className="ui red message">Warning Alert</div>
-          
-          <div className="ui yellow message">Error Alert</div>
-          <div className="ui green message">Success Alert</div> 
-          </div>
-      </div>
-  
-        
-    
- 
-  );
+
+
+
+    );
 }
 
 export default Messagebar;

@@ -16,15 +16,15 @@ const client = new ApolloClient({
 });
 export function MfAccountAppLib(props: MfAccountAppLibProps) {
 
- const onSelectCountry=(data)=>{
-   console.log("country-selected-value",data)
-  props.parentCallback(data)
+  const onSelectCountry = (data) => {
+    console.log("country-selected-value", data)
+    props.parentCallback(data)
   }
   return (
     <ApolloProvider client={client}>
-     <ApolloHooksProvider client={client}>
-      <Country parentCallback={onSelectCountry} />
-    </ApolloHooksProvider>
+      <ApolloHooksProvider client={client as any}>
+        <Country parentCallback={onSelectCountry} />
+      </ApolloHooksProvider>
     </ApolloProvider>
   );
 }

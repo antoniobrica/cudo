@@ -2,6 +2,7 @@ import React from 'react';
 
 import '../../../style/index.scss';
 import { Header, Icon, Image, Menu, Segment, Sidebar, Button, Popup } from 'semantic-ui-react'
+import { NavLink } from 'react-router-dom';
 /* eslint-disable-next-line */
 export interface MenuProps {
   parentCallback
@@ -10,15 +11,13 @@ export interface MenuProps {
 
 export function Menubar(props: MenuProps) {
 
-  const [visible, setVisible] = React.useState(false)
+  const [visible, setVisible] = React.useState('')
 
   const handleOpenProject = (item) => {
     props.parentCallback(item)
   }
 
   return (
-
-
     <div id="sidebar">
       <Sidebar.Pushable as={Segment}>
         <Sidebar
@@ -29,14 +28,15 @@ export function Menubar(props: MenuProps) {
           vertical
           visible
           width='thin'
-
         >
           <Menu.Item as='a'>
             {/* <img src={logo} alt="logo"></img> */}
 
           </Menu.Item>
 
-          <Menu.Item as='a' onClick={() => handleOpenProject('add')}>
+          <Menu.Item as={NavLink} to="/add"
+            name='add'
+            active={visible === 'add'} onClick={() => handleOpenProject('add')}>
 
             <Popup
               content='Add Project'
@@ -69,14 +69,14 @@ export function Menubar(props: MenuProps) {
             </Popup>
           </Menu.Item>
 
-          <Menu.Item as='a' onClick={() => handleOpenProject('project')} className="active">
+          <Menu.Item as={NavLink} to="/project"
+            name='project'
+            active={visible === 'project'} onClick={() => handleOpenProject('project')}>
             <Popup
               content='Project'
               trigger={<i className="ms-Icon ms-Icon--FabricNewFolder" aria-hidden="true"></i>
               } size='small' position='right center'>
-
             </Popup>
-
           </Menu.Item>
 
           <Menu.Item as='a' onClick={() => handleOpenProject('calendar')}>
@@ -123,7 +123,6 @@ export function Menubar(props: MenuProps) {
             <i className="ms-Icon ms-Icon--DoubleChevronRight" aria-hidden="true"></i>
           </Menu.Item>
 
-
           <Menu.Item as='a' onClick={() => handleOpenProject('logout')}>
             <Popup
               content='Logout'
@@ -132,16 +131,19 @@ export function Menubar(props: MenuProps) {
             </Popup>
           </Menu.Item>
 
+          <Menu.Item as={NavLink} to="/profile"
+            name='profile'
+            active={visible === 'profile'} onClick={() => handleOpenProject('profile')}>
+            <Popup
+              content='profile'
+              trigger={<i className="ms-Icon ms-Icon--People" aria-hidden="true"></i>
+              } size='small' position='right center'>
+            </Popup>
+          </Menu.Item>
+
         </Sidebar>
-
-
       </Sidebar.Pushable>
-
-
     </div>
-
-
-
   );
 }
 

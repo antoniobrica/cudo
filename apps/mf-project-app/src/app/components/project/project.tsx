@@ -13,7 +13,7 @@ export interface ProjectProps {
 export function Project(props: ProjectProps) {
   const {  projectId,
     projectName,
-    projectNum,buildingType,workType } = props.project;
+    projectNum,buildingType } = props.project;
   return (
     // <div style={{margin:20}}>
     //    <div className="ui card">

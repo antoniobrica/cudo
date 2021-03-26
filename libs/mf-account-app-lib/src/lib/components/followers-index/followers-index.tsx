@@ -17,15 +17,15 @@ export interface FollowersIndexProps {
 }
 
 export function FollowersIndex(props: FollowersIndexProps) {
-  const onSelectF=(data)=>{
+  const onSelectF = (data) => {
     props.parentFollowersSelect(data)
   }
   return (
     <ApolloProvider client={client}>
-    <ApolloHooksProvider client={client}>
-     <Followers parentFollowersSelect={onSelectF} />
-   </ApolloHooksProvider>
-   </ApolloProvider>
+      <ApolloHooksProvider client={client as any}>
+        <Followers parentFollowersSelect={onSelectF} />
+      </ApolloHooksProvider>
+    </ApolloProvider>
   );
 }
 

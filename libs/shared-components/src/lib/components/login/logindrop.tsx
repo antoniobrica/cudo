@@ -4,41 +4,42 @@ import '../../../style/index.scss';
 import { Select, Input, Segment, Form, Grid, Image, Checkbox, Button, Icon } from 'semantic-ui-react'
 import logo from 'libs/shared-components/src/slider.png';
 import img from 'libs/shared-components/src/Shape 2.png';
-import img3 from 'libs/shared-components/src/green_tick.png';  
-import img4 from 'libs/shared-components/src/company1.png';  
- 
+import img3 from 'libs/shared-components/src/green_tick.png';
+import img4 from 'libs/shared-components/src/company1.png';
+
 /* eslint-disable-next-line */
 export interface LoginDropProps {
   login
+  email
 }
 
 export function Logindrop(props: LoginDropProps) {
-    const countryOptions = [
-        { key: 'af', value: 'af', text: 'CP 1' },
-        { key: 'ax', value: 'ax', text: 'CP 2' },
-        { key: 'al', value: 'al', text: 'CP 3' }, 
-      ]
-    const description = [
-         
-      ] 
-      const handleLogin =()=>{
-        props.login();
-      }
-      const friendOptions = [
-        {
-          key: 'Company 1',
-          text: 'Company 1',
-          value: 'Company 1',
-           image: img4,
-        },
-        {
-          key: 'Company 2',
-          text: 'Company 2',
-          value: 'Company 2',
-          image: img4,
-        },
-         
-      ]
+  const countryOptions = [
+    { key: 'af', value: 'af', text: 'Afghanistan' },
+    { key: 'ax', value: 'ax', text: 'Aland Islands' },
+    { key: 'al', value: 'al', text: 'Albania' },
+  ]
+  const handleLogin = () => {
+    props.login();
+  }
+  const description = [
+
+  ]
+  const friendOptions = [
+    {
+      key: 'Company 1',
+      text: 'Company 1',
+      value: 'Company 1',
+      image: img4,
+    },
+    {
+      key: 'Company 2',
+      text: 'Company 2',
+      value: 'Company 2',
+      image: img4,
+    },
+
+  ]
   return (
     <div className=" ">
       <div className="main-outer-area">
@@ -54,14 +55,15 @@ export function Logindrop(props: LoginDropProps) {
                   </div>
                   <div className="form-inner">
                     <Form>
-                      <Form.Field>
-                        <label>softobiz@gmail.in <span className="float-area">
+                      <Form.Field className="login-user">
+                        <label>  <span><img src={img3} className="img-src" /> </span> <span>{props.email}  </span><span className="float-area">
                           <i className="ms-Icon ms-Icon--Accounts" aria-hidden="true"></i> </span> </label>
                       </Form.Field>
                       <Form.Field>
-                        <Select placeholder='Select' options={countryOptions} className="full-width" />
+                        <Select placeholder='Select Company' options={friendOptions} defaultValue={friendOptions[0].value} className="full-width" />
                       </Form.Field>
-                      <Button size='large' className="grey-btn btn-large" onClick={handleLogin}>Next <Icon name='arrow right' />   </Button>
+                      <Button onClick={handleLogin} size='large' className="grey-btn btn-large">Continue <Icon name='arrow right' />   </Button>
+                      <span className="float_right "> <br /> <a href="" className="blue_color"> Forgot Password ?</a>  </span>
                     </Form>
                   </div>
                 </div>

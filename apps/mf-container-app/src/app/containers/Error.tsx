@@ -27,10 +27,13 @@ export const Error = () => {
         </div>
         <hr className="divider" />
         <div className="alternative-actions">
-          <p>
+          {/* <p>
             <button onClick={() => register({ setReferer: false })} className="a">
               Register new account
             </button>
+          </p> */}
+          <p>
+            <Link to={config.routes.registration.path}>Register</Link>
           </p>
           <p>
             <Link to={config.routes.recovery.path}>Reset password</Link>
