@@ -2,6 +2,7 @@ import { Expose, plainToClass } from 'class-transformer';
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, ManyToMany, UpdateDateColumn } from 'typeorm';
 import * as uuid from 'uuid';
 import { BkpEntity } from './bkp.entity';
+import { FileEntity } from './file.entity';
 import { PhaseEntity } from './phase.entity';
 import UsersEntity from './users.entity';
 
@@ -52,6 +53,10 @@ export default class ReferanceTypeEntity extends BaseEntity {
     
     @ManyToMany(() => UsersEntity, usersEntity => usersEntity.references)
     users: UsersEntity[];
+
+    @Expose()
+    @OneToMany(() => FileEntity, (file: FileEntity) => file.reference)
+    file: FileEntity[];
 
     constructor(referanceTypeEntity: Partial<ReferanceTypeEntity>) {
         super();

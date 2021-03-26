@@ -19,7 +19,6 @@ export class SasGeneratorService {  constructor(
         {
           containerName.create()
         }
-        console.log()
         return this.blobstorage.sasObject;
     }
 }

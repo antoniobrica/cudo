@@ -35,13 +35,13 @@ export class FileService {
   public async updateFile(createFileInput: CreateFileInput, referenceFilter: ReferenceFilterParams): Promise<FileEntity> {
 
     const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
-    const file = await this.FileRepository.findOne({ where: { fileTitle: createFileInput.fileTitle, reference: { id: selectedReference.id } } });
+    const file = await this.FileRepository.findOne({ where: { fileID: createFileInput.fileID, reference: { id: selectedReference.id } } });
     if (file) {
-      await this.FileRepository.update(file.fileTitle, { ...createFileInput });
-      const updatedPost = await this.FileRepository.findOne(file.fileTitle);
+      await this.FileRepository.update(file.id, { ...createFileInput });
+      const updatedPost = await this.FileRepository.findOne(file.id);
       return updatedPost;
     }
-    throw new FileNotFoundException(file.fileTitle);
+    throw new FileNotFoundException(file.fileID);
   }
 
   public async findAllFile(refFilter: ReferenceFilterParams): Promise<FileEntity[]> {
