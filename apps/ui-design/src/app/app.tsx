@@ -29,7 +29,8 @@ import ProjectSetting from 'libs/shared-components/src/lib/components/projectset
 import EditProject from 'libs/shared-components/src/lib/components/projectsetting/editproject';
 import UserProfile from 'libs/shared-components/src/lib/components/userprofile/userprofile';
 import RegisterPage from 'libs/shared-components/src/lib/components/login/register';
-import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
+import ModalAddSubLevel from 'libs/shared-components/src/lib/components/modal/addsublevel';
+import UserProfileView from 'libs/shared-components/src/lib/components/userprofile/userprofileview';
 
 // import { Sidebar } from 'semantic-ui-react';
 
@@ -64,9 +65,11 @@ export function App() {
       <ModalPin></ModalPin><br />
       <ManageFileStructure></ManageFileStructure><br />
       <ProjectSetting></ProjectSetting><br />
+      <ModalAddSubLevel></ModalAddSubLevel><br />
       <EditProject></EditProject><br />
       <UserProfile></UserProfile><br />
-      <RegisterPage></RegisterPage>
+      <RegisterPage></RegisterPage><br />
+      <UserProfileView></UserProfileView>
     </div>
 
 
