@@ -6,7 +6,7 @@ import { Button, Select, Modal, Tab, Table, Input, Form, Grid, Image, Segment, T
 import img from 'libs/shared-components/src/user_profile.png';
 import img5 from 'libs/shared-components/src/edit.png';
 
-function UserProfileView() {
+export function UserProfileView() {
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
@@ -155,7 +155,7 @@ function UserProfileView() {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                      <button className="ui mini button edit_btn">  <img src={img5} /> Edit</button>
+                        <button className="ui mini button edit_btn">  <img src={img5} /> Edit</button>
 
                       </Form.Field>
                     </Grid.Column>

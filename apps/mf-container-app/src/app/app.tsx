@@ -5,7 +5,7 @@ import MicroFrontend from "../MicroFrontend";
 import "./app.module.scss";
 import { environment } from "../environments/environment";
 import { Email } from './login/login'
-import { Menubar, UserProfile } from '@cudo/shared-components';
+import { Menubar, UserProfile, UserProfileView } from '@cudo/shared-components';
 import '../../../../libs/shared-components/src/style/index.scss';
 import { SessionProvider } from "./services/session";
 import { Callback } from "./containers/Callback";
@@ -72,7 +72,7 @@ function Home({ history }) {
         <Menubar data={data} parentCallback={callbackFunction}></Menubar>
         <Switch>
           <Route path='/project' render={() => <ProjectApp history={history} />} />
-          <Route path='/profile' render={() => <UserProfile history={history} />} />
+          <Route path='/profile' render={() => <UserProfileView />} />
         </Switch>
         {/* <div className="home">
           {state === 'add-project' ?
