@@ -21,7 +21,6 @@ import LoginSelect from "./login-select/login-select";
 import { isAuthenticated, login, logout, profile, ToEmail } from "./services/auth";
 import UserProfile from "./user-profile/user-profile";
 import { UserRegistration } from "./user-registration/user-registration";
-import routes from "./routes";
 import PropTypes from 'prop-types';
 import { renderRoutes } from 'react-router-config';
 import { Home } from "./home/home";
@@ -48,7 +47,7 @@ function App() {
           <Route path={config.routes.login.path} component={LoginPassword} />
           <Route path={config.routes.verification.path} component={Verify} />
           <Route path={config.routes.recovery.path} component={Recover} />
-          <Route path={config.routes.registration.path} component={Register} />
+          <Route path={config.routes.registration.path} component={UserRegistration} />
           <Route path={config.routes.error.path} component={Error} />
         </Switch>
       </SessionProvider>

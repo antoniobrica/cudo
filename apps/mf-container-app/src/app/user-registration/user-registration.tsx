@@ -1,45 +1,43 @@
-import React, { useEffect, useState } from 'react';
-
-import './user-registration.module.scss';
-import { UserProfile, UserProfileView } from '@cudo/shared-components';
-import { useHistory } from 'react-router-dom';
-import { KratosMessages } from '../components/KratosMessages';
-import { initialiseRequest } from '../services/kratos';
-
+import React, { useEffect, useState } from "react"
+import { initialiseRequest } from "../services/kratos"
+import { KratosMessages } from "../components/KratosMessages"
+import { KratosForm } from "../components/KratosForm"
+import { login, ToEmail } from "../services/auth"
+import { Button, Form, Grid, Header, Input, Modal, TextArea } from "semantic-ui-react"
+import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
+import { RegisterPage } from "@cudo/shared-components"
+import { FormField } from "@oryd/kratos-client"
 /* eslint-disable-next-line */
 export interface UserRegistrationProps {
 }
 
 export function UserRegistration(props: UserRegistrationProps) {
   const [requestResponse, setRequestResponse] = useState<any>()
+  const [open, setOpen] = React.useState(false)
   useEffect(() => {
-    const request = initialiseRequest({ type: "settings" }, { filterid: "flow" }) as Promise<any>
+    const request = initialiseRequest({ type: "register" }, { filterid: "flow" }) as Promise<any>
     request
       .then(request => setRequestResponse(request))
       .catch((error) => { console.log(error) })
-  }, [])
+  }, [setRequestResponse])
 
-  const { state } = requestResponse || {}
-  const formPassword = requestResponse?.methods?.password?.config
-  const formProfile = requestResponse?.methods?.profile?.config
+  const form = requestResponse?.methods?.password?.config
   const messages = requestResponse?.messages
-  const history = useHistory()
-  const cancel = (childData) => {
-    history.push(`/home/profile`);
-  }
-  const update = (childData) => {
-    history.push(`/home/profile`);
-  }
+
   return (
 
-    <div>
-      {state === "success" && <p>Your changes have been saved!</p>}
-      {/* {messages && <KratosMessages messages={messages} />} */}
-      {formProfile ? <UserProfile action={formProfile?.action}
-        fields={formProfile?.fields}
-        messages={formProfile?.messages} update={update} cancel={cancel}></UserProfile> : null}
+    <div className="auth">
+      <div className="container">
+        <div id="registration-password">
+          {messages && <KratosMessages messages={messages} />}
+          {
+            form && <RegisterPage action={form?.action} fields={form?.fields as FormField[]} messages={messages} login={ToEmail} ></RegisterPage>
+          }
+        </div>
+      </div>
     </div>
-  );
+  )
 }
+
 
 export default UserRegistration;

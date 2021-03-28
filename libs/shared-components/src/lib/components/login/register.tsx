@@ -7,9 +7,10 @@ import img from 'libs/shared-components/src/Shape 2.png';
 import { FormField, Message } from "@oryd/kratos-client"
 
 export interface RegisterProps {
-  action
-  fields
-  messages
+  action?
+  fields?
+  messages?
+  login?
 }
 
 export function RegisterPage(props: RegisterProps) {
@@ -159,13 +160,12 @@ export function RegisterPage(props: RegisterProps) {
                           <Grid.Column>
                             <Form.Field key={password?.name}>
                               <label>Password</label>
-                              <Input placeholder='Email Address' size='small' className="full-width  " type={password?.type}
+                              <Input placeholder='Password' size='small' className="full-width  " type={password?.type}
                                 name={password?.name}
                                 defaultValue={password?.value as any}
                                 {...password?.required} />
                             </Form.Field>
                             <Form.Field key={csrf_token?.name}>
-                              <label>csrf_token</label>
                               <Input placeholder='Email Address' size='small' className="full-width  " type={csrf_token?.type}
                                 name={csrf_token?.name}
                                 defaultValue={csrf_token?.value as any}
@@ -252,6 +252,7 @@ export function RegisterPage(props: RegisterProps) {
                       <button type="submit" className="ui large button grey-btn btn-large">Register <i aria-hidden="true" className="arrow right icon"></i></button>
                     </Form>
                   }</div>
+                <button onClick={props.login} className="ui large button grey-btn btn-large">Login <i aria-hidden="true" className="arrow right icon"></i></button>
               </div>
             </Grid.Column>
           </Grid.Row>

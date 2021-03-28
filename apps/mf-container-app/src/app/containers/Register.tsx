@@ -24,25 +24,11 @@ export const Register = () => {
 
     <div className="auth">
       <div className="container">
-        <div className="alternative-actions">
-          <p>
-            <Button size='large' className="grey-btn btn-large" onClick={() => login({ setReferer: false })}>
-              Already have an account? Log in instead
-            </Button>
-          </p>
-        </div>
-
         <div id="registration-password">
           {messages && <KratosMessages messages={messages} />}
           {
             form && <RegisterPage action={form?.action} fields={form?.fields as FormField[]} messages={messages}></RegisterPage>
           }
-          {/* {form &&
-            <KratosForm
-              submitLabel="Sign up"
-              action={form.action}
-              fields={form.fields}
-              messages={form.messages} />} */}
         </div>
       </div>
     </div>

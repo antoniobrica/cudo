@@ -4,7 +4,7 @@ import { Switch, Route, Link, useHistory, useRouteMatch, Redirect, useLocation }
 import { environment } from '../../environments/environment';
 import { Settings } from '../containers/Settings';
 import { MfProjectAppMount } from '../mf-project-app-mount/mf-project-app-mount';
-import { isAuthenticated, ToEmail } from '../services/auth';
+import { isAuthenticated, logout, ToEmail } from '../services/auth';
 import { UserProfileEdit } from '../user-profile-edit/user-profile-edit';
 import { UserProfile } from '../user-profile/user-profile';
 import { UserRegistration } from '../user-registration/user-registration';
@@ -28,8 +28,15 @@ export function Home(props: HomeProps) {
     if (!isAuthenticated()) ToEmail()
   }, [])
   const callbackFunction = (childData) => {
-    console.log(`${path}/settings`);
     console.log(location);
+    switch (childData) {
+      case 'logout':
+        logout();
+        break;
+
+      default:
+        break;
+    }
     // history.push('/project')
   };
   const edit = (childData) => {
