@@ -32,4 +32,5 @@ export * from './lib/components/userprofile/userprofile';
 export * from './lib/components/login/register'; 
 export * from './lib/components/modal/addsublevel'; 
 export * from './lib/components/userprofile/userprofileview'; 
+export * from './lib/components/loader/loader'; 
  

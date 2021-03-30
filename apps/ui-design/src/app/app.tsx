@@ -32,7 +32,7 @@ import UserProfile from 'libs/shared-components/src/lib/components/userprofile/u
 import RegisterPage from 'libs/shared-components/src/lib/components/login/register';
 import ModalAddSubLevel from 'libs/shared-components/src/lib/components/modal/addsublevel';
 import UserProfileView from 'libs/shared-components/src/lib/components/userprofile/userprofileview';
-
+import LoaderPage from 'libs/shared-components/src/lib/components/loader/loader';
 // import { Sidebar } from 'semantic-ui-react';
 
 export function App() {
@@ -56,7 +56,7 @@ export function App() {
     <FileStructure></FileStructure><br/> 
     <ModalExampleSize></ModalExampleSize><br/>
     <UploadNewVersion></UploadNewVersion><br/>
-    <AddNewFolder></AddNewFolder><br/>
+    <AddNewFolder></AddNewFolder><br/>  
     <AddNewPeople></AddNewPeople><br/>
     <PeopleList></PeopleList><br/>
     <ModalDelete></ModalDelete><br/>
@@ -70,7 +70,8 @@ export function App() {
     <EditProject></EditProject><br/>
     <UserProfile></UserProfile><br/>
     <RegisterPage></RegisterPage><br/>
-    <UserProfileView></UserProfileView>
+    <UserProfileView></UserProfileView><br/>
+    <LoaderPage></LoaderPage>
     </div>
     
    
