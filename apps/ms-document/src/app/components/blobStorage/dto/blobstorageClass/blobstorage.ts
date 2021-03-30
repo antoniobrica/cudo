@@ -20,7 +20,7 @@ export class BlobStorage {
       this.blobServiceClient = BlobServiceClient.fromConnectionString(process.env.AZURE_BLOB_CON_STRING);
     }
   }
-  get blobSAS() {
+  get blobSASToken() {
     const result = generateBlobSASQueryParameters({
       containerName: this.containerName,
       permissions: ContainerSASPermissions.parse("racwdl"),
@@ -57,15 +57,15 @@ export class BlobStorage {
     return result
   }
 
-  get sasObject() {
+  get blobSASObject() {
     this.createInstance();
     this.client = this.blobServiceClient.getContainerClient(this.containerName)
     this.blobClient = this.client.getBlobClient(this.blobName)
-    const result = { sasUrl: `${this.sasUrl}`, blobSAS: `${this.blobSAS}` }
+    const result = { sasUrl: `${this.sasUrl}`, blobSASToken: `${this.blobSASToken}` }
     return result
   }
 
-  async gisContainerExist(containerName) {
+  async isContainerExist(containerName) {
     this.createInstance();
     this.client = this.blobServiceClient.getContainerClient(containerName)
     this.blobClient = this.client.getBlobClient(this.blobName)

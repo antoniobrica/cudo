@@ -17,6 +17,6 @@ export class SasGeneratorService {
     if (!isExist) {
       this.blobstorage.blobServiceClient.getContainerClient(getContainer.containerName).create()
     }
-    return this.blobstorage.sasObject;
+    return this.blobstorage.blobSASObject;
   }
 }

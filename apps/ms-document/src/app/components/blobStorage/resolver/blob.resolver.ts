@@ -5,20 +5,20 @@ import { SasGeneratorService } from '../service/blob.service';
 import BlobParams from '../dto/blobparam';
 
 
-@Resolver(() =>blobModel)
+@Resolver(() => blobModel)
 export class BlobResolver {
-    constructor(
-        @Inject(SasGeneratorService) private sasGeneratorService: SasGeneratorService) { }
+  constructor(
+    @Inject(SasGeneratorService) private sasGeneratorService: SasGeneratorService) { }
 
 
-        @Query(returns =>String)
-        async sasAccountTocken(): Promise<string> {
-          return await this.sasGeneratorService.getAccountTolen();
-        }
+  @Query(returns => String)
+  async accountSASToken(): Promise<string> {
+    return await this.sasGeneratorService.getAccountTolen();
+  }
 
-        @Query(returns =>blobModel)
-        async sasObject(@Args("container") getContainer:BlobParams): Promise<any> {
-          return await this.sasGeneratorService.getSasObject(getContainer);
-        }
-      
+  @Query(returns => blobModel)
+  async blobSASToken(@Args("container") getContainer: BlobParams): Promise<any> {
+    return await this.sasGeneratorService.getSasObject(getContainer);
+  }
+
 }
