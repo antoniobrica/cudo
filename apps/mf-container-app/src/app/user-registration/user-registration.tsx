@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react"
 import { initialiseRequest } from "../services/kratos"
 import { KratosMessages } from "../components/KratosMessages"
 import { KratosForm } from "../components/KratosForm"
-import { login } from "../services/auth"
+import { login, ToEmail } from "../services/auth"
 import { Button, Form, Grid, Header, Input, Modal, TextArea } from "semantic-ui-react"
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
 import { RegisterPage } from "@cudo/shared-components"
 import { FormField } from "@oryd/kratos-client"
-export const Register = () => {
+/* eslint-disable-next-line */
+export interface UserRegistrationProps {
+}
+
+export function UserRegistration(props: UserRegistrationProps) {
   const [requestResponse, setRequestResponse] = useState<any>()
   const [open, setOpen] = React.useState(false)
   useEffect(() => {
@@ -27,10 +31,13 @@ export const Register = () => {
         <div id="registration-password">
           {messages && <KratosMessages messages={messages} />}
           {
-            form && <RegisterPage action={form?.action} fields={form?.fields as FormField[]} messages={messages}></RegisterPage>
+            form && <RegisterPage action={form?.action} fields={form?.fields as FormField[]} messages={messages} login={ToEmail} ></RegisterPage>
           }
         </div>
       </div>
     </div>
   )
 }
+
+
+export default UserRegistration;

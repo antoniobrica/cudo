@@ -3,6 +3,8 @@ import { initialiseRequest } from "../services/kratos"
 import { KratosMessages } from "../components/KratosMessages"
 import { KratosForm } from "../components/KratosForm"
 import { Header } from "../components/Header"
+import { Button, Icon } from "semantic-ui-react"
+import { login, ToEmail } from "../services/auth"
 
 export const Recover = () => {
   const [requestResponse, setRequestResponse] = useState<any>()
@@ -19,9 +21,10 @@ export const Recover = () => {
 
   return (
     <div className="content">
-      <Header />
+      {/* <Header /> */}
       <div className="container">
         <h4>Recover Your Account</h4>
+
         {messages && <KratosMessages messages={messages} />}
         {form &&
           <KratosForm
