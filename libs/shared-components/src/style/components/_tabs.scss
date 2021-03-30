@@ -1,117 +1,118 @@
-
-
 .margin {
-	a.item {
-		margin: 0 10px 0;
-		font-weight: 500;
-	}
+  a.item {
+    margin: 0 10px 0;
+    font-weight: 500;
+  }
 }
-.preliminary{
-    font-size: 13px;
-    color: #718898;
-    font-weight: 600;
+.preliminary {
+  font-size: 13px;
+  color: #718898;
+  font-weight: 600;
 }
 .ui.pointing.secondary.menu {
-	margin-top: 30px;
+  margin-top: 30px;
 }
-.ui.secondary.pointing.menu .active.item
-{
-color: #2D62ED; 
-border-color: #2d62ed;
-border-bottom: 2px solid #2d62ed;
- padding: 10px;
-&:hover{
-    color: #2D62ED; 
+.ui.secondary.pointing.menu .active.item {
+  color: #2d62ed;
+  border-color: #2d62ed;
+  border-bottom: 2px solid #2d62ed;
+  padding: 10px;
+  &:hover {
+    color: #2d62ed;
+  }
 }
-
-
-}
-.ui.secondary.pointing.menu .item{
-    color: #718898;
-    font-size: 14px;
-    padding: 13px;
+.ui.secondary.pointing.menu .item {
+  color: #718898;
+  font-size: 14px;
+  padding: 13px;
 }
 span.material-icons.middle {
-	vertical-align: middle;
-	margin-right: 10px;
+  vertical-align: middle;
+  margin-right: 10px;
 }
 
 .cs-tab {
-    .ui.pointing.secondary.menu {
-        border: 0;
-        margin: 0;
-        border-bottom: 1px solid color("grey", "lighten-4");
-        color:#718898;
-        .item {
-            font-size: 1.8rem; 
-            opacity: 0.54;
-            border-top: 0.3rem solid transparent;
-            border-bottom: 0;
-            padding: 1.4rem 2.5rem;
-            font-weight: 600;
-            margin: 0 !important;
-            margin-bottom: -1px !important;
-            @media (max-width:#{$small-screen}) {
-                font-size: 1.6rem;
-            }
-            &.active {
-                opacity: 1;
-                border-top-color: color("blue", "base");
-                border-bottom: 1px solid color("shades", "white");
-                border-left: 1px solid color("grey", "lighten-4");
-                border-right: 1px solid color("grey", "lighten-4");
-                
-            }
-        }
+  .ui.pointing.secondary.menu {
+    border: 0;
+    margin: 0;
+    border-bottom: 1px solid color('grey', 'lighten-4');
+    color: #718898;
+    .item {
+      font-size: 1.8rem;
+      opacity: 0.54;
+      border-top: 0.3rem solid transparent;
+      border-bottom: 0;
+      padding: 1.4rem 2.5rem;
+      font-weight: 600;
+      margin: 0 !important;
+      margin-bottom: -1px !important;
+      @media (max-width:#{$small-screen}) {
+        font-size: 1.6rem;
+      }
+      &.active {
+        opacity: 1;
+        border-top-color: color('blue', 'base');
+        border-bottom: 1px solid color('shades', 'white');
+        border-left: 1px solid color('grey', 'lighten-4');
+        border-right: 1px solid color('grey', 'lighten-4');
+      }
     }
-    .ui.segment {
-        font-size: 1.5rem;
-        border: 0;
-        padding: 3rem;
-        border: 1px solid color("grey", "lighten-4");
-        border-top: 0;
-       
-        @media (max-width:#{$small-screen}) {
-            padding: 2rem;
-        }
+  }
+  .ui.segment {
+    font-size: 1.5rem;
+    border: 0;
+    padding: 3rem;
+    border: 1px solid color('grey', 'lighten-4');
+    border-top: 0;
+
+    @media (max-width:#{$small-screen}) {
+      padding: 2rem;
     }
+  }
 }
 //colors
 $white: #ffffff;
 
 .navbar-collapse {
-	padding: 20px;
+  padding: 20px;
 }
 .box-shadow {
-	 box-shadow: 0 2px 2px rgb(0 0 0 / 5%), 0 1px 0 rgb(0 0 0 / 5%);
+  box-shadow: 0 2px 2px rgb(0 0 0 / 5%), 0 1px 0 rgb(0 0 0 / 5%);
 }
 .bg-white-only {
-	background-color: $white;
+  background-color: $white;
 }
-.preliminary-font{
-    font-size: 14px;
-    font-weight: 600;
+.preliminary-font {
+  font-size: 14px;
+  font-weight: 600;
 }
-.ui-tabs{
-    margin-top: 10px;
+.ui-tabs {
+  margin-top: 10px;
 }
-.project-sub{
-    font-size: 14px;
-    color: #9A9EA1;
+.project-sub {
+  font-size: 14px;
+  color: #9a9ea1;
 }
-.found{
-    font-size: 24px;
-    color: #1B1B40;
+.found {
+  font-size: 24px;
+  color: #1b1b40;
 }
-.app-content-body-dash.navbar-collapse.box-shadow.bg-white-only .ui.segment.active.tab {
-    background: #F9F8FF;
+.app-content-body-dash.navbar-collapse.box-shadow.bg-white-only
+  .ui.segment.active.tab {
+  background: #f9f8ff;
 }
-.app-content-body-dash{
-     
-    margin-left: 275px;
-    
-    width: 100%;
+.app-content-body-dash {
+  margin-left: 275px;
+
+  width: 100%;
 }
-.margin-top{
-    margin-top: 20px;
+
+.dash_area {
+  margin-left: 45px;
+}
+.margin-top {
+  margin-top: 20px;
+}
+.App {
+  width: 100%;
 }

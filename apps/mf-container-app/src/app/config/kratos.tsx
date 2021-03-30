@@ -27,8 +27,20 @@ export default {
     registration: {
       path: "/auth/registration"
     },
+    testmodal: {
+      path: "/modal"
+    },
     error: {
       path: "/error"
+    },
+    loginEmail: {
+      path: "/login-email"
+    },
+    loginPasswoord: {
+      path: "/login-passwoord"
+    },
+    loginSelect: {
+      path: "/login-select"
     }
   }
 }

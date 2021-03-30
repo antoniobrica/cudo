@@ -13,15 +13,15 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 /* eslint-disable-next-line */
-export interface AssigneeIndexProps {}
+export interface AssigneeIndexProps { }
 
 export function AssigneeIndex(props: AssigneeIndexProps) {
   return (
     <ApolloProvider client={client}>
-    <ApolloHooksProvider client={client}>
-     <Assignee />
-   </ApolloHooksProvider>
-   </ApolloProvider>
+      <ApolloHooksProvider client={client as any}>
+        <Assignee />
+      </ApolloHooksProvider>
+    </ApolloProvider>
   );
 }
 

@@ -4,21 +4,19 @@ import { BlobStorage } from '../dto/blobstorageClass/blobstorage';
 
 
 @Injectable()
-export class SasGeneratorService {  constructor(
+export class SasGeneratorService {
+  constructor(
     @Inject(BlobStorage) private blobstorage: BlobStorage) { }
 
+  getAccountTolen() {
+    return this.blobstorage.accountSAS;
+  }
 
-    getAccountTolen() {
-        return this.blobstorage.accountSAS;
+  async getSasObject(getContainer: BlobParams) {
+    const isExist = this.blobstorage.isContainerExist(getContainer.containerName);
+    if (!isExist) {
+      this.blobstorage.blobServiceClient.getContainerClient(getContainer.containerName).create()
     }
-
-  async getSasObject(getContainer:BlobParams){
-        const containerName =  this.blobstorage.blobServiceClient.getContainerClient(getContainer.containerName);
-        const isExist = await containerName.exists()
-           if (!isExist)
-        {
-          containerName.create()
-        }
-        return this.blobstorage.sasObject;
-    }
+    return this.blobstorage.sasObject;
+  }
 }

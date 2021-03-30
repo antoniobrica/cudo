@@ -24,7 +24,7 @@ selfservice:
       ui_url: http://192.168.29.131:4455/error
 
     settings:
-      ui_url: http://192.168.29.131:4455/settings
+      ui_url: http://192.168.29.131:4455/home/settings
       privileged_session_max_age: 15m
 
     recovery:

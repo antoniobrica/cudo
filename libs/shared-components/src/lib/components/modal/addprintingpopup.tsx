@@ -6,7 +6,7 @@ import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, Te
 
 
 
-function ModalExamplePrinting() {
+export function ModalExamplePrinting() {
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
@@ -31,10 +31,6 @@ function ModalExamplePrinting() {
               <div className="description">Upload Client logo  <span className="danger">*</span></div>
               <Button className="secondary_btn" size='mini' primary>Click to upload</Button>
               <p className="paragraph">Click the upload button to upload the client logo</p>
-
-
-
-
             </div>
 
             <Form>
@@ -63,6 +59,7 @@ function ModalExamplePrinting() {
                     <Form.Field>
                       <label>Type  </label>
                       <Select placeholder='Select' className="small" options={countryOptions} />
+
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -169,15 +166,6 @@ function ModalExamplePrinting() {
 
               </Grid>
             </Form>
-            <Button
-              content="Add Company"
-              onClick={() => setOpen(false)}
-              positive
-              size='mini' className="grey-btn"
-            />
-            <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
-              X  Cancel
-        </Button>
 
 
 
@@ -188,6 +176,15 @@ function ModalExamplePrinting() {
         </Modal.Content>
         <Modal.Actions>
 
+          <Button
+            content="Add Company"
+            onClick={() => setOpen(false)}
+            positive
+            size='mini' className="grey-btn"
+          />
+          <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+            X  Cancel
+        </Button>
 
         </Modal.Actions>
 

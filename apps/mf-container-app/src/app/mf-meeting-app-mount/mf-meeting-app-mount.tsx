@@ -9,7 +9,7 @@ export interface MfMeetingAppMountProps { }
 
 export function MfMeetingAppMount(props: MfMeetingAppMountProps) {
   const id = 'mf-meeting-app';
-  const { isLoaded, mfProducts } = useMicrofrontend(id, environment.mfProductsUrl);
+  const { isLoaded, mfProducts } = useMicrofrontend(id, environment.REACT_APP_PROJECT_HOST);
 
   useEffect(() => {
     if (!mfProducts) return;

@@ -1,18 +1,23 @@
 import React, { useEffect } from "react";
 
 function MicroFrontend({ name, host, history }) {
+
   useEffect(() => {
     const scriptId = `render${name}`;
+
     const renderMicroFrontend = () => {
+      console.log(window[`render${name}`])
       window[`render${name}`](`${name}-container`, history);
     };
 
     if (document.getElementById(scriptId)) {
+
       renderMicroFrontend();
       return;
     }
     const main = "main.js";
     const script = document.createElement("script");
+
     script.id = scriptId;
     script.crossOrigin = "";
     script.src = `${host}/${main}`;
@@ -24,7 +29,6 @@ function MicroFrontend({ name, host, history }) {
       window[`unmount${name}`] && window[`unmount${name}`](`${name}-container`);
     };
   });
-
   return <main id={`${name}-container`} />;
 }
 

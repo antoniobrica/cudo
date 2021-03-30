@@ -8,6 +8,7 @@ import 'semantic-ui-css/semantic.min.css'
 import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
 import * as serviceWorker from "./serviceWorker";
 import "./SubscriberWidgetElement";
+import App from './app/app';
 
 declare global {
   interface Window {
@@ -15,11 +16,6 @@ declare global {
     unmountProjectApp: any;
   }
 }
-
-
-
-
-import App from './app/app';
 const client = new ApolloClient({
   uri: 'http://localhost:5005/graphql',
   cache: new InMemoryCache()
@@ -27,17 +23,16 @@ const client = new ApolloClient({
 
 
 window.renderProjectApp = (containerId, history) => {
+  console.log("!!!!!!!!!!!!!!!!!!!!!!!", history)
   ReactDOM.render(
-  <React.StrictMode>
     <BrowserRouter>
-    <ApolloProvider client={client}>
-    <ApolloHooksProvider client={client}>
-      <App />
-      </ApolloHooksProvider>
+      <ApolloProvider client={client}>
+        <ApolloHooksProvider client={client as any}>
+          <App />
+        </ApolloHooksProvider>
       </ApolloProvider>
-    </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById(containerId)
+    </BrowserRouter>,
+    document.getElementById(containerId)
   );
   serviceWorker.unregister();
 };
@@ -49,14 +44,14 @@ if (!document.getElementById("ProjectApp-container")) {
   // ReactDOM.render(<App />, document.getElementById("root"));
   ReactDOM.render(
     <React.StrictMode>
-    <BrowserRouter>
-    <ApolloProvider client={client}>
-    <ApolloHooksProvider client={client}>
-      <App />
-      </ApolloHooksProvider>
-      </ApolloProvider>
-    </BrowserRouter>
-  </React.StrictMode>,
+      <BrowserRouter>
+        <ApolloProvider client={client}>
+          <ApolloHooksProvider client={client as any}>
+            <App />
+          </ApolloHooksProvider>
+        </ApolloProvider>
+      </BrowserRouter>
+    </React.StrictMode>,
     document.getElementById("root")
   );
   serviceWorker.unregister();

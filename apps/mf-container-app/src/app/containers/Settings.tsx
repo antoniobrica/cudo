@@ -3,22 +3,30 @@ import { initialiseRequest } from "../services/kratos"
 import { Header } from "../components/Header"
 import { KratosMessages } from "../components/KratosMessages"
 import { KratosForm } from "../components/KratosForm"
+import UserRegistration from "../user-registration/user-registration"
+import { useHistory, useRouteMatch } from "react-router-dom"
 
 export const Settings = () => {
   const [requestResponse, setRequestResponse] = useState<any>()
-
+  const { url, path } = useRouteMatch();
   useEffect(() => {
     const request = initialiseRequest({ type: "settings" }, { filterid: "flow" }) as Promise<any>
     request
       .then(request => setRequestResponse(request))
       .catch((error) => { console.log(error) })
-  }, [setRequestResponse])
+  }, [])
 
   const { state } = requestResponse || {}
   const formPassword = requestResponse?.methods?.password?.config
   const formProfile = requestResponse?.methods?.profile?.config
   const messages = requestResponse?.messages
-
+  const use = useHistory()
+  const cancel = (childData) => {
+    use.push(`/home/profile`);
+  }
+  const update = (childData) => {
+    use.push(`/home/profile`);
+  }
   return (
     <div className="content">
       <Header />
@@ -35,16 +43,19 @@ export const Settings = () => {
               fields={formProfile.fields}
               messages={formProfile.messages} />}
         </div>
-        <div id="user-password">
-          <h3>Password</h3>
-          {formPassword &&
-            <KratosForm
-              submitLabel="Save"
-              action={formPassword.action}
-              fields={formPassword.fields}
-              messages={formPassword.messages} />}
-        </div>
+        {/* <div id="user-password">
+            <h3>Password</h3>
+            {formPassword &&
+              <KratosForm
+                submitLabel="Save"
+                action={formPassword.action}
+                fields={formPassword.fields}
+                messages={formPassword.messages} />}
+          </div> */}
       </div>
     </div>
+    // <div>
+    //   <UserRegistration update={update} cancel={cancel}></UserRegistration>
+    // </div>
   )
 }
