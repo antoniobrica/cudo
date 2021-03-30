@@ -34,7 +34,7 @@ function ProjectApp(history: any) {
 
 function userprofile(history: any) {
   return (
-    <UserProfile image ></UserProfile>
+    <UserProfile image history ></UserProfile>
   );
 }
 

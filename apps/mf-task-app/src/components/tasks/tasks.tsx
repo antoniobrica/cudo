@@ -4,7 +4,7 @@ import CreateTask from '../../app/components/create-task/create-task';
 import { GET_TASKS } from '../../app/graphql/graphql';
 import { useTaskQuery } from "../../app/services/useRequest";
 import './tasks.module.scss';
-import ListExampleFloated from 'libs/shared-components/src/lib/components/task/taskarea';
+import {TaskArea} from 'libs/shared-components/src/lib/components/task/taskarea';
 import {MfAccountAppLib} from '@cudo/mf-account-app-lib';
 
 /* eslint-disable-next-line */
@@ -31,7 +31,7 @@ export function Tasks(props: TasksProps) {
         {data.tasks.map((task, id)=>{
           return(
             <div key={id}>
-             <ListExampleFloated task={task}></ListExampleFloated>
+             <TaskArea task={task}></TaskArea>
             </div>
           )
         })}

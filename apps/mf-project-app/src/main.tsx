@@ -23,7 +23,6 @@ const client = new ApolloClient({
 
 
 window.renderProjectApp = (containerId, history) => {
-  console.log("!!!!!!!!!!!!!!!!!!!!!!!", history)
   ReactDOM.render(
     <BrowserRouter>
       <ApolloProvider client={client}>
@@ -43,7 +42,7 @@ window.unmountProjectApp = (containerId) => {
 if (!document.getElementById("ProjectApp-container")) {
   // ReactDOM.render(<App />, document.getElementById("root"));
   ReactDOM.render(
-    <React.StrictMode>
+    // <React.StrictMode>
       <BrowserRouter>
         <ApolloProvider client={client}>
           <ApolloHooksProvider client={client as any}>
@@ -51,7 +50,8 @@ if (!document.getElementById("ProjectApp-container")) {
           </ApolloHooksProvider>
         </ApolloProvider>
       </BrowserRouter>
-    </React.StrictMode>,
+    // </React.StrictMode>
+    ,
     document.getElementById("root")
   );
   serviceWorker.unregister();

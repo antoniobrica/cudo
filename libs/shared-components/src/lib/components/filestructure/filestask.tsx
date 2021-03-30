@@ -131,7 +131,7 @@ export function FileStructure(props: FileStructureProps) {
 					</div>
 					 */}
 					{props.files.map((file, i) => (
-						<div className="card1 card-custom gutter-b width_card">
+						<div className="card1 card-custom gutter-b width_card" key={i}> 
 
 							<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
 

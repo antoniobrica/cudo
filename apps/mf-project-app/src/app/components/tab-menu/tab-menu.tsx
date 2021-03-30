@@ -1,8 +1,6 @@
 import React from 'react';
-import Tabsbar from 'libs/shared-components/src/lib/components/tabs/tabs'
-import AccordionExampleMenu from 'libs/shared-components/src/lib/components/menu/sidebar';
 import './tab-menu.module.scss';
- 
+import { AccordionExampleMenu } from "@cudo/shared-components"
 import { environment } from "../../../environments/environment";
 import MicroFrontend from "../../../MicroFrontend";
 import { Tab,Image } from 'semantic-ui-react'
