@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { SecretService } from 'libs/ms-core/src/services/secret/secret.service';
+import { SecretService } from '@cudo/ms-core'
 
 @Injectable()
 export class AppService {
-  constructor(private secretService: SecretService){
+  constructor(private secretService: SecretService) {
     secretService = new SecretService
   }
   getData(): { message: string } {
