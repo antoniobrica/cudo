@@ -1,5 +1,5 @@
 import React from 'react';
-import {  Form,  Select } from 'semantic-ui-react';
+import {  Form,  Select, Dropdown } from 'semantic-ui-react';
 import { useUsersQuery } from '../../services/useRequest';
 import { GET_USERS } from '../../graphql/graphql';
 
@@ -23,17 +23,31 @@ export function Assignee(props: AssigneeProps) {
   }, [data]);
 
   const onAssignee = (event, data) => {
+    console.log('assignee',data.value)
     setAssignee(data.value)
     props.parentBKPSelect(data)
    }
   return (
     <Form.Field>
-      <label>Assignee  </label>
+      {/* <label>Assignee  </label>
       <Select placeholder='Select' className="small" 
       options={items}
       value={assignee}
       onChange={onAssignee}
-      />
+      /> */}
+       <label>Select Multiple people</label>
+        
+        <Dropdown className="small_drop" 
+      clearable
+      fluid
+      multiple
+      search
+      selection
+      options={items}
+//value={assignee}
+      onChange={onAssignee}
+      placeholder='Select' 
+    />  
       
     </Form.Field>
   );

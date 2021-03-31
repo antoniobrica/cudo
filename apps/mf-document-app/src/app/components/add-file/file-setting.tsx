@@ -14,6 +14,8 @@ import { UploadsViewStateContext, SharedViewStateContext } from 'apps/mf-documen
 import { BlobItem } from '@azure/storage-blob';
 import { tap } from 'rxjs/operators';
 import { BlobItemUpload } from 'apps/mf-document-app/src/azure-storage/types/azure-storage';
+import '../../../../../../libs/shared-components/src/style/index.scss';
+
 import { LoaderPage } from "@cudo/shared-components"
 
 export interface FileProps {
@@ -24,7 +26,7 @@ export function FileSetting(props: FileProps) {
   const [fileData, setFileData] = React.useState<BlobItem[]>([]);
   const [loader, setLoader] = React.useState(false);
   const [people, setPeople] = React.useState(false);
-  const [asignee, setAsignis] = React.useState('');
+  const [asignee, setAsignis] = React.useState([]);
   const [fileList, setFileList] = React.useState<any>([]);
 
 
@@ -47,7 +49,10 @@ export function FileSetting(props: FileProps) {
 
   const getUploadsEffect = () => {
     const sub = context.uploadedItems$
-      .pipe(tap(items => setItems(items)))
+      .pipe(tap(items => {
+        setItems(items)
+       console.log('file items', items)
+      }))
       .subscribe();
     return () => sub.unsubscribe();
   };
@@ -158,10 +163,11 @@ export function FileSetting(props: FileProps) {
 
                 </Grid.Row>
               </Grid>
-              {fileList &&
-                fileList.map((file, index) => {
+              {items &&
+                items.map((file, index) => {
                   return (
-                    <Grid columns={12} key={index}>
+                    <div key={index}>
+                    <Grid columns={12}>
                       <Grid.Row>
                         <Grid.Column>
                           <Form.Field>
@@ -173,7 +179,7 @@ export function FileSetting(props: FileProps) {
                         <Grid.Column>
                           <Form.Field>
                             <label></label>
-                            <label>{file.name}</label>
+                            <label>{file.filename}</label>
 
 
                           </Form.Field>
@@ -221,16 +227,15 @@ export function FileSetting(props: FileProps) {
                           </Form.Field>
                         </Grid.Column>
                       </Grid.Row>
-                      {/* {items.map((item, i) => (
-                <ProgressBar key={i} progress={item.progress}></ProgressBar> 
-             ))} */}
                     </Grid>
+                 <ProgressBar  progress={file.progress}></ProgressBar> 
+              </div>
                   )
                 })}
 
-              {items.map((item, i) => (
+              {/* {items.map((item, i) => (
                 <ProgressBar key={i} progress={item.progress}></ProgressBar>
-              ))}
+              ))} */}
               {/* 
 <Grid columns={12}>
 <Grid.Row>
@@ -409,31 +414,22 @@ export function FileSetting(props: FileProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>Who can access</label>
-
                     </Form.Field>
-
                   </Grid.Column>
-
                 </Grid.Row>
               </Grid>
               <Grid columns={2} >
                 <Grid.Row>
-
-
                   <Grid.Column>
                     <Form.Field>
                       <Checkbox label='Everyone in the Project/Work type' className="small" />
                     </Form.Field>
-
                   </Grid.Column>
-
                   <Grid.Column>
                     <Form.Field>
                       <Checkbox label='Specify People only' className="small" onChange={specifyPeople} />
-
                     </Form.Field>
                   </Grid.Column>
-
                 </Grid.Row>
               </Grid>
               {people ?
@@ -447,19 +443,21 @@ export function FileSetting(props: FileProps) {
                   </Grid>
                   <Grid columns={5} >
                     <Grid.Row>
-                      {asignee?
-                      <Grid.Column>
-                        <Form.Field>
-                          <div className="below_area">
-                            <img src={img3} className="avatar" />
-                            <span className="span_name">{asignee}</span>
-                            <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
+                      {asignee.map((asign, i) => {
+                        return (
+                          <Grid.Column key={i}>
+                            <Form.Field>
+                              <div className="below_area">
+                                <img src={img3} className="avatar" />
+                                <span className="span_name">{asign}</span>
+                                <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
+                              </div>
+                            </Form.Field>
 
-                          </div>
-                        </Form.Field>
-
-                      </Grid.Column>:null}
-
+                          </Grid.Column>
+                        )
+                      })}
+                     
                       {/* <Grid.Column>
                         <Form.Field>
 
