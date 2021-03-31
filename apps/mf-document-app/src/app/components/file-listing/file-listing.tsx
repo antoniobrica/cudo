@@ -6,27 +6,30 @@ import { DeletesViewStateContext, DownloadsViewStateContext, SharedViewStateCont
 import { BlobItemUpload } from 'apps/mf-document-app/src/azure-storage/types/azure-storage';
 import { tap } from 'rxjs/operators';
 import { BlobItem } from '@azure/storage-blob';
+import { LoaderPage } from "@cudo/shared-components"
+
 /* eslint-disable-next-line */
 export interface FileListingProps { }
 
 export function FileListing(props: FileListingProps) {
   const context = React.useContext(UploadsViewStateContext);
   const [items, setItems] = React.useState<BlobItemUpload[]>([]);
-  const [loader, setLoader] = React.useState(false);
+  const [loader, setLoader] = React.useState(true);
   const sharedContext = React.useContext(SharedViewStateContext);
   const downloadsContext = React.useContext(DownloadsViewStateContext);
   const deletesContext = React.useContext(DeletesViewStateContext);
   const [fileData, setFileData] = React.useState<BlobItem[]>([]);
 
   const getContainerItemsEffect = () => {
-    setLoader(true);
-    const sub = sharedContext.itemsInContainer$
+     setLoader(true);
+     const sub = sharedContext.itemsInContainer$
       .pipe(tap(items => {
-        setFileData(items);
+        setFileData(items)
         setLoader(false);
       }
       ))
       .subscribe();
+
     return () => sub.unsubscribe();
   };
   React.useEffect(getContainerItemsEffect, []);
@@ -46,7 +49,7 @@ export function FileListing(props: FileListingProps) {
         <pre key={i}>{JSON.stringify(item, undefined, 2)}</pre>
       ))} */}
       {loader?
-      <div>Loading</div>:
+      <LoaderPage />:
       <FileStructure files={fileData}></FileStructure>
       }
       

@@ -6,6 +6,7 @@ import { useTaskQuery } from "../../app/services/useRequest";
 import './tasks.module.scss';
 import {TaskArea} from 'libs/shared-components/src/lib/components/task/taskarea';
 import {MfAccountAppLib} from '@cudo/mf-account-app-lib';
+import { LoaderPage } from "@cudo/shared-components"
 
 /* eslint-disable-next-line */
 export interface TasksProps {}
@@ -13,7 +14,7 @@ export interface TasksProps {}
 export function Tasks(props: TasksProps) {
   const { loading, error, data } = useTaskQuery(GET_TASKS);
 
-  if (loading) return <h1>Loading...</h1>;
+  if (loading) return <h1> <LoaderPage /></h1>;
   if (error) return <h1>Something went wrong!</h1>;
   if(data){
     console.log('tasks=>', data.tasks)

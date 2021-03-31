@@ -14,20 +14,29 @@ import { UploadsViewStateContext, SharedViewStateContext } from 'apps/mf-documen
 import { BlobItem } from '@azure/storage-blob';
 import { tap } from 'rxjs/operators';
 import { BlobItemUpload } from 'apps/mf-document-app/src/azure-storage/types/azure-storage';
+import { LoaderPage } from "@cudo/shared-components"
+
 export interface FileProps {
   openSettingF
 }
 export function FileSetting(props: FileProps) {
   const context = useContext(UploadsViewStateContext);
   const [fileData, setFileData] = React.useState<BlobItem[]>([]);
+  const [loader, setLoader] = React.useState(false);
+
   const [items, setItems] = React.useState<BlobItemUpload[]>([]);
 
   const sharedContext = React.useContext(SharedViewStateContext);
 
   const getContainerItemsEffect = () => {
+    setLoader(true);
     const sub = sharedContext.itemsInContainer$
-      .pipe(tap(items => setFileData(items)))
-      .subscribe();
+     .pipe(tap(items => {
+       setFileData(items)
+       setLoader(false);
+     }
+     ))
+     .subscribe();
     return () => sub.unsubscribe();
   };
   React.useEffect(getContainerItemsEffect, []);
@@ -136,7 +145,9 @@ export function FileSetting(props: FileProps) {
 
                 </Grid.Row>
               </Grid>
-              {fileData.map((file, index) => {
+              {loader?
+              <LoaderPage />:
+              fileData.map((file, index) => {
                 return (
                   <Grid columns={12} key={index}>
                     <Grid.Row>

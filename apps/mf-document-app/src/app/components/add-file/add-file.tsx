@@ -13,10 +13,10 @@ export interface AddFileProps { }
 export function AddFile(props: AddFileProps) {
   const [fileSelected, setFileSelected] = React.useState(null);
   const [items, setItems] = React.useState<ContainerItem[]>([]);
-  const { loading, error, data } = useTokenQuery(GET_TOKEN);
-  if(data){
-    console.log('access token=>', data)
-  }
+  // const { loading, error, data } = useTokenQuery(GET_TOKEN);
+  // if(data){
+  //   console.log('access token=>', data)
+  // }
   const [open, setOpen] = React.useState(false)
 
   const context1 = useContext(UploadsViewStateContext);
