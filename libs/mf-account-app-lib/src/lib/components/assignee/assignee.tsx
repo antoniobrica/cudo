@@ -6,7 +6,9 @@ import { GET_USERS } from '../../graphql/graphql';
 import './assignee.module.scss';
 
 /* eslint-disable-next-line */
-export interface AssigneeProps {}
+export interface AssigneeProps {
+  parentBKPSelect
+}
 
 export function Assignee(props: AssigneeProps) {
   const [items, setItems] = React.useState([])
@@ -22,6 +24,7 @@ export function Assignee(props: AssigneeProps) {
 
   const onAssignee = (event, data) => {
     setAssignee(data.value)
+    props.parentBKPSelect(data)
    }
   return (
     <Form.Field>

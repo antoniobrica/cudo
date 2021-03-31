@@ -23,6 +23,10 @@ export function FileSetting(props: FileProps) {
   const context = useContext(UploadsViewStateContext);
   const [fileData, setFileData] = React.useState<BlobItem[]>([]);
   const [loader, setLoader] = React.useState(false);
+  const [people, setPeople] = React.useState(false);
+  const [asignee, setAsignis] = React.useState('');
+  const [fileList, setFileList] = React.useState<any>([]);
+
 
   const [items, setItems] = React.useState<BlobItemUpload[]>([]);
 
@@ -31,12 +35,12 @@ export function FileSetting(props: FileProps) {
   const getContainerItemsEffect = () => {
     setLoader(true);
     const sub = sharedContext.itemsInContainer$
-     .pipe(tap(items => {
-       setFileData(items)
-       setLoader(false);
-     }
-     ))
-     .subscribe();
+      .pipe(tap(items => {
+        setFileData(items)
+        setLoader(false);
+      }
+      ))
+      .subscribe();
     return () => sub.unsubscribe();
   };
   React.useEffect(getContainerItemsEffect, []);
@@ -85,20 +89,32 @@ export function FileSetting(props: FileProps) {
   const onsetPhasesID = (data) => {
     // setPhasesID(data.value);
   }
+  const setAsignee = (data) => {
+    setAsignis(data.value)
+    console.log('setAsignee', data.value)
+  }
+  const specifyPeople = () => {
+    setPeople(previousCount => !previousCount)
+  }
   React.useEffect(() => {
     if (props.openSettingF) {
       setOpen(props.openSettingF);
-
     }
   }, [props.openSettingF]);
   const openf = () => {
     setOpen(true)
   }
 
-  const uploadFiles = (files: FileList | null) =>
+  const uploadFiles = (files: FileList | null) => {
     files && context.uploadItems(files);
+    const fileArr = [];
+    for (let i = 0; i < files.length; i++) {
+      fileArr.push(files[i]);
+    }
+    setFileList(fileArr)
+  }
 
-  console.log('file-data==>', fileData)
+  // console.log('file-data==>', fileData)
   return (
     <div >
       <Modal className="modal_media modal_center modal_media_1"
@@ -109,10 +125,7 @@ export function FileSetting(props: FileProps) {
       >
         <Modal.Header><h3>Add File </h3></Modal.Header>
         <Modal.Content body>
-
           <div>
-
-
             <Form>
               <Grid columns={1}>
                 <Grid.Row>
@@ -145,77 +158,78 @@ export function FileSetting(props: FileProps) {
 
                 </Grid.Row>
               </Grid>
-              {loader?
-              <LoaderPage />:
-              fileData.map((file, index) => {
-                return (
-                  <Grid columns={12} key={index}>
-                    <Grid.Row>
-                      <Grid.Column>
-                        <Form.Field>
+              {fileList &&
+                fileList.map((file, index) => {
+                  return (
+                    <Grid columns={12} key={index}>
+                      <Grid.Row>
+                        <Grid.Column>
+                          <Form.Field>
 
-                          <img src={img6} />
+                            <img src={img6} />
 
-                        </Form.Field>
-                      </Grid.Column>
-                      <Grid.Column>
-                        <Form.Field>
-                          <label></label>
-                          <label>{file.name}</label>
+                          </Form.Field>
+                        </Grid.Column>
+                        <Grid.Column>
+                          <Form.Field>
+                            <label></label>
+                            <label>{file.name}</label>
 
 
-                        </Form.Field>
-                      </Grid.Column>
-                      <Grid.Column>
-                        <Form.Field>
-                        </Form.Field>
-                      </Grid.Column>
-                      <Grid.Column>
-                        <Form.Field>
-                        </Form.Field>
-                      </Grid.Column>
-                      <Grid.Column>
-                        <Form.Field>
-                        </Form.Field>
-                      </Grid.Column>
-                      <Grid.Column>
-                        <Form.Field>
-                        </Form.Field>
-                      </Grid.Column>
-                      <Grid.Column>
-                        <Form.Field>
-                        </Form.Field>
-                      </Grid.Column>
-                      <Grid.Column>
-                        <Form.Field>
-                        </Form.Field>
-                      </Grid.Column>
-                      <Grid.Column>
-                        <Form.Field>
-                        </Form.Field>
-                      </Grid.Column>
-                      <Grid.Column>
-                        <Form.Field>
-                        </Form.Field>
-                      </Grid.Column>
-                      <Grid.Column>
-                        <Form.Field>
-                        </Form.Field>
-                      </Grid.Column>
-                      <Grid.Column>
-                        <Form.Field>
+                          </Form.Field>
+                        </Grid.Column>
+                        <Grid.Column>
+                          <Form.Field>
+                          </Form.Field>
+                        </Grid.Column>
+                        <Grid.Column>
+                          <Form.Field>
+                          </Form.Field>
+                        </Grid.Column>
+                        <Grid.Column>
+                          <Form.Field>
+                          </Form.Field>
+                        </Grid.Column>
+                        <Grid.Column>
+                          <Form.Field>
+                          </Form.Field>
+                        </Grid.Column>
+                        <Grid.Column>
+                          <Form.Field>
+                          </Form.Field>
+                        </Grid.Column>
+                        <Grid.Column>
+                          <Form.Field>
+                          </Form.Field>
+                        </Grid.Column>
+                        <Grid.Column>
+                          <Form.Field>
+                          </Form.Field>
+                        </Grid.Column>
+                        <Grid.Column>
+                          <Form.Field>
+                          </Form.Field>
+                        </Grid.Column>
+                        <Grid.Column>
+                          <Form.Field>
+                          </Form.Field>
+                        </Grid.Column>
+                        <Grid.Column>
+                          <Form.Field>
 
-                          <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
-                        </Form.Field>
-                      </Grid.Column>
-
-                    </Grid.Row>
-                  </Grid>
-                )
-              })}
+                            <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
+                          </Form.Field>
+                        </Grid.Column>
+                      </Grid.Row>
+                      {/* {items.map((item, i) => (
+                <ProgressBar key={i} progress={item.progress}></ProgressBar> 
+             ))} */}
+                    </Grid>
+                  )
+                })}
 
               {items.map((item, i) => (
-                 <ProgressBar key={i} progress={item.progress}></ProgressBar> 
+                <ProgressBar key={i} progress={item.progress}></ProgressBar>
               ))}
               {/* 
 <Grid columns={12}>
@@ -350,14 +364,10 @@ export function FileSetting(props: FileProps) {
                         <div className="description">Generate file number
                   <p className="enable">Enable this option to generate file numbering</p>
                           <Checkbox toggle className="toggle_area" />
-
                         </div>
-
                       </div>
                     </Form.Field>
                   </Grid.Column>
-
-
                 </Grid.Row>
               </Grid>
               <Grid columns={2}>
@@ -370,11 +380,6 @@ export function FileSetting(props: FileProps) {
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
-                    {/* <Form.Field>
-      <label>Project</label>
-      <Select placeholder='Select' className="small" options={countryOptions} />
-         
-    </Form.Field> */}
                     <PhaseIndex parentPhaseSelect={onsetPhasesID} />
                   </Grid.Column>
                 </Grid.Row>
@@ -382,20 +387,12 @@ export function FileSetting(props: FileProps) {
               <Grid columns={3}>
                 <Grid.Row>
                   <Grid.Column>
-                    {/* <Form.Field>
-      <label>BKP/Folder</label>
-      <Select placeholder='Select' className="small" options={countryOptions} />
-         
-    </Form.Field> */}
                     <BkpIndex parentBKPSelect={setBKPIDChange}></BkpIndex>
-
                   </Grid.Column>
-
                   <Grid.Column>
                     <Form.Field>
                       <label>File type</label>
                       <Select placeholder='Select' className="small" options={fileTypeOptions} />
-
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
@@ -432,75 +429,65 @@ export function FileSetting(props: FileProps) {
 
                   <Grid.Column>
                     <Form.Field>
-                      <Checkbox label='Specify People only' className="small" />
+                      <Checkbox label='Specify People only' className="small" onChange={specifyPeople} />
 
                     </Form.Field>
                   </Grid.Column>
 
                 </Grid.Row>
               </Grid>
+              {people ?
+                <div>
+                  <Grid columns={1} >
+                    <Grid.Row>
+                      <Grid.Column>
+                        <AssigneeIndex parentAsigneeSelect={setAsignee} />
+                      </Grid.Column>
+                    </Grid.Row>
+                  </Grid>
+                  <Grid columns={5} >
+                    <Grid.Row>
+                      {asignee?
+                      <Grid.Column>
+                        <Form.Field>
+                          <div className="below_area">
+                            <img src={img3} className="avatar" />
+                            <span className="span_name">{asignee}</span>
+                            <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
 
-              <Grid columns={1} >
-                <Grid.Row>
+                          </div>
+                        </Form.Field>
 
+                      </Grid.Column>:null}
 
-                  <Grid.Column>
-                    {/* <Form.Field> 
-        <label>Select people</label>
-      <Select placeholder='Select' className="small" options={countryOptions} />
-       
-    </Form.Field> */}
-                    <AssigneeIndex />
+                      {/* <Grid.Column>
+                        <Form.Field>
 
+                          <div className="below_area">
+                            <img src={img3} className="avatar" />
+                            <span className="span_name">Barthelemy Chalvet</span>
+                            <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
 
-                  </Grid.Column>
+                          </div>
+                        </Form.Field>
 
+                      </Grid.Column>
+                      <Grid.Column>
+                        <Form.Field>
 
-                </Grid.Row>
-              </Grid>
-              <Grid columns={5} >
-                <Grid.Row>
+                          <div className="below_area">
+                            <img src={img4} className="avatar" />
+                            <span className="span_name">Barthelemy Chalvet</span>
+                            <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
 
+                          </div>
+                        </Form.Field>
 
-                  <Grid.Column>
-                    <Form.Field>
-
-                      <div className="below_area">
-                        <img src={img2} className="avatar" />
-                        <span className="span_name">Barthelemy Chalvet</span>
-                        <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
-
-                      </div>
-                    </Form.Field>
-
-                  </Grid.Column>
-
-                  <Grid.Column>
-                    <Form.Field>
-
-                      <div className="below_area">
-                        <img src={img3} className="avatar" />
-                        <span className="span_name">Barthelemy Chalvet</span>
-                        <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
-
-                      </div>
-                    </Form.Field>
-
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Form.Field>
-
-                      <div className="below_area">
-                        <img src={img4} className="avatar" />
-                        <span className="span_name">Barthelemy Chalvet</span>
-                        <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
-
-                      </div>
-                    </Form.Field>
-
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
+                      </Grid.Column> */}
+                    </Grid.Row>
+                  </Grid> </div> :
+                null
+              }
             </Form>
 
           </div>
