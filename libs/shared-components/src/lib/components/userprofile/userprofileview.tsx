@@ -6,44 +6,33 @@ import { Button, Select, Modal, Tab, Table, Input, Form, Grid, Image, Segment, T
 import img from 'libs/shared-components/src/user_profile.png';
 import img5 from 'libs/shared-components/src/edit.png';
 
-export function UserProfileView() {
+export interface UserProfileEditProps {
+  edit?
+}
+export function UserProfileView(props: UserProfileEditProps) {
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
-
   ]
 
-
   const [open, setOpen] = React.useState(false)
-
   return (
-    <div className="app-content-body-dash navbar-collapse box-shadow bg-white-only" style={{ background: '#e6e6e6' }}>
+    <div className="app-content-body-dash dash_area navbar-collapse box-shadow bg-white-only" style={{ background: '#e6e6e6' }}>
       <div style={{ background: '#fff', padding: '10px' }}>
         <span className="preliminary-font">User Profile</span>
-
       </div>
-      <Grid columns={4}>
-        <Grid.Column>
-
-
+      <Grid columns={2}>
+        <Grid.Column style={{ height: '243px;' }}>
           <div className="card card-custom gutter-b">
-
             <div className="card-body">
               <img src={img} /><br />
               <label className="text-center">Change Picture</label>
               <Input type="file" className="file-upload-input" placeholder='Firstname' />
-
             </div>
-
-
-
           </div>
-
         </Grid.Column>
         <Grid.Column>
-
           <div className="card card-custom gutter-b widthcard" >
-
             <div className="card-body">
               <Form>
                 <Grid columns={2}>
@@ -92,7 +81,6 @@ export function UserProfileView() {
                         <label>1111d</label>
                       </Form.Field>
                     </Grid.Column>
-
                   </Grid.Row>
                 </Grid>
                 <Grid >
@@ -110,7 +98,6 @@ export function UserProfileView() {
                     <Grid.Column>
                       <Form.Field>
                         <label>Address Line 1</label>
-
                         <label> 532 68th Street</label>
                       </Form.Field>
                     </Grid.Column>
@@ -122,7 +109,6 @@ export function UserProfileView() {
                     </Grid.Column>
                   </Grid.Row>
                 </Grid>
-
                 <Grid columns={4}>
                   <Grid.Row>
                     <Grid.Column>
@@ -155,25 +141,17 @@ export function UserProfileView() {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <button className="ui mini button edit_btn">  <img src={img5} /> Edit</button>
-
+                        <button onClick={props.edit} className="ui mini button edit_btn">  <img src={img5} /> Edit</button>
                       </Form.Field>
                     </Grid.Column>
-
                   </Grid.Row>
                 </Grid>
-
-
               </Form>
             </div>
           </div>
-
         </Grid.Column>
       </Grid>
-
     </div>
-
-
   )
 }
 

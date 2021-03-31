@@ -81,7 +81,9 @@ export function Loginpassword(props: LoginPasswordProps) {
                           {...csrf_token?.required} />
                       </Form.Field>
                       <Button size='large' className="grey-btn btn-large" type="submit">Login <Icon name='arrow right' />   </Button>
-                      <span className="float_right "> <br /> <a href="" className="blue_color"> Forgot Password ?</a>  </span>
+
+                      <span> <br /> <a href="/auth/registration" className="blue_color"> Register with us</a>  </span>
+                      <span className="float_right ">   <a href="/recovery" className="blue_color"> Forgot Password ?</a>  </span>
                     </Form>
 
                   </div>

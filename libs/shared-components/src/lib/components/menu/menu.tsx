@@ -2,7 +2,7 @@ import React from 'react';
 
 import '../../../style/index.scss';
 import { Header, Icon, Image, Menu, Segment, Sidebar, Button, Popup } from 'semantic-ui-react'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useRouteMatch } from 'react-router-dom';
 /* eslint-disable-next-line */
 export interface MenuProps {
   parentCallback
@@ -10,7 +10,7 @@ export interface MenuProps {
 }
 
 export function Menubar(props: MenuProps) {
-
+  const { url, path } = useRouteMatch();
   const [visible, setVisible] = React.useState('')
 
   const handleOpenProject = (item) => {
@@ -34,7 +34,7 @@ export function Menubar(props: MenuProps) {
 
           </Menu.Item>
 
-          <Menu.Item as={NavLink} to="/add"
+          <Menu.Item as={NavLink} to={`${url}"/add"`}
             name='add'
             active={visible === 'add'} onClick={() => handleOpenProject('add')}>
 
@@ -69,7 +69,7 @@ export function Menubar(props: MenuProps) {
             </Popup>
           </Menu.Item>
 
-          <Menu.Item as={NavLink} to="/project"
+          <Menu.Item as={NavLink} to={`${url}/project`}
             name='project'
             active={visible === 'project'} onClick={() => handleOpenProject('project')}>
             <Popup
@@ -131,7 +131,7 @@ export function Menubar(props: MenuProps) {
             </Popup>
           </Menu.Item>
 
-          <Menu.Item as={NavLink} to="/profile"
+          <Menu.Item as={NavLink} to={`${url}/profile`}
             name='profile'
             active={visible === 'profile'} onClick={() => handleOpenProject('profile')}>
             <Popup

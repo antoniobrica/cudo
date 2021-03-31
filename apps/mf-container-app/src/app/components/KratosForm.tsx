@@ -5,9 +5,13 @@ import { KratosMessages } from "../components/KratosMessages"
 import { Button, Form, Grid, Segment } from "semantic-ui-react"
 import logo from '../../assets/images/slider.png';
 import img from '../../assets/images/Shape 2.png';
+import { ToEmail } from "../services/auth"
 
 export const KratosForm = ({ action, messages = [], fields, submitLabel = "Submit" }: { action: string, messages?: Message[], fields: FormField[], submitLabel: string }) => {
   const fieldsSorted = sortFormFields({ fields })
+  const login = (() => {
+    ToEmail();
+  })
   return (
     <div className=" ">
       <div className="main-outer-area">
@@ -35,6 +39,11 @@ export const KratosForm = ({ action, messages = [], fields, submitLabel = "Submi
             <Grid.Column>
               <img src={logo} className="massive" />
             </Grid.Column>
+          </Grid.Row>
+          <Grid.Row columns={2}>
+            <div className="form-header">
+              <Button onClick={login} size='large' className="grey-btn btn-large">Login </Button>
+            </div>
           </Grid.Row>
         </Grid>
       </div>

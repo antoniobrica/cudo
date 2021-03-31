@@ -6,7 +6,7 @@ import { SecretClient } from "@azure/keyvault-secrets";
 export class SecretService {
     //#region private fields    
     private credential: DefaultAzureCredential;
-    client: SecretClient;
+    private client: SecretClient;
     //#endregion
 
     //#region constructors
@@ -24,7 +24,12 @@ export class SecretService {
 
     //#region public methods
     public async getSecretValue(secretName: string) {
-        const result = await this.client.getSecret(secretName);
+        try {
+            const result = await this.client.getSecret(secretName);
+            return result;
+        } catch (error) {
+            return error;
+        }
     }
     //#endregion
 }

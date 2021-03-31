@@ -6,7 +6,7 @@ import * as path from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ComponentsModule } from './components/components.module';
-import { SecretService } from 'libs/ms-core/src/services/secret/secret.service';
+import { SecretService } from '@cudo/ms-core'
 
 @Module({
   imports: [
