@@ -1,15 +1,18 @@
+import { Optional } from "@nestjs/common";
 import { Field, InputType } from "@nestjs/graphql";
 import PeopleParams from "../../../../utils/types/peopleParams";
-import { TaskBasicDetailsInput } from "./task-basic-details.input";
+import { TaskBasicDetailsUpdateInput } from "./task-basic-details-update.input";
 @InputType()
-export class TaskDetailsInput {
+export class TaskDetailsUpdateInput {
 
-    @Field(type => TaskBasicDetailsInput)
-    taskBasics?: TaskBasicDetailsInput;
+    @Field(type => TaskBasicDetailsUpdateInput)
+    taskBasics?: TaskBasicDetailsUpdateInput;
 
     @Field(type => [PeopleParams], { description: `This is for title task title` })
+    @Optional()
     followers?: PeopleParams[];
 
     @Field(type => [PeopleParams], { description: `This is for title task title` })
+    @Optional()
     assignees?: PeopleParams[];
 }

@@ -8,6 +8,7 @@ import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { GetReferenceArgs } from '../../reference/dto/args/get-reference.arg.dto';
 import { ReferenceService } from '../../reference/service/reference.service';
 import { GetTasksArgs } from '../dto/args/get-tasks.args';
+import { TaskDetailsUpdateInput } from '../dto/input/task-details-update.input';
 import { TaskDetailsInput } from '../dto/input/task-details.input';
 
 @Injectable()
@@ -63,5 +64,11 @@ export class TasksService {
             relations: ['reference', 'assignees', 'followers']
         });
     }
-
+    public async update(createProjectTaskInput: TaskDetailsUpdateInput, referenceFilter: ReferenceFilterParams): Promise<TasksEntity> {
+        await this.projectTasksRepository.update({ taskID: createProjectTaskInput.taskBasics.taskID }, {
+            status: createProjectTaskInput.taskBasics.status
+        });
+        const reference = await this.projectTasksRepository.findOne({ where: { taskID: createProjectTaskInput.taskBasics.taskID } });
+        return reference;
+    }
 }
