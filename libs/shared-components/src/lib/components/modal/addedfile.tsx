@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Checkbox,   Modal,  Tab,Table,  Input, Form, Grid, Image, Select, TextArea} from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
- 
+import { Dropdown } from 'semantic-ui-react';
 import img from 'libs/shared-components/src/upload.png';
 import img2 from 'libs/shared-components/src/avatar_1.png';
 import img3 from 'libs/shared-components/src/avatar_2.png';
@@ -12,7 +12,15 @@ function ModalAddFile() {
     const countryOptions = [
         { key: 'af', value: 'af', text: 'Afghanistan' },
         { key: 'ax', value: 'ax', text: 'Aland Islands' },
-         
+         { key: 'az', value: 'az', flag: 'az', text: 'Azerbaijan' },
+  { key: 'bs', value: 'bs', flag: 'bs', text: 'Bahamas' },
+  { key: 'bh', value: 'bh', flag: 'bh', text: 'Bahrain' },
+  { key: 'bd', value: 'bd', flag: 'bd', text: 'Bangladesh' },
+  { key: 'bb', value: 'bb', flag: 'bb', text: 'Barbados' },
+  { key: 'by', value: 'by', flag: 'by', text: 'Belarus' },
+  { key: 'be', value: 'be', flag: 'be', text: 'Belgium' },
+  { key: 'bz', value: 'bz', flag: 'bz', text: 'Belize' },
+  { key: 'bj', value: 'bj', flag: 'bj', text: 'Benin' }, 
       ]
 
  
@@ -339,16 +347,23 @@ function ModalAddFile() {
   
 </Grid.Row>
 </Grid>
-
+ 
 <Grid columns={1} >
 <Grid.Row>
-
-
+ 
   <Grid.Column>
     <Form.Field> 
-        <label>Select people</label>
-      <Select placeholder='Select' className="small" options={countryOptions} />
-       
+        <label>Select Multiple people</label>
+        
+      <Dropdown className="small_drop" 
+    clearable
+    fluid
+    multiple
+    search
+    selection
+    options={countryOptions}
+    placeholder='Select Country' 
+  />  
     </Form.Field>
       
   </Grid.Column>
@@ -356,6 +371,7 @@ function ModalAddFile() {
   
 </Grid.Row>
 </Grid>
+
 <Grid columns={5} >
 <Grid.Row>
 
