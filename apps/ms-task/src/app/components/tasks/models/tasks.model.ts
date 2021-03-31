@@ -5,6 +5,9 @@ import { UserModel } from './user.model';
 @ObjectType()
 export class TasksModel {
 
+  @Field({ nullable: true, description: `This is for title taskID` })
+  taskID?: string;
+
   @Field({ nullable: true, description: `This is for title task title` })
   taskTitle?: string;
 
@@ -47,10 +50,10 @@ export class TasksModel {
   @Field()
   reference?: ReferenceModel
 
-  @Field(type => [UserModel])
+  @Field(type => [UserModel], { nullable: true })
   assignees?: UserModel[]
 
-  @Field(type => [UserModel])
+  @Field(type => [UserModel], { nullable: true })
   followers?: UserModel[]
 
 }

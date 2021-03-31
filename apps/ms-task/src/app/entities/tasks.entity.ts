@@ -46,14 +46,6 @@ export class TasksEntity extends BaseEntity {
   @Column({ nullable: true })
   saveTaskAsTemplate?: string;
 
-  // @Expose()
-  // @Column({ nullable: true })
-  // BKPID?: string;
-
-  // @Expose()
-  // @Column({ nullable: true })
-  // phasesID?: string;
-
   @Expose()
   @CreateDateColumn()
   createdAt?: Date;
@@ -91,12 +83,6 @@ export class TasksEntity extends BaseEntity {
   @JoinColumn()
   phase: Phases[];
 
-
-  // @Expose()
-  // // n:n relation with TaskAssigneessEntity
-  // @ManyToMany(type => TaskAssigneessEntity)
-  // @JoinTable()
-  // assignees: TaskAssigneessEntity[];
   @Expose()
   // n:n relation with TaskAssigneessEntity
   @ManyToMany(type => TaskAssigneessEntity)
