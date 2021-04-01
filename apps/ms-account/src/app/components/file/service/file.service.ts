@@ -23,7 +23,7 @@ export class FileService {
       const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
       const newPost = await this.FileRepository.create({
         ...taskeDetails,
-        reference: { id: selectedReference.id }
+        // reference: { id: selectedReference.id }
       });
       await this.FileRepository.save(newPost);
       return newPost;
@@ -47,10 +47,11 @@ export class FileService {
   public async findAllFile(refFilter: ReferenceFilterParams): Promise<FileEntity[]> {
     const selectedReference = await this.referenceService.getReferenceById(refFilter)
     return await this.FileRepository.find({
-      "reference": {
-        id: selectedReference.id
+      // "reference": {
+        // id: selectedReference.id
       }
-    });
+    
+    );
 
   }
 

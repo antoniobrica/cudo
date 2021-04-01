@@ -9,5 +9,8 @@ export class CreateFileInput {
   @Field({description:'type of file'})
   fileTitle: string;
 
+  @Field({description:'type of file'})
+  sasUrl: string;
+
 }
 

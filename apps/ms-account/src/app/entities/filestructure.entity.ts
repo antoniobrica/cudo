@@ -1,26 +1,23 @@
-import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, ManyToOne, ObjectIdColumn, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
 import ReferanceTypeEntity from './references.entity';
 
 
-@Entity({ name: 'file' })
+@Entity({ name: 'filestructure' })
 
-export class FileEntity extends BaseEntity {
+export class FileStructureEntity extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ unique: true })
   @Expose()
-  fileID: string;
+  fileStructureID: string;
 
   @Column()
   @Expose()
-  fileTitle: string;
+  fileStructureTitle: string;
 
-  @Column()
-  @Expose()
-  sasUrl: string;
 
   @Expose()
   @CreateDateColumn()
@@ -43,16 +40,16 @@ export class FileEntity extends BaseEntity {
   isDeleted?: boolean;
 
   @Expose()
-  @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.file)
-  reference: ReferanceTypeEntity[];
+  @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.filestructure)
+  reference: ReferanceTypeEntity;
 
 
-  constructor(fileEntity: Partial<FileEntity>) {
+  constructor(filestructureEntity: Partial<FileStructureEntity>) {
     super();
-    if (fileEntity) {
+    if (filestructureEntity) {
       Object.assign(
         this,
-        plainToClass(FileEntity, fileEntity, {
+        plainToClass(FileStructureEntity, filestructureEntity, {
           excludeExtraneousValues: true
         })
       )
