@@ -16,6 +16,11 @@ export interface IBkp {
   bkpTitle: string
 }
 
+export interface IFileType {
+  fileTypeID: string
+  fileTypeTitle: string
+}
+
 export interface IPhase{
   id: string
   phaseTitle: string
@@ -25,6 +30,9 @@ export interface Iphases {
 }
 export interface IBkps {
   Bkp: IBkp[];
+}
+export interface IFileTypes {
+  FileTypes: IFileType[];
 }
 export interface IUsers {
   users: IUser[];

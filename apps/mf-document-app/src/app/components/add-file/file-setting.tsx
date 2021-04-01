@@ -9,7 +9,7 @@ import img4 from 'libs/shared-components/src/avatar_3.png';
 import img5 from 'libs/shared-components/src/file_1.png';
 import img6 from 'libs/shared-components/src/file_2.png';
 import ProgressBar from 'libs/shared-components/src/lib/components/progress_bar/progressbar';
-import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex } from "@cudo/mf-account-app-lib"
+import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex ,FileTypeIndex} from "@cudo/mf-account-app-lib"
 import { UploadsViewStateContext, SharedViewStateContext } from 'apps/mf-document-app/src/azure-storage/contexts/viewStateContext';
 import { BlobItem } from '@azure/storage-blob';
 import { tap } from 'rxjs/operators';
@@ -395,10 +395,11 @@ export function FileSetting(props: FileProps) {
                     <BkpIndex parentBKPSelect={setBKPIDChange}></BkpIndex>
                   </Grid.Column>
                   <Grid.Column>
-                    <Form.Field>
+                    {/* <Form.Field>
                       <label>File type</label>
                       <Select placeholder='Select' className="small" options={fileTypeOptions} />
-                    </Form.Field>
+                    </Form.Field> */}
+                    <FileTypeIndex />
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>

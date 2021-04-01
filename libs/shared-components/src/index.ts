@@ -26,7 +26,7 @@ export * from './lib/components/people/premissionpeople';
 export * from './lib/components/people/addnewpeople'; 
 export * from './lib/components/modal/pinaddfile'; 
 export * from './lib/components/modal/managefilestructure'; 
-export * from './lib/components/projectsetting/projectsetting'; 
+// export * from './lib/components/projectsetting/projectsetting'; 
 export * from './lib/components/projectsetting/editproject'; 
 export * from './lib/components/userprofile/userprofile'; 
 export * from './lib/components/login/register'; 
