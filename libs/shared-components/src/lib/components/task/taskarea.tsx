@@ -71,16 +71,16 @@ export function TaskArea(props: Tasks) {
 						<div className="symbol symbol-30">
 							<img src={img} />
 							<span className="mr-2"  >
-
-								<Dropdown text='...'>
-									<Dropdown.Menu>
-
-										<Dropdown.Item icon='eye' text='View detail' />
-										<Dropdown.Item icon='pencil' text='Edit' />
-										<Dropdown.Item icon='check circle outline' text='Re-open' />
-										<Dropdown.Item icon='trash alternate outline' text='Delete' />
-									</Dropdown.Menu>
-								</Dropdown>
+							
+							<Dropdown text='...'>
+    <Dropdown.Menu>
+      
+      <Dropdown.Item icon='eye' text='View detail' />
+      <Dropdown.Item icon='pencil' text='Edit' />
+	  <Dropdown.Item icon='check circle outline' text='Re-open' />
+	  <Dropdown.Item icon='trash alternate outline' text='Delete' />
+    </Dropdown.Menu>
+  </Dropdown>
 							</span>
 						</div>
 
@@ -138,16 +138,16 @@ export function TaskArea(props: Tasks) {
 							</span>
 							<img src={img2} />
 							<span className="mr-2"  >
-
-								<Dropdown text='...'>
-									<Dropdown.Menu>
-
-										<Dropdown.Item icon='eye' text='View detail' />
-										<Dropdown.Item icon='pencil' text='Edit' />
-										<Dropdown.Item icon='check circle outline' text='Re-open' />
-										<Dropdown.Item icon='trash alternate outline' text='Delete' />
-									</Dropdown.Menu>
-								</Dropdown>
+							
+							<Dropdown text='...' >
+    <Dropdown.Menu className="dropdowncomplete">
+      
+      <Dropdown.Item icon='eye' text='View detail' />
+      <Dropdown.Item icon='pencil' text='Edit' />
+	  <Dropdown.Item icon='check circle outline' text='Mark as complete' />
+	  <Dropdown.Item icon='trash alternate outline' text='Delete' />
+    </Dropdown.Menu>
+  </Dropdown>
 							</span>
 						</div>
 
@@ -204,16 +204,16 @@ export function TaskArea(props: Tasks) {
 							</span>
 							<img src={img2} />
 							<span className="mr-2"  >
-
-								<Dropdown text='...'>
-									<Dropdown.Menu>
-
-										<Dropdown.Item icon='eye' text='View detail' />
-										<Dropdown.Item icon='pencil' text='Edit' />
-										<Dropdown.Item icon='check circle outline' text='Re-open' />
-										<Dropdown.Item icon='trash alternate outline' text='Delete' />
-									</Dropdown.Menu>
-								</Dropdown>
+							
+							<Dropdown text='...'>
+    <Dropdown.Menu>
+      
+      <Dropdown.Item icon='eye' text='View detail' />
+      <Dropdown.Item icon='pencil' text='Edit' />
+	  <Dropdown.Item icon='check circle outline' text='Re-open' />
+	  <Dropdown.Item icon='trash alternate outline' text='Delete' />
+    </Dropdown.Menu>
+  </Dropdown>
 							</span>
 						</div>
 
