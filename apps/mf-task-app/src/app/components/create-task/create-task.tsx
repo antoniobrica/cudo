@@ -86,7 +86,7 @@ const onsetEstimatedDays = (event, data) => {
   addTask({
     variables: {
       taskTitle, startDate, endDate, estimatedDays,
-      sendNotification, BKPID, saveTaskAsTemplate, phasesID, status
+      sendNotification, BKPID, saveTaskAsTemplate, phasesID
     },
     update: (
       cache: ApolloCache<TaskMutation>,

@@ -21,6 +21,12 @@ export interface IFileType {
   fileTypeTitle: string
 }
 
+export interface IFileStructure {
+  fileStructureID: string
+  fileStructureTitle: string
+}
+
+
 export interface IPhase{
   id: string
   phaseTitle: string
@@ -33,6 +39,9 @@ export interface IBkps {
 }
 export interface IFileTypes {
   FileTypes: IFileType[];
+}
+export interface IFileStructures {
+  FileStructure: IFileStructure[];
 }
 export interface IUsers {
   users: IUser[];

@@ -1,5 +1,5 @@
 import { DocumentNode, useQuery, useMutation } from "@apollo/react-hooks";
-import { IBkps, ICountries, ICountry, IFileTypes, Iphases, IUsers, } from "../interfaces/task";
+import { IBkps, ICountries, ICountry, IFileStructures, IFileTypes, Iphases, IUsers, } from "../interfaces/task";
 
 export function useCountrykQuery(gqlQuery: DocumentNode) {
   const { loading, error, data } = useQuery<ICountries>(gqlQuery);
@@ -25,6 +25,11 @@ export function usePhaseQuery(gqlQuery: DocumentNode) {
 
 export function useFileTypeQuery(gqlQuery: DocumentNode) {
   const { loading, error, data } = useQuery<IFileTypes>(gqlQuery);
+  return { loading, error, data };
+}
+
+export function useFileStructureQuery(gqlQuery: DocumentNode) {
+  const { loading, error, data } = useQuery<IFileStructures>(gqlQuery);
   return { loading, error, data };
 }
 

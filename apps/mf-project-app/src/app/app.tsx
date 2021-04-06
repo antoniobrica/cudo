@@ -85,7 +85,7 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/tabs" component={TabMenu} />
+        <Route path="/home/project/tabs" component={TabMenu} />
         <Route exact path="/home/project" component={ProjectInfo} />
       </Switch>
     </Router>

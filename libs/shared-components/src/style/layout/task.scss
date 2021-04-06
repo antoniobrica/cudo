@@ -150,3 +150,16 @@
     height: 20px !important;
     border-color: #D0D8DF !important;
 }
+
+.mr-2 i.dropdown.icon {
+    display: none;
+}
+.menu.transition.visible{
+    margin-left: -90px;
+}
+.menu.transition.visible.dropdowncomplete{
+    margin-left: -140px;  
+}
+.anchor_complete{
+    cursor: pointer;
+}

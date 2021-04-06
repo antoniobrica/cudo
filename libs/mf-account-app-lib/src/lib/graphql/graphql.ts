@@ -38,6 +38,15 @@ export const GET_FILE_TYPE = gql`{
       
     }
 }`
+export const GET_FILE_STRUCTURE = gql`{
+  FileStructure(referenceFilter: { referenceType: COMPANY, referenceID: "3" }
+  ){
+      fileStructureID
+      fileStructureTitle
+      
+    }
+}`
+
 export const GET_PHASE = gql`{
   Phase(referenceFilter:{referenceType:COMPANY,referenceID:"3"})
  {

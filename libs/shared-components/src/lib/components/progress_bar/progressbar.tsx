@@ -16,7 +16,7 @@ export function ProgressBar(props: Tasks) {
 
       <div>
       
-      <Progress percent={props.progress}>file uploading {props.progress} %</Progress>
+      <Progress percent={props.progress}>Completed {props.progress} %</Progress>
  
      </div> 
     

@@ -1,5 +1,5 @@
 import { DocumentNode, useQuery, useMutation } from "@apollo/react-hooks";
-import { ITodos, TaskMutation, ITask, ITasks } from "../interfaces/task";
+import { ITodos, TaskMutation, ITask, ITasks, TaskUpdateMutation } from "../interfaces/task";
 
 export function useTaskQuery(gqlQuery: DocumentNode) {
   const { loading, error, data } = useQuery<ITasks>(gqlQuery);
@@ -10,4 +10,8 @@ export function useTaskQuery(gqlQuery: DocumentNode) {
 export function useTaskMutation(gqlQuery: DocumentNode){
   const [addTask] = useMutation<TaskMutation>(gqlQuery);
   return [addTask];
+}
+export function useTaskUpdateMutation(gqlQuery: DocumentNode){
+  const [updateTask] = useMutation<TaskUpdateMutation>(gqlQuery);
+  return [updateTask];
 }
