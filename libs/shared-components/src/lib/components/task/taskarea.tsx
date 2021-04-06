@@ -28,7 +28,7 @@ export function TaskArea(props: Tasks) {
 					<div className="d-flex align-items-center py-2">
 						<span> <img src={img4} className="  mr-10 " />  </span>
 						<span className="textt">T-001</span>
-						<span> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </span>
+						<span><a href=" " title="Mark as complete"> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span>
 						<span className="font-weight-bold mb-0 mr-10">This is task name here</span>
 						<div className="d-flex mr-3">
 
@@ -71,16 +71,16 @@ export function TaskArea(props: Tasks) {
 						<div className="symbol symbol-30">
 							<img src={img} />
 							<span className="mr-2"  >
-							
-							<Dropdown text='...'>
-    <Dropdown.Menu>
-      
-      <Dropdown.Item icon='eye' text='View detail' />
-      <Dropdown.Item icon='pencil' text='Edit' />
-	  <Dropdown.Item icon='check circle outline' text='Re-open' />
-	  <Dropdown.Item icon='trash alternate outline' text='Delete' />
-    </Dropdown.Menu>
-  </Dropdown>
+
+								<Dropdown text='...'>
+									<Dropdown.Menu>
+
+										<Dropdown.Item icon='eye' text='View detail' />
+										<Dropdown.Item icon='pencil' text='Edit' />
+										<Dropdown.Item icon='check circle outline' text='Re-open' />
+										<Dropdown.Item icon='trash alternate outline' text='Delete' />
+									</Dropdown.Menu>
+								</Dropdown>
 							</span>
 						</div>
 
@@ -96,7 +96,7 @@ export function TaskArea(props: Tasks) {
 					<div className="d-flex align-items-center   py-2">
 						<span> <img src={img4} className="  mr-10 " />  </span>
 						<span className="textt">T-002</span>
-						<span> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </span>
+						<span><a href=" " title="Mark as complete"> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span>
 						<span className="font-weight-bold mb-0 mr-10">This is task name here</span>
 						<div className="d-flex mr-3">
 
@@ -126,11 +126,7 @@ export function TaskArea(props: Tasks) {
 					</div>
 
 					<div className="symbol-group symbol-hover py-2">
-
-
-
-
-						<div className="symbol symbol-30">
+							<div className="symbol symbol-30">
 							<span className="btn btn-default btn-icon btn-sm mr-2 mr-top">
 
 								<i className="ms-Icon ms-Icon--Pinned" aria-hidden="true"></i>
@@ -138,19 +134,19 @@ export function TaskArea(props: Tasks) {
 							</span>
 							<img src={img2} />
 							<span className="mr-2"  >
-							
-							<Dropdown text='...' >
-    <Dropdown.Menu className="dropdowncomplete">
-      
-      <Dropdown.Item icon='eye' text='View detail' />
-      <Dropdown.Item icon='pencil' text='Edit' />
-	  <Dropdown.Item icon='check circle outline' text='Mark as complete' />
-	  <Dropdown.Item icon='trash alternate outline' text='Delete' />
-    </Dropdown.Menu>
-  </Dropdown>
+
+								<Dropdown text='...' >
+									<Dropdown.Menu className="dropdowncomplete">
+
+										<Dropdown.Item icon='eye' text='View detail' />
+										<Dropdown.Item icon='pencil' text='Edit' />
+										<Dropdown.Item icon='check circle outline' text='Mark as complete' />
+										<Dropdown.Item icon='trash alternate outline' text='Delete' />
+									</Dropdown.Menu>
+								</Dropdown>
 							</span>
 						</div>
-
+ 
 					</div>
 
 				</div>
@@ -162,9 +158,9 @@ export function TaskArea(props: Tasks) {
 				<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
 
 					<div className="d-flex align-items-center   py-2">
-						<span> <img src={img4} className="  mr-10 " />  </span>
+						<span>  <img src={img4} className="  mr-10 " />   </span>
 						<span className="textt">T-003</span>
-						<span> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </span>
+						<span> <a href=" " title="Mark as complete"> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span>
 						<span className="font-weight-bold mb-0 mr-10">This is task name here</span>
 						<div className="d-flex mr-3">
 
@@ -204,16 +200,16 @@ export function TaskArea(props: Tasks) {
 							</span>
 							<img src={img2} />
 							<span className="mr-2"  >
-							
-							<Dropdown text='...'>
-    <Dropdown.Menu>
-      
-      <Dropdown.Item icon='eye' text='View detail' />
-      <Dropdown.Item icon='pencil' text='Edit' />
-	  <Dropdown.Item icon='check circle outline' text='Re-open' />
-	  <Dropdown.Item icon='trash alternate outline' text='Delete' />
-    </Dropdown.Menu>
-  </Dropdown>
+
+								<Dropdown text='...'>
+									<Dropdown.Menu>
+
+										<Dropdown.Item icon='eye' text='View detail' />
+										<Dropdown.Item icon='pencil' text='Edit' />
+										<Dropdown.Item icon='check circle outline' text='Re-open' />
+										<Dropdown.Item icon='trash alternate outline' text='Delete' />
+									</Dropdown.Menu>
+								</Dropdown>
 							</span>
 						</div>
 
