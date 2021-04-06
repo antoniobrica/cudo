@@ -28,7 +28,7 @@ export function TaskArea(props: Tasks) {
 					<div className="d-flex align-items-center py-2">
 						<span> <img src={img4} className="  mr-10 " />  </span>
 						<span className="textt">T-001</span>
-						<span><a href=" " title="Mark as complete"> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span>
+						<span className="anchor_complete"><a   title="Mark as complete"> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span>
 						<span className="font-weight-bold mb-0 mr-10">This is task name here</span>
 						<div className="d-flex mr-3">
 
