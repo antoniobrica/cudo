@@ -19,8 +19,8 @@ export class FileService {
     private referenceService: ReferenceService,
     @InjectRepository(FileParamEntity)
     private fileParamRepository: Repository<FileParamEntity>,
-    // @InjectRepository(BKP)
-    // private bkprepo: Repository<BKP>,
+    @InjectRepository(BKP)
+    private bkprepo: Repository<BKP>,
     @InjectRepository(FileParamEntity)
     private filestructurerepo: Repository<FileStructureEntity>,
     @InjectRepository(Phases)
@@ -32,7 +32,7 @@ export class FileService {
     try {
       const fileDetail = new FileEntity({});
       fileDetail.fileParam = [];
-      const { fileParam, fileBasics, phase,filestructure, folder } = createFileInput;
+      const { fileParam, fileBasics, phase,filestructure, folder, bkp } = createFileInput;
       for (let index = 0; index < fileParam.length; index++) {
         const fileParamentity = new FileParamEntity(fileParam[index])
         const newFile = await this.fileParamRepository.create({ ...fileParamentity });
@@ -44,7 +44,7 @@ export class FileService {
       if(fileDetail.isFolder == true){
         fileDetail.folderName = folder.folderName}
       else {
-        // fileDetail.BKPID = bkp.BKPID
+        fileDetail.BKPID = bkp.BKPID
       }
       fileDetail.fileTypeID = fileBasics.fileTypeID
       fileDetail.phaseID = phase.phaseID
