@@ -12,13 +12,18 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 /* eslint-disable-next-line */
-export interface FileStructureIndexProps {}
+export interface FileStructureIndexProps {
+  parentFileStructureSelect
+}
 
 export function FileStructureIndex(props: FileStructureIndexProps) {
+  const onFileStructure = (data) => {
+    props.parentFileStructureSelect(data)
+  }
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <FileStructure />
+        <FileStructure parentFileStructureSelect={onFileStructure}/>
       </ApolloHooksProvider>
     </ApolloProvider>
   );

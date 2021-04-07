@@ -5,7 +5,9 @@ import { Form, Select } from 'semantic-ui-react';
 import './file-type.module.scss';
 
 /* eslint-disable-next-line */
-export interface FileTypeProps { }
+export interface FileTypeProps { 
+  parentFileTypeSelect
+}
 
 export function FileType(props: FileTypeProps) {
   const [items, setItems] = React.useState([])
@@ -21,7 +23,7 @@ export function FileType(props: FileTypeProps) {
 
   const onFile = (event, data) => {
     setFileType(data.value)
-    // props.parentBKPSelect(data);
+    props.parentFileTypeSelect(data);
   }
 
 

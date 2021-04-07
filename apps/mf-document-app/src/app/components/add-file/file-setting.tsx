@@ -91,6 +91,13 @@ export function FileSetting(props: FileProps) {
   const setBKPIDChange = (data) => {
     //setBKPID(data.value)
   }
+  const setFileStructureChange =(data) =>{
+    console.log('fileStructure',data)
+  }
+
+  const setFileTypeChange = (data) =>{
+    console.log('fileType', data.value)
+  }
   const onsetPhasesID = (data) => {
     // setPhasesID(data.value);
   }
@@ -399,10 +406,10 @@ export function FileSetting(props: FileProps) {
                       <label>File type</label>
                       <Select placeholder='Select' className="small" options={fileTypeOptions} />
                     </Form.Field> */}
-                    <FileTypeIndex />
+                    <FileTypeIndex parentFileTypeSelect={setFileTypeChange}/>
                   </Grid.Column>
                   <Grid.Column>
-                    <FileStructureIndex />
+                    <FileStructureIndex parentFileStructureSelect={setFileStructureChange}/>
                     {/* <Form.Field>
                       <label>File structure</label>
                       <Select placeholder='Select' className="small" options={fileOptions} />

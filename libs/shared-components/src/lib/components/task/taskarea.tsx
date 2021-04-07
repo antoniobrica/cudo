@@ -35,7 +35,7 @@ export function TaskArea(props: Tasks) {
 						<div className="d-flex align-items-center  py-2">
 							<span> <img src={img4} className="  mr-10 " />  </span>
 							<span className="textt">T-0{props.id + 1}</span>
-							<span>  <img src={img3} className=" mr-2 mr-10 " />   </span>
+							<span  onClick={() => updateStatus(props.task, props.id)} className="anchor_complete">  <img src={img3} className=" mr-2 mr-10 " />   </span>
 							<span className="font-weight-bold mb-0 mr-10 line-through">{props.task.taskTitle}</span>
 							<div className="d-flex mr-3">
 
@@ -81,7 +81,7 @@ export function TaskArea(props: Tasks) {
 
 											<Dropdown.Item icon='eye' text='View detail' />
 											<Dropdown.Item icon='pencil' text='Edit' />
-											<Dropdown.Item icon='check circle outline' text='Re-open' />
+											<Dropdown.Item onClick={() => updateStatus(props.task, props.id)} icon='check circle outline' text='Re-open' />
 											<Dropdown.Item icon='trash alternate outline' text='Delete' />
 										</Dropdown.Menu>
 									</Dropdown>

@@ -6,7 +6,9 @@ import { GET_FILE_STRUCTURE } from '../../graphql/graphql';
 import { useFileStructureQuery } from '../../services/useRequest';
 
 /* eslint-disable-next-line */
-export interface FileStructureProps {}
+export interface FileStructureProps {
+  parentFileStructureSelect
+}
 
 export function FileStructure(props: FileStructureProps) {
   const [items, setItems] = React.useState([])
@@ -22,6 +24,7 @@ export function FileStructure(props: FileStructureProps) {
 
   const onFile = (event, data) => {
     setFileStructureTitle(data.value)
+    props.parentFileStructureSelect(data)
     // props.parentBKPSelect(data);
   }
 

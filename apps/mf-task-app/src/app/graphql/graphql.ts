@@ -72,7 +72,8 @@ mutation CreateTask(
 
 export const UPDATE_TASK = gql`
 mutation UpdateTask(
-  $taskID: String!,      
+  $taskID: String!,    
+  $status: TASKSTATUS!
   ){ 
     updateTask(
       referenceFilter: {
@@ -84,7 +85,7 @@ mutation UpdateTask(
         taskDetailsUpdate: {
         taskBasics:{
           taskID: $taskID,
-          status: COMPLETED
+          status: $status
         }
       assignees:[{userID:"2",userName:"Ashutosh"},{userID:"3",userName:"Ashutosh"}]
       followers:[{userID:"1",userName:"Ashutosh"}]

@@ -46,7 +46,7 @@ else {
     const taskID= task.taskID;
     addTask({
       variables: {
-        taskID
+        taskID, status
       },
       update: (
         cache,
