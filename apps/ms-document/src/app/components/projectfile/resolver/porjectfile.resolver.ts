@@ -1,4 +1,5 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
+import { ProjectFileEntity } from '../../../entities/projectfile.entity';
 import { CreateProjectfileInput } from '../dto/createprojectfile.input';
 import { ProjectFileModel } from '../model/projectfile.mode';
 import { ProjectFileService } from '../service/projectfile.service';
@@ -15,5 +16,10 @@ export class ProjectFileResolver {
     @Args('ProjectFileDetails') createfileinput: CreateProjectfileInput) 
     {
     return this.projectfileservice.createfile(createfileinput);
+  }
+
+  @Query(() => [ProjectFileModel], { nullable: true })
+  async ProjectFiles(): Promise<ProjectFileEntity[]> {
+    return await this.projectfileservice.findAllProjectFile()
   }
 }

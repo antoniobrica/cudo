@@ -12,10 +12,10 @@ export class PhasesResolver {
 
   @Mutation(returns => Phases)
   async createPhase(
-    @Args('phaseId') phaseId: number,
+    @Args('phaseId') phaseID: string,
     @Args('phaseTitle') phaseTitle: string,
   ): Promise<Phases> {
-    return await this.phasesService.create({ phaseTitle, phaseId })
+    return await this.phasesService.create({ phaseTitle, phaseID })
   }
 
   @Query(returns => Phases)

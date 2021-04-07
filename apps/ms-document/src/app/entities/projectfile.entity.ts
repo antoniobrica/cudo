@@ -3,7 +3,8 @@ import { Expose, plainToClass } from 'class-transformer';
 import { FileEntity } from './file.entity';
 import { FileStructureEntity } from './filestructure.entity';
 import { FileUserEntity } from './fileuser.entity';
-
+import * as uuid from 'uuid';
+import ReferanceTypeEntity from './reference-type.entity';
 
 
 @Entity({ name: 'projectfile' })
@@ -11,11 +12,15 @@ import { FileUserEntity } from './fileuser.entity';
 export class ProjectFileEntity extends BaseEntity {
 
   @PrimaryGeneratedColumn()
-  id: number;
+  Id: number;
 
-  @Column({ unique: true })
+  @Column()
   @Expose()
   projectId: string;
+
+  @Column({ unique: false })
+  @Expose()
+  projectFileId: string;
 
   @Column()
   @Expose()
@@ -74,6 +79,9 @@ export class ProjectFileEntity extends BaseEntity {
   @ManyToMany(type => FileUserEntity, fileuser => fileuser.projectfile) 
   fileuser: FileUserEntity;
 
+  @Expose()
+  @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.projectfile)
+  reference: ReferanceTypeEntity;
 
   constructor(fileEntity: Partial<ProjectFileEntity>) {
     super();
@@ -84,6 +92,7 @@ export class ProjectFileEntity extends BaseEntity {
                 excludeExtraneousValues: true
             })
         )
+        this.projectFileId = this.projectFileId || uuid.v1();
         this.createdAt = this.createdAt || new Date(new Date().toUTCString());
         this.updatedAt = new Date(new Date().toUTCString());
     }

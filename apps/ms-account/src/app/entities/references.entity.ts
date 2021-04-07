@@ -5,6 +5,7 @@ import { BkpEntity } from './bkp.entity';
 import { FileTypeEntity } from './file-type.entity';
 import { FileEntity } from './file.entity';
 import { FileStructureEntity } from './filestructure.entity';
+import { FolderEntity } from './folder.entity';
 import { PhaseEntity } from './phase.entity';
 import UsersEntity from './users.entity';
 
@@ -48,6 +49,11 @@ export default class ReferanceTypeEntity extends BaseEntity {
     @Expose()
     @OneToMany(() => BkpEntity, (bkp: BkpEntity) => bkp.reference)
     bkp: BkpEntity[];
+
+    @Expose()
+    @OneToMany(() => FolderEntity, (folder: FolderEntity) => folder.reference)
+    folder: FolderEntity[];
+
 
     @Expose()
     @OneToMany(() => FileTypeEntity, (filetype: FileTypeEntity) => filetype.reference)

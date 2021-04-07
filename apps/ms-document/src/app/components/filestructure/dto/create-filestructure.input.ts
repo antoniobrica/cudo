@@ -7,9 +7,9 @@ export class CreateFileStructureInput {
 
     @Field()
     @Column()
-    structureId: number;
+    structureId: string;
 
-    @Field(() => string)
+    @Field()
     @Column()
     structureTitle: string;
 

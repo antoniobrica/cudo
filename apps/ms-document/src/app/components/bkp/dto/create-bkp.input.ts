@@ -5,11 +5,11 @@ import { Column } from "typeorm";
 @InputType()
 export class CreateBkpInput {
 
-    @Field()
+    @Field({nullable:true})
     @Column()
-    bkpId: number;
+    BKPID: string;
 
-    @Field(() => string)
+    @Field()
     @Column()
     bkpTitle: string;
 

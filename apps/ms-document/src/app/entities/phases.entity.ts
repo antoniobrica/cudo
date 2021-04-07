@@ -12,7 +12,7 @@ export class Phases {
 
     @Field()
     @Column()
-    phaseId: number;
+    phaseID: string;
 
     @Column()
     @Field()

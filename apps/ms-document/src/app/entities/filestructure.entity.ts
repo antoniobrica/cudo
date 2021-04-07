@@ -1,14 +1,15 @@
 import { Field, ObjectType } from "@nestjs/graphql";
-import {  Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {  BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { FileEntity } from "./file.entity";
 import { ProjectFileEntity } from "./projectfile.entity";
 
 @ObjectType()
 @Entity({name: 'filestructure'})
-export class FileStructureEntity {
+export class FileStructureEntity extends BaseEntity{
 
     @Field()
     @PrimaryGeneratedColumn()
-    Id: number;
+    filestructureID: number;
 
     @Column()
     @Field()
@@ -16,8 +17,9 @@ export class FileStructureEntity {
 
     @Field()
     @Column()
-    structureId: number;
+    structureId: string;
 
-    @OneToMany(type => ProjectFileEntity, projectfile => projectfile.filestructure) // specify inverse side as a second parameter
-    projectfile: ProjectFileEntity[];
+    @OneToMany(type => FileEntity, projectfile => projectfile.filestructure) // specify inverse side as a second parameter
+    projectfile: FileEntity[];
+
 }

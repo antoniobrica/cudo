@@ -17,19 +17,19 @@ export class FileResolver {
   }
 
   @Mutation(() => FileModel)
-  async createFile(
+   async createFile(
     @Args('fileDetails') createFileInput: CreateFileInput,
     @Args("referenceFilter") referenceFilter: ReferenceFilterParams
   ) {
-    return this.fileService.createFile(createFileInput, referenceFilter);
+    return await this.fileService.createFile(createFileInput, referenceFilter);
   }
 
-  @Mutation(() => FileModel)
-  async updateFile(
-    @Args('fileDetails') createFileInput: CreateFileInput,
-    @Args("referenceFilter") referenceFilter: ReferenceFilterParams
-  ) {
-    return this.fileService.updateFile(createFileInput, referenceFilter);
-  }
+  // @Mutation(() => FileModel)
+  // async updateFile(
+  //   @Args('fileDetails') createFileInput: CreateFileInput,
+  //   @Args("referenceFilter") referenceFilter: ReferenceFilterParams
+  // ) {
+  //   return await this.fileService.updateFile(createFileInput, referenceFilter);
+  // }
 
 }

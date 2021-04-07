@@ -1,12 +1,13 @@
-import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, ObjectIdColumn, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
 import ReferanceTypeEntity from './reference-type.entity';
 import { Phases } from './phases.entity';
 import { BKP } from './bkp.entity';
 import { ProjectFileEntity } from './projectfile.entity';
 import { FileVersionEntity } from './fileversion.entity';
-import { FileParams } from '../components/file/dto/args/param/file.param';
 import { FileParamEntity } from './file.param.entity';
+import { FileStructureEntity } from './filestructure.entity';
+import { Folder } from './folder.entity';
 
 
 @Entity({ name: 'File' })
@@ -16,22 +17,38 @@ export class FileEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true })
   @Expose()
-  fileURL: string;
-
   @Column()
+  isFolder?: boolean;
+
+  @Column({ nullable: true })
   @Expose()
-  fileTitle: string;
+  folderName: string;
 
-  @Column()
+  @Column({ nullable: true })
+  @Expose()
+  structureId: string;
+
+  @Column({ nullable: true })
+  @Expose()
+  structureTitle: string;
+
+
+  @Column({ nullable: true })
   @Expose()
   BKPID: string;
 
+  @Column({ nullable: true })
+  @Expose()
+  phaseID: string;
+
   @Column()
   @Expose()
-  phaseId: string;
+  fileTypeID?: string;
 
+  @Column()
+  @Expose()
+  fileTypeName?: string;
 
   @Expose()
   @CreateDateColumn()
@@ -53,6 +70,7 @@ export class FileEntity extends BaseEntity {
   @Column({ nullable: true })
   isDeleted?: boolean;
 
+
   @Expose()
   @ManyToMany(type => FileParamEntity)
   @JoinTable()
@@ -70,9 +88,17 @@ export class FileEntity extends BaseEntity {
   @JoinColumn()
   bkp: BKP[];
 
+  @ManyToMany(type => Folder, folder => folder.file) // specify inverse side as a second parameter
+  @JoinColumn()
+  folder: Folder[];
+
   @Expose()
   @ManyToOne(() => ProjectFileEntity, (projectfile: ProjectFileEntity) => projectfile.file)
+  @JoinTable()
   projectfile: ProjectFileEntity;
+
+  @ManyToOne(type => FileStructureEntity, filestructure => filestructure.projectfile) 
+  filestructure: FileStructureEntity;
 
   @Expose()
   @OneToMany(() => FileVersionEntity, (file: FileVersionEntity) => file.filevrsion)

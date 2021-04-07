@@ -4,7 +4,8 @@ import { FileModule } from './file/file.module';
 import { FileStructureModule } from './filestructure/filestructure.module';
 import { FileUserModule } from './fileuser/fileuser.module';
 import { FileVersionModule } from './fileVersion/fileversion.module';
-import { ProjectFileModule } from './projectfile/projectfile.module';
+import { FolderModule } from './folder/phases.module';
+import { ProjectFileModule } from './projectfiles/projectfile.module';
 import { ReferenceModule } from './reference/reference.module';
 
 @Module({
@@ -15,7 +16,8 @@ import { ReferenceModule } from './reference/reference.module';
     ProjectFileModule,
     FileStructureModule,
     FileUserModule,
-    FileVersionModule ],
+    FileVersionModule,
+    FolderModule ],
   providers: []
 })
 export class ComponentsModule { }

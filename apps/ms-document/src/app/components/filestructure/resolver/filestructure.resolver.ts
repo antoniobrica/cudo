@@ -11,7 +11,7 @@ export class FileStructureResolver {
     
   @Mutation(returns => FileStructureEntity)
   async createFileStructure(
-    @Args('structureId') structureId: number,
+    @Args('structureId') structureId: string,
     @Args('structureTitle') structureTitle: string,
   ): Promise<FileStructureEntity> {
     return await this.filestructureService.create({ structureId,structureTitle })

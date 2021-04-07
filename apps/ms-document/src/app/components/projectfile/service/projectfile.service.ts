@@ -9,16 +9,16 @@ import { CreateProjectfileInput } from "../dto/createprojectfile.input";
 export class ProjectFileService {
     constructor(
         @InjectRepository(ProjectFileEntity)
-        private fileRepository: Repository< ProjectFileEntity >
+        private projectfileRepository: Repository< ProjectFileEntity >
         ) {}
       
 
    public async createfile(createfileinput: CreateProjectfileInput ): Promise< ProjectFileEntity >{
         try{
             const fileDetail = new ProjectFileEntity({...createfileinput})
-            const newfile = await this.fileRepository.create({
+            const newfile = await this.projectfileRepository.create({
                 ...fileDetail});
-            await this.fileRepository.save(newfile);
+            await this.projectfileRepository.save(newfile);
             return newfile;
         }
         catch (error) {
@@ -26,4 +26,11 @@ export class ProjectFileService {
           }
 
     }
+    public async findAllProjectFile(): Promise<ProjectFileEntity[]> {
+        return await this.projectfileRepository.find({ relations: [ 'filestructure', 'fileuser' ]
+         
+        });
+    
+      }
+
 }

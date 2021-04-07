@@ -11,10 +11,10 @@ export class BkpResolver {
     
   @Mutation(returns => BKP)
   async createBkp(
-    @Args('bkpId') bkpId: number,
+    @Args('bkpId') BKPID: string,
     @Args('bkpTitle') bkpTitle: string,
   ): Promise<BKP> {
-    return await this.bkpService.create({ bkpTitle,bkpId })
+    return await this.bkpService.create({ BKPID,bkpTitle })
   }
 
   @Query(returns => BKP)

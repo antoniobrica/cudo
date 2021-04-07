@@ -7,9 +7,9 @@ export class CreatePhaseInput {
 
     @Field()
     @Column()
-    phaseId: number;
+    phaseID: string;
 
-    @Field(() => string)
+    @Field()
     @Column()
     phaseTitle: string;
 

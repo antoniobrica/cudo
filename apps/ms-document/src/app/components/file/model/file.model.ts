@@ -1,31 +1,45 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { ProjectFileEntity } from '../../../entities/projectfile.entity';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { ReferenceModel } from '../../reference/model/reference.model';
+import { FileParamModel } from './file-param.model';
 
 @ObjectType()
 export class FileModel {
 
-  @Field({nullable: true})
-  fileURL?: string;
-
-  @Field({nullable: true})
-  fileTitle?: string;
+  @Field({ description: `PhaseID linked with task` })
+  isFolder?: boolean;
 
   @Field({ nullable: true, description: `BKPID linked with task` })
   BKPID?: string;
 
   @Field({ nullable: true, description: `PhaseID linked with task` })
-  phasesID?: string;
+  folderName?: string;
 
   @Field({ nullable: true, description: `PhaseID linked with task` })
-  FileTypeID?: string;
+  phaseID?: string;
+
+  @Field({ nullable: true, description: `PhaseID linked with task` })
+  fileTypeID?: string;
+
+  @Field({ nullable: true, description: `PhaseID linked with task` })
+  fileTypeName?: string;
   
+  @Field({nullable: true, description: `file updated at` })
+  updatedAt?: Date;
+
+  @Field({nullable: true, description: `file created at` })
+  createdAt?: Date;
+
+  @Field({ nullable: true, description: `file updated By` })
+  updatedBy?: string;
+
+  @Field({ nullable: true, description: `file created by` })
+  createdBy?: string;
 
   @Field(type => [ReferenceModel])
-  references: ReferenceModel[]
+  reference?: ReferenceModel[]
 
-  // @Field(type => [ProjectFileEntity])
-  // projectfile: ProjectFileEntity[]
+  @Field(type => [FileParamModel])
+  fileParam?: FileParamModel[]
 
 }
 

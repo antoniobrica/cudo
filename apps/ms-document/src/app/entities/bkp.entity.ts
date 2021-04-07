@@ -14,9 +14,9 @@ export class BKP {
     @Field()
     bkpTitle: string;
 
-    @Field()
+    @Field({nullable:true})
     @Column()
-    bkpId: number;
+    BKPID: string;
 
     @OneToMany(type => FileEntity, file => file.bkp) // specify inverse side as a second parameter
     file: FileEntity[];
