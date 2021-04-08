@@ -1,23 +1,23 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
-import { FileEntity } from './file.entity';
+import ReferanceTypeEntity from './references.entity';
 
 
+@Entity({ name: 'folder' })
 
-@Entity({ name: 'fileversion' })
-
-export class FileVersionEntity extends BaseEntity {
+export class FolderEntity extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ unique: true })
   @Expose()
-  fileID: string;
+  folderID: string;
 
   @Column()
   @Expose()
-  fileVersion: string;
+  folderTitle: string;
+
 
   @Expose()
   @CreateDateColumn()
@@ -40,21 +40,21 @@ export class FileVersionEntity extends BaseEntity {
   isDeleted?: boolean;
 
   @Expose()
-  @ManyToOne(() => FileEntity, (filevrsion: FileEntity) => filevrsion.projectFileID)
-  filevrsion: FileEntity[];
+  @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.folder)
+  reference: ReferanceTypeEntity;
 
 
-  constructor(fileversionEntity: Partial<FileVersionEntity>) {
+  constructor(folderEntity: Partial<FolderEntity>) {
     super();
-    if (fileversionEntity) {
+    if (folderEntity) {
       Object.assign(
         this,
-        plainToClass(FileVersionEntity, fileversionEntity, {
+        plainToClass(FolderEntity, folderEntity, {
           excludeExtraneousValues: true
         })
       )
-      this.createdAt = this.createdAt || new Date(new Date().toUTCString());
-      this.updatedAt = new Date(new Date().toUTCString());
+      // this.createdAt = this.createdAt || new Date(new Date().toUTCString());
+      // this.updatedAt = new Date(new Date().toUTCString());
     }
   }
 }

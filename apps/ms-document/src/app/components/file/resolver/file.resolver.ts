@@ -2,6 +2,7 @@ import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { FileEntity } from '../../../entities/file.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { CreateFileInput } from '../dto/create-file.input';
+import { UpdateFileInput } from '../dto/update-file.input';
 import { FileModel } from '../model/file.model';
 import { FileService } from '../service/file.service';
 
@@ -21,15 +22,14 @@ export class FileResolver {
     @Args('fileDetails') createFileInput: CreateFileInput,
     @Args("referenceFilter") referenceFilter: ReferenceFilterParams
   ) {
-    return this.fileService.createFile(createFileInput, referenceFilter);
+    return await this.fileService.createFile(createFileInput, referenceFilter);
   }
 
   @Mutation(() => FileModel)
   async updateFile(
-    @Args('fileDetails') createFileInput: CreateFileInput,
-    @Args("referenceFilter") referenceFilter: ReferenceFilterParams
+    @Args('updatefileDetails') createFileInput: UpdateFileInput
   ) {
-    return this.fileService.updateFile(createFileInput, referenceFilter);
+    return await this.fileService.updateFile(createFileInput);
   }
 
 }
