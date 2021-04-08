@@ -8,6 +8,7 @@ export interface ITodo {
     status: string;
    }
   export interface ITask {
+    taskID: string
     taskTitle: string
     startDate: string
     endDate: string

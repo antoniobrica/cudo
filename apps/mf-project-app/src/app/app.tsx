@@ -1,6 +1,6 @@
 import React, { Suspense, useState } from 'react';
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch, useHistory, useLocation } from "react-router-dom";
 import ProjectInfo from './components/project-info/project-info';
 
 import { initI18n } from '@cudo/mf-core';
@@ -82,13 +82,16 @@ function loadApp() {
 }
 
 function App() {
+  const history = useHistory()
+  const location = useLocation();
+  const { url, path } = useRouteMatch();
+  console.log('path-project-app', path)
   return (
-    <Router>
+    
       <Switch>
-        <Route path="/home/project/tabs" component={TabMenu} />
-        <Route exact path="/home/project" component={ProjectInfo} />
+        <Route exact path="/home/project/tabs" render={() => <TabMenu />} />
+        <Route exact path="/home/project" render={() => <ProjectInfo />}/>
       </Switch>
-    </Router>
   );
 }
 
