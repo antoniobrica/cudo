@@ -81,7 +81,7 @@ export class FileEntity extends BaseEntity {
   isDeleted?: boolean;
 
   @Expose()
-  @ManyToMany(type => FileParamEntity)
+  @ManyToMany(type => FileParamEntity, { cascade: true })
   @JoinTable()
   files: FileParamEntity[];
 
@@ -91,7 +91,7 @@ export class FileEntity extends BaseEntity {
 
   @Expose()
   // n:n relation with PeopleEntity
-  @ManyToMany(type => PeopleEntity)
+  @ManyToMany(type => PeopleEntity, { cascade: true })
   @JoinTable()
   people: PeopleEntity[];
 

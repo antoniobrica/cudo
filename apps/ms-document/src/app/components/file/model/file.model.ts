@@ -54,10 +54,10 @@ export class FileModel {
   @Field({ description: `PhaseID linked with task` })
   isEveryOneAllowed?: boolean;
 
-  @Field(type => [FileParamModel])
+  @Field(type => [FileParamModel], { nullable: true })
   files?: FileParamModel[]
 
-  @Field(type => [PeopleModel])
+  @Field(type => [PeopleModel], { nullable: true })
   people?: PeopleModel[]
 
 }
