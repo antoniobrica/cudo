@@ -1,14 +1,9 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
 import ReferanceTypeEntity from './reference-type.entity';
-import { Phases } from './phases.entity';
-import { BKP } from './bkp.entity';
-import { ProjectFileEntity } from './projectfile.entity';
-import { FileVersionEntity } from './fileversion.entity';
 import { FileParamEntity } from './file.param.entity';
-import { FileStructureEntity } from './filestructure.entity';
-import { Folder } from './folder.entity';
-
+import * as uuid from 'uuid';
+import { PeopleEntity } from './people.entity';
 
 @Entity({ name: 'File' })
 
@@ -16,6 +11,10 @@ export class FileEntity extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Expose()
+  @Column({ unique: true })
+  projectFileID: string;
 
   @Expose()
   @Column()
@@ -27,12 +26,11 @@ export class FileEntity extends BaseEntity {
 
   @Column({ nullable: true })
   @Expose()
-  structureId: string;
+  structureID: string;
 
   @Column({ nullable: true })
   @Expose()
   structureTitle: string;
-
 
   @Column({ nullable: true })
   @Expose()
@@ -40,7 +38,15 @@ export class FileEntity extends BaseEntity {
 
   @Column({ nullable: true })
   @Expose()
+  BKPIDTitle: string;
+
+  @Column({ nullable: true })
+  @Expose()
   phaseID: string;
+
+  @Column({ nullable: true })
+  @Expose()
+  phaseName: string;
 
   @Column()
   @Expose()
@@ -49,6 +55,10 @@ export class FileEntity extends BaseEntity {
   @Column()
   @Expose()
   fileTypeName?: string;
+
+  @Column()
+  @Expose()
+  isEveryOneAllowed?: boolean;
 
   @Expose()
   @CreateDateColumn()
@@ -70,39 +80,20 @@ export class FileEntity extends BaseEntity {
   @Column({ nullable: true })
   isDeleted?: boolean;
 
-
   @Expose()
   @ManyToMany(type => FileParamEntity)
   @JoinTable()
-  fileParam: FileParamEntity[];
+  files: FileParamEntity[];
 
   @Expose()
   @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.file)
   reference: ReferanceTypeEntity;
 
-  @ManyToMany(type => Phases, phase => phase.file) // specify inverse side as a second parameter
-  @JoinColumn()
-  phase: Phases[];
-
-  @ManyToMany(type => BKP, phase => phase.file) // specify inverse side as a second parameter
-  @JoinColumn()
-  bkp: BKP[];
-
-  @ManyToMany(type => Folder, folder => folder.file) // specify inverse side as a second parameter
-  @JoinColumn()
-  folder: Folder[];
-
   @Expose()
-  @ManyToOne(() => ProjectFileEntity, (projectfile: ProjectFileEntity) => projectfile.file)
+  // n:n relation with PeopleEntity
+  @ManyToMany(type => PeopleEntity)
   @JoinTable()
-  projectfile: ProjectFileEntity;
-
-  @ManyToOne(type => FileStructureEntity, filestructure => filestructure.projectfile) 
-  filestructure: FileStructureEntity;
-
-  @Expose()
-  @OneToMany(() => FileVersionEntity, (file: FileVersionEntity) => file.filevrsion)
-  file: FileVersionEntity;
+  people: PeopleEntity[];
 
   constructor(fileEntity: Partial<FileEntity>) {
     super();
@@ -113,8 +104,7 @@ export class FileEntity extends BaseEntity {
           excludeExtraneousValues: true
         })
       )
-      this.createdAt = this.createdAt || new Date(new Date().toUTCString());
-      this.updatedAt = new Date(new Date().toUTCString());
+      this.projectFileID = this.projectFileID || uuid.v1();
     }
   }
 }

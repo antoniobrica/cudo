@@ -17,7 +17,7 @@ export class FileResolver {
   }
 
   @Mutation(() => FileModel)
-   async createFile(
+  async createFile(
     @Args('fileDetails') createFileInput: CreateFileInput,
     @Args("referenceFilter") referenceFilter: ReferenceFilterParams
   ) {

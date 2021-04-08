@@ -1,32 +1,40 @@
 import { Expose, plainToClass } from "class-transformer";
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import * as uuid from 'uuid';
 
 
-
-@Entity({ name: 'fileParam' })
-
+@Entity({ name: 'files' })
 export class FileParamEntity extends BaseEntity {
 
-@PrimaryGeneratedColumn()
-id: number;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-@Column({ unique: true })
-@Expose()
-fileURL: string;
+    @Expose()
+    @Column({ unique: true })
+    fileID: string;
 
-@Column()
-@Expose()
-fileTitle: string;
+    @Column()
+    @Expose()
+    fileURL: string;
 
-constructor(fileParamEntity: Partial<FileParamEntity>) {
-    super();
-    if (fileParamEntity) {
-        Object.assign(
-            this,
-            plainToClass(FileParamEntity, fileParamEntity, {
-                excludeExtraneousValues: true
-            })
-        )
+    @Column()
+    @Expose()
+    fileTitle: string;
+
+    @Column({ nullable: true })
+    @Expose()
+    fileType: string;
+
+    constructor(fileParamEntity: Partial<FileParamEntity>) {
+        super();
+        if (fileParamEntity) {
+            Object.assign(
+                this,
+                plainToClass(FileParamEntity, fileParamEntity, {
+                    excludeExtraneousValues: true
+                })
+            )
+            this.fileID = this.fileID || uuid.v1();
+        }
     }
-}
 }

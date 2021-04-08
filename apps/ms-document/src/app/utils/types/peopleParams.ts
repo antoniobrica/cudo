@@ -1,14 +1,12 @@
 import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
-export class FileParams {
+class PeopleParams {
   @Field({ description: `User ID` })
-  fileURL?: string;
+  userID?: string;
 
   @Field({ description: `User Name` })
-  fileTitle?: string;
-
-  @Field({ description: `User Name` })
-  fileType?: string;
-
+  userName?: string;
 }
+
+export default PeopleParams;

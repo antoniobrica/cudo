@@ -1,8 +1,8 @@
 import { Expose, plainToClass } from 'class-transformer';
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import * as uuid from 'uuid';
+import { FileTypeEntity } from './file-type.entity';
 import { FileEntity } from './file.entity';
-import { ProjectFileEntity } from './projectfile.entity';
 
 /**
  * 
@@ -52,8 +52,8 @@ export default class ReferanceTypeEntity extends BaseEntity {
     // 1:n relation with TasksEntity 
 
     @Expose()
-    @OneToMany(() => ProjectFileEntity, (projectfile: ProjectFileEntity) => projectfile.reference)
-    projectfile: ProjectFileEntity[];
+    @OneToMany(() => FileTypeEntity, (filetype: FileTypeEntity) => filetype.reference)
+    filetype: FileTypeEntity[];
 
     constructor(referanceTypeEntity: Partial<ReferanceTypeEntity>) {
         super();
@@ -69,7 +69,7 @@ export default class ReferanceTypeEntity extends BaseEntity {
         }
     }
 
-   
 
-    
+
+
 }
