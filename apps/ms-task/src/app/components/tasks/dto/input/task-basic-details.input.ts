@@ -1,4 +1,5 @@
 import { Field, InputType } from "@nestjs/graphql";
+import { StatusEnum } from "../../../../enums/status.enum";
 import { TaskAssigneesInput } from "./task-assignees.input";
 import { TaskFollowersInput } from "./task-followers.input";
 @InputType()
@@ -28,7 +29,7 @@ export class TaskBasicDetailsInput {
     @Field({ description: `PhaseID attached with task` })
     phasesID?: string;
 
-    @Field({ description: `Status of task` })
-    status?: string;
+    @Field(type => StatusEnum, { description: `Task status` })
+    status?: StatusEnum;
 
 }
