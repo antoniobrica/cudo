@@ -13,10 +13,10 @@ export class SasGeneratorService {
   }
 
   async getSasObject(getContainer: BlobParams) {
-    const isExist = this.blobstorage.gisContainerExist(getContainer.containerName);
+    const isExist = this.blobstorage.isContainerExist(getContainer.containerName);
     if (!isExist) {
       this.blobstorage.blobServiceClient.getContainerClient(getContainer.containerName).create()
     }
-    return this.blobstorage.sasObject;
+    return this.blobstorage.blobSASObject;
   }
 }

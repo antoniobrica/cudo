@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {  Repository } from 'typeorm';
 import { BkpEntity } from '../../../entities/bkp.entity';
+import { FolderEntity } from '../../../entities/folder.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
 import { CreateBkpInput } from '../dto/create-bkp.input';
@@ -14,7 +15,9 @@ export class BkpService {
   constructor(
     @InjectRepository(BkpEntity)
     private BkpRepository: Repository<BkpEntity>,
-    private referenceService: ReferenceService,
+    public referenceService: ReferenceService,
+    @InjectRepository(FolderEntity)
+    private FolderRepository: Repository<FolderEntity>,
   ) { }
 
   public async createBkp(createBkpInput: CreateBkpInput, referenceFilter: ReferenceFilterParams): Promise<BkpEntity> {
@@ -47,6 +50,16 @@ export class BkpService {
   public async findAllBkp(refFilter: ReferenceFilterParams): Promise<BkpEntity[]> {
     const selectedReference = await this.referenceService.getReferenceById(refFilter)
     return await this.BkpRepository.find({
+      "reference": {
+        id: selectedReference.id
+      }
+    });
+
+  }
+  
+  public async findAllFolder(refFilter: ReferenceFilterParams): Promise<FolderEntity[]> {
+    const selectedReference = await this.referenceService.getReferenceById(refFilter)
+    return await this.FolderRepository.find({
       "reference": {
         id: selectedReference.id
       }
