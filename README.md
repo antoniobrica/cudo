@@ -140,3 +140,12 @@ Change 192.168.29.131 to 'your-local-ip' in following files 1: apps\mf-container
 
 ### To Run Container
 nx run mf-container-app:serve --host 0.0.0.0
+
+
+## Build Process
+ nx run-many --target=build --projects='ms-account,ms-document,ms-project,ms-task' --with-deps --generatePackageJson=true --configuration=production
+
+### Install Dependancy
+npm i apollo-server-express @nestjs/platform-express mssql
+### Run production build dist/apps/ms-{domain_name}
+set "NODE_ENV=production" && set "PORT={port_number}" && node main.js

@@ -5,7 +5,7 @@ export const environment = {
   DATABASE_PORT: 1433,
   DATABASE_USERNAME: 'cudo',
   DATABASE_PASSWORD: 'apl$dsfTJ#20',
-  DATABASE_NAME: 'accounts',
+  DATABASE_NAME: 'projects',
   DATABASE_TYPE: 'mssql',
   DATABASE_CONNECTION_TIME_OUT: 150000,
   DATABASE_ACQUIRE_TIME_OUT: 150000,
