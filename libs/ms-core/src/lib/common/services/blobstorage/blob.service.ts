@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import BlobParams from '../dto/blobparam';
-import { BlobStorage } from '../dto/blobstorageClass/blobstorage';
+import BlobParams from './blobparam';
+import { BlobStorage } from './blobstorage';
+
 
 
 @Injectable()

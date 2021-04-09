@@ -1,8 +1,8 @@
 import { SecretService } from '@cudo/ms-core';
 import { Module } from '@nestjs/common';
-import { BlobStorage } from './dto/blobstorageClass/blobstorage';
+import { BlobStorage } from 'libs/ms-core/src/lib/common/services/blobstorage/blobstorage';
 import { BlobResolver } from './resolver/blob.resolver';
-import { SasGeneratorService } from './service/blob.service';
+import { SasGeneratorService } from 'libs/ms-core/src/lib/common/services/blobstorage/blob.service';
 
 
 @Module({

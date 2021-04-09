@@ -1,8 +1,8 @@
 import { Resolver, Query, Args } from '@nestjs/graphql';
 import { Inject } from '@nestjs/common';
-import { blobModel } from '../model/blob.model';
-import { SasGeneratorService } from '../service/blob.service';
-import BlobParams from '../dto/blobparam';
+import { blobModel } from 'libs/ms-core/src/lib/common/services/blobstorage/blob.model';
+import { SasGeneratorService } from 'libs/ms-core/src/lib/common/services/blobstorage/blob.service';
+import BlobParams from 'libs/ms-core/src/lib/common/services/blobstorage/blobparam';
 
 
 @Resolver(() => blobModel)
