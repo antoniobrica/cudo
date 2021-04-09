@@ -18,15 +18,21 @@ export function FileStructure(props: FileStructureProps) {
   React.useEffect(() => {
     if (data) {
       console.log('GET_FILE_TYPE==>', data)
-      setItems(data.FileStructure.map(({ fileStructureTitle }) => ({ key: fileStructureTitle, value: fileStructureTitle, text: fileStructureTitle })));
+      setItems(data.FileStructure.map(({ fileStructureTitle, fileStructureID }) => ({ key: fileStructureID, value: fileStructureTitle, text: fileStructureTitle })));
     }
   }, [data]);
 
   const onFile = (event, data) => {
+    let file = {structureID:'', structureTitle:''};
+    for(let i=0; i<= items.length; i++){
+      if(items[i]?.value === data.value){
+        file.structureID = items[i].key;
+        file.structureTitle = data.value;
+      }
+    }
     setFileStructureTitle(data.value)
-    props.parentFileStructureSelect(data)
-    // props.parentBKPSelect(data);
-  }
+    props.parentFileStructureSelect(file)
+   }
 
 
   return (

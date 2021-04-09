@@ -7,6 +7,8 @@ import { BlobItemUpload } from 'apps/mf-document-app/src/azure-storage/types/azu
 import { tap } from 'rxjs/operators';
 import { BlobItem } from '@azure/storage-blob';
 import { LoaderPage } from "@cudo/shared-components"
+import { useFileQuery } from '../../services/useRequest';
+import { GET_FILES } from '../../graphql/graphql';
 
 /* eslint-disable-next-line */
 export interface FileListingProps { }
@@ -19,38 +21,30 @@ export function FileListing(props: FileListingProps) {
   const downloadsContext = React.useContext(DownloadsViewStateContext);
   const deletesContext = React.useContext(DeletesViewStateContext);
   const [fileData, setFileData] = React.useState<BlobItem[]>([]);
+  const { loading, error, data } = useFileQuery(GET_FILES);
 
-  const getContainerItemsEffect = () => {
-     setLoader(true);
-     const sub = sharedContext.itemsInContainer$
-      .pipe(tap(items => {
-        setFileData(items)
-        setLoader(false);
-      }
-      ))
-      .subscribe();
-
-    return () => sub.unsubscribe();
-  };
-  React.useEffect(getContainerItemsEffect, []);
-
-  // const getUploadsEffect = () => {
-  //   const sub = context.uploadedItems$
-  //     .pipe(tap(items => setItems(items)))
+  // const getContainerItemsEffect = () => {
+  //    setLoader(true);
+  //    const sub = sharedContext.itemsInContainer$
+  //     .pipe(tap(items => {
+  //       setFileData(items)
+  //       setLoader(false);
+  //     }
+  //     ))
   //     .subscribe();
+
   //   return () => sub.unsubscribe();
   // };
-  // React.useEffect(getUploadsEffect, []);
-
+  // React.useEffect(getContainerItemsEffect, []);
+if(data){
+  console.log('files query',data.File)
+}
 
   return (
     <div>
-      {/* {items.map((item, i) => (
-        <pre key={i}>{JSON.stringify(item, undefined, 2)}</pre>
-      ))} */}
-      {loader?
+      {loading?
       <LoaderPage />:
-      <FileStructure files={fileData}></FileStructure>
+      <FileStructure files={data.File}></FileStructure>
       }
       
     </div>

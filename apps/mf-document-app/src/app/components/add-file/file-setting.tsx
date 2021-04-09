@@ -17,6 +17,10 @@ import { BlobItemUpload } from 'apps/mf-document-app/src/azure-storage/types/azu
 import '../../../../../../libs/shared-components/src/style/index.scss';
 
 import { LoaderPage } from "@cudo/shared-components"
+import { useFileMutation } from '../../services/useRequest';
+import { GET_FILES, UPLOAD_FILE } from '../../graphql/graphql';
+import { FileMutation, IFiles } from '../../interfaces/document';
+import { FetchResult } from '@apollo/client';
 
 export interface FileProps {
   openSettingF
@@ -25,10 +29,20 @@ export function FileSetting(props: FileProps) {
   const context = useContext(UploadsViewStateContext);
   const [fileData, setFileData] = React.useState<BlobItem[]>([]);
   const [loader, setLoader] = React.useState(false);
-  const [people, setPeople] = React.useState(false);
-  const [asignee, setAsignis] = React.useState([]);
-  const [fileList, setFileList] = React.useState<any>([]);
+  const [showPeople, setShowPeople] = React.useState(false);
+  const [people, setAsignis] = React.useState([]);
+  const [files, setFileList] = React.useState<any>([]);
+  const [fileTypeName, setfileTypeName ] = React.useState("");
+  const [fileTypeID, setfileTypeID] = React.useState("");
+  const [structureTitle, setstructureTitle ] = React.useState("");
+  const [structureID, setstructureID] = React.useState("");
+  const [BKPIDTitle, setBKPIDTitle] = React.useState("");
+  const [BKPID, setBKPID] = React.useState("");
+  const [phaseName, setPhasesName] =React.useState("");
+  const [phaseID, setPhasesID] =React.useState("");
 
+
+  const [addFile] = useFileMutation(UPLOAD_FILE);
 
   const [items, setItems] = React.useState<BlobItemUpload[]>([]);
 
@@ -89,24 +103,32 @@ export function FileSetting(props: FileProps) {
   ]
   const [open, setOpen] = React.useState(false)
   const setBKPIDChange = (data) => {
-    //setBKPID(data.value)
+    console.log(data)
+    setBKPIDTitle(data.BKPIDTitle)
+    setBKPID(data.BKPID)
   }
   const setFileStructureChange =(data) =>{
     console.log('fileStructure',data)
+    // setfileStructureID()
+    setstructureID(data.structureID)
+    setstructureTitle(data.structureTitle)
   }
 
   const setFileTypeChange = (data) =>{
-    console.log('fileType', data.value)
+    console.log('fileType', data)
+    setfileTypeName(data.fileTypeTitle);
+    setfileTypeID(data.fileTypeID)
   }
   const onsetPhasesID = (data) => {
-    // setPhasesID(data.value);
+    
+     setPhasesID((data.phaseID).toString());
+     setPhasesName(data.phaseName)
   }
   const setAsignee = (data) => {
-    setAsignis(data.value)
-    console.log('setAsignee', data.value)
+    setAsignis(data)
   }
   const specifyPeople = () => {
-    setPeople(previousCount => !previousCount)
+    setShowPeople(previousCount => !previousCount)
   }
   React.useEffect(() => {
     if (props.openSettingF) {
@@ -121,11 +143,34 @@ export function FileSetting(props: FileProps) {
     files && context.uploadItems(files);
     const fileArr = [];
     for (let i = 0; i < files.length; i++) {
-      fileArr.push(files[i]);
+      fileArr.push({fileURL:files[i].name , fileTitle:files[i].name, fileType: files[i].type});
     }
     setFileList(fileArr)
+    console.log('fileArr',fileArr)
   }
 
+  const handleSaveFile = () => {
+    setOpen(false);
+    addFile({
+      variables: {
+        fileTypeName, folderName:"Folder1", people ,BKPIDTitle, files, phaseName, fileTypeID, phaseID, structureTitle, structureID,isFolder:false, isEveryOneAllowed:false, BKPID
+       },
+      update: (
+        cache,
+        { data}
+      ) => {
+        const cacheData = cache.readQuery({ query: GET_FILES}) as IFiles;
+        cache.writeQuery({
+          query: GET_FILES,
+          data: {
+            tasks: [...cacheData.File, data]
+          }
+        });
+      }
+    });
+  
+  };
+  
   // console.log('file-data==>', fileData)
   return (
     <div >
@@ -441,7 +486,7 @@ export function FileSetting(props: FileProps) {
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
-              {people ?
+              {showPeople ?
                 <div>
                   <Grid columns={1} >
                     <Grid.Row>
@@ -452,13 +497,13 @@ export function FileSetting(props: FileProps) {
                   </Grid>
                   <Grid columns={5} >
                     <Grid.Row>
-                      {asignee.map((asign, i) => {
+                      {people.map((asign, i) => {
                         return (
                           <Grid.Column key={i}>
                             <Form.Field>
                               <div className="below_area">
                                 <img src={img3} className="avatar" />
-                                <span className="span_name">{asign}</span>
+                                <span className="span_name">{asign.userName}</span>
                                 <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
                               </div>
                             </Form.Field>
@@ -505,7 +550,7 @@ export function FileSetting(props: FileProps) {
 
           <Button
             content="Submit"
-            onClick={() => setOpen(false)}
+            onClick={handleSaveFile}
             positive
             size='mini' className="grey-btn"
           />

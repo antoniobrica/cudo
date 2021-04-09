@@ -17,13 +17,23 @@ export function FileType(props: FileTypeProps) {
   React.useEffect(() => {
     if (data) {
       console.log('GET_FILE_TYPE==>', data)
-      setItems(data.FileTypes.map(({ fileTypeTitle }) => ({ key: fileTypeTitle, value: fileTypeTitle, text: fileTypeTitle })));
+      setItems(data.FileTypes.map(({ fileTypeTitle, fileTypeID }) => ({ key: fileTypeID, value: fileTypeTitle, text: fileTypeTitle })));
     }
   }, [data]);
 
   const onFile = (event, data) => {
+    let file = {fileTypeID:'', fileTypeTitle:''};
+    for(let i=0; i<= items.length; i++){
+      console.log(items[i]?.value);
+
+      if(items[i]?.value === data.value){
+        file.fileTypeID = items[i].key;
+        file.fileTypeTitle = data.value;
+      }
+    }
+    console.log('fileTypeID', file)
     setFileType(data.value)
-    props.parentFileTypeSelect(data);
+    props.parentFileTypeSelect(file);
   }
 
 

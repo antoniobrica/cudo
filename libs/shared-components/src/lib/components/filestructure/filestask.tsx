@@ -131,6 +131,42 @@ export function FileStructure(props: FileStructureProps) {
 					</div>
 					 */}
 					{props.files.map((file, i) => (
+		             file.isFolder? 
+					 <div className="card1 card-custom gutter-b width_card" key={i}>
+
+					 <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
+
+						 <div className="d-flex align-items-center py-2">
+							 <span> <img src={img4} className="  mr-10 " />  </span>
+
+							 <span className="font-weight-bold mb-0 mr-10">{file.folderName}</span>
+							 <div className="d-flex mr-3">
+
+								 <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
+
+									 <div className="navi-item mr-2">
+										 <a href=" " className="navi-link active">
+											 <span className="navi-text">( {file?.files?.length} files )</span>
+										 </a>
+									 </div>
+
+								 </div>
+
+							 </div>
+
+						 </div>
+
+						 <div className="symbol-group symbol-hover py-2">
+							 <div className="symbol symbol-30">
+
+								 <span className="mr-2"  >...</span>
+							 </div>
+
+						 </div>
+
+					 </div>
+				 </div>
+:
 						<div className="card1 card-custom gutter-b width_card" key={i}> 
 
 							<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
@@ -138,7 +174,7 @@ export function FileStructure(props: FileStructureProps) {
 								<div className="d-flex align-items-center py-2">
 									<span> <img src={img2} className="  mr-10 " />  </span>
 
-									<span className="font-weight-bold mb-0 mr-10">{file.name}</span>
+									<span className="font-weight-bold mb-0 mr-10">{file.BKPIDTitle}</span>
 									<div className="d-flex mr-3">
 
 										{/* <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
