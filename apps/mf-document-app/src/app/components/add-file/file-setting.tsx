@@ -153,7 +153,7 @@ export function FileSetting(props: FileProps) {
     setOpen(false);
     addFile({
       variables: {
-        fileTypeName, folderName:"Folder1", people ,BKPIDTitle, files, phaseName, fileTypeID, phaseID, structureTitle, structureID,isFolder:false, isEveryOneAllowed:false, BKPID
+        fileTypeName, folderName:"Folder1", people ,BKPIDTitle, files, phaseName, fileTypeID, phaseID, structureTitle, structureID,isFolder:true, isEveryOneAllowed:false, BKPID
        },
       update: (
         cache,
