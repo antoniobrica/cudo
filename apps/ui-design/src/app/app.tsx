@@ -33,6 +33,9 @@ import RegisterPage from 'libs/shared-components/src/lib/components/login/regist
 import ModalAddSubLevel from 'libs/shared-components/src/lib/components/modal/addsublevel';
 import UserProfileView from 'libs/shared-components/src/lib/components/userprofile/userprofileview';
 import LoaderPage from 'libs/shared-components/src/lib/components/loader/loader';
+import ModalAlert from 'libs/shared-components/src/lib/components/modal/alert';
+
+
 // import { Sidebar } from 'semantic-ui-react';
 
 export function App() {
@@ -71,7 +74,8 @@ export function App() {
     <UserProfile></UserProfile><br/>
     <RegisterPage></RegisterPage><br/>
     <UserProfileView></UserProfileView><br/>
-    <LoaderPage></LoaderPage>
+    <LoaderPage></LoaderPage><br/>
+    <ModalAlert></ModalAlert>
     </div>
     
    

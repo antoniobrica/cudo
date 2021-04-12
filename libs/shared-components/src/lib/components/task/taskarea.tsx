@@ -128,7 +128,6 @@ export function TaskArea(props: Tasks) {
 					<div className="symbol-group symbol-hover py-2">
 							<div className="symbol symbol-30">
 							<span className="btn btn-default btn-icon btn-sm mr-2 mr-top">
-
 								<i className="ms-Icon ms-Icon--Pinned" aria-hidden="true"></i>
 
 							</span>
@@ -143,7 +142,7 @@ export function TaskArea(props: Tasks) {
 										<Dropdown.Item icon='check circle outline' text='Mark as complete' />
 										<Dropdown.Item icon='trash alternate outline' text='Delete' />
 									</Dropdown.Menu>
-								</Dropdown>
+								</Dropdown>``
 							</span>
 						</div>
  
