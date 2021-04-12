@@ -1,21 +1,35 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { FileEntity } from '../../../entities/file.entity';
-import { CreatefileInput } from '../dto/createfile.input';
+import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
+import { CreateFileInput } from '../dto/create-file.input';
+import { UpdateFileInput } from '../dto/update-file.input';
+import { FileModel } from '../model/file.model';
 import { FileService } from '../service/file.service';
 
 
-
-
-
-@Resolver(() => FileEntity)
+@Resolver(() => FileModel)
 export class FileResolver {
   constructor(
-    private readonly fileservice: FileService) { }
+    private readonly fileService: FileService) { }
 
-  @Mutation(() => FileEntity)
-  async createProjectWorkType(
-    @Args('ProjectworkTypeDetails') createfileinput: CreatefileInput) 
-    {
-    return this.fileservice.createfile(createfileinput);
+  @Query(() => [FileModel], { nullable: true })
+  async File(@Args("referenceFilter") referenceFilter: ReferenceFilterParams): Promise<FileEntity[]> {
+    return await this.fileService.findAllFile(referenceFilter)
   }
+
+  @Mutation(() => FileModel)
+  async createFile(
+    @Args('fileDetails') createFileInput: CreateFileInput,
+    @Args("referenceFilter") referenceFilter: ReferenceFilterParams
+  ) {
+    return await this.fileService.createFile(createFileInput, referenceFilter);
+  }
+
+  @Mutation(() => FileModel)
+  async updateFile(
+    @Args('updatefileDetails') createFileInput: UpdateFileInput
+  ) {
+    return await this.fileService.updateFile(createFileInput);
+  }
+
 }

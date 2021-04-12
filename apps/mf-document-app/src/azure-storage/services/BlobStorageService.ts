@@ -13,13 +13,13 @@ import {
 } from '../types/azure-storage';
 
 export class BlobStorageService {
-   getContainers(request: BlobStorageRequest) {
+  getContainers(request: BlobStorageRequest) {
     const blobServiceClient = this.buildClient(request);
     return this.asyncToObservable(blobServiceClient.listContainers());
   }
 
   listBlobsInContainer(request: BlobContainerRequest) {
-    console.log('request',request);
+    console.log('request', request);
     const containerClient = this.getContainerClient(request);
     return this.asyncToObservable(containerClient.listBlobsFlat());
   }
@@ -58,7 +58,7 @@ export class BlobStorageService {
   }
 
   private uploadFile(blockBlobClient: BlockBlobClient, file: File) {
-    console.log('uploadFile====>>',blockBlobClient, file);
+    console.log('uploadFile====>>', blockBlobClient, file);
     return new Observable<number>(observer => {
       blockBlobClient
         .uploadBrowserData(file, {
@@ -114,10 +114,10 @@ export class BlobStorageService {
 
   private buildConnectionString = (options) => {
     console.log('options==>', options)
-   return (
-     // `BlobEndpoint=https://cudo.blob.core.windows.net/;SharedAccessSignature=sv=2019-02-02&ss=b&srt=sco&spr=https%2Chttp&st=2021-03-22T09%3A06%3A45Z&se=2021-03-22T11%3A30%3A45Z&sip=0.0.0.0-255.255.255.255&sp=rwdlacup&sig=jQgVAf%2B%2B%2BdGRI1kR%2BGiI%2Fg5cNSnEaPQV1p3rteTRMls%3D`
+    return (
+      // `BlobEndpoint=https://cudo.blob.core.windows.net/;SharedAccessSignature=sv=2019-02-02&ss=b&srt=sco&spr=https%2Chttp&st=2021-03-22T09%3A06%3A45Z&se=2021-03-22T11%3A30%3A45Z&sip=0.0.0.0-255.255.255.255&sp=rwdlacup&sig=jQgVAf%2B%2B%2BdGRI1kR%2BGiI%2Fg5cNSnEaPQV1p3rteTRMls%3D`
       `BlobEndpoint=https://cudo.blob.core.windows.net/;` +
-      `SharedAccessSignature=${options.data.sasAccountTocken}`
+      `SharedAccessSignature=${options.data.accountSASToken}`
     );
   };
 }

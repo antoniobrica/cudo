@@ -1,31 +1,31 @@
-// import { NODE_ENV, MONGO_URL, MONGO_PORT, MONGO_DB } from '@environments'
+import { environment } from './environments/environment'
 
 const orm = {
 	development: {
-		type: process.env.DATABASE_TYPE,
-		host: process.env.DATABASE_HOST,
-		port: Number(process.env.DATABASE_PORT),
-		username: process.env.DATABASE_USERNAME,
-		password: process.env.DATABASE_PASSWORD,
-		database: process.env.DATABASE_NAME
+		type: environment.DATABASE_TYPE,
+		host: environment.DATABASE_HOST,
+		port: Number(environment.DATABASE_PORT),
+		username: environment.DATABASE_USERNAME,
+		password: environment.DATABASE_PASSWORD,
+		database: environment.DATABASE_NAME
 	},
 	testing: {
-		url: process.env.DATABASE_HOST
+		url: environment.DATABASE_HOST
 	},
 	staging: {
 		host: 'localhost',
-		port: process.env.DATABASE_PORT,
+		port: environment.DATABASE_PORT,
 		username: '',
 		password: '',
-		database: process.env.DATABASE_NAME
+		database: environment.DATABASE_NAME
 	},
 	production: {
-		type: process.env.DATABASE_TYPE,
-		host: process.env.DATABASE_HOST,
-		port: Number(process.env.DATABASE_PORT),
-		username: process.env.DATABASE_USERNAME,
-		password: process.env.DATABASE_PASSWORD,
-		database: process.env.DATABASE_NAME
+		type: environment.DATABASE_TYPE,
+		host: environment.DATABASE_HOST,
+		port: Number(environment.DATABASE_PORT),
+		username: environment.DATABASE_USERNAME,
+		password: environment.DATABASE_PASSWORD,
+		database: environment.DATABASE_NAME
 	}
 }
 

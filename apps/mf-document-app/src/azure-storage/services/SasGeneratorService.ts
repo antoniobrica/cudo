@@ -7,14 +7,14 @@ import { useTokenQuery } from '../../app/services/useRequest';
 import { BlobStorageRequest } from '../types/azure-storage';
 
 export class SasGeneratorService {
-  
+
   getSasToken(): Observable<BlobStorageRequest> {
     return Axios.post<BlobStorageRequest>(
       'http://localhost:5003/graphql',
       {
         query: `
      {
-      sasAccountTocken
+      accountSASToken
       }
     `}
     ).pipe(map(

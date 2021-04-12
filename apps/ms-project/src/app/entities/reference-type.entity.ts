@@ -72,12 +72,10 @@ export default class ReferanceTypeEntity extends BaseEntity {
                     excludeExtraneousValues: true
                 })
             )
-            // this.createdAt = this.createdAt || new Date(new Date().toUTCString());
-            // this.updatedAt = new Date(new Date().toUTCString());
         }
     }
 
-   
 
-    
+
+
 }
