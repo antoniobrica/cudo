@@ -230,8 +230,8 @@ export function FileSetting(props: FileProps) {
                         </Grid.Column>
                         <Grid.Column>
                           <Form.Field>
-                            <label></label>
-                            <label>{file.filename}</label>
+                            {/* <label></label> */}
+                            <label className="width_area">{file.filename}</label>
 
 
                           </Form.Field>
