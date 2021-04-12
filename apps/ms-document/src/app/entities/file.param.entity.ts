@@ -25,6 +25,10 @@ export class FileParamEntity extends BaseEntity {
     @Expose()
     fileType: string;
 
+    @Column({ nullable: true })
+    @Expose()
+    fileVersion: string;
+
     constructor(fileParamEntity: Partial<FileParamEntity>) {
         super();
         if (fileParamEntity) {
