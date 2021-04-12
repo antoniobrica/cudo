@@ -13,6 +13,7 @@ export const GET_FILES = gql`
     fileURL
     fileTitle
     fileType
+    fileVersion
     }
     BKPID
     BKPIDTitle
@@ -79,6 +80,7 @@ mutation CreateFile(
       fileURL
       fileTitle
       fileType
+      fileVersion
       }
       folderName
       phaseID

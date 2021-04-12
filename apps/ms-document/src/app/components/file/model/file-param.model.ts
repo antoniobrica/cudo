@@ -12,4 +12,7 @@ export class FileParamModel {
     @Field({ nullable: true, description: `file Name` })
     fileType?: string;
 
+    @Field({ nullable: true, description: `file Version` })
+    fileVersion?: string;
+
 }

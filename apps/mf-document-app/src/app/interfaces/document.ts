@@ -25,6 +25,7 @@ export interface IFileParam {
   fileURL: string
   fileTitle: string
   fileType: string
+  fileVersion: string
 }
 export interface IPeople {
   userID: string

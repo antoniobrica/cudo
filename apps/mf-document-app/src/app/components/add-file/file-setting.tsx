@@ -143,7 +143,7 @@ export function FileSetting(props: FileProps) {
     files && context.uploadItems(files);
     const fileArr = [];
     for (let i = 0; i < files.length; i++) {
-      fileArr.push({fileURL:files[i].name , fileTitle:files[i].name, fileType: files[i].type});
+      fileArr.push({fileURL:files[i].name , fileTitle:files[i].name, fileType: files[i].type, fileVersion:"v1"});
     }
     setFileList(fileArr)
     console.log('fileArr',fileArr)
@@ -153,7 +153,7 @@ export function FileSetting(props: FileProps) {
     setOpen(false);
     addFile({
       variables: {
-        fileTypeName, folderName:"Folder1", people ,BKPIDTitle, files, phaseName, fileTypeID, phaseID, structureTitle, structureID,isFolder:true, isEveryOneAllowed:false, BKPID
+        fileTypeName, folderName:"Folder1", people ,BKPIDTitle, files, phaseName, fileTypeID, phaseID, structureTitle, structureID,isFolder:false, isEveryOneAllowed:false, BKPID
        },
       update: (
         cache,
@@ -280,7 +280,8 @@ export function FileSetting(props: FileProps) {
                         </Grid.Column>
                       </Grid.Row>
                     </Grid>
-                 <ProgressBar  progress={file.progress}></ProgressBar> 
+                    {file.progress<100?
+                     <ProgressBar  progress={file.progress}></ProgressBar> : null }
               </div>
                   )
                 })}
