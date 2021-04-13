@@ -19,14 +19,22 @@ export function Bkp(props: BkpProps) {
   React.useEffect(() => {
     if(data){
       console.log('bkp==>',data)
-     setItems(data.Bkp.map(({bkpTitle }) => ({ key: bkpTitle, value: bkpTitle, text: bkpTitle })));
+     setItems(data.Bkp.map(({bkpTitle, bkpID }) => ({ key: bkpID, value: bkpTitle, text: bkpTitle })));
 
     }
   }, [data]);
 
   const onBkp = (event, data) => {
+   
+    let bkpID = {BKPID:'', BKPIDTitle:''};
+    for(let i=0; i<= items.length; i++){
+      if(items[i]?.value === data.value){
+        bkpID.BKPID = items[i].key;
+        bkpID.BKPIDTitle = data.value;
+      }
+    }
     setBKPID(data.value)
-    props.parentBKPSelect(data);
+    props.parentBKPSelect(bkpID);
    }
 
 

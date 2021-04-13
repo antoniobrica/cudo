@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Header,   Modal,  Tab,Table,  Input, Form, Grid, Image, Select, TextArea} from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
- 
 import img from 'libs/shared-components/src/upload.png';
 export interface FileProps {
   fileData
@@ -9,7 +8,7 @@ export interface FileProps {
   setting
  }
 
-function ModalAddPrint( props: FileProps) {
+ export function ModalAddPrint( props: FileProps) {
     const countryOptions = [
         { key: 'af', value: 'af', text: 'Afghanistan' },
         { key: 'ax', value: 'ax', text: 'Aland Islands' },
@@ -19,7 +18,6 @@ function ModalAddPrint( props: FileProps) {
  
   const [open, setOpen] = React.useState(false)
   const [file, setFile] = React.useState(null)
-
   const onFileChange = event => {
     const fl = event.target.files;
     // console.log('multiple==>',fl)

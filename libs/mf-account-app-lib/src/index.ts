@@ -1,3 +1,8 @@
+export * from './lib/components/file-structure-index/file-structure-index';
+export * from './lib/components/file-type-index/file-type-index';
+export * from './lib/components/file-structure/file-structure';
+export * from './lib/components/file-type/file-type';
+
 export * from './lib/components/phase/phase';
 export * from './lib/components/phase-index/phase-index';
 export * from './lib/components/bkp-index/bkp-index';

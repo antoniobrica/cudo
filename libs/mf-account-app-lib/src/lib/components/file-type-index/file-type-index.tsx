@@ -1,33 +1,32 @@
 import React from 'react';
-
-import './assignee-index.module.scss';
-
+import './file-type-index.module.scss';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
 import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
-import Assignee from '../assignee/assignee';
-
+import FileType from '../file-type/file-type';
+ 
 /* eslint-disable-next-line */
 const client = new ApolloClient({
   uri: 'http://localhost:5001/graphql',
   cache: new InMemoryCache()
 });
 /* eslint-disable-next-line */
-export interface AssigneeIndexProps {
-  parentAsigneeSelect
- }
+export interface FileTypeIndexProps {
+  parentFileTypeSelect
+}
 
-export function AssigneeIndex(props: AssigneeIndexProps) {
-  const onSelectAsignee = (data) => {
-    props.parentAsigneeSelect(data)
+export function FileTypeIndex(props: FileTypeIndexProps) {
+  const onFileType =(data)=>{
+   props.parentFileTypeSelect(data)
   }
+
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <Assignee  parentBKPSelect={onSelectAsignee} />
+        <FileType parentFileTypeSelect={onFileType}/>
       </ApolloHooksProvider>
     </ApolloProvider>
   );
 }
 
-export default AssigneeIndex;
+export default FileTypeIndex;

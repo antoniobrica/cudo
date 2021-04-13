@@ -1,13 +1,17 @@
 import { DocumentNode, useQuery, useMutation } from "@apollo/react-hooks";
-import { IToken } from "../interfaces/document";
+import { FileMutation, IFiles, IToken } from "../interfaces/document";
 
 export function useTokenQuery(gqlQuery: DocumentNode) {
   const { loading, error, data } = useQuery<IToken>(gqlQuery);
   return { loading, error, data };
 }
 
+export function useFileQuery(gqlQuery: DocumentNode) {
+  const { loading, error, data } = useQuery<IFiles>(gqlQuery);
+  return { loading, error, data };
+}
 
-// export function useTaskMutation(gqlQuery: DocumentNode){
-//   const [addTask] = useMutation<TaskMutation>(gqlQuery);
-//   return [addTask];
-// }
+export function useFileMutation(gqlQuery: DocumentNode){
+  const [addFile] = useMutation<FileMutation>(gqlQuery);
+  return [addFile];
+}
