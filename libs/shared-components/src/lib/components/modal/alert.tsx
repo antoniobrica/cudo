@@ -52,7 +52,7 @@ const size = undefined
         open={open} className="mini"
       >
         {/* <Modal.Header>Update your Task</Modal.Header> */}
-        <Modal.Header>Delete Your Account
+        <Modal.Header>Update Task Status
         <a className="float_right" onClick={cancel}>  <i className="ms-Icon ms-Icon--CalculatorMultiply mr-10" aria-hidden="true"></i></a> 
           
           </Modal.Header>
