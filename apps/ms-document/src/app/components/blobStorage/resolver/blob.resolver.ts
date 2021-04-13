@@ -1,9 +1,8 @@
 import { Resolver, Query, Args } from '@nestjs/graphql';
 import { Inject } from '@nestjs/common';
-import { blobModel } from '../model/blob.model';
-import { SasGeneratorService } from '../service/blob.service';
-import BlobParams from '../dto/blobparam';
-
+import { blobModel } from '@cudo/ms-core';
+import { SasGeneratorService } from '@cudo/ms-core';
+import { BlobParams } from '@cudo/ms-core';
 
 @Resolver(() => blobModel)
 export class BlobResolver {
