@@ -1,5 +1,5 @@
 import { Field, InputType } from "@nestjs/graphql";
-import TaskFileParams from "apps/ms-task/src/app/utils/types/fileParam";
+import TaskFileParams from "../../../../utils/types/fileParam";
 import PeopleParams from "../../../../utils/types/peopleParams";
 import { TaskBasicDetailsInput } from "./task-basic-details.input";
 @InputType()

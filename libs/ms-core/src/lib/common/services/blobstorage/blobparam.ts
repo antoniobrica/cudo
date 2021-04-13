@@ -1,10 +1,8 @@
 import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
-class BlobParams {
+export class BlobParams {
 
   @Field({ description: `Container Name` })
   containerName?: string;
 }
-
-export default BlobParams;

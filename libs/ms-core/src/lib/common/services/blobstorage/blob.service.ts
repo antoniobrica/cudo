@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import BlobParams from './blobparam';
+import { BlobParams } from './blobparam';
 import { BlobStorage } from './blobstorage';
 
 
