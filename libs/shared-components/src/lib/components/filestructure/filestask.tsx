@@ -130,7 +130,7 @@ export function FileStructure(props: FileStructureProps) {
 						</div>
 					</div>
 					 */}
-					{props.files.map((file, i) => (
+					{(props.files|| []).map((file, i) => (
 		            //  file.isFolder? 
 					 <div className="card1 card-custom gutter-b width_card" key={i}>
 

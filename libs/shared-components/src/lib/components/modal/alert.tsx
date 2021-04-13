@@ -12,34 +12,58 @@ import { Button, Icon, Modal } from 'semantic-ui-react'
     }
   }
 
-const ModalAlert = () => {
+  export interface AlertProps {
+    openAlertF,
+    confirm,
+    taskData,
+    cancel,
+    taskStatus
+  }
+  export const ModalAlert = (props: AlertProps) => {
   const [state, dispatch] = React.useReducer(exampleReducer, {
     open: false,
     size: undefined,
   })
-  const { open, size } = state
-
+  const [open, setOpen] = React.useState(false)
+  React.useEffect(() => {
+    if (props.openAlertF) {
+      setOpen(props.openAlertF);
+    }
+  }, [props.openAlertF]);
+  const openf = () => {
+    setOpen(true)
+  }
+  const yes =()=>{
+    setOpen(false)
+    props.confirm(true, props.taskData)
+  }
+  const cancel =()=>{
+    setOpen(false)
+    props.cancel()
+  }
+const size = undefined
   return (
     <>
-      <Button className="float_right" onClick={() => dispatch({ type: 'open', size: 'mini' })}>
-        Alert
-      </Button>
-    
 
       <Modal
         size={size}
-        open={open}
-        onClose={() => dispatch({ type: 'close' })}
+        onClose={() => setOpen(false)}
+        onOpen={openf}
+        open={open} className="mini"
       >
-        <Modal.Header>Delete Your Account</Modal.Header>
+        {/* <Modal.Header>Update your Task</Modal.Header> */}
+        <Modal.Header>Delete Your Account
+        <a className="float_right" onClick={cancel}>  <i className="ms-Icon ms-Icon--CalculatorMultiply mr-10" aria-hidden="true"></i></a> 
+          
+          </Modal.Header>
         <Modal.Content>
-          <p style={{color: "black"}}>Are you sure you want to delete your account</p>
+          <p className="text-center" style={{color: "black"}}>Are you sure you want to {props.taskStatus} the task? </p>
         </Modal.Content>
         <Modal.Actions className="float_right">
-        <Button positive onClick={() => dispatch({ type: 'close' })}>
+        <Button positive onClick={yes}>
             Yes
           </Button>
-          <Button negative onClick={() => dispatch({ type: 'close' })}>
+          <Button negative  onClick={cancel}>
             No
           </Button>
        

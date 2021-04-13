@@ -36,15 +36,15 @@ export function FileListing(props: FileListingProps) {
   //   return () => sub.unsubscribe();
   // };
   // React.useEffect(getContainerItemsEffect, []);
-if(data){
-  console.log('files query',data.File)
-}
+
+  console.log('files query',data)
+
 
   return (
     <div>
       {loading?
       <LoaderPage />:
-      <FileStructure files={data.File}></FileStructure>
+      <FileStructure files={data?.File}></FileStructure>
       }
       
     </div>
