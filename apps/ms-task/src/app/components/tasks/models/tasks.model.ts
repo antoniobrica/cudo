@@ -1,5 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import TaskFileEntity from '../../../entities/task-file.entity';
 import { ReferenceModel } from '../../reference/model/reference.model';
+import { TaskFileModel } from './taskfile.model';
 import { UserModel } from './user.model';
 
 @ObjectType()
@@ -55,6 +57,9 @@ export class TasksModel {
 
   @Field(type => [UserModel], { nullable: true })
   followers?: UserModel[]
+
+  @Field(type => [TaskFileModel], { nullable: true })
+  files?: TaskFileModel[]
 
 }
 
