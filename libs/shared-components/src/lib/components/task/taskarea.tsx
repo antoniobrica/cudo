@@ -142,7 +142,7 @@ export function TaskArea(props: Tasks) {
 										<Dropdown.Item icon='check circle outline' text='Mark as complete' />
 										<Dropdown.Item icon='trash alternate outline' text='Delete' />
 									</Dropdown.Menu>
-								</Dropdown>``
+								</Dropdown> 
 							</span>
 						</div>
  

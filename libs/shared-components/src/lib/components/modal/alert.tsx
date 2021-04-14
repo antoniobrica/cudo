@@ -31,9 +31,12 @@ const ModalAlert = () => {
         open={open}
         onClose={() => dispatch({ type: 'close' })}
       >
-        <Modal.Header>Delete Your Account</Modal.Header>
+        <Modal.Header>Delete Your Account
+        <a href="" className="float_right">  <i className="ms-Icon ms-Icon--CalculatorMultiply mr-10" aria-hidden="true"></i></a> 
+          
+          </Modal.Header> 
         <Modal.Content>
-          <p style={{color: "black"}}>Are you sure you want to delete your account</p>
+          <p style={{color: "black"}} className="text-center">Are you sure you want to delete your account</p>
         </Modal.Content>
         <Modal.Actions className="float_right">
         <Button positive onClick={() => dispatch({ type: 'close' })}>
