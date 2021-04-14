@@ -3,17 +3,16 @@ import React, { useEffect } from 'react';
 import './project-info.module.scss';
 import { GET_TODOS, GET_PROJECTS } from "../../graphql/graphql";
 import { useTodoQuery, useProjectQuery } from "../../services/useRequest";
-import AddProject from "../add-project/add-project";
-import Project from "../project/project";
 import { ITodo, IProject } from "../../interfaces/project";
 import Modal from 'react-modal';
 import { Card, Icon, Form, Grid } from 'semantic-ui-react'
 import { useHistory } from "react-router";
 import '../../../../../../libs/shared-components/src/style/index.scss';
+import { LoaderPage } from "@cudo/shared-components"
 
-import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
+//import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
 
-// import ModalExampleModal from '../modal/modal'
+ import ModalExampleModal from '../modal/modal'
 
 /* eslint-disable-next-line */
 export interface ProjectInfoProps { }
@@ -24,7 +23,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
   const history = useHistory();
-  if (loading) return <h1>Loading...</h1>;
+  if (loading) return <LoaderPage/>;
   if (error) return <h1>Something went wrong!</h1>;
 
   const addProject = () => {
@@ -34,7 +33,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
 
   const openTask = (project) => {
     console.log('task open==>', history)
-    history.push('/tabs');
+    history.push('/home/project/tabs');
   }
   function openModal() {
     setIsOpen(true);

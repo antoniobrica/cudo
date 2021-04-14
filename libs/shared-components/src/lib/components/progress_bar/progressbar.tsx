@@ -3,7 +3,9 @@ import React from 'react';
 import '../../../style/index.scss';
 import { Progress } from 'semantic-ui-react'
 /* eslint-disable-next-line */
-export interface Tasks { }
+export interface Tasks {
+  progress
+ }
 
 export function ProgressBar(props: Tasks) {
 
@@ -12,9 +14,9 @@ export function ProgressBar(props: Tasks) {
       ] 
   return (
 
-      <div className="app-content-body ">
+      <div>
       
-      <Progress percent={55}>progressbar</Progress>
+      <Progress percent={props.progress}>Completed {props.progress} %</Progress>
  
      </div> 
     

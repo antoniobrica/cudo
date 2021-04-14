@@ -8,6 +8,8 @@ export const GET_TASKS = gql`
   referenceID: "3"
   }){
   taskTitle
+  taskID
+  status
   createdBy
   startDate
   endDate
@@ -37,7 +39,6 @@ mutation CreateTask(
   $BKPID: String!,
   $saveTaskAsTemplate: String!,
   $phasesID: String!,
-  $status: String!,
   ){ 
     createTask(
       referenceFilter: {
@@ -47,7 +48,7 @@ mutation CreateTask(
         referenceID: "3"
         },
       taskDetails: {
-        taskBasics:{
+      taskBasics:{
       taskTitle: $taskTitle,
       startDate: $startDate, 
       endDate: $endDate,
@@ -56,7 +57,7 @@ mutation CreateTask(
       BKPID: $BKPID,
       saveTaskAsTemplate: $saveTaskAsTemplate,
       phasesID: $phasesID,
-      status: $status,
+      status: INPROGRESS
         }
       assignees:[{userID:"2",userName:"Ashutosh"},{userID:"3",userName:"Ashutosh"}]
       followers:[{userID:"1",userName:"Ashutosh"}]
@@ -69,6 +70,30 @@ mutation CreateTask(
 
 
 
+export const UPDATE_TASK = gql`
+mutation UpdateTask(
+  $taskID: String!,    
+  $status: TASKSTATUS!
+  ){ 
+    updateTask(
+      referenceFilter: {
+        projectID: "3"
+        companyID: "1"
+        referenceType: PROJECTTYPE
+        referenceID: "3"
+        },
+        taskDetailsUpdate: {
+        taskBasics:{
+          taskID: $taskID,
+          status: $status
+        }
+      assignees:[{userID:"2",userName:"Ashutosh"},{userID:"3",userName:"Ashutosh"}]
+      followers:[{userID:"1",userName:"Ashutosh"}]
+   }){
+    taskID
+    status    
+  }
+}`;
 //dummy data
 
 

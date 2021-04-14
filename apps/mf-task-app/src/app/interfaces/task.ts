@@ -3,7 +3,12 @@ export interface ITodo {
     title: string;
     description: string;
   }
+  export interface ITaskUpdate {
+    taskID?: string;
+    status: string;
+   }
   export interface ITask {
+    taskID: string
     taskTitle: string
     startDate: string
     endDate: string
@@ -29,4 +34,8 @@ export interface ITodo {
   export interface TaskMutation {
       addTask: ITask;
   }
+  export interface TaskUpdateMutation {
+    addTask: ITaskUpdate;
+}
+
  

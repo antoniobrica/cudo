@@ -31,45 +31,50 @@ import UserProfile from 'libs/shared-components/src/lib/components/userprofile/u
 import RegisterPage from 'libs/shared-components/src/lib/components/login/register';
 import ModalAddSubLevel from 'libs/shared-components/src/lib/components/modal/addsublevel';
 import UserProfileView from 'libs/shared-components/src/lib/components/userprofile/userprofileview';
+import LoaderPage from 'libs/shared-components/src/lib/components/loader/loader';
+import ModalAlert from 'libs/shared-components/src/lib/components/modal/alert';
+
 
 // import { Sidebar } from 'semantic-ui-react';
 
 export function App() {
   return (
     <div>
-      <Menubar></Menubar>
-      <AccordionExampleMenu></AccordionExampleMenu>
-      <Tabsbar></Tabsbar>
-      <ModalExampleModal></ModalExampleModal> <br /> <br /><br />
-      <Cardbar></Cardbar>
-      <Messagebar></Messagebar><br />
-      <Loginbar></Loginbar><br />
-      <Logindrop></Logindrop><br />
-      <Loginpassword></Loginpassword>
-      <ModalExampleModal2></ModalExampleModal2><br />
-      <ModalExampleCompany></ModalExampleCompany><br />
-      <ModalExamplePrinting></ModalExamplePrinting><br />
-      <ListExampleFloated></ListExampleFloated><br /><br />
-      <ModalAddPrint></ModalAddPrint><br />
-      <ModalAddFile></ModalAddFile><br />
-      <FileStructure></FileStructure><br />
-      <ModalExampleSize></ModalExampleSize><br />
-      <UploadNewVersion></UploadNewVersion><br />
-      <AddNewFolder></AddNewFolder><br />
-      <AddNewPeople></AddNewPeople><br />
-      <PeopleList></PeopleList><br />
-      <ModalDelete></ModalDelete><br />
-      <PremissionPeople></PremissionPeople><br />
-      <AddPeoplePermission></AddPeoplePermission><br />
-      <ProgressBar></ProgressBar><br />
-      <ModalPin></ModalPin><br />
-      <ManageFileStructure></ManageFileStructure><br />
-      <ProjectSetting></ProjectSetting><br />
-      <ModalAddSubLevel></ModalAddSubLevel><br />
-      <EditProject></EditProject><br />
-      <UserProfile></UserProfile><br />
-      <RegisterPage></RegisterPage><br />
-      <UserProfileView></UserProfileView>
+   <Menubar></Menubar> 
+   <AccordionExampleMenu></AccordionExampleMenu>
+   <Tabsbar></Tabsbar>
+    <ModalExampleModal></ModalExampleModal> <br/> <br/><br/>  
+    <Cardbar></Cardbar> 
+    <Messagebar></Messagebar><br/>
+    <Loginbar></Loginbar><br/>
+    <Logindrop></Logindrop><br/>
+    <Loginpassword></Loginpassword>
+     <ModalExampleModal2></ModalExampleModal2><br/>
+    <ModalExampleCompany></ModalExampleCompany><br/>
+    <ModalExamplePrinting></ModalExamplePrinting><br/> 
+    <ListExampleFloated></ListExampleFloated><br/><br/>
+    <ModalAddPrint></ModalAddPrint><br/>
+    <ModalAddFile></ModalAddFile><br/>
+    <FileStructure></FileStructure><br/> 
+    <ModalExampleSize></ModalExampleSize><br/>
+    <UploadNewVersion></UploadNewVersion><br/>
+    <AddNewFolder></AddNewFolder><br/>  
+    <AddNewPeople></AddNewPeople><br/>
+    <PeopleList></PeopleList><br/>
+    <ModalDelete></ModalDelete><br/>
+    <PremissionPeople></PremissionPeople><br/>
+    <AddPeoplePermission></AddPeoplePermission><br/> 
+     <ProgressBar></ProgressBar><br/>
+     <ModalPin></ModalPin><br/>
+     <ManageFileStructure></ManageFileStructure><br/>
+    <ProjectSetting></ProjectSetting><br/>
+   <ModalAddSubLevel></ModalAddSubLevel><br/>
+    <EditProject></EditProject><br/>
+    <UserProfile></UserProfile><br/>
+    <RegisterPage></RegisterPage><br/>
+    <UserProfileView></UserProfileView><br/>
+    <LoaderPage></LoaderPage><br/>
+    <ModalAlert></ModalAlert>
     </div>
 
 

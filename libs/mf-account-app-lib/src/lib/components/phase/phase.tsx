@@ -18,14 +18,21 @@ export function Phase(props: PhaseProps) {
   React.useEffect(() => {
     if(data){
       console.log('bkp==>',data)
-     setItems(data.Phase.map(({phaseTitle }) => ({ key: phaseTitle, value: phaseTitle, text: phaseTitle })));
+     setItems(data.Phase.map(({phaseTitle , id}) => ({ key: id, value: phaseTitle, text: phaseTitle })));
 
     }
   }, [data]);
 
   const onPhase = (event, data) => {
+    let phase = {phaseID:'', phaseName:''};
+    for(let i=0; i<= items.length; i++){
+      if(items[i]?.value === data.value){
+        phase.phaseID = items[i].key;
+        phase.phaseName = data.value;
+      }
+    }
     setPhase(data.value)
-    props.parentPhaseSelect(data)
+    props.parentPhaseSelect(phase)
    }
   return (
     <Form.Field>

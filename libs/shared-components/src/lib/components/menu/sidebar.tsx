@@ -20,7 +20,7 @@ const ColorForm = (
 /* eslint-disable-next-line */
 // export interface SideMenuProps { }
 
-export default class AccordionExampleMenu extends Component {
+export  class AccordionExampleMenu extends Component {
     state = { activeIndex: 0 }
   
     handleClick = (e, titleProps) => {
@@ -252,4 +252,4 @@ export default class AccordionExampleMenu extends Component {
     }
   }
 
-// export default AccordionExampleMenu;
+ export default AccordionExampleMenu;
