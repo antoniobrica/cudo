@@ -85,13 +85,12 @@ function App() {
   const history = useHistory()
   const location = useLocation();
   const { url, path } = useRouteMatch();
-  console.log('path-project-app', path)
   return (
-    
-      <Switch>
-        <Route exact path="/home/project/tabs" render={() => <TabMenu />} />
-        <Route exact path="/home/project" render={() => <ProjectInfo />}/>
-      </Switch>
+
+    <Switch>
+      <Route exact path="/home/project/tabs" render={() => <TabMenu />} />
+      <Route exact path="/home/project" render={() => <ProjectInfo />} />
+    </Switch>
   );
 }
 

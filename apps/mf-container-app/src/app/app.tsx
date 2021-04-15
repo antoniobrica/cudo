@@ -30,7 +30,6 @@ const defaultHistory = createBrowserHistory();
 
 function App() {
   const { url, path } = useRouteMatch();
-  console.log(path)
   const history = useHistory();
   return (
     <div className="App">
