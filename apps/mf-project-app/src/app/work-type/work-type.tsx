@@ -14,10 +14,9 @@ export function WorkType(props: WorkTypeProps) {
 
 
   function handleChangeInput(i, event, field) {
-    console.log('field==>',field, i, event.target.value) 
     const values = [...fields];
     if(field === 'worktype'){
-      values[i].workTypeName = event.target.value;
+          values[i].workTypeName = event
     }
     else  {
       values[i].estimatedCost = event.target.value;
@@ -41,8 +40,9 @@ export function WorkType(props: WorkTypeProps) {
     values.splice(i, 1);
     setFields(values);
   }
-  const getWorktype = (data)=>{
+  const getWorktype = (data, id)=>{
      console.log('selected-WorkType', data)
+     handleChangeInput(id, data,'worktype' )
   }
 
   return (
@@ -73,7 +73,7 @@ export function WorkType(props: WorkTypeProps) {
                               onChange={e =>handleChangeInput( idx, e, 'worktype')}
                             />
                           </Form.Field> */}
-                          <WorkTypeDropdown data={props.worktypes} selectedWorkType={getWorktype}/>
+                          <WorkTypeDropdown data={props.worktypes} id={idx}selectedWorkType={getWorktype}/>
                         </Grid.Column>
 
                       </Grid.Row>

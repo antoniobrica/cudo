@@ -4,6 +4,7 @@ import { Form,  Select } from 'semantic-ui-react';
 export interface WorktypeDropdownProps {
     data
     selectedWorkType
+    id
 }
 
 export function WorkTypeDropdown(props: WorktypeDropdownProps) {
@@ -12,7 +13,7 @@ export function WorkTypeDropdown(props: WorktypeDropdownProps) {
  
   const onMworkType = (event, data) => {
     setworkType(data.value)
-    props.selectedWorkType(workType)
+    props.selectedWorkType(workType, props.id)
    }
 
   return (

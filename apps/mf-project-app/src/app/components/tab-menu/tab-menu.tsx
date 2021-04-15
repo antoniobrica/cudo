@@ -4,7 +4,8 @@ import { AccordionExampleMenu } from "@cudo/shared-components"
 import { environment } from "../../../environments/environment";
 import MicroFrontend from "../../../MicroFrontend";
 import { Tab, Image } from 'semantic-ui-react'
-import { NavLink, BrowserRouter as Router, useRouteMatch, Route, Switch } from 'react-router-dom';
+import { NavLink, BrowserRouter as Router, useRouteMatch, Route, Switch, useLocation, useParams } from 'react-router-dom';
+import { useHistory } from "react-router";
 
 
 
@@ -20,7 +21,9 @@ const {
 export interface TabMenuProps { }
 
 function TabMenu(props: TabMenuProps) {
-
+  const history = useHistory();
+  let params = useParams();
+    console.log('urlparams', params)
   function TaskApp(history: any) {
     return (
       <MicroFrontend history={history} host={taskHost} name="TaskApp" />
@@ -32,12 +35,18 @@ function TabMenu(props: TabMenuProps) {
       <MicroFrontend history={history} host={documentHost} name="DocumentApp" />
     );
   }
+  
+  function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
 
   function Home() {
     const [input, setInput] = React.useState("");
     const [isTask, setIsTask] = React.useState(false);
     const data = "parrent"
     const { url, path } = useRouteMatch();
+    let query = useQuery();
+    
     const callbackFunction = (childData) => {
       setInput(childData);
       if (childData == "task") {
