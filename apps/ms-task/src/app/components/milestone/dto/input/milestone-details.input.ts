@@ -1,15 +1,18 @@
 import { Field, InputType } from "@nestjs/graphql";
-import PeopleParams from "../../../../utils/types/peopleParams";
-import { TaskBasicDetailsInput } from "./task-basic-details.input";
+import TaskFileParams from "apps/ms-task/src/app/utils/types/fileParam";
+import WorkTypeParams from "apps/ms-task/src/app/utils/types/worktypeParam";
+import { MilestoneBasicDetailsInput } from "./milestone-basic-details.input";
+
 @InputType()
-export class TaskDetailsInput {
+export class MilestoneDetailsInput {
 
-    @Field(type => TaskBasicDetailsInput)
-    taskBasics?: TaskBasicDetailsInput;
+    @Field(type => MilestoneBasicDetailsInput)
+    milestoneBasics?: MilestoneBasicDetailsInput;
 
-    @Field(type => [PeopleParams], { description: `This is for title task title` })
-    followers?: PeopleParams[];
+    @Field(type => [TaskFileParams], { description: `Task Files` })
+    files?: TaskFileParams[];
 
-    @Field(type => [PeopleParams], { description: `This is for title task title` })
-    assignees?: PeopleParams[];
+    @Field(type => [WorkTypeParams], { description: `Task Files` })
+    worktypes?: WorkTypeParams[];
+
 }

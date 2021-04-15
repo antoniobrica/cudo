@@ -1,35 +1,24 @@
 import { Field, InputType } from "@nestjs/graphql";
 import { StatusEnum } from "../../../../enums/status.enum";
-import { TaskAssigneesInput } from "./task-assignees.input";
-import { TaskFollowersInput } from "./task-followers.input";
+
 @InputType()
-export class TaskBasicDetailsInput {
+export class MilestoneBasicDetailsInput {
 
-    @Field({ description: `This is for title task title` })
-    taskTitle?: string;
+    @Field({ description: `This is for milestone title` })
+    milestoneID?: string;
 
-    @Field({ description: `This is for task start date in UTC` })
-    startDate?: Date;
+    @Field({ description: `This is for milestone title` })
+    milestoneTitle?: string;
 
-    @Field({ description: `This is for task end date in UTC` })
-    endDate?: Date;
+    @Field({ description: `Due Date of MileStone in UTC` })
+    dueDate?: Date;
 
-    @Field({ description: `This is for task estimated days` })
-    estimatedDays?: string;
+    @Field({ description: `description of milestone created` })
+    description?: string;
 
-    @Field({ description: `To send notificatioin on task created` })
-    sendNotification?: string;
-
-    @Field({ description: `To save task as template as well` })
-    saveTaskAsTemplate?: string;
-
-    @Field({ description: `BKPID attached with task` })
-    BKPID?: string;
-
-    @Field({ description: `PhaseID attached with task` })
+    @Field({ description: `PhaseID attached with milestone` })
     phasesID?: string;
 
-    @Field(type => StatusEnum, { description: `Task status` })
-    status?: StatusEnum;
-
+    // @Field({ description: `PhaseID attached with task` })
+    // workTypeTitle?: string;
 }
