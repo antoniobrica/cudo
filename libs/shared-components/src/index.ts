@@ -34,3 +34,4 @@ export * from './lib/components/modal/addsublevel';
 export * from './lib/components/userprofile/userprofileview'; 
 export * from './lib/components/loader/loader'; 
 export * from './lib/components/modal/alert'; 
+export * from './lib/components/modal/planningnew'; 

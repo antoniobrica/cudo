@@ -1,8 +1,8 @@
 import React from 'react';
- 
+
 import '../../../style/index.scss';
-import { Tab,Image } from 'semantic-ui-react'
- 
+import { Tab, Image, Form, Grid, Card, Dropdown } from 'semantic-ui-react';
+
 /* eslint-disable-next-line */
 export interface TabsProps {
   parentCallback
@@ -86,16 +86,17 @@ export function Tabsbar(props: TabsProps) {
       
   return (
     <div className="app-content-body-dash navbar-collapse box-shadow bg-white-only">
-        <div> 
-           <span className="">Electrical Work</span> | <span className="preliminary-font">Preliminary Studies</span>
-         </div>
-            
-         <Tab className="ui-tabs" menu={{ secondary: true, pointing: true }} panes={panes} />
- 
+      <div>
+        <span className="">Electrical Work</span> |{' '}
+        <span className="preliminary-font">Preliminary Studies</span>
+      </div>
+
+      <Tab
+        className="ui-tabs"
+        menu={{ secondary: true, pointing: true }}
+        panes={panes}
+      />
     </div>
-        
-    
- 
   );
 }
 
