@@ -12,7 +12,7 @@ import { LoaderPage } from "@cudo/shared-components"
 
 //import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
 
- import ModalExampleModal from '../modal/modal'
+import ModalExampleModal from '../modal/modal'
 
 /* eslint-disable-next-line */
 export interface ProjectInfoProps { }
@@ -23,16 +23,14 @@ export function ProjectInfo(props: ProjectInfoProps) {
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
   const history = useHistory();
-  if (loading) return <LoaderPage/>;
+  if (loading) return <LoaderPage />;
   if (error) return <h1>Something went wrong!</h1>;
 
   const addProject = () => {
-    console.log('add=project')
     setopenForm(!openForm);
   }
 
   const openTask = (project) => {
-    console.log('task open==>', history)
     history.push('/home/project/tabs');
   }
   function openModal() {

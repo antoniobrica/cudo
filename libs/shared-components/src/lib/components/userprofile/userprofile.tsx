@@ -16,7 +16,6 @@ export interface UserProfileProps {
   messages?
 }
 export function UserProfile(props: UserProfileProps) {
-  console.log(props)
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
@@ -37,7 +36,6 @@ export function UserProfile(props: UserProfileProps) {
   const [country, setCountry] = useState({} as FormField);
   useEffect(() => {
     props?.fields?.map(field => {
-      console.log(field, props.action)
       switch (field.name) {
         case "csrf_token":
           setcsrf_token(field);

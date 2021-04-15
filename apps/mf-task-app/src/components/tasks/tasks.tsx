@@ -32,101 +32,64 @@ export function Tasks(props: TasksProps) {
   if (data) {
     console.log('tasks=>', data.tasks)
   }
-  
-  const cancel =() =>{
+
+  const cancel = () => {
     setOpen(false)
   }
-const confirmation= (data, task)=>{
-  console.log('data', data)
-  setIsUpdate(data)
-  setOpen(false)
- // updateTask(taskData);
- 
- let status;
- if (task.status === 'COMPLETED') {
-   status = Status.INPROGRESS
- }
- else {
-   status = Status.COMPLETED
- }
- console.log('task-update--', status)
- const taskID = task.taskID;
- addTask({
-   variables: {
-     taskID, status
-   },
-   update: (
-     cache
-   ) => {
-     const cacheData = cache.readQuery({ query: GET_TASKS }) as ITasks;
-     const newTask = cacheData.tasks.map(t => {
-       if (t.taskID === taskID) {
-         if(t.status === 'INPROGRESS'){
-           return {...t, status: Status.COMPLETED};
-         }
-       else {
-         return {...t, status: Status.INPROGRESS};
-       }
-       } else {
-         return t;
-       }
-     });
-     console.log('updated-task', newTask)
- //    setOpen(false)
-      cache.writeQuery({
-       query: GET_TASKS,
-       data: {
-         tasks: newTask
-       }
-     });
-   }
+  const confirmation = (data, task) => {
+    setIsUpdate(data)
+    setOpen(false)
+    // updateTask(taskData);
 
- });
+    let status;
+    if (task.status === 'COMPLETED') {
+      status = Status.INPROGRESS
+    }
+    else {
+      status = Status.COMPLETED
+    }
+    const taskID = task.taskID;
+    addTask({
+      variables: {
+        taskID, status
+      },
+      update: (
+        cache
+      ) => {
+        const cacheData = cache.readQuery({ query: GET_TASKS }) as ITasks;
+        const newTask = cacheData.tasks.map(t => {
+          if (t.taskID === taskID) {
+            if (t.status === 'INPROGRESS') {
+              return { ...t, status: Status.COMPLETED };
+            }
+            else {
+              return { ...t, status: Status.INPROGRESS };
+            }
+          } else {
+            return t;
+          }
+        });
+        //    setOpen(false)
+        cache.writeQuery({
+          query: GET_TASKS,
+          data: {
+            tasks: newTask
+          }
+        });
+      }
 
-}
+    });
+
+  }
   const updateTask = (task) => {
     setTaskData(task)
     setOpen(true)
-    console.log('open', open)
     if (task.status === 'COMPLETED') {
       settaskStatus('Re-open')
     }
     else {
       settaskStatus('Mark as Complete')
     }
-    // console.log('task-update--', status)
-    // const taskID = task.taskID;
-    // addTask({
-    //   variables: {
-    //     taskID, status
-    //   },
-    //   update: (
-    //     cache
-    //   ) => {
-    //     const cacheData = cache.readQuery({ query: GET_TASKS }) as ITasks;
-    //     const newTask = cacheData.tasks.map(t => {
-    //       if (t.taskID === taskID) {
-    //         if(t.status === 'INPROGRESS'){
-    //           return {...t, status: Status.COMPLETED};
-    //         }
-    //       else {
-    //         return {...t, status: Status.INPROGRESS};
-    //       }
-    //       } else {
-    //         return t;
-    //       }
-    //     });
-    //     console.log('updated-task', newTask)
-    // //    setOpen(false)
-    //      cache.writeQuery({
-    //       query: GET_TASKS,
-    //       data: {
-    //         tasks: newTask
-    //       }
-    //     });
-    //   }
-
-    // });
 
   }
   return (
@@ -138,7 +101,7 @@ const confirmation= (data, task)=>{
       <br />
       {open ?
         <div style={{ marginLeft: 900 }} >
-          <ModalAlert openAlertF={open} confirm={confirmation} taskData={taskData} taskStatus={taskStatus}  cancel={cancel}></ModalAlert>
+          <ModalAlert openAlertF={open} confirm={confirmation} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></ModalAlert>
         </div>
         : null}
       <div className="TaskApp-container">

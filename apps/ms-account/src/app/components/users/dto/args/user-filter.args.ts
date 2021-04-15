@@ -4,5 +4,5 @@ import { ArgsType, Field } from "@nestjs/graphql";
 export class UserFilterArgs {
 
     @Field({ description: `User ID` })
-    userID?: string;
+    email?: string;
 }
