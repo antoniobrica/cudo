@@ -1,7 +1,7 @@
 import React from 'react';
 
 import '../../../style/index.scss';
-import { Segment, Dropdown } from 'semantic-ui-react'
+import { Segment, Dropdown,Input,Grid,Form } from 'semantic-ui-react'
 import img from 'libs/shared-components/src/user.png';
 import img2 from 'libs/shared-components/src/user2.png';
 import img3 from 'libs/shared-components/src/green_tick.png';
@@ -285,7 +285,42 @@ export function TaskArea(props: Tasks) {
 				</div>
 			</div>
 
+			<div className="card1 card-custom gutter-b">
 
+<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
+
+	<div className="  align-items-center py-2">
+		 
+		<span className="anchor_complete"><a   title="Mark as complete"> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span>
+		<span className="font-weight-bold mb-0 mr-10">1. This is the checklist point text here</span>
+	 <br/>
+	 <span className="anchor_complete"><a   title="Mark as complete"> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span>
+		<span className="font-weight-bold mb-0 mr-10">2. This is the checklist point text here</span>
+		<br/>
+	 <span className="anchor_complete"><a   title="Mark as complete"> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span>
+		 
+		<Grid columns={2} className="classtop">
+<Grid.Row>
+  <Grid.Column>
+    <Form.Field className="fillarea">
+       
+      <Input  placeholder='Enter your text here....' size='small' className="full-width " type="text"  />
+    </Form.Field>
+  </Grid.Column>
+
+  <Grid.Column>
+    <Form.Field style={{marginleft: '145px'}}>
+     <button className="greenbutton"><i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i> </button> 
+	 &nbsp;  <button className="redbutton"><i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> </button>
+    </Form.Field>
+  </Grid.Column>
+</Grid.Row>
+</Grid>
+	</div> 
+	
+
+</div>
+</div>
 			<button className="ui large button btn-dashed  btn-large"><i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> Add new task    </button>
 		</div>
 
