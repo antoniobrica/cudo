@@ -232,7 +232,7 @@ export function Tabsbar(props: TabsProps) {
                                 <Dropdown.Menu>
                                   <Dropdown.Item
                                     icon="eye"
-                                  text="View detail"
+                                    text="View detail"
                                   />
                                   <Dropdown.Item icon="pencil" text="Edit" />
                                   <Dropdown.Item
