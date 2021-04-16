@@ -17,15 +17,13 @@ export const setAuthenticated = () => localStorage.setItem(LSK_IS_AUTHENTICATED,
 export const unsetAuthenticated = () => localStorage.removeItem(LSK_IS_AUTHENTICATED)
 
 export const login = ({ setReferer = true } = {}) => {
-  const { pathname } = window.location
-  console.log(pathname)
+  const { pathname } = window.location;
   if (setReferer) setAuthenticatedReferer(pathname)
   window.location.href = config.routes.login.path
 }
 
 export const ToEmail = ({ setReferer = true } = {}) => {
-  const { pathname } = window.location
-  console.log(pathname)
+  const { pathname } = window.location;
   if (setReferer) setAuthenticatedReferer(pathname)
   window.location.href = config.routes.loginEmail.path
 }

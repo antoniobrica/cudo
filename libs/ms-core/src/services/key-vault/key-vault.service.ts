@@ -31,6 +31,5 @@ export class KeyVaultService {
 
     public async getSecretValue(secretName: string) {
         const result = await this.client.getKey(secretName);
-        console.log(result);
     }
 }

@@ -6,6 +6,7 @@ import { Phases } from './phases.entity';
 import ReferanceTypeEntity from './reference-type.entity';
 import TaskAssigneessEntity from './task-assignees.entity';
 import TaskFllowersEntity from './task-followers.entity';
+import TaskFileEntity from './task-file.entity';
 
 @Entity({
   name: 'tasks',
@@ -88,6 +89,12 @@ export class TasksEntity extends BaseEntity {
   @ManyToMany(type => TaskAssigneessEntity)
   @JoinTable()
   assignees: TaskAssigneessEntity[];
+
+  @Expose()
+  // n:n relation with TaskAssigneessEntity
+  @ManyToMany(type => TaskFileEntity)
+  @JoinTable()
+  files: TaskFileEntity[];
 
   @Expose()
   // n:n relation with TaskFllowersEntity

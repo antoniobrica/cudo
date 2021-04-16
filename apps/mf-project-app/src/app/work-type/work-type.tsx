@@ -4,7 +4,7 @@ import WorkTypeDropdown from './work-type-dropdown';
 
 import './work-type.module.scss';
 
-export interface WorkTypeProps { 
+export interface WorkTypeProps {
   worktypes,
   workTypeData
 }
@@ -18,7 +18,7 @@ export function WorkType(props: WorkTypeProps) {
     if(field === 'worktype'){
           values[i].workTypeName = event
     }
-    else  {
+    else {
       values[i].estimatedCost = event.target.value;
     }
     setFields(values);
@@ -36,7 +36,6 @@ export function WorkType(props: WorkTypeProps) {
   }
   function handleRemoveInput(i) {
     const values = [...fields];
-    console.log(values);
     values.splice(i, 1);
     setFields(values);
   }
@@ -47,27 +46,27 @@ export function WorkType(props: WorkTypeProps) {
 
   return (
     <Table>
-    <Table.Header>
-      <Table.Row>
-        <Table.HeaderCell>Work Type</Table.HeaderCell>
-        <Table.HeaderCell> </Table.HeaderCell>
-        <Table.HeaderCell>Estimate Cost</Table.HeaderCell>
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell>Work Type</Table.HeaderCell>
+          <Table.HeaderCell> </Table.HeaderCell>
+          <Table.HeaderCell>Estimate Cost</Table.HeaderCell>
 
-      </Table.Row>
-    </Table.Header>
+        </Table.Row>
+      </Table.Header>
 
-    <Table.Body>
       <Table.Body>
-        {
-          fields.map((field, idx) => {
-            return (
-              <Table.Row  key={`${field}-${idx}`}>
-                <Table.Cell>
-                  <Form>
-                    <Grid columns={1}>
-                      <Grid.Row>
-                        <Grid.Column>
-                          {/* <Form.Field>
+        <Table.Body>
+          {
+            fields.map((field, idx) => {
+              return (
+                <Table.Row key={`${field}-${idx}`}>
+                  <Table.Cell>
+                    <Form>
+                      <Grid columns={1}>
+                        <Grid.Row>
+                          <Grid.Column>
+                            {/* <Form.Field>
                             <Select placeholder='Select' className="small"  options={props.worktypes}
                               value={field.workTypeName}
                               onChange={e =>handleChangeInput( idx, e, 'worktype')}
@@ -97,32 +96,32 @@ export function WorkType(props: WorkTypeProps) {
                           </Form.Field>
                         </Grid.Column>
 
-                      </Grid.Row>
-                    </Grid>
-                  </Form>
+                        </Grid.Row>
+                      </Grid>
+                    </Form>
 
-                </Table.Cell>
+                  </Table.Cell>
 
-              </Table.Row>
+                </Table.Row>
 
 
+              )
+            }
             )
           }
-          )
-        }
-            <Table.Row>
-          <Table.Cell>
-            <a onClick={()=> handleAddInput()}>+ Add more </a>
+          <Table.Row>
+            <Table.Cell>
+              <a onClick={() => handleAddInput()}>+ Add more </a>
 
-          </Table.Cell>
-          <Table.Cell></Table.Cell>
-          <Table.Cell>
+            </Table.Cell>
+            <Table.Cell></Table.Cell>
+            <Table.Cell>
 
-          </Table.Cell>
-        </Table.Row>
+            </Table.Cell>
+          </Table.Row>
+        </Table.Body>
       </Table.Body>
-      </Table.Body>
-        </Table>
+    </Table>
 
   );
 }

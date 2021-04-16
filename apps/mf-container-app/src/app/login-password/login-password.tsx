@@ -21,8 +21,7 @@ export function LoginPassword(props: LoginPasswordProps) {
 
   useEffect(() => {
     // Need to implement using redux
-    setEmail(localStorage.getItem('email'))
-    console.log(email)
+    setEmail(localStorage.getItem('email'));
     const request = initialiseRequest({ type: "login" }, { filterid: "flow" }) as Promise<LoginFlow>
     request
       .then(request => setRequestResponse(request))

@@ -13,7 +13,6 @@ export class BlobUploadsViewStateService {
   );
 
   get uploadQueue$() {
-    console.log('uploadQueue')
     return this.uploadQueueInner$
       .asObservable()
       .pipe(mergeMap(files => from(files)));
@@ -22,19 +21,15 @@ export class BlobUploadsViewStateService {
   constructor(
     private blobStorage: BlobStorageService,
     private blobState: BlobSharedViewStateService
-  ) {}
+  ) { }
 
   uploadItems(files: FileList): void {
-    console.log('files==>', files)
     this.uploadQueueInner$.next(files);
-    console.log('uploadQueueInner')
   }
 
   private uploadFile = (file: File) =>
     this.blobState.getStorageOptionsWithContainer().pipe(
-      switchMap(options =>
-     { 
-       console.log("options",options); 
+      switchMap(options => {
         return this.blobStorage
           .uploadToBlobStorage(file, {
             ...options,
@@ -43,24 +38,25 @@ export class BlobUploadsViewStateService {
           .pipe(
             this.mapUploadResponse(file, options),
             this.blobState.finaliseBlobChange(options.containerName)
-          )}
+          )
+      }
       )
     );
 
-    private mapUploadResponse = (
+  private mapUploadResponse = (
     file: File,
     options: BlobContainerRequest
   ): OperatorFunction<number, BlobItemUpload> => source =>
-    source.pipe(
-      map(progress => ({
-        filename: file.name,
-        containerName: options.containerName,
-        progress: parseInt(((progress / file.size) * 100).toString(), 10)
-      })),
-      startWith({
-        filename: file.name,
-        containerName: options.containerName,
-        progress: 0
-      })
-    );
+      source.pipe(
+        map(progress => ({
+          filename: file.name,
+          containerName: options.containerName,
+          progress: parseInt(((progress / file.size) * 100).toString(), 10)
+        })),
+        startWith({
+          filename: file.name,
+          containerName: options.containerName,
+          progress: 0
+        })
+      );
 }

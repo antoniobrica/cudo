@@ -17,7 +17,11 @@ export class ProjectWorkTypeEntity extends BaseEntity {
   projectWorkTypeID: string;
 
   @Expose()
-  @Column({nullable: true})
+  @Column({ nullable: true })
+  workID?: string;
+
+  @Expose()
+  @Column({ nullable: true })
   workTypeName: string;
 
   @Expose()
