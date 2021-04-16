@@ -23,7 +23,8 @@
       "@cudo/shared-components": ["libs/shared-components/src/index.ts"],
       "@cudo/mf-core": ["libs/mf-core/src/index.ts"],
       "@cudo/mf-account-app-lib": ["libs/mf-account-app-lib/src/index.ts"],
-      "@cudo/mf-document-lib": ["libs/mf-document-lib/src/index.ts"]
+      "@cudo/mf-document-lib": ["libs/mf-document-lib/src/index.ts"],
+      "@cudo/mf-task-lib": ["libs/mf-task-lib/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -14,7 +14,7 @@ import {
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 
-function ModalPlanningNew() {
+export function ModalPlanningNew() {
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },

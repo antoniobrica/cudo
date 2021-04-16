@@ -6,6 +6,7 @@ import MicroFrontend from "../../../MicroFrontend";
 import { Tab, Image } from 'semantic-ui-react'
 import { NavLink, BrowserRouter as Router, useRouteMatch, Route, Switch, useLocation, useParams } from 'react-router-dom';
 import { useHistory } from "react-router";
+import Planning from '../../../../../../libs/mf-task-lib/src/lib/components/planning/planning'
 
 
 
@@ -104,7 +105,9 @@ function TabMenu(props: TabMenuProps) {
         path={`${url}/planning`}
         exact
         render={() => (
-        <Tab.Pane attached={false} onClick={handleOpenProject('planning')}>Planning</Tab.Pane>
+        <Tab.Pane attached={false} onClick={handleOpenProject('planning')}>
+          <Planning></Planning>
+          </Tab.Pane>
         )}
         />,
       },
