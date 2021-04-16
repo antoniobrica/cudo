@@ -13,10 +13,7 @@ export interface AddFileProps { }
 export function AddFile(props: AddFileProps) {
   const [fileSelected, setFileSelected] = React.useState(null);
   const [items, setItems] = React.useState<ContainerItem[]>([]);
-  // const { loading, error, data } = useTokenQuery(GET_TOKEN);
-  // if(data){
-  //   console.log('access token=>', data)
-  // }
+
   const [open, setOpen] = React.useState(false)
 
   const context1 = useContext(UploadsViewStateContext);
@@ -30,7 +27,6 @@ export function AddFile(props: AddFileProps) {
   };
   React.useEffect(getContainersEffect, []);
   const onFile = (data) => {
-    console.log('onFile', data)
     setFileSelected(data);
   };
 
@@ -38,10 +34,9 @@ export function AddFile(props: AddFileProps) {
     setOpen(true)
   }
   const onFileUpload = async (file: FileList | null) => {
-    console.log('fileSelected', file)
     fileSelected && context1.uploadItems(file);
   }
-  
+
   return (
     <div>
       {open ?
@@ -50,8 +45,8 @@ export function AddFile(props: AddFileProps) {
         </div>
         :
         <div style={{ marginLeft: 900 }} >
-           <Suspense fallback={<div>Loading...</div>}>
-          <ModalAddPrint fileData={onFile} onFileSubmit={onFileUpload} setting={openSetting}></ModalAddPrint>
+          <Suspense fallback={<div>Loading...</div>}>
+            <ModalAddPrint fileData={onFile} onFileSubmit={onFileUpload} setting={openSetting}></ModalAddPrint>
           </Suspense>
         </div>
 

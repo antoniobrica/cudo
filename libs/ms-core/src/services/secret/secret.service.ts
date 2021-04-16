@@ -28,7 +28,6 @@ export class SecretService {
             const result = await this.client.getSecret(secretName);
             return result;
         } catch (error) {
-            console.log(error);
             return error;
         }
     }

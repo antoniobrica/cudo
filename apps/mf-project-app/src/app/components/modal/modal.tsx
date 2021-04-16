@@ -158,7 +158,6 @@ export function ModalExampleModal() {
     setZip(e.target.vale)
   }
   const onCountry = (data) => {
-    console.log('selected_country', data)
     setCountry(data.value)
   }
   const onDescription = e => {
@@ -170,7 +169,6 @@ export function ModalExampleModal() {
   }
   const moreWorkTypes = (data: ProjectWorkTypeModel) => {
     setProjectWorkEstimates(data);
-    console.log('selected-worktypes', projectWorkEstimates);
 
   }
   const handleSaveProject = () => {

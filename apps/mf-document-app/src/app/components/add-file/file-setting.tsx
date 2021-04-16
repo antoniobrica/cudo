@@ -9,7 +9,7 @@ import img4 from 'libs/shared-components/src/avatar_3.png';
 import img5 from 'libs/shared-components/src/file_1.png';
 import img6 from 'libs/shared-components/src/file_2.png';
 import ProgressBar from 'libs/shared-components/src/lib/components/progress_bar/progressbar';
-import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex ,FileTypeIndex, FileStructureIndex} from "@cudo/mf-account-app-lib"
+import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex, FileTypeIndex, FileStructureIndex } from "@cudo/mf-account-app-lib"
 import { UploadsViewStateContext, SharedViewStateContext } from 'apps/mf-document-app/src/azure-storage/contexts/viewStateContext';
 import { BlobItem } from '@azure/storage-blob';
 import { tap } from 'rxjs/operators';
@@ -32,14 +32,14 @@ export function FileSetting(props: FileProps) {
   const [showPeople, setShowPeople] = React.useState(false);
   const [people, setAsignis] = React.useState([]);
   const [files, setFileList] = React.useState<any>([]);
-  const [fileTypeName, setfileTypeName ] = React.useState("");
+  const [fileTypeName, setfileTypeName] = React.useState("");
   const [fileTypeID, setfileTypeID] = React.useState("");
-  const [structureTitle, setstructureTitle ] = React.useState("");
+  const [structureTitle, setstructureTitle] = React.useState("");
   const [structureID, setstructureID] = React.useState("");
   const [BKPIDTitle, setBKPIDTitle] = React.useState("");
   const [BKPID, setBKPID] = React.useState("");
-  const [phaseName, setPhasesName] =React.useState("");
-  const [phaseID, setPhasesID] =React.useState("");
+  const [phaseName, setPhasesName] = React.useState("");
+  const [phaseID, setPhasesID] = React.useState("");
 
 
   const [addFile] = useFileMutation(UPLOAD_FILE);
@@ -65,7 +65,6 @@ export function FileSetting(props: FileProps) {
     const sub = context.uploadedItems$
       .pipe(tap(items => {
         setItems(items)
-       console.log('file items', items)
       }))
       .subscribe();
     return () => sub.unsubscribe();
@@ -103,26 +102,23 @@ export function FileSetting(props: FileProps) {
   ]
   const [open, setOpen] = React.useState(false)
   const setBKPIDChange = (data) => {
-    console.log(data)
     setBKPIDTitle(data.BKPIDTitle)
     setBKPID(data.BKPID)
   }
-  const setFileStructureChange =(data) =>{
-    console.log('fileStructure',data)
+  const setFileStructureChange = (data) => {
     // setfileStructureID()
     setstructureID(data.structureID)
     setstructureTitle(data.structureTitle)
   }
 
-  const setFileTypeChange = (data) =>{
-    console.log('fileType', data)
+  const setFileTypeChange = (data) => {
     setfileTypeName(data.fileTypeTitle);
     setfileTypeID(data.fileTypeID)
   }
   const onsetPhasesID = (data) => {
-    
-     setPhasesID((data.phaseID).toString());
-     setPhasesName(data.phaseName)
+
+    setPhasesID((data.phaseID).toString());
+    setPhasesName(data.phaseName)
   }
   const setAsignee = (data) => {
     setAsignis(data)
@@ -143,23 +139,22 @@ export function FileSetting(props: FileProps) {
     files && context.uploadItems(files);
     const fileArr = [];
     for (let i = 0; i < files.length; i++) {
-      fileArr.push({fileURL:files[i].name , fileTitle:files[i].name, fileType: files[i].type, fileVersion:"v1"});
+      fileArr.push({ fileURL: files[i].name, fileTitle: files[i].name, fileType: files[i].type, fileVersion: "v1" });
     }
-    setFileList(fileArr)
-    console.log('fileArr',fileArr)
+    setFileList(fileArr);
   }
 
   const handleSaveFile = () => {
     setOpen(false);
     addFile({
       variables: {
-        fileTypeName, folderName:"Folder1", people ,BKPIDTitle, files, phaseName, fileTypeID, phaseID, structureTitle, structureID,isFolder:false, isEveryOneAllowed:false, BKPID
-       },
+        fileTypeName, folderName: "Folder1", people, BKPIDTitle, files, phaseName, fileTypeID, phaseID, structureTitle, structureID, isFolder: false, isEveryOneAllowed: false, BKPID
+      },
       update: (
         cache,
-        { data}
+        { data }
       ) => {
-        const cacheData = cache.readQuery({ query: GET_FILES}) as IFiles;
+        const cacheData = cache.readQuery({ query: GET_FILES }) as IFiles;
         cache.writeQuery({
           query: GET_FILES,
           data: {
@@ -168,10 +163,9 @@ export function FileSetting(props: FileProps) {
         });
       }
     });
-  
+
   };
-  
-  // console.log('file-data==>', fileData)
+
   return (
     <div >
       <Modal className="modal_media modal_center modal_media_1"
@@ -219,70 +213,70 @@ export function FileSetting(props: FileProps) {
                 items.map((file, index) => {
                   return (
                     <div key={index}>
-                    <Grid columns={12}>
-                      <Grid.Row>
-                        <Grid.Column>
-                          <Form.Field>
+                      <Grid columns={12}>
+                        <Grid.Row>
+                          <Grid.Column>
+                            <Form.Field>
 
-                            <img src={img6} />
+                              <img src={img6} />
 
-                          </Form.Field>
-                        </Grid.Column>
-                        <Grid.Column>
-                          <Form.Field>
-                            {/* <label></label> */}
-                            <label className="width_area">{file.filename}</label>
+                            </Form.Field>
+                          </Grid.Column>
+                          <Grid.Column>
+                            <Form.Field>
+                              {/* <label></label> */}
+                              <label className="width_area">{file.filename}</label>
 
 
-                          </Form.Field>
-                        </Grid.Column>
-                        <Grid.Column>
-                          <Form.Field>
-                          </Form.Field>
-                        </Grid.Column>
-                        <Grid.Column>
-                          <Form.Field>
-                          </Form.Field>
-                        </Grid.Column>
-                        <Grid.Column>
-                          <Form.Field>
-                          </Form.Field>
-                        </Grid.Column>
-                        <Grid.Column>
-                          <Form.Field>
-                          </Form.Field>
-                        </Grid.Column>
-                        <Grid.Column>
-                          <Form.Field>
-                          </Form.Field>
-                        </Grid.Column>
-                        <Grid.Column>
-                          <Form.Field>
-                          </Form.Field>
-                        </Grid.Column>
-                        <Grid.Column>
-                          <Form.Field>
-                          </Form.Field>
-                        </Grid.Column>
-                        <Grid.Column>
-                          <Form.Field>
-                          </Form.Field>
-                        </Grid.Column>
-                        <Grid.Column>
-                          <Form.Field>
-                          </Form.Field>
-                        </Grid.Column>
-                        <Grid.Column>
-                          <Form.Field>
+                            </Form.Field>
+                          </Grid.Column>
+                          <Grid.Column>
+                            <Form.Field>
+                            </Form.Field>
+                          </Grid.Column>
+                          <Grid.Column>
+                            <Form.Field>
+                            </Form.Field>
+                          </Grid.Column>
+                          <Grid.Column>
+                            <Form.Field>
+                            </Form.Field>
+                          </Grid.Column>
+                          <Grid.Column>
+                            <Form.Field>
+                            </Form.Field>
+                          </Grid.Column>
+                          <Grid.Column>
+                            <Form.Field>
+                            </Form.Field>
+                          </Grid.Column>
+                          <Grid.Column>
+                            <Form.Field>
+                            </Form.Field>
+                          </Grid.Column>
+                          <Grid.Column>
+                            <Form.Field>
+                            </Form.Field>
+                          </Grid.Column>
+                          <Grid.Column>
+                            <Form.Field>
+                            </Form.Field>
+                          </Grid.Column>
+                          <Grid.Column>
+                            <Form.Field>
+                            </Form.Field>
+                          </Grid.Column>
+                          <Grid.Column>
+                            <Form.Field>
 
-                            <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
-                          </Form.Field>
-                        </Grid.Column>
-                      </Grid.Row>
-                    </Grid>
-                    {file.progress<100?
-                     <ProgressBar  progress={file.progress}></ProgressBar> : null }
-              </div>
+                              <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
+                            </Form.Field>
+                          </Grid.Column>
+                        </Grid.Row>
+                      </Grid>
+                      {file.progress < 100 ?
+                        <ProgressBar progress={file.progress}></ProgressBar> : null}
+                    </div>
                   )
                 })}
 
@@ -452,10 +446,10 @@ export function FileSetting(props: FileProps) {
                       <label>File type</label>
                       <Select placeholder='Select' className="small" options={fileTypeOptions} />
                     </Form.Field> */}
-                    <FileTypeIndex parentFileTypeSelect={setFileTypeChange}/>
+                    <FileTypeIndex parentFileTypeSelect={setFileTypeChange} />
                   </Grid.Column>
                   <Grid.Column>
-                    <FileStructureIndex parentFileStructureSelect={setFileStructureChange}/>
+                    <FileStructureIndex parentFileStructureSelect={setFileStructureChange} />
                     {/* <Form.Field>
                       <label>File structure</label>
                       <Select placeholder='Select' className="small" options={fileOptions} />
@@ -512,7 +506,7 @@ export function FileSetting(props: FileProps) {
                           </Grid.Column>
                         )
                       })}
-                     
+
                       {/* <Grid.Column>
                         <Form.Field>
 

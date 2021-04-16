@@ -46,7 +46,6 @@ export class TasksService {
                 const taskfileEntity = new TaskFileEntity(files[index])
                 const newTaskFile = await this.taskFileRepository.create({ ...taskfileEntity });
                 const savedFiles = await this.taskFileRepository.save(newTaskFile);
-                console.log('SAVED FILES =>',savedFiles)
                 taskeDetails.files.push(savedFiles)
             }
             const selectedReference = await this.referenceService.getReferenceById(referenceFilter)
@@ -70,7 +69,7 @@ export class TasksService {
                 }
             }
             ,
-            relations: ['reference', 'assignees', 'followers','files' ]
+            relations: ['reference', 'assignees', 'followers', 'files']
         });
     }
     public async update(createProjectTaskInput: TaskDetailsUpdateInput, referenceFilter: ReferenceFilterParams): Promise<TasksEntity> {

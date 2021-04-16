@@ -37,7 +37,6 @@ export function AddProject(props: AddProjectProps) {
         { data: { addProject } }: FetchResult<ProjectMutation>
       ) => {
 
-        console.log('projectCreated successfully');
         const cacheData = cache.readQuery({ query: GET_PROJECTS }) as IProjects;
         cache.writeQuery({
           query: GET_PROJECTS,

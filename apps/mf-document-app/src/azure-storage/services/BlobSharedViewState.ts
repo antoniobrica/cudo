@@ -48,23 +48,22 @@ export class BlobSharedViewStateService {
   constructor(
     private sasGenerator: SasGeneratorService,
     private blobStorage: BlobStorageService
-  ) {}
+  ) { }
 
   getContainerItems(containerName: string): void {
-    console.log("container-name",containerName)
     this.selectedContainerInner$.next(containerName);
   }
 
   finaliseBlobChange = <T>(
     containerName: string
   ): MonoTypeOperatorFunction<T> => source =>
-    source.pipe(
-      finalize(
-        () =>
-          this.selectedContainerInner$.value === containerName &&
-          this.selectedContainerInner$.next(containerName)
-      )
-    );
+      source.pipe(
+        finalize(
+          () =>
+            this.selectedContainerInner$.value === containerName &&
+            this.selectedContainerInner$.next(containerName)
+        )
+      );
 
   scanEntries = <T extends BlobItem>(): OperatorFunction<T, T[]> => source =>
     source.pipe(

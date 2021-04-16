@@ -8,11 +8,10 @@ const ItemsUploaded: React.FC = () => {
   const [items, setItems] = useState<BlobItemUpload[]>([]);
 
   const getUploadsEffect = () => {
-    console.log('getUploadsEffect')
     const sub = context.uploadedItems$
       .pipe(tap(items => setItems(items)))
       .subscribe();
-     return () => sub.unsubscribe();
+    return () => sub.unsubscribe();
   };
   useEffect(getUploadsEffect, []);
 

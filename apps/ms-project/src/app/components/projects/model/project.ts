@@ -6,17 +6,18 @@ import { WorkTypeModel } from '../../workTypes/model/workTypes.model';
 
 @ObjectType()
 export class ProjectModel {
-  // @Field()
-  // projectId: string;
 
   @Field()
-  projectName: string;
+  projectId?: string;
 
   @Field()
-  projectNum: number
+  projectName?: string;
 
   @Field()
-  client: string;
+  projectNum?: number
+
+  @Field()
+  client?: string;
 
   @Field({ nullable: true })
   buildingType?: string;
@@ -24,23 +25,22 @@ export class ProjectModel {
   @Field({ nullable: true })
   printingCom?: string;
 
-  @Field(()=>[WorkTypeModel])
-  workType?: WorkTypeModel[] ;
-
-  @Field(() => [ProjectWorkTypeModel])
-  ProjectWork?: ProjectWorkTypeModel[];
-
   @Field({ nullable: true })
   description?: string;
 
   @Field()
   @CreateDateColumn()
-  createdAt: Date
+  createdAt?: Date
+
+  @Field({ nullable: true })
+  createdBy?: string;
 
   @Field()
   @UpdateDateColumn()
-  updatedAt: Date
+  updatedAt?: Date
 
+  @Field({ nullable: true })
+  updatedBy?: string;
 
   @Field()
   reference?: ReferenceModel

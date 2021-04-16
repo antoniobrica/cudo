@@ -37,16 +37,15 @@ export function FileListing(props: FileListingProps) {
   // };
   // React.useEffect(getContainerItemsEffect, []);
 
-  console.log('files query',data)
 
 
   return (
     <div>
-      {loading?
-      <LoaderPage />:
-      <FileStructure files={data?.File}></FileStructure>
+      {loading ?
+        <LoaderPage /> :
+        <FileStructure files={data?.File}></FileStructure>
       }
-      
+
     </div>
   );
 }
