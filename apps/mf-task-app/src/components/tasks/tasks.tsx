@@ -11,6 +11,7 @@ import { LoaderPage } from "@cudo/shared-components"
 import { ApolloCache, FetchResult } from '@apollo/client';
 import { ITask, ITasks, TaskUpdateMutation } from '../../app/interfaces/task';
 import { ModalAlert } from '@cudo/shared-components'
+import { useHistory, useParams } from 'react-router';
 /* eslint-disable-next-line */
 export interface TasksProps { }
 
@@ -19,6 +20,8 @@ export function Tasks(props: TasksProps) {
   const [open, setOpen] = React.useState(false);
   const [addTask] = useTaskUpdateMutation(UPDATE_TASK);
   const [taskData, setTaskData] = React.useState();
+  const [projectId, setProjectId] = React.useState('');
+
   const [isUpdate, setIsUpdate] = React.useState(false);
   const [taskStatus, settaskStatus] = React.useState('');
 
@@ -32,6 +35,10 @@ export function Tasks(props: TasksProps) {
   if (data) {
     console.log('tasks=>', data.tasks)
   }
+  const history = useHistory();
+  var res = history.location.pathname.split("/");
+  console.log('spliting',res[3])
+  // setProjectId(res[3]);
 
   const cancel = () => {
     setOpen(false)

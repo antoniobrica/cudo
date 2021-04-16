@@ -38,6 +38,8 @@ function TabMenu(props: TabMenuProps) {
   console.log('project-details',data);
  }
   function TaskApp(history: any) {
+    console.log('history---', history);
+    
     return (
       <MicroFrontend history={history} host={taskHost} name="TaskApp" />
     );
@@ -102,7 +104,7 @@ function TabMenu(props: TabMenuProps) {
           exact
           render={() => (
             <Tab.Pane onClick={handleOpenProject('task')}>
-              <TaskApp></TaskApp>
+              <TaskApp id={params.projectId}></TaskApp>
             </Tab.Pane>
           )}
         />,
