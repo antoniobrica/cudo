@@ -22,15 +22,7 @@ export default class ReferanceTypeEntity extends BaseEntity {
 
     @Expose()
     @Column()
-    projectID: string;
-
-    @Expose()
-    @Column()
     name: string;
-
-    @Expose()
-    @Column()
-    companyID: string;
 
     @Expose()
     @CreateDateColumn()
