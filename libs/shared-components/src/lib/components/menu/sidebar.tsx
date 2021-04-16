@@ -19,10 +19,18 @@ const ColorForm = (
   )
 /* eslint-disable-next-line */
 // export interface SideMenuProps { }
-
-export  class AccordionExampleMenu extends Component {
-    state = { activeIndex: 0 }
-  
+type MyProps = {
+  workTypeData
+};
+export  class AccordionExampleMenu extends Component<MyProps> {
+    state = { 
+      activeIndex: 0 ,
+      worktypes: [],
+    }
+   componentDidMount(){
+   console.log(this.props.workTypeData?.projectById[0].projectWorkTypes);
+   this.setState({worktypes:this.props.workTypeData?.projectById[0].projectWorkTypes})
+  }
     handleClick = (e, titleProps) => {
       const { index } = titleProps
       const { activeIndex } = this.state
@@ -43,8 +51,10 @@ export  class AccordionExampleMenu extends Component {
           <span className="summary"><span className="dot">...</span></span>
           </div>
           <div className="description"><span className="subdescription">John &amp; co. </span></div>
-           <Accordion className="ui-accordion accordion-top">
-        <Accordion.Title
+          {this.state.worktypes.map((worktype,i)=>{
+           return(
+           <Accordion className="ui-accordion accordion-top" key={i}>
+           <Accordion.Title
           active={activeIndex === 0}
           index={0}
           onClick={this.handleClick}
@@ -78,7 +88,7 @@ export  class AccordionExampleMenu extends Component {
           onClick={this.handleClick}
           className="active-title"
         > 
-          Electrical Work (1/5) <Icon name='angle down' />
+          { worktype.workTypeName} <Icon name='angle down' />
         </Accordion.Title>
         <Accordion.Content className="active-title" active={activeIndex === 1}>
         <ul>
@@ -99,7 +109,7 @@ export  class AccordionExampleMenu extends Component {
           </ul>
         </Accordion.Content>
 
-        <Accordion.Title
+        {/* <Accordion.Title
           active={activeIndex === 2}
           index={2}
           onClick={this.handleClick}
@@ -125,9 +135,9 @@ export  class AccordionExampleMenu extends Component {
           <span className="strategic_plan">Realization</span> <span className="dots_area">...</span>
           </li>
           </ul>
-        </Accordion.Content>
+        </Accordion.Content> */}
 
-        <Accordion.Title
+        {/* <Accordion.Title
           active={activeIndex === 3}
           index={3}
           onClick={this.handleClick}
@@ -153,9 +163,9 @@ export  class AccordionExampleMenu extends Component {
           <span className="strategic_plan">Realization</span> <span className="dots_area">...</span>
           </li>
           </ul>
-        </Accordion.Content>
+        </Accordion.Content> */}
         
-        <Accordion.Title
+        {/* <Accordion.Title
           active={activeIndex === 4}
           index={4}
           onClick={this.handleClick}
@@ -182,8 +192,8 @@ export  class AccordionExampleMenu extends Component {
           </li>
           </ul>
         </Accordion.Content>
-        
-        <Accordion.Title
+         */}
+        {/* <Accordion.Title
           active={activeIndex === 5}
           index={5}
           onClick={this.handleClick}
@@ -210,8 +220,8 @@ export  class AccordionExampleMenu extends Component {
           </li>
           </ul>
         </Accordion.Content>
-        
-        <Accordion.Title
+         */}
+        {/* <Accordion.Title
           active={activeIndex === 6}
           index={6}
           onClick={this.handleClick}
@@ -238,9 +248,10 @@ export  class AccordionExampleMenu extends Component {
           </li>
           </ul>
          
-        </Accordion.Content>
+        </Accordion.Content> */}
       </Accordion>
-
+            )
+ })}
     </div>
 
 

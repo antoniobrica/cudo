@@ -9,6 +9,10 @@ export function useProjectQuery(gqlQuery: DocumentNode) {
   const { loading, error, data } = useQuery<IProjects>(gqlQuery);
   return { loading, error, data };
 }
+export function useProjectByIdQuery(gqlQuery: DocumentNode) {
+  const {loading, error, data } = useQuery<IProject>(gqlQuery);
+  return { loading, error, data }; 
+}
 export function useWorkTypesQuery(gqlQuery: DocumentNode) {
   const { loading, error, data } = useQuery<IWorkTypes>(gqlQuery);
   return { loading, error, data };

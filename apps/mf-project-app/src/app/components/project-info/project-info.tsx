@@ -32,7 +32,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
 
   const openTask = (project) => {
     console.log('task open==>', history)
-    history.push(`/home/project/${project.projectName}`);
+    history.push(`/home/project/${project.projectId}`);
   }
   function openModal() {
     setIsOpen(true);

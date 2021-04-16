@@ -78,7 +78,7 @@ export function ModalExampleModal() {
 
   React.useEffect(() => {
     if (worktypeData) {
-      setItems(worktypeData.workTypes.map(({ name }) => ({ key: name, value: name, text: name })));
+      setItems(worktypeData.workTypes.map(({ name, workTypeID }) => ({ key: name, value: name, text: name, id: workTypeID })));
     }
   }, [worktypeData]);
 
@@ -167,7 +167,19 @@ export function ModalExampleModal() {
   const addWorkType = () => {
     setAddWorkTypes(prevCount => prevCount + 1);
   }
-  const moreWorkTypes = (data: ProjectWorkTypeModel) => {
+  const moreWorkTypes = (data) => {
+    const worktypesArr = [];
+    for (let i = 0; i < data.length ; i++) {
+      console.log('data',data[i])
+      worktypeData.workTypes.map(d => {
+        if (d.name == data[i].workTypeName) {
+         console.log('workTypeName----',d.workTypeID );
+         data[i].workTypeID= d.workTypeID;
+        }
+      })
+    }
+    console.log('worktypes==>',data)
+
     setProjectWorkEstimates(data);
 
   }
@@ -176,10 +188,10 @@ export function ModalExampleModal() {
     addProject({
       variables: {
         projectName, projectNum, client, buildingType,
-        printingCom, workType, estCost, description
+        printingCom, workType, estCost, description, projectWorkEstimates
       },
       update: (
-        cache: ApolloCache<ProjectMutation>,
+        cache,
         { data: { addProject } }: FetchResult<ProjectMutation>
       ) => {
         const cacheData = cache.readQuery({ query: GET_PROJECTS }) as IProjects;

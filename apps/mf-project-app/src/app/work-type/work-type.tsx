@@ -10,7 +10,7 @@ export interface WorkTypeProps {
 }
 
 export function WorkType(props: WorkTypeProps) {
-  const [fields, setFields] = React.useState([{ workTypeName: null, estimatedCost: null }])
+  const [fields, setFields] = React.useState([{ workTypeName: null, estimatedCost: null ,workTypeID:null}])
 
 
   function handleChangeInput(i, event, field) {
@@ -31,6 +31,7 @@ export function WorkType(props: WorkTypeProps) {
     values.push({
       workTypeName: '',
       estimatedCost: '',
+      workTypeID:''
     });
     setFields(values);
   }
@@ -55,7 +56,7 @@ export function WorkType(props: WorkTypeProps) {
         </Table.Row>
       </Table.Header>
 
-      <Table.Body>
+     
         <Table.Body>
           {
             fields.map((field, idx) => {
@@ -72,7 +73,7 @@ export function WorkType(props: WorkTypeProps) {
                               onChange={e =>handleChangeInput( idx, e, 'worktype')}
                             />
                           </Form.Field> */}
-                          <WorkTypeDropdown data={props.worktypes} id={idx}selectedWorkType={getWorktype}/>
+                          <WorkTypeDropdown data={props.worktypes} id={idx} selectedWorkType={getWorktype}/>
                         </Grid.Column>
 
                       </Grid.Row>
@@ -120,7 +121,6 @@ export function WorkType(props: WorkTypeProps) {
             </Table.Cell>
           </Table.Row>
         </Table.Body>
-      </Table.Body>
     </Table>
 
   );

@@ -7,6 +7,9 @@ import { Tab, Image } from 'semantic-ui-react'
 import { NavLink, BrowserRouter as Router, useRouteMatch, Route, Switch, useLocation, useParams } from 'react-router-dom';
 import { useHistory } from "react-router";
 import Planning from '../../../../../../libs/mf-task-lib/src/lib/components/planning/planning'
+import { useProjectByIdQuery } from '../../services/useRequest';
+import { GET_PROJECT_BY_ID } from '../../graphql/graphql';
+import { useQuery } from '@apollo/client';
 
 
 
@@ -22,9 +25,18 @@ const {
 export interface TabMenuProps { }
 
 function TabMenu(props: TabMenuProps) {
+
   const history = useHistory();
   let params = useParams();
-    console.log('urlparams', params)
+    console.log('urlparams', params.projectId)
+  let projectId =params.projectId
+
+ const { loading, error, data } = useQuery(GET_PROJECT_BY_ID, {
+      variables: { projectId},
+ });
+ if(data){
+  console.log('project-details',data);
+ }
   function TaskApp(history: any) {
     return (
       <MicroFrontend history={history} host={taskHost} name="TaskApp" />
@@ -37,16 +49,13 @@ function TabMenu(props: TabMenuProps) {
     );
   }
   
-  function useQuery() {
-    return new URLSearchParams(useLocation().search);
-  }
+  
 
   function Home() {
     const [input, setInput] = React.useState("");
     const [isTask, setIsTask] = React.useState(false);
     const data = "parrent"
     const { url, path } = useRouteMatch();
-    let query = useQuery();
     
     const callbackFunction = (childData) => {
       setInput(childData);
@@ -244,9 +253,13 @@ function TabMenu(props: TabMenuProps) {
 
   return (
     <div>
-      <AccordionExampleMenu>
+      {data?
+      <div>
+      <AccordionExampleMenu workTypeData={data}>
       </AccordionExampleMenu>
       <Home></Home>
+      </div>:
+      null}
     </div>
   );
 }

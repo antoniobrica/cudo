@@ -18,6 +18,28 @@ export const GET_PROJECTS = gql`
       referenceID:"Sftobiz_123"
       })
     {
+      projectId
+      projectName
+      projectNum
+      client
+      buildingType
+      printingCom
+      projectWorkTypes{
+        workTypeName
+        projectWorkTypeID
+              workTypeName
+        estimatedCost
+        }
+      description
+    }
+  }
+`;
+export const GET_PROJECT_BY_ID = gql`
+query ProjectById($projectId: String!) 
+    {
+    projectById( projectId:$projectId)
+    {
+      projectId
       projectName
       projectNum
       client
