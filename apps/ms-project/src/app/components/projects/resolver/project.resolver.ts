@@ -1,5 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
+import { GetProjectArgs } from '../dto/args/get-project.args';
 import { ProjectDetailsInput } from '../dto/input/project-details.input';
 import { ProjectModel } from '../model/project';
 import { ProjectService } from '../service/project.service';
@@ -13,6 +14,11 @@ export class ProjectResolver {
     @Query(() => [ProjectModel], { nullable: true })
     async projects(@Args("referenceFilter") getProjectArgs: ReferenceFilterParams): Promise<ProjectModel[]> {
         return await this.projectService.findAll(getProjectArgs)
+    }
+
+    @Query(() => [ProjectModel], { nullable: true })
+    async projectById(@Args() getProjectArgs: GetProjectArgs): Promise<ProjectModel[]> {
+        return await this.projectService.findProjectById(getProjectArgs)
     }
 
     @Mutation(() => ProjectModel)

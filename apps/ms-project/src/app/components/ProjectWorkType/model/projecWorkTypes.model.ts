@@ -1,5 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { WorkTypeModel } from '../../workTypes/model/workTypes.model';
 
 @ObjectType()
 export class ProjectWorkTypeModel {
@@ -8,6 +9,9 @@ export class ProjectWorkTypeModel {
 
   @Field()
   workTypeName?: string;
+
+  @Field({ nullable: true })
+  workID?: string;
 
   @Field()
   estimatedCost: number;

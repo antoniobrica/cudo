@@ -7,6 +7,7 @@ import { WorkTypeEntity } from '../../../entities/work-type.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
 import { WorkTypesService } from '../../workTypes/service/workTypes.service';
+import { GetProjectArgs } from '../dto/args/get-project.args';
 import { ProjectDetailsInput } from '../dto/input/project-details.input';
 
 @Injectable()
@@ -27,17 +28,14 @@ export class ProjectService {
             proejctDetails.projectWorkTypes = [];
             const { projectWorkEstimates } = createProjectInput;
             for (let index = 0; index < projectWorkEstimates.length; index++) {
-
-                
-                const selectedWorkType = await this.workTypeService.getWorktypeByWorkTypeID({workTypeID:projectWorkEstimates[index].workTypeID,name:projectWorkEstimates[index].workTypeName})
-
-                const projectworkentity = new ProjectWorkTypeEntity({estimatedCost:projectWorkEstimates[index].estimatedCost,workTypeName:projectWorkEstimates[index].workTypeName});
-                const selectedReference = await this.referenceService.getReferenceById(referenceFilter)
-                const newProjectWork = await this.projectWorkRepository.create({ ...projectworkentity,workType:{id:selectedWorkType.id} });
+                const selectedWorkType = await this.workTypeService.getWorktypeByWorkTypeID({ workTypeID: projectWorkEstimates[index].workTypeID, name: projectWorkEstimates[index].workTypeName })
+                const projectworkentity = new ProjectWorkTypeEntity({ estimatedCost: projectWorkEstimates[index].estimatedCost, workTypeName: projectWorkEstimates[index].workTypeName });
+                projectworkentity.workID = selectedWorkType.workTypeID;
+                const newProjectWork = await this.projectWorkRepository.create({ ...projectworkentity, workType: { id: selectedWorkType.id } });
                 const savedProjectWork = await this.projectWorkRepository.save(newProjectWork);
                 proejctDetails.projectWorkTypes.push(savedProjectWork);
             }
-              const selectedReference = await this.referenceService.getReferenceById(referenceFilter)
+            const selectedReference = await this.referenceService.getReferenceById(referenceFilter)
             const newProject = await this.projectRepository.create({
                 ...proejctDetails,
                 reference: { id: selectedReference.id }
@@ -58,6 +56,15 @@ export class ProjectService {
                 }
             }
             ,
+            relations: ['reference', 'projectWorkTypes']
+        });
+    }
+
+    public async findProjectById(refFilter: GetProjectArgs): Promise<ProjectEntity[]> {
+        return await this.projectRepository.find({
+            where: {
+                ...refFilter
+            },
             relations: ['reference', 'projectWorkTypes']
         });
     }
