@@ -12,6 +12,5 @@ import { MileStoneService } from './service/milestone.service';
 @Module({
   imports: [TypeOrmModule.forFeature([MileStoneEntity, WorkTypeEntity, TaskFileEntity]), ReferenceModule, PhasesModule],
   providers: [MileStoneResolver, MileStoneService],
-  // exports: [TasksService]
 })
 export class MileStoneModule { }

@@ -8,11 +8,11 @@ export class TaskDetailsUpdateInput {
     @Field(type => TaskBasicDetailsUpdateInput)
     taskBasics?: TaskBasicDetailsUpdateInput;
 
-    @Field(type => [PeopleParams], { description: `This is for title task title` })
+    @Field(type => [PeopleParams], {nullable:true, description: `This is for title task title` })
     @Optional()
     followers?: PeopleParams[];
 
-    @Field(type => [PeopleParams], { description: `This is for title task title` })
+    @Field(type => [PeopleParams], {nullable:true, description: `This is for title task title` })
     @Optional()
     assignees?: PeopleParams[];
 }

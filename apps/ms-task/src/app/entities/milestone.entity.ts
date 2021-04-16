@@ -6,12 +6,8 @@ import ReferanceTypeEntity from './reference-type.entity';
 import TaskFileEntity from './task-file.entity';
 import { WorkTypeEntity } from './workType.entity';
 
-@Entity({
-  name: 'milestone',
-  orderBy: {
-    createdAt: 'ASC'
-  }
-})
+@Entity({name: 'milestone'})
+
 export class MileStoneEntity extends BaseEntity {
 
   @PrimaryGeneratedColumn()
@@ -79,7 +75,7 @@ export class MileStoneEntity extends BaseEntity {
           excludeExtraneousValues: true
         })
       )
-      // this.milestoneID = this.milestoneID || uuid.v1();
+      this.milestoneID = this.milestoneID || uuid.v1();
     }
   }
 

@@ -6,7 +6,9 @@ import TaskFileEntity from '../../../entities/task-file.entity';
 import { WorkTypeEntity } from '../../../entities/workType.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
+import MileStoneFilterParam from '../dto/args/milestone.filter';
 import { MilestoneDetailsInput } from '../dto/input/milestone-details.input';
+import MileStoneNotFoundException from '../exceptions/milestoneNotFound.exception';
 
 
 @Injectable()
@@ -49,4 +51,38 @@ export class MileStoneService {
             return error;
         }
     }
+
+
+    public async findAll(refFilter: ReferenceFilterParams): Promise<MileStoneEntity[]> {
+        const selectedReference = await this.referenceService.getReferenceById(refFilter)
+        return await this.mileStoneRepository.find({
+            where: {
+                "reference": {
+                    id: selectedReference.id
+                }
+            }
+            ,
+            relations: ['reference', 'worktypes','files' ]
+        });
+    }
+
+
+    async getMileStoneByID(mileFilter: MileStoneFilterParam) {
+        const milestone = await this.mileStoneRepository.findOne({ where: { ...mileFilter }, relations: ['worktypes','files'] });
+        if (milestone) {
+            return milestone;
+        }
+        throw new MileStoneNotFoundException(milestone.milestoneID);
+    }
+
+    async deleteMileStone(mileFilter: MileStoneFilterParam) {
+        const { id } = await this.mileStoneRepository.findOne({ where: { ...mileFilter } });
+        const deleteResponse = await this.mileStoneRepository.delete(id);
+        if (deleteResponse) {
+            return deleteResponse;
+        }
+        throw new MileStoneNotFoundException(mileFilter.milestoneID);
+    }
+
+
 }
