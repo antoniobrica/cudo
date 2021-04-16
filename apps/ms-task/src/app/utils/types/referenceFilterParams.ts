@@ -4,12 +4,6 @@ import { ReferenceTypeEnum } from '../../enums/reference-type.enum';
 
 @InputType()
 class ReferenceFilterParams {
-  @Field({ description: `Project ID` })
-  projectID?: string;
-
-  @Field({ description: `Company ID` })
-  companyID?: string;
-
   @Field(type => ReferenceTypeEnum, { description: `Refrence Type` })
   referenceType?: ReferenceTypeEnum;
 

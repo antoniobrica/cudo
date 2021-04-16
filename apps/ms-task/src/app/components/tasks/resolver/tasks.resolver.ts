@@ -1,7 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
-import { GetTasksArgs } from '../dto/args/get-tasks.args';
-import { TaskBasicDetailsUpdateInput } from '../dto/input/task-basic-details-update.input';
+import TaskFilterParams from '../../../utils/types/taskFilterParams';
 import { TaskDetailsUpdateInput } from '../dto/input/task-details-update.input';
 import { TaskDetailsInput } from '../dto/input/task-details.input';
 import { TasksModel } from '../models/tasks.model';
@@ -18,6 +17,11 @@ export class TasksResolver {
         return await this.projectTasksService.findAll(getTasksArgs)
     }
 
+    @Query(() => [TasksModel], { nullable: true })
+    async taskById(@Args("taskFilterParams") taskFilterParams: TaskFilterParams): Promise<TasksModel[]> {
+        return await this.projectTasksService.findTaskById(taskFilterParams)
+    }
+
     @Mutation(() => TasksModel)
     async createTask(
         @Args('taskDetails') createProjectTaskInput: TaskDetailsInput,
@@ -26,12 +30,11 @@ export class TasksResolver {
         return this.projectTasksService.create(createProjectTaskInput, getTasksArgs);
     }
 
-    @Mutation(() => TasksModel)
+    @Mutation(() => [TasksModel])
     async updateTask(
-        @Args('taskDetailsUpdate') createProjectTaskInput: TaskDetailsUpdateInput,
-        @Args("referenceFilter") getTasksArgs: ReferenceFilterParams
+        @Args('taskDetailsUpdate') createProjectTaskInput: TaskDetailsUpdateInput
     ) {
-        return this.projectTasksService.update(createProjectTaskInput, getTasksArgs);
+        return this.projectTasksService.updateTaskByID(createProjectTaskInput);
     }
 
 }

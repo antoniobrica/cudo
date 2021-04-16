@@ -23,7 +23,7 @@ export class TasksModel {
   estimatedDays?: string;
 
   @Field({ nullable: true, description: `This is for sending notification on task created to assignes and followers. True or False` })
-  sendNotification?: string;
+  sendNotification?: boolean;
 
   @Field({ nullable: true, description: `To save task as template. True or False` })
   saveTaskAsTemplate?: string;
@@ -32,7 +32,13 @@ export class TasksModel {
   BKPID?: string;
 
   @Field({ nullable: true, description: `PhaseID linked with task` })
-  phasesID?: string;
+  phaseID?: string;
+
+  @Field({ nullable: true, description: `BKPID linked with task` })
+  BKPTitle?: string;
+
+  @Field({ nullable: true, description: `PhaseID linked with task` })
+  phaseName?: string;
 
   @Field({ nullable: true, description: `Task Status` })
   status?: string;
