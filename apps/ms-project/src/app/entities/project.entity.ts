@@ -48,10 +48,9 @@ export class ProjectEntity extends BaseEntity {
   @Column({ nullable: true })
   createdBy?: string;
 
-
   @Expose()
   @UpdateDateColumn()
-  updatedAt: Date
+  updatedAt?: Date
 
   @Expose()
   @Column({ nullable: true })
@@ -61,12 +60,9 @@ export class ProjectEntity extends BaseEntity {
   @Column({ nullable: true })
   isDeleted?: boolean;
 
-
   @Expose()
   @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.projects)
- 
   reference: ReferanceTypeEntity;
-
 
   @Expose()
   @OneToMany(() => ProjectWorkTypeEntity, (projectwork: ProjectWorkTypeEntity) => projectwork.project)
@@ -83,8 +79,8 @@ export class ProjectEntity extends BaseEntity {
         })
       )
       this.projectId = this.projectId || uuid.v1();
-      this.createdAt = this.createdAt || new Date(new Date().toUTCString());
-      this.updatedAt = new Date(new Date().toUTCString());
+      // this.createdAt = this.createdAt || new Date(new Date().toUTCString());
+      // this.updatedAt = new Date(new Date().toUTCString());
     }
   }
 }
