@@ -11,4 +11,7 @@ export class UserInputDto {
     @Field({ description: `User Name` })
     userName: string;
 
+    @Field({ description: `User Name` })
+    email: string;
+
 }

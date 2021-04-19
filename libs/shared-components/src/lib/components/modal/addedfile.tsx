@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Checkbox, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
-
+import { Dropdown } from 'semantic-ui-react';
 import img from 'libs/shared-components/src/upload.png';
 import img2 from 'libs/shared-components/src/avatar_1.png';
 import img3 from 'libs/shared-components/src/avatar_2.png';
@@ -9,12 +9,19 @@ import img4 from 'libs/shared-components/src/avatar_3.png';
 import img5 from 'libs/shared-components/src/file_1.png';
 import img6 from 'libs/shared-components/src/file_2.png';
 function ModalAddFile() {
-  const countryOptions = [
-    { key: 'af', value: 'af', text: 'Afghanistan' },
-    { key: 'ax', value: 'ax', text: 'Aland Islands' },
-
-  ]
-
+    const countryOptions = [
+        { key: 'af', value: 'af', text: 'Afghanistan' },
+        { key: 'ax', value: 'ax', text: 'Aland Islands' },
+         { key: 'az', value: 'az', flag: 'az', text: 'Azerbaijan' },
+  { key: 'bs', value: 'bs', flag: 'bs', text: 'Bahamas' },
+  { key: 'bh', value: 'bh', flag: 'bh', text: 'Bahrain' },
+  { key: 'bd', value: 'bd', flag: 'bd', text: 'Bangladesh' },
+  { key: 'bb', value: 'bb', flag: 'bb', text: 'Barbados' },
+  { key: 'by', value: 'by', flag: 'by', text: 'Belarus' },
+  { key: 'be', value: 'be', flag: 'be', text: 'Belgium' },
+  { key: 'bz', value: 'bz', flag: 'bz', text: 'Belize' },
+  { key: 'bj', value: 'bj', flag: 'bj', text: 'Benin' }, 
+      ]
 
   const [open, setOpen] = React.useState(false)
 
@@ -257,163 +264,172 @@ function ModalAddFile() {
                       <div className="content">
                         <div className="description">Generate file number
                   <p className="enable">Enable this option to generate file numbering</p>
-                          <Checkbox toggle className="toggle_area" />
+                  <Checkbox toggle className="toggle_area" />
+                 
+                </div> 
+                
+            </div>
+    </Form.Field>
+  </Grid.Column>
 
-                        </div>
-
-                      </div>
-                    </Form.Field>
-                  </Grid.Column>
-
-
-                </Grid.Row>
-              </Grid>
-              <Grid columns={2}>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>Project</label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
-
-                    </Form.Field>
-                  </Grid.Column>
-
-                </Grid.Row>
-              </Grid>
-              <Grid columns={3}>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>BKP/Folder</label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
-
-                    </Form.Field>
-
-                  </Grid.Column>
-
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>File type</label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
-
-                    </Form.Field>
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>File structure</label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
-
-                    </Form.Field>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-              <Grid  >
-                <Grid.Row>
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>Who can access</label>
-
-                    </Form.Field>
-
-                  </Grid.Column>
-
-                </Grid.Row>
-              </Grid>
-              <Grid columns={2} >
-                <Grid.Row>
-
-
-                  <Grid.Column>
-                    <Form.Field>
-                      <Checkbox label='Everyone in the Project/Work type' className="small" />
-                    </Form.Field>
-
-                  </Grid.Column>
-
-                  <Grid.Column>
-                    <Form.Field>
-                      <Checkbox label='Specify People only' className="small" />
-
-                    </Form.Field>
-                  </Grid.Column>
-
-                </Grid.Row>
-              </Grid>
-
-              <Grid columns={1} >
-                <Grid.Row>
+  
+</Grid.Row>
+</Grid>
+<Grid columns={2 }>
+<Grid.Row>
+  <Grid.Column>
+    <Form.Field>
+      <label>Project</label>
+      <Select placeholder='Select' className="small" options={countryOptions} />
+         
+    </Form.Field>
+  </Grid.Column>
+ 
+</Grid.Row>
+</Grid>
+<Grid columns={3}>
+<Grid.Row>
+  <Grid.Column>
+    <Form.Field>
+      <label>BKP/Folder</label>
+      <Select placeholder='Select' className="small" options={countryOptions} />
+         
+    </Form.Field>
+      
+  </Grid.Column>
+ 
+  <Grid.Column>
+    <Form.Field>
+    <label>File type</label>
+      <Select placeholder='Select' className="small" options={countryOptions} />
+             
+    </Form.Field>
+  </Grid.Column>
+  <Grid.Column>
+    <Form.Field>
+    <label>File structure</label>
+      <Select placeholder='Select' className="small" options={countryOptions} />
+             
+    </Form.Field>
+  </Grid.Column>
+</Grid.Row>
+</Grid>
+<Grid  >
+<Grid.Row>
+  <Grid.Column>
+    <Form.Field>
+      <label>Who can access</label>
+          
+    </Form.Field>
+      
+  </Grid.Column>
+  
+</Grid.Row>
+</Grid>
+<Grid columns={2} >
+<Grid.Row>
 
 
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>Select people</label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+  <Grid.Column>
+    <Form.Field>
+    <Checkbox label='Everyone in the Project/Work type' className="small" />      
+    </Form.Field>
+      
+  </Grid.Column>
+  
+  <Grid.Column>
+    <Form.Field>
+    <Checkbox label='Specify People only' className="small" />    
+          
+    </Form.Field>
+  </Grid.Column>
+  
+</Grid.Row>
+</Grid>
+ 
+<Grid columns={1} >
+<Grid.Row>
+ 
+  <Grid.Column>
+    <Form.Field> 
+        <label>Select Multiple people</label>
+        
+      <Dropdown className="small_drop" 
+    clearable
+    fluid
+    multiple
+    search
+    selection
+    options={countryOptions}
+    placeholder='Select Country' 
+  />  
+    </Form.Field>
+      
+  </Grid.Column>
+   
+  
+</Grid.Row>
+</Grid>
 
-                    </Form.Field>
-
-                  </Grid.Column>
-
-
-                </Grid.Row>
-              </Grid>
-              <Grid columns={5} >
-                <Grid.Row>
-
-
-                  <Grid.Column>
-                    <Form.Field>
-
-                      <div className="below_area">
-                        <img src={img2} className="avatar" />
-                        <span className="span_name">Barthelemy Chalvet</span>
-                        <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
-
-                      </div>
-                    </Form.Field>
-
-                  </Grid.Column>
-
-                  <Grid.Column>
-                    <Form.Field>
-
-                      <div className="below_area">
-                        <img src={img3} className="avatar" />
-                        <span className="span_name">Barthelemy Chalvet</span>
-                        <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
-
-                      </div>
-                    </Form.Field>
-
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Form.Field>
-
-                      <div className="below_area">
-                        <img src={img4} className="avatar" />
-                        <span className="span_name">Barthelemy Chalvet</span>
-                        <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
-
-                      </div>
-                    </Form.Field>
-
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-            </Form>
-
-          </div>
+<Grid columns={5} >
+<Grid.Row>
 
 
-        </Modal.Content>
-        <Modal.Actions>
-          <Button
-            content="Submit"
-            onClick={() => setOpen(false)}
-            positive
-            size='mini' className="grey-btn"
-          />
-          <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
-            X  Cancel
+  <Grid.Column>
+    <Form.Field> 
+       
+      <div className="below_area">
+      <img src={img2}  className="avatar"/> 
+    <span className="span_name">Barthelemy Chalvet</span>
+    <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>     
+    
+  </div>
+    </Form.Field>
+      
+  </Grid.Column>
+   
+  <Grid.Column>
+    <Form.Field> 
+       
+      <div className="below_area">
+      <img src={img3}  className="avatar"/> 
+    <span className="span_name">Barthelemy Chalvet</span>
+    <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>     
+    
+  </div>
+    </Form.Field>
+      
+  </Grid.Column>
+  <Grid.Column>
+    <Form.Field> 
+       
+      <div className="below_area">
+      <img src={img4}  className="avatar"/> 
+    <span className="span_name">Barthelemy Chalvet</span> 
+    <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>     
+                                                                       
+  </div>
+    </Form.Field>
+      
+  </Grid.Column>
+</Grid.Row>
+</Grid>
+</Form>
+  
+            </div>
+        
+       
+      </Modal.Content>
+      <Modal.Actions>
+    
+      <Button
+          content="Submit" 
+          onClick={() => setOpen(false)}
+          positive
+          size='mini' className="grey-btn"
+        />
+        <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+        X  Cancel
         </Button>
 
         </Modal.Actions>

@@ -1,4 +1,4 @@
-import { BlobServiceClient, ContainerClient} from '@azure/storage-blob';
+import { BlobServiceClient, ContainerClient } from '@azure/storage-blob';
 
 // THIS IS SAMPLE CODE ONLY - DON'T STORE TOKEN IN PRODUCTION CODE
 const sasToken = "sv=2020-04-08&st=2021-03-16T10%3A57%3A17Z&se=2021-03-16T10%3A58%3A44Z&sr=b&sp=racwd&sig=ymLYxbSiQeOaxhscthIYm4UxTSa9dk0oSQ93qZhtJKo%3D"
@@ -23,10 +23,8 @@ const getBlobsInContainer = async (containerClient: ContainerClient) => {
 }
 
 const createBlobInContainer = async (containerClient: ContainerClient, file: File) => {
-  console.log('createBlobInContainer',containerClient)
   // create blobClient for container
   const blobClient = containerClient.getBlockBlobClient(file.name);
-console.log('blobClient ==>',blobClient)
   // set mimetype as determined from browser with file upload control
   const options = { blobHTTPHeaders: { blobContentType: file.type } };
 
@@ -35,7 +33,6 @@ console.log('blobClient ==>',blobClient)
 }
 const uploadFileToBlob = async (file: File | null): Promise<string[]> => {
   if (!file) return [];
-    console.log('uploadFileToBlob',file)
   // get BlobService = notice `?` is pulled out of sasToken - if created in Azure portal
   const blobService = new BlobServiceClient(
     `https://${storageAccountName}.blob.core.windows.net/?${sasToken}`

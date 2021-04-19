@@ -20,11 +20,8 @@ export const SessionProvider: React.FunctionComponent = ({ children }) => {
         else setSession(data)
       })
       .catch(error => {
-
-        console.log(error)
         // Request may fail due to an expired token.
         unsetAuthenticated()
-        console.log(error)
         login({ setReferer: false })
       })
   }, [])

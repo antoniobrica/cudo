@@ -61,7 +61,6 @@ const sortFormFields = ({ fields }: { fields: FormField[] }) => {
 
 const renderFormFields = ({ fields = [] }: { fields: FormField[] }) => fields.map(field => {
   const { name, type, required, value, messages = [] } = field
-  console.log(name)
   const _required = required ? { required } : {}
   const _label = FORM_LABELS[name]?.label
   const style = type === "hidden" ? { display: "none" } : {}

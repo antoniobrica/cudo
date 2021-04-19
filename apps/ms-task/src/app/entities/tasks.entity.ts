@@ -6,6 +6,7 @@ import { Phases } from './phases.entity';
 import ReferanceTypeEntity from './reference-type.entity';
 import TaskAssigneessEntity from './task-assignees.entity';
 import TaskFllowersEntity from './task-followers.entity';
+import TaskFileEntity from './task-file.entity';
 
 @Entity({
   name: 'tasks',
@@ -28,6 +29,22 @@ export class TasksEntity extends BaseEntity {
 
   @Expose()
   @Column({ nullable: true })
+  BKPID?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  phaseID?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  BKPTitle?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  phaseName?: string;
+
+  @Expose()
+  @Column({ nullable: true })
   startDate?: Date;
 
   @Expose()
@@ -40,7 +57,7 @@ export class TasksEntity extends BaseEntity {
 
   @Expose()
   @Column({ nullable: true })
-  sendNotification?: string;
+  sendNotification?: boolean;
 
   @Expose()
   @Column({ nullable: true })
@@ -74,24 +91,21 @@ export class TasksEntity extends BaseEntity {
   @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.tasks)
   reference: ReferanceTypeEntity;
 
-  @ManyToOne(type => BKP, bkp => bkp.task) // specify inverse side as a second parameter
-  @JoinColumn()
-  bkp: BKP;
-
-
-  @ManyToOne(type => Phases, phase => phase.task) // specify inverse side as a second parameter
-  @JoinColumn()
-  phase: Phases[];
-
   @Expose()
   // n:n relation with TaskAssigneessEntity
-  @ManyToMany(type => TaskAssigneessEntity)
+  @ManyToMany(type => TaskAssigneessEntity, { cascade: true })
   @JoinTable()
   assignees: TaskAssigneessEntity[];
 
   @Expose()
+  // n:n relation with TaskAssigneessEntity
+  @ManyToMany(type => TaskFileEntity, { cascade: true })
+  @JoinTable()
+  files: TaskFileEntity[];
+
+  @Expose()
   // n:n relation with TaskFllowersEntity
-  @ManyToMany(type => TaskFllowersEntity)
+  @ManyToMany(type => TaskFllowersEntity, { cascade: true })
   @JoinTable()
   followers: TaskFllowersEntity[];
 

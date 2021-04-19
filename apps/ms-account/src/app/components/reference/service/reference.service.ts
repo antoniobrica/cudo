@@ -45,7 +45,15 @@ export class ReferenceService {
 
 
     async getReferenceById(refFilter: ReferenceFilterParams) {
-        const reference = await this.referancesRepository.findOne({ where: { ...refFilter }, relations: ['users','bkp'] });
+        const reference = await this.referancesRepository.findOne({ where: { ...refFilter }, relations: ['users', 'bkp'] });
+        if (reference) {
+            return reference;
+        }
+        throw new ProjectNotFoundException(refFilter.referenceID);
+    }
+
+    async getOnlyReferenceById(refFilter: ReferenceFilterParams) {
+        const reference = await this.referancesRepository.findOne({ where: { ...refFilter } });
         if (reference) {
             return reference;
         }

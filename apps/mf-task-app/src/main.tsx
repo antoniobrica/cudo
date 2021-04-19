@@ -25,7 +25,7 @@ const client = new ApolloClient({
 
 window.renderTaskApp = (containerId, history) => {
   ReactDOM.render(
-    <React.StrictMode>
+    // <React.StrictMode>
       <BrowserRouter>
         <ApolloProvider client={client}>
           <ApolloHooksProvider client={client}>
@@ -33,7 +33,7 @@ window.renderTaskApp = (containerId, history) => {
           </ApolloHooksProvider>
         </ApolloProvider>
       </BrowserRouter>
-    </React.StrictMode>,
+    ,
     document.getElementById(containerId)
   );
   serviceWorker.unregister();
@@ -45,8 +45,7 @@ window.unmountMeetingApp = (containerId) => {
 
 if (!document.getElementById("TaskApp-container")) {
   // ReactDOM.render(<App />, document.getElementById("root"));
-  ReactDOM.render(
-    <React.StrictMode>
+  ReactDOM.render( 
       <BrowserRouter>
         <ApolloProvider client={client}>
           <ApolloHooksProvider client={client}>
@@ -54,7 +53,7 @@ if (!document.getElementById("TaskApp-container")) {
           </ApolloHooksProvider>
         </ApolloProvider>
       </BrowserRouter>
-    </React.StrictMode>,
+   ,
     document.getElementById("root")
   );
   serviceWorker.unregister();

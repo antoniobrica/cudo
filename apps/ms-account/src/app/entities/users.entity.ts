@@ -13,12 +13,16 @@ export default class UsersEntity extends BaseEntity {
     id: number;
 
     @Expose()
-    @Column()
+    @Column({ nullable: true })
     userID: string;
 
     @Expose()
-    @Column()
+    @Column({ nullable: true })
     userName: string;
+
+    @Expose()
+    @Column({ nullable: true })
+    email: string;
 
     @Expose()
     @CreateDateColumn()
@@ -41,7 +45,7 @@ export default class UsersEntity extends BaseEntity {
     isDeleted?: boolean;
 
     @Expose()
-    @ManyToMany(() => ReferanceTypeEntity, (referanceTypeEntity: ReferanceTypeEntity) => referanceTypeEntity.users)
+    @ManyToMany(() => ReferanceTypeEntity, (referanceTypeEntity: ReferanceTypeEntity) => referanceTypeEntity.users, { cascade: true })
     @JoinTable()
     references: ReferanceTypeEntity[];
 

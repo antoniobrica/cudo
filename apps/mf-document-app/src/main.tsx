@@ -1,21 +1,3 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import 'semantic-ui-css/semantic.min.css'
-
-
-// import { BrowserRouter } from 'react-router-dom';
-
-// import App from './app/app';
-
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <BrowserRouter>
-//       <App />
-//     </BrowserRouter>
-//   </React.StrictMode>,
-//   document.getElementById('root')
-// );
-
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -43,15 +25,13 @@ const client = new ApolloClient({
 
 window.renderDocumentApp = (containerId, history) => {
   ReactDOM.render(
-    <React.StrictMode>
       <BrowserRouter>
         <ApolloProvider client={client}>
-          <ApolloHooksProvider client={client}>
+          <ApolloHooksProvider client={client as any}>
             <App />
           </ApolloHooksProvider>
         </ApolloProvider>
-      </BrowserRouter>
-    </React.StrictMode>,
+      </BrowserRouter>,
     document.getElementById(containerId)
   );
   serviceWorker.unregister();
@@ -64,15 +44,14 @@ window.unmountMeetingApp = (containerId) => {
 if (!document.getElementById("DocumentApp-container")) {
   // ReactDOM.render(<App />, document.getElementById("root"));
   ReactDOM.render(
-    <React.StrictMode>
       <BrowserRouter>
         <ApolloProvider client={client}>
-          <ApolloHooksProvider client={client}>
+          <ApolloHooksProvider  client={client as any}>
             <App />
           </ApolloHooksProvider>
         </ApolloProvider>
       </BrowserRouter>
-    </React.StrictMode>,
+    ,
     document.getElementById("root")
   );
   serviceWorker.unregister();

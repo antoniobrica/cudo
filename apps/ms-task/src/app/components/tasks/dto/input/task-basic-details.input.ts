@@ -18,7 +18,7 @@ export class TaskBasicDetailsInput {
     estimatedDays?: string;
 
     @Field({ description: `To send notificatioin on task created` })
-    sendNotification?: string;
+    sendNotification?: boolean;
 
     @Field({ description: `To save task as template as well` })
     saveTaskAsTemplate?: string;
@@ -27,7 +27,13 @@ export class TaskBasicDetailsInput {
     BKPID?: string;
 
     @Field({ description: `PhaseID attached with task` })
-    phasesID?: string;
+    phaseID?: string;
+
+    @Field({ description: `BKP Title attached with task` })
+    BKPTitle?: string;
+
+    @Field({ description: `Phase Name attached with task` })
+    phaseName?: string;
 
     @Field(type => StatusEnum, { description: `Task status` })
     status?: StatusEnum;

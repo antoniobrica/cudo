@@ -23,7 +23,6 @@ export function Loginpassword(props: LoginPasswordProps) {
   const [password, setPassword] = useState({} as FormField);
   useEffect(() => {
     props?.fields?.map(field => {
-      console.log(field.name)
       switch (field.name) {
         case "csrf_token":
           setcsrf_token(field);

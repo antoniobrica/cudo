@@ -8,7 +8,6 @@ export class AppService {
   }
   getData(): { message: string } {
     const value = this.secretService.getSecretValue("cusdo-secret");
-    console.log(value)
     return { message: 'Welcome to ms-account!' };
   }
 }
