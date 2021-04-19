@@ -188,7 +188,7 @@ export function ModalExampleModal() {
     addProject({
       variables: {
         projectName, projectNum, client, buildingType,
-        printingCom, workType, estCost, description, projectWorkEstimates
+        printingCom, description, projectWorkEstimates
       },
       update: (
         cache,

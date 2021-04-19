@@ -34,11 +34,14 @@ mutation CreateTask(
   $startDate: DateTime!,
   $endDate: DateTime!,
   $estimatedDays: String!,
-  $sendNotification: String!,
+  $sendNotification: Boolean!,
   $BKPID: String!,
+  $BKPTitle: String!
   $saveTaskAsTemplate: String!,
-  $phasesID: String!,
-  $referenceID: String!
+  $phaseID: String!,
+  $phaseName: String!,
+  $referenceID: String!,
+  $files: [TaskFileParams!]!
   ){ 
     createTask(
       referenceFilter: {
@@ -53,12 +56,15 @@ mutation CreateTask(
       estimatedDays: $estimatedDays,
       sendNotification: $sendNotification,
       BKPID: $BKPID,
+      BKPTitle: $BKPTitle,
       saveTaskAsTemplate: $saveTaskAsTemplate,
-      phasesID: $phasesID,
+      phaseID: $phaseID,
+      phaseName: $phaseName,
       status: INPROGRESS
         }
       assignees:[{userID:"2",userName:"Ashutosh"},{userID:"3",userName:"Ashutosh"}]
       followers:[{userID:"1",userName:"Ashutosh"}]
+      files: $files
    }){
     taskTitle
     startDate
@@ -72,13 +78,9 @@ export const UPDATE_TASK = gql`
 mutation UpdateTask(
   $taskID: String!,    
   $status: TASKSTATUS!,
-  $referenceID: String!
+  $files: [TaskFileParams!]!
   ){ 
     updateTask(
-      referenceFilter: {
-        referenceType: PROJECTTYPE
-        referenceID: $referenceID
-        },
         taskDetailsUpdate: {
         taskBasics:{
           taskID: $taskID,
@@ -86,6 +88,7 @@ mutation UpdateTask(
         }
       assignees:[{userID:"2",userName:"Ashutosh"},{userID:"3",userName:"Ashutosh"}]
       followers:[{userID:"1",userName:"Ashutosh"}]
+      files: $files
    }){
     taskID
     status    

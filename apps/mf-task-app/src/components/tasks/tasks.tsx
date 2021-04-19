@@ -39,9 +39,9 @@ export function Tasks(props: TasksProps) {
   enum Status {
     INPROGRESS = 'INPROGRESS',
     COMPLETED = 'COMPLETED',
-  }
+  }  
   if (loading) return <h1> <LoaderPage /></h1>;
-  if (error) return <h1>Something went wrong!</h1>;
+  if (error) return <p style={{color:'black'}}>Something went wrong</p>;
   if (data) {
     console.log('tasks=>', data.tasks)
   }
@@ -66,12 +66,12 @@ export function Tasks(props: TasksProps) {
     const taskID = task.taskID;
     addTask({
       variables: {
-        taskID, status
+        taskID, status, files: []
       },
       update: (
         cache
       ) => {
-        const cacheData = cache.readQuery({ query: GET_TASKS }) as ITasks;
+        const cacheData = cache.readQuery({ query: GET_TASKS , variables: { referenceID }}) as ITasks;
         const newTask = cacheData.tasks.map(t => {
           if (t.taskID === taskID) {
             if (t.status === 'INPROGRESS') {
@@ -89,7 +89,8 @@ export function Tasks(props: TasksProps) {
           query: GET_TASKS,
           data: {
             tasks: newTask
-          }
+          },
+          variables: { referenceID },
         });
       }
 

@@ -10,21 +10,36 @@ import {
   TextArea,
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
-
-function ModalViewPlanning() {
+export interface PlanningProps {
+  openPlanningDetail,
+  cancel
+}
+export function ModalViewPlanning(props: PlanningProps) {
+  
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
   ];
 
   const [open, setOpen] = React.useState(false);
-
+  React.useEffect(() => {
+    if (props.openPlanningDetail) {
+      setOpen(props.openPlanningDetail);
+    }
+  }, [props.openPlanningDetail]);
+  const openf = () => {
+    setOpen(true)
+  }
+  const cancel =()=>{
+    setOpen(false)
+    props.cancel()
+  }
   return (
     <div id="navbar">
       <Modal
         className="modal_media"
         onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
+        onOpen={openf}
         open={open}
         trigger={
           <Button size="mini" className="grey-btn">

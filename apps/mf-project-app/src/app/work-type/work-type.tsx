@@ -19,7 +19,7 @@ export function WorkType(props: WorkTypeProps) {
           values[i].workTypeName = event
     }
     else {
-      values[i].estimatedCost = event.target.value;
+      values[i].estimatedCost = Number(event.target.value);
     }
     setFields(values);
     props.workTypeData(fields)

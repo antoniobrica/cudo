@@ -23,7 +23,7 @@ export function ModalPlanningNew() {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <div id="navbar">
+    <div style={{ marginLeft: 900 }} >
       <Modal
         className="modal_media"
         onClose={() => setOpen(false)}
