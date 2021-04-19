@@ -1,6 +1,7 @@
 import { Expose, plainToClass } from 'class-transformer';
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToMany } from 'typeorm';
 import * as uuid from 'uuid';
+import { MileStoneEntity } from './milestone.entity';
 import { TasksEntity } from './tasks.entity';
 /**
  * 
@@ -26,6 +27,10 @@ export default class TaskFileEntity extends BaseEntity {
     @Expose()
     @ManyToMany(() => TasksEntity, tasksEntity => tasksEntity.files)
     tasks?: TasksEntity[];
+
+    @Expose()
+    @ManyToMany(() => MileStoneEntity, mileStoneEntity => mileStoneEntity.files)
+    milestone?: MileStoneEntity[];
 
     constructor(taskFileEntity: Partial<TaskFileEntity>) {
         super();
