@@ -26,9 +26,11 @@ export class TasksService {
     ) { }
     public async create(createProjectTaskInput: TaskDetailsInput, referenceFilter: ReferenceFilterParams): Promise<TasksEntity> {
         try {
-
             const { assignees, followers, files, taskBasics } = createProjectTaskInput;
             const taskeDetails = new TasksEntity({ ...taskBasics });
+            taskeDetails.assignees = [];
+            taskeDetails.followers = [];
+            taskeDetails.files = [];
             if (assignees)
                 for (let index = 0; index < assignees.length; index++) {
                     const assigneesentity = new TaskAssigneessEntity(assignees[index])
@@ -117,6 +119,18 @@ export class TasksService {
                 const savedFiles = await this.taskFileRepository.save(newTaskFile);
                 taskeDetail.files.push(savedFiles)
             }
+        taskBasics.BKPID ? taskeDetail.BKPID = taskBasics.BKPID : null;
+        taskBasics.BKPTitle ? taskeDetail.BKPTitle = taskBasics.BKPTitle : null;
+        taskBasics.endDate ? taskeDetail.endDate = taskBasics.endDate : null;
+        taskBasics.estimatedDays ? taskeDetail.estimatedDays = taskBasics.estimatedDays : null;
+        taskBasics.phaseID ? taskeDetail.phaseID = taskBasics.phaseID : null;
+        taskBasics.phaseName ? taskeDetail.phaseName = taskBasics.phaseName : null;
+        taskBasics.saveTaskAsTemplate ? taskeDetail.saveTaskAsTemplate = taskBasics.saveTaskAsTemplate : null;
+        taskBasics.sendNotification ? taskeDetail.sendNotification = taskBasics.sendNotification : null;
+        taskBasics.startDate ? taskeDetail.startDate = taskBasics.startDate : null;
+        taskBasics.status ? taskeDetail.status = taskBasics.status : null;
+        taskBasics.taskID ? taskeDetail.taskID = taskBasics.taskID : null;
+        taskBasics.taskTitle ? taskeDetail.taskTitle = taskBasics.taskTitle : null;
         await this.projectTasksRepository.save(taskeDetail);
         const tasks = await this.projectTasksRepository.find({
             where: { taskID: taskBasics.taskID },
