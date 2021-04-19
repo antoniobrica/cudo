@@ -8,6 +8,7 @@ import { TasksEntity } from '../../../entities/tasks.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import TaskFilterParams from '../../../utils/types/taskFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
+import { TaskDeleteInput } from '../dto/input/task-delete.input';
 import { TaskDetailsUpdateInput } from '../dto/input/task-details-update.input';
 import { TaskDetailsInput } from '../dto/input/task-details.input';
 
@@ -134,6 +135,17 @@ export class TasksService {
         await this.projectTasksRepository.save(taskeDetail);
         const tasks = await this.projectTasksRepository.find({
             where: { taskID: taskBasics.taskID },
+            relations: ['reference', 'assignees', 'followers', 'files']
+        });
+        return tasks;
+    }
+
+    public async deleteTaskByID(taskDeleteInput: TaskDeleteInput): Promise<TasksEntity[]> {
+        const { taskID } = taskDeleteInput;
+        const taskeDetails = await this.projectTasksRepository.delete({ taskID: taskID });
+        console.log(taskeDetails)
+        const tasks = await this.projectTasksRepository.find({
+            where: { taskID: taskID },
             relations: ['reference', 'assignees', 'followers', 'files']
         });
         return tasks;
