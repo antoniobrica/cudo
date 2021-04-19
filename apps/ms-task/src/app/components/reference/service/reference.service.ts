@@ -50,7 +50,7 @@ export class ReferenceService {
         if (reference) {
             return reference;
         }
-        throw new ProjectNotFoundException(refFilter.projectID);
+        throw new ProjectNotFoundException(refFilter.referenceID);
     }
 
 
@@ -62,7 +62,7 @@ export class ReferenceService {
             const updatedPost = await this.referancesRepository.findOne(reference.id);
             return updatedPost;
         }
-        throw new ProjectNotFoundException(refFilter.projectID);
+        throw new ProjectNotFoundException(refFilter.referenceID);
     }
 
     async deleteReference(refFilter: ReferenceFilterParams) {
@@ -71,7 +71,7 @@ export class ReferenceService {
         if (deleteResponse) {
             return deleteResponse;
         }
-        throw new ProjectNotFoundException(refFilter.projectID);
+        throw new ProjectNotFoundException(refFilter.referenceID);
     }
 
 }
