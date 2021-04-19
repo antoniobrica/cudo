@@ -31,17 +31,20 @@ export  class AccordionExampleMenu extends Component<MyProps> {
    console.log(this.props.workTypeData?.projectById[0].projectWorkTypes);
    this.setState({worktypes:this.props.workTypeData?.projectById[0].projectWorkTypes})
   }
-    handleClick = (e, titleProps) => {
+    handleClick = ( titleProps) => {
+      console.log('activeIndex',titleProps )
       const { index } = titleProps
       const { activeIndex } = this.state
       const newIndex = activeIndex === index ? -1 : index
   
-      this.setState({ activeIndex: newIndex })
+      this.setState({ activeIndex: titleProps });
+      console.log('activeIndexSet', activeIndex);
+      
     }
   
     render() {
       const { activeIndex } = this.state
-  
+      console.log('renderactiveIndex', activeIndex)
       return (
         <div className="sidebar-wrapper sidebar-theme">
           <div className="sidebar-top"> 
@@ -52,11 +55,11 @@ export  class AccordionExampleMenu extends Component<MyProps> {
           <Accordion className="ui-accordion accordion-top">
           {this.state.worktypes.map((worktype,i)=>{
            return(
-        <div>
+        <div key={i}>
         <Accordion.Title
           active={activeIndex === i}
-          index={1}
-          onClick={this.handleClick}
+          index={i}
+          onClick={()=>this.handleClick(i)}
           className="active-title"
         > 
           { worktype.workTypeName} <Icon name='angle down' />
