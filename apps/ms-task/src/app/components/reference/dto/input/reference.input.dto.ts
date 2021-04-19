@@ -16,12 +16,6 @@ export class ReferenceInputDto {
     name: string;
 
     @Field({ description: `This is for title task title` })
-    projectID: string;
-
-    @Field({ description: `This is for title task title` })
-    companyID: string;
-
-    @Field({ description: `This is for title task title` })
     createdBy?: string;
 
     @Field({ description: `This is for title task title` })
