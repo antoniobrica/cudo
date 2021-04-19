@@ -62,7 +62,7 @@
     "avsc": "^5.5.3",
     "axios": "^0.21.1",
     "axios-observable": "^1.1.6",
-    "bcrypt-nodejs": "0.0.3",
+    "bcrypt": "^5.0.0",
     "bootstrap": "^4.6.0",
     "class-transformer": "^0.3.2",
     "class-validator": "^0.13.1",
