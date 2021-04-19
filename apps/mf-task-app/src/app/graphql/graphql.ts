@@ -1,11 +1,10 @@
 import gql from "graphql-tag";
 export const GET_TASKS = gql`
+query Tasks($referenceID: String!) 
 {
   tasks(referenceFilter: {
-  projectID: "3"
-  companyID: "1"
-  referenceType: PROJECTTYPE
-  referenceID: "3"
+    referenceType: PROJECTTYPE
+    referenceID: $referenceID
   }){
   taskTitle
   taskID
@@ -39,13 +38,12 @@ mutation CreateTask(
   $BKPID: String!,
   $saveTaskAsTemplate: String!,
   $phasesID: String!,
+  $referenceID: String!
   ){ 
     createTask(
       referenceFilter: {
-        projectID: "3"
-        companyID: "1"
         referenceType: PROJECTTYPE
-        referenceID: "3"
+        referenceID: $referenceID
         },
       taskDetails: {
       taskBasics:{
@@ -73,14 +71,13 @@ mutation CreateTask(
 export const UPDATE_TASK = gql`
 mutation UpdateTask(
   $taskID: String!,    
-  $status: TASKSTATUS!
+  $status: TASKSTATUS!,
+  $referenceID: String!
   ){ 
     updateTask(
       referenceFilter: {
-        projectID: "3"
-        companyID: "1"
         referenceType: PROJECTTYPE
-        referenceID: "3"
+        referenceID: $referenceID
         },
         taskDetailsUpdate: {
         taskBasics:{

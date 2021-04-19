@@ -8,7 +8,7 @@ import { TaskArea } from 'libs/shared-components/src/lib/components/task/taskare
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
 import { LoaderPage } from "@cudo/shared-components"
 
-import { ApolloCache, FetchResult } from '@apollo/client';
+import { ApolloCache, FetchResult, useQuery } from '@apollo/client';
 import { ITask, ITasks, TaskUpdateMutation } from '../../app/interfaces/task';
 import { ModalAlert } from '@cudo/shared-components'
 import { useHistory, useParams } from 'react-router';
@@ -16,9 +16,19 @@ import { useHistory, useParams } from 'react-router';
 export interface TasksProps { }
 
 export function Tasks(props: TasksProps) {
-  const { loading, error, data } = useTaskQuery(GET_TASKS);
+  const history = useHistory();
+  var res = history.location.pathname.split("/");
+  const referenceID = res[3].toString();
+  const { loading, error, data } = useTaskQuery(GET_TASKS,{
+    variables: { referenceID },
+});
+// const { loading, error, data } = useQuery(GET_TASKS, {
+//   variables: { referenceID},
+// });
   const [open, setOpen] = React.useState(false);
-  const [addTask] = useTaskUpdateMutation(UPDATE_TASK);
+  const [addTask] = useTaskUpdateMutation(UPDATE_TASK,{
+    variables: { referenceID },
+});
   const [taskData, setTaskData] = React.useState();
   const [projectId, setProjectId] = React.useState('');
 
@@ -35,9 +45,7 @@ export function Tasks(props: TasksProps) {
   if (data) {
     console.log('tasks=>', data.tasks)
   }
-  const history = useHistory();
-  var res = history.location.pathname.split("/");
-  console.log('spliting',res[3])
+ 
   // setProjectId(res[3]);
 
   const cancel = () => {

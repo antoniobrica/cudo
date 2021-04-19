@@ -9,6 +9,7 @@ import '../../../../../../libs/shared-components/src/style/index.scss';
 import './create-task.module.scss';
 import moment, { calendarFormat } from 'moment';
 import {FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex} from "@cudo/mf-account-app-lib"
+import { useHistory } from 'react-router';
 /* eslint-disable-next-line */
 export interface CreateTaskProps { }
 
@@ -41,8 +42,12 @@ const [saveTaskAsTemplate, setSaveTaskAsTemplate] = React.useState("")
 const [phasesID, setPhasesID] = React.useState("")
 const [status, setStatus] = React.useState("")
 const [followers, setfollowers] = React.useState("")
-
-  const [addTask] = useTaskMutation(ADD_TASK);
+const history = useHistory();
+var res = history.location.pathname.split("/");
+const referenceID = res[3].toString();
+  const [addTask] = useTaskMutation(ADD_TASK,{
+    variables: { referenceID },
+});
 
 const onTaskTitleChange = e => {
   setTaskTitle(e.target.value)
