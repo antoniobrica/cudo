@@ -6,6 +6,8 @@ import { Tab, Image, Form, Grid, Card, Dropdown } from 'semantic-ui-react';
 /* eslint-disable-next-line */
 export interface TabsProps {}
 
+import img8 from 'libs/shared-components/src/default_area.png';
+
 export function Tabsbar(props: TabsProps) {
   const panes = [
     {
@@ -272,7 +274,26 @@ export function Tabsbar(props: TabsProps) {
         icon: 'calendar outline',
         content: 'Meetings',
       },
-      render: () => <Tab.Pane attached={false}>Meetings</Tab.Pane>,
+      render: () => (
+        <Tab.Pane attached={false}>
+          <div className="ui-tabs">
+            <div>
+              <img src={img8} className="image_center"></img>
+            </div>
+            <div className="text-center margin-top">
+              <span className="found">No Data Found</span>
+              <p className="project-sub" style={{ color: '#9A9EA1' }}>
+                Hey User, you don't have any active sub project lists on this
+                project. Click the button <br /> below to create a sub project
+                list.
+              </p>
+              <button className="ui mini button grey-btn">
+                + Add New Session
+              </button>
+            </div>
+          </div>
+        </Tab.Pane>
+      ),
     },
     {
       menuItem: { key: 'Files', icon: 'folder open outline', content: 'Files' },
