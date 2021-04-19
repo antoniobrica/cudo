@@ -4,9 +4,6 @@ import { StatusEnum } from "../../../../enums/status.enum";
 @InputType()
 export class MilestoneBasicDetailsInput {
 
-    // @Field({ description: `This is for milestone title` })
-    // milestoneID?: string;
-
     @Field({ description: `This is for milestone title` })
     milestoneTitle?: string;
 
