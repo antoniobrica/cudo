@@ -111,6 +111,7 @@ export function Tabsbar(props: TabsProps) {
                                     text="View detail"
                                   />
                                   <Dropdown.Item icon="pencil" text="Edit" />
+                                  <Dropdown.Item icon='check circle outline' text='Re-open' />
                                   <Dropdown.Item
                                     icon="trash alternate outline"
                                     text="Delete"
@@ -174,6 +175,7 @@ export function Tabsbar(props: TabsProps) {
                                     text="View detail"
                                   />
                                   <Dropdown.Item icon="pencil" text="Edit" />
+                                  <Dropdown.Item icon='check circle outline' text='Re-open' />
                                   <Dropdown.Item
                                     icon="trash alternate outline"
                                     text="Delete"
@@ -237,6 +239,7 @@ export function Tabsbar(props: TabsProps) {
                                     text="View detail"
                                   />
                                   <Dropdown.Item icon="pencil" text="Edit" />
+                                  <Dropdown.Item icon='check circle outline' text='Re-open' />
                                   <Dropdown.Item
                                     icon="trash alternate outline"
                                     text="Delete"
@@ -287,10 +290,9 @@ export function Tabsbar(props: TabsProps) {
                 project. Click the button <br /> below to create a sub project
                 list.
               </p>
-              <button className="ui mini button grey-btn">
-                + Add New Session
-              </button>
+              <button className="ui mini button grey-btn">+ Add New Session</button>
             </div>
+
           </div>
         </Tab.Pane>
       ),
