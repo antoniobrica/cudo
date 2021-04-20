@@ -5,7 +5,7 @@ import { BaseEntity, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGen
 import { TasksEntity } from "./tasks.entity";
 
 @ObjectType()
-@Entity({name: 'bkp'})
+@Entity({ name: 'bkp' })
 export class BKP {
 
     @Field()
@@ -28,6 +28,4 @@ export class BKP {
     @Column()
     clientId: number;
 
-    @OneToMany(type => TasksEntity, task => task) // specify inverse side as a second parameter
-    task: TasksEntity[];
 }

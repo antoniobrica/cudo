@@ -8,6 +8,7 @@ import { TasksEntity } from '../../../entities/tasks.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import TaskFilterParams from '../../../utils/types/taskFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
+import { TaskDeleteInput } from '../dto/input/task-delete.input';
 import { TaskDetailsUpdateInput } from '../dto/input/task-details-update.input';
 import { TaskDetailsInput } from '../dto/input/task-details.input';
 
@@ -139,13 +140,14 @@ export class TasksService {
         return tasks;
     }
 
-    async deleteTask(taskFilterParams: TaskFilterParams) {
-        const { id } = await this.projectTasksRepository.findOne({ where: { ...taskFilterParams } });
-        const deleteResponse = await this.projectTasksRepository.delete(id);
-        if (deleteResponse) {
-            return deleteResponse;
-        }
-        throw new NotFoundException(taskFilterParams.taskID);
+    public async deleteTaskByID(taskDeleteInput: TaskDeleteInput): Promise<TasksEntity[]> {
+        const { taskID } = taskDeleteInput;
+        const taskeDetails = await this.projectTasksRepository.delete({ taskID: taskID });
+        console.log(taskeDetails)
+        const tasks = await this.projectTasksRepository.find({
+            where: { taskID: taskID },
+            relations: ['reference', 'assignees', 'followers', 'files']
+        });
+        return tasks;
     }
-
 }

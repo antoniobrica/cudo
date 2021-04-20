@@ -1,6 +1,7 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import TaskFilterParams from '../../../utils/types/taskFilterParams';
+import { TaskDeleteInput } from '../dto/input/task-delete.input';
 import { TaskDetailsUpdateInput } from '../dto/input/task-details-update.input';
 import { TaskDetailsInput } from '../dto/input/task-details.input';
 import { TasksModel } from '../models/tasks.model';
@@ -37,10 +38,11 @@ export class TasksResolver {
         return this.projectTasksService.updateTaskByID(createProjectTaskInput);
     }
 
-    @Mutation(() => TasksModel)
-    async deleteTask(@Args("taskFilter") taskFilter: TaskFilterParams
+    @Mutation(() => [TasksModel])
+    async deleteTask(
+        @Args('taskDeleteInput') taskDeleteInput: TaskDeleteInput
     ) {
-        return this.projectTasksService.deleteTask(taskFilter);
+        return this.projectTasksService.deleteTaskByID(taskDeleteInput);
     }
 
 }

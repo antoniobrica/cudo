@@ -6,7 +6,7 @@ import ReferanceTypeEntity from './reference-type.entity';
 import TaskFileEntity from './task-file.entity';
 import { WorkTypeEntity } from './workType.entity';
 
-@Entity({name: 'milestone'})
+@Entity({ name: 'milestone' })
 
 export class MileStoneEntity extends BaseEntity {
 
@@ -55,10 +55,6 @@ export class MileStoneEntity extends BaseEntity {
 
   @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.tasks)
   reference: ReferanceTypeEntity;
-
-  @ManyToOne(type => Phases, phase => phase.task) // specify inverse side as a second parameter
-  @JoinColumn()
-  phase: Phases[];
 
   @Expose()
   @ManyToMany(() => WorkTypeEntity)
