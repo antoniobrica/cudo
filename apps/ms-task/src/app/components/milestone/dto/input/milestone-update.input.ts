@@ -13,8 +13,5 @@ export class MileStoneDetailsUpdateInput {
     @Field(type => [TaskFileParams], { nullable: true, description: `Task Files` })
     @Optional()
     files?: TaskFileParams[];
-
-    @Field(type => [WorkTypeParams], { nullable: true, description: `Task Files` })
-    @Optional()
-    worktypes?: WorkTypeParams[];
+    
 }

@@ -1,10 +1,8 @@
 import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, ObjectIdColumn, PrimaryColumn, PrimaryGeneratedColumn, getMongoRepository, UpdateDateColumn, JoinColumn, OneToOne } from 'typeorm';
 import * as uuid from 'uuid';
 import { Expose, plainToClass } from 'class-transformer';
-import { Phases } from './phases.entity';
 import ReferanceTypeEntity from './reference-type.entity';
 import TaskFileEntity from './task-file.entity';
-import { WorkTypeEntity } from './workType.entity';
 
 @Entity({ name: 'milestone' })
 
@@ -30,6 +28,26 @@ export class MileStoneEntity extends BaseEntity {
   description?: string;
 
   @Expose()
+  @Column({ nullable: true })
+  phaseID?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  phaseName?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  worktypeID?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  worktypeName?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  status?: string;
+
+  @Expose()
   @CreateDateColumn()
   createdAt?: Date;
 
@@ -51,11 +69,6 @@ export class MileStoneEntity extends BaseEntity {
 
   @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.tasks)
   reference: ReferanceTypeEntity;
-
-  @Expose()
-  @ManyToMany(() => WorkTypeEntity)
-  @JoinTable()
-  worktypes: WorkTypeEntity[];
 
   @Expose()
   @ManyToMany(type => TaskFileEntity)
