@@ -12,7 +12,4 @@ export class MilestoneDetailsInput {
     @Field(type => [TaskFileParams], { description: `Task Files` })
     files?: TaskFileParams[];
 
-    @Field(type => [WorkTypeParams], { description: `Task Files` })
-    worktypes?: WorkTypeParams[];
-
 }

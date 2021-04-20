@@ -14,6 +14,18 @@ export class MilestoneBasicDetailsInput {
     description?: string;
 
     @Field({ description: `PhaseID attached with milestone` })
-    phasesID?: string;
+    phaseID?: string;
+
+    @Field({ description: `PhaseID attached with milestone` })
+    phaseName?: string;
+
+    @Field({ description: `PhaseID attached with milestone` })
+    worktypeID?: string;
+
+    @Field({ description: `PhaseID attached with milestone` })
+    worktypeName?: string;
+
+    @Field(type => StatusEnum, {description: `PhaseID attached with milestone` })
+    status?: StatusEnum;
 
 }

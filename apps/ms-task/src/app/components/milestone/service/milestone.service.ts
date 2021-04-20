@@ -26,20 +26,13 @@ export class MileStoneService {
     public async create(milestoneDetailsInput: MilestoneDetailsInput, referenceFilter: ReferenceFilterParams): Promise<MileStoneEntity> {
         try {
             const milestoneDetails = new MileStoneEntity({ ...milestoneDetailsInput.milestoneBasics });
-            milestoneDetails.worktypes = [];
             milestoneDetails.files = [];
-            const {  files, worktypes } = milestoneDetailsInput;
+            const {  files } = milestoneDetailsInput;
             for (let index = 0; index < files.length; index++) {
                 const taskfileEntity = new TaskFileEntity(files[index])
                 const newTaskFile = await this.taskFileRepository.create({ ...taskfileEntity });
                 const savedFiles = await this.taskFileRepository.save(newTaskFile);
                 milestoneDetails.files.push(savedFiles)
-            }
-            for (let index = 0; index < worktypes.length; index++) {
-                const worktypeEntity = new WorkTypeEntity(worktypes[index])
-                const newWorkType = await this.workTypeRepository.create({ ...worktypeEntity });
-                const savedworktypes = await this.workTypeRepository.save(newWorkType);
-                milestoneDetails.worktypes.push(savedworktypes)
             }
             const selectedReference = await this.referenceService.getReferenceById(referenceFilter)
             const newMilestone = await this.mileStoneRepository.create({
@@ -63,13 +56,13 @@ export class MileStoneService {
                 }
             }
             ,
-            relations: ['reference', 'worktypes','files' ]
+            relations: ['reference', 'files' ]
         });
     }
 
 
     async getMileStoneByID(mileFilter: MileStoneFilterParam) {
-        const milestone = await this.mileStoneRepository.findOne({ where: { ...mileFilter }, relations: ['worktypes','files'] });
+        const milestone = await this.mileStoneRepository.findOne({ where: { ...mileFilter }, relations: ['files'] });
         if (milestone) {
             return milestone;
         }
@@ -86,16 +79,15 @@ export class MileStoneService {
     }
 
     public async updateMileStoneByID(createMileStoneInput: MileStoneDetailsUpdateInput): Promise<MileStoneEntity[]> {
-        const { files, worktypes, milestoneBasics } = createMileStoneInput;
+        const { files, milestoneBasics } = createMileStoneInput;
         const milestoneDetails = await this.mileStoneRepository.find({
             where: { milestoneID: milestoneBasics.milestoneID },
-            relations: ['reference', 'files', 'worktypes']
+            relations: ['reference', 'files']
         });
         if (milestoneDetails.length <= 0)
             throw new HttpException('MileStone Not Found', HttpStatus.NOT_FOUND);
         const milestoneDetail = milestoneDetails[0];
         milestoneDetail.files = [];
-        milestoneDetail.worktypes = [];
        
         if (files)
             for (let index = 0; index < files.length; index++) {
@@ -104,23 +96,20 @@ export class MileStoneService {
                 const savedFiles = await this.taskFileRepository.save(newTaskFile);
                 milestoneDetail.files.push(savedFiles)
             }
-        if (worktypes)
-        for (let index = 0; index < worktypes.length; index++) {
-            const worktypeEntity = new WorkTypeEntity(worktypes[index])
-            const newWorkType = await this.workTypeRepository.create({ ...worktypeEntity });
-            const savedworktypes = await this.workTypeRepository.save(newWorkType);
-            milestoneDetail.worktypes.push(savedworktypes)
-        }
-
+     
         milestoneBasics.milestoneTitle? milestoneDetail.milestoneTitle = milestoneBasics.milestoneTitle : null;
         milestoneBasics.dueDate? milestoneDetail.dueDate = milestoneBasics.dueDate : null;
         milestoneBasics.description? milestoneDetail.description = milestoneBasics.description : null;
-        milestoneBasics.phasesID? milestoneDetail.phasesID = milestoneBasics.phasesID : null;
+        milestoneBasics.phaseID? milestoneDetail.phaseID = milestoneBasics.phaseID : null;
+        milestoneBasics.phaseName? milestoneDetail.phaseName = milestoneBasics.phaseName : null;
+        milestoneBasics.worktypeID? milestoneDetail.worktypeID = milestoneBasics.worktypeID : null;
+        milestoneBasics.worktypeName? milestoneDetail.worktypeName = milestoneBasics.worktypeName : null;
+        milestoneBasics.status? milestoneDetail.status = milestoneBasics.status : null;
 
         await this.mileStoneRepository.save(milestoneDetail);
         const milestones = await this.mileStoneRepository.find({
             where: { milestoneID: milestoneBasics.milestoneID },
-            relations: ['reference', 'files', 'worktypes']
+            relations: ['reference', 'files' ]
         });
         return milestones;
     }
