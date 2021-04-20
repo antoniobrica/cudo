@@ -27,6 +27,6 @@ export class Phases {
     @Column()
     clientId: number;
 
-    @OneToMany(type => TasksEntity, task => task.phase) 
+    @OneToMany(type => TasksEntity, task => task) 
     task: TasksEntity[];
 }

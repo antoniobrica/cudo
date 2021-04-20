@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MileStoneEntity } from '../../../entities/milestone.entity';
@@ -8,6 +8,7 @@ import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
 import MileStoneFilterParam from '../dto/args/milestone.filter';
 import { MilestoneDetailsInput } from '../dto/input/milestone-details.input';
+import { MileStoneDetailsUpdateInput } from '../dto/input/milestone-update.input';
 import MileStoneNotFoundException from '../exceptions/milestoneNotFound.exception';
 
 
@@ -82,6 +83,46 @@ export class MileStoneService {
             return deleteResponse;
         }
         throw new MileStoneNotFoundException(mileFilter.milestoneID);
+    }
+
+    public async updateMileStoneByID(createMileStoneInput: MileStoneDetailsUpdateInput): Promise<MileStoneEntity[]> {
+        const { files, worktypes, milestoneBasics } = createMileStoneInput;
+        const milestoneDetails = await this.mileStoneRepository.find({
+            where: { milestoneID: milestoneBasics.milestoneID },
+            relations: ['reference', 'files', 'worktypes']
+        });
+        if (milestoneDetails.length <= 0)
+            throw new HttpException('MileStone Not Found', HttpStatus.NOT_FOUND);
+        const milestoneDetail = milestoneDetails[0];
+        milestoneDetail.files = [];
+        milestoneDetail.worktypes = [];
+       
+        if (files)
+            for (let index = 0; index < files.length; index++) {
+                const taskfileEntity = new TaskFileEntity(files[index])
+                const newTaskFile = await this.taskFileRepository.create({ ...taskfileEntity });
+                const savedFiles = await this.taskFileRepository.save(newTaskFile);
+                milestoneDetail.files.push(savedFiles)
+            }
+        if (worktypes)
+        for (let index = 0; index < worktypes.length; index++) {
+            const worktypeEntity = new WorkTypeEntity(worktypes[index])
+            const newWorkType = await this.workTypeRepository.create({ ...worktypeEntity });
+            const savedworktypes = await this.workTypeRepository.save(newWorkType);
+            milestoneDetail.worktypes.push(savedworktypes)
+        }
+
+        milestoneBasics.milestoneTitle? milestoneDetail.milestoneTitle = milestoneBasics.milestoneTitle : null;
+        milestoneBasics.dueDate? milestoneDetail.dueDate = milestoneBasics.dueDate : null;
+        milestoneBasics.description? milestoneDetail.description = milestoneBasics.description : null;
+        milestoneBasics.phasesID? milestoneDetail.phasesID = milestoneBasics.phasesID : null;
+
+        await this.mileStoneRepository.save(milestoneDetail);
+        const milestones = await this.mileStoneRepository.find({
+            where: { milestoneID: milestoneBasics.milestoneID },
+            relations: ['reference', 'files', 'worktypes']
+        });
+        return milestones;
     }
 
 

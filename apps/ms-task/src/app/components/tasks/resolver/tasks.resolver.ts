@@ -37,5 +37,11 @@ export class TasksResolver {
         return this.projectTasksService.updateTaskByID(createProjectTaskInput);
     }
 
+    @Mutation(() => TasksModel)
+    async deleteTask(@Args("taskFilter") taskFilter: TaskFilterParams
+    ) {
+        return this.projectTasksService.deleteTask(taskFilter);
+    }
+
 }
 

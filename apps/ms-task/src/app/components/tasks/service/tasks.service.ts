@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import TaskAssigneessEntity from '../../../entities/task-assignees.entity';
@@ -138,4 +138,14 @@ export class TasksService {
         });
         return tasks;
     }
+
+    async deleteTask(taskFilterParams: TaskFilterParams) {
+        const { id } = await this.projectTasksRepository.findOne({ where: { ...taskFilterParams } });
+        const deleteResponse = await this.projectTasksRepository.delete(id);
+        if (deleteResponse) {
+            return deleteResponse;
+        }
+        throw new NotFoundException(taskFilterParams.taskID);
+    }
+
 }

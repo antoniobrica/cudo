@@ -30,6 +30,10 @@ export class MileStoneEntity extends BaseEntity {
   description?: string;
 
   @Expose()
+  @Column({ nullable: true })
+  phasesID?: string;
+
+  @Expose()
   @CreateDateColumn()
   createdAt?: Date;
 
