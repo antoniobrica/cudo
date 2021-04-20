@@ -35,6 +35,10 @@ import LoaderPage from 'libs/shared-components/src/lib/components/loader/loader'
 import ModalAlert from 'libs/shared-components/src/lib/components/modal/alert';
 import ModalPlanningNew from 'libs/shared-components/src/lib/components/modal/planningnew';
 import ModalViewPlanning from 'libs/shared-components/src/lib/components/modal/viewdetailsplanning';
+import ModalSession from 'libs/shared-components/src/lib/components/modal/addsession';
+import ModalViewTask from 'libs/shared-components/src/lib/components/modal/taskdetails';
+import ModalTaskEdit from 'libs/shared-components/src/lib/components/modal/taskeditdetails';
+
 
 
 // import { Sidebar } from 'semantic-ui-react';
@@ -78,7 +82,10 @@ export function App() {
     <LoaderPage></LoaderPage><br/>
     <ModalAlert></ModalAlert><br/>
     <ModalPlanningNew></ModalPlanningNew><br/>
-    <ModalViewPlanning></ModalViewPlanning>
+    <ModalViewPlanning></ModalViewPlanning><br/>
+    <ModalSession></ModalSession><br/>
+    <ModalViewTask></ModalViewTask><br/>
+    <ModalTaskEdit></ModalTaskEdit>
     </div>
 
 

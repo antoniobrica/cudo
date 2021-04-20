@@ -8,6 +8,8 @@ export interface TabsProps {
   parentCallback
  }
 
+import img8 from 'libs/shared-components/src/default_area.png';
+
 export function Tabsbar(props: TabsProps) {
 
   const handleOpenProject = (item) => {
