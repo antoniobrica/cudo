@@ -298,3 +298,63 @@
     position: relative;
     width: 100%;
 }
+
+.h5heading{
+    color: #000;
+}
+.daysarea{
+    background-color: #FAFAFA;
+    font-size: 12px;
+    padding: 6px
+}
+.time{
+    padding: 6px;
+    background: blue;
+    color: #fff;
+    font-size: 12px;
+}
+.time2{
+    padding: 6px;
+    background: #FB8364;
+    color: #fff;
+    font-size: 12px;
+}
+.daysarea2{
+    background-color: #FFE7E1;
+    border: #FB8364;
+    font-size: 12px;
+    padding: 6px;
+    color: #FF0000;
+}
+.classtop{
+    margin-top: -36px  !important;
+    margin-left: 40px !important;
+}
+.fillarea input{
+    width: 1000px !important;
+}
+.redbutton{
+    
+    color: #ffffff;
+    background-color: #E99898;
+    border-color: #E99898;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    height: 24px;
+    width: 24px;
+    font-size: 10px;
+}
+.greenbutton{
+    color: #ffffff;
+    background-color: #37BA77;
+    border-color: #37BA77;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    height: 24px;
+    width: 24px;
+    font-size: 10px; 
+}

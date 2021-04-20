@@ -27,5 +27,6 @@ module.exports = {
     '<rootDir>/libs/mf-account-app-lib',
     '<rootDir>/libs/mf-document-lib',
     '<rootDir>/apps/mf-document-app',
+    '<rootDir>/libs/mf-task-lib',
   ],
 };

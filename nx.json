@@ -149,6 +149,9 @@
     "mf-document-app-e2e": {
       "tags": [],
       "implicitDependencies": ["mf-document-app"]
+    },
+    "mf-task-lib": {
+      "tags": []
     }
   }
 }

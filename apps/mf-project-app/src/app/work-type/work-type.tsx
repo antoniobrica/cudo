@@ -10,17 +10,16 @@ export interface WorkTypeProps {
 }
 
 export function WorkType(props: WorkTypeProps) {
-  const [fields, setFields] = React.useState([{ workTypeName: null, estimatedCost: null }])
+  const [fields, setFields] = React.useState([{ workTypeName: null, estimatedCost: null ,workTypeID:null}])
 
 
   function handleChangeInput(i, event, field) {
-    console.log('field==>', field, i, event.target.value)
     const values = [...fields];
-    if (field === 'worktype') {
-      values[i].workTypeName = event.target.value;
+    if(field === 'worktype'){
+          values[i].workTypeName = event
     }
     else {
-      values[i].estimatedCost = event.target.value;
+      values[i].estimatedCost = Number(event.target.value);
     }
     setFields(values);
     props.workTypeData(fields)
@@ -32,6 +31,7 @@ export function WorkType(props: WorkTypeProps) {
     values.push({
       workTypeName: '',
       estimatedCost: '',
+      workTypeID:''
     });
     setFields(values);
   }
@@ -40,8 +40,9 @@ export function WorkType(props: WorkTypeProps) {
     values.splice(i, 1);
     setFields(values);
   }
-  const getWorktype = (data) => {
-    console.log('selected-WorkType', data)
+  const getWorktype = (data, id)=>{
+     console.log('selected-WorkType', data)
+     handleChangeInput(id, data,'worktype' )
   }
 
   return (
@@ -55,7 +56,7 @@ export function WorkType(props: WorkTypeProps) {
         </Table.Row>
       </Table.Header>
 
-      <Table.Body>
+     
         <Table.Body>
           {
             fields.map((field, idx) => {
@@ -72,29 +73,29 @@ export function WorkType(props: WorkTypeProps) {
                               onChange={e =>handleChangeInput( idx, e, 'worktype')}
                             />
                           </Form.Field> */}
-                            <WorkTypeDropdown data={props.worktypes} selectedWorkType={getWorktype} />
-                          </Grid.Column>
+                          <WorkTypeDropdown data={props.worktypes} id={idx} selectedWorkType={getWorktype}/>
+                        </Grid.Column>
 
-                        </Grid.Row>
-                      </Grid>
-                    </Form>
+                      </Grid.Row>
+                    </Grid>
+                  </Form>
 
-                  </Table.Cell>
-                  <Table.Cell></Table.Cell>
-                  <Table.Cell>
-                    <Form>
-                      <Grid columns={1}>
-                        <Grid.Row>
-                          <Grid.Column>
-                            <Form.Field>
+                </Table.Cell>
+                <Table.Cell></Table.Cell>
+                <Table.Cell>
+                  <Form>
+                    <Grid columns={1}>
+                      <Grid.Row>
+                        <Grid.Column>
+                          <Form.Field>
 
-                              <Input label='$' size='small' className="full-width"
-                                type="text"
-                                value={field.estimatedCost}
-                                onChange={e => handleChangeInput(idx, e, 'estCost')}
-                              />
-                            </Form.Field>
-                          </Grid.Column>
+                            <Input label='$' size='small' className="full-width"
+                              type="text"
+                              value={field.estimatedCost}
+                              onChange={e =>handleChangeInput( idx, e, 'estCost')}
+                            />
+                          </Form.Field>
+                        </Grid.Column>
 
                         </Grid.Row>
                       </Grid>
@@ -120,7 +121,6 @@ export function WorkType(props: WorkTypeProps) {
             </Table.Cell>
           </Table.Row>
         </Table.Body>
-      </Table.Body>
     </Table>
 
   );
