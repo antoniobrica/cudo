@@ -17,3 +17,7 @@ export function useTaskUpdateMutation(gqlQuery: DocumentNode, variable) {
   const [updateTask] = useMutation<TaskUpdateMutation>(gqlQuery, variable);
   return [updateTask];
 }
+export function useTaskDeleteMutation(gqlQuery: DocumentNode, variable) {
+  const [updateTask] = useMutation<TaskUpdateMutation>(gqlQuery, variable);
+  return [updateTask];
+}

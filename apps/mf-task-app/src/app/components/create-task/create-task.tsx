@@ -30,6 +30,14 @@ export function CreateTask(props: CreateTaskProps) {
     { key: 'BKP_2', value: 'BKP_2', text: 'BKP 2' },
 
   ]
+  const workTypes = [
+    { key: 'w1', value: 'w1', text: 'Electrical Work' },
+    { key: 'w2', value: 'w2', text: 'HVAC work' },
+    { key: 'w3', value: 'w3', text: 'Pipelines work' },
+    { key: 'w4', value: 'w4', text: 'Plumbing Work' },
+
+
+  ]
 
 const [open, setOpen] = React.useState(false)
 const [taskTitle, setTaskTitle] = React.useState("")
@@ -77,7 +85,11 @@ const onsetEstimatedDays = (event, data) => {
   }
   const setBKPIDChange = (data) => {
     setBKPIDTitle(data.BKPIDTitle)
-    setBKPID(data.BKPID)  }
+    setBKPID(data.BKPID)  
+    console.log('bkp==>',data);
+  }
+    
+    
 
   const setSaveTaskAsTemplateChange = (event, data) => {
     setSaveTaskAsTemplate(data.value)
@@ -164,7 +176,7 @@ const onsetEstimatedDays = (event, data) => {
   <Grid.Column>
     <Form.Field>
       <label>Associate with work type <span className="danger">*</span></label>
-      <Input placeholder='Electrical work' size='small' className="full-width" type="text" />
+      <Select placeholder='Select' className="small" options={workTypes} />
     </Form.Field>
   </Grid.Column>
  

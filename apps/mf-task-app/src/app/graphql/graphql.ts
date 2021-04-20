@@ -94,6 +94,18 @@ mutation UpdateTask(
     status    
   }
 }`;
+export const DELETE_TASK = gql`
+mutation DeleteTask(
+  $taskID: String!,    
+  ){ 
+    deleteTask(taskDeleteInput:
+      {
+        taskID:$taskID
+      }
+  ){
+      taskID
+    }
+}`;
 //dummy data
 
 

@@ -18,7 +18,7 @@ export function Bkp(props: BkpProps) {
   const { loading, error, data } = useBkpQuery(GET_BKP);
   React.useEffect(() => {
     if (data) {
-      setItems(data.Bkp.map(({ bkpTitle, bkpID }) => ({ key: bkpID, value: bkpTitle, text: bkpTitle })));
+      setItems(data.Bkp.map(({ bkpTitle, bkpID }) => ({ key: bkpID, value: bkpTitle, text: bkpID + " - "+ bkpTitle })));
 
     }
   }, [data]);

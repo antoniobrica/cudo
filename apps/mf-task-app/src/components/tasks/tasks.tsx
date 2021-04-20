@@ -1,8 +1,8 @@
 import React from 'react';
 import CreateTask from '../../app/components/create-task/create-task';
 
-import { GET_TASKS, UPDATE_TASK } from '../../app/graphql/graphql';
-import { useTaskQuery, useTaskUpdateMutation } from "../../app/services/useRequest";
+import { DELETE_TASK, GET_TASKS, UPDATE_TASK } from '../../app/graphql/graphql';
+import { useTaskDeleteMutation, useTaskQuery, useTaskUpdateMutation } from "../../app/services/useRequest";
 import './tasks.module.scss';
 import { TaskArea } from 'libs/shared-components/src/lib/components/task/taskarea';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
@@ -12,6 +12,7 @@ import { ApolloCache, FetchResult, useQuery } from '@apollo/client';
 import { ITask, ITasks, TaskUpdateMutation } from '../../app/interfaces/task';
 import { ModalAlert } from '@cudo/shared-components'
 import { useHistory, useParams } from 'react-router';
+import TaskDelete from '../delete-task';
 /* eslint-disable-next-line */
 export interface TasksProps { }
 
@@ -26,9 +27,15 @@ export function Tasks(props: TasksProps) {
 //   variables: { referenceID},
 // });
   const [open, setOpen] = React.useState(false);
+  const [openD, setOpenD] = React.useState(false);
+
   const [addTask] = useTaskUpdateMutation(UPDATE_TASK,{
     variables: { referenceID },
 });
+const [taskDelete] = useTaskDeleteMutation(DELETE_TASK,{
+  variables: { referenceID },
+});
+
   const [taskData, setTaskData] = React.useState();
   const [projectId, setProjectId] = React.useState('');
 
@@ -41,7 +48,11 @@ export function Tasks(props: TasksProps) {
     COMPLETED = 'COMPLETED',
   }  
   if (loading) return <h1> <LoaderPage /></h1>;
-  if (error) return <p style={{color:'black'}}>Something went wrong</p>;
+  if (error) return (
+    <div style={{ marginLeft: 900 }} >
+    <CreateTask />
+  </div>
+  );
   if (data) {
     console.log('tasks=>', data.tasks)
   }
@@ -97,6 +108,45 @@ export function Tasks(props: TasksProps) {
     });
 
   }
+  const confirmationDelete = (data, task) => {
+    setIsUpdate(data)
+    setOpenD(false)
+    // updateTask(taskData);
+    const taskID = task.taskID;
+    taskDelete({
+      variables: {
+        taskID
+      },
+      update: (
+        cache
+      ) => {
+        const cacheData = cache.readQuery({ query: GET_TASKS , variables: { referenceID }}) as ITasks;
+        // const newTask = cacheData.tasks.map(t => {
+        //   if (t.taskID === taskID) {
+        //     if (t.status === 'INPROGRESS') {
+        //       return { ...t, status: Status.COMPLETED };
+        //     }
+        //     else {
+        //       return { ...t, status: Status.INPROGRESS };
+        //     }
+        //   } else {
+        //     return t;
+        //   }
+        // });
+  
+      const newTask = cacheData.tasks.filter(item => item.taskID !== taskID);
+        cache.writeQuery({
+          query: GET_TASKS,
+          data: {
+            tasks: newTask
+          },
+          variables: { referenceID },
+        });
+      }
+
+    });
+
+  }
   const updateTask = (task) => {
     setTaskData(task)
     setOpen(true)
@@ -107,6 +157,10 @@ export function Tasks(props: TasksProps) {
       settaskStatus('Mark as Complete')
     }
 
+  }
+  const deleteTask =(task) =>{
+    setTaskData(task)
+    setOpenD(true)
   }
   return (
     <div>
@@ -120,12 +174,17 @@ export function Tasks(props: TasksProps) {
           <ModalAlert openAlertF={open} confirm={confirmation} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></ModalAlert>
         </div>
         : null}
+         {openD ?
+        <div style={{ marginLeft: 900 }} >
+          <TaskDelete openAlertF={openD} confirm={confirmationDelete} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></TaskDelete>
+        </div>
+        : null}
       <div className="TaskApp-container">
         <h3 style={{ color: "black" }}>All Tasks</h3>
         {data.tasks.map((task, id) => {
           return (
             <div key={id}>
-              <TaskArea task={task} id={id} updateTask={updateTask}></TaskArea>
+              <TaskArea task={task} id={id} updateTask={updateTask} deleteTask={deleteTask}></TaskArea>
             </div>
           )
         })}

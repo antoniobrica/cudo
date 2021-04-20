@@ -37,6 +37,7 @@ const {
 export interface TabMenuProps { }
 
 function TabMenu(props: TabMenuProps) {
+  const [worktypeName, setWorktype] = React.useState("");
 
   const history = useHistory();
   let params = useParams();
@@ -46,8 +47,16 @@ function TabMenu(props: TabMenuProps) {
   const { loading, error, data } = useQuery(GET_PROJECT_BY_ID, {
     variables: { projectId },
   });
-  if (data) {
-    console.log('project-details', data);
+ 
+  React.useEffect(() => {
+    if (data) {
+      setWorktype( data.projectById[0].projectWorkTypes[0].workTypeName );
+    }
+  }, [data]);
+
+  const changeWorktypeName=(data)=>{
+    console.log('changeWorktypeName', data)
+    setWorktype(data);
   }
   function TaskApp(history: any) {
     console.log('history---', history);
@@ -67,6 +76,7 @@ function TabMenu(props: TabMenuProps) {
 
   function Home() {
     const [input, setInput] = React.useState("");
+
     const [isTask, setIsTask] = React.useState(false);
     const data = "parrent"
     const { url, path } = useRouteMatch();
@@ -237,7 +247,7 @@ function TabMenu(props: TabMenuProps) {
       <Router>
         <div className="app-content-body-dash navbar-collapse box-shadow bg-white-only">
           <div>
-            <span className="">Electrical Work</span> | <span className="preliminary-font">Preliminary Studies</span>
+            <span className="">{worktypeName? worktypeName: 'WorktypeName'}</span> | <span className="preliminary-font">Preliminary Studies</span>
           </div>
           <Switch>
             <Tab className="ui-tabs" menu={{ secondary: true, pointing: true }} panes={panes} />
@@ -269,7 +279,7 @@ function TabMenu(props: TabMenuProps) {
     <div>
       {data ?
         <div>
-          <AccordionExampleMenu workTypeData={data}>
+          <AccordionExampleMenu changeWorktypeName={changeWorktypeName} workTypeData={data}>
           </AccordionExampleMenu>
           <Home></Home>
         </div> :

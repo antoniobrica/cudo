@@ -11,7 +11,8 @@ import img5 from 'libs/shared-components/src/tasks.png';
 export interface Tasks {
 	task,
 	id,
-	updateTask
+	updateTask,
+	deleteTask
 }
 
 export function TaskArea(props: Tasks) {
@@ -22,6 +23,9 @@ export function TaskArea(props: Tasks) {
 	]
 	const updateStatus = (task, id) => {
 		props.updateTask(task, id)
+	}
+	const deleteTaskbyId =( task, id) =>{
+		props.deleteTask(task,id)
 	}
 	return (
 
@@ -82,7 +86,7 @@ export function TaskArea(props: Tasks) {
 											<Dropdown.Item icon='eye' text='View detail' />
 											<Dropdown.Item icon='pencil' text='Edit' />
 											<Dropdown.Item onClick={() => updateStatus(props.task, props.id)} icon='check circle outline' text='Re-open' />
-											<Dropdown.Item icon='trash alternate outline' text='Delete' />
+											<Dropdown.Item onClick={() => deleteTaskbyId(props.task, props.id)} icon='trash alternate outline' text='Delete' />
 										</Dropdown.Menu>
 									</Dropdown>
 								</span>
@@ -151,7 +155,7 @@ export function TaskArea(props: Tasks) {
 											<Dropdown.Item icon='eye' text='View detail' />
 											<Dropdown.Item icon='pencil' text='Edit' />
 											<Dropdown.Item onClick={() => updateStatus(props.task, props.id)} icon='check circle outline' text='Mark as complete' />
-											<Dropdown.Item icon='trash alternate outline' text='Delete' />
+											<Dropdown.Item onClick={() => deleteTaskbyId(props.task, props.id)} icon='trash alternate outline' text='Delete' />
 										</Dropdown.Menu>
 									</Dropdown>
 								</span>

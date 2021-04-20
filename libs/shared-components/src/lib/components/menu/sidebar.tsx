@@ -20,16 +20,19 @@ const ColorForm = (
 /* eslint-disable-next-line */
 // export interface SideMenuProps { }
 type MyProps = {
-  workTypeData
+  workTypeData,
+  changeWorktypeName
 };
 export  class AccordionExampleMenu extends Component<MyProps> {
     state = { 
       activeIndex: 0 ,
       worktypes: [],
+      worktypeValue:'',
     }
    componentDidMount(){
    console.log(this.props.workTypeData?.projectById[0].projectWorkTypes);
    this.setState({worktypes:this.props.workTypeData?.projectById[0].projectWorkTypes})
+   this.setState({worktypeValue: this.props.workTypeData?.projectById[0].projectWorkTypes[0].workTypeName})
   }
     handleClick = ( titleProps) => {
       console.log('activeIndex',titleProps )
@@ -39,7 +42,9 @@ export  class AccordionExampleMenu extends Component<MyProps> {
   
       this.setState({ activeIndex: titleProps });
       console.log('activeIndexSet', activeIndex);
-      
+     const value= this.state.worktypes[activeIndex+1].workTypeName;
+     this.setState({worktypeValue: value});
+     this.props.changeWorktypeName(value);
     }
   
     render() {
