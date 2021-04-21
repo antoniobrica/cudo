@@ -17,11 +17,22 @@ import moment, { calendarFormat } from 'moment';
 
 // import SampleModal from './sample-modal';
 
-export function ModalPlanningNew() {
+export interface PlanningProps {
+  getMilestoneData,
+}
+export function ModalPlanningNew(props: PlanningProps) {
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
   ];
+  const workTypes = [
+    { key: 'w1', value: 'w1', text: 'Electrical Work' },
+    { key: 'w2', value: 'w2', text: 'HVAC work' },
+    { key: 'w3', value: 'w3', text: 'Pipelines work' },
+    { key: 'w4', value: 'w4', text: 'Plumbing Work' },
+
+
+  ]
   const [phaseName, setPhasesName] = React.useState("");
   const [phaseID, setPhasesID] = React.useState("");
   const [fileTypeName, setfileTypeName] = React.useState("");
@@ -50,7 +61,17 @@ export function ModalPlanningNew() {
     console.log('des=>',e.target.value);
     setDescription(e.target.value);
   }
-
+const createMilestone=()=>{
+   const data ={
+    milestoneTitle: milestone,
+    dueDate: dueDate,
+    description: description,
+    phaseID: phaseID,
+    phaseName: phaseName
+   }
+   props.getMilestoneData(data);
+   setOpen(false)
+}
   return (
     <div style={{ marginLeft: 900 }} >
       <Modal
@@ -128,7 +149,7 @@ export function ModalPlanningNew() {
                       <Select
                         placeholder="Select"
                         className="small"
-                        options={countryOptions}
+                        options={workTypes}
                       />
                     </Form.Field>
                   </Grid.Column>
@@ -156,7 +177,7 @@ export function ModalPlanningNew() {
         <Modal.Actions>
           <Button
             content="Submit"
-            onClick={() => setOpen(false)}
+            onClick={createMilestone}
             positive
             size="mini"
             className="grey-btn"

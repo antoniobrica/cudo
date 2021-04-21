@@ -19,6 +19,7 @@ import {
 import { NavLink, BrowserRouter as Router, useRouteMatch, Route, Switch, useLocation, useParams } from 'react-router-dom';
 import { useHistory } from "react-router";
 import Planning from '../../../../../../libs/mf-task-lib/src/lib/components/planning/planning'
+import { PlanningIndex } from '@cudo/mf-task-lib';
 import { useProjectByIdQuery } from '../../services/useRequest';
 import { GET_PROJECT_BY_ID } from '../../graphql/graphql';
 import { useQuery } from '@apollo/client';
@@ -139,7 +140,7 @@ function TabMenu(props: TabMenuProps) {
           exact
           render={() => (
             <Tab.Pane attached={false} onClick={handleOpenProject('planning')}>
-              <Planning></Planning>
+              <PlanningIndex></PlanningIndex>
               </Tab.Pane>
           )}
         />,

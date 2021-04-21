@@ -10,6 +10,13 @@ import {
 } from 'semantic-ui-react';
 
 import ModalViewPlanning from '../../../../../shared-components/src/lib/components/modal/viewdetailsplanning'
+import { useMilestonesQuery, useMilestoneMutation } from '../../services/useRequest';
+import { GET_MILESTONES, ADD_MILESTONE, } from '../../graphql/graphql';
+import { LoaderPage } from "@cudo/shared-components";
+import { ApolloCache, FetchResult, from } from '@apollo/client';
+import { MilestoneMutation, IMileStones } from '../../interfaces/task'
+
+
 // import { ModalViewPlanning } from '@cudo/shared-components';
 /* eslint-disable-next-line */
 export interface PlanningProps { }
@@ -22,9 +29,36 @@ export function Planning(props: PlanningProps) {
   const cancel = () => {
     setOpen(false)
   }
+  const [addPlan] = useMilestoneMutation(ADD_MILESTONE);
+
+  const getMilestoneData=(data)=>{
+   console.log('getMilestoneData',data);
+   addPlan({
+    variables: data,
+    update: (
+      cache,
+      { data: { addPlan } }: FetchResult
+    ) => {
+      const cacheData = cache.readQuery({ query: GET_MILESTONES}) as IMileStones;
+      cache.writeQuery({
+        query: GET_MILESTONES,
+        data: {
+          tasks: [...cacheData.MileStones, addPlan]
+        },
+      });
+    }
+  });
+
+
+  }
+  const { loading, error, data } = useMilestonesQuery(GET_MILESTONES);
+  if (loading) return <LoaderPage />;
+if(data){
+  console.log('milestone-data',data.MileStones);
+}
   return (
     <div>
-      <ModalPlanningNew></ModalPlanningNew>
+      <ModalPlanningNew getMilestoneData={getMilestoneData}></ModalPlanningNew>
       {open ?
         <div style={{ marginLeft: 900 }} >
           <ModalViewPlanning openPlanningDetail={open}  cancel={cancel}></ModalViewPlanning>
@@ -38,16 +72,19 @@ export function Planning(props: PlanningProps) {
             <h6 style={{ fontWeight: 'normal' }} className="h5heading">
               Active Milestone{' '}
             </h6>
-
             <Form>
+           
               <Grid columns={4}>
+              
                 <Grid.Row>
+                {data.MileStones.map((plan, i)=>{
+              return(
                   <Grid.Column>
                     <Card>
                       <div className="ui card">
                         <div className="content">
                           <div className="description">
-                            <span className="time">Aug 26, Wednesday</span>
+                            <span className="time">{plan.dueDate}</span>
                             <span className="summary">
                               {' '}
                               <a href="">
@@ -60,7 +97,7 @@ export function Planning(props: PlanningProps) {
                             </span>
                           </div>
                           <div className="header font-header">
-                            High priority things
+                           {plan.milestoneTitle}
                           </div>
                           <div className="description">
                             John & co. +2 others responsible
@@ -71,8 +108,7 @@ export function Planning(props: PlanningProps) {
                           <div className="data-built">
                             <p>
                               {' '}
-                              This is description will be show sunt in culpa qui
-                              officia deserunt mollit anim id est laborum...
+                              {plan.description}
                             </p>
                           </div>
                           <br /> <br />
@@ -82,7 +118,7 @@ export function Planning(props: PlanningProps) {
                           </div>
                           <div className="data-built">
                             Phase
-                            <span className="summary">Prelimary Studies</span>
+                            <span className="summary">{plan.phaseName}</span>
                           </div>
                           <br />
                           <div className="description">
@@ -108,7 +144,8 @@ export function Planning(props: PlanningProps) {
                       </div>
                     </Card>
                   </Grid.Column>
-                  <Grid.Column>
+                  )})}
+                  {/* <Grid.Column>
                     <Card>
                       <div className="ui card">
                         <div className="content">
@@ -233,9 +270,12 @@ export function Planning(props: PlanningProps) {
                         </div>
                       </div>
                     </Card>
-                  </Grid.Column>
+                  </Grid.Column> */}
+           
                 </Grid.Row>
+                  
               </Grid>
+         
             </Form>
           </div>
 
