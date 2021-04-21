@@ -40,5 +40,12 @@ export class MileStoneResolver {
         return this.mileStoneService.deleteMileStone(mileFilter);
     }
 
+    @Mutation(() => [MileStoneModel])
+    async updateMileStone(
+        @Args('milestoneDetailsUpdate') milestoneDetailsUpdate: MileStoneDetailsUpdateInput
+    ) {
+        return this.mileStoneService.updateMileStoneByID(milestoneDetailsUpdate);
+    }
+
 }
 

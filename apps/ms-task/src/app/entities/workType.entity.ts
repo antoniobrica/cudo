@@ -20,7 +20,7 @@ export class WorkTypeEntity extends BaseEntity{
     @Column({ nullable: true })
     workTypeTitle?: string;
 
-    @OneToOne(type => MileStoneEntity, milestone => milestone.worktypes) 
+    @OneToOne(type => MileStoneEntity, milestone => milestone) 
     milestone: MileStoneEntity[];
 
     constructor(worktypeEntity: Partial<WorkTypeEntity>) {
