@@ -12,6 +12,9 @@ import {
   Select,
   TextArea,
 } from 'semantic-ui-react';
+import { PhaseIndex } from "@cudo/mf-account-app-lib"
+import moment, { calendarFormat } from 'moment';
+
 // import SampleModal from './sample-modal';
 
 export function ModalPlanningNew() {
@@ -19,8 +22,34 @@ export function ModalPlanningNew() {
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
   ];
-
+  const [phaseName, setPhasesName] = React.useState("");
+  const [phaseID, setPhasesID] = React.useState("");
+  const [fileTypeName, setfileTypeName] = React.useState("");
+  const [milestone, setMilestoneName] = React.useState("");
+  const [dueDate, setDueDate] = React.useState("")
+  const [description, setDescription] = React.useState("")
   const [open, setOpen] = React.useState(false);
+  const onsetPhasesID = (data) => {
+    console.log('phase',data);
+    
+    setPhasesID((data.phaseID).toString());
+    setPhasesName(data.phaseName)
+  }
+
+   const onMilestoneChange=(e)=>{
+     console.log('milestone=>',e.target.value);
+     setMilestoneName(e.target.value);
+   }
+
+   const onDueDateChange = e => {
+    const date= moment.utc(moment(e.target.value).utc()).format();
+    setDueDate(e.target.value)
+  }
+
+  const onDescriptionChange = e=>{
+    console.log('des=>',e.target.value);
+    setDescription(e.target.value);
+  }
 
   return (
     <div style={{ marginLeft: 900 }} >
@@ -49,10 +78,12 @@ export function ModalPlanningNew() {
                         Milestone Title <span className="danger">*</span>
                       </label>
                       <Input
-                        placeholder="Swtichboard fitting"
+                        placeholder="Milestone title"
                         size="small"
                         className="full-width"
                         type="text"
+                        value={milestone}
+                        onChange={onMilestoneChange}
                       />
                     </Form.Field>
                   </Grid.Column>
@@ -65,6 +96,8 @@ export function ModalPlanningNew() {
                         size="small"
                         className="full-width"
                         type="date"
+                        value={dueDate}
+                        onChange={onDueDateChange}
                       />
                     </Form.Field>
                   </Grid.Column>
@@ -76,7 +109,10 @@ export function ModalPlanningNew() {
                   <Grid.Column>
                     <Form.Field>
                       <label>Description </label>
-                      <TextArea placeholder="Tell us more" />
+                      <TextArea placeholder="Tell us more"    
+                       value={description}
+                       onChange={onDescriptionChange}
+                     />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -101,14 +137,15 @@ export function ModalPlanningNew() {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
+                    {/* <Form.Field>
                       <label>Select Phase </label>
                       <Select
                         placeholder="Select"
                         className="small"
                         options={countryOptions}
                       />
-                    </Form.Field>
+                    </Form.Field> */}
+                <PhaseIndex parentPhaseSelect={onsetPhasesID} />
                   </Grid.Column>
  
                 </Grid.Row>

@@ -10,6 +10,7 @@ import {
 } from 'semantic-ui-react';
 
 import ModalViewPlanning from '../../../../../shared-components/src/lib/components/modal/viewdetailsplanning'
+// import { ModalViewPlanning } from '@cudo/shared-components';
 /* eslint-disable-next-line */
 export interface PlanningProps { }
 
