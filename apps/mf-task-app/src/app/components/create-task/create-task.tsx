@@ -88,7 +88,9 @@ const onsetEstimatedDays = (event, data) => {
     setBKPID(data.BKPID)  
     console.log('bkp==>',data);
   }
-    
+  const setAsignee = (data) => {
+   // setAsignis(data)
+  }
     
 
   const setSaveTaskAsTemplateChange = (event, data) => {
@@ -211,7 +213,7 @@ const onsetEstimatedDays = (event, data) => {
       <label>Assignee <span className="danger">*</span></label>
       <Input placeholder='Electrical work' size='small' className="full-width" type="text" />
     </Form.Field> */}
-    <AssigneeIndex />
+    <AssigneeIndex parentAsigneeSelect={setAsignee} />
   </Grid.Column>
  
 </Grid.Row>

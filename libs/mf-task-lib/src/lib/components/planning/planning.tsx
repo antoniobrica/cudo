@@ -10,43 +10,151 @@ import {
 } from 'semantic-ui-react';
 
 import ModalViewPlanning from '../../../../../shared-components/src/lib/components/modal/viewdetailsplanning'
+import { useMilestonesQuery, useMilestoneMutation, useIMileStoneQuery, useMilestoneDeleteMutation } from '../../services/useRequest';
+import { GET_MILESTONES, ADD_MILESTONE, GET_MILESTONES_BY_ID, DELETE_MILESTONE, } from '../../graphql/graphql';
+import { LoaderPage } from "@cudo/shared-components";
+import { ApolloCache, FetchResult, from } from '@apollo/client';
+import { MilestoneMutation, IMileStones } from '../../interfaces/task'
+import PlanDelete from './delete-task';
+
+
+// import { ModalViewPlanning } from '@cudo/shared-components';
 /* eslint-disable-next-line */
 export interface PlanningProps { }
 
 export function Planning(props: PlanningProps) {
   const [open, setOpen] = React.useState(false);
-  const viewDetail =()=>{
-    setOpen(true)
-  }
+  const [openD, setOpenD] = React.useState(false);
+  const [milestoneID, setmilestoneID] = React.useState('');
+  const [milestoneIDd, setmilestoneIDd] = React.useState('');
+  const [milestoneByID, setmilestoneByID] = React.useState({});
+  const { loading, error, data } = useMilestonesQuery(GET_MILESTONES);
+  const [addPlan] = useMilestoneMutation(ADD_MILESTONE);
+  const [planData, setPlanData] = React.useState();
+  const { loading: milLoading, error: MileError, data: MilestoneData } = useIMileStoneQuery(GET_MILESTONES_BY_ID, {
+    variables: { milestoneID: milestoneID },
+  });
+  const [planDelete] = useMilestoneDeleteMutation(DELETE_MILESTONE,{
+    variables: { milestoneID: milestoneIDd },
+  });
+
+  React.useEffect(()=>{
+    if(MilestoneData){
+      setmilestoneByID(MilestoneData)
+      setOpen(true)
+      console.log('MilestoneData', MilestoneData);
+    }
+  }, [MilestoneData])
+
   const cancel = () => {
     setOpen(false)
   }
+
+  const viewDetail = (id) => {
+    setmilestoneID(id);
+  }
+  const deletePlan =(data) =>{
+    setPlanData(data)
+    setmilestoneIDd(data.milestoneID);
+    setOpenD(true)
+  }
+  const getMilestoneData = (data) => {
+    console.log('getMilestoneData', data);
+    addPlan({
+      variables: data,
+      update: (
+        cache,
+        { data: { addPlan } }: FetchResult
+      ) => {
+        const cacheData = cache.readQuery({ query: GET_MILESTONES }) as IMileStones;
+        cache.writeQuery({
+          query: GET_MILESTONES,
+          data: {
+            tasks: [...cacheData.MileStones, addPlan]
+          },
+        });
+      }
+    });
+  }
+  const confirmationDelete = (plan) => {
+    setOpenD(false)
+    const milestoneID = plan.milestoneID;
+    console.log('plan=milestoneID', milestoneID);
+    planDelete({
+      variables: {
+        milestoneID
+      },
+      update: (
+        cache
+      ) => {
+      const cacheData = cache.readQuery({ query: GET_MILESTONES , variables: { milestoneID }}) as IMileStones;
+      const newTask = cacheData.MileStones.filter(item => item.milestoneID !== milestoneID);
+        cache.writeQuery({
+          query: GET_MILESTONES,
+          data: {
+            MileStones: newTask
+          },
+          variables: { milestoneID },
+        });
+      }
+
+    });
+  }
+
+  // const updateMilestone = (task) => {
+  //   setTaskData(task)
+  //   setOpen(true)
+  //   if (task.status === 'COMPLETED') {
+  //     settaskStatus('Re-open')
+  //   }
+  //   else {
+  //     settaskStatus('Mark as Complete')
+  //   }
+
+  // }
+  if (loading) return <LoaderPage />;
+  if (data) {
+    console.log('milestone-data', data.MileStones);
+  }
   return (
     <div>
-      <ModalPlanningNew></ModalPlanningNew>
-      {open ?
+      <ModalPlanningNew getMilestoneData={getMilestoneData}></ModalPlanningNew>
+      { open ?
         <div style={{ marginLeft: 900 }} >
-          <ModalViewPlanning openPlanningDetail={open}  cancel={cancel}></ModalViewPlanning>
+          <ModalViewPlanning
+           openPlanningDetail={open} 
+           cancel={cancel}
+           milestoneDataById={milestoneByID}
+           loading={milLoading}
+            ></ModalViewPlanning>
+        </div>
+        : null}
+         {openD ?
+        <div style={{ marginLeft: 900 }} >
+          <PlanDelete openAlertF={openD} confirm={confirmationDelete} planData={planData} cancel={cancel}></PlanDelete>
         </div>
         : null}
       <div className="ui-tabs">
-            <h6 className="h5heading planningtop">
-              Planning
+        <h6 className="h5heading planningtop planningbelow">
+          Planning
             </h6>
-            <hr style={{ color: '#707070' }}></hr>
-            <h6 style={{ fontWeight: 'normal' }} className="h5heading">
-              Active Milestone{' '}
-            </h6>
+        <hr style={{ borderColor: 'rgba(34,36,38,.1)' }}></hr>
+        <h6 className="headingactive">
+          Active Milestone{' '}
+        </h6>
+        <Form style={{ marginTop: '-20px'}}>
 
-            <Form>
-              <Grid columns={4}>
-                <Grid.Row>
+          <Grid columns={4}>
+
+            <Grid.Row>
+              {data.MileStones.map((plan, i) => {
+                return (
                   <Grid.Column>
                     <Card>
                       <div className="ui card">
                         <div className="content">
                           <div className="description">
-                            <span className="time">Aug 26, Wednesday</span>
+                            <span className="time">{plan.dueDate}</span>
                             <span className="summary">
                               {' '}
                               <a href="">
@@ -58,8 +166,8 @@ export function Planning(props: PlanningProps) {
                               </a>
                             </span>
                           </div>
-                          <div className="header font-header">
-                            High priority things
+                          <div className="header font-header" style={{ color: '#1B1B40' }}>
+                            {plan.milestoneTitle}
                           </div>
                           <div className="description">
                             John & co. +2 others responsible
@@ -70,8 +178,7 @@ export function Planning(props: PlanningProps) {
                           <div className="data-built">
                             <p>
                               {' '}
-                              This is description will be show sunt in culpa qui
-                              officia deserunt mollit anim id est laborum...
+                              {plan.description}
                             </p>
                           </div>
                           <br /> <br />
@@ -81,7 +188,7 @@ export function Planning(props: PlanningProps) {
                           </div>
                           <div className="data-built">
                             Phase
-                            <span className="summary">Prelimary Studies</span>
+                            <span className="summary">{plan.phaseName}</span>
                           </div>
                           <br />
                           <div className="description">
@@ -90,12 +197,13 @@ export function Planning(props: PlanningProps) {
                               <Dropdown text="...">
                                 <Dropdown.Menu>
                                   <Dropdown.Item
-                                    onClick={viewDetail}
+                                    onClick={() => viewDetail(plan.milestoneID)}
                                     icon="eye"
                                     text="View detail"
                                   />
                                   <Dropdown.Item icon="pencil" text="Edit" />
                                   <Dropdown.Item
+                                    onClick={() => deletePlan(plan)}
                                     icon="trash alternate outline"
                                     text="Delete"
                                   />
@@ -107,7 +215,9 @@ export function Planning(props: PlanningProps) {
                       </div>
                     </Card>
                   </Grid.Column>
-                  <Grid.Column>
+                )
+              })}
+              {/* <Grid.Column>
                     <Card>
                       <div className="ui card">
                         <div className="content">
@@ -232,13 +342,16 @@ export function Planning(props: PlanningProps) {
                         </div>
                       </div>
                     </Card>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-            </Form>
-          </div>
+                  </Grid.Column> */}
 
+            </Grid.Row>
+
+          </Grid>
+
+        </Form>
       </div>
+
+    </div>
   );
 }
 

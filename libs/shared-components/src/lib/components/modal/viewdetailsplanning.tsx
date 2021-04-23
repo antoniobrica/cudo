@@ -9,10 +9,13 @@ import {
   Select,
   TextArea,
 } from 'semantic-ui-react';
+import LoaderPage from '../loader/loader';
 // import SampleModal from './sample-modal';
 export interface PlanningProps {
   openPlanningDetail,
-  cancel
+  cancel,
+  milestoneDataById,
+  loading
 }
 export function ModalViewPlanning(props: PlanningProps) {
   
@@ -23,6 +26,7 @@ export function ModalViewPlanning(props: PlanningProps) {
 
   const [open, setOpen] = React.useState(false);
   React.useEffect(() => {
+    console.log('loading',props.loading);
     if (props.openPlanningDetail) {
       setOpen(props.openPlanningDetail);
     }
@@ -34,6 +38,7 @@ export function ModalViewPlanning(props: PlanningProps) {
     setOpen(false)
     props.cancel()
   }
+  if(props.loading) return <LoaderPage />;
   return (
     <div id="navbar">
       <Modal
@@ -58,13 +63,13 @@ export function ModalViewPlanning(props: PlanningProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>Milestone Title</label>
-                      <span>Switchboard Fitting</span>
+                      <span>{props?.milestoneDataById?.MileStoneByID.milestoneTitle}</span>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
                       <label>Due Date</label>
-                      <span>20/11/2021</span>
+                      <span>{props?.milestoneDataById?.MileStoneByID.dueDate}</span>
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -75,9 +80,7 @@ export function ModalViewPlanning(props: PlanningProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>Description </label>
-                      <span>
-                        This is description will be show sunt in culpa qui
-                        officia deserunt mollit anim id est laborum...
+                      <span>{props?.milestoneDataById?.MileStoneByID.description}
                       </span>
                     </Form.Field>
                   </Grid.Column>
@@ -99,7 +102,7 @@ export function ModalViewPlanning(props: PlanningProps) {
         <Modal.Actions>
           <Button
             content="Submit"
-            onClick={() => setOpen(false)}
+            onClick={cancel}
             positive
             size="mini"
             className="grey-btn"
@@ -107,7 +110,7 @@ export function ModalViewPlanning(props: PlanningProps) {
           <Button
             size="mini"
             className="icon-border"
-            onClick={() => setOpen(false)}
+            onClick={cancel}
           >
             X Cancel
           </Button>
