@@ -225,7 +225,7 @@ export function FileStructure(props: FileStructureProps) {
 	]
 
 	return (
-		<div className=" navbar-collapse box-shadow ">
+		<div className=" navbar-collapse box-shadow "  style={{marginTop: '-50px'}}>
 
 
 			<Tab className="ui-tabs" menu={{ secondary: true, pointing: true }} panes={panes} />

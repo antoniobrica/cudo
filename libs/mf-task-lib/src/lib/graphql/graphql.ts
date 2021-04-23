@@ -13,6 +13,42 @@ export const GET_MILESTONES = gql`{
       } 
     
 }`
+
+export const DELETE_MILESTONE = gql`
+mutation  Delete($milestoneID: String!){ 
+  deleteMileStone(milestoneFilter: { milestoneID: $milestoneID }) { 
+    milestoneID 
+    milestoneTitle 
+  } 
+
+} 
+`
+export const GET_MILESTONES_BY_ID = gql`
+query MileStone($milestoneID: String!) {
+  
+  MileStoneByID( 
+    milestoneFilter: { milestoneID: $milestoneID } 
+  ) { 
+
+    milestoneID 
+
+    milestoneTitle 
+
+    description 
+    phaseName
+    dueDate
+    status
+
+    files { 
+
+      fileID 
+
+    } 
+
+  } 
+
+    
+}`
 export const ADD_MILESTONE = gql`
 mutation CreateTask(
   $milestoneTitle: String!, 

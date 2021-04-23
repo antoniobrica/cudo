@@ -10,11 +10,12 @@ import {
 } from 'semantic-ui-react';
 
 import ModalViewPlanning from '../../../../../shared-components/src/lib/components/modal/viewdetailsplanning'
-import { useMilestonesQuery, useMilestoneMutation } from '../../services/useRequest';
-import { GET_MILESTONES, ADD_MILESTONE, } from '../../graphql/graphql';
+import { useMilestonesQuery, useMilestoneMutation, useIMileStoneQuery, useMilestoneDeleteMutation } from '../../services/useRequest';
+import { GET_MILESTONES, ADD_MILESTONE, GET_MILESTONES_BY_ID, DELETE_MILESTONE, } from '../../graphql/graphql';
 import { LoaderPage } from "@cudo/shared-components";
 import { ApolloCache, FetchResult, from } from '@apollo/client';
 import { MilestoneMutation, IMileStones } from '../../interfaces/task'
+import PlanDelete from './delete-task';
 
 
 // import { ModalViewPlanning } from '@cudo/shared-components';
@@ -23,62 +24,131 @@ export interface PlanningProps { }
 
 export function Planning(props: PlanningProps) {
   const [open, setOpen] = React.useState(false);
-  const viewDetail =()=>{
-    setOpen(true)
-  }
+  const [openD, setOpenD] = React.useState(false);
+  const [milestoneID, setmilestoneID] = React.useState('');
+  const [milestoneIDd, setmilestoneIDd] = React.useState('');
+  const [milestoneByID, setmilestoneByID] = React.useState({});
+  const { loading, error, data } = useMilestonesQuery(GET_MILESTONES);
+  const [addPlan] = useMilestoneMutation(ADD_MILESTONE);
+  const [planData, setPlanData] = React.useState();
+  const { loading: milLoading, error: MileError, data: MilestoneData } = useIMileStoneQuery(GET_MILESTONES_BY_ID, {
+    variables: { milestoneID: milestoneID },
+  });
+  const [planDelete] = useMilestoneDeleteMutation(DELETE_MILESTONE,{
+    variables: { milestoneID: milestoneIDd },
+  });
+
+  React.useEffect(()=>{
+    if(MilestoneData){
+      setmilestoneByID(MilestoneData)
+      setOpen(true)
+      console.log('MilestoneData', MilestoneData);
+    }
+  }, [MilestoneData])
+
   const cancel = () => {
     setOpen(false)
   }
-  const [addPlan] = useMilestoneMutation(ADD_MILESTONE);
 
-  const getMilestoneData=(data)=>{
-   console.log('getMilestoneData',data);
-   addPlan({
-    variables: data,
-    update: (
-      cache,
-      { data: { addPlan } }: FetchResult
-    ) => {
-      const cacheData = cache.readQuery({ query: GET_MILESTONES}) as IMileStones;
-      cache.writeQuery({
-        query: GET_MILESTONES,
-        data: {
-          tasks: [...cacheData.MileStones, addPlan]
-        },
-      });
-    }
-  });
-
-
+  const viewDetail = (id) => {
+    setmilestoneID(id);
   }
-  const { loading, error, data } = useMilestonesQuery(GET_MILESTONES);
+  const deletePlan =(data) =>{
+    setPlanData(data)
+    setmilestoneIDd(data.milestoneID);
+    setOpenD(true)
+  }
+  const getMilestoneData = (data) => {
+    console.log('getMilestoneData', data);
+    addPlan({
+      variables: data,
+      update: (
+        cache,
+        { data: { addPlan } }: FetchResult
+      ) => {
+        const cacheData = cache.readQuery({ query: GET_MILESTONES }) as IMileStones;
+        cache.writeQuery({
+          query: GET_MILESTONES,
+          data: {
+            tasks: [...cacheData.MileStones, addPlan]
+          },
+        });
+      }
+    });
+  }
+  const confirmationDelete = (plan) => {
+    setOpenD(false)
+    const milestoneID = plan.milestoneID;
+    console.log('plan=milestoneID', milestoneID);
+    planDelete({
+      variables: {
+        milestoneID
+      },
+      update: (
+        cache
+      ) => {
+      const cacheData = cache.readQuery({ query: GET_MILESTONES , variables: { milestoneID }}) as IMileStones;
+      const newTask = cacheData.MileStones.filter(item => item.milestoneID !== milestoneID);
+        cache.writeQuery({
+          query: GET_MILESTONES,
+          data: {
+            MileStones: newTask
+          },
+          variables: { milestoneID },
+        });
+      }
+
+    });
+  }
+
+  // const updateMilestone = (task) => {
+  //   setTaskData(task)
+  //   setOpen(true)
+  //   if (task.status === 'COMPLETED') {
+  //     settaskStatus('Re-open')
+  //   }
+  //   else {
+  //     settaskStatus('Mark as Complete')
+  //   }
+
+  // }
   if (loading) return <LoaderPage />;
-if(data){
-  console.log('milestone-data',data.MileStones);
-}
+  if (data) {
+    console.log('milestone-data', data.MileStones);
+  }
   return (
     <div>
       <ModalPlanningNew getMilestoneData={getMilestoneData}></ModalPlanningNew>
-      {open ?
+      { open ?
         <div style={{ marginLeft: 900 }} >
-          <ModalViewPlanning openPlanningDetail={open}  cancel={cancel}></ModalViewPlanning>
+          <ModalViewPlanning
+           openPlanningDetail={open} 
+           cancel={cancel}
+           milestoneDataById={milestoneByID}
+           loading={milLoading}
+            ></ModalViewPlanning>
+        </div>
+        : null}
+         {openD ?
+        <div style={{ marginLeft: 900 }} >
+          <PlanDelete openAlertF={openD} confirm={confirmationDelete} planData={planData} cancel={cancel}></PlanDelete>
         </div>
         : null}
       <div className="ui-tabs">
-            <h6 className="h5heading planningtop">
-              Planning
+        <h6 className="h5heading planningtop planningbelow">
+          Planning
             </h6>
-            <hr style={{ color: '#707070' }}></hr>
-            <h6 style={{ fontWeight: 'normal' }} className="h5heading">
-              Active Milestone{' '}
-            </h6>
-            <Form>
-           
-              <Grid columns={4}>
-              
-                <Grid.Row>
-                {data.MileStones.map((plan, i)=>{
-              return(
+        <hr style={{ borderColor: 'rgba(34,36,38,.1)' }}></hr>
+        <h6 className="headingactive">
+          Active Milestone{' '}
+        </h6>
+        <Form style={{ marginTop: '-20px'}}>
+
+          <Grid columns={4}>
+
+            <Grid.Row>
+              {data.MileStones.map((plan, i) => {
+                return (
                   <Grid.Column>
                     <Card>
                       <div className="ui card">
@@ -96,8 +166,8 @@ if(data){
                               </a>
                             </span>
                           </div>
-                          <div className="header font-header">
-                           {plan.milestoneTitle}
+                          <div className="header font-header" style={{ color: '#1B1B40' }}>
+                            {plan.milestoneTitle}
                           </div>
                           <div className="description">
                             John & co. +2 others responsible
@@ -127,12 +197,13 @@ if(data){
                               <Dropdown text="...">
                                 <Dropdown.Menu>
                                   <Dropdown.Item
-                                    onClick={viewDetail}
+                                    onClick={() => viewDetail(plan.milestoneID)}
                                     icon="eye"
                                     text="View detail"
                                   />
                                   <Dropdown.Item icon="pencil" text="Edit" />
                                   <Dropdown.Item
+                                    onClick={() => deletePlan(plan)}
                                     icon="trash alternate outline"
                                     text="Delete"
                                   />
@@ -144,8 +215,9 @@ if(data){
                       </div>
                     </Card>
                   </Grid.Column>
-                  )})}
-                  {/* <Grid.Column>
+                )
+              })}
+              {/* <Grid.Column>
                     <Card>
                       <div className="ui card">
                         <div className="content">
@@ -271,15 +343,15 @@ if(data){
                       </div>
                     </Card>
                   </Grid.Column> */}
-           
-                </Grid.Row>
-                  
-              </Grid>
-         
-            </Form>
-          </div>
 
+            </Grid.Row>
+
+          </Grid>
+
+        </Form>
       </div>
+
+    </div>
   );
 }
 

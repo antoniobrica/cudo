@@ -180,7 +180,7 @@ const [taskDelete] = useTaskDeleteMutation(DELETE_TASK,{
         </div>
         : null}
       <div className="TaskApp-container">
-        <h3 style={{ color: "black" }}>All Tasks</h3>
+        <h3 className="alltask">All Tasks</h3>
         {data.tasks.map((task, id) => {
           return (
             <div key={id}>

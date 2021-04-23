@@ -1,5 +1,5 @@
 import { DocumentNode, useQuery, useMutation } from "@apollo/react-hooks";
-import { IMileStones, MilestoneMutation } from "../interfaces/task";
+import { IMileStoneModel, IMileStones, MilestoneMutation } from "../interfaces/task";
 
 export function useMilestonesQuery(gqlQuery: DocumentNode) {
   const { loading, error, data } = useQuery<IMileStones>(gqlQuery);
@@ -9,4 +9,13 @@ export function useMilestonesQuery(gqlQuery: DocumentNode) {
 export function useMilestoneMutation(gqlQuery: DocumentNode){
   const [addFile] = useMutation<MilestoneMutation>(gqlQuery);
   return [addFile];
+}
+export function useIMileStoneQuery(gqlQuery: DocumentNode, variable) {
+  const { loading, error, data } = useQuery<IMileStoneModel>(gqlQuery, variable);
+  return { loading, error, data };
+}
+
+export function useMilestoneDeleteMutation(gqlQuery: DocumentNode, variable) {
+  const [updateTask] = useMutation<MilestoneMutation>(gqlQuery, variable);
+  return [updateTask];
 }
