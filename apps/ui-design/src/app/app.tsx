@@ -38,6 +38,9 @@ import ModalViewPlanning from 'libs/shared-components/src/lib/components/modal/v
 import ModalSession from 'libs/shared-components/src/lib/components/modal/addsession';
 import ModalViewTask from 'libs/shared-components/src/lib/components/modal/taskdetails';
 import ModalTaskEdit from 'libs/shared-components/src/lib/components/modal/taskeditdetails';
+import InvitationTab from 'libs/shared-components/src/lib/components/invitation/invitation';
+import EditMileStonePopup from 'libs/shared-components/src/lib/components/modal/editmilestone';
+
 
 
 
@@ -85,7 +88,9 @@ export function App() {
     <ModalViewPlanning></ModalViewPlanning><br/>
     <ModalSession></ModalSession><br/>
     <ModalViewTask></ModalViewTask><br/>
-    <ModalTaskEdit></ModalTaskEdit>
+    <ModalTaskEdit></ModalTaskEdit><br/>
+    <InvitationTab></InvitationTab><br/>
+    <EditMileStonePopup></EditMileStonePopup>
     </div>
 
 
