@@ -86,6 +86,43 @@ mutation CreateTask(
     }
 }`;
 
+export const UPDATE_MILESTONE = gql`
+mutation UpdateMileStone(
+  $milestoneID: String!,
+  $milestoneTitle: String!, 
+  $dueDate: DateTime!,
+  $description: String!,
+  $phaseName: String!,
+  ){ 
+    updateMileStone(
+      mileStoneDetails: {
+        milestoneBasics: {
+          milestoneTitle: $milestoneTitle
+          milestoneID: $milestoneID
+          dueDate: $dueDate
+          description: $description
+          phaseName: $phaseName
+          worktypeName: "Whateever"
+          status: INPROGRESS
+        }
+        files: [
+          { fileID: "milestone1", fileUrl: "Pull.comm", fileName: "requeest" }
+        ]
+      }
+    ) {
+      milestoneID
+      description
+      phaseID
+      phaseName
+      status
+      files {
+        fileID
+      }
+    }
+}`;
+
+
+
 
 
 //dummy data

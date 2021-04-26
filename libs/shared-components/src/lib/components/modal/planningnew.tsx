@@ -74,7 +74,7 @@ const createMilestone=()=>{
 }
   return (
     <div style={{ marginLeft: 900 }} >
-      <Modal
+      <Modal style={{height: '650px'}}
         className="modal_media"
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}

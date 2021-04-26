@@ -41,7 +41,7 @@ export function ModalViewPlanning(props: PlanningProps) {
   if(props.loading) return <LoaderPage />;
   return (
     <div id="navbar">
-      <Modal
+      <Modal style={{height:'650px'}}
         className="modal_media"
         onClose={() => setOpen(false)}
         onOpen={openf}
