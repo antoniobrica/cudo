@@ -40,6 +40,9 @@ import ModalSession from 'libs/shared-components/src/lib/components/modal/addses
 import ModalViewTask from 'libs/shared-components/src/lib/components/modal/taskdetails';
 import ModalTaskEdit from 'libs/shared-components/src/lib/components/modal/taskeditdetails';
 import InvitationTab from 'libs/shared-components/src/lib/components/invitation/invitation';
+import EditMileStonePopup from 'libs/shared-components/src/lib/components/modal/editmilestone';
+
+
 
 
 // import { Sidebar } from 'semantic-ui-react';
@@ -87,7 +90,8 @@ export function App() {
     <ModalSession></ModalSession><br/>
     <ModalViewTask></ModalViewTask><br/>
     <ModalTaskEdit></ModalTaskEdit><br/>
-    <InvitationTab></InvitationTab>
+    <InvitationTab></InvitationTab><br/>
+    <EditMileStonePopup></EditMileStonePopup>
     </div>
     
    
