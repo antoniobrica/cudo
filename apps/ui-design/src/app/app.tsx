@@ -41,7 +41,7 @@ import ModalViewTask from 'libs/shared-components/src/lib/components/modal/taskd
 import ModalTaskEdit from 'libs/shared-components/src/lib/components/modal/taskeditdetails';
 import InvitationTab from 'libs/shared-components/src/lib/components/invitation/invitation';
 import EditMileStonePopup from 'libs/shared-components/src/lib/components/modal/editmilestone';
-
+import ModalEditViewMilestone from 'libs/shared-components/src/lib/components/modal/viewmilestone';
 
 
 
@@ -91,7 +91,8 @@ export function App() {
     <ModalViewTask></ModalViewTask><br/>
     <ModalTaskEdit></ModalTaskEdit><br/>
     <InvitationTab></InvitationTab><br/>
-    <EditMileStonePopup></EditMileStonePopup>
+    <EditMileStonePopup></EditMileStonePopup><br/>
+    <ModalEditViewMilestone></ModalEditViewMilestone>
     </div>
     
    
