@@ -12,13 +12,14 @@ const client = new ApolloClient({
 });
 /* eslint-disable-next-line */
 export interface PlanningIndexProps {
+  worktypes
  }
 
 export function PlanningIndex(props: PlanningIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <Planning></Planning>
+        <Planning worktypes={props.worktypes}></Planning>
       </ApolloHooksProvider>
     </ApolloProvider>
   );

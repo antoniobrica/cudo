@@ -9,6 +9,9 @@ export const GET_MILESTONES = gql`{
         phaseName
         dueDate
         status
+        worktypeID
+        worktypeName
+        description
         files{fileID,fileName,fileUrl} 
       } 
     
@@ -38,7 +41,8 @@ query MileStone($milestoneID: String!) {
     phaseName
     dueDate
     status
-
+    worktypeID
+    worktypeName
     files { 
 
       fileID 
@@ -56,6 +60,8 @@ mutation CreateTask(
   $description: String!,
   $phaseID: String!,
   $phaseName: String!,
+  $worktypeName: String!,
+  $worktypeID: String!
   ){ 
     createMileStone(
       referenceFilter: { referenceType: PROJECTTYPE, referenceID: "d3f04920-a18e-11eb-bd3b-7597bc3ab7d7" }
@@ -66,8 +72,8 @@ mutation CreateTask(
           description: $description
           phaseID: $phaseID
           phaseName: $phaseName
-          worktypeID: "123"
-          worktypeName: "Whateever"
+          worktypeID: $worktypeID
+          worktypeName: $worktypeName
           status: INPROGRESS
         }
         files: [
@@ -80,6 +86,8 @@ mutation CreateTask(
       phaseID
       phaseName
       status
+      worktypeID
+      worktypeName
       files {
         fileID
       }
@@ -95,7 +103,7 @@ mutation UpdateMileStone(
   $phaseName: String!,
   ){ 
     updateMileStone(
-      mileStoneDetails: {
+      milestoneDetailsUpdate: {
         milestoneBasics: {
           milestoneTitle: $milestoneTitle
           milestoneID: $milestoneID

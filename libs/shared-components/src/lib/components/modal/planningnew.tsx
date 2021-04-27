@@ -19,6 +19,7 @@ import moment, { calendarFormat } from 'moment';
 
 export interface PlanningProps {
   getMilestoneData,
+  worktypes
 }
 export function ModalPlanningNew(props: PlanningProps) {
   const countryOptions = [
@@ -39,7 +40,40 @@ export function ModalPlanningNew(props: PlanningProps) {
   const [milestone, setMilestoneName] = React.useState("");
   const [dueDate, setDueDate] = React.useState("")
   const [description, setDescription] = React.useState("")
+  const [worktypeID, setworktypeID] = React.useState("")
+  const [worktypeName, setworktypeName] = React.useState("")
+  const [workTypeData, setworkTypeData]= React.useState('')
+  const [workType, setworkType] = React.useState(null) 
+  const [workTypeD, setworkTypeD] = React.useState(null) 
+
+
   const [open, setOpen] = React.useState(false);
+  React.useEffect(() => {
+    if (props.worktypes) {
+      console.log('worktypes', props.worktypes);
+      setworkType(props.worktypes.map(({ workTypeName, projectWorkTypeID }) => ({ key: projectWorkTypeID, value: workTypeName, text: workTypeName, id: projectWorkTypeID })));
+
+    }
+  }, [props.worktypes]);
+  const onMworkType = (event, data) => {
+    const workT = { 
+      worktypeID: '',
+      worktypeName: ''
+     };
+    for (let i = 0; i < props.worktypes.length; i++) {
+      if (props.worktypes[i]?.workTypeName === data.value) {
+        console.log('props.worktypes[i]', props.worktypes[i]);
+        workT.worktypeID = props.worktypes[i].projectWorkTypeID;
+        workT.worktypeName = data.value;
+        setworktypeName(workT.worktypeName);
+        setworktypeID(workT.worktypeID);
+        setworkTypeD(workT)
+      }
+    }
+    setworkTypeData(data.value)
+
+    console.log('worktypeName-', workTypeD);
+  }
   const onsetPhasesID = (data) => {
     console.log('phase',data);
     
@@ -62,12 +96,15 @@ export function ModalPlanningNew(props: PlanningProps) {
     setDescription(e.target.value);
   }
 const createMilestone=()=>{
+  
    const data ={
     milestoneTitle: milestone,
     dueDate: dueDate,
     description: description,
     phaseID: phaseID,
-    phaseName: phaseName
+    phaseName: phaseName,
+    worktypeID: workTypeD.worktypeID,
+    worktypeName: workTypeD.worktypeName
    }
    props.getMilestoneData(data);
    setOpen(false)
@@ -149,7 +186,9 @@ const createMilestone=()=>{
                       <Select
                         placeholder="Select"
                         className="small"
-                        options={workTypes}
+                        value={workTypeData}
+                        options={workType}
+                        onChange={onMworkType}                        
                       />
                     </Form.Field>
                   </Grid.Column>
