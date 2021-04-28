@@ -5,6 +5,10 @@ import { MilestoneDetailsInput } from '../dto/input/milestone-details.input';
 import { MileStoneDetailsUpdateInput } from '../dto/input/milestone-update.input';
 import { MileStoneModel } from '../model/milestone.model';
 import { MileStoneService } from '../service/milestone.service';
+import { pageParams } from '../../paginate/pagination.param';
+import { PaginationModel } from '../../paginate/pagination.model';
+import { MileStoneEntity } from '../../../entities/milestone.entity';
+import { Pagination } from '../../paginate';
 
 @Resolver(() => MileStoneModel)
 export class MileStoneResolver {
@@ -45,6 +49,13 @@ export class MileStoneResolver {
         @Args('milestoneDetailsUpdate') milestoneDetailsUpdate: MileStoneDetailsUpdateInput
     ) {
         return this.mileStoneService.updateMileStoneByID(milestoneDetailsUpdate);
+    }
+
+    @Query(() => PaginationModel, { nullable: true })
+    async paginatedMileStone(@Args('options')options:pageParams,
+    @Args("referenceFilter") getTasksArgs: ReferenceFilterParams): Promise<Pagination<MileStoneEntity>>  {
+        return await this.mileStoneService.paginate(options,getTasksArgs
+          )
     }
 
 }
