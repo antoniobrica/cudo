@@ -38,4 +38,7 @@ export class TaskBasicDetailsInput {
     @Field(type => StatusEnum, { description: `Task status` })
     status?: StatusEnum;
 
+    @Field({ description: `Description of task` })
+    description?: string;
+
 }
