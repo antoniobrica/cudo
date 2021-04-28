@@ -5,6 +5,7 @@ import { FolderEntity } from '../../../entities/folder.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
 import { CreateFolderInput } from '../dto/create-folder.input';
+import { UpdateFolder } from '../dto/update-folder.input';
 import FolderNotFoundException from '../exceptions/folderNotFound.exception';
 
 
@@ -33,12 +34,12 @@ export class FolderService {
     }
   }
 
-  public async updateFolder(createfolderInput: CreateFolderInput, referenceFilter: ReferenceFilterParams): Promise<FolderEntity> {
+  public async updateFolder(updatefolder: UpdateFolder, referenceFilter: ReferenceFilterParams): Promise<FolderEntity> {
 
     const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
-    const folder = await this.FolderRepository.findOne({ where: { folderID: createfolderInput.folderID, reference: { id: selectedReference.id } } });
+    const folder = await this.FolderRepository.findOne({ where: { folderID: updatefolder.folderID, reference: { id: selectedReference.id } } });
     if (folder) {
-      await this.FolderRepository.update(folder.id, { ...createfolderInput });
+      await this.FolderRepository.update(folder.id, { ...updatefolder });
       const updatedPost = await this.FolderRepository.findOne(folder.id);
       return updatedPost;
     }
