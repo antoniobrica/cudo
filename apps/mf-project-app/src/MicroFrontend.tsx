@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 
 function MicroFrontend({ name, host, history }) {
+  console.log('MicroFrontend',history);
+  
   useEffect(() => {
     const scriptId = `render${name}`;
     const renderMicroFrontend = () => {

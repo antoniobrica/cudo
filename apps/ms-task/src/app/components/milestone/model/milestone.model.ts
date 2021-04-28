@@ -22,7 +22,19 @@ export class MileStoneModel {
   // WorkTypeTitle?: string;
 
   @Field({ nullable: true, description: `PhaseID linked with task` })
-  phasesID?: string;
+  phaseID?: string;
+
+  @Field({ nullable: true, description: `PhaseID linked with task` })
+  phaseName?: string;
+
+  @Field({ nullable: true, description: `PhaseID linked with task` })
+  worktypeID?: string;
+
+  @Field({ nullable: true, description: `PhaseID linked with task` })
+  worktypeName?: string;
+
+  @Field({ nullable: true, description: `PhaseID linked with task` })
+  status?: string;
 
   @Field({ description: `Task updated at` })
   updatedAt?: Date;
@@ -42,8 +54,8 @@ export class MileStoneModel {
   @Field(type => [TaskFileModel], { nullable: true })
   files?: TaskFileModel[]
 
-  @Field(type => [WorkTypeModel], { nullable: true })
-  worktypes?: WorkTypeModel[]
+  // @Field(type => [WorkTypeModel], { nullable: true })
+  // worktypes?: WorkTypeModel[]
 
 }
 

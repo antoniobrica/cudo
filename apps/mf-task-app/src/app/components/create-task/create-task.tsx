@@ -9,6 +9,7 @@ import '../../../../../../libs/shared-components/src/style/index.scss';
 import './create-task.module.scss';
 import moment, { calendarFormat } from 'moment';
 import {FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex} from "@cudo/mf-account-app-lib"
+import { useHistory } from 'react-router';
 /* eslint-disable-next-line */
 export interface CreateTaskProps { }
 
@@ -29,20 +30,36 @@ export function CreateTask(props: CreateTaskProps) {
     { key: 'BKP_2', value: 'BKP_2', text: 'BKP 2' },
 
   ]
+  const workTypes = [
+    { key: 'w1', value: 'w1', text: 'Electrical Work' },
+    { key: 'w2', value: 'w2', text: 'HVAC work' },
+    { key: 'w3', value: 'w3', text: 'Pipelines work' },
+    { key: 'w4', value: 'w4', text: 'Plumbing Work' },
+
+
+  ]
 
 const [open, setOpen] = React.useState(false)
 const [taskTitle, setTaskTitle] = React.useState("")
 const [startDate, setStartDate] = React.useState('')
 const [endDate, setEndDate] = React.useState("")
 const [estimatedDays, setEstimatedDays] = React.useState("")
-const [sendNotification, setEendNotification] = React.useState("")
+const [sendNotification, setEendNotification] = React.useState(false)
 const [BKPID, setBKPID] = React.useState("")
 const [saveTaskAsTemplate, setSaveTaskAsTemplate] = React.useState("")
-const [phasesID, setPhasesID] = React.useState("")
+const [phaseID, setPhasesID] = React.useState("")
 const [status, setStatus] = React.useState("")
 const [followers, setfollowers] = React.useState("")
+const [phaseName, setPhasesName] = React.useState("");
+const [BKPTitle, setBKPIDTitle] = React.useState("");
+const [files, setFileList] = React.useState<any>([]);
 
-  const [addTask] = useTaskMutation(ADD_TASK);
+const history = useHistory();
+var res = history.location.pathname.split("/");
+const referenceID = res[3].toString();
+  const [addTask] = useTaskMutation(ADD_TASK,{
+    variables: { referenceID },
+});
 
 const onTaskTitleChange = e => {
   setTaskTitle(e.target.value)
@@ -67,15 +84,22 @@ const onsetEstimatedDays = (event, data) => {
     setfollowers(data.value);
   }
   const setBKPIDChange = (data) => {
-    setBKPID(data.value)
+    setBKPIDTitle(data.BKPIDTitle)
+    setBKPID(data.BKPID)  
+    console.log('bkp==>',data);
   }
+  const setAsignee = (data) => {
+   // setAsignis(data)
+  }
+    
 
   const setSaveTaskAsTemplateChange = (event, data) => {
     setSaveTaskAsTemplate(data.value)
   }
 
   const onsetPhasesID = ( data) => {
-    setPhasesID(data.value);
+    setPhasesID((data.phaseID).toString());
+    setPhasesName(data.phaseName)
   }
   const onsetStatus = e => {
     setStatus(e.target.value)
@@ -86,18 +110,20 @@ const onsetEstimatedDays = (event, data) => {
   addTask({
     variables: {
       taskTitle, startDate, endDate, estimatedDays,
-      sendNotification, BKPID, saveTaskAsTemplate, phasesID
+      sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
+      files
     },
     update: (
       cache,
       { data: { addTask } }: FetchResult<TaskMutation>
     ) => {
-      const cacheData = cache.readQuery({ query: GET_TASKS}) as ITasks;
+      const cacheData = cache.readQuery({ query: GET_TASKS,  variables: { referenceID },}) as ITasks;
       cache.writeQuery({
         query: GET_TASKS,
         data: {
           tasks: [...cacheData.tasks, addTask]
-        }
+        },
+        variables: { referenceID },
       });
     }
   });
@@ -126,7 +152,7 @@ const onsetEstimatedDays = (event, data) => {
   <Grid.Column>
     <Form.Field>
       <label>Task Title <span className="danger">*</span></label>
-      <Input placeholder='Swtichboard fitting' size='small' className="full-width" type="text" 
+      <Input placeholder='Task title' size='small' className="full-width" type="text" 
        value={taskTitle}
        onChange={onTaskTitleChange}/>
     </Form.Field>
@@ -152,7 +178,7 @@ const onsetEstimatedDays = (event, data) => {
   <Grid.Column>
     <Form.Field>
       <label>Associate with work type <span className="danger">*</span></label>
-      <Input placeholder='Electrical work' size='small' className="full-width" type="text" />
+      <Select placeholder='Select' className="small" options={workTypes} />
     </Form.Field>
   </Grid.Column>
  
@@ -187,7 +213,7 @@ const onsetEstimatedDays = (event, data) => {
       <label>Assignee <span className="danger">*</span></label>
       <Input placeholder='Electrical work' size='small' className="full-width" type="text" />
     </Form.Field> */}
-    <AssigneeIndex />
+    <AssigneeIndex parentAsigneeSelect={setAsignee} />
   </Grid.Column>
  
 </Grid.Row>

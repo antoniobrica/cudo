@@ -24,6 +24,8 @@ export function Home(props: HomeProps) {
   const location = useLocation();
   // const routeMatch = useRouteMatch();
   const { url, path } = useRouteMatch();
+  console.log('path==>', path);
+  
   useEffect(() => {
     if (!isAuthenticated()) ToEmail()
   }, [])
