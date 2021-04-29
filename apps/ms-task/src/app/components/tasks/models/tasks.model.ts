@@ -1,6 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import TaskFileEntity from '../../../entities/task-file.entity';
 import { ReferenceModel } from '../../reference/model/reference.model';
+import { SubTaskModel } from './subtask.model';
 import { TaskFileModel } from './taskfile.model';
 import { UserModel } from './user.model';
 
@@ -67,7 +68,7 @@ export class TasksModel {
   @Field(type => [TaskFileModel], { nullable: true })
   files?: TaskFileModel[]
 
+  @Field(type => [SubTaskModel], { nullable: true })
+  subtasks?: SubTaskModel[]
+
 }
-
-
-
