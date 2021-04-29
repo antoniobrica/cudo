@@ -3,7 +3,7 @@ import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import SubTaskParams from '../../../utils/types/subtask.param.';
 import TaskFilterParams from '../../../utils/types/taskFilterParams';
 import SubTaskInput from '../dto/input/create-subtask.input';
-import { SubTaskDeleteInput } from '../dto/input/subtask-delete.input';
+import {  SubTaskFilterInput } from '../dto/input/subtask-delete.input';
 import { TaskDeleteInput } from '../dto/input/task-delete.input';
 import { TaskDetailsUpdateInput } from '../dto/input/task-details-update.input';
 import { TaskDetailsInput } from '../dto/input/task-details.input';
@@ -51,29 +51,18 @@ export class TasksResolver {
 
     @Mutation(() => [SubTaskModel])
     async deletesubTask(
-        @Args('subtaskDeleteInput') taskDeleteInput: SubTaskDeleteInput
+        @Args('subtaskDeleteInput') taskDeleteInput: SubTaskFilterInput
     ) {
         return this.projectTasksService.deletesubTaskByID(taskDeleteInput);
     }
 
-    // @Mutation(() => SubTaskModel)
-    // async deleteSubTask(@Args("subtaskFilter") mileFilter: SubTaskDeleteInput
-    // ) {
-    //     return this.projectTasksService.deleteSubTaskByID(mileFilter);
-    // }
-
-    // @Mutation(() => SubTaskModel)
-    // async updateSubTask(
-    //   @Args('subTask') createfileStructureInput: SubTaskInput,
-    // ) {
-    //   return this.projectTasksService.updateSubTask(createfileStructureInput);
-    // }
 
     @Mutation(() => SubTaskModel)
     async updatesubTask(
+      @Args('subTaskFilter')update: SubTaskFilterInput,
       @Args('subTaskDetail') createsub: SubTaskInput,
     ) {
-      return this.projectTasksService.updatesubTask(createsub);
+      return this.projectTasksService.updateSubTask(update,createsub);
     }
   
 

@@ -4,13 +4,11 @@ import { StatusEnum } from 'apps/ms-task/src/app/enums/status.enum';
 @InputType()
 class SubTaskInput {
 
-  @Field({ description: `subtask Name` })
-  subtaskID?: string
 
-  @Field({ description: `subtask Name` })
+  @Field({ description: `subtask Name`, nullable:true })
   subtaskTitle?: string;
 
-  @Field(type => StatusEnum, { description: `SubTask status` })
+  @Field(type => StatusEnum, { description: `SubTask status`, nullable: true })
   status?: StatusEnum;
 }
 

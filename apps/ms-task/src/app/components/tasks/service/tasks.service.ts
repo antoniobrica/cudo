@@ -11,7 +11,7 @@ import TaskFilterParams from '../../../utils/types/taskFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
 import SubTaskNotFoundException from '../dto/args/subTaskNotFound';
 import SubTaskInput from '../dto/input/create-subtask.input';
-import { SubTaskDeleteInput } from '../dto/input/subtask-delete.input';
+import { SubTaskFilterInput } from '../dto/input/subtask-delete.input';
 import { TaskDeleteInput } from '../dto/input/task-delete.input';
 import { TaskDetailsUpdateInput } from '../dto/input/task-details-update.input';
 import { TaskDetailsInput } from '../dto/input/task-details.input';
@@ -175,36 +175,22 @@ export class TasksService {
         return tasks;
     }
 
-    public async deletesubTaskByID(subtaskDeleteInput: SubTaskDeleteInput): Promise<SubTaskEntity[]> {
+    public async deletesubTaskByID(subtaskDeleteInput: SubTaskFilterInput): Promise<SubTaskEntity[]> {
         const { subtaskID } = subtaskDeleteInput;
         const subtaskeDetails = await this.subTaskRepository.delete({ subtaskID: subtaskID });
         console.log(subtaskeDetails)
         const subtasks = await this.subTaskRepository.find({
             where: { subtaskID: subtaskID },
-            // relations: ['reference', 'assignees', 'followers', 'files', 'subtasks']
         });
         return subtasks;
     }
 
 
-
-    // public async updateSubTask(createFileStructureInput: SubTaskInput): Promise<SubTaskEntity> {
-
-    //     const subTask = await this.subTaskRepository.findOne({ where: { subtaskID: createFileStructureInput.subtaskID, } });
-    //     if (subTask) {
-    //       await this.subTaskRepository.update(subTask.subtaskID, { ...createFileStructureInput });
-    //       const updatedPost = await this.subTaskRepository.findOne(subTask.subtaskID);
-    //       return updatedPost;
-    //     }
-    //     throw new SubTaskNotFoundException(subTask.subtaskID);
-    // }
-
-    public async updatesubTask(createsubtaskInput: SubTaskInput): Promise<SubTaskEntity> {
-
-        const subtask = await this.subTaskRepository.findOne({ where: { subtaskID: createsubtaskInput.subtaskID } });
+      public async updateSubTask(updateSubTask: SubTaskFilterInput, createinput: SubTaskInput): Promise<SubTaskEntity> {
+        const subtask = await this.subTaskRepository.findOne({ where: { subtaskID: updateSubTask.subtaskID } });
         if (subtask) {
-          await this.subTaskRepository.update(subtask.subtaskID, { ...createsubtaskInput });
-          const updatedPost = await this.subTaskRepository.findOne(subtask.subtaskID);
+          await this.subTaskRepository.update(subtask.Id, { ...createinput });
+          const updatedPost = await this.subTaskRepository.findOne(subtask.Id);
           return updatedPost;
         }
         throw new SubTaskNotFoundException(subtask.subtaskID);
