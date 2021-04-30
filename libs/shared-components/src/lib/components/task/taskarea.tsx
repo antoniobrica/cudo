@@ -7,7 +7,12 @@ import img2 from 'libs/shared-components/src/user2.png';
 import img3 from 'libs/shared-components/src/green_tick.png';
 import img4 from 'libs/shared-components/src/dots.png';
 import img5 from 'libs/shared-components/src/tasks.png';
-/* eslint-disable-next-line */
+import { initI18n } from '@cudo/mf-core';
+import { useTranslation } from 'react-i18next';
+const defaultLanguage = 'en-GB';
+const supportedLanguages = [defaultLanguage, 'en-GB'];
+initI18n('./assets/i18n/{{lng}}.json', defaultLanguage);
+
 export interface Tasks {
 	task,
 	id,
@@ -16,9 +21,8 @@ export interface Tasks {
 	deleteTask,
 	editTask
 }
-
 export function TaskArea(props: Tasks) {
-
+	const { t, i18n } = useTranslation();
 	const description = [
 		<Segment>Pellentesque habitant morbi tristique senectus.</Segment>
 
@@ -36,7 +40,6 @@ export function TaskArea(props: Tasks) {
 		props.editTask(task, id)
 	}
 	return (
-
 		<div>
 
 			{props.task.status === "COMPLETED" ?
@@ -127,7 +130,7 @@ export function TaskArea(props: Tasks) {
 
 									<div className="navi-item mr-2">
 										<a className="navi-link">
-											<span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>2 files  -  </span>
+											<span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>2 files  - </span>
 										</a>
 									</div>
 
@@ -175,8 +178,6 @@ export function TaskArea(props: Tasks) {
 			}
 
 		</div>
-
-
 	);
 }
 

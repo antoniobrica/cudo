@@ -12,11 +12,13 @@ import { ITask, ITasks, TaskUpdateMutation } from '../../app/interfaces/task';
 import { ModalAlert, ModalViewTask } from '@cudo/shared-components';
 import { useHistory, useParams } from 'react-router';
 import TaskDelete from '../delete-task';
+import { useTranslation } from 'react-i18next';
 /* eslint-disable-next-line */
 export interface TasksProps { }
 
 export function Tasks(props: TasksProps) {
   const history = useHistory();
+  const { t } = useTranslation();
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
   const { loading, error, data } = useTaskQuery(GET_TASKS, {

@@ -41,7 +41,7 @@ export function AddProject(props: AddProjectProps) {
         cache.writeQuery({
           query: GET_PROJECTS,
           data: {
-            getProjects: [...cacheData.getProjects, addProject]
+            getProjects: [...cacheData.projects, addProject]
           }
         });
       }
