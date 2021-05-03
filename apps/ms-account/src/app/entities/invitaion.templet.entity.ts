@@ -4,20 +4,20 @@ import ReferanceTypeEntity from './references.entity';
 import * as uuid from 'uuid';
 
 
-@Entity({ name: 'folder' })
+@Entity({ name: 'invitationTemplate' })
 
-export class FolderEntity extends BaseEntity {
+export class InvitationTemplateEntity extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ unique: true })
   @Expose()
-  folderID: string;
+  invitationTemplateID: string;
 
   @Column()
   @Expose()
-  folderTitle: string;
+  invitationTemplateTitle: string;
 
 
   @Expose()
@@ -45,16 +45,16 @@ export class FolderEntity extends BaseEntity {
   reference: ReferanceTypeEntity;
 
 
-  constructor(folderEntity: Partial<FolderEntity>) {
+  constructor(invitationTemplateEntity: Partial<InvitationTemplateEntity>) {
     super();
-    if (folderEntity) {
+    if (invitationTemplateEntity) {
       Object.assign(
         this,
-        plainToClass(FolderEntity, folderEntity, {
+        plainToClass(InvitationTemplateEntity, invitationTemplateEntity, {
           excludeExtraneousValues: true
         })
       )
-      this.folderID = this.folderID || uuid.v1();
+      this.invitationTemplateID = this.invitationTemplateID || uuid.v1();
 
     }
   }
