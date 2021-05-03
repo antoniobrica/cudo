@@ -5,6 +5,7 @@ import ReferanceTypeEntity from './reference-type.entity';
 import TaskAssigneessEntity from './task-assignees.entity';
 import TaskFllowersEntity from './task-followers.entity';
 import TaskFileEntity from './task-file.entity';
+import { SubTaskEntity } from './subtask.entity';
 
 @Entity({
   name: 'tasks',
@@ -110,6 +111,13 @@ export class TasksEntity extends BaseEntity {
   @ManyToMany(type => TaskFllowersEntity, { cascade: true })
   @JoinTable()
   followers: TaskFllowersEntity[];
+
+  @Expose()
+  // n:n relation with TaskAssigneessEntity
+  @ManyToMany(type => SubTaskEntity, { cascade: true })
+  @JoinTable()
+  subtasks: SubTaskEntity[];
+
 
   constructor(projectTasksEntity: Partial<TasksEntity>) {
     super();

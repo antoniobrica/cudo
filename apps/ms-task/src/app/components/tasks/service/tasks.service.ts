@@ -1,6 +1,7 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { SubTaskEntity } from '../../../entities/subtask.entity';
 import TaskAssigneessEntity from '../../../entities/task-assignees.entity';
 import TaskFileEntity from '../../../entities/task-file.entity';
 import TaskFllowersEntity from '../../../entities/task-followers.entity';
@@ -8,6 +9,9 @@ import { TasksEntity } from '../../../entities/tasks.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import TaskFilterParams from '../../../utils/types/taskFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
+import SubTaskNotFoundException from '../dto/args/subTaskNotFound';
+import SubTaskInput from '../dto/input/create-subtask.input';
+import { SubTaskFilterInput } from '../dto/input/subtask-delete.input';
 import { TaskDeleteInput } from '../dto/input/task-delete.input';
 import { TaskDetailsUpdateInput } from '../dto/input/task-details-update.input';
 import { TaskDetailsInput } from '../dto/input/task-details.input';
@@ -23,15 +27,18 @@ export class TasksService {
         private tasksFollowersRepository: Repository<TaskFllowersEntity>,
         @InjectRepository(TaskFileEntity)
         private taskFileRepository: Repository<TaskFileEntity>,
+        @InjectRepository(SubTaskEntity)
+        private subTaskRepository: Repository<SubTaskEntity>,
         private referenceService: ReferenceService
     ) { }
     public async create(createProjectTaskInput: TaskDetailsInput, referenceFilter: ReferenceFilterParams): Promise<TasksEntity> {
         try {
-            const { assignees, followers, files, taskBasics } = createProjectTaskInput;
+            const { assignees, followers, files, taskBasics, subtasks } = createProjectTaskInput;
             const taskeDetails = new TasksEntity({ ...taskBasics });
             taskeDetails.assignees = [];
             taskeDetails.followers = [];
             taskeDetails.files = [];
+            taskeDetails.subtasks = []
             if (assignees)
                 for (let index = 0; index < assignees.length; index++) {
                     const assigneesentity = new TaskAssigneessEntity(assignees[index])
@@ -53,6 +60,14 @@ export class TasksService {
                     const savedFiles = await this.taskFileRepository.save(newTaskFile);
                     taskeDetails.files.push(savedFiles)
                 }
+
+            if (subtasks)
+                for (let index = 0; index < subtasks.length; index++) {
+                    const subtaskEntity = new SubTaskEntity(subtasks[index])
+                    const newSubTask = await this.subTaskRepository.create({ ...subtaskEntity });
+                    const savedSubTask = await this.subTaskRepository.save(newSubTask);
+                    taskeDetails.subtasks.push(savedSubTask)
+                }    
             const selectedReference = await this.referenceService.getReferenceById(referenceFilter)
             const newTask = await this.projectTasksRepository.create({
                 ...taskeDetails,
@@ -74,7 +89,7 @@ export class TasksService {
                 }
             }
             ,
-            relations: ['reference', 'assignees', 'followers', 'files']
+            relations: ['reference', 'assignees', 'followers', 'files','subtasks']
         });
     }
 
@@ -83,15 +98,15 @@ export class TasksService {
             where: {
                 taskID: taskFilterParams.taskID
             },
-            relations: ['reference', 'assignees', 'followers', 'files']
+            relations: ['reference', 'assignees', 'followers', 'files', 'subtasks']
         });
     }
 
     public async updateTaskByID(createProjectTaskInput: TaskDetailsUpdateInput): Promise<TasksEntity[]> {
-        const { assignees, followers, files, taskBasics } = createProjectTaskInput;
+        const { assignees, followers, files, taskBasics, subtasks } = createProjectTaskInput;
         const taskeDetails = await this.projectTasksRepository.find({
             where: { taskID: taskBasics.taskID },
-            relations: ['reference', 'assignees', 'followers', 'files']
+            relations: ['reference', 'assignees', 'followers', 'files','subtasks']
         });
         if (taskeDetails.length <= 0)
             throw new HttpException('Task Not Found', HttpStatus.NOT_FOUND);
@@ -99,6 +114,7 @@ export class TasksService {
         taskeDetail.assignees = [];
         taskeDetail.followers = [];
         taskeDetail.files = [];
+        taskeDetail.subtasks = [];
         if (assignees)
             for (let index = 0; index < assignees.length; index++) {
                 const assigneesentity = new TaskAssigneessEntity(assignees[index])
@@ -120,6 +136,14 @@ export class TasksService {
                 const savedFiles = await this.taskFileRepository.save(newTaskFile);
                 taskeDetail.files.push(savedFiles)
             }
+        if (subtasks)
+            for (let index = 0; index < subtasks.length; index++) {
+                const subtaskEntity = new SubTaskEntity(subtasks[index])
+                const newSubTask = await this.subTaskRepository.create({ ...subtaskEntity });
+                const savedSubTask = await this.subTaskRepository.save(newSubTask);
+                taskeDetail.subtasks.push(savedSubTask)
+            }
+
         taskBasics.BKPID ? taskeDetail.BKPID = taskBasics.BKPID : null;
         taskBasics.BKPTitle ? taskeDetail.BKPTitle = taskBasics.BKPTitle : null;
         taskBasics.endDate ? taskeDetail.endDate = taskBasics.endDate : null;
@@ -135,7 +159,7 @@ export class TasksService {
         await this.projectTasksRepository.save(taskeDetail);
         const tasks = await this.projectTasksRepository.find({
             where: { taskID: taskBasics.taskID },
-            relations: ['reference', 'assignees', 'followers', 'files']
+            relations: ['reference', 'assignees', 'followers', 'files', 'subtasks']
         });
         return tasks;
     }
@@ -146,8 +170,30 @@ export class TasksService {
         console.log(taskeDetails)
         const tasks = await this.projectTasksRepository.find({
             where: { taskID: taskID },
-            relations: ['reference', 'assignees', 'followers', 'files']
+            relations: ['reference', 'assignees', 'followers', 'files', 'subtasks']
         });
         return tasks;
     }
+
+    public async deletesubTaskByID(subtaskDeleteInput: SubTaskFilterInput): Promise<SubTaskEntity[]> {
+        const { subtaskID } = subtaskDeleteInput;
+        const subtaskeDetails = await this.subTaskRepository.delete({ subtaskID: subtaskID });
+        console.log(subtaskeDetails)
+        const subtasks = await this.subTaskRepository.find({
+            where: { subtaskID: subtaskID },
+        });
+        return subtasks;
+    }
+
+
+      public async updateSubTask(updateSubTask: SubTaskFilterInput, createinput: SubTaskInput): Promise<SubTaskEntity> {
+        const subtask = await this.subTaskRepository.findOne({ where: { subtaskID: updateSubTask.subtaskID } });
+        if (subtask) {
+          await this.subTaskRepository.update(subtask.Id, { ...createinput });
+          const updatedPost = await this.subTaskRepository.findOne(subtask.Id);
+          return updatedPost;
+        }
+        throw new SubTaskNotFoundException(subtask.subtaskID);
+      }
+
 }
