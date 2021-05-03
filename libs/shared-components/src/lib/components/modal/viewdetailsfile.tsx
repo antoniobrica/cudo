@@ -2,8 +2,9 @@ import React from 'react'
 import { Button,Pagination, Modal,Input, Form, Grid, Image,Comment, Select, TextArea} from 'semantic-ui-react'
 
 import img from 'libs/shared-components/src/check_grey.png';
+import Canvas from './canvas';
 
-function exampleReducer(state, action) {
+ function exampleReducer(state, action) {
     switch (action.type) {
       case 'close':
         return { open: false }
@@ -18,24 +19,36 @@ function exampleReducer(state, action) {
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
      
   ]
-  const ModalExampleSize = () => {
-    const [state, dispatch] = React.useReducer(exampleReducer, {
-      open: false,
-      size: undefined,
-    })
-    const { open, size } = state
-  
+  export interface FileDetailsProps {
+    open
+  }
+  export const ViewFileDetail = (props: FileDetailsProps) => {
+    // const [state, dispatch] = React.useReducer(exampleReducer, {
+    //   open: false,
+    //   size: undefined,
+    // })
+    // const { open, size } = state
+    const [open, setOpen] = React.useState(false)
+
+  React.useEffect(()=>{
+    if(props.open){
+      setOpen(props.open)
+    }
+  })
+ const cancel =()=>{
+   setOpen(false);
+ }
     return (
       <>
        <div id="navbar">
-        <Button className="grey-btn" onClick={() => dispatch({ type: 'open', size: 'fullscreen' })}>
+        {/* <Button className="grey-btn" onClick={() => dispatch({ type: 'open', size: 'fullscreen' })}>
            view Files
-        </Button>
+        </Button> */}
   
         <Modal
-          size={size}
+          size={undefined}
           open={open}
-          onClose={() => dispatch({ type: 'close' })}
+          onClose={cancel}
         >
           <Modal.Content>
           <Form>
@@ -43,7 +56,8 @@ function exampleReducer(state, action) {
 <Grid.Row>
   <Grid.Column>
     <div>
-    <Image src='https://react.semantic-ui.com/images/wireframe/image.png' fluid />
+      <Canvas></Canvas>
+    {/* <Image src='https://react.semantic-ui.com/images/wireframe/image.png' fluid /> */}
     <div className="align_center">File versions
     <Pagination
     defaultActivePage={1}
@@ -129,7 +143,9 @@ function exampleReducer(state, action) {
         
        <label>Task(1)</label>
       
-       <p> <img src={img}  className="mr-10 " /><span className="form_desc_2_1"> Another task here </span> <span className="git_area">2302101_version_03647.pptx </span></p>
+       <p> 
+         <img src={img}  className="mr-10 " />
+       <span className="form_desc_2_1"> Another task here </span> <span className="git_area">2302101_version_03647.pptx </span></p>
        <p className="form_desc_2 git">Starts Tomorrow ↦ Due Fri Aug 28th
        <span className="mr-2 float_right"  >...</span>
        </p> 
@@ -202,11 +218,16 @@ function exampleReducer(state, action) {
          
          
           </Modal.Content>
-         
+          <Modal.Actions>
+          <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+            X  Cancel
+        </Button>
+
+        </Modal.Actions>
         </Modal>
         </div>
       </>
     )
   }
   
-  export default ModalExampleSize
+  export default ViewFileDetail

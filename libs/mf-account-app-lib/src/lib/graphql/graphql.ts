@@ -30,6 +30,14 @@ export const GET_BKP = gql`{
   
 }`
 
+export const GET_FOLDER = gql`{
+  Folders(referenceFilter: { referenceID: "dapr", referenceType: COMPANY }) { 
+    folderTitle 
+    folderID 
+  } 
+
+}`
+
 export const GET_FILE_TYPE = gql`{
     FileTypes(referenceFilter: { referenceType: COMPANY, referenceID: "3" }
   ){

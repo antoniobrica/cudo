@@ -27,35 +27,41 @@ export class BlobUploadsViewStateService {
     this.uploadQueueInner$.next(files);
   }
 
-  private uploadFile = (file: File) =>
-    this.blobState.getStorageOptionsWithContainer().pipe(
+  private uploadFile = (file: File) =>{
+    const filename = file.name + new Date().getTime();
+    console.log('filename', filename);
+    
+    return this.blobState.getStorageOptionsWithContainer().pipe(
       switchMap(options => {
         return this.blobStorage
           .uploadToBlobStorage(file, {
             ...options,
-            filename: file.name + new Date().getTime()
+            filename: filename
           })
           .pipe(
-            this.mapUploadResponse(file, options),
+            this.mapUploadResponse(file,filename, options),
             this.blobState.finaliseBlobChange(options.containerName)
           )
       }
       )
     );
-
+    }
   private mapUploadResponse = (
     file: File,
+    filename,
     options: BlobContainerRequest
   ): OperatorFunction<number, BlobItemUpload> => source =>
       source.pipe(
         map(progress => ({
-          filename: file.name,
+          filename: filename,
           containerName: options.containerName,
+          type: file.type,
           progress: parseInt(((progress / file.size) * 100).toString(), 10)
         })),
         startWith({
-          filename: file.name,
+          filename: filename,
           containerName: options.containerName,
+          type: file.type,
           progress: 0
         })
       );
