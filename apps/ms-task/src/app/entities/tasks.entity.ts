@@ -56,6 +56,10 @@ export class TasksEntity extends BaseEntity {
 
   @Expose()
   @Column({ nullable: true })
+  description?: string;
+
+  @Expose()
+  @Column({ nullable: true })
   sendNotification?: boolean;
 
   @Expose()

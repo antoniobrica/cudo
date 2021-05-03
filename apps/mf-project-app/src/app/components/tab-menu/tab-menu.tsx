@@ -18,7 +18,6 @@ import {
 } from 'semantic-ui-react';
 import { NavLink, BrowserRouter as Router, useRouteMatch, Route, Switch, useLocation, useParams } from 'react-router-dom';
 import { useHistory } from "react-router";
-import Planning from '../../../../../../libs/mf-task-lib/src/lib/components/planning/planning'
 import { PlanningIndex } from '@cudo/mf-task-lib';
 import { useProjectByIdQuery } from '../../services/useRequest';
 import { GET_PROJECT_BY_ID } from '../../graphql/graphql';
@@ -36,26 +35,28 @@ const {
 
 /* eslint-disable-next-line */
 export interface TabMenuProps { }
-
+type params = {
+  projectId: string;
+};
 function TabMenu(props: TabMenuProps) {
   const [worktypeName, setWorktype] = React.useState("");
 
   const history = useHistory();
-  let params = useParams();
+  const params = useParams<params>();
   console.log('urlparams', params.projectId)
-  let projectId = params.projectId
+  const projectId = params.projectId
 
   const { loading, error, data } = useQuery(GET_PROJECT_BY_ID, {
     variables: { projectId },
   });
- 
+
   React.useEffect(() => {
     if (data) {
-      setWorktype( data.projectById[0].projectWorkTypes[0].workTypeName );
+      setWorktype(data.projectById[0].projectWorkTypes[0].workTypeName);
     }
   }, [data]);
 
-  const changeWorktypeName=(data)=>{
+  const changeWorktypeName = (data) => {
     console.log('changeWorktypeName', data)
     setWorktype(data);
   }
@@ -141,7 +142,7 @@ function TabMenu(props: TabMenuProps) {
           render={() => (
             <Tab.Pane attached={false} onClick={handleOpenProject('planning')}>
               <PlanningIndex></PlanningIndex>
-              </Tab.Pane>
+            </Tab.Pane>
           )}
         />,
       },
@@ -248,7 +249,7 @@ function TabMenu(props: TabMenuProps) {
       <Router>
         <div className="app-content-body-dash navbar-collapse box-shadow bg-white-only">
           <div>
-            <span className="">{worktypeName? worktypeName: 'WorktypeName'}</span> | <span className="preliminary-font">Preliminary Studies</span>
+            <span className="">{worktypeName ? worktypeName : 'WorktypeName'}</span> | <span className="preliminary-font">Preliminary Studies</span>
           </div>
           <Switch>
             <Tab className="ui-tabs" menu={{ secondary: true, pointing: true }} panes={panes} />

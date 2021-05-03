@@ -12,20 +12,48 @@ import {
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 
-function ModalTaskEdit() {
+function exampleReducer(state, action) {
+  switch (action.type) {
+    case 'close':
+      return { open: false }
+    case 'open':
+      return { open: true, size: action.size }
+    default:
+      throw new Error('Unsupported action...')
+  }
+}
+
+interface AlertProps {
+  openAlertF,
+  taskData,
+  cancel,
+  taskStatus
+}
+export const ModalTaskEdit = (props: AlertProps) => {
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
   ];
 
   const [open, setOpen] = React.useState(false);
-
+  React.useEffect(() => {
+    if (props.openAlertF) {
+      setOpen(props.openAlertF);
+    }
+  }, [props.openAlertF]);
+  const openf = () => {
+    setOpen(true)
+  }
+  const cancel = () => {
+    setOpen(false)
+    props.cancel()
+  }
   return (
     <div id="navbar">
       <Modal
         className="modal_media"
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
+        onClose={cancel}
+        onOpen={openf}
         open={open}
         trigger={
           <Button size="mini" className="grey-btn">
@@ -51,6 +79,7 @@ function ModalTaskEdit() {
                         size="small"
                         className="full-width"
                         type="text"
+                        value={props?.taskData?.taskTitle}
                       />
                     </Form.Field>
                   </Grid.Column>
@@ -62,7 +91,8 @@ function ModalTaskEdit() {
                   <Grid.Column>
                     <Form.Field>
                       <label>Description </label>
-                      <TextArea placeholder="Tell us more" />
+                      <TextArea placeholder="Tell us more"
+                        value={props?.taskData?.description} />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -162,34 +192,32 @@ function ModalTaskEdit() {
                   <Grid.Column>
                     <Form.Field>
                       <label>Start Date </label>
-
                       <Input
-                        placeholder="Default"
-                        size="small"
+                        placeholder='Default'
+                        size='small'
                         className="full-width"
                         type="date"
+                        value={props?.taskData?.startDate}
                       />
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
                       <label>End Date </label>
-
                       <Input
                         placeholder="Default"
                         size="small"
                         className="full-width"
                         type="date"
+                        value={props?.taskData?.endDate}
                       />
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
                       <label>Estimated Days </label>
-                      <Select
-                        placeholder="Select"
-                        className="small"
-                        options={countryOptions}
+                      <Input placeholder='Enter days' className="small"
+                        value={props?.taskData?.estimatedDays}
                       />
                     </Form.Field>
                   </Grid.Column>
@@ -219,7 +247,7 @@ function ModalTaskEdit() {
           <Button
             size="mini"
             className="icon-border"
-            onClick={() => setOpen(false)}
+            onClick={cancel}
           >
             X Cancel
           </Button>

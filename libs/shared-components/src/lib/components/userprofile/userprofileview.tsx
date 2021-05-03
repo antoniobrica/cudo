@@ -5,7 +5,11 @@ import { Button, Select, Modal, Tab, Table, Input, Form, Grid, Image, Segment, T
 
 import img from 'libs/shared-components/src/user_profile.png';
 import img5 from 'libs/shared-components/src/edit.png';
-
+// import { initI18n } from '@cudo/mf-core';
+import { useTranslation } from 'react-i18next';
+// const defaultLanguage = 'en-GB';
+// const supportedLanguages = [defaultLanguage, 'en-GB'];
+// initI18n('./assets/i18n/{{lng}}.json', defaultLanguage);
 export interface UserProfileEditProps {
   edit?
 }
@@ -16,10 +20,11 @@ export function UserProfileView(props: UserProfileEditProps) {
   ]
 
   const [open, setOpen] = React.useState(false)
+  const { t } = useTranslation();
   return (
     <div className="app-content-body-dash dash_area navbar-collapse box-shadow bg-white-only" style={{ background: '#e6e6e6' }}>
       <div style={{ background: '#fff', padding: '10px' }}>
-        <span className="preliminary-font">User Profile</span>
+        <span className="preliminary-font">{t('user_profile')}</span>
       </div>
       <Grid columns={2}>
         <Grid.Column style={{ height: '243px;' }}>
@@ -39,7 +44,7 @@ export function UserProfileView(props: UserProfileEditProps) {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <label>First Name </label>
+                        <label>{t('first_name')} </label>
                         <label>John  </label>
                       </Form.Field>
                     </Grid.Column>

@@ -25,9 +25,14 @@ import PropTypes from 'prop-types';
 import { renderRoutes } from 'react-router-config';
 import { Home } from "./home/home";
 import MfProjectAppMount from "./mf-project-app-mount/mf-project-app-mount";
+
+import { useTranslation } from 'react-i18next';
+import { initI18n } from "@cudo/mf-core";
 const defaultHistory = createBrowserHistory();
 
-
+const defaultLanguage = 'en-GB';
+const supportedLanguages = [defaultLanguage, 'en-GB'];
+initI18n('./assets/i18n/{{lng}}.json', defaultLanguage);
 function App() {
   const { url, path } = useRouteMatch();
   const history = useHistory();
