@@ -50,7 +50,7 @@ export class TasksResolver {
     }
 
     @Mutation(() => [SubTaskModel])
-    async deletesubTask(
+    async deleteSubTask(
         @Args('subtaskDeleteInput') taskDeleteInput: SubTaskFilterInput
     ) {
         return this.projectTasksService.deletesubTaskByID(taskDeleteInput);
@@ -58,7 +58,7 @@ export class TasksResolver {
 
 
     @Mutation(() => SubTaskModel)
-    async updatesubTask(
+    async updateSubTask(
       @Args('subTaskFilter')update: SubTaskFilterInput,
       @Args('subTaskDetail') createsub: SubTaskInput,
     ) {
