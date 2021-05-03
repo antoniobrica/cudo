@@ -34,12 +34,10 @@ export class FolderService {
     }
   }
 
-  public async updateFolder(updatefolder: UpdateFolder, referenceFilter: ReferenceFilterParams): Promise<FolderEntity> {
-
-    const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
-    const folder = await this.FolderRepository.findOne({ where: { folderID: updatefolder.folderID, reference: { id: selectedReference.id } } });
+  public async updateFolder(updatefolder: UpdateFolder, createinput: CreateFolderInput): Promise<FolderEntity> {
+    const folder = await this.FolderRepository.findOne({ where: { folderID: updatefolder.folderID } });
     if (folder) {
-      await this.FolderRepository.update(folder.id, { ...updatefolder });
+      await this.FolderRepository.update(folder.id, { ...createinput });
       const updatedPost = await this.FolderRepository.findOne(folder.id);
       return updatedPost;
     }

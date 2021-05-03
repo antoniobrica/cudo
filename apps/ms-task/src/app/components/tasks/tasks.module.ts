@@ -9,9 +9,10 @@ import { PhasesModule } from './module/phases.module';
 import TaskAssigneessEntity from '../../entities/task-assignees.entity';
 import TaskFllowersEntity from '../../entities/task-followers.entity';
 import TaskFileEntity from '../../entities/task-file.entity';
+import { SubTaskEntity } from '../../entities/subtask.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([TasksEntity, TaskAssigneessEntity, TaskFllowersEntity, TaskFileEntity]), ReferenceModule, BkpModule, PhasesModule],
+  imports: [TypeOrmModule.forFeature([TasksEntity, TaskAssigneessEntity, TaskFllowersEntity, TaskFileEntity, SubTaskEntity]), ReferenceModule, BkpModule, PhasesModule],
   providers: [TasksResolver, TasksService],
   // exports: [TasksService]
 })
