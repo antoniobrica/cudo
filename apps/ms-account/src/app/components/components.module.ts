@@ -5,6 +5,7 @@ import { FileModule } from './file/file.module';
 import { FileStructureModule } from './fileStructure/filestructure.module';
 import { FileTypeModule } from './filetype/filetype.module';
 import { FolderModule } from './folder/folder.module';
+import { MeetingCatagoryModule } from './meeting_catagory/meeting.catagory.module';
 import { PhaseModule } from './Phase/phase.module';
 import { ReferenceModule } from './reference/reference.module';
 import { UsersModule } from './users/users.module';
@@ -19,7 +20,8 @@ import { UsersModule } from './users/users.module';
     FileModule,
     FileTypeModule,
     FileStructureModule,
-    FolderModule
+    FolderModule,
+    MeetingCatagoryModule
   ],
   providers: []
 })
