@@ -22,20 +22,31 @@ export function Bkp(props: BkpProps) {
   const { loading, error, data } = useBkpQuery(GET_BKP);
   const { loading: folderL, error: folderE, data: FolderD} = useFolderQuery(GET_FOLDER)
   React.useEffect(() => {
-    if (data) {
+    if (data && FolderD) {
+      console.log('FolderD', FolderD);
+      const bkps =data.Bkp.map(({ bkpTitle, bkpID }) => ({ key: bkpID, value: bkpTitle, text: bkpID + " - "+ bkpTitle }))
       setItems(data.Bkp.map(({ bkpTitle, bkpID }) => ({ key: bkpID, value: bkpTitle, text: bkpID + " - "+ bkpTitle })));
+      const arr = FolderD.Folders.map(({ folderTitle, folderID }) => ({ key: folderID, value: folderTitle, text: folderTitle }))
+      setItems1(arr);
+      const bkpF= bkps.concat(arr);
+      setItems2(bkpF);
     }
-  }, [data]);
+  }, [data, FolderD]);
   
-  React.useEffect(()=>{
-    if(FolderD){
-        const arr = FolderD.Folders.map(({ folderTitle, folderID }) => ({ key: folderID, value: folderTitle, text: folderTitle }))
-        setItems1(arr);
-        const bkpF= items.concat(arr);
-        setItems2(bkpF);
-    }
+  // React.useEffect(()=>{
+  //   if(FolderD){
+  //     console.log('FolderD',FolderD);
+      
+  //       const arr = FolderD.Folders.map(({ folderTitle, folderID }) => ({ key: folderID, value: folderTitle, text: folderTitle }))
+  //       setItems1(arr);
+  //       if(items){
+  //       const bkpF= items.concat(arr);
+  //       setItems2(bkpF);
+  //       }
+      
+  //   }
 
-  }, [FolderD]);
+  // }, [FolderD]);
 
   const onBkp = (event, data) => {
 console.log('data==', data)
@@ -57,17 +68,17 @@ console.log('data==', data)
     let bkpFolder = null;
     let isFolder = false;
     if(bkpID.BKPIDTitle.length > 0){
-      bkpFolder = bkpID;
-      isFolder = false;
+      // bkpFolder = bkpID;
+      props.parentBKPSelect(bkpID);
+
     }
     else {
       bkpFolder = folder;
+      props.parentBKPSelect(folder);
       isFolder = true;
     }
 
-    console.log('bkpFolder', bkpFolder);
-    
-    props.parentBKPSelect(bkpFolder);
+    // props.parentBKPSelect(bkpFolder);
   }
 
 

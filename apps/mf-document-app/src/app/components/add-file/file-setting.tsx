@@ -9,7 +9,7 @@ import img4 from 'libs/shared-components/src/avatar_3.png';
 import img5 from 'libs/shared-components/src/file_1.png';
 import img6 from 'libs/shared-components/src/file_2.png';
 import ProgressBar from 'libs/shared-components/src/lib/components/progress_bar/progressbar';
-import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex, FileTypeIndex, FileStructureIndex } from "@cudo/mf-account-app-lib"
+import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex, FileTypeIndex, FileStructureIndex, AddFolderIndex } from "@cudo/mf-account-app-lib"
 import { UploadsViewStateContext, SharedViewStateContext, DownloadsViewStateContext } from 'apps/mf-document-app/src/azure-storage/contexts/viewStateContext';
 import { BlobItem } from '@azure/storage-blob';
 import { tap } from 'rxjs/operators';
@@ -186,7 +186,7 @@ const folderData=(data)=>{
     <div >
       {folderopen?
       <div>
-        <AddNewFolder open={folderopen} cancel={cancel} folderData={folderData}></AddNewFolder>
+        <AddFolderIndex open={folderopen} cancel={cancel} folderData={folderData}></AddFolderIndex>
       </div>: null}
       <Modal className="modal_media modal_center modal_media_1"
         onClose={() => setOpen(false)}

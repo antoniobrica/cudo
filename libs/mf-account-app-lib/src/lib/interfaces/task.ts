@@ -45,6 +45,9 @@ export interface IBkps {
 export interface IFolders {
   Folders: IFolder[];
 }
+export interface IFolderMutation {
+  createFolder: IFolder;
+}
 export interface IFileTypes {
   FileTypes: IFileType[];
 }

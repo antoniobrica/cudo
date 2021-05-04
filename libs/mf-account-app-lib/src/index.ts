@@ -1,3 +1,5 @@
+export * from './lib/components/add-folder-index/add-folder-index';
+export * from './lib/components/add-folder/add-folder';
 export * from './lib/components/file-structure-index/file-structure-index';
 export * from './lib/components/file-type-index/file-type-index';
 export * from './lib/components/file-structure/file-structure';

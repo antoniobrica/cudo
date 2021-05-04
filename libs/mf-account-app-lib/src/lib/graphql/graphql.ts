@@ -63,6 +63,20 @@ phaseTitle
   }
 
 }`
+export const ADD_FOLDER = gql`
+mutation CreateFolder(
+  $folderTitle: String!, 
+  ){ 
+    createFolder( 
+      referenceFilter: { referenceID: "dapr", referenceType: COMPANY } 
+      folderDetails: { folderID: "4", folderTitle:  $folderTitle } 
+    ) { 
+      folderID 
+      folderTitle 
+    } 
+}`;
+
+
 export const ADD_TASK = gql`
 mutation CreateTask(
   $taskTitle: String!, 
