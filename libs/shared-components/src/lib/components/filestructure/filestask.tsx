@@ -1,7 +1,7 @@
 import React from 'react';
 
 import '../../../style/index.scss';
-import { Tab } from 'semantic-ui-react'
+import { Tab, Accordion } from 'semantic-ui-react'
 
 import img4 from 'libs/shared-components/src/folder.png';
 import img5 from 'libs/shared-components/src/image2.png';
@@ -19,6 +19,8 @@ export function FileStructure(props: FileStructureProps) {
 	const [view, setView] = React.useState(false);
 	const [expand, setExpand] = React.useState(false);
 	const [filesData, setFilesData] = React.useState([]);
+	const [items, setItems] = React.useState([]);
+
 
 	const viewFile = () => {
 		setView(true)
@@ -36,6 +38,63 @@ export function FileStructure(props: FileStructureProps) {
 		setExpand(true);
 		setFilesData(data)
 	}
+	React.useEffect(() => {
+		if (props.files) {
+		  setItems(props.files.map((file, i) => ({ key: i, title: file.isFolder ? file.folderName : file.BKPIDTitle, content: { content: (renderItems(file.files)) }})));
+		}
+	  }, [props.files]);
+	const  renderItems=(data)=>{
+	const files= data.map((file) => {
+			return (
+				<div className="card1 card-custom gutter-b width_card">
+
+					<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
+
+						<div className="d-flex align-items-center py-2">
+							<span> 
+								{file.fileType == ("image/jpeg" || "image/png")
+								?
+								<img src={img5} className="  mr-10 " /> :
+								<img src={img2} className="  mr-10 " /> 
+							}
+							
+							 </span>
+
+							<span className="font-weight-bold mb-0 mr-10">{file.fileTitle}</span>
+							<div className="d-flex mr-3">
+
+								<div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
+
+									<div className="navi-item mr-2">
+										<button className="ui mini button grey-btn">{file.fileVersion}</button>
+									</div>
+
+								</div>
+
+							</div>
+
+						</div>
+
+						<div className="symbol-group symbol-hover py-2">
+							<div className="symbol symbol-30">
+								<a onClick={()=>download(file.fileTitle)}>  <i className="ms-Icon ms-Icon--Download mr-10" aria-hidden="true"></i></a>
+								<a onClick={viewFile}> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a>
+
+								<span className="mr-2"  >...</span>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+			)
+		})
+return files;
+	  }
+	const rootPanels = [
+		{ key: 'panel-1', title: 'General', content: { content: <a href=''>+ Add item</a> }, },
+		{ key: 'panel-2', title: 'Freehold Two Solar LLC', content: { content: <a href=''>+ Add item</a> } },
+	  ]
 	const panes = [
 		{
 			menuItem: { key: 'Overview', icon: 'images', content: 'All files' },
@@ -117,7 +176,7 @@ export function FileStructure(props: FileStructureProps) {
 
 	 */}
 
-
+{/* 
 					{(props.files || []).map((file, i) => (
 						//  file.isFolder? 
 						<div className="card1 card-custom gutter-b width_card" key={i} onClick={() => expandFolder(file.files)}>
@@ -153,56 +212,10 @@ export function FileStructure(props: FileStructureProps) {
 								</div>
 
 							</div>
-						</div>
-						// :
-						// 						<div className="card1 card-custom gutter-b width_card" key={i}> 
-
-						// 							<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-
-						// 								<div className="d-flex align-items-center py-2">
-						// 									<span> <img src={img2} className="  mr-10 " />  </span>
-
-						// 									<span className="font-weight-bold mb-0 mr-10">{file.BKPIDTitle}</span>
-						// 									<div className="d-flex mr-3">
-
-						// 										{/* <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
-
-						// 											<div className="navi-item mr-2">
-						// 												<a className="navi-link">
-						// 													<span className="navi-text">  <i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i> 2 comments  </span>
-						// 												</a>
-						// 											</div>
-
-
-
-
-						// 											<div className="navi-item mr-2">
-						// 												<a href="" className="navi-link">
-						// 													<span className="navi-text"><i className="ms-Icon ms-Icon--CheckboxComposite" aria-hidden="true"></i> 2 tasks </span>
-						// 												</a>
-						// 											</div>
-						// 										</div> */}
-
-						// 									</div>
-
-						// 								</div>
-
-						// 								<div className="symbol-group symbol-hover py-2">
-						// 									<div className="symbol symbol-30">
-
-						// 										<a href="">  <i className="ms-Icon ms-Icon--Download mr-10" aria-hidden="true"></i></a>
-						// 										<a href=""> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a>
-
-						// 										<span className="mr-2"  >...</span>
-						// 									</div>
-
-						// 								</div>
-
-						// 							</div>
-						// 						</div>
-					))}
+						</div>	
+					))} */}
 				</div>
-				{expand ?
+				{/* {expand ?
 					filesData.map((file) => {
 						return (
 							<div className="card1 card-custom gutter-b width_card">
@@ -249,7 +262,17 @@ export function FileStructure(props: FileStructureProps) {
 						)
 					})
 
-					: null}
+					: null} */}
+		 <div className="ui card " style={{ width: '80%' }}>
+
+           <Accordion className="widtharea" defaultActiveIndex={0} panels={items} styled  >
+
+
+               </Accordion>
+
+
+
+               </div>
 			</Tab.Pane>,
 		},
 		{
@@ -267,7 +290,6 @@ export function FileStructure(props: FileStructureProps) {
 				</div> : null}
 
 			<Tab className="ui-tabs" menu={{ secondary: true, pointing: true }} panes={panes} />
-
 		</div>
 
 
