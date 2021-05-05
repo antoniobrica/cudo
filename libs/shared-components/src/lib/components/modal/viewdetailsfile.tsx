@@ -40,7 +40,7 @@ function exampleReducer(state, action) {
           <Modal.Content>
           <Form>
 <Grid columns={2}>
-<Grid.Row>
+<Grid.Row>\9
   <Grid.Column>
     <div>
     <Image src='https://react.semantic-ui.com/images/wireframe/image.png' fluid />
