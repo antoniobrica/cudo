@@ -13,7 +13,7 @@ export class InvitationTemplateResolver {
     private readonly invitationService: InvitationTemplateService) { }
 
   @Query(() => [InvitationTemplateModel], { nullable: true })
-  async MeetingCatagories(@Args("referenceFilter") referenceFilter: ReferenceFilterParams): Promise<InvitationTemplateEntity[]> {
+  async invitationTemplates(@Args("referenceFilter") referenceFilter: ReferenceFilterParams): Promise<InvitationTemplateEntity[]> {
     return await this.invitationService.findAllInvitationTemplate(referenceFilter)
   }
 
