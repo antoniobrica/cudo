@@ -18,7 +18,6 @@ export class FileStructureEntity extends BaseEntity {
   @Expose()
   fileStructureTitle: string;
 
-
   @Expose()
   @CreateDateColumn()
   createdAt?: Date;
