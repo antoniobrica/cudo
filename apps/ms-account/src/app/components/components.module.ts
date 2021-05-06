@@ -9,6 +9,7 @@ import { FolderModule } from './folder/folder.module';
 import { InvitationTemplateModule } from './invitation_tamplate/invitation.tamplate.module';
 import { MeetingCatagoryModule } from './meeting_catagory/meeting.catagory.module';
 import { PhaseModule } from './Phase/phase.module';
+import { ProtocolTemplateModule } from './protocol_template/meeting.catagory.module';
 import { ReferenceModule } from './reference/reference.module';
 import { UsersModule } from './users/users.module';
 
@@ -25,7 +26,8 @@ import { UsersModule } from './users/users.module';
     FolderModule,
     MeetingCatagoryModule,
     InvitationTemplateModule,
-    StructureModule
+    StructureModule,
+    ProtocolTemplateModule
   ],
   providers: []
 })
