@@ -1,5 +1,9 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import SessionEntity from '../../../entities/session.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
+import { Pagination } from '../../paginate';
+import { PaginationModel } from '../../paginate/pagination.model';
+import { pageParams } from '../../paginate/pagination.param';
 import SessionFilterParam from '../dto/args/session.filter';
 import { SessionDetailsInput } from '../dto/input/session-details.input';
 import { SessionModel } from '../model/session.model';
@@ -25,5 +29,12 @@ export class SessionResolver {
         ) {
             const session = await this.sessionService.getSessionID(sessionFilter);
             return session;
+        }
+
+        @Query(() => PaginationModel, { nullable: true })
+        async paginatedSession(@Args('options')options:pageParams,
+        @Args("referenceFilter") getTasksArgs: ReferenceFilterParams): Promise<Pagination<SessionEntity>>  {
+            return await this.sessionService.paginate(options,getTasksArgs
+              )
         }
 }

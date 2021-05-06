@@ -5,6 +5,7 @@ import AdminEntity from "../../../entities/admin.entity";
 import MembersEntity from "../../../entities/members.entity";
 import SessionEntity from "../../../entities/session.entity";
 import ReferenceFilterParams from "../../../utils/types/referenceFilterParams";
+import { Pagination, PaginationOptionsInterface } from "../../paginate";
 import { ReferenceService } from "../../reference/service/reference.service";
 import SessionFilterParam from "../dto/args/session.filter";
 import { SessionDetailsInput } from "../dto/input/session-details.input";
@@ -64,5 +65,30 @@ export class SessionService {
             return session;
         }
         throw new SessionNotFoundException(session.sessionID);
+    }
+
+    async paginate(
+        options: PaginationOptionsInterface,
+        refFilter: ReferenceFilterParams
+    ): Promise<Pagination<SessionEntity>> {
+
+        const selectedReference = await this.referenceService.getReferenceById(refFilter)
+
+        
+        const [results, total] = await this.sessionRepository.findAndCount({ where: {
+            "reference": {
+                id: selectedReference.id
+            }
+        },
+        relations:['reference','admins','members'],
+        take: options.limit,
+        skip: options.page * options.limit,
+        }
+        );            
+        const pagination =  new Pagination({
+            results,
+            total,
+        });      
+        return pagination
     }
 }
