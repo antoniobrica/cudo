@@ -6,7 +6,9 @@ import MembersEntity from "../../../entities/members.entity";
 import SessionEntity from "../../../entities/session.entity";
 import ReferenceFilterParams from "../../../utils/types/referenceFilterParams";
 import { ReferenceService } from "../../reference/service/reference.service";
+import SessionFilterParam from "../dto/args/session.filter";
 import { SessionDetailsInput } from "../dto/input/session-details.input";
+import SessionNotFoundException from "../exceptions/sessionNotFound.exception";
 
 
 @Injectable()
@@ -54,5 +56,13 @@ export class SessionService {
         }   catch (error) {
             return error;
         }
+    }
+
+    async getSessionID(sessionFilter: SessionFilterParam) {
+        const session = await this.sessionRepository.findOne({ where: { ...sessionFilter }, relations: ['members','admins'] });
+        if (session) {
+            return session;
+        }
+        throw new SessionNotFoundException(session.sessionID);
     }
 }

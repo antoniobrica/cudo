@@ -1,5 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
+import SessionFilterParam from '../dto/args/session.filter';
 import { SessionDetailsInput } from '../dto/input/session-details.input';
 import { SessionModel } from '../model/session.model';
 import { SessionService } from '../service/session.service';
@@ -17,5 +18,12 @@ export class SessionResolver {
             @Args("referenceFilter") getTasksArgs: ReferenceFilterParams
         ) {
             return this.sessionService.create(createInput, getTasksArgs);
+        }
+
+        @Query(() => SessionModel)
+        async SessionByID(@Args("sessionFilter") sessionFilter?: SessionFilterParam
+        ) {
+            const session = await this.sessionService.getSessionID(sessionFilter);
+            return session;
         }
 }
