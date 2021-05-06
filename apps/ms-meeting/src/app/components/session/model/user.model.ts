@@ -10,6 +10,9 @@ export class UserModel {
   @Field({ nullable: true, description: `This is for User Name` })
   adminName?: string;
 
+  @Field({ nullable: true, description: `This is for User Name` })
+  image?: string;
+
 }
 
 

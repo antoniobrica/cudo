@@ -20,6 +20,10 @@ export default class AdminEntity extends BaseEntity {
     adminName: string;
 
     @Expose()
+    @Column()
+    image: string;
+
+    @Expose()
     @CreateDateColumn()
     createdAt?: Date;
 

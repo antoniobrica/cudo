@@ -9,4 +9,7 @@ export class MemberModel {
   @Field({ nullable: true, description: `This is for User Name` })
   memberName?: string;
 
+  @Field({ nullable: true, description: `This is for User Name` })
+  image?: string;
+
 }

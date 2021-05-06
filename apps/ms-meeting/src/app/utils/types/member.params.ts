@@ -7,6 +7,9 @@ class MemberParams {
 
   @Field({ description: `User Name` })
   memberName?: string;
+
+  @Field({ description: `User Name` })
+  image?: string;
 }
 
 export default MemberParams;

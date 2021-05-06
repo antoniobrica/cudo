@@ -20,6 +20,10 @@ export default class MembersEntity extends BaseEntity {
     memberName: string;
 
     @Expose()
+    @Column()
+    image: string;
+
+    @Expose()
     @CreateDateColumn()
     createdAt?: Date;
 
