@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { BkpModule } from './bkp/bkp.module';
+import { StructureModule } from './category/structure.module';
 import { CountryModule } from './country/country.module';
 import { FileModule } from './file/file.module';
 import { FileStructureModule } from './fileStructure/filestructure.module';
@@ -25,6 +26,7 @@ import { UsersModule } from './users/users.module';
     FolderModule,
     MeetingCatagoryModule,
     InvitationTemplateModule,
+    StructureModule,
     ProtocolTemplateModule
   ],
   providers: []
