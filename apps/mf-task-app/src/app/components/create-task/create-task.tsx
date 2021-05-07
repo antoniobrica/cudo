@@ -3,7 +3,7 @@ import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, Te
 import { radios } from '@storybook/addon-knobs';
 import { ITask, ITasks, TaskMutation } from "../../interfaces/task";
 import { useTaskMutation } from '../../services/useRequest';
-import { ApolloCache, FetchResult } from '@apollo/client';
+import { ApolloCache, FetchResult, useMutation } from '@apollo/client';
 import { ADD_TASK, GET_TASKS } from "../../graphql/graphql";
 import '../../../../../../libs/shared-components/src/style/index.scss';
 import './create-task.module.scss';
@@ -11,7 +11,9 @@ import moment, { calendarFormat } from 'moment';
 import {FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex} from "@cudo/mf-account-app-lib"
 import { useHistory } from 'react-router';
 /* eslint-disable-next-line */
-export interface CreateTaskProps { }
+export interface CreateTaskProps { 
+  onSuccess
+}
 
 export function CreateTask(props: CreateTaskProps) {
   const countryOptions = [
@@ -57,10 +59,16 @@ const [files, setFileList] = React.useState<any>([]);
 const history = useHistory();
 var res = history.location.pathname.split("/");
 const referenceID = res[3].toString();
-  const [addTask] = useTaskMutation(ADD_TASK,{
-    variables: { referenceID },
-});
-
+//   const [addTask] = useTaskMutation(ADD_TASK,{
+//     variables: { referenceID },
+// });
+const [addTask, { data }] = useMutation(ADD_TASK, 
+  {
+    refetchQueries: [
+      {query: GET_TASKS,  variables: { referenceID }}
+    ]
+  }
+)
 const onTaskTitleChange = e => {
   setTaskTitle(e.target.value)
 }
@@ -109,22 +117,27 @@ const onsetEstimatedDays = (event, data) => {
   setOpen(false);
   addTask({
     variables: {
+      referenceID,
       taskTitle, startDate, endDate, estimatedDays,
       sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
       files
     },
     update: (
       cache,
-      { data: { addTask } }: FetchResult<TaskMutation>
-    ) => {
+      data
+     ) => {
       const cacheData = cache.readQuery({ query: GET_TASKS,  variables: { referenceID },}) as ITasks;
+      console.log('datammm', data);
       cache.writeQuery({
         query: GET_TASKS,
         data: {
-          tasks: [...cacheData.tasks, addTask]
+          getTasks: [...cacheData.tasks,  data?.createTask]
         },
         variables: { referenceID },
       });
+      console.log('data==',data);
+      props.onSuccess(data);
+
     }
   });
 

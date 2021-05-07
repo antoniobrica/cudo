@@ -13,9 +13,11 @@ import ModalViewPlanning from '../../../../../shared-components/src/lib/componen
 import { useMilestonesQuery, useMilestoneMutation, useIMileStoneQuery, useMilestoneDeleteMutation, useMilestoneUpdateMutation } from '../../services/useRequest';
 import { GET_MILESTONES, ADD_MILESTONE, GET_MILESTONES_BY_ID, DELETE_MILESTONE,UPDATE_MILESTONE } from '../../graphql/graphql';
 import { LoaderPage } from "@cudo/shared-components";
-import { ApolloCache, FetchResult, from } from '@apollo/client';
+import { ApolloCache, FetchResult, from, useMutation } from '@apollo/client';
 import { MilestoneMutation, IMileStones } from '../../interfaces/task'
 import PlanDelete from './delete-task';
+import moment, { calendarFormat } from 'moment';
+
 
 export interface PlanningProps { 
   worktypes
@@ -30,7 +32,14 @@ export function Planning(props: PlanningProps) {
   const [milestoneIDe, setmilestoneIDE] = React.useState('');
   const [milestoneByID, setmilestoneByID] = React.useState({});
   const { loading, error, data } = useMilestonesQuery(GET_MILESTONES);
-  const [addPlan] = useMilestoneMutation(ADD_MILESTONE);
+  // const [addPlan] = useMilestoneMutation(ADD_MILESTONE);
+  const [addPlan, {data:refreshData}] = useMutation(ADD_MILESTONE, 
+    {
+      refetchQueries: [
+        { query: GET_MILESTONES }
+      ]
+    }
+  )
   const [planData, setPlanData] = React.useState();
   const { loading: milLoading, error: MileError, data: MilestoneData } = useIMileStoneQuery(GET_MILESTONES_BY_ID, {
     variables: { milestoneID: milestoneID },
@@ -38,9 +47,17 @@ export function Planning(props: PlanningProps) {
   const [planDelete] = useMilestoneDeleteMutation(DELETE_MILESTONE,{
     variables: { milestoneID: milestoneIDd },
   });
-  const [milestoneUpdate] = useMilestoneUpdateMutation(UPDATE_MILESTONE,{
-    variables: { milestoneID: milestoneIDd },
-  });
+  const [milestoneUpdate, {data:refreshMilestone}] = useMutation(UPDATE_MILESTONE, 
+    {
+      variables: { milestoneID: milestoneIDd },
+      refetchQueries: [
+        { query: GET_MILESTONES }
+      ]
+    }
+  )
+  // const [milestoneUpdate] = useMilestoneUpdateMutation(UPDATE_MILESTONE,{
+  //   variables: { milestoneID: milestoneIDd },
+  // });
 
   React.useEffect(()=>{
     if(MilestoneData){
@@ -79,14 +96,13 @@ export function Planning(props: PlanningProps) {
       variables: data,
       update: (
         cache,
-        { data: { addPlan } }: FetchResult
+         data
       ) => {
         const cacheData = cache.readQuery({ query: GET_MILESTONES }) as IMileStones;
-        console.log('cacheData-add-m', addPlan);
         cache.writeQuery({
           query: GET_MILESTONES,
           data: {
-            MileStones: [...cacheData.MileStones, addPlan]
+            getMileStones: [...cacheData.MileStones, data?.createMileStone]
           },
         });
       }
@@ -198,7 +214,7 @@ export function Planning(props: PlanningProps) {
                       <div className="ui card">
                         <div className="content">
                           <div className="description">
-                            <span className="time">{plan.dueDate}</span>
+                            <span className="time">{new Date(plan.dueDate).toDateString()}</span>
                             <span className="summary">
                               {' '}
                               <a href="">

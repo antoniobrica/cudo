@@ -4,13 +4,16 @@ import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Select, TextArea 
 // import SampleModal from './sample-modal';
 import { IProject, IProjects, ProjectMutation, IWorkTypes, IProjectWorktypes, ProjectWorkTypeModel } from "../../interfaces/project";
 import { useProjectMutation, useProjectQuery, useWorkTypesQuery, useCompanyQuery, useBuildingTypesQuery } from '../../services/useRequest';
-import { ApolloCache, FetchResult } from '@apollo/client';
+import { ApolloCache, FetchResult, useMutation } from '@apollo/client';
 import { ADD_PROJECT, GET_BUILDINGTYPES, GET_CLIENT_COMPANY, GET_PRINTING_COMPANY, GET_PROJECTS, GET_WORKTYPES } from "../../graphql/graphql";
 import { ModalExamplePrinting, ModalExampleCompany } from '@cudo/shared-components'
 import WorkType from '../../work-type/work-type';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
 
-export function ModalExampleModal() {
+export interface ProjectInfoProps {
+  onSuccess
+ }
+export function ModalExampleModal(props: ProjectInfoProps) {
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
 
 
@@ -69,7 +72,14 @@ export function ModalExampleModal() {
   const [addWorkTypes, setAddWorkTypes] = React.useState(1)
   const [secondOpen, setSecondOpen] = React.useState(false)
   const [projectWorkEstimates, setProjectWorkEstimates] = React.useState(null)
-  const [addProject] = useProjectMutation(ADD_PROJECT);
+  // const [addProject] = useProjectMutation(ADD_PROJECT);
+  const [addProject, { data }] = useMutation(ADD_PROJECT, 
+  {
+    refetchQueries: [
+      { query: GET_PROJECTS }
+    ]
+  }
+)
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
   const { loading: worktypeLoading, error, data: worktypeData } = useWorkTypesQuery(GET_WORKTYPES);
   const { loading: companyLoading, data: printingCompanyData } = useCompanyQuery(GET_PRINTING_COMPANY);
@@ -192,15 +202,19 @@ export function ModalExampleModal() {
       },
       update: (
         cache,
-        { data: { addProject } }: FetchResult<ProjectMutation>
+         data
       ) => {
         const cacheData = cache.readQuery({ query: GET_PROJECTS }) as IProjects;
+        console.log('data--', data)
         cache.writeQuery({
           query: GET_PROJECTS,
           data: {
-            getProjects: [...cacheData.projects, addProject]
+            getProjects: [...cacheData.projects, data?.createProject]
           }
         });
+        console.log('data==',data);
+        
+        props.onSuccess(data);
       }
     });
 

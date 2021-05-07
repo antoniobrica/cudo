@@ -18,6 +18,8 @@ export function FileListing(props: FileListingProps) {
   const context = React.useContext(UploadsViewStateContext);
   // const [items, setItems] = React.useState<BlobItemUpload[]>([]);
   const [loader, setLoader] = React.useState(true);
+  const [fileName, setFileName] = React.useState('');
+
   const sharedContext = React.useContext(SharedViewStateContext);
   const downloadsContext = React.useContext(DownloadsViewStateContext);
   const deletesContext = React.useContext(DeletesViewStateContext);
@@ -43,8 +45,10 @@ export function FileListing(props: FileListingProps) {
   React.useEffect(getContainersEffect, []);
 
   const downloadFiles=(data)=>{
+    setFileName(data);
     downloadsContext.downloadItem(data)
   }
+   
   // const getContainerItemsEffect = () => {
   //    setLoader(true);
   //    const sub = sharedContext.itemsInContainer$
@@ -66,7 +70,7 @@ export function FileListing(props: FileListingProps) {
       {loading ?
         <LoaderPage /> :
         <div>
-        <FileStructure files={data?.File} downloadFiles={downloadFiles}></FileStructure>
+        <FileStructure files={data?.File} downloadFiles={downloadFiles} downloadedImg={itemsd}></FileStructure>
         {itemsd.map((item, i) => (
         <div key={i}>
           {item.containerName}:

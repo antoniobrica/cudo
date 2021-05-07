@@ -52,13 +52,13 @@ export function App() {
    <Menubar></Menubar> 
    <AccordionExampleMenu></AccordionExampleMenu>
    <Tabsbar></Tabsbar>
-    <ModalExampleModal></ModalExampleModal> <br/> <br/><br/>  
+    {/* <ModalExampleModal></ModalExampleModal> <br/> <br/><br/>   */}
     <Cardbar></Cardbar> 
     <Messagebar></Messagebar><br/>
     <Loginbar></Loginbar><br/>
     <Logindrop></Logindrop><br/>
     <Loginpassword></Loginpassword>
-     <ModalExampleModal2></ModalExampleModal2><br/>
+     {/* <ModalExampleModal2></ModalExampleModal2><br/> */}
     <ModalExampleCompany></ModalExampleCompany><br/>
     <ModalExamplePrinting></ModalExamplePrinting><br/> 
     <ListExampleFloated></ListExampleFloated><br/><br/>

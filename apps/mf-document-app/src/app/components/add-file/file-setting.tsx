@@ -20,7 +20,7 @@ import { LoaderPage } from "@cudo/shared-components"
 import { useFileMutation } from '../../services/useRequest';
 import { GET_FILES, UPLOAD_FILE } from '../../graphql/graphql';
 import { FileMutation, IFiles } from '../../interfaces/document';
-import { FetchResult } from '@apollo/client';
+import { FetchResult, useMutation } from '@apollo/client';
 import { AddNewFolder } from '@cudo/shared-components';
 export interface FileProps {
   openSettingF
@@ -47,7 +47,14 @@ export function FileSetting(props: FileProps) {
   
 
 
-  const [addFile] = useFileMutation(UPLOAD_FILE);
+  // const [addFile] = useFileMutation(UPLOAD_FILE);
+  const [addFile, { data }] = useMutation(UPLOAD_FILE, 
+    {
+      refetchQueries: [
+        { query: GET_FILES }
+      ]
+    }
+  )
 
   const [items, setItems] = React.useState<BlobItemUpload[]>([]);
   const [download, setDownload] = React.useState<BlobItemDownload[]>([]);
@@ -155,13 +162,13 @@ export function FileSetting(props: FileProps) {
       },
       update: (
         cache,
-        { data }
+         data 
       ) => {
         const cacheData = cache.readQuery({ query: GET_FILES }) as IFiles;
         cache.writeQuery({
           query: GET_FILES,
           data: {
-            tasks: [...cacheData.File, data]
+            tasks: [...cacheData.File, data?.createFile]
           }
         });
       }

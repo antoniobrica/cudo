@@ -20,7 +20,7 @@ const {
   EACT_APP_COST_HOST: costHost,
   REACT_APP_MEETING_HOST: meetingHost,
   REACT_APP_TASK_HOST: taskHost,
-  REACT_APP_DOCUMENT_HOST: documentHost
+  REACT_APP_DOCUMENT_HOST: documentHost,
 } = environment;
 
 
@@ -67,7 +67,17 @@ function TabMenu(props: TabMenuProps) {
   }
 
 
+  function MeetingApp(history: any) {
+    return (
+      <MicroFrontend history={history} host={meetingHost} name="MeetingApp" />
+    );
+  }
 
+  function CostApp(history: any) {
+    return (
+      <MicroFrontend history={history} host={costHost} name="CostApp" />
+    );
+  }
   function Home() {
     const [input, setInput] = React.useState("");
 
@@ -145,7 +155,9 @@ function TabMenu(props: TabMenuProps) {
           path={`${url}/cost`}
           exact
           render={() => (
-            <Tab.Pane attached={false} onClick={handleOpenProject('cost')}>Cost</Tab.Pane>
+            <Tab.Pane attached={false} onClick={handleOpenProject('cost')}>
+              <CostApp />
+            </Tab.Pane>
           )}
         />,
       },
@@ -168,7 +180,9 @@ function TabMenu(props: TabMenuProps) {
           exact
           render={() => (
 
-            <Tab.Pane attached={false} onClick={handleOpenProject('meetings')}>Meetings</Tab.Pane>
+            <Tab.Pane attached={false} onClick={handleOpenProject('meetings')}>
+              <MeetingApp />
+            </Tab.Pane>
           )}
         />,
       },

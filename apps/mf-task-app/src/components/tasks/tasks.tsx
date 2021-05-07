@@ -162,10 +162,14 @@ const [taskDelete] = useTaskDeleteMutation(DELETE_TASK,{
     setTaskData(task)
     setOpenD(true)
   }
+  const refresh =(data)=>{
+    console.log('refresh is called', data);
+    
+  }
   return (
     <div>
       <div style={{ marginLeft: 900 }} >
-        <CreateTask />
+        <CreateTask onSuccess={refresh} />
       </div>
       {/* <MfAccountAppLib/> */}
       <br />
