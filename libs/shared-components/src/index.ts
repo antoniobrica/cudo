@@ -37,3 +37,5 @@ export * from './lib/components/modal/alert';
 export * from './lib/components/modal/planningnew';
 export * from './lib/components/modal/taskdetails';
 export * from './lib/components/modal/taskeditdetails';
+export * from './lib/components/modal/modal2';
+export * from './lib/components/modal/modal';
