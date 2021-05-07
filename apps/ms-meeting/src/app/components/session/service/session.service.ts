@@ -8,6 +8,7 @@ import ReferenceFilterParams from "../../../utils/types/referenceFilterParams";
 import { Pagination, PaginationOptionsInterface } from "../../paginate";
 import { ReferenceService } from "../../reference/service/reference.service";
 import SessionFilterParam from "../dto/args/session.filter";
+import { SessionDeleteInput } from "../dto/input/session-delete.input";
 import { SessionDetailsUpdateInput } from "../dto/input/session-details-update.input";
 import { SessionDetailsInput } from "../dto/input/session-details.input";
 import SessionNotFoundException from "../exceptions/sessionNotFound.exception";
@@ -133,6 +134,18 @@ export class SessionService {
         await this.sessionRepository.save(sessionDetail);
         const sessions = await this.sessionRepository.find({
             where: { sessionID: sessionBasics.sessionID },
+            relations: ['reference', 'admins', 'members']
+        });
+        return sessions;
+    }
+
+
+    public async deleteSessionByID(sessionDeleteInput: SessionDeleteInput): Promise<SessionEntity[]> {
+        const { sessionID } = sessionDeleteInput;
+        const sessioneDetails = await this.sessionRepository.delete({ sessionID: sessionID });
+        console.log(sessioneDetails)
+        const sessions = await this.sessionRepository.find({
+            where: { sessionID: sessionID },
             relations: ['reference', 'admins', 'members']
         });
         return sessions;
