@@ -5,6 +5,7 @@ import { Pagination } from '../../paginate';
 import { PaginationModel } from '../../paginate/pagination.model';
 import { pageParams } from '../../paginate/pagination.param';
 import SessionFilterParam from '../dto/args/session.filter';
+import { SessionDetailsUpdateInput } from '../dto/input/session-details-update.input';
 import { SessionDetailsInput } from '../dto/input/session-details.input';
 import { SessionModel } from '../model/session.model';
 import { SessionService } from '../service/session.service';
@@ -36,5 +37,12 @@ export class SessionResolver {
         @Args("referenceFilter") getTasksArgs: ReferenceFilterParams): Promise<Pagination<SessionEntity>>  {
             return await this.sessionService.paginate(options,getTasksArgs
               )
+        }
+
+        @Mutation(() => [SessionModel])
+        async updateSession(
+            @Args('sessionDetailsUpdate') createInput: SessionDetailsUpdateInput
+        ) {
+            return this.sessionService.updateSessionByID(createInput);
         }
 }
