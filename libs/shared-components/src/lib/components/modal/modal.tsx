@@ -6,7 +6,7 @@ import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, Te
 
 
 
-function ModalExampleModal() {
+export function ModalExampleModal() {
   const [secondOpen, setSecondOpen] = React.useState(false)
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },

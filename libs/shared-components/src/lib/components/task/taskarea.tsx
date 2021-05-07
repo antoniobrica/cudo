@@ -14,12 +14,12 @@ const supportedLanguages = [defaultLanguage, 'en-GB'];
 initI18n('./assets/i18n/{{lng}}.json', defaultLanguage);
 
 export interface Tasks {
-	task,
-	id,
-	updateTask,
-	veiwTask,
-	deleteTask,
-	editTask
+	task?,
+	id?,
+	updateTask?,
+	veiwTask?,
+	deleteTask?,
+	editTask?
 }
 export function TaskArea(props: Tasks) {
 	const { t, i18n } = useTranslation();

@@ -6,8 +6,8 @@ import logo from 'libs/shared-components/src/slider.png';
 import img from 'libs/shared-components/src/Shape 2.png';
 /* eslint-disable-next-line */
 export interface LoginProps {
-  emailSubmitHandle
-  email
+  emailSubmitHandle?
+  email?
 }
 
 export function Loginbar(props: LoginProps) {

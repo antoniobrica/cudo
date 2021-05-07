@@ -13,11 +13,11 @@ function exampleReducer(state, action) {
 }
 
 export interface AlertProps {
-  openAlertF,
-  confirm,
-  taskData,
-  cancel,
-  taskStatus
+  openAlertF?,
+  confirm?,
+  taskData?,
+  cancel?,
+  taskStatus?
 }
 export const ModalAlert = (props: AlertProps) => {
   const [state, dispatch] = React.useReducer(exampleReducer, {

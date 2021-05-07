@@ -15,10 +15,10 @@ function exampleReducer(state, action) {
 }
 
 interface AlertProps {
-  openAlertF,
-  taskData,
-  cancel,
-  taskStatus
+  openAlertF?,
+  taskData?,
+  cancel?,
+  taskStatus?
 }
 
 export const ModalViewTask = (props: AlertProps) => {
