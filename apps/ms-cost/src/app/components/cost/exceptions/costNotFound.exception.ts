@@ -1,8 +1,8 @@
 import { NotFoundException } from '@nestjs/common';
 
 class CostNotFoundException extends NotFoundException {
-  constructor(projectID: string) {
-    super(`Project with id ${projectID} not found`);
+  constructor(costID: string) {
+    super(`Cost with id ${costID} not found`);
   }
 }
 

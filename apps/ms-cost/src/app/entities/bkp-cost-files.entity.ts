@@ -1,28 +1,35 @@
 import { Expose, plainToClass } from 'class-transformer';
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToMany, JoinTable } from 'typeorm';
 import * as uuid from 'uuid';
-import { CostEntity } from './cost.entity';
 
 /**
  * 
  */
-@Entity({ name: 'referenceTypes' })
-export default class ReferanceTypeEntity extends BaseEntity {
+@Entity({ name: 'bkpCostFiles' })
+export default class BKPCostFilesEntity extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;
 
     @Expose()
     @Column({ unique: true })
-    referenceID: string;
+    bkpCostFileID: string;
 
-    @Expose()
-    @Column({ nullable: true })
-    referenceType: string;
-
-    @Expose()
     @Column()
-    name: string;
+    @Expose()
+    fileURL: string;
+
+    @Column()
+    @Expose()
+    fileTitle: string;
+
+    @Column({ nullable: true })
+    @Expose()
+    fileType: string;
+
+    @Column({ nullable: true })
+    @Expose()
+    fileVersion: string;
 
     @Expose()
     @CreateDateColumn()
@@ -40,23 +47,16 @@ export default class ReferanceTypeEntity extends BaseEntity {
     @Column({ nullable: true })
     updatedBy?: string;
 
-    @Expose()
-    @Column({ nullable: true })
-    isDeleted?: boolean;
-
-    @Expose()
-    @OneToMany(() => CostEntity, (file: CostEntity) => file.references)
-    costs: CostEntity[];
-
-    constructor(referanceTypeEntity: Partial<ReferanceTypeEntity>) {
+    constructor(referanceTypeEntity: Partial<BKPCostFilesEntity>) {
         super();
         if (referanceTypeEntity) {
             Object.assign(
                 this,
-                plainToClass(ReferanceTypeEntity, referanceTypeEntity, {
+                plainToClass(BKPCostFilesEntity, referanceTypeEntity, {
                     excludeExtraneousValues: true
                 })
             )
+            this.bkpCostFileID = this.bkpCostFileID || uuid.v1();
         }
     }
 }
