@@ -13,6 +13,9 @@ export class UserModel extends PaginationParams {
     userName: string;
 
     @Field({ nullable: true, description: `User Name` })
+    imageUrl: string;
+
+    @Field({ nullable: true, description: `User Name` })
     email: string;
 
     @Field(type => [ReferenceModel])
