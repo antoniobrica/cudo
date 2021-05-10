@@ -5,6 +5,7 @@ import { ProjectWorkTypeEntity } from '../../../entities/project-WorkType.entity
 import { ProjectEntity } from '../../../entities/project.entity';
 import { WorkTypeEntity } from '../../../entities/work-type.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
+import { Pagination, PaginationOptionsInterface } from '../../paginate';
 import { ReferenceService } from '../../reference/service/reference.service';
 import { WorkTypesService } from '../../workTypes/service/workTypes.service';
 import { GetProjectArgs } from '../dto/args/get-project.args';
@@ -67,6 +68,31 @@ export class ProjectService {
             },
             relations: ['reference', 'projectWorkTypes']
         });
+    }
+
+    async paginate(
+        options: PaginationOptionsInterface,
+        refFilter: ReferenceFilterParams
+    ): Promise<Pagination<ProjectEntity>> {
+
+        const selectedReference = await this.referenceService.getReferenceById(refFilter)
+
+        
+        const [results, total] = await this.projectRepository.findAndCount({ where: {
+            "reference": {
+                id: selectedReference.id
+            }
+        },
+        relations:['reference', 'projectWorkTypes'],
+        take: options.limit,
+        skip: options.page * options.limit,
+        }
+        );            
+        const pagination =  new Pagination({
+            results,
+            total,
+        });      
+        return pagination
     }
 
 }
