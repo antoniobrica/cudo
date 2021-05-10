@@ -12,7 +12,7 @@ import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex } from "@cudo/mf-ac
 import { useHistory } from 'react-router';
 /* eslint-disable-next-line */
 export interface CreateTaskProps {
-  onSuccess
+  onSuccess?
 }
 
 export function CreateTask(props: CreateTaskProps) {
