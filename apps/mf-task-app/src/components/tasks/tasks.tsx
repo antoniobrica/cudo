@@ -154,48 +154,51 @@ export function Tasks(props: TasksProps) {
   const editTask = (task) => {
     setTaskData(task)
     setEditTaskOpen(true)
-  }
-  return (
-    <div>
-      <div style={{ marginLeft: 900 }} >
-        <CreateTask />
-      </div>
-      {/* <MfAccountAppLib/> */}
-      <br />
-      {open ?
-        <div style={{ marginLeft: 900 }}  >
-          {/* <ModalViewTask></ModalViewTask> */}
-          <ModalAlert openAlertF={open} confirm={confirmation} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></ModalAlert>
-        </div>
-        : null}
-      {openD ?
-        <div style={{ marginLeft: 900 }} >
-          <TaskDelete openAlertF={openD} confirm={confirmationDelete} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></TaskDelete>
-        </div>
-        : null}
-      {viewTaskOpen ?
-        <div style={{ marginLeft: 900 }} >
-          <ModalViewTask openAlertF={viewTaskOpen} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></ModalViewTask>
-        </div>
-        : null}
-      {editTaskOpen ?
-        <div style={{ marginLeft: 900 }} >
-          <ModalTaskEdit openAlertF={editTaskOpen} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></ModalTaskEdit>
-        </div>
-        : null}
-      <div className="TaskApp-container">
-        <h3 className="alltask" >All Tasks</h3>
-        {data.tasks.map((task, id) => {
-          return (
-            <div key={id}>
-              <TaskArea task={task} id={id} updateTask={updateTask} deleteTask={deleteTask} veiwTask={viewTask} editTask={editTask}></TaskArea>
-            </div>
-          )
-        })}
-      </div>
-      {/* <button className="ui large button btn-dashed  btn-large"><i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> Add new task    </button> */}
-    </div>
-  );
-}
+    const refresh = (data) => {
+      console.log('refresh is called', data);
 
-export default Tasks;
+    }
+    return (
+      <div>
+        <div style={{ marginLeft: 900 }} >
+          <CreateTask onSuccess={refresh} />
+        </div>
+        {/* <MfAccountAppLib/> */}
+        <br />
+        {open ?
+          <div style={{ marginLeft: 900 }}  >
+            {/* <ModalViewTask></ModalViewTask> */}
+            <ModalAlert openAlertF={open} confirm={confirmation} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></ModalAlert>
+          </div>
+          : null}
+        {openD ?
+          <div style={{ marginLeft: 900 }} >
+            <TaskDelete openAlertF={openD} confirm={confirmationDelete} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></TaskDelete>
+          </div>
+          : null}
+        {viewTaskOpen ?
+          <div style={{ marginLeft: 900 }} >
+            <ModalViewTask openAlertF={viewTaskOpen} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></ModalViewTask>
+          </div>
+          : null}
+        {editTaskOpen ?
+          <div style={{ marginLeft: 900 }} >
+            <ModalTaskEdit openAlertF={editTaskOpen} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></ModalTaskEdit>
+          </div>
+          : null}
+        <div className="TaskApp-container">
+          <h3 className="alltask" >All Tasks</h3>
+          {data.tasks.map((task, id) => {
+            return (
+              <div key={id}>
+                <TaskArea task={task} id={id} updateTask={updateTask} deleteTask={deleteTask} veiwTask={viewTask} editTask={editTask}></TaskArea>
+              </div>
+            )
+          })}
+        </div>
+        {/* <button className="ui large button btn-dashed  btn-large"><i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> Add new task    </button> */}
+      </div>
+    );
+  }
+
+  export default Tasks;

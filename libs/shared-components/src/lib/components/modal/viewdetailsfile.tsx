@@ -20,7 +20,9 @@ import Canvas from './canvas';
      
   ]
   export interface FileDetailsProps {
-    open
+    open,
+    filesData,
+    dowloadFilesData
   }
   export const ViewFileDetail = (props: FileDetailsProps) => {
     // const [state, dispatch] = React.useReducer(exampleReducer, {
@@ -28,13 +30,37 @@ import Canvas from './canvas';
     //   size: undefined,
     // })
     // const { open, size } = state
-    const [open, setOpen] = React.useState(false)
+    const [open, setOpen] = React.useState(false);
+    const [files, setFiles] = React.useState();
+    const [imgUrl, setimgUrl] = React.useState('');
+
+
 
   React.useEffect(()=>{
     if(props.open){
       setOpen(props.open)
     }
   })
+  
+  
+  React.useEffect(()=>{
+    if(props.dowloadFilesData){
+      console.log('dowloadFilesData', props.dowloadFilesData[0].url);
+      for(let i =0; i< props.dowloadFilesData.length; i++){
+        if(props.dowloadFilesData[i].filename == props.filesData.fileTitle) {
+          setimgUrl(props.dowloadFilesData[i].url);
+        }
+      }
+     
+    }
+  })
+  React.useEffect(()=>{
+    if(props.filesData){
+      console.log('filesData', props.filesData);
+      setFiles(props.filesData)
+    }
+  }, [props.filesData])
+  
  const cancel =()=>{
    setOpen(false);
  }
@@ -46,9 +72,9 @@ import Canvas from './canvas';
         </Button> */}
   
         <Modal
-          size={undefined}
+          size={'fullscreen'}
           open={open}
-          onClose={cancel}
+          onClose={cancel}  style={{marginLeft:40}}
         >
           <Modal.Content>
           <Form>
@@ -56,8 +82,8 @@ import Canvas from './canvas';
 <Grid.Row>
   <Grid.Column>
     <div>
-      <Canvas></Canvas>
-    {/* <Image src='https://react.semantic-ui.com/images/wireframe/image.png' fluid /> */}
+      <Canvas imgUrl={imgUrl} ></Canvas>
+    {/* <Image src={imgUrl} fluid /> */}
     <div className="align_center">File versions
     <Pagination
     defaultActivePage={1}
@@ -188,7 +214,7 @@ import Canvas from './canvas';
    
     <Comment.Group>
     <Comment>
-      <Comment.Avatar as='a' src='https://react.semantic-ui.com/images/avatar/small/stevie.jpg' />
+      <Comment.Avatar as='a' src='https://react.semantic-ui.com/images/avatar/small/stevie.jpg' className="avtarfile"/>
       <Comment className="comment_margin">
         <Comment.Author>Stevie Feliciano</Comment.Author>
         <Comment.Metadata className="float_right">

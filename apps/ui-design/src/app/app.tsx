@@ -50,19 +50,19 @@ import EditMileStonePopup from 'libs/shared-components/src/lib/components/modal/
 export function App() {
   return (
     <div>
-      <Menubar ></Menubar>
+      <Menubar></Menubar>
       <AccordionExampleMenu></AccordionExampleMenu>
       <Tabsbar></Tabsbar>
-      <ModalExampleModal></ModalExampleModal> <br /> <br /><br />
+      {/* <ModalExampleModal></ModalExampleModal> <br/> <br/><br/>   */}
       <Cardbar></Cardbar>
       <Messagebar></Messagebar><br />
       <Loginbar></Loginbar><br />
       <Logindrop></Logindrop><br />
       <Loginpassword></Loginpassword>
-      <ModalExampleModal2></ModalExampleModal2><br />
+      {/* <ModalExampleModal2></ModalExampleModal2><br/> */}
       <ModalExampleCompany></ModalExampleCompany><br />
       <ModalExamplePrinting></ModalExamplePrinting><br />
-      {/* <TaskArea></TaskArea><br /><br /> */}
+      <ListExampleFloated></ListExampleFloated><br /><br />
       <ModalAddPrint></ModalAddPrint><br />
       <ModalAddFile></ModalAddFile><br />
       <FileStructure></FileStructure><br />
@@ -82,14 +82,16 @@ export function App() {
       <EditProject></EditProject><br />
       <UserProfile></UserProfile><br />
       <RegisterPage></RegisterPage><br />
-      {/* <UserProfileView></UserProfileView><br /> */}
+      <UserProfileView></UserProfileView><br />
       <LoaderPage></LoaderPage><br />
       <ModalAlert></ModalAlert><br />
       <ModalPlanningNew></ModalPlanningNew><br />
       <ModalViewPlanning></ModalViewPlanning><br />
       <ModalSession></ModalSession><br />
       <ModalViewTask></ModalViewTask><br />
-      <ModalTaskEdit></ModalTaskEdit>
+      <ModalTaskEdit></ModalTaskEdit><br />
+      <InvitationTab></InvitationTab><br />
+      <EditMileStonePopup></EditMileStonePopup>
     </div>
 
 
