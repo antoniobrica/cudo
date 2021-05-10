@@ -200,5 +200,5 @@ export function Tasks(props: TasksProps) {
       </div>
     );
   }
-
-  export default Tasks;
+}
+export default Tasks;
