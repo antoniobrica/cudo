@@ -5,6 +5,7 @@ import { MileStoneEntity } from '../../../entities/milestone.entity';
 import TaskFileEntity from '../../../entities/task-file.entity';
 import { WorkTypeEntity } from '../../../entities/workType.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
+import { Pagination, PaginationOptionsInterface } from '../../paginate';
 import { ReferenceService } from '../../reference/service/reference.service';
 import MileStoneFilterParam from '../dto/args/milestone.filter';
 import { MilestoneDetailsInput } from '../dto/input/milestone-details.input';
@@ -17,8 +18,6 @@ export class MileStoneService {
     constructor(
         @InjectRepository(MileStoneEntity)
         private mileStoneRepository: Repository<MileStoneEntity>,
-        @InjectRepository(WorkTypeEntity)
-        private workTypeRepository: Repository<WorkTypeEntity>,
         @InjectRepository(TaskFileEntity)
         private taskFileRepository: Repository<TaskFileEntity>,
         private referenceService: ReferenceService
@@ -114,5 +113,29 @@ export class MileStoneService {
         return milestones;
     }
 
+        async paginate(
+            options: PaginationOptionsInterface,
+            refFilter: ReferenceFilterParams
+        ): Promise<Pagination<MileStoneEntity>> {
 
+            const selectedReference = await this.referenceService.getReferenceById(refFilter)
+
+            
+            const [results, total] = await this.mileStoneRepository.findAndCount({ where: {
+                "reference": {
+                    id: selectedReference.id
+                }
+            },
+            relations:['reference','files'],
+            take: options.limit,
+            skip: options.page * options.limit,
+            }
+            );            
+            const pagination =  new Pagination({
+                results,
+                total,
+            });      
+            return pagination
+        }
+        
 }

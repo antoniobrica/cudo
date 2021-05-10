@@ -18,8 +18,8 @@ import moment, { calendarFormat } from 'moment';
 // import SampleModal from './sample-modal';
 
 export interface PlanningProps {
-  getMilestoneData,
-  worktypes
+  getMilestoneData?,
+  worktypes?
 }
 export function ModalPlanningNew(props: PlanningProps) {
   const countryOptions = [

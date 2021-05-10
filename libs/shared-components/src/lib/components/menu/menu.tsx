@@ -5,8 +5,8 @@ import { Header, Icon, Image, Menu, Segment, Sidebar, Button, Popup } from 'sema
 import { NavLink, useRouteMatch } from 'react-router-dom';
 /* eslint-disable-next-line */
 export interface MenuProps {
-  parentCallback
-  data
+  parentCallback?
+  data?
 }
 
 export function Menubar(props: MenuProps) {
@@ -14,7 +14,7 @@ export function Menubar(props: MenuProps) {
   const [visible, setVisible] = React.useState('')
 
   const handleOpenProject = (item) => {
-    props.parentCallback(item)
+    props?.parentCallback(item)
   }
 
   return (

@@ -1,6 +1,7 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
 import ReferanceTypeEntity from './references.entity';
+import * as uuid from 'uuid';
 
 
 @Entity({ name: 'folder' })
@@ -53,8 +54,8 @@ export class FolderEntity extends BaseEntity {
           excludeExtraneousValues: true
         })
       )
-      // this.createdAt = this.createdAt || new Date(new Date().toUTCString());
-      // this.updatedAt = new Date(new Date().toUTCString());
+      this.folderID = this.folderID || uuid.v1();
+
     }
   }
 }

@@ -2,21 +2,51 @@ import React from 'react';
 import { Button, Modal, Form, Grid, TextArea } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 import img8 from 'libs/shared-components/src/default_area.png';
+import Moment from 'moment';
+function exampleReducer(state, action) {
+  switch (action.type) {
+    case 'close':
+      return { open: false }
+    case 'open':
+      return { open: true, size: action.size }
+    default:
+      throw new Error('Unsupported action...')
+  }
+}
 
-function ModalViewTask() {
+interface AlertProps {
+  openAlertF?,
+  taskData?,
+  cancel?,
+  taskStatus?
+}
+
+export const ModalViewTask = (props: AlertProps) => {
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
   ];
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false)
+  React.useEffect(() => {
+    if (props.openAlertF) {
+      setOpen(props.openAlertF);
+    }
+  }, [props.openAlertF]);
+  const openf = () => {
+    setOpen(true)
+  }
+  const cancel = () => {
+    setOpen(false)
+    props.cancel()
+  }
 
   return (
     <div id="navbar">
       <Modal
         className="modal_media"
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
+        onClose={cancel}
+        onOpen={openf}
         open={open}
         trigger={
           <Button size="mini" className="grey-btn">
@@ -34,7 +64,7 @@ function ModalViewTask() {
             <span className="taskdetails">Edit</span>
           </h3>
           <span style={{ color: '#718898', fontSize: '12px' }}>
-            Created on:20 August,2020 - Created by: Zyhane Rhyane
+            Created on:{Moment(props?.taskData?.createdAt).format('DD-MM-YYYY')} - Created by: {props?.taskData?.createdBy}
           </span>
         </Modal.Header>
         <Modal.Content body>
@@ -45,19 +75,19 @@ function ModalViewTask() {
                   <Grid.Column>
                     <Form.Field>
                       <label>Task Title</label>
-                      <span>Switchboard Fitting</span>
+                      <span>{props?.taskData?.taskTitle}</span>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
                       <label>Project/Work Type</label>
-                      <span>Electrcial Work</span>
+                      <span>{props?.taskData?.taskTitle}</span>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
                       <label>Phase</label>
-                      <span>2. Prelimary studies </span>
+                      <span>{props?.taskData?.phaseName}</span>
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -69,8 +99,7 @@ function ModalViewTask() {
                     <Form.Field>
                       <label>Description </label>
                       <span>
-                        This is description will be show sunt in culpa qui
-                        officia deserunt mollit anim id est laborum...
+                        {props?.taskData?.description}
                       </span>
                     </Form.Field>
                   </Grid.Column>
@@ -81,7 +110,7 @@ function ModalViewTask() {
                   <Grid.Column>
                     <Form.Field>
                       <label>BKP</label>
-                      <span>211 </span>
+                      <span>{props?.taskData?.BKPTitle} </span>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
@@ -114,19 +143,19 @@ function ModalViewTask() {
                   <Grid.Column>
                     <Form.Field>
                       <label>Start date</label>
-                      <span>1 Aug,2020 </span>
+                      <span>{props?.taskData?.startDate}</span>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
                       <label>End date</label>
-                      <span>10 Aug,2020</span>
+                      <span>{props?.taskData?.endDate}</span>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
                       <label>Estimated days</label>
-                      <span> 10 </span>
+                      <span>{props?.taskData?.estimatedDays}</span>
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -182,7 +211,7 @@ function ModalViewTask() {
                       <Button
                         style={{ float: 'right' }}
                         content="Update"
-                        onClick={() => setOpen(false)}
+                        onClick={cancel}
                         positive
                         size="mini"
                         className="grey-btn"

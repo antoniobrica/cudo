@@ -4,13 +4,12 @@ import React from 'react';
 import { ReactComponent as Logo } from './logo.svg';
 import star from './star.svg';
 
-import { AccordionExampleMenu, ModalExampleModal2, Cardbar, Menubar, Tabsbar, Messagebar, Loginbar, Logindrop, Loginpassword } from '@cudo/shared-components';
+import { AccordionExampleMenu, ModalExampleModal2, Cardbar, Menubar, Tabsbar, Messagebar, Loginbar, Logindrop, Loginpassword, ModalExampleModal, UserProfileView, TaskArea } from '@cudo/shared-components';
 
 // import ModalExampleModal2 from 'libs/shared-components/src/lib/components/modal/modal2';
 import ModalExampleCompany from 'libs/shared-components/src/lib/components/modal/companypopup';
 import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
-// import AccordionExampleMenu from 'libs/shared-components/src/lib/components/menu/sidebar';
-import ListExampleFloated from 'libs/shared-components/src/lib/components/task/taskarea';
+// import ListExampleFloated from 'libs/shared-components/src/lib/components/task/taskarea';
 import ModalAddPrint from 'libs/shared-components/src/lib/components/modal/addfile';
 import ModalAddFile from 'libs/shared-components/src/lib/components/modal/addedfile';
 import FileStructure from 'libs/shared-components/src/lib/components/filestructure/filestask';
@@ -30,7 +29,7 @@ import EditProject from 'libs/shared-components/src/lib/components/projectsettin
 import UserProfile from 'libs/shared-components/src/lib/components/userprofile/userprofile';
 import RegisterPage from 'libs/shared-components/src/lib/components/login/register';
 import ModalAddSubLevel from 'libs/shared-components/src/lib/components/modal/addsublevel';
-import UserProfileView from 'libs/shared-components/src/lib/components/userprofile/userprofileview';
+// import UserProfileView from 'libs/shared-components/src/lib/components/userprofile/userprofileview';
 import LoaderPage from 'libs/shared-components/src/lib/components/loader/loader';
 import ModalAlert from 'libs/shared-components/src/lib/components/modal/alert';
 import ModalPlanningNew from 'libs/shared-components/src/lib/components/modal/planningnew';
@@ -43,54 +42,54 @@ import EditMileStonePopup from 'libs/shared-components/src/lib/components/modal/
 
 
 
+// import AccordionExampleMenu from 'libs/shared-components/src/lib/components/menu/sidebar';
+// const ListExampleFloated = React.lazy(() => import('libs/shared-components/src/lib/components/task/taskarea'));
 
 // import { Sidebar } from 'semantic-ui-react';
 
 export function App() {
   return (
     <div>
-   <Menubar></Menubar> 
-   <AccordionExampleMenu></AccordionExampleMenu>
-   <Tabsbar></Tabsbar>
-    <ModalExampleModal></ModalExampleModal> <br/> <br/><br/>  
-    <Cardbar></Cardbar> 
-    <Messagebar></Messagebar><br/>
-    <Loginbar></Loginbar><br/>
-    <Logindrop></Logindrop><br/>
-    <Loginpassword></Loginpassword>
-     <ModalExampleModal2></ModalExampleModal2><br/>
-    <ModalExampleCompany></ModalExampleCompany><br/>
-    <ModalExamplePrinting></ModalExamplePrinting><br/> 
-    <ListExampleFloated></ListExampleFloated><br/><br/>
-    <ModalAddPrint></ModalAddPrint><br/>
-    <ModalAddFile></ModalAddFile><br/>
-    <FileStructure></FileStructure><br/> 
-    <ModalExampleSize></ModalExampleSize><br/>
-    <UploadNewVersion></UploadNewVersion><br/>
-    <AddNewFolder></AddNewFolder><br/>  
-    <AddNewPeople></AddNewPeople><br/>
-    <PeopleList></PeopleList><br/>
-    <ModalDelete></ModalDelete><br/>
-    <PremissionPeople></PremissionPeople><br/>
-    <AddPeoplePermission></AddPeoplePermission><br/> 
-     <ProgressBar></ProgressBar><br/>
-     <ModalPin></ModalPin><br/>
-     <ManageFileStructure></ManageFileStructure><br/>
-    <ProjectSetting></ProjectSetting><br/>
-   <ModalAddSubLevel></ModalAddSubLevel><br/>
-    <EditProject></EditProject><br/>
-    <UserProfile></UserProfile><br/>
-    <RegisterPage></RegisterPage><br/>
-    <UserProfileView></UserProfileView><br/>
-    <LoaderPage></LoaderPage><br/>
-    <ModalAlert></ModalAlert><br/>
-    <ModalPlanningNew></ModalPlanningNew><br/>
-    <ModalViewPlanning></ModalViewPlanning><br/>
-    <ModalSession></ModalSession><br/>
-    <ModalViewTask></ModalViewTask><br/>
-    <ModalTaskEdit></ModalTaskEdit><br/>
-    <InvitationTab></InvitationTab><br/>
-    <EditMileStonePopup></EditMileStonePopup>
+      <Menubar ></Menubar>
+      <AccordionExampleMenu></AccordionExampleMenu>
+      <Tabsbar></Tabsbar>
+      <ModalExampleModal></ModalExampleModal> <br /> <br /><br />
+      <Cardbar></Cardbar>
+      <Messagebar></Messagebar><br />
+      <Loginbar></Loginbar><br />
+      <Logindrop></Logindrop><br />
+      <Loginpassword></Loginpassword>
+      <ModalExampleModal2></ModalExampleModal2><br />
+      <ModalExampleCompany></ModalExampleCompany><br />
+      <ModalExamplePrinting></ModalExamplePrinting><br />
+      {/* <TaskArea></TaskArea><br /><br /> */}
+      <ModalAddPrint></ModalAddPrint><br />
+      <ModalAddFile></ModalAddFile><br />
+      <FileStructure></FileStructure><br />
+      <ModalExampleSize></ModalExampleSize><br />
+      <UploadNewVersion></UploadNewVersion><br />
+      <AddNewFolder></AddNewFolder><br />
+      <AddNewPeople></AddNewPeople><br />
+      <PeopleList></PeopleList><br />
+      <ModalDelete></ModalDelete><br />
+      <PremissionPeople></PremissionPeople><br />
+      <AddPeoplePermission></AddPeoplePermission><br />
+      <ProgressBar></ProgressBar><br />
+      <ModalPin></ModalPin><br />
+      <ManageFileStructure></ManageFileStructure><br />
+      <ProjectSetting></ProjectSetting><br />
+      <ModalAddSubLevel></ModalAddSubLevel><br />
+      <EditProject></EditProject><br />
+      <UserProfile></UserProfile><br />
+      <RegisterPage></RegisterPage><br />
+      {/* <UserProfileView></UserProfileView><br /> */}
+      <LoaderPage></LoaderPage><br />
+      <ModalAlert></ModalAlert><br />
+      <ModalPlanningNew></ModalPlanningNew><br />
+      <ModalViewPlanning></ModalViewPlanning><br />
+      <ModalSession></ModalSession><br />
+      <ModalViewTask></ModalViewTask><br />
+      <ModalTaskEdit></ModalTaskEdit>
     </div>
 
 

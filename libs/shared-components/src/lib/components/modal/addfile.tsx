@@ -3,9 +3,9 @@ import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, Te
 // import SampleModal from './sample-modal';
 import img from 'libs/shared-components/src/upload.png';
 export interface FileProps {
-  fileData
-  onFileSubmit
-  setting
+  fileData?
+  onFileSubmit?
+  setting?
 }
 
 export function ModalAddPrint(props: FileProps) {

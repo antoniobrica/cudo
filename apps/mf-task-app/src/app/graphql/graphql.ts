@@ -6,13 +6,23 @@ query Tasks($referenceID: String!)
     referenceType: PROJECTTYPE
     referenceID: $referenceID
   }){
-  taskTitle
-  taskID
-  status
-  createdBy
-  startDate
-  endDate
-  estimatedDays
+    taskID
+    taskTitle
+    startDate
+    endDate
+    estimatedDays
+    sendNotification
+    saveTaskAsTemplate
+    BKPID
+    BKPTitle
+    phaseID
+    description
+    phaseName
+    status
+    updatedAt
+    createdAt
+    updatedBy
+    createdBy
   reference{
   referenceID
   }

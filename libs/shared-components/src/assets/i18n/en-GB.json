@@ -1,0 +1,16 @@
+{
+  "header": {
+    "logo": "Cudo Logo",
+    "title": "Cudo"
+  },
+  "loading": "Loading...",
+  "messages": {
+    "test": "Oops~ Something went wrong. Please refresh the page."
+  },
+  "user_profile": "User Profile",
+  "first_name": "First Name",
+  "language": {
+    "en-GB": "English",
+    "de-DE": "Deutsche"
+  }
+}
