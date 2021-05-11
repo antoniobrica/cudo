@@ -21,7 +21,7 @@ export function FileStructure(props: FileStructureProps) {
 	const [expand, setExpand] = React.useState(false);
 	const [filesData, setFilesData] = React.useState([]);
 	const [items, setItems] = React.useState([]);
-    const [imgUrl, setimgUrl] = React.useState('');
+	const [imgUrl, setimgUrl] = React.useState('');
 	const [fname, setFname] = React.useState('');
 
 
@@ -41,15 +41,15 @@ export function FileStructure(props: FileStructureProps) {
 		setExpand(true);
 		setFilesData(data)
 	}
-	React.useEffect(()=>{
-		if(props.downloadedImg){
+	React.useEffect(() => {
+		if (props.downloadedImg) {
 			console.log('downloadedImg', props.downloadedImg);
-			for(let i =0; i< props.downloadedImg.length; i++){
-				if(props.downloadedImg[i].filename == filesData.fileTitle) {
-				  setimgUrl(props.downloadedImg[i].url);
+			for (let i = 0; i < props.downloadedImg.length; i++) {
+				if (props.downloadedImg[i].filename == filesData.fileTitle) {
+					setimgUrl(props.downloadedImg[i].url);
 				}
-			  }
-			
+			}
+
 		}
 	})
 	React.useEffect(() => {
@@ -92,7 +92,7 @@ export function FileStructure(props: FileStructureProps) {
 						<div className="symbol-group symbol-hover py-2">
 							<div className="symbol symbol-30">
 								<a onClick={() => download(file.fileTitle)}>  <i className="ms-Icon ms-Icon--Download mr-10" aria-hidden="true"></i></a>
-								<a onClick={()=>viewFile(file)}> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a>
+								<a onClick={() => viewFile(file)}> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a>
 
 								<span className="mr-2"  >...</span>
 							</div>
@@ -279,7 +279,7 @@ export function FileStructure(props: FileStructureProps) {
 					: null} */}
 				<div className="ui card " style={{ width: '80%' }}>
 					<Accordion className="widtharea" defaultActiveIndex={0} panels={items} styled  >
-					 
+
 
 					</Accordion>
 
@@ -296,7 +296,7 @@ export function FileStructure(props: FileStructureProps) {
 	]
 
 	return (
-		<div className=" navbar-collapse box-shadow " style={{ marginTop: '-50px' }}>
+		<div className=" navbar-collapse box-shadow " style={{ marginTop: '-63px' }}>
 			{view && imgUrl.length > 0 ?
 				<div>
 					<ViewFileDetail open={view} filesData={filesData} dowloadFilesData={props.downloadedImg} ></ViewFileDetail>

@@ -136,7 +136,7 @@ export function CreateTask(props: CreateTaskProps) {
 
   return (
     <div >
-      <Modal className="modal_media"
+      <Modal className="modal_media" style={{ width: '800px', marginLeft: '155px' }}
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
