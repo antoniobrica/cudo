@@ -17,7 +17,7 @@ const client = new ApolloClient({
 export function MfAccountAppLib(props: MfAccountAppLibProps) {
 
   const onSelectCountry = (data) => {
-    props.parentCallback(data)
+    props?.parentCallback(data)
   }
   return (
     <ApolloProvider client={client}>

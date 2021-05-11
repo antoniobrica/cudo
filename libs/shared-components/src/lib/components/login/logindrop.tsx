@@ -9,8 +9,8 @@ import img4 from 'libs/shared-components/src/company1.png';
 
 /* eslint-disable-next-line */
 export interface LoginDropProps {
-  login
-  email
+  login?
+  email?
 }
 
 export function Logindrop(props: LoginDropProps) {

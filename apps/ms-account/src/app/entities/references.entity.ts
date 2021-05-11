@@ -66,7 +66,7 @@ export default class ReferanceTypeEntity extends BaseEntity {
     @Expose()
     @OneToMany(() => PhaseEntity, (phase: PhaseEntity) => phase.reference)
     phase: PhaseEntity[];
-    
+
     @ManyToMany(() => UsersEntity, usersEntity => usersEntity.references)
     users: UsersEntity[];
 

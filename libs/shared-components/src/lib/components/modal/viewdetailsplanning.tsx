@@ -12,13 +12,13 @@ import {
 import LoaderPage from '../loader/loader';
 // import SampleModal from './sample-modal';
 export interface PlanningProps {
-  openPlanningDetail,
-  cancel,
-  milestoneDataById,
-  loading
+  openPlanningDetail?,
+  cancel?,
+  milestoneDataById?,
+  loading?
 }
 export function ModalViewPlanning(props: PlanningProps) {
-  
+
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
@@ -26,7 +26,7 @@ export function ModalViewPlanning(props: PlanningProps) {
 
   const [open, setOpen] = React.useState(false);
   React.useEffect(() => {
-    console.log('loading',props.loading);
+    console.log('loading', props.loading);
     if (props.openPlanningDetail) {
       setOpen(props.openPlanningDetail);
     }
@@ -34,11 +34,11 @@ export function ModalViewPlanning(props: PlanningProps) {
   const openf = () => {
     setOpen(true)
   }
-  const cancel =()=>{
+  const cancel = () => {
     setOpen(false)
     props.cancel()
   }
-  if(props.loading) return <LoaderPage />;
+  if (props.loading) return <LoaderPage />;
   return (
     <div id="navbar">
       <Modal

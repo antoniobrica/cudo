@@ -1,26 +1,26 @@
 import React from 'react';
- 
+
 import '../../../style/index.scss';
 import { Progress } from 'semantic-ui-react'
 /* eslint-disable-next-line */
 export interface Tasks {
-  progress
- }
+  progress?
+}
 
 export function ProgressBar(props: Tasks) {
 
-    const description = [
-        
-      ] 
+  const description = [
+
+  ]
   return (
 
-      <div>
-      
+    <div>
+
       <Progress percent={props.progress}>Completed {props.progress} %</Progress>
- 
-     </div> 
-    
- 
+
+    </div>
+
+
   );
 }
 
