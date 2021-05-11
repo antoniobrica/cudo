@@ -55,9 +55,18 @@ export function CreateTask(props: CreateTaskProps) {
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
-  const [addTask] = useTaskMutation(ADD_TASK, {
-    variables: { referenceID },
-  });
+  // const [addTask] = useTaskMutation(ADD_TASK, {
+  //   variables: { referenceID },
+  // });
+
+  const [addTask, { data }] = useMutation(ADD_TASK, 
+    {
+      refetchQueries: [
+        {query: GET_TASKS, variables: { referenceID }}
+      ],
+      variables: { referenceID },
+    }
+  )
 
   const onTaskTitleChange = e => {
     setTaskTitle(e.target.value)
@@ -120,7 +129,7 @@ export function CreateTask(props: CreateTaskProps) {
         cache.writeQuery({
           query: GET_TASKS,
           data: {
-            tasks: [...cacheData.tasks, addTask]
+            tasksD: [...cacheData.tasks, addTask]
           },
           variables: { referenceID },
         });
