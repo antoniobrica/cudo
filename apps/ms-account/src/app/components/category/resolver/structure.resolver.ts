@@ -2,8 +2,8 @@ import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { Structure } from '../../../entities/structure.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { StructureFilterArgs } from '../dto/args/structure-filter.args';
-import { CreateStructureInput } from '../dto/create-Structure.input';
-import { UpdateStructureInput } from '../dto/update-Structure.input';
+import { CreateStructureInput } from '../dto/create-structure.input';
+import { UpdateStructureInput } from '../dto/update-structure.input';
 import { StructureModel } from '../model/structure.model';
 import { StructureService } from '../service/structure.service';
 
