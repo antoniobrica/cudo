@@ -5,10 +5,10 @@ import { ReferenceTypeEnum } from '../../enums/reference-type.enum';
 @InputType()
 class ReferenceFilterParams {
   @Field(type => ReferenceTypeEnum, { description: `Refrence Type` })
-  referenceType?: ReferenceTypeEnum;
+  referenceType: ReferenceTypeEnum;
 
-  @Field({ description: `Refrence ID` })
-  referenceID?: string;
+  @Field({ description: `Refrence ID`})
+  referenceID: string;
 }
 
 export default ReferenceFilterParams;

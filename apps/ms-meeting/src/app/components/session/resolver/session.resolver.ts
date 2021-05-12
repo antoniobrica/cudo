@@ -19,7 +19,7 @@ export class SessionResolver {
         @Mutation(() => SessionModel)
         async createSession(
             @Args('sessionDetails') createInput: SessionDetailsInput,
-            @Args("referenceFilter") getTasksArgs: ReferenceFilterParams
+            @Args("referenceFilter") getTasksArgs: ReferenceFilterParams,
         ) {
             return this.sessionService.create(createInput, getTasksArgs);
         }
@@ -32,9 +32,14 @@ export class SessionResolver {
         }
 
         @Query(() => PaginationModel, { nullable: true })
-        async paginatedSession(@Args('options')options:pageParams,
+        async paginatedSession(@Args('options',)options:pageParams,
         @Args("referenceFilter") getTasksArgs: ReferenceFilterParams): Promise<Pagination<SessionEntity>>  {
             return await this.sessionService.paginate(options,getTasksArgs
               )
+        }
+
+        @Query(() => [SessionModel], { nullable: true })
+        async findAllSessions(): Promise<SessionEntity[]> {
+          return await this.sessionService.findAllSessions()
         }
 }

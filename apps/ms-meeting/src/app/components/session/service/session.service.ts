@@ -91,4 +91,8 @@ export class SessionService {
         });      
         return pagination
     }
+
+    public async findAllSessions(): Promise<SessionEntity[]> {
+        return await this.sessionRepository.find({relations:['reference','admins','members']});
+      }
 }
