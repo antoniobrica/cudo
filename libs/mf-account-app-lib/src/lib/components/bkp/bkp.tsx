@@ -8,7 +8,8 @@ import './bkp.module.scss';
 
 /* eslint-disable-next-line */
 export interface BkpProps {
-  parentBKPSelect
+  parentBKPSelect,
+  bkp
 }
 
 export function Bkp(props: BkpProps) {
@@ -20,37 +21,42 @@ export function Bkp(props: BkpProps) {
   const [BKPID, setBKPID] = React.useState("")
 
   const { loading, error, data } = useBkpQuery(GET_BKP);
-  const { loading: folderL, error: folderE, data: FolderD} = useFolderQuery(GET_FOLDER)
+  const { loading: folderL, error: folderE, data: FolderD } = useFolderQuery(GET_FOLDER)
   React.useEffect(() => {
     if (data && FolderD) {
       console.log('FolderD', FolderD);
-      const bkps =data.Bkp.map(({ bkpTitle, bkpID }) => ({ key: bkpID, value: bkpTitle, text: bkpID + " - "+ bkpTitle }))
-      setItems(data.Bkp.map(({ bkpTitle, bkpID }) => ({ key: bkpID, value: bkpTitle, text: bkpID + " - "+ bkpTitle })));
+      const bkps = data.Bkp.map(({ bkpTitle, bkpID }) => ({ key: bkpID, value: bkpTitle, text: bkpID + " - " + bkpTitle }))
+      setItems(data.Bkp.map(({ bkpTitle, bkpID }) => ({ key: bkpID, value: bkpTitle, text: bkpID + " - " + bkpTitle })));
       const arr = FolderD.Folders.map(({ folderTitle, folderID }) => ({ key: folderID, value: folderTitle, text: folderTitle }))
       setItems1(arr);
-      const bkpF= bkps.concat(arr);
+      const bkpF = bkps.concat(arr);
       setItems2(bkpF);
     }
   }, [data, FolderD]);
-  
+  React.useEffect(() => {
+    if (props.bkp) {
+      setBKPID(props.bkp)
+    }
+  }, [props.bkp])
+
   // React.useEffect(()=>{
   //   if(FolderD){
   //     console.log('FolderD',FolderD);
-      
+
   //       const arr = FolderD.Folders.map(({ folderTitle, folderID }) => ({ key: folderID, value: folderTitle, text: folderTitle }))
   //       setItems1(arr);
   //       if(items){
   //       const bkpF= items.concat(arr);
   //       setItems2(bkpF);
   //       }
-      
+
   //   }
 
   // }, [FolderD]);
 
   const onBkp = (event, data) => {
-console.log('data==', data)
-    const bkpID = { BKPID: '', BKPIDTitle: '' , isFolder: false};
+    console.log('data==', data)
+    const bkpID = { BKPID: '', BKPIDTitle: '', isFolder: false };
     for (let i = 0; i <= items.length; i++) {
       if (items[i]?.value === data.value) {
         bkpID.BKPID = items[i].key;
@@ -67,7 +73,7 @@ console.log('data==', data)
     setBKPID(data.value)
     let bkpFolder = null;
     let isFolder = false;
-    if(bkpID.BKPIDTitle.length > 0){
+    if (bkpID.BKPIDTitle.length > 0) {
       // bkpFolder = bkpID;
       props.parentBKPSelect(bkpID);
 
