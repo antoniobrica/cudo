@@ -44,11 +44,11 @@ export function FileSetting(props: FileProps) {
   const [phaseID, setPhasesID] = React.useState("");
   const [folderName, setfolderName] = React.useState("");
 
-  
+
 
 
   // const [addFile] = useFileMutation(UPLOAD_FILE);
-  const [addFile, { data }] = useMutation(UPLOAD_FILE, 
+  const [addFile, { data }] = useMutation(UPLOAD_FILE,
     {
       refetchQueries: [
         { query: GET_FILES }
@@ -73,18 +73,17 @@ export function FileSetting(props: FileProps) {
     return () => sub.unsubscribe();
   };
   React.useEffect(getContainerItemsEffect, []);
-
   const getUploadsEffect = () => {
     const sub = context.uploadedItems$
       .pipe(tap(items => {
-        console.log('getUploadsEffect', items );
+        console.log('getUploadsEffect', items);
         setItems(items);
         const fileArr = [];
         for (let i = 0; i < items.length; i++) {
           fileArr.push({ fileURL: items[i].filename, fileTitle: items[i].filename, fileType: items[i].type, fileVersion: "v1" });
         }
         console.log('fileArr', fileArr);
-        
+
         setFileList(fileArr);
       }))
       .subscribe();
@@ -101,15 +100,15 @@ export function FileSetting(props: FileProps) {
   const setBKPIDChange = (data) => {
     console.log('bkp=f', data.isFolder);
     setisFolder(data.isFolder)
-    if(data.isFolder){
+    if (data.isFolder) {
       setfolderName(data.folderTitle)
-      console.log('folderName',folderName);
+      console.log('folderName', folderName);
     }
-    else{
+    else {
       setBKPIDTitle(data.BKPIDTitle)
       setBKPID(data.BKPID)
     }
-    console.log('folderName2',folderName);
+    console.log('folderName2', folderName);
 
   }
   const setFileStructureChange = (data) => {
@@ -150,7 +149,7 @@ export function FileSetting(props: FileProps) {
     //   fileArr.push({ fileURL: items[i].filename, fileTitle: items[i].filename, fileType: items[i].type, fileVersion: "v1" });
     // }
     // console.log('fileArr', fileArr);
-    
+
     // setFileList(fileArr);
   }
 
@@ -162,7 +161,7 @@ export function FileSetting(props: FileProps) {
       },
       update: (
         cache,
-         data 
+        data
       ) => {
         const cacheData = cache.readQuery({ query: GET_FILES }) as IFiles;
         cache.writeQuery({
@@ -176,25 +175,25 @@ export function FileSetting(props: FileProps) {
 
   };
 
-  const folderOpen =()=>{
-   console.log('folder');
-   setFolderOpen(true);
+  const folderOpen = () => {
+    console.log('folder');
+    setFolderOpen(true);
   }
-const cancel=(data)=>{
-  setFolderOpen(false);
-}
-const folderData=(data)=>{
-  console.log('folderName=>', data);
-  setFolderOpen(false);
-}
+  const cancel = (data) => {
+    setFolderOpen(false);
+  }
+  const folderData = (data) => {
+    console.log('folderName=>', data);
+    setFolderOpen(false);
+  }
 
 
   return (
     <div >
-      {folderopen?
-      <div>
-        <AddFolderIndex open={folderopen} cancel={cancel} folderData={folderData}></AddFolderIndex>
-      </div>: null}
+      {folderopen ?
+        <div>
+          <AddFolderIndex open={folderopen} cancel={cancel} folderData={folderData}></AddFolderIndex>
+        </div> : null}
       <Modal className="modal_media modal_center modal_media_1"
         onClose={() => setOpen(false)}
         onOpen={openf}
@@ -339,8 +338,8 @@ const folderData=(data)=>{
                   <Grid.Column>
                     <BkpIndex parentBKPSelect={setBKPIDChange}></BkpIndex>
                     <Form.Field>
-                  <a className="anchor-color" onClick={folderOpen}>+ Add New</a>
-                </Form.Field>
+                      <a className="anchor-color" onClick={folderOpen}>+ Add New</a>
+                    </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     {/* <Form.Field>

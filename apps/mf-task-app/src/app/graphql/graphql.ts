@@ -102,6 +102,8 @@ mutation UpdateTask(
       assignees:[{userID:"2",userName:"Ashutosh"},{userID:"3",userName:"Ashutosh"}]
       followers:[{userID:"1",userName:"Ashutosh"}]
       files: $files
+      subtasks: []
+
    }){
     taskID
     status    

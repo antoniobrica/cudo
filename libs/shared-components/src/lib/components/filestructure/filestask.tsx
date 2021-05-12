@@ -13,24 +13,29 @@ import ViewFileDetail from '../modal/viewdetailsfile';
 export interface FileStructureProps {
 	files?,
 	downloadFiles,
-	downloadedImg
+	downloadedImg,
+	viewFiles
 }
 
 export function FileStructure(props: FileStructureProps) {
 	const [view, setView] = React.useState(false);
 	const [expand, setExpand] = React.useState(false);
+	const [isLoading, setIsLoading] = React.useState(false);
 	const [filesData, setFilesData] = React.useState([]);
 	const [items, setItems] = React.useState([]);
 	const [imgUrl, setimgUrl] = React.useState('');
 	const [fname, setFname] = React.useState('');
+	const [fType, setFtype] = React.useState('');
 
 
 
 	const viewFile = (data) => {
-		setView(true)
-		setFilesData(data)
+		console.log('viewfile', data);
+		setFtype(data.fileType);
+		setView(true);
+		setFilesData(data);
 
-		props.downloadFiles(data.fileTitle)
+		props.viewFiles(data.fileTitle)
 	}
 
 	const download = (data) => {
@@ -299,7 +304,7 @@ export function FileStructure(props: FileStructureProps) {
 		<div className=" navbar-collapse box-shadow " style={{ marginTop: '-63px' }}>
 			{view && imgUrl.length > 0 ?
 				<div>
-					<ViewFileDetail open={view} filesData={filesData} dowloadFilesData={props.downloadedImg} ></ViewFileDetail>
+					<ViewFileDetail open={view} fType={fType} filesData={filesData} dowloadFilesData={props.downloadedImg} ></ViewFileDetail>
 				</div> : null}
 
 			<Tab className="ui-tabs" menu={{ secondary: true, pointing: true }} panes={panes} />
