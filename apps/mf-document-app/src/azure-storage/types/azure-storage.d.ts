@@ -3,6 +3,7 @@ import { BlobServiceClient } from '@azure/storage-blob';
 export interface BlobItem {
   filename: string;
   containerName: string;
+  type: string;
 }
 
 export interface BlobItemDownload extends BlobItem {

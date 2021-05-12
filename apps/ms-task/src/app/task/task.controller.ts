@@ -12,7 +12,7 @@ import { TaskService } from './task.service';
 
 @Controller('task')
 export class TaskController {
-  constructor(private readonly tenderService: TaskService) {}
+  constructor(private readonly tenderService: TaskService) { }
 
   @Get()
   findAll(): Promise<Itask[]> {
@@ -29,4 +29,5 @@ export class TaskController {
   delete(@Param('id') id: string) {
     return this.tenderService.findAll();
   }
+
 }

@@ -9,6 +9,9 @@ export const GET_MILESTONES = gql`{
         phaseName
         dueDate
         status
+        worktypeID
+        worktypeName
+        description
         files{fileID,fileName,fileUrl} 
       } 
     
@@ -38,7 +41,8 @@ query MileStone($milestoneID: String!) {
     phaseName
     dueDate
     status
-
+    worktypeID
+    worktypeName
     files { 
 
       fileID 
@@ -56,6 +60,8 @@ mutation CreateTask(
   $description: String!,
   $phaseID: String!,
   $phaseName: String!,
+  $worktypeName: String!,
+  $worktypeID: String!
   ){ 
     createMileStone(
       referenceFilter: { referenceType: PROJECTTYPE, referenceID: "d3f04920-a18e-11eb-bd3b-7597bc3ab7d7" }
@@ -66,7 +72,44 @@ mutation CreateTask(
           description: $description
           phaseID: $phaseID
           phaseName: $phaseName
-          worktypeID: "123"
+          worktypeID: $worktypeID
+          worktypeName: $worktypeName
+          status: INPROGRESS
+        }
+        files: [
+          { fileID: "milestone1", fileUrl: "Pull.comm", fileName: "requeest" }
+        ]
+      }
+    ) {
+      milestoneID
+      description
+      phaseID
+      phaseName
+      status
+      worktypeID
+      worktypeName
+      files {
+        fileID
+      }
+    }
+}`;
+
+export const UPDATE_MILESTONE = gql`
+mutation UpdateMileStone(
+  $milestoneID: String!,
+  $milestoneTitle: String!, 
+  $dueDate: DateTime!,
+  $description: String!,
+  $phaseName: String!,
+  ){ 
+    updateMileStone(
+      milestoneDetailsUpdate: {
+        milestoneBasics: {
+          milestoneTitle: $milestoneTitle
+          milestoneID: $milestoneID
+          dueDate: $dueDate
+          description: $description
+          phaseName: $phaseName
           worktypeName: "Whateever"
           status: INPROGRESS
         }
@@ -85,6 +128,8 @@ mutation CreateTask(
       }
     }
 }`;
+
+
 
 
 

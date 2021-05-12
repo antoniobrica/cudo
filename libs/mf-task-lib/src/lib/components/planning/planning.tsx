@@ -8,28 +8,38 @@ import {
   Grid,
   Dropdown
 } from 'semantic-ui-react';
-
+import EditMileStonePopup from 'libs/shared-components/src/lib/components/modal/editmilestone';
 import ModalViewPlanning from '../../../../../shared-components/src/lib/components/modal/viewdetailsplanning'
-import { useMilestonesQuery, useMilestoneMutation, useIMileStoneQuery, useMilestoneDeleteMutation } from '../../services/useRequest';
-import { GET_MILESTONES, ADD_MILESTONE, GET_MILESTONES_BY_ID, DELETE_MILESTONE, } from '../../graphql/graphql';
+import { useMilestonesQuery, useMilestoneMutation, useIMileStoneQuery, useMilestoneDeleteMutation, useMilestoneUpdateMutation } from '../../services/useRequest';
+import { GET_MILESTONES, ADD_MILESTONE, GET_MILESTONES_BY_ID, DELETE_MILESTONE,UPDATE_MILESTONE } from '../../graphql/graphql';
 import { LoaderPage } from "@cudo/shared-components";
-import { ApolloCache, FetchResult, from } from '@apollo/client';
+import { ApolloCache, FetchResult, from, useMutation } from '@apollo/client';
 import { MilestoneMutation, IMileStones } from '../../interfaces/task'
 import PlanDelete from './delete-task';
+import moment, { calendarFormat } from 'moment';
 
 
-// import { ModalViewPlanning } from '@cudo/shared-components';
-/* eslint-disable-next-line */
-export interface PlanningProps { }
+export interface PlanningProps { 
+  worktypes
+}
 
 export function Planning(props: PlanningProps) {
   const [open, setOpen] = React.useState(false);
   const [openD, setOpenD] = React.useState(false);
+  const [openEdit, setOpenEdit] = React.useState(false);
   const [milestoneID, setmilestoneID] = React.useState('');
   const [milestoneIDd, setmilestoneIDd] = React.useState('');
+  const [milestoneIDe, setmilestoneIDE] = React.useState('');
   const [milestoneByID, setmilestoneByID] = React.useState({});
   const { loading, error, data } = useMilestonesQuery(GET_MILESTONES);
-  const [addPlan] = useMilestoneMutation(ADD_MILESTONE);
+  // const [addPlan] = useMilestoneMutation(ADD_MILESTONE);
+  const [addPlan, {data:refreshData}] = useMutation(ADD_MILESTONE, 
+    {
+      refetchQueries: [
+        { query: GET_MILESTONES }
+      ]
+    }
+  )
   const [planData, setPlanData] = React.useState();
   const { loading: milLoading, error: MileError, data: MilestoneData } = useIMileStoneQuery(GET_MILESTONES_BY_ID, {
     variables: { milestoneID: milestoneID },
@@ -37,6 +47,17 @@ export function Planning(props: PlanningProps) {
   const [planDelete] = useMilestoneDeleteMutation(DELETE_MILESTONE,{
     variables: { milestoneID: milestoneIDd },
   });
+  const [milestoneUpdate, {data:refreshMilestone}] = useMutation(UPDATE_MILESTONE, 
+    {
+      variables: { milestoneID: milestoneIDd },
+      refetchQueries: [
+        { query: GET_MILESTONES }
+      ]
+    }
+  )
+  // const [milestoneUpdate] = useMilestoneUpdateMutation(UPDATE_MILESTONE,{
+  //   variables: { milestoneID: milestoneIDd },
+  // });
 
   React.useEffect(()=>{
     if(MilestoneData){
@@ -45,6 +66,11 @@ export function Planning(props: PlanningProps) {
       console.log('MilestoneData', MilestoneData);
     }
   }, [MilestoneData])
+  React.useEffect(()=>{
+    if(props.worktypes){
+       console.log('worktypes-planning', props.worktypes);
+    }
+  }, [props.worktypes])
 
   const cancel = () => {
     setOpen(false)
@@ -58,23 +84,33 @@ export function Planning(props: PlanningProps) {
     setmilestoneIDd(data.milestoneID);
     setOpenD(true)
   }
+ const edittPlan =(data)=>{
+    setPlanData(data)
+    setmilestoneIDE(data.milestoneID);
+    setOpenEdit(true)
+ }
+
   const getMilestoneData = (data) => {
     console.log('getMilestoneData', data);
     addPlan({
       variables: data,
       update: (
         cache,
-        { data: { addPlan } }: FetchResult
+         data
       ) => {
         const cacheData = cache.readQuery({ query: GET_MILESTONES }) as IMileStones;
         cache.writeQuery({
           query: GET_MILESTONES,
           data: {
-            tasks: [...cacheData.MileStones, addPlan]
+            getMileStones: [...cacheData.MileStones, data?.createMileStone]
           },
         });
       }
     });
+  }
+
+  const confirmationUpdate = (data) => {
+    
   }
   const confirmationDelete = (plan) => {
     setOpenD(false)
@@ -112,13 +148,32 @@ export function Planning(props: PlanningProps) {
   //   }
 
   // }
+  const editMilestoneData=(data)=>{
+     console.log('edited-data',data);
+     milestoneUpdate({
+      variables: data,
+      update: (
+        cache,
+        { data: { milestoneUpdate } }: FetchResult
+      ) => {
+        const cacheData = cache.readQuery({ query: GET_MILESTONES }) as IMileStones;
+        cache.writeQuery({
+          query: GET_MILESTONES,
+          data: {
+            tasks: [...cacheData.MileStones, milestoneUpdate]
+          },
+        });
+      }
+    });
+
+  }
   if (loading) return <LoaderPage />;
   if (data) {
     console.log('milestone-data', data.MileStones);
   }
   return (
     <div>
-      <ModalPlanningNew getMilestoneData={getMilestoneData}></ModalPlanningNew>
+      <ModalPlanningNew worktypes={props.worktypes} getMilestoneData={getMilestoneData}></ModalPlanningNew>
       { open ?
         <div style={{ marginLeft: 900 }} >
           <ModalViewPlanning
@@ -132,6 +187,11 @@ export function Planning(props: PlanningProps) {
          {openD ?
         <div style={{ marginLeft: 900 }} >
           <PlanDelete openAlertF={openD} confirm={confirmationDelete} planData={planData} cancel={cancel}></PlanDelete>
+        </div>
+        : null}
+         {openEdit ?
+        <div style={{ marginLeft: 900 }} >
+          <EditMileStonePopup worktypes={props.worktypes} openEdit={openEdit} confirm={confirmationUpdate} getMilestoneData={editMilestoneData} planData={planData} cancel={cancel}></EditMileStonePopup>
         </div>
         : null}
       <div className="ui-tabs">
@@ -154,7 +214,7 @@ export function Planning(props: PlanningProps) {
                       <div className="ui card">
                         <div className="content">
                           <div className="description">
-                            <span className="time">{plan.dueDate}</span>
+                            <span className="time">{new Date(plan.dueDate).toDateString()}</span>
                             <span className="summary">
                               {' '}
                               <a href="">
@@ -184,7 +244,7 @@ export function Planning(props: PlanningProps) {
                           <br /> <br />
                           <div className="data-built">
                             Project/Work type
-                            <span className="summary">Electrical Work</span>
+                            <span className="summary">{plan.worktypeName}</span>
                           </div>
                           <div className="data-built">
                             Phase
@@ -201,7 +261,9 @@ export function Planning(props: PlanningProps) {
                                     icon="eye"
                                     text="View detail"
                                   />
-                                  <Dropdown.Item icon="pencil" text="Edit" />
+                                  <Dropdown.Item 
+                                   onClick={() => edittPlan(plan)}
+                                  icon="pencil" text="Edit" />
                                   <Dropdown.Item
                                     onClick={() => deletePlan(plan)}
                                     icon="trash alternate outline"

@@ -37,11 +37,16 @@ export function ProjectInfo(props: ProjectInfoProps) {
   function openModal() {
     setIsOpen(true);
   }
+  const refresh =(data)=>{
+    console.log('refresh is called', data); 
+
+    
+  }
   return (
     <div>
       {/* <h1>Projects</h1> */}
       <div>
-        <ModalExampleModal></ModalExampleModal>
+        <ModalExampleModal onSuccess={refresh}></ModalExampleModal>
       </div>
 
       <div className="app-content-body body_cards_area">

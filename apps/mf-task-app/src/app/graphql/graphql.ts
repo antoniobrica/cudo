@@ -51,6 +51,7 @@ mutation CreateTask(
   $phaseID: String!,
   $phaseName: String!,
   $referenceID: String!,
+  $description: String!,
   $files: [TaskFileParams!]!
   ){ 
     createTask(
@@ -70,11 +71,13 @@ mutation CreateTask(
       saveTaskAsTemplate: $saveTaskAsTemplate,
       phaseID: $phaseID,
       phaseName: $phaseName,
-      status: INPROGRESS
+      status: INPROGRESS,
+      description: $description
         }
       assignees:[{userID:"2",userName:"Ashutosh"},{userID:"3",userName:"Ashutosh"}]
       followers:[{userID:"1",userName:"Ashutosh"}]
-      files: $files
+      files: $files,
+      subtasks: []
    }){
     taskTitle
     startDate
@@ -99,6 +102,8 @@ mutation UpdateTask(
       assignees:[{userID:"2",userName:"Ashutosh"},{userID:"3",userName:"Ashutosh"}]
       followers:[{userID:"1",userName:"Ashutosh"}]
       files: $files
+      subtasks: []
+
    }){
     taskID
     status    

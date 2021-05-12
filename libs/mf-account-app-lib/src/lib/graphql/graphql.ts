@@ -30,6 +30,14 @@ export const GET_BKP = gql`{
   
 }`
 
+export const GET_FOLDER = gql`{
+  Folders(referenceFilter: { referenceID: "dapr", referenceType: COMPANY }) { 
+    folderTitle 
+    folderID 
+  } 
+
+}`
+
 export const GET_FILE_TYPE = gql`{
     FileTypes(referenceFilter: { referenceType: COMPANY, referenceID: "3" }
   ){
@@ -55,6 +63,20 @@ phaseTitle
   }
 
 }`
+export const ADD_FOLDER = gql`
+mutation CreateFolder(
+  $folderTitle: String!, 
+  ){ 
+    createFolder( 
+      referenceFilter: { referenceID: "dapr", referenceType: COMPANY } 
+      folderDetails: { folderID: "4", folderTitle:  $folderTitle } 
+    ) { 
+      folderID 
+      folderTitle 
+    } 
+}`;
+
+
 export const ADD_TASK = gql`
 mutation CreateTask(
   $taskTitle: String!, 

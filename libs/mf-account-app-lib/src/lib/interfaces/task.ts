@@ -16,6 +16,11 @@ export interface IBkp {
   bkpTitle: string
 }
 
+export interface IFolder {
+  folderTitle : string
+  folderID : string
+}
+
 export interface IFileType {
   fileTypeID: string
   fileTypeTitle: string
@@ -36,6 +41,12 @@ export interface Iphases {
 }
 export interface IBkps {
   Bkp: IBkp[];
+}
+export interface IFolders {
+  Folders: IFolder[];
+}
+export interface IFolderMutation {
+  createFolder: IFolder;
 }
 export interface IFileTypes {
   FileTypes: IFileType[];

@@ -3,7 +3,7 @@ import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, Te
 import { radios } from '@storybook/addon-knobs';
 import { ITask, ITasks, TaskMutation } from "../../interfaces/task";
 import { useTaskMutation } from '../../services/useRequest';
-import { ApolloCache, FetchResult } from '@apollo/client';
+import { ApolloCache, FetchResult, useMutation } from '@apollo/client';
 import { ADD_TASK, GET_TASKS } from "../../graphql/graphql";
 import '../../../../../../libs/shared-components/src/style/index.scss';
 import './create-task.module.scss';
@@ -11,7 +11,9 @@ import moment, { calendarFormat } from 'moment';
 import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex } from "@cudo/mf-account-app-lib"
 import { useHistory } from 'react-router';
 /* eslint-disable-next-line */
-export interface CreateTaskProps { }
+export interface CreateTaskProps {
+  onSuccess?
+}
 
 export function CreateTask(props: CreateTaskProps) {
   const countryOptions = [
@@ -53,9 +55,18 @@ export function CreateTask(props: CreateTaskProps) {
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
-  const [addTask] = useTaskMutation(ADD_TASK, {
-    variables: { referenceID },
-  });
+  // const [addTask] = useTaskMutation(ADD_TASK, {
+  //   variables: { referenceID },
+  // });
+
+  const [addTask, { data }] = useMutation(ADD_TASK, 
+    {
+      refetchQueries: [
+        {query: GET_TASKS, variables: { referenceID }}
+      ],
+      variables: { referenceID },
+    }
+  )
 
   const onTaskTitleChange = e => {
     setTaskTitle(e.target.value)
@@ -118,7 +129,7 @@ export function CreateTask(props: CreateTaskProps) {
         cache.writeQuery({
           query: GET_TASKS,
           data: {
-            tasks: [...cacheData.tasks, addTask]
+            tasksD: [...cacheData.tasks, addTask]
           },
           variables: { referenceID },
         });
@@ -134,11 +145,11 @@ export function CreateTask(props: CreateTaskProps) {
 
   return (
     <div >
-      <Modal className="modal_media"
+      <Modal className="modal_media" style={{ width: '800px', marginLeft: '155px' }}
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button size='mini' className="grey-btn">+ Add  New Task</Button>}      >
+        trigger={<Button size='mini' className="grey-btn taskmargin">+ Add  New Task</Button>}      >
         <Modal.Header><h3>Add New Task </h3></Modal.Header>
         <Modal.Content body>
           <div>

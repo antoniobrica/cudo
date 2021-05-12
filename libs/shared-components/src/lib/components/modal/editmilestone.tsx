@@ -1,4 +1,3 @@
- 
 import React from 'react';
 import {
   Button,
@@ -12,16 +11,21 @@ import {
   Select,
   TextArea,
 } from 'semantic-ui-react';
-import { PhaseIndex } from "@cudo/mf-account-app-lib"
-import moment, { calendarFormat } from 'moment';
-
 // import SampleModal from './sample-modal';
+import moment, { calendarFormat } from 'moment';
+import { PhaseIndex } from "@cudo/mf-account-app-lib"
+
+
 
 export interface PlanningProps {
-  getMilestoneData?,
-  worktypes?
+  getMilestoneData,
+  planData,
+  openEdit,
+  confirm,
+  cancel,
+  worktypes
 }
-export function ModalPlanningNew(props: PlanningProps) {
+export function EditMileStonePopup(props: PlanningProps) {
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
@@ -40,14 +44,16 @@ export function ModalPlanningNew(props: PlanningProps) {
   const [milestone, setMilestoneName] = React.useState("");
   const [dueDate, setDueDate] = React.useState("")
   const [description, setDescription] = React.useState("")
-  const [worktypeID, setworktypeID] = React.useState("")
-  const [worktypeName, setworktypeName] = React.useState("")
+  const [open, setOpen] = React.useState(false);
+  const [milestoneID, setmilestoneID]= React.useState('');
   const [workTypeData, setworkTypeData]= React.useState('')
   const [workType, setworkType] = React.useState(null) 
   const [workTypeD, setworkTypeD] = React.useState(null) 
-
-
-  const [open, setOpen] = React.useState(false);
+  React.useEffect(() => {
+    if (props.openEdit) {
+      setOpen(props.openEdit);
+    }
+  }, [props.openEdit]);
   React.useEffect(() => {
     if (props.worktypes) {
       console.log('worktypes', props.worktypes);
@@ -55,6 +61,7 @@ export function ModalPlanningNew(props: PlanningProps) {
 
     }
   }, [props.worktypes]);
+
   const onMworkType = (event, data) => {
     const workT = { 
       worktypeID: '',
@@ -65,8 +72,6 @@ export function ModalPlanningNew(props: PlanningProps) {
         console.log('props.worktypes[i]', props.worktypes[i]);
         workT.worktypeID = props.worktypes[i].projectWorkTypeID;
         workT.worktypeName = data.value;
-        setworktypeName(workT.worktypeName);
-        setworktypeID(workT.worktypeID);
         setworkTypeD(workT)
       }
     }
@@ -74,15 +79,31 @@ export function ModalPlanningNew(props: PlanningProps) {
 
     console.log('worktypeName-', workTypeD);
   }
+
+  React.useEffect(() => {
+    if (props.planData) {
+     console.log('plan-edit-data', props.planData);
+     setMilestoneName(props.planData.milestoneTitle);
+     setDueDate(props.planData.dueDate);
+     setDescription(props.planData.description);
+     setmilestoneID(props.planData.milestoneID);
+     setPhasesName(props.planData.phaseName);
+    }
+
+  }, [props.planData]);
+  const openf = () => {
+    setOpen(true)
+  }
+  const cancel =()=>{
+    setOpen(false)
+    props.cancel()
+  }
   const onsetPhasesID = (data) => {
-    console.log('phase',data);
-    
     setPhasesID((data.phaseID).toString());
     setPhasesName(data.phaseName)
   }
 
    const onMilestoneChange=(e)=>{
-     console.log('milestone=>',e.target.value);
      setMilestoneName(e.target.value);
    }
 
@@ -92,38 +113,37 @@ export function ModalPlanningNew(props: PlanningProps) {
   }
 
   const onDescriptionChange = e=>{
-    console.log('des=>',e.target.value);
     setDescription(e.target.value);
   }
-const createMilestone=()=>{
-  
+const updateMilestone=()=>{
    const data ={
+    milestoneID: milestoneID,
     milestoneTitle: milestone,
     dueDate: dueDate,
     description: description,
-    phaseID: phaseID,
     phaseName: phaseName,
-    worktypeID: workTypeD.worktypeID,
-    worktypeName: workTypeD.worktypeName
+    // worktypeID: workTypeD.worktypeID,
+    // worktypeName: workTypeD.worktypeName
    }
    props.getMilestoneData(data);
    setOpen(false)
 }
+
   return (
-    <div style={{ marginLeft: 900 }} >
-      <Modal style={{height: '650px'}}
+    <div id="navbar">
+      <Modal  style={{height:'650px'}}
         className="modal_media"
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
+        onClose={cancel}
+        onOpen={openf}
         open={open}
         trigger={
           <Button size="mini" className="grey-btn">
-            + Add New  
+            edit Milestone   
           </Button>
         }
       >
         <Modal.Header>
-          <h3>Add Milestone </h3>
+          <h3>Edit Milestone </h3>
         </Modal.Header>
         <Modal.Content body>
           <div>
@@ -136,7 +156,7 @@ const createMilestone=()=>{
                         Milestone Title <span className="danger">*</span>
                       </label>
                       <Input
-                        placeholder="Milestone title"
+                        placeholder="Swtichboard fitting"
                         size="small"
                         className="full-width"
                         type="text"
@@ -167,10 +187,10 @@ const createMilestone=()=>{
                   <Grid.Column>
                     <Form.Field>
                       <label>Description </label>
-                      <TextArea placeholder="Tell us more"    
+                      <TextArea placeholder="Tell us more" 
                        value={description}
                        onChange={onDescriptionChange}
-                     />
+                      />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -188,7 +208,7 @@ const createMilestone=()=>{
                         className="small"
                         value={workTypeData}
                         options={workType}
-                        onChange={onMworkType}                        
+                        onChange={onMworkType}     
                       />
                     </Form.Field>
                   </Grid.Column>
@@ -205,7 +225,7 @@ const createMilestone=()=>{
                         options={countryOptions}
                       />
                     </Form.Field> */}
-                <PhaseIndex parentPhaseSelect={onsetPhasesID} />
+                <PhaseIndex phaseName={phaseName} parentPhaseSelect={onsetPhasesID} />
                   </Grid.Column>
  
                 </Grid.Row>
@@ -216,7 +236,7 @@ const createMilestone=()=>{
         <Modal.Actions>
           <Button
             content="Submit"
-            onClick={createMilestone}
+            onClick={updateMilestone}
             positive
             size="mini"
             className="grey-btn"
@@ -224,7 +244,7 @@ const createMilestone=()=>{
           <Button
             size="mini"
             className="icon-border"
-            onClick={() => setOpen(false)}
+            onClick={cancel}
           >
             X Cancel
           </Button>
@@ -234,4 +254,4 @@ const createMilestone=()=>{
   );
 }
 
-export default ModalPlanningNew;
+export default EditMileStonePopup;
