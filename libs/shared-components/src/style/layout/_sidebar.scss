@@ -216,6 +216,10 @@ a.article {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     background: #ffffff;
     left: 57px;
+	background: #ffffff 0% 0% no-repeat padding-box;
+	background: #FFFFFF 0% 0% no-repeat padding-box;
+	box-shadow: 1px 0px 0px #0000001A;
+	opacity: 1;
 
 }
 .ui-accordion{
@@ -230,6 +234,7 @@ a.article {
     background-color: #2D62ED;
     color: rgb(255,255,255);
 	padding: 5px;
+	border-radius: 4px;
 
 }
 .accordion-top{
@@ -239,11 +244,12 @@ i.angle.down.icon {
     float: right;
 }
 .burj{
-	padding: 40px;
+	padding: 20px;
 	font-weight: 600;
+
 }
 .sidebar-top{
-	margin-top: 20px;
+	margin-top: 15px;
 }
 
 .subdescription{   
@@ -253,12 +259,24 @@ i.angle.down.icon {
 }
 .strategic_plan{
 	margin-left: -30px;
+	font-size: 14px;
 }
 .dots_area{
 	float: right;
 	margin-right: 20px;
+	margin-left: 10px;
 }
 .ui.inverted.menu .link.item:active, .ui.inverted.menu a.item:active {
     background: #2D62ED;
     color: #fff;
+}
+.workspan{
+	font-size: 10px;
+}
+.lineheight{
+	margin-top: -14px;
+    line-height: 27px;
+}
+span.strategic_plan {
+    line-height: 30px;
 }

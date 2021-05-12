@@ -39,10 +39,11 @@ export default class AccordionExampleMenu extends Component {
           
         <div className="sidebar-wrapper sidebar-theme">
           <div className="sidebar-top"> 
-          <span className="burj">Burj Khalifa</span> 
+           <span className="burj">  <Icon name='arrow left' /> Burj Khalifa</span> 
           <span className="summary"><span className="dot">...</span></span>
           </div>
-          <div className="description"><span className="subdescription">John &amp; co. </span></div>
+          <div className="description" style={{marginBottom:'15px'}}><span className="subdescription">John &amp; co. </span></div>
+          
            <Accordion className="ui-accordion accordion-top">
         <Accordion.Title
           active={activeIndex === 0}
@@ -51,11 +52,12 @@ export default class AccordionExampleMenu extends Component {
           className="active-title"
         >
          
-         Everything <Icon name='angle down' />
+         Electrical Work <span className="workspan">(1/5) </span>  <Icon name='angle down' />
         </Accordion.Title>
         <Accordion.Content  active={activeIndex === 0}>
           <ul>
-          <li className="active-li">
+
+          <li className="active-li  lineheight">
             <span className="strategic_plan">Strategic Planning</span> <span className="dots_area">...</span> </li>
           <li>
           <span className="strategic_plan">Preliminary Studies</span> <span className="dots_area">...</span>
