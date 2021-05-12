@@ -51,18 +51,18 @@ export function Tabsbar(props: TabsProps) {
               Planning
             </h6>
             <hr style={{ color: '#707070' }}></hr>
-            <h6 style={{ fontWeight: 'normal' }} className="h5heading">
-              Active Milestone{' '}
+            <h6 style={{ fontWeight: 'normal', marginTop:'12px' }} className="h5heading">
+              Active Milestone {' '}
             </h6>
 
             <Form>
               <Grid columns={4}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Card>
-                      <div className="ui card">
-                        <div className="content">
-                          <div className="description">
+                    <Card className="ui_width">
+                      <div className="ui card ui_width">
+                        <div className="content paddingcontent">
+                          <div className="description ">
                             <span className="time">Aug 26, Wednesday</span>
                             <span className="summary">
                               {' '}
@@ -75,7 +75,7 @@ export function Tabsbar(props: TabsProps) {
                               </a>
                             </span>
                           </div>
-                          <div className="header font-header">
+                          <div className="header font-header paddingarea">
                             High priority things
                           </div>
                           <div className="description">
@@ -83,25 +83,25 @@ export function Tabsbar(props: TabsProps) {
                           </div>
                         </div>
 
-                        <div className="content">
-                          <div className="data-built">
+                        <div className="content noborder">
+                          <div className="data-built data_area">
                             <p>
                               {' '}
                               This is description will be show sunt in culpa qui
                               officia deserunt mollit anim id est laborum...
                             </p>
                           </div>
-                          <br /> <br />
-                          <div className="data-built">
+                         
+                          <div className="data-built data_pad">
                             Project/Work type
                             <span className="summary">Electrical Work</span>
                           </div>
-                          <div className="data-built">
+                          <div className="data-built data_field">
                             Phase
                             <span className="summary">Prelimary Studies</span>
                           </div>
-                          <br />
-                          <div className="description">
+                         
+                          <div className="description details">
                             <span className="daysarea">26 days away </span>
                             <span className="summary mr-2">
                               <Dropdown text="...">
@@ -120,16 +120,17 @@ export function Tabsbar(props: TabsProps) {
                               </Dropdown>
                             </span>
                           </div>
+                          
                         </div>
                       </div>
                     </Card>
                   </Grid.Column>
                   <Grid.Column>
-                    <Card>
-                      <div className="ui card">
-                        <div className="content">
-                          <div className="description">
-                            <span className="time">Aug 20, Wednesday</span>
+                  <Card className="ui_width">
+                      <div className="ui card ui_width">
+                        <div className="content paddingcontent">
+                          <div className="description ">
+                            <span className="time">Aug 26, Wednesday</span>
                             <span className="summary">
                               {' '}
                               <a href="">
@@ -141,32 +142,34 @@ export function Tabsbar(props: TabsProps) {
                               </a>
                             </span>
                           </div>
-                          <div className="header font-header">Checkpoints</div>
+                          <div className="header font-header paddingarea">
+                            High priority things
+                          </div>
                           <div className="description">
                             John & co. +2 others responsible
                           </div>
                         </div>
 
-                        <div className="content">
-                          <div className="data-built">
+                        <div className="content noborder">
+                          <div className="data-built data_area">
                             <p>
                               {' '}
                               This is description will be show sunt in culpa qui
                               officia deserunt mollit anim id est laborum...
                             </p>
                           </div>
-                          <br /> <br />
-                          <div className="data-built">
+                         
+                          <div className="data-built data_pad">
                             Project/Work type
                             <span className="summary">Electrical Work</span>
                           </div>
-                          <div className="data-built">
+                          <div className="data-built data_field">
                             Phase
                             <span className="summary">Prelimary Studies</span>
                           </div>
-                          <br />
-                          <div className="description">
-                            <span className="daysarea">20 days away </span>
+                         
+                          <div className="description details">
+                            <span className="daysarea">26 days away </span>
                             <span className="summary mr-2">
                               <Dropdown text="...">
                                 <Dropdown.Menu>
@@ -184,14 +187,15 @@ export function Tabsbar(props: TabsProps) {
                               </Dropdown>
                             </span>
                           </div>
+                          
                         </div>
                       </div>
                     </Card>
                   </Grid.Column>
                   <Grid.Column>
-                    <Card>
-                      <div className="ui card">
-                        <div className="content">
+                    <Card className="ui_width">
+                      <div className="ui card ui_width">
+                        <div className="content paddingcontent">
                           <div className="description">
                             <span className="time2">Aug 1, Saturday</span>
                             <span className="summary">
@@ -205,31 +209,31 @@ export function Tabsbar(props: TabsProps) {
                               </a>
                             </span>
                           </div>
-                          <div className="header font-header">Checkpoints</div>
+                          <div className="header font-header paddingarea">Checkpoints</div>
                           <div className="description">
                             John & co. +2 others responsible
                           </div>
                         </div>
 
-                        <div className="content">
-                          <div className="data-built">
+                        <div className="content noborder">
+                          <div className="data-built data_area">
                             <p>
                               {' '}
                               This is description will be show sunt in culpa qui
                               officia deserunt mollit anim id est laborum...
                             </p>
                           </div>
-                          <br /> <br />
-                          <div className="data-built">
+                          
+                          <div className="data-built data_pad">
                             Project/Work type
                             <span className="summary">Electrical Work</span>
                           </div>
-                          <div className="data-built">
+                          <div className="data-built data_field">
                             Phase
                             <span className="summary">Prelimary Studies</span>
                           </div>
-                          <br />
-                          <div className="description">
+                         
+                          <div className="description details">
                             <span className="daysarea2">3 days away </span>
                             <span className="summary mr-2">
                               <Dropdown text="...">
