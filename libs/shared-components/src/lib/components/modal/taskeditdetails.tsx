@@ -28,7 +28,8 @@ interface AlertProps {
   openAlertF?,
   taskData?,
   cancel?,
-  taskStatus?
+  taskStatus?,
+  editTaskData
 }
 export const ModalTaskEdit = (props: AlertProps) => {
 
@@ -59,7 +60,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
       setTaskTitle(props.taskData.taskTitle);
       setDescription(props.taskData.description);
       setEstimatedDays(props.taskData.estimatedDays);
-      setBKPIDTitle(props.taskData.BKPIDTitle)
+      setBKPIDTitle(props.taskData.BKPTitle)
       setBKPID(props.taskData.BKPID)
       setPhasesID((props.taskData.phaseID).toString());
       setPhasesName(props.taskData.phaseName)
@@ -116,6 +117,29 @@ export const ModalTaskEdit = (props: AlertProps) => {
   const onDescriptionChange = e => {
     console.log('des=>', e.target.value);
     setDescription(e.target.value);
+  }
+
+  const editTask = () => {
+    console.log('editTask');
+    const editTaskData = {
+      taskID: props.taskData.taskID,
+      taskTitle: taskTitle,
+      startDate: startDate,
+      endDate: endDate,
+      description: endDate,
+      estimatedDays: description,
+      BKPID: BKPID,
+      BKPTitle: BKPTitle,
+      phaseID: phaseID,
+      phaseName: phaseName,
+      sendNotification: false,
+      status: props.taskData.status,
+      files: [],
+      saveTaskAsTemplate: props.taskData.saveTaskAsTemplate,
+    }
+    props.editTaskData(editTaskData);
+    setOpen(false)
+    props.cancel()
   }
   const workTypes = [
     { key: 'w1', value: 'w1', text: 'Electrical Work' },
@@ -317,7 +341,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
         <Modal.Actions>
           <Button
             content="Submit"
-            onClick={() => setOpen(false)}
+            onClick={editTask}
             positive
             size="mini"
             className="grey-btn"

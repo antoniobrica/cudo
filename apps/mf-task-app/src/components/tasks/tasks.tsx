@@ -7,7 +7,7 @@ import './tasks.module.scss';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
 import { LoaderPage, ModalTaskEdit, TaskArea } from "@cudo/shared-components"
 
-import { ApolloCache, FetchResult, useQuery } from '@apollo/client';
+import { ApolloCache, FetchResult, useMutation, useQuery } from '@apollo/client';
 import { ITask, ITasks, TaskUpdateMutation } from '../../app/interfaces/task';
 import { ModalAlert, ModalViewTask } from '@cudo/shared-components'
 import { useHistory, useParams } from 'react-router';
@@ -39,6 +39,15 @@ export function Tasks(props: TasksProps) {
     variables: { referenceID },
   });
 
+  const [editTaskApi, { data: editData }] = useMutation(UPDATE_TASK,
+    {
+      refetchQueries: [
+        { query: GET_TASKS, variables: { referenceID } }
+      ],
+      variables: { referenceID },
+    }
+  )
+
   const [taskData, setTaskData] = React.useState();
   const [projectId, setProjectId] = React.useState('');
 
@@ -69,6 +78,8 @@ export function Tasks(props: TasksProps) {
     setEditTaskOpen(false)
   }
   const confirmation = (data, task) => {
+    console.log('data', task);
+
     setIsUpdate(data)
     setOpen(false)
     // updateTask(taskData);
@@ -83,7 +94,10 @@ export function Tasks(props: TasksProps) {
     const taskID = task.taskID;
     addTask({
       variables: {
-        taskID, status, files: []
+        taskID, status, files: [], taskTitle: task.taskTitle, startDate: task.startDate, endDate: task.endDate,
+        estimatedDays: task.estimatedDays, sendNotification: false, BKPID: task.BKPID, BKPTitle: task.BKPTitle,
+        saveTaskAsTemplate: task.saveTaskAsTemplate, phaseID: task.phaseID, phaseName: task.phaseName, referenceID: task.referenceID,
+        description: task.description
       },
       update: (
         cache
@@ -179,6 +193,30 @@ export function Tasks(props: TasksProps) {
 
   const refresh = (data) => {
     console.log('refresh is called', data);
+  }
+  const editTaskData = (data) => {
+    console.log('editTaskData', data);
+    editTaskApi({
+      variables: {
+        taskID: data.taskID, status: data.status, files: [], taskTitle: data.taskTitle, startDate: data.startDate, endDate: data.endDate,
+        estimatedDays: data.estimatedDays, sendNotification: false, BKPID: data.BKPID, BKPTitle: data.BKPTitle,
+        saveTaskAsTemplate: data.saveTaskAsTemplate, phaseID: data.phaseID, phaseName: data.phaseName, referenceID: data.referenceID,
+        description: data.description
+      },
+      update: (
+        cache,
+        data
+      ) => {
+        const cacheData = cache.readQuery({ query: GET_TASKS, variables: { referenceID }, }) as ITasks;
+        cache.writeQuery({
+          query: GET_TASKS,
+          data: {
+            tasksD: [...cacheData.tasks, data]
+          },
+          variables: { referenceID },
+        });
+      }
+    });
 
   }
   return (
@@ -205,7 +243,7 @@ export function Tasks(props: TasksProps) {
         : null}
       {editTaskOpen ?
         <div style={{ marginLeft: 900 }} >
-          <ModalTaskEdit openAlertF={editTaskOpen} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></ModalTaskEdit>
+          <ModalTaskEdit openAlertF={editTaskOpen} taskData={taskData} taskStatus={taskStatus} cancel={cancel} editTaskData={editTaskData}></ModalTaskEdit>
         </div>
         : null}
       <div className="TaskApp-container">
