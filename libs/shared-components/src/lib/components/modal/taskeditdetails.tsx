@@ -56,7 +56,9 @@ export const ModalTaskEdit = (props: AlertProps) => {
 
   React.useEffect(() => {
     if (props.taskData) {
-      console.log('taskData', props.taskData);
+      const date = new Date(props.taskData.startDate).toLocaleDateString();
+      console.log('date', date);
+      setStartDate(date);
       setTaskTitle(props.taskData.taskTitle);
       setDescription(props.taskData.description);
       setEstimatedDays(props.taskData.estimatedDays);
@@ -120,14 +122,13 @@ export const ModalTaskEdit = (props: AlertProps) => {
   }
 
   const editTask = () => {
-    console.log('editTask');
     const editTaskData = {
       taskID: props.taskData.taskID,
       taskTitle: taskTitle,
       startDate: startDate,
       endDate: endDate,
-      description: endDate,
-      estimatedDays: description,
+      description: description,
+      estimatedDays: estimatedDays,
       BKPID: BKPID,
       BKPTitle: BKPTitle,
       phaseID: phaseID,
@@ -223,7 +224,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         options={countryOptions}
                       />
                     </Form.Field> */}
-                    <PhaseIndex parentPhaseSelect={onsetPhasesID} />
+                    <PhaseIndex phaseName={phaseName} parentPhaseSelect={onsetPhasesID} />
                   </Grid.Column>
 
                   <Grid.Column>
