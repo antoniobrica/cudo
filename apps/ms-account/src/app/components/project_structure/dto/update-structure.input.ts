@@ -1,5 +1,5 @@
 import { Field, InputType, PartialType } from '@nestjs/graphql';
-import { CreateStructureInput } from './create-Structure.input';
+import { CreateStructureInput } from './create-structure.input';
 
 @InputType()
 export class UpdateStructureInput {
