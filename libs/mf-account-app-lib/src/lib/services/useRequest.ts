@@ -1,5 +1,5 @@
 import { DocumentNode, useQuery, useMutation } from "@apollo/react-hooks";
-import { IBkps, ICountries, ICountry, IFileStructures, IFileTypes, IFolderMutation, IFolders, Iphases, IUsers, } from "../interfaces/task";
+import { IBkps, ICatagories, ICountries, ICountry, IFileStructures, IFileTypes, IFolderMutation, IFolders, IInvitations, Iphases, IProtocols, IUsers, } from "../interfaces/task";
 
 export function useCountrykQuery(gqlQuery: DocumentNode) {
   const { loading, error, data } = useQuery<ICountries>(gqlQuery);
@@ -33,6 +33,19 @@ export function useFileTypeQuery(gqlQuery: DocumentNode) {
   return { loading, error, data };
 }
 
+export function useMeetingCatagoriesQuery(gqlQuery: DocumentNode) {
+  const { loading, error, data } = useQuery<ICatagories>(gqlQuery);
+  return { loading, error, data };
+}
+
+export function useProtocolQuery(gqlQuery: DocumentNode) {
+  const { loading, error, data } = useQuery<IProtocols>(gqlQuery);
+  return { loading, error, data };
+}
+export function useInvitationQuery(gqlQuery: DocumentNode) {
+  const { loading, error, data } = useQuery<IInvitations>(gqlQuery);
+  return { loading, error, data };
+}
 export function useFileStructureQuery(gqlQuery: DocumentNode) {
   const { loading, error, data } = useQuery<IFileStructures>(gqlQuery);
   return { loading, error, data };
