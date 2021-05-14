@@ -1,0 +1,111 @@
+version: '2.1'
+
+services:
+
+  ms-task:
+    build: 
+      context: .
+      dockerfile: Dockerfile-mstask
+    volumes:
+       - ./:/usr/src/app/
+    ports:
+      - '5007:5007' 
+    healthcheck:
+      test: exit 0
+    network_mode: host
+
+
+  ms-project:
+    build: 
+      context: .
+      dockerfile: Dockerfile-msproject
+    volumes:
+       - ./:/usr/src/app/
+
+    ports:
+      - '5005:5005' 
+    healthcheck:
+      test: exit 0
+    network_mode: host
+
+
+#  ms-tender:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile-mstender
+#     volumes:
+#       - ./:/usr/src/app/
+
+#    ports:
+#      - '5007:5007' 
+
+  ms-account:
+    build:
+      context: .
+      dockerfile: Dockerfile-msaccount
+    volumes:
+       - ./:/usr/src/app/
+
+    ports:
+      - '5001:5001'
+    network_mode: host
+
+  ms-document:
+    build:
+      context: .
+      dockerfile: Dockerfile-msdocument
+    volumes:
+       - ./:/usr/src/app/
+
+    ports:
+      - '5003:5003'
+    network_mode: host
+  
+
+  front-end:
+    build:
+      context: .
+      dockerfile: Dockerfile-mfcontainer
+    volumes:
+       - ./:/usr/src/app/
+
+    network_mode: host
+
+
+  front-end:
+    build:
+      context: .
+      dockerfile: Dockerfile-mfaccount
+    volumes:
+       - ./:/usr/src/app/
+
+    network_mode: host
+
+  front-end:
+    build:
+      context: .
+      dockerfile: Dockerfile-mftask
+    volumes:
+       - ./:/usr/src/app/
+
+    network_mode: host
+
+
+  front-end:
+    build:
+      context: .
+      dockerfile: Dockerfile-mfproject
+    volumes:
+       - ./:/usr/src/app/
+
+    network_mode: host
+
+
+  front-end:
+    build:
+      context: .
+      dockerfile: Dockerfile-mfdocument
+    volumes:
+       - ./:/usr/src/app/
+
+    network_mode: host
