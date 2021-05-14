@@ -3,6 +3,7 @@ version: '2.1'
 services:
 
   ms-task:
+    image: node:14.15-alpine
     build: 
       context: .
       dockerfile: Dockerfile-mstask
@@ -16,6 +17,7 @@ services:
 
 
   ms-project:
+    image: node:14.15-alpine
     build: 
       context: .
       dockerfile: Dockerfile-msproject
@@ -40,6 +42,7 @@ services:
 #      - '5007:5007' 
 
   ms-account:
+    image: node:14.15-alpine
     build:
       context: .
       dockerfile: Dockerfile-msaccount
@@ -51,6 +54,7 @@ services:
     network_mode: host
 
   ms-document:
+    image: node:14.15-alpine
     build:
       context: .
       dockerfile: Dockerfile-msdocument
@@ -63,6 +67,7 @@ services:
   
 
   mf-container:
+    image: node:14.15-alpine
     build:
       context: .
       dockerfile: Dockerfile-mfcontainer
@@ -73,6 +78,7 @@ services:
 
 
   mf-account:
+    image: node:14.15-alpine
     build:
       context: .
       dockerfile: Dockerfile-mfaccount
@@ -82,6 +88,7 @@ services:
     network_mode: host
 
   mf-task:
+    image: node:14.15-alpine
     build:
       context: .
       dockerfile: Dockerfile-mftask
@@ -91,7 +98,8 @@ services:
     network_mode: host
 
 
-  mf-project:
+  mf-proect:
+    image: node:14.15-alpine
     build:
       context: .
       dockerfile: Dockerfile-mfproject
@@ -102,6 +110,7 @@ services:
 
 
   mf-document:
+    image: node:14.15-alpine
     build:
       context: .
       dockerfile: Dockerfile-mfdocument
