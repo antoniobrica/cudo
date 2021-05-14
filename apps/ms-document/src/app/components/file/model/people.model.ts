@@ -10,6 +10,9 @@ export class PeopleModel {
   @Field({ nullable: true, description: `This is for task start date in UTC` })
   userName?: string;
 
+  @Field({ nullable: true, description: `This is for task start date in UTC` })
+  imageUrl?: string;
+
 }
 
 

@@ -18,6 +18,10 @@ export class PeopleEntity extends BaseEntity {
     userName: string;
 
     @Expose()
+    @Column({nullable:true})
+    imageUrl: string;
+
+    @Expose()
     @CreateDateColumn()
     createdAt?: Date;
 

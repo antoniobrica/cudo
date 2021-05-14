@@ -10,6 +10,12 @@ export class ReferenceModel {
     @Field({ nullable: true, description: `referenceType` })
     referenceType?: string;
 
+    @Field({ nullable: true, description: `referenceType` })
+    name?: string;
+
+    @Field({ nullable: true, description: `referenceType` })
+    imageUrl?: string;
+
     @Field({ description: `Reference updated at` })
     updatedAt?: Date;
 
