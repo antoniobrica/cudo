@@ -2,7 +2,7 @@ version: '2.1'
 
 services:
 
-  front-end:
+  mf-container:
     build:
       context: .
       dockerfile: Dockerfile-mfcontainer
@@ -12,7 +12,7 @@ services:
     network_mode: host
 
 
-  front-end:
+  mf-account:
     build:
       context: .
       dockerfile: Dockerfile-mfaccount
@@ -21,7 +21,7 @@ services:
 
     network_mode: host
 
-  front-end:
+  mf-task:
     build:
       context: .
       dockerfile: Dockerfile-mftask
@@ -31,7 +31,7 @@ services:
     network_mode: host
 
 
-  front-end:
+  mf-project:
     build:
       context: .
       dockerfile: Dockerfile-mfproject
@@ -41,7 +41,7 @@ services:
     network_mode: host
 
 
-  front-end:
+  mf-document:
     build:
       context: .
       dockerfile: Dockerfile-mfdocument

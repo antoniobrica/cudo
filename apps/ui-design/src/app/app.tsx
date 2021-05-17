@@ -39,7 +39,11 @@ import ModalViewTask from 'libs/shared-components/src/lib/components/modal/taskd
 import ModalTaskEdit from 'libs/shared-components/src/lib/components/modal/taskeditdetails';
 import InvitationTab from 'libs/shared-components/src/lib/components/invitation/invitation';
 import EditMileStonePopup from 'libs/shared-components/src/lib/components/modal/editmilestone';
+import ModalEditViewMilestone from 'libs/shared-components/src/lib/components/modal/viewmilestone';
+import ModalAddProtocol from 'libs/shared-components/src/lib/components/modal/addprotocol';
+import ModalEditInvitation from 'libs/shared-components/src/lib/components/modal/editInvitation';
 
+import ModalAddInvitation from 'libs/shared-components/src/lib/components/modal/addinvitaton';
 
 
 // import AccordionExampleMenu from 'libs/shared-components/src/lib/components/menu/sidebar';
@@ -53,13 +57,13 @@ export function App() {
       <Menubar></Menubar>
       <AccordionExampleMenu></AccordionExampleMenu>
       <Tabsbar></Tabsbar>
-      {/* <ModalExampleModal></ModalExampleModal> <br/> <br/><br/>   */}
+      <ModalExampleModal></ModalExampleModal> <br /> <br /><br />
       <Cardbar></Cardbar>
       <Messagebar></Messagebar><br />
       <Loginbar></Loginbar><br />
       <Logindrop></Logindrop><br />
       <Loginpassword></Loginpassword>
-      {/* <ModalExampleModal2></ModalExampleModal2><br/> */}
+      <ModalExampleModal2></ModalExampleModal2><br />
       <ModalExampleCompany></ModalExampleCompany><br />
       <ModalExamplePrinting></ModalExamplePrinting><br />
       <ListExampleFloated></ListExampleFloated><br /><br />
@@ -91,7 +95,11 @@ export function App() {
       <ModalViewTask></ModalViewTask><br />
       <ModalTaskEdit></ModalTaskEdit><br />
       <InvitationTab></InvitationTab><br />
-      <EditMileStonePopup></EditMileStonePopup>
+      <EditMileStonePopup></EditMileStonePopup><br />
+      <ModalEditViewMilestone></ModalEditViewMilestone><br />
+      <ModalAddProtocol></ModalAddProtocol><br />
+      <ModalEditInvitation></ModalEditInvitation><br />
+      <ModalAddInvitation></ModalAddInvitation>
     </div>
 
 
