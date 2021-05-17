@@ -1,0 +1,57 @@
+FROM node:14.15-alpine As development
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+COPY workspace*.json ./
+COPY cypress*.json ./
+RUN npm install
+COPY . .
+RUN npm run build ms-project
+
+FROM node:14.15-alpine as production
+
+ARG NODE_ENV=development
+ARG PORT=5005
+ARG SERVER_TIMEOUT=1080000
+ARG DATABASE_HOST='192.168.0.31'
+ARG DATABASE_PORT=1433
+ARG DATABASE_USERNAME='sa'
+ARG DATABASE_PASSWORD='Welcome@1'
+ARG DATABASE_NAME=democudodevdb
+ARG DATABASE_TYPE=mssql
+ARG DATABASE_CONNECTION_TIME_OUT=150000
+ARG DATABASE_ACQUIRE_TIME_OUT=150000
+ARG DATABASE_CONNECTION_LIMIT=20
+ARG AZURE_TENANT_ID='b820e9bb-0893-4024-9c7a-0947b22e95bf'
+ARG AZURE_CLIENT_ID='bd2a6ffd-726f-4b43-b66a-a4fb53028b51'
+ARG AZURE_CLIENT_SECRET='-s_f6YGclWR7WY-n504R_-5uGHY93saPgI'
+ARG VAULT_NAME='cudo-devvault-01'
+ENV NODE_ENV=${NODE_ENV}
+ENV PORT=${PORT}
+ENV SERVER_TIMEOUT=1080000
+ENV DATABASE_HOST='democudodevserver.database.windows.net'
+ENV DATABASE_PORT=1433
+ENV DATABASE_USERNAME='Administrators'
+ENV DATABASE_PASSWORD='Admin@123456'
+ENV DATABASE_NAME=democudodevdb
+ENV DATABASE_TYPE=mssql
+ENV DATABASE_CONNECTION_TIME_OUT=150000
+ENV DATABASE_ACQUIRE_TIME_OUT=150000
+ENV DATABASE_CONNECTION_LIMIT=20
+ENV AZURE_TENANT_ID='b820e9bb-0893-4024-9c7a-0947b22e95bf'
+ENV AZURE_CLIENT_ID='bd2a6ffd-726f-4b43-b66a-a4fb53028b51'
+ENV AZURE_CLIENT_SECRET='-s_f6YGclWR7WY-n504R_-5uGHY93saPgI'
+ENV VAULT_NAME='cudo-devvault-01'
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm install --only=production
+
+COPY --from=development /usr/src/app/dist/apps/ms-project ./dist
+
+COPY --from=development /usr/src/app/apps/ms-project/.env ./dist
+
+CMD ["node", "dist/main"]

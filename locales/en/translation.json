@@ -1,0 +1,34 @@
+{
+  "header": {
+    "logo": "",
+    "title": ""
+  },
+  "quotes": {
+    "noFlightsFound": {
+      "title": "",
+      "description": ""
+    },
+    "modifySearch": "",
+    "totalPriceFrom": ""
+  },
+  "quote": {
+    "selectFlight": "",
+    "changeFlight": ""
+  },
+  "loading": "",
+  "search": {
+    "reset": "",
+    "country": "",
+    "currency": "",
+    "tripType": "",
+    "from": "",
+    "to": "",
+    "departDate": "",
+    "changeDate": "",
+    "returnDate": "",
+    "search": ""
+  },
+  "messages": {
+    "minDate": ""
+  }
+}

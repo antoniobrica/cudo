@@ -1,0 +1,370 @@
+.account-section {
+    @include flexbox;
+    width: 100%;
+    position: relative;
+    margin: 2rem 0;
+    @media (max-width:#{$small-screen}) {
+        @include flex-direction(column);
+    }
+    .side-section {
+        width: 100%;
+        max-width: 43.5rem;
+        margin: 0 3rem 0rem 0;
+        @media (max-width:#{$large}) {
+            max-width: 30.5rem;
+        }
+        @media (max-width:#{$small-screen}) {
+            max-width: 100%;
+            margin: 0 0rem 0rem 0;
+        }
+        .card {
+            margin: 0 0 2rem 0;
+        }
+    }
+    .info-section {
+        width: 100%;
+        padding: 3rem;
+        h5 {
+            font-weight: 500;
+            font-size: 1.5rem;
+        }
+    }
+}
+
+.account-profile {
+    .ui.header {
+        @include flexbox;
+        @include align-items(center);
+        font-size: 1.6rem;
+        span {
+            font-weight: 400;
+            font-size: 1.5rem;
+        }
+        img.image {
+            width: 7.6rem;
+            height: 7.6rem;
+            border-radius: 100%;
+            margin: 0 3rem 0 0;
+            @media (max-width:#{$large}) {
+                margin: 0 1.5rem 0 0;
+            }
+        }
+    }
+}
+
+.account-links.card {
+    padding: 0;
+    .ui.menu {
+        font-size: 1.5rem;
+        width: 100%;
+        margin: 0;
+        .item {
+            @include flexbox;
+            @include align-items(center);
+            padding: 2rem 2rem;
+            border-bottom: 1px solid color("grey", "lighten-4");
+            margin: 0;
+            color: color("grey", "lighten-2");
+            @media (max-width:#{$large}) {
+                padding: 1.5rem 2rem;
+            }
+            &:last-child {
+                border: 0;
+            }
+            &.active {
+                background: none;
+                color: color("shades", "black");
+                .img-area {
+                    opacity: 1;
+                }
+            }
+            &:hover {
+                .img-area {
+                    opacity: 1;
+                }
+            }
+            i.icon {
+                float: inherit;
+                margin: 0 1rem 0 0;
+                width: 2rem;
+                text-align: center;
+            }
+            .material-icons {
+                margin: 0 1rem 0 0;
+                width: 2rem;
+                text-align: center;
+            }
+            .img-area {
+                margin: 0 1rem 0 0;
+                width: 2rem;
+                text-align: center;
+                opacity: 0.5;
+            }
+        }
+    }
+}
+
+.profile-section {
+    .form-section {
+        margin: 2rem 0;
+        max-width: 75%;
+        .submit-btn {
+            margin: 3rem 0 0;
+            .button {
+                height: 3.6rem;
+                width: auto;
+                min-width: 14rem;
+                line-height: 3.6rem;
+            }
+        }
+    }
+}
+
+.upload-profile-pic {
+    position: relative;
+    width: 100%;
+    margin: 1rem 0 3rem 0;
+    .img-area {
+        position: relative;
+        width: 10.8rem;
+        height: 10.8rem;
+        img {
+            border-radius: 100%;
+        }
+    }
+    .edit {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 100%;
+        color: color("shades", "white");
+        background: color("blue", "base");
+        @include flexbox;
+        @include align-items(center);
+        @include justify-content(center);
+        @include absolute(bottom 0 right 0px);
+        cursor: pointer;
+        input {
+            @include absolute(top 0 left 0px);
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0;
+            cursor: pointer;
+        }
+        span {
+            font-size: 1.6rem;
+        }
+    }
+}
+
+.payment-information {
+    .edit-box {
+        margin: 0 0 3rem 0;
+        position: relative;
+        .edit-box-inner {
+            background: color("grey", "lighten-6");
+            border: 1px solid color("grey", "base");
+            padding: 2.5rem;
+            overflow: auto;
+        }
+        .remeber-checkbox {
+            margin: 1.5rem 0 0 !important;
+        }
+    }
+    .btn-area {
+        margin: 1rem 0 3rem 0;
+        .button {
+            min-width: 16rem;
+        }
+    }
+}
+
+.payment-box {
+    width: 100%;
+    position: relative;
+    padding: 1.5rem 2rem;
+    padding-right: 4rem;
+    background: color("shades", "white");
+    border: 1px solid color("grey", "lighten-4");
+    margin: 2rem 0 1.5rem 0;
+    p {
+        font-size: 1.5rem;
+    }
+    .delete {
+        @include absolute(right 1.5rem top 1.5rem);
+        color: color("grey", "base");
+        cursor: pointer;
+        transition: all 0.3s;
+        &:hover {
+            color: color("grey", "lighten-2");
+        }
+        i {
+            font-size: 1.8rem;
+        }
+    }
+    .ac-detail {
+        @include flexbox;
+        @include align-items(center);
+        position: relative;
+        width: 100%;
+        .detail {
+            @include flexbox;
+            @include align-items(center);
+            min-width: 40%;
+            margin: 0 2rem 0 0;
+            white-space: nowrap;
+            i {
+                margin: 0 1rem 0 0;
+                font-size: 1.8rem;
+            }
+            img {
+                max-width: 3rem;
+                margin: 0 1rem 0 0;
+            }
+            span {
+                font-size: 1.5rem;
+            }
+        }
+        .make-default {
+            span {
+                font-size: 1.5rem;
+                white-space: nowrap;
+            }
+        }
+    }
+}
+
+.date-select {
+    @include flexbox;
+    .ui.selection.dropdown {
+        margin: 0 1rem 0 0;
+        max-width: 110px;
+        width: auto;
+        min-width: 10rem;
+    }
+}
+
+.order-listing {
+    position: relative;
+    width: 100%;
+    margin: 1rem 0 0;
+    .order-list {
+        background: color("shades", "white");
+        border: 1px solid color("grey", "base");
+        position: relative;
+        width: 100%;
+        margin: 0 0 2rem 0;
+        .list {
+            font-size: 1.5rem;
+            padding: 2rem;
+            position: relative;
+            width: 100%;
+            background: color("grey", "lighten-9");
+            @include flexbox;
+            @include justify-content(space-between);
+            margin: 0;
+            @media (max-width:#{$large}) {
+                @include flex-wrap(wrap);
+                @include justify-content(flex-start);
+            }
+            .item {
+                margin: 0 2rem 0 0 !important;
+                padding: 0 !important;
+                &:before,
+                &:after {
+                    display: none;
+                }
+                @media (max-width:#{$large}) {
+                    width: calc(33% - 1rem);
+                    margin: 0 1rem 1.5rem 0 !important;
+                    text-align: left;
+                }
+                @media (max-width:#{$small-screen}) {
+                    width: calc(50% - 1rem);
+                    margin: 0 1rem 1.5rem 0 !important;
+                }
+                @media (max-width:#{$small-screen-up}) {
+                    width: calc(100% - 0rem);
+                    margin: 0 0rem 1.5rem 0 !important;
+                }
+            }
+            label {
+                color: color("grey", "lighten-2");
+                font-size: 1.2rem;
+                margin: 0 0 0.5rem 0;
+                display: block;
+            }
+            p {
+                line-height: normal;
+            }
+        }
+        .bottom-info {
+            padding: 2rem;
+            position: relative;
+            width: 100%;
+            @include flexbox;
+            @media (max-width:#{$small-screen}) {
+                padding: 1.5rem;
+            }
+            >.img-area {
+                width: 13rem;
+                margin: 0 2rem 2rem 0;
+                border-radius: 4px;
+            }
+            h6 {
+                margin: 0 0 0.3rem 0;
+                font-size: 1.5rem;
+                color: color("shades", "black");
+                line-height: normal;
+            }
+            p {
+                margin: 0 0 0.3rem 0;
+                font-size: 1.5rem;
+                color: color("shades", "black");
+            }
+        }
+    }
+}
+
+.profile-pic-area {
+    position: relative;
+    width: 100%;
+    @include flexbox;
+    @include align-items(center);
+    margin: 0.5rem 0 0;
+    .img-left {
+        position: relative;
+        width: 3.5rem;
+        min-width: 3.5rem;
+        height: 3.5rem;
+        margin: 0 1rem 0 0;
+        .img-area {
+            border-radius: 100%;
+            overflow: hidden;
+            @include flexbox;
+            @include align-items(center);
+            @include justify-content(center);
+            width: 100%;
+            height: 100%;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .live-dot {
+            background: color("green", "dark");
+            border: 2px solid color("shades", "white");
+            width: 1.2rem;
+            height: 1.2rem;
+            border-radius: 100%;
+            @include absolute(left 2.5rem top 2.5rem);
+        }
+    }
+    p {
+        font-size: 1.3rem !important;
+        font-weight: 500;
+        .grey-text {
+            font-weight: 400;
+        }
+    }
+}

@@ -1,0 +1,282 @@
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+ 
+#sidebar ul li .material-icons.right-area {
+	margin-right: -17px;
+}
+.ui.segment{
+	background: none;
+	box-shadow: none;
+	border-radius: 0px;
+}
+
+.ui.inverted.menu{
+	background-color: #1B1B40;
+}
+ #root{
+	 display: flex;
+	 height: 100%;
+ }
+ .ui.labeled.icon.menu .item{
+	min-width: 0em;
+}
+.ui.thin.left.sidebar{
+	width: 6em;
+}
+i.add.icon{
+	font-size: 12px !important;
+}
+#sidebar {
+	min-width: 100px;
+	max-width: 100px;
+	position: fixed;
+	 
+	color: #fff;
+	transition: all 0.3s;
+	height: 100%;
+	img{
+		width: 45px;
+		border-radius: 50%;
+	}
+	ul {
+		li {
+			
+			a {
+				text-align: left;
+				padding: 10px;
+				font-size: 1.1em;
+                display: block;
+				text-decoration: none;
+				color: #ffffff;
+				font-weight: 400; 
+				i {
+					margin-right: 10px;
+				}
+			}
+			.material-icons{
+				font-size: 22px;
+				 
+			}
+			span{
+				margin-right: 20px;
+			}
+			
+		}
+		.configuration{
+			padding: 140px 0 0 0;
+		}
+		li.active {
+			>a {
+				color: #fff;
+				background: #6d7fcc;
+			}
+		}
+	}
+	.sidebar-header {
+		padding: 20px;
+		background: #1B1B40; 
+		border-bottom: 1px solid #707070;
+		strong {
+			display: none;
+			font-size: 1.8em;
+		}
+	}
+	ul.components {
+		padding: 5px 0;
+		border-bottom: 1px solid #707070;
+	}
+	.list-unstyled{
+		list-style: none;
+	}
+}
+#sidebar.active {
+	min-width: 80px;
+	max-width: 80px;
+	text-align: center;
+	.sidebar-header {
+		h3 {
+			display: none;
+		}
+		strong {
+			display: block;
+		}
+	}
+	.CTAs {
+		display: none;
+	}
+	ul {
+		li {
+			a {
+				padding: 20px 10px;
+				text-align: center;
+				font-size: 0.85em;
+				i {
+					margin-right: 0;
+					display: block;
+					font-size: 1.8em;
+					margin-bottom: 5px;
+				}
+			}
+		}
+		ul {
+			a {
+				padding: 10px !important;
+			}
+		}
+	}
+	.dropdown-toggle {
+		&::after {
+			top: auto;
+			bottom: 10px;
+			right: 50%;
+			-webkit-transform: translateX(50%);
+			-ms-transform: translateX(50%);
+			transform: translateX(50%);
+		}
+	}
+}
+a[aria-expanded="true"] {
+	color: #fff;
+	background: #6d7fcc;
+}
+a[data-toggle="collapse"] {
+	position: relative;
+}
+.dropdown-toggle {
+	&::after {
+		display: block;
+		position: absolute;
+		top: 50%;
+		right: 20px;
+		transform: translateY(-50%);
+	}
+}
+ul {
+	ul {
+		a {
+			font-size: 0.9em !important;
+			padding-left: 30px !important;
+			background: #1B1B40;
+		}
+	}
+}
+ul.CTAs {
+	padding: 20px;
+	a {
+		text-align: center;
+		font-size: 0.9em !important;
+		display: block;
+		border-radius: 5px;
+		margin-bottom: 5px;
+	}
+}
+a.download {
+	background: #fff;
+	color: #1B1B40;
+}
+a.article {
+	background: #6d7fcc !important;
+	color: #fff !important;
+	&:hover {
+		background: #6d7fcc !important;
+		color: #fff !important;
+	}
+}
+
+
+
+#navbar{
+    position: relative;
+     
+    margin-left: 1200px;
+    top: 10px;
+}
+
+#side-menu{
+
+	position: relative;
+	left: 57px;
+    top: -1px;
+	 
+}
+
+.float-right{
+	float: right;
+}
+
+.sidebar-wrapper.sidebar-theme
+{    
+    position: fixed;
+    transition: .600s;
+    height: 100vh;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    background: #ffffff;
+    left: 57px;
+	background: #ffffff 0% 0% no-repeat padding-box;
+	background: #FFFFFF 0% 0% no-repeat padding-box;
+	box-shadow: 1px 0px 0px #0000001A;
+	opacity: 1;
+
+}
+.ui-accordion{
+	padding: 20px;
+	font-size: 14px;
+}
+.content.active li{
+	color: #718898;
+	list-style: none;
+}
+.accordion.ui.ui-accordion .active.title.active-title {
+    background-color: #2D62ED;
+    color: rgb(255,255,255);
+	padding: 5px;
+	border-radius: 4px;
+
+}
+.accordion-top{
+	border-top: 1px solid #eaeaea;
+}
+i.angle.down.icon {
+    float: right;
+}
+.burj{
+	padding: 20px;
+	font-weight: 600;
+
+}
+.sidebar-top{
+	margin-top: 15px;
+}
+
+.subdescription{   
+	 padding: 40px;
+    font-size: 14px;
+    color: #9A9EA1;
+}
+.strategic_plan{
+	margin-left: -30px;
+	font-size: 14px;
+}
+.dots_area{
+	float: right;
+	margin-right: 20px;
+	margin-left: 10px;
+}
+.ui.inverted.menu .link.item:active, .ui.inverted.menu a.item:active {
+    background: #2D62ED;
+    color: #fff;
+}
+.workspan{
+	font-size: 10px;
+}
+.lineheight{
+	margin-top: -14px;
+    line-height: 27px;
+}
+span.strategic_plan {
+    line-height: 30px;
+}

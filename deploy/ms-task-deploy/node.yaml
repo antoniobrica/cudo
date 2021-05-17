@@ -1,0 +1,44 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ms-task
+  labels:
+    app: ms-task
+spec:
+  selector:
+    app: ms-task
+  ports:
+    - protocol: TCP
+      port: 5007
+      targetPort: 5007
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-task
+  labels:
+    app: ms-task
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-task
+  template:
+    metadata:
+      labels:
+        app: ms-task
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "ms-task"
+        dapr.io/app-port: "5007"
+        dapr.io/dapr-http-port: "3501"
+        dapr.io/config: "appconfig"
+    spec:
+      containers:
+        - name: ms-task-container
+          image: localhost:5000/ms-task
+          ports:
+            - containerPort: 5007
+          imagePullPolicy: Always

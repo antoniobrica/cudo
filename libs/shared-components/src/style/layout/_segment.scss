@@ -1,0 +1,15 @@
+.ui.segment {
+    .segment-heading {
+        @include flex(flex);
+        @include align-items(center);
+        padding: 0 10px 0 20px;
+        height: 50px;
+        border-bottom: 1px solid color("grey", "lighten-8");
+        .ui.header {
+            margin: 0;
+            img {
+                width: auto;
+            }
+        }
+    }
+}

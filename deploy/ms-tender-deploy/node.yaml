@@ -1,0 +1,44 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ms-tender
+  labels:
+    app: ms-tender
+spec:
+  selector:
+    app: ms-tender
+  ports:
+    - protocol: TCP
+      port: 5008
+      targetPort: 5008
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-tender
+  labels:
+    app: ms-tender
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-tender
+  template:
+    metadata:
+      labels:
+        app: ms-tender
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "ms-tender"
+        dapr.io/app-port: "5008"
+        dapr.io/dapr-http-port: "3501"
+        dapr.io/config: "appconfig"
+    spec:
+      containers:
+        - name: ms-tender-container
+          image: localhost:5000/ms-tender
+          ports:
+            - containerPort: 5008
+          imagePullPolicy: Always

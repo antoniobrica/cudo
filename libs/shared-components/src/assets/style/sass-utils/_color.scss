@@ -1,0 +1,53 @@
+$blue: ( "base": #718898, "dark": #000099, "dark-1": #000066, "lighten": #CCCCFF, "lighten-1": #E0EEFB, "lighten-2": #B1D8F9, "lighten-3": #ECEDF1);
+$green: ( "base": #32CD32, "dark": #28A428, "dark-1": #1E7B1E, "lighten-1": #62D0A2, "lighten-2": #E5F8F0);
+$grey: ( "base": #2D62ED, "dark": #A6A6A6, "dark-1": #8C8C8C, "darken": #323338, "lighten-1": #565264, "lighten-2": #808080, "lighten-3": #C0C0C0, "lighten-4": #e6e6e6, "lighten-5": #E8E8E8, "lighten-6": #F5F5F5, "lighten-7": #FEFEFE, "lighten-8": #F7F7F7, "lighten-9": #EBEBEB);
+$red: ( "base": #CC0000, "dark": #990000, "dark-1": #660000, "lighten": #F96666, "lighten-2": #FEE9E9, );
+$shades: ( "black": #ffffff, "dark": #000000, "white": #ffffff, "transparent": transparent, "lighten-1": #E0E0E0);
+$yellow: ( "base": #CFB53B, "dark": #FFBC00, "lighten-1": #CFB53B, "lighten-2": #F7F3DE, "lighten-3": #f4f1d6, );
+$colors: ( "red": $red, "blue": $blue, "green": $green, "yellow": $yellow, "grey": $grey, "shades": $shades) !default;
+// Color Classes
+@each $color_name,
+$color in $colors {
+    @each $color_type,
+    $color_value in $color {
+        @if $color_type=="base" {
+            .#{$color_name} {
+                background-color: $color_value !important;
+            }
+            .#{$color_name}-text {
+                color: $color_value !important;
+            }
+        }
+        @else if $color_name !="shades" {
+            .#{$color_name}.#{$color_type} {
+                background-color: $color_value !important;
+            }
+            .#{$color_name}-text.text-#{$color_type} {
+                color: $color_value !important;
+            }
+        }
+    }
+}
+
+// Shade classes
+@each $color,
+$color_value in $shades {
+    .#{$color} {
+        background-color: $color_value !important;
+    }
+    .#{$color}-text {
+        color: $color_value !important;
+    }
+}
+
+// usage: color("name_of_color", "type_of_color")
+// to avoid to repeating map-get($colors, ...)
+@function color($color, $type) {
+    @if map-has-key($colors, $color) {
+        $curr_color: map-get($colors, $color);
+        @if map-has-key($curr_color, $type) {
+            @return map-get($curr_color, $type);
+        }
+    }
+    @return null;
+}

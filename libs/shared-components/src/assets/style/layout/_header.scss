@@ -1,0 +1,206 @@
+.main-header {
+    @include fixed(top 0);
+    width: $full-width;
+    background: #F5F5F5;
+    box-shadow: 0px 3px 4px #00000017;
+    box-shadow: $z-depth-1;
+    height: 8rem;
+    z-index: 99;
+    padding: 0 5rem;
+    @include flexbox;
+    @include align-items(center);
+    @include justify-content(space-between);
+    @media (max-width:#{$large-desktop-middle-down}) {
+        padding: 0 3rem;
+    }
+    @media (max-width:#{$large}) {
+        padding: 0 1.5rem;
+    }
+    &.dashboard-header {
+        .top-bar-right {
+            .notification-menu {
+                @include relative();
+                margin: 0 1.8rem;
+                cursor: pointer;
+                .yellow-mb {
+                    background: color("blue", "base");
+                    @include absolute(top 0 right 0);
+                    border: 2px solid color("shades", "white");
+                    width: 8px;
+                    height: 8px;
+                    padding: 0 !important;
+                }
+            }
+        }
+    }
+    .logo-area {
+        img {
+            width: 13.8rem;
+        }
+    }
+}
+
+.helping-links {
+    .ui.list {
+        @include flex(flex);
+        @include align-items(center);
+        .item {
+            margin: 0;
+            padding: .78571429em .92857143em .78571429em .92857143em;
+            color: rgba(0, 0, 0, .87);
+            a {
+                color: rgba(0, 0, 0, .95);
+            }
+        }
+    }
+}
+
+.cart-area {
+    position: relative;
+    margin: 0 0 0 1.5rem;
+    @media (max-width:#{$large}) {
+        margin: 1.5rem 0 0;
+    }
+    .material-icons {
+        color: color("shades", "black");
+    }
+    .count {
+        @include absolute(top -0.6rem right -0.5rem);
+        width: 1.6rem;
+        height: 1.6rem;
+        background: color("blue", "base");
+        border-radius: 100%;
+        color: #fff;
+        text-align: center;
+        font-size: 1.1rem;
+        line-height: 1.6rem;
+    }
+}
+
+.header-right {
+    @include flexbox;
+    @include align-items(center);
+    @include justify-content(flex-end);
+    @media (max-width:#{$large}) {
+        position: fixed;
+        right: -32rem;
+        top: 0px;
+        width: 32rem;
+        height: 100%;
+        background: color("shades", "white");
+        @include flex-direction(column);
+        @include align-items(flex-start);
+        @include justify-content(flex-start);
+        padding: 2rem;
+        box-shadow: 0 0 21px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s;
+        &.open {
+            right: 0;
+        }
+    }
+    .country-flag {
+        max-width: 3rem;
+        text-align: center;
+        margin: 0;
+    }
+    .ui.dropdown {
+        @include flexbox;
+        @include align-items(center);
+        @include justify-content(center);
+        margin: 0 0 0 1.5rem;
+        font-size: 1.4rem;
+        text-transform: uppercase;
+        color: color("shades", "black");
+        font-weight: 500;
+        @media (max-width:#{$large}) {
+            margin: 1rem 0;
+            font-size: 1.6rem;
+        }
+        .icon {
+            font-weight: 300;
+            margin: 0 0 0 0.3rem;
+            font-size: 1.2rem;
+            height: auto;
+        }
+    }
+}
+
+.header-search {
+    // background: $white;
+    background: color("shades", "white");
+    border: 1px solid color("grey", "lighten-5");
+    border-radius: 4px;
+    @include flexbox;
+    @include align-items(center);
+    width: 100%;
+    margin: 0 4rem;
+    @media (max-width:#{$large}) {
+        margin: 0 1.5rem;
+    }
+    .ui.selection.dropdown {
+        width: 6rem;
+        height: 4rem;
+        min-width: 6rem;
+        min-height: 4rem;
+        background: color("grey", "lighten-5");
+        border-radius: 4px 0px 0px 4px;
+        color: color("shades", "black");
+        border: 0;
+        padding: 0;
+        @include flexbox;
+        @include align-items(center);
+        @include justify-content(center);
+        white-space: nowrap;
+        .text {
+            padding: 0;
+            margin: 0;
+        }
+    }
+    .ui.labeled.icon.button {
+        padding-left: 1rem !important;
+        padding-right: 3.2rem !important;
+        background: color("grey", "lighten-5");
+        border-radius: 4px 0px 0px 4px;
+        color: color("shades", "black");
+        height: 4rem;
+        line-height: 2rem;
+        .icon {
+            left: inherit;
+            right: -1px;
+            background: transparent;
+        }
+    }
+    .search-input {
+        width: 100%;
+        input {
+            border: 0;
+            font-size: 1.5rem;
+            width: 100%;
+        }
+    }
+    .ui.icon.search-button {
+        height: 4rem;
+        margin: 0;
+        max-height: 100%;
+        border-radius: 0 3px 3px 0;
+        font-size: 1.2rem;
+        width: 5rem;
+    }
+}
+
+.ui.icon.menu-toggle {
+    margin: 0;
+    border-radius: 3px;
+    padding: 0;
+    width: 4rem;
+    height: 4rem;
+    min-width: 4rem;
+    display: none;
+    .icon {
+        font-size: 1.8rem;
+        height: auto;
+    }
+    @media (max-width:#{$large}) {
+        display: block;
+    }
+}
