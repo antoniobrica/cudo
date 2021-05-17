@@ -52,10 +52,19 @@ export class FileService {
       } else throw new HttpException('folderName already exists', HttpStatus.NOT_FOUND);
     }
       else {
+        const bkpTitle = await this.FileRepository.findOne({ where: { BKPIDTitle: fileDetail.BKPIDTitle } });
+        const bkpId = await this.FileRepository.findOne({ where: { BKPID: fileDetail.BKPID } });
+
+        if(!bkpTitle){
         fileDetail.BKPID = fileBasics.BKPID
         fileDetail.BKPIDTitle = fileBasics.BKPIDTitle
         fileDetail.folderName = ''
-      }
+      } else throw new HttpException('BKPIDTitle already exists', HttpStatus.NOT_FOUND);
+      if(!bkpId){
+        fileDetail.BKPID = fileBasics.BKPID
+      }  else throw new HttpException('BKPID already exists', HttpStatus.NOT_FOUND);
+
+    }
       const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
       const newPost = await this.FileRepository.create({
         ...fileDetail,
