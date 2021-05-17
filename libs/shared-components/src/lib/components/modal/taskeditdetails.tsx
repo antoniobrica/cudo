@@ -11,6 +11,7 @@ import {
   TextArea,
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
+import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex } from "@cudo/mf-account-app-lib";
 
 function exampleReducer(state, action) {
   switch (action.type) {
@@ -27,20 +28,47 @@ interface AlertProps {
   openAlertF?,
   taskData?,
   cancel?,
-  taskStatus?
+  taskStatus?,
+  editTaskData
 }
 export const ModalTaskEdit = (props: AlertProps) => {
-  const countryOptions = [
-    { key: 'af', value: 'af', text: 'Afghanistan' },
-    { key: 'ax', value: 'ax', text: 'Aland Islands' },
-  ];
 
   const [open, setOpen] = React.useState(false);
+  const [taskTitle, setTaskTitle] = React.useState("")
+  const [startDate, setStartDate] = React.useState('')
+  const [endDate, setEndDate] = React.useState("")
+  const [estimatedDays, setEstimatedDays] = React.useState("")
+  const [sendNotification, setEendNotification] = React.useState(false)
+  const [BKPID, setBKPID] = React.useState("")
+  const [saveTaskAsTemplate, setSaveTaskAsTemplate] = React.useState("")
+  const [phaseID, setPhasesID] = React.useState("")
+  const [status, setStatus] = React.useState("")
+  const [followers, setfollowers] = React.useState("")
+  const [phaseName, setPhasesName] = React.useState("");
+  const [BKPTitle, setBKPIDTitle] = React.useState("");
+  const [files, setFileList] = React.useState<any>([]);
+  const [description, setDescription] = React.useState("")
   React.useEffect(() => {
     if (props.openAlertF) {
       setOpen(props.openAlertF);
     }
   }, [props.openAlertF]);
+
+  React.useEffect(() => {
+    if (props.taskData) {
+      const date = new Date(props.taskData.startDate).toLocaleDateString();
+      console.log('date', date);
+      setStartDate(date);
+      setTaskTitle(props.taskData.taskTitle);
+      setDescription(props.taskData.description);
+      setEstimatedDays(props.taskData.estimatedDays);
+      setBKPIDTitle(props.taskData.BKPTitle)
+      setBKPID(props.taskData.BKPID)
+      setPhasesID((props.taskData.phaseID).toString());
+      setPhasesName(props.taskData.phaseName)
+    }
+  }, [props.taskData]);
+
   const openf = () => {
     setOpen(true)
   }
@@ -48,6 +76,79 @@ export const ModalTaskEdit = (props: AlertProps) => {
     setOpen(false)
     props.cancel()
   }
+
+  const onTaskTitleChange = e => {
+    setTaskTitle(e.target.value)
+  }
+  const onStartDateChange = e => {
+    // const date = moment.utc(moment(e.target.value).utc()).format();
+    setStartDate(e.target.value)
+  }
+  const onEndDateChange = e => {
+    setEndDate(e.target.value);
+  }
+  const onsetEstimatedDays = (event, data) => {
+    setEstimatedDays(data.value)
+  }
+
+  const sendNotificationChange = (event) => {
+    setEendNotification(event.target.value)
+  }
+
+  const onFollowers = (data) => {
+    setfollowers(data.value);
+  }
+  const setBKPIDChange = (data) => {
+    setBKPIDTitle(data.BKPIDTitle)
+    setBKPID(data.BKPID)
+    console.log('bkp==>', data);
+  }
+  const setAsignee = (data) => {
+    // setAsignis(data)
+  }
+
+
+  const setSaveTaskAsTemplateChange = (event, data) => {
+    setSaveTaskAsTemplate(data.value)
+  }
+
+  const onsetPhasesID = (data) => {
+    setPhasesID((data.phaseID).toString());
+    setPhasesName(data.phaseName)
+  }
+  const onDescriptionChange = e => {
+    console.log('des=>', e.target.value);
+    setDescription(e.target.value);
+  }
+
+  const editTask = () => {
+    const editTaskData = {
+      taskID: props.taskData.taskID,
+      taskTitle: taskTitle,
+      startDate: startDate,
+      endDate: endDate,
+      description: description,
+      estimatedDays: estimatedDays,
+      BKPID: BKPID,
+      BKPTitle: BKPTitle,
+      phaseID: phaseID,
+      phaseName: phaseName,
+      sendNotification: false,
+      status: props.taskData.status,
+      files: [],
+      saveTaskAsTemplate: props.taskData.saveTaskAsTemplate,
+    }
+    props.editTaskData(editTaskData);
+    setOpen(false)
+    props.cancel()
+  }
+  const workTypes = [
+    { key: 'w1', value: 'w1', text: 'Electrical Work' },
+    { key: 'w2', value: 'w2', text: 'HVAC work' },
+    { key: 'w3', value: 'w3', text: 'Pipelines work' },
+    { key: 'w4', value: 'w4', text: 'Plumbing Work' },
+  ]
+
   return (
     <div id="navbar">
       <Modal
@@ -79,7 +180,8 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         size="small"
                         className="full-width"
                         type="text"
-                        value={props?.taskData?.taskTitle}
+                        value={taskTitle}
+                        onChange={onTaskTitleChange}
                       />
                     </Form.Field>
                   </Grid.Column>
@@ -92,7 +194,8 @@ export const ModalTaskEdit = (props: AlertProps) => {
                     <Form.Field>
                       <label>Description </label>
                       <TextArea placeholder="Tell us more"
-                        value={props?.taskData?.description} />
+                        value={description}
+                        onChange={onDescriptionChange} />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -105,12 +208,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         Associate with work type{' '}
                         <span className="danger">*</span>
                       </label>
-                      <Input
-                        placeholder="Electrical work"
-                        size="small"
-                        className="full-width"
-                        type="text"
-                      />
+                      <Select placeholder='Select' className="small" options={workTypes} />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -118,32 +216,34 @@ export const ModalTaskEdit = (props: AlertProps) => {
               <Grid columns={2}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
+                    {/* <Form.Field>
                       <label>Select Phase </label>
                       <Select
                         placeholder="Select"
                         className="small"
                         options={countryOptions}
                       />
-                    </Form.Field>
+                    </Form.Field> */}
+                    <PhaseIndex phaseName={phaseName} parentPhaseSelect={onsetPhasesID} />
                   </Grid.Column>
 
                   <Grid.Column>
-                    <Form.Field>
+                    {/* <Form.Field>
                       <label>Select BKP </label>
                       <Select
                         placeholder="Select"
                         className="small"
                         options={countryOptions}
                       />
-                    </Form.Field>
+                    </Form.Field> */}
+                    <BkpIndex bkp={BKPTitle} parentBKPSelect={setBKPIDChange} />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
+                    {/* <Form.Field>
                       <label>
                         Assignee <span className="danger">*</span>
                       </label>
@@ -153,21 +253,23 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         className="full-width"
                         type="text"
                       />
-                    </Form.Field>
+                    </Form.Field> */}
+                    <AssigneeIndex parentAsigneeSelect={setAsignee} />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
               <Grid columns={2}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
+                    {/* <Form.Field>
                       <label>Followers </label>
                       <Select
                         placeholder="Select"
                         className="small"
                         options={countryOptions}
                       />
-                    </Form.Field>
+                    </Form.Field> */}
+                    <FollowersIndex parentFollowersSelect={onFollowers} />
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
@@ -197,8 +299,8 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         size='small'
                         className="full-width"
                         type="date"
-                        value={props?.taskData?.startDate}
-                      />
+                        value={startDate}
+                        onChange={onStartDateChange} />
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
@@ -209,15 +311,16 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         size="small"
                         className="full-width"
                         type="date"
-                        value={props?.taskData?.endDate}
-                      />
+                        value={endDate}
+                        onChange={onEndDateChange} />
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
                       <label>Estimated Days </label>
                       <Input placeholder='Enter days' className="small"
-                        value={props?.taskData?.estimatedDays}
+                        value={estimatedDays}
+                        onChange={onsetEstimatedDays}
                       />
                     </Form.Field>
                   </Grid.Column>
@@ -239,7 +342,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
         <Modal.Actions>
           <Button
             content="Submit"
-            onClick={() => setOpen(false)}
+            onClick={editTask}
             positive
             size="mini"
             className="grey-btn"
