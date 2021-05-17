@@ -37,6 +37,15 @@ import ModalViewPlanning from 'libs/shared-components/src/lib/components/modal/v
 import ModalSession from 'libs/shared-components/src/lib/components/modal/addsession';
 import ModalViewTask from 'libs/shared-components/src/lib/components/modal/taskdetails';
 import ModalTaskEdit from 'libs/shared-components/src/lib/components/modal/taskeditdetails';
+import InvitationTab from 'libs/shared-components/src/lib/components/invitation/invitation';
+import EditMileStonePopup from 'libs/shared-components/src/lib/components/modal/editmilestone';
+import ModalEditViewMilestone from 'libs/shared-components/src/lib/components/modal/viewmilestone';
+import ModalAddProtocol from 'libs/shared-components/src/lib/components/modal/addprotocol';
+import ModalEditInvitation from 'libs/shared-components/src/lib/components/modal/editInvitation';
+
+import ModalAddInvitation from 'libs/shared-components/src/lib/components/modal/addinvitaton';
+
+
 // import AccordionExampleMenu from 'libs/shared-components/src/lib/components/menu/sidebar';
 // const ListExampleFloated = React.lazy(() => import('libs/shared-components/src/lib/components/task/taskarea'));
 
@@ -45,7 +54,7 @@ import ModalTaskEdit from 'libs/shared-components/src/lib/components/modal/taske
 export function App() {
   return (
     <div>
-      <Menubar ></Menubar>
+      <Menubar></Menubar>
       <AccordionExampleMenu></AccordionExampleMenu>
       <Tabsbar></Tabsbar>
       <ModalExampleModal></ModalExampleModal> <br /> <br /><br />
@@ -57,7 +66,7 @@ export function App() {
       <ModalExampleModal2></ModalExampleModal2><br />
       <ModalExampleCompany></ModalExampleCompany><br />
       <ModalExamplePrinting></ModalExamplePrinting><br />
-      {/* <TaskArea></TaskArea><br /><br /> */}
+      <ListExampleFloated></ListExampleFloated><br /><br />
       <ModalAddPrint></ModalAddPrint><br />
       <ModalAddFile></ModalAddFile><br />
       <FileStructure></FileStructure><br />
@@ -77,14 +86,20 @@ export function App() {
       <EditProject></EditProject><br />
       <UserProfile></UserProfile><br />
       <RegisterPage></RegisterPage><br />
-      {/* <UserProfileView></UserProfileView><br /> */}
+      <UserProfileView></UserProfileView><br />
       <LoaderPage></LoaderPage><br />
       <ModalAlert></ModalAlert><br />
       <ModalPlanningNew></ModalPlanningNew><br />
       <ModalViewPlanning></ModalViewPlanning><br />
       <ModalSession></ModalSession><br />
       <ModalViewTask></ModalViewTask><br />
-      <ModalTaskEdit></ModalTaskEdit>
+      <ModalTaskEdit></ModalTaskEdit><br />
+      <InvitationTab></InvitationTab><br />
+      <EditMileStonePopup></EditMileStonePopup><br />
+      <ModalEditViewMilestone></ModalEditViewMilestone><br />
+      <ModalAddProtocol></ModalAddProtocol><br />
+      <ModalEditInvitation></ModalEditInvitation><br />
+      <ModalAddInvitation></ModalAddInvitation>
     </div>
 
 

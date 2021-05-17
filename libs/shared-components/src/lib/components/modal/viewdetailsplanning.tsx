@@ -41,7 +41,7 @@ export function ModalViewPlanning(props: PlanningProps) {
   if (props.loading) return <LoaderPage />;
   return (
     <div id="navbar">
-      <Modal
+      <Modal style={{height:'650px'}}
         className="modal_media"
         onClose={() => setOpen(false)}
         onOpen={openf}
@@ -53,7 +53,7 @@ export function ModalViewPlanning(props: PlanningProps) {
         }
       >
         <Modal.Header>
-          <h3> Milestone Details </h3>
+          <h3>View Milestone Details </h3>
         </Modal.Header>
         <Modal.Content body>
           <div>
@@ -91,7 +91,17 @@ export function ModalViewPlanning(props: PlanningProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>Associate with work type</label>
-                      <span>Burj Khalifa (project ModalAddSubLevel) </span>
+                      <span>{props?.milestoneDataById?.MileStoneByID.worktypeName} </span>
+                    </Form.Field>
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
+              <Grid columns={1}>
+                <Grid.Row>
+                  <Grid.Column>
+                    <Form.Field>
+                      <label>Phase type</label>
+                      <span>{props?.milestoneDataById?.MileStoneByID.phaseName} </span>
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -101,7 +111,7 @@ export function ModalViewPlanning(props: PlanningProps) {
         </Modal.Content>
         <Modal.Actions>
           <Button
-            content="Submit"
+            content="Ok"
             onClick={cancel}
             positive
             size="mini"

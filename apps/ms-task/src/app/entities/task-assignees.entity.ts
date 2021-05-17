@@ -20,6 +20,10 @@ export default class TaskAssigneessEntity extends BaseEntity {
     userName: string;
 
     @Expose()
+    @Column({nullable: true})
+    imageUrl: string;
+
+    @Expose()
     @CreateDateColumn()
     createdAt?: Date;
 

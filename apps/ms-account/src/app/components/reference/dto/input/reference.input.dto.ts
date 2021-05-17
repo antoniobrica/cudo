@@ -12,6 +12,12 @@ export class ReferenceInputDto {
     @Field(type => ReferenceTypeEnum)
     referenceType: ReferenceTypeEnum;
 
+    @Field({ description: `Reference name` })
+    name: string;
+
+    @Field({ description: `ReferenceID imageUrl` })
+    imageUrl: string;
+
     @Field({ description: `This is for title task title` })
     createdBy?: string;
 

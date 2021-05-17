@@ -51,6 +51,7 @@ mutation CreateTask(
   $phaseID: String!,
   $phaseName: String!,
   $referenceID: String!,
+  $description: String!,
   $files: [TaskFileParams!]!
   ){ 
     createTask(
@@ -70,11 +71,13 @@ mutation CreateTask(
       saveTaskAsTemplate: $saveTaskAsTemplate,
       phaseID: $phaseID,
       phaseName: $phaseName,
-      status: INPROGRESS
+      status: INPROGRESS,
+      description: $description
         }
       assignees:[{userID:"2",userName:"Ashutosh"},{userID:"3",userName:"Ashutosh"}]
       followers:[{userID:"1",userName:"Ashutosh"}]
-      files: $files
+      files: $files,
+      subtasks: []
    }){
     taskTitle
     startDate
@@ -88,17 +91,41 @@ export const UPDATE_TASK = gql`
 mutation UpdateTask(
   $taskID: String!,    
   $status: TASKSTATUS!,
+  $taskTitle: String!,
+  $startDate: DateTime!,
+  $endDate: DateTime!,
+  $estimatedDays: String!,
+  $sendNotification: Boolean!,
+  $BKPID: String!,
+  $BKPTitle: String!,
+  $saveTaskAsTemplate: String!,
+  $phaseID: String!
+  $phaseName: String!
+  $description: String!
   $files: [TaskFileParams!]!
   ){ 
     updateTask(
         taskDetailsUpdate: {
         taskBasics:{
           taskID: $taskID,
-          status: $status
+          status: $status,
+          taskTitle: $taskTitle,
+          startDate: $startDate, 
+          endDate: $endDate,
+          estimatedDays: $estimatedDays,
+          sendNotification: $sendNotification,
+          BKPID: $BKPID,
+          BKPTitle: $BKPTitle,
+          saveTaskAsTemplate: $saveTaskAsTemplate,
+          phaseID: $phaseID,
+          phaseName: $phaseName,
+          description: $description
         }
       assignees:[{userID:"2",userName:"Ashutosh"},{userID:"3",userName:"Ashutosh"}]
       followers:[{userID:"1",userName:"Ashutosh"}]
       files: $files
+      subtasks: []
+
    }){
     taskID
     status    

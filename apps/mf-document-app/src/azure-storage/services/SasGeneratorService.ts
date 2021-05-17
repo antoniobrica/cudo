@@ -9,6 +9,8 @@ import { BlobStorageRequest } from '../types/azure-storage';
 export class SasGeneratorService {
 
   getSasToken(): Observable<BlobStorageRequest> {
+    console.log('sasstoken');
+    
     return Axios.post<BlobStorageRequest>(
       'http://localhost:5003/graphql',
       {
@@ -25,5 +27,6 @@ export class SasGeneratorService {
     // ).pipe(map(
     //    res => res.data
     //   ));
+
   }
 }

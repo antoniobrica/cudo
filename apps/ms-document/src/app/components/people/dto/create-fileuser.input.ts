@@ -13,4 +13,8 @@ export class CreateFileUserInput {
     @Column()
     userName: string;
 
+    @Field(() => string,{nullable:true})
+    @Column()
+    imageUrl: string;
+
 }

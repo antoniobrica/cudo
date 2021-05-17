@@ -124,7 +124,7 @@ export function TaskArea(props: Tasks) {
 
 									<div className="navi-item mr-2">
 										<a href=" " className="navi-link active">
-											<span className="navi-text">( {props.task.startDate} ↦ Due {props.task.endDate})</span>
+											<span className="navi-text">( {new Date(props.task.startDate).toDateString()} ↦ Due {new Date(props.task.endDate).toDateString()})</span>
 										</a>
 									</div>
 

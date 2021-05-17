@@ -13,6 +13,7 @@ const client = new ApolloClient({
 /* eslint-disable-next-line */
 export interface BkpIndexProps {
   parentBKPSelect
+  bkp
 }
 
 export function BkpIndex(props: BkpIndexProps) {
@@ -22,7 +23,7 @@ export function BkpIndex(props: BkpIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <Bkp parentBKPSelect={onSelectBkp} />
+        <Bkp parentBKPSelect={onSelectBkp} bkp={props.bkp} />
       </ApolloHooksProvider>
     </ApolloProvider>
   );

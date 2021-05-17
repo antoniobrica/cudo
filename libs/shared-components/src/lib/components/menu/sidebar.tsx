@@ -29,7 +29,7 @@ export class AccordionExampleMenu extends Component<MyProps> {
     worktypeValue: '',
   }
   componentDidMount() {
-    console.log(this.props.workTypeData?.projectById[0].projectWorkTypes);
+    console.log('wt', this.props.workTypeData?.projectById[0]);
     this.setState({ worktypes: this.props.workTypeData?.projectById[0].projectWorkTypes })
     this.setState({ worktypeValue: this.props.workTypeData?.projectById[0].projectWorkTypes[0].workTypeName })
   }
@@ -66,7 +66,7 @@ export class AccordionExampleMenu extends Component<MyProps> {
                   onClick={() => this.handleClick(i)}
                   className="active-title"
                 >
-                  {worktype.workTypeName} <Icon name='angle down' />
+                  {worktype.workTypeName} <span className="workspan">({i + 1}/{this.state.worktypes.length}) </span>  <Icon name='angle down' />
                 </Accordion.Title>
                 <Accordion.Content className="active-title" active={activeIndex === i}>
                   <ul>

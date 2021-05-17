@@ -4,17 +4,7 @@ import { AccordionExampleMenu } from "@cudo/shared-components"
 import { environment } from "../../../environments/environment";
 import MicroFrontend from "../../../MicroFrontend";
 import {
-  Button,
-  Header,
-  Modal,
-  Tab, Image,
-  Input,
-  Form,
-  Grid,
-  Dropdown,
-  Select,
-  TextArea,
-  Card
+  Tab, Image
 } from 'semantic-ui-react';
 import { NavLink, BrowserRouter as Router, useRouteMatch, Route, Switch, useLocation, useParams } from 'react-router-dom';
 import { useHistory } from "react-router";
@@ -29,7 +19,7 @@ const {
   EACT_APP_COST_HOST: costHost,
   REACT_APP_MEETING_HOST: meetingHost,
   REACT_APP_TASK_HOST: taskHost,
-  REACT_APP_DOCUMENT_HOST: documentHost
+  REACT_APP_DOCUMENT_HOST: documentHost,
 } = environment;
 
 
@@ -40,6 +30,8 @@ type params = {
 };
 function TabMenu(props: TabMenuProps) {
   const [worktypeName, setWorktype] = React.useState("");
+  const [worktypes, setWorktypes] = React.useState();
+
 
   const history = useHistory();
   const params = useParams<params>();
@@ -53,6 +45,7 @@ function TabMenu(props: TabMenuProps) {
   React.useEffect(() => {
     if (data) {
       setWorktype(data.projectById[0].projectWorkTypes[0].workTypeName);
+      setWorktypes(data.projectById[0].projectWorkTypes)
     }
   }, [data]);
 
@@ -75,7 +68,17 @@ function TabMenu(props: TabMenuProps) {
   }
 
 
+  function MeetingApp(history: any) {
+    return (
+      <MicroFrontend history={history} host={meetingHost} name="MeetingApp" />
+    );
+  }
 
+  function CostApp(history: any) {
+    return (
+      <MicroFrontend history={history} host={costHost} name="CostApp" />
+    );
+  }
   function Home() {
     const [input, setInput] = React.useState("");
 
@@ -141,7 +144,7 @@ function TabMenu(props: TabMenuProps) {
           exact
           render={() => (
             <Tab.Pane attached={false} onClick={handleOpenProject('planning')}>
-              <PlanningIndex></PlanningIndex>
+              <PlanningIndex worktypes={worktypes}></PlanningIndex>
             </Tab.Pane>
           )}
         />,
@@ -153,7 +156,9 @@ function TabMenu(props: TabMenuProps) {
           path={`${url}/cost`}
           exact
           render={() => (
-            <Tab.Pane attached={false} onClick={handleOpenProject('cost')}>Cost</Tab.Pane>
+            <Tab.Pane attached={false} onClick={handleOpenProject('cost')}>
+              <CostApp />
+            </Tab.Pane>
           )}
         />,
       },
@@ -176,7 +181,9 @@ function TabMenu(props: TabMenuProps) {
           exact
           render={() => (
 
-            <Tab.Pane attached={false} onClick={handleOpenProject('meetings')}>Meetings</Tab.Pane>
+            <Tab.Pane attached={false} onClick={handleOpenProject('meetings')}>
+              <MeetingApp />
+            </Tab.Pane>
           )}
         />,
       },

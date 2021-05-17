@@ -19,3 +19,7 @@ export function useMilestoneDeleteMutation(gqlQuery: DocumentNode, variable) {
   const [updateTask] = useMutation<MilestoneMutation>(gqlQuery, variable);
   return [updateTask];
 }
+export function useMilestoneUpdateMutation(gqlQuery: DocumentNode, variable) {
+  const [updateMileStone] = useMutation<MilestoneMutation>(gqlQuery, variable);
+  return [updateMileStone];
+}

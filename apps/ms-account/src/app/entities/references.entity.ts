@@ -27,6 +27,14 @@ export default class ReferanceTypeEntity extends BaseEntity {
     referenceType: string;
 
     @Expose()
+    @Column({ nullable: true })
+    name: string;
+
+    @Expose()
+    @Column({ nullable: true })
+    imageUrl: string;
+
+    @Expose()
     @CreateDateColumn()
     createdAt?: Date;
 

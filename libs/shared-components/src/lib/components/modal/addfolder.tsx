@@ -3,8 +3,12 @@ import { Button, Checkbox,   Modal,   Input, Form, Grid,  Select } from 'semanti
 // import SampleModal from './sample-modal';
  
 import img from 'libs/shared-components/src/default.png'; 
-
-function AddNewFolder() {
+export interface FileProps {
+  open,
+  cancel,
+  folderData
+}
+export function AddNewFolder(props:FileProps ) {
     const countryOptions = [
         { key: 'af', value: 'af', text: 'Afghanistan' },
         { key: 'ax', value: 'ax', text: 'Aland Islands' },
@@ -12,7 +16,31 @@ function AddNewFolder() {
       ]
 
  
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false);
+  const [folderName, setfolderName] = React.useState("");
+
+  React.useEffect(()=>{
+   if(props.open){
+    setOpen(props.open);
+   }
+  }, [props.open])
+  const openF =()=>{
+
+  }
+  const cancel =() =>{
+    setOpen(false);
+    props.cancel(false);
+  }
+ const onFolderName =(e)=>{
+   const fname = e.target.value;
+   console.log('fname', fname);
+   setfolderName(fname)
+  }
+
+  const onSubmit=()=>{
+   props.folderData(folderName);
+   props.cancel(false);
+  }
    
   return (
     <div id="navbar">
@@ -35,7 +63,10 @@ function AddNewFolder() {
   <Grid.Column>
     <Form.Field>
     <label>Folder name</label>
-    <Input  placeholder='Enter folder name here...' size='small' className="full-width" type="text" />
+    <Input  placeholder='Enter folder name here...' size='small' className="full-width" type="text" 
+    value={folderName}
+    onChange={onFolderName}
+  />
       
     </Form.Field>
   </Grid.Column>
@@ -49,11 +80,11 @@ function AddNewFolder() {
       <Modal.Actions>
       <Button
           content="Submit" 
-          onClick={() => setOpen(false)}
+          onClick={onSubmit}
           positive
           size='mini' className="grey-btn"
         />
-        <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+        <Button size='mini' className="icon-border" onClick={cancel}>
         X  Cancel
         </Button>
         

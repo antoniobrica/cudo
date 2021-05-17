@@ -28,7 +28,7 @@ window.renderTaskApp = (containerId, history) => {
     // <React.StrictMode>
       <BrowserRouter>
         <ApolloProvider client={client}>
-          <ApolloHooksProvider client={client}>
+          <ApolloHooksProvider client={client as any}>
             <App />
           </ApolloHooksProvider>
         </ApolloProvider>
@@ -48,7 +48,7 @@ if (!document.getElementById("TaskApp-container")) {
   ReactDOM.render( 
       <BrowserRouter>
         <ApolloProvider client={client}>
-          <ApolloHooksProvider client={client}>
+          <ApolloHooksProvider client={client as any}>
             <App />
           </ApolloHooksProvider>
         </ApolloProvider>

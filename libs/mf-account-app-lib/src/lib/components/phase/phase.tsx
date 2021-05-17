@@ -7,7 +7,8 @@ import { Form, Select } from 'semantic-ui-react';
 import { usePhaseQuery } from '../../services/useRequest';
 /* eslint-disable-next-line */
 export interface PhaseProps {
-  parentPhaseSelect
+  parentPhaseSelect,
+  phaseName
 }
 
 export function Phase(props: PhaseProps) {
@@ -15,6 +16,12 @@ export function Phase(props: PhaseProps) {
   const [phase, setPhase] = React.useState("")
 
   const { loading, error, data } = usePhaseQuery(GET_PHASE);
+  React.useEffect(() => {
+    if (props.phaseName) {
+      console.log('phaseName', props.phaseName);
+      setPhase(props.phaseName);
+    }
+  }, [props.phaseName]);
   React.useEffect(() => {
     if (data) {
       setItems(data.Phase.map(({ phaseTitle, id }) => ({ key: id, value: phaseTitle, text: phaseTitle })));

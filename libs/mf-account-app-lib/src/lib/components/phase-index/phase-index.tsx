@@ -17,6 +17,7 @@ const client = new ApolloClient({
 /* eslint-disable-next-line */
 export interface PhaseIndexProps {
   parentPhaseSelect
+  phaseName?
 }
 
 export function PhaseIndex(props: PhaseIndexProps) {
@@ -26,7 +27,7 @@ export function PhaseIndex(props: PhaseIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <Phase parentPhaseSelect={onSelectPhase} />
+        <Phase phaseName={props.phaseName} parentPhaseSelect={onSelectPhase} />
       </ApolloHooksProvider>
     </ApolloProvider>
   );

@@ -48,6 +48,10 @@ export class FileEntity extends BaseEntity {
   @Expose()
   phaseName: string;
 
+  @Expose()
+  @Column({ nullable: true })
+  generateFileName?: boolean;
+
   @Column()
   @Expose()
   fileTypeID?: string;

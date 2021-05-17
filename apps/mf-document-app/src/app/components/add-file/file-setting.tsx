@@ -9,19 +9,19 @@ import img4 from 'libs/shared-components/src/avatar_3.png';
 import img5 from 'libs/shared-components/src/file_1.png';
 import img6 from 'libs/shared-components/src/file_2.png';
 import ProgressBar from 'libs/shared-components/src/lib/components/progress_bar/progressbar';
-import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex, FileTypeIndex, FileStructureIndex } from "@cudo/mf-account-app-lib"
-import { UploadsViewStateContext, SharedViewStateContext } from 'apps/mf-document-app/src/azure-storage/contexts/viewStateContext';
+import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex, FileTypeIndex, FileStructureIndex, AddFolderIndex } from "@cudo/mf-account-app-lib"
+import { UploadsViewStateContext, SharedViewStateContext, DownloadsViewStateContext } from 'apps/mf-document-app/src/azure-storage/contexts/viewStateContext';
 import { BlobItem } from '@azure/storage-blob';
 import { tap } from 'rxjs/operators';
-import { BlobItemUpload } from 'apps/mf-document-app/src/azure-storage/types/azure-storage';
+import { BlobItemUpload, BlobItemDownload } from 'apps/mf-document-app/src/azure-storage/types/azure-storage';
 import '../../../../../../libs/shared-components/src/style/index.scss';
 
 import { LoaderPage } from "@cudo/shared-components"
 import { useFileMutation } from '../../services/useRequest';
 import { GET_FILES, UPLOAD_FILE } from '../../graphql/graphql';
 import { FileMutation, IFiles } from '../../interfaces/document';
-import { FetchResult } from '@apollo/client';
-
+import { FetchResult, useMutation } from '@apollo/client';
+import { AddNewFolder } from '@cudo/shared-components';
 export interface FileProps {
   openSettingF
 }
@@ -30,6 +30,8 @@ export function FileSetting(props: FileProps) {
   const [fileData, setFileData] = React.useState<BlobItem[]>([]);
   const [loader, setLoader] = React.useState(false);
   const [showPeople, setShowPeople] = React.useState(false);
+  const [isFolder, setisFolder] = React.useState(false);
+  const [folderopen, setFolderOpen] = React.useState(false);
   const [people, setAsignis] = React.useState([]);
   const [files, setFileList] = React.useState<any>([]);
   const [fileTypeName, setfileTypeName] = React.useState("");
@@ -40,11 +42,22 @@ export function FileSetting(props: FileProps) {
   const [BKPID, setBKPID] = React.useState("");
   const [phaseName, setPhasesName] = React.useState("");
   const [phaseID, setPhasesID] = React.useState("");
+  const [folderName, setfolderName] = React.useState("");
 
 
-  const [addFile] = useFileMutation(UPLOAD_FILE);
+
+
+  // const [addFile] = useFileMutation(UPLOAD_FILE);
+  const [addFile, { data }] = useMutation(UPLOAD_FILE,
+    {
+      refetchQueries: [
+        { query: GET_FILES }
+      ]
+    }
+  )
 
   const [items, setItems] = React.useState<BlobItemUpload[]>([]);
+  const [download, setDownload] = React.useState<BlobItemDownload[]>([]);
 
   const sharedContext = React.useContext(SharedViewStateContext);
 
@@ -60,40 +73,23 @@ export function FileSetting(props: FileProps) {
     return () => sub.unsubscribe();
   };
   React.useEffect(getContainerItemsEffect, []);
-
   const getUploadsEffect = () => {
     const sub = context.uploadedItems$
       .pipe(tap(items => {
-        setItems(items)
+        console.log('getUploadsEffect', items);
+        setItems(items);
+        const fileArr = [];
+        for (let i = 0; i < items.length; i++) {
+          fileArr.push({ fileURL: items[i].filename, fileTitle: items[i].filename, fileType: items[i].type, fileVersion: "v1" });
+        }
+        console.log('fileArr', fileArr);
+
+        setFileList(fileArr);
       }))
       .subscribe();
     return () => sub.unsubscribe();
   };
   React.useEffect(getUploadsEffect, []);
-
-  const countryOptions = [
-    { key: 'af', value: 'af', text: 'Afghanistan' },
-    { key: 'ax', value: 'ax', text: 'Aland Islands' },
-
-  ]
-
-  const fileOptions = [
-    { key: 'gen', value: 'gen', text: 'General' },
-    { key: 'mo', value: 'mo', text: 'Monroe One Solar LLC' },
-    { key: 'ft', value: 'ft', text: 'Freehold Two Solar LLC' },
-
-  ]
-
-
-  const fileTypeOptions = [
-    { key: 'pa', value: 'pa', text: 'Parent' },
-    { key: 'cu', value: 'cu', text: 'Cuts' },
-    { key: 'sc', value: 'sc', text: 'Scheme' },
-    { key: 'ap', value: 'ap', text: 'Apparatus plan' },
-    { key: 'ip', value: 'ip', text: 'Installation plan' },
-    { key: 'rp', value: 'rp', text: 'Router plan' },
-
-  ]
 
   const projectOptions = [
     { key: 'ew', value: 'ew', text: 'Electrical Work' },
@@ -102,8 +98,18 @@ export function FileSetting(props: FileProps) {
   ]
   const [open, setOpen] = React.useState(false)
   const setBKPIDChange = (data) => {
-    setBKPIDTitle(data.BKPIDTitle)
-    setBKPID(data.BKPID)
+    console.log('bkp=f', data.isFolder);
+    setisFolder(data.isFolder)
+    if (data.isFolder) {
+      setfolderName(data.folderTitle)
+      console.log('folderName', folderName);
+    }
+    else {
+      setBKPIDTitle(data.BKPIDTitle)
+      setBKPID(data.BKPID)
+    }
+    console.log('folderName2', folderName);
+
   }
   const setFileStructureChange = (data) => {
     // setfileStructureID()
@@ -136,29 +142,32 @@ export function FileSetting(props: FileProps) {
   }
 
   const uploadFiles = (files: FileList | null) => {
+    console.log('files', files);
     files && context.uploadItems(files);
-    const fileArr = [];
-    for (let i = 0; i < files.length; i++) {
-      fileArr.push({ fileURL: files[i].name, fileTitle: files[i].name, fileType: files[i].type, fileVersion: "v1" });
-    }
-    setFileList(fileArr);
+    // const fileArr = [];
+    // for (let i = 0; i < items.length; i++) {
+    //   fileArr.push({ fileURL: items[i].filename, fileTitle: items[i].filename, fileType: items[i].type, fileVersion: "v1" });
+    // }
+    // console.log('fileArr', fileArr);
+
+    // setFileList(fileArr);
   }
 
   const handleSaveFile = () => {
     setOpen(false);
     addFile({
       variables: {
-        fileTypeName, folderName: "Folder1", people, BKPIDTitle, files, phaseName, fileTypeID, phaseID, structureTitle, structureID, isFolder: false, isEveryOneAllowed: false, BKPID
+        fileTypeName, folderName, people, BKPIDTitle, files, phaseName, fileTypeID, phaseID, structureTitle, structureID, isFolder, isEveryOneAllowed: false, BKPID
       },
       update: (
         cache,
-        { data }
+        data
       ) => {
         const cacheData = cache.readQuery({ query: GET_FILES }) as IFiles;
         cache.writeQuery({
           query: GET_FILES,
           data: {
-            tasks: [...cacheData.File, data]
+            tasks: [...cacheData.File, data?.createFile]
           }
         });
       }
@@ -166,8 +175,25 @@ export function FileSetting(props: FileProps) {
 
   };
 
+  const folderOpen = () => {
+    console.log('folder');
+    setFolderOpen(true);
+  }
+  const cancel = (data) => {
+    setFolderOpen(false);
+  }
+  const folderData = (data) => {
+    console.log('folderName=>', data);
+    setFolderOpen(false);
+  }
+
+
   return (
     <div >
+      {folderopen ?
+        <div>
+          <AddFolderIndex open={folderopen} cancel={cancel} folderData={folderData}></AddFolderIndex>
+        </div> : null}
       <Modal className="modal_media modal_center modal_media_1"
         onClose={() => setOpen(false)}
         onOpen={openf}
@@ -279,135 +305,6 @@ export function FileSetting(props: FileProps) {
                     </div>
                   )
                 })}
-
-              {/* {items.map((item, i) => (
-                <ProgressBar key={i} progress={item.progress}></ProgressBar>
-              ))} */}
-              {/* 
-<Grid columns={12}>
-<Grid.Row>
-  <Grid.Column>
-    <Form.Field>
-  
-   <img src={img5}  /> 
-   
-    </Form.Field>
-  </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
-    <label></label>
-    <label>File_name.cad</label>
-    
-   
-    </Form.Field>
-  </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
- </Form.Field>
-  </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
-     </Form.Field>
-  </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
-     </Form.Field>
-  </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
-     </Form.Field>
-  </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
-     </Form.Field>
-  </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
-     </Form.Field>
-  </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
-     </Form.Field>
-  </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
-     </Form.Field>
-  </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
-     </Form.Field>
-  </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
-   
-    <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>     
-      </Form.Field>
-  </Grid.Column>
- 
-</Grid.Row>
-</Grid>
-<Grid columns={12}>
-<Grid.Row>
-  <Grid.Column>
-    <Form.Field>
-  
-   <img src={img6}  /> 
-   
-    </Form.Field>
-  </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
-    <label></label>
-    <label>File_name.cad</label>
-    
-   
-    </Form.Field>
-  </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
- </Form.Field>
-  </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
-     </Form.Field>
-  </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
-     </Form.Field>
-  </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
-     </Form.Field>
-  </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
-     </Form.Field>
-  </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
-     </Form.Field>
-  </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
-     </Form.Field>
-  </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
-     </Form.Field>
-  </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
-     </Form.Field>
-  </Grid.Column>
-  <Grid.Column>
-    <Form.Field>
-   
-    <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>     
-      </Form.Field>
-  </Grid.Column>
- 
-</Grid.Row>
-</Grid> */}
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
@@ -440,6 +337,9 @@ export function FileSetting(props: FileProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <BkpIndex parentBKPSelect={setBKPIDChange}></BkpIndex>
+                    <Form.Field>
+                      <a className="anchor-color" onClick={folderOpen}>+ Add New</a>
+                    </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     {/* <Form.Field>

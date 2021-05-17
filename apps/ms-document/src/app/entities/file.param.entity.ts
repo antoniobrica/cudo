@@ -17,6 +17,10 @@ export class FileParamEntity extends BaseEntity {
     @Expose()
     fileURL: string;
 
+    // @Expose()
+    // @Column({ nullable: true })
+    // generateFileName?: boolean;
+
     @Column()
     @Expose()
     fileTitle: string;
