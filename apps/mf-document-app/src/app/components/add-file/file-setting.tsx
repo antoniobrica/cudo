@@ -386,7 +386,7 @@ export function FileSetting(props: FileProps) {
                   <Grid columns={1} >
                     <Grid.Row>
                       <Grid.Column>
-                        <AssigneeIndex parentAsigneeSelect={setAsignee} />
+                        <AssigneeIndex parentAsigneeSelect={setAsignee} name="Select people" />
                       </Grid.Column>
                     </Grid.Row>
                   </Grid>

@@ -59,10 +59,10 @@ export function CreateTask(props: CreateTaskProps) {
   //   variables: { referenceID },
   // });
 
-  const [addTask, { data }] = useMutation(ADD_TASK, 
+  const [addTask, { data }] = useMutation(ADD_TASK,
     {
       refetchQueries: [
-        {query: GET_TASKS, variables: { referenceID }}
+        { query: GET_TASKS, variables: { referenceID } }
       ],
       variables: { referenceID },
     }
@@ -201,7 +201,7 @@ export function CreateTask(props: CreateTaskProps) {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <AssigneeIndex parentAsigneeSelect={setAsignee} />
+                    <AssigneeIndex parentAsigneeSelect={setAsignee} name="Assignee" />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>

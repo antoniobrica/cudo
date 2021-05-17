@@ -10,14 +10,13 @@ export const GET_COUNTRY = gql`
 
 export const GET_USERS = gql`
 {
-  users(userID:"1") {
-  userID
-  userName
-  references {
-  referenceID
-  referenceType
-  }
-  }
+  userByEmail( 
+    email:"vipin11july1995@gmail.com",
+  ) { 
+     userID
+     userName
+     email
+  } 
   }
 `;
 

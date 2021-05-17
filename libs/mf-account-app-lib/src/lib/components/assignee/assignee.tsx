@@ -7,7 +7,8 @@ import './assignee.module.scss';
 
 /* eslint-disable-next-line */
 export interface AssigneeProps {
-  parentBKPSelect
+  parentBKPSelect,
+  name?
 }
 
 export function Assignee(props: AssigneeProps) {
@@ -17,7 +18,7 @@ export function Assignee(props: AssigneeProps) {
   const { loading, error, data } = useUsersQuery(GET_USERS);
   React.useEffect(() => {
     if (data) {
-      setItems(data.users.map(({ userName, userID }) => ({ key: userName, value: userName, text: userName, id: userID })));
+      setItems(data.userByEmail.map(({ userName, userID }) => ({ key: userName, value: userName, text: userName, id: userID })));
 
     }
   }, [data]);
@@ -44,7 +45,7 @@ export function Assignee(props: AssigneeProps) {
       value={assignee}
       onChange={onAssignee}
       /> */}
-      <label>Select Multiple people</label>
+      <label>{props.name}</label>
 
       <Dropdown className="small_drop"
         clearable

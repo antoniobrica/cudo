@@ -18,7 +18,7 @@ import { Dropdown } from 'semantic-ui-react';
 import img2 from 'libs/shared-components/src/avatar_1.png';
 import img3 from 'libs/shared-components/src/avatar_2.png';
 import img4 from 'libs/shared-components/src/avatar_3.png';
-import { MeetingCategoryIndex, SessionInvitationIndex, SessionProtocolIndex } from '@cudo/mf-account-app-lib';
+import { MeetingCategoryIndex, SessionInvitationIndex, SessionProtocolIndex, FollowersIndex, AssigneeIndex, } from '@cudo/mf-account-app-lib';
 
 export interface SessionProps {
   workTypes?
@@ -49,6 +49,8 @@ export function ModalSession(props: SessionProps) {
   const [catagory, setCatagory] = React.useState(null);
   const [protocol, setProtocol] = React.useState(null);
   const [invitation, setInvitation] = React.useState(null);
+  const [followers, setfollowers] = React.useState("")
+
 
 
   const onSessionTitleChange = (e) => {
@@ -93,6 +95,12 @@ export function ModalSession(props: SessionProps) {
   const parentInvitationSelect = (data) => {
     console.log('parentInvitationSelect', data);
     setInvitation(data)
+  }
+  const onFollowers = (data) => {
+    setfollowers(data.value);
+  }
+  const setAsignee = (data) => {
+    // setAsignis(data)
   }
   const createSession = () => {
     setOpen(false);
@@ -161,7 +169,6 @@ export function ModalSession(props: SessionProps) {
                         value={workTypeData}
                         options={workType}
                         onChange={onMworkType}
-
                       />
                     </Form.Field>
                   </Grid.Column>
@@ -183,7 +190,7 @@ export function ModalSession(props: SessionProps) {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
+                    {/* <Form.Field>
                       <label>Admin</label>
 
                       <Dropdown
@@ -196,12 +203,14 @@ export function ModalSession(props: SessionProps) {
                         options={countryOptions}
                         placeholder="Select Country"
                       />
-                    </Form.Field>
+                    </Form.Field> */}
+                    <AssigneeIndex parentAsigneeSelect={setAsignee} name="Admin" />
+
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
 
-              <Grid columns={5}>
+              {/* <Grid columns={5}>
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
@@ -241,11 +250,11 @@ export function ModalSession(props: SessionProps) {
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
-              </Grid>
+              </Grid> */}
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
+                    {/* <Form.Field>
                       <label>Members</label>
 
                       <Dropdown
@@ -258,12 +267,13 @@ export function ModalSession(props: SessionProps) {
                         options={countryOptions}
                         placeholder="Select Country"
                       />
-                    </Form.Field>
+                    </Form.Field> */}
+                    <AssigneeIndex parentAsigneeSelect={setAsignee} name="Members" />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
 
-              <Grid columns={5}>
+              {/* <Grid columns={5}>
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
@@ -303,7 +313,7 @@ export function ModalSession(props: SessionProps) {
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
-              </Grid>
+              </Grid> */}
               <Grid columns={2}>
                 <Grid.Row>
                   <Grid.Column>

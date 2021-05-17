@@ -254,7 +254,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         type="text"
                       />
                     </Form.Field> */}
-                    <AssigneeIndex parentAsigneeSelect={setAsignee} />
+                    <AssigneeIndex parentAsigneeSelect={setAsignee} name="Assignee" />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>

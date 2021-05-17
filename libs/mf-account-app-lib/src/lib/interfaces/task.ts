@@ -83,5 +83,5 @@ export interface IFileStructures {
   FileStructure: IFileStructure[];
 }
 export interface IUsers {
-  users: IUser[];
+  userByEmail: IUser[];
 }
