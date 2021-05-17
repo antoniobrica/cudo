@@ -44,10 +44,13 @@ export class FileService {
       }
       fileDetail.isFolder = fileBasics.isFolder
       if (fileDetail.isFolder == true) {
-        fileDetail.folderName = fileBasics.folderName
-        fileDetail.BKPID = ''
-        fileDetail.BKPIDTitle = ''
-      }
+        const folder = await this.FileRepository.findOne({ where: { folderName: fileDetail.folderName } });
+        if(!folder){
+            fileDetail.folderName = fileBasics.folderName
+            fileDetail.BKPID = ''
+            fileDetail.BKPIDTitle = ''
+      } else throw new HttpException('folderName already exists', HttpStatus.NOT_FOUND);
+    }
       else {
         fileDetail.BKPID = fileBasics.BKPID
         fileDetail.BKPIDTitle = fileBasics.BKPIDTitle

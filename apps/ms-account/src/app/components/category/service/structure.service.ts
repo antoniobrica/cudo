@@ -5,8 +5,8 @@ import { Structure } from '../../../entities/structure.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
 import { StructureFilterArgs } from '../dto/args/structure-filter.args';
-import { CreateStructureInput } from '../dto/create-Structure.input';
-import { UpdateStructureInput } from '../dto/update-Structure.input';
+import { CreateStructureInput } from '../dto/create-structure.input';
+import { UpdateStructureInput } from '../dto/update-structure.input';
 
 
 
