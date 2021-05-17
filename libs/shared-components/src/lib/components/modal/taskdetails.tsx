@@ -43,7 +43,7 @@ export const ModalViewTask = (props: AlertProps) => {
 
   return (
     <div id="navbar">
-      <Modal
+      <Modal style={{ width: '670px', marginLeft: '345px'}}
         className="modal_media"
         onClose={cancel}
         onOpen={openf}
