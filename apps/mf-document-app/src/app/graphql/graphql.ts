@@ -7,7 +7,7 @@ export const GET_TOKEN = gql`
 
 export const GET_FILES = gql`
 {
-  File(referenceFilter: { referenceID: "12", referenceType: "Project" }){
+  File(referenceFilter: { referenceID: "13", referenceType: PROJECTTYPE }){
     projectFileID
     files{
     fileURL
@@ -56,7 +56,7 @@ mutation CreateFile(
   $people: [PeopleParams!]!
   ){ 
     createFile(
-      referenceFilter: { referenceID: "12", referenceType: "Project" }
+      referenceFilter: { referenceID: "13", referenceType: PROJECTTYPE }
       fileDetails: {
       fileBasics: {
       fileTypeID: $fileTypeID
