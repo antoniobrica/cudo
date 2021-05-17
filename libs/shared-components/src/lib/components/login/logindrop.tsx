@@ -1,7 +1,7 @@
 import React from 'react';
 
 import '../../../style/index.scss';
-import { Select, Input, Segment, Form, Grid, Image, Checkbox, Button, Icon } from 'semantic-ui-react'
+import { Select, Input, Segment, Form, Grid, Image, Checkbox, Button, Icon, Dropdown } from 'semantic-ui-react'
 import logo from 'libs/shared-components/src/slider.png';
 import img from 'libs/shared-components/src/Shape 2.png';
 import img3 from 'libs/shared-components/src/green_tick.png';
@@ -11,35 +11,20 @@ import img4 from 'libs/shared-components/src/company1.png';
 export interface LoginDropProps {
   login?
   email?
+  companies?
+  selectedCompany?
 }
 
 export function Logindrop(props: LoginDropProps) {
-  const countryOptions = [
-    { key: 'af', value: 'af', text: 'Afghanistan' },
-    { key: 'ax', value: 'ax', text: 'Aland Islands' },
-    { key: 'al', value: 'al', text: 'Albania' },
-  ]
   const handleLogin = () => {
     props.login();
   }
   const description = [
 
   ]
-  const friendOptions = [
-    {
-      key: 'Company 1',
-      text: 'Company 1',
-      value: 'Company 1',
-      image: img4,
-    },
-    {
-      key: 'Company 2',
-      text: 'Company 2',
-      value: 'Company 2',
-      image: img4,
-    },
-
-  ]
+  const handleOnChange = (e, data) => {
+    props.selectedCompany(data.value);
+  }
   return (
     <div className=" ">
       <div className="main-outer-area">
@@ -60,7 +45,14 @@ export function Logindrop(props: LoginDropProps) {
                           <i className="ms-Icon ms-Icon--Accounts" aria-hidden="true"></i> </span> </label>
                       </Form.Field>
                       <Form.Field>
-                        <Select placeholder='Select Company' options={friendOptions} defaultValue={friendOptions[0].value} className="full-width" />
+                        <Dropdown
+                          placeholder='Please select'
+                          fluid
+                          selection
+                          options={props?.companies}
+                          onChange={handleOnChange}
+                        />
+                        <Select placeholder='Select Company' options={props?.companies} defaultValue={props?.companies[0]?.value} className="full-width" />
                       </Form.Field>
                       <Button onClick={handleLogin} size='large' className="grey-btn btn-large">Continue <Icon name='arrow right' />   </Button>
                       <span> <br /> <a href="/auth/registration" className="blue_color"> Register with us</a>  </span>
