@@ -13,8 +13,9 @@ export class FileUserResolver {
   async createFileUser(
     @Args('userId') userId: number,
     @Args('userName') userName: string,
+    @Args('imageUrl') imageUrl: string,
   ): Promise<PeopleEntity> {
-    return await this.fileUserService.create({ userName, userId })
+    return await this.fileUserService.create({ userName, userId, imageUrl })
   }
 
   @Query(returns => PeopleEntity)

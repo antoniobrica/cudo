@@ -4,11 +4,14 @@ import { ReferenceModel } from '../../reference/model/reference.model';
 @ObjectType()
 export class UserModel {
 
-  @Field({ nullable: true, description: `This is for title task title` })
+  @Field({ nullable: true, description: `User ID` })
   userID?: string;
 
-  @Field({ nullable: true, description: `This is for task start date in UTC` })
+  @Field({ nullable: true, description: `User Name` })
   userName?: string;
+
+  @Field({ nullable: true, description: `User image` })
+  imageUrl?: string;
 
 }
 

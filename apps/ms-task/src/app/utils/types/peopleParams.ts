@@ -7,6 +7,9 @@ class PeopleParams {
 
   @Field({ description: `User Name` })
   userName?: string;
+
+  @Field({ description: `User image`, nullable:true })
+  imageUrl?: string;
 }
 
 export default PeopleParams;

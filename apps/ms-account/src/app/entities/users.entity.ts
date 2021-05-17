@@ -22,6 +22,10 @@ export default class UsersEntity extends BaseEntity {
 
     @Expose()
     @Column({ nullable: true })
+    imageUrl: string;
+
+    @Expose()
+    @Column({ nullable: true })
     email: string;
 
     @Expose()

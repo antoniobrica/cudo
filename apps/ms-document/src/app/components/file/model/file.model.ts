@@ -9,6 +9,9 @@ export class FileModel {
   @Field({ description: `PhaseID linked with task` })
   isFolder?: boolean;
 
+  @Field({ nullable: true, description: `file exist or not` })
+  generateFileName?: string;
+
   @Field({ description: `PhaseID linked with task` })
   projectFileID?: string;
 

@@ -13,6 +13,9 @@ export class FileBasicDetailsInput {
     @Field({ description: `PhaseID linked with task` })
     isFolder?: boolean;
 
+    @Field({ nullable: true,description: `PhaseID linked with task` })
+    generateFileName?: boolean;
+
     @Field({ nullable: true, description: `BKPID attached with task` })
     BKPID?: string;
 
