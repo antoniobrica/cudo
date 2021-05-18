@@ -8,16 +8,15 @@ export const GET_COUNTRY = gql`
   }
 `;
 
-export const GET_USERS= gql`
+export const GET_USERS = gql`
 {
-  users(userID:"1") {
-  userID
-  userName
-  references {
-  referenceID
-  referenceType
-  }
-  }
+  userByEmail( 
+    email:"vipin11july1995@gmail.com",
+  ) { 
+     userID
+     userName
+     email
+  } 
   }
 `;
 
@@ -63,6 +62,38 @@ phaseTitle
   }
 
 }`
+
+export const GET_CATAGORIES = gql`{
+  MeetingCatagories( 
+    referenceFilter: { referenceID: "dapr", referenceType: COMPANY } 
+  ) { 
+    meetingCatagoryID 
+    meetingCatagoryTitle 
+  } 
+}`
+
+export const GET_PROTOCOL = gql`{
+  ProtocoleTemplates( 
+    referenceFilter: { referenceID: "dapr", referenceType: COMPANY } 
+  ) { 
+    protocolTemplateID 
+    protocolTemplateTitle 
+
+  } 
+}`
+
+export const GET_INVITATION = gql`{
+  invitationTemplates( 
+    referenceFilter: { referenceID: "dapr", referenceType: COMPANY } 
+  ) { 
+    invitationTemplateID 
+    invitationTemplateTitle 
+
+  } 
+}`
+
+
+
 export const ADD_FOLDER = gql`
 mutation CreateFolder(
   $folderTitle: String!, 

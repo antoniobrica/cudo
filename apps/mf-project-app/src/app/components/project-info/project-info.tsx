@@ -24,7 +24,6 @@ export function ProjectInfo(props: ProjectInfoProps) {
 
   const history = useHistory();
   if (loading) return <LoaderPage />;
-  if (error) return <h1>Something went wrong!</h1>;
 
   const addProject = () => {
     setopenForm(!openForm);
@@ -37,11 +36,17 @@ export function ProjectInfo(props: ProjectInfoProps) {
   function openModal() {
     setIsOpen(true);
   }
-  const refresh =(data)=>{
-    console.log('refresh is called', data); 
+  const refresh = (data) => {
+    console.log('refresh is called', data);
 
-    
+
   }
+
+  if (error) return (
+    <div style={{ marginLeft: 900 }} >
+      <ModalExampleModal onSuccess={refresh}></ModalExampleModal>
+    </div>
+  );
   return (
     <div>
       {/* <h1>Projects</h1> */}

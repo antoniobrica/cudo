@@ -6,7 +6,7 @@ import { useTaskDeleteMutation, useTaskQuery, useTaskUpdateMutation } from "../.
 import './tasks.module.scss';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
 import { LoaderPage, ModalTaskEdit, TaskArea } from "@cudo/shared-components"
-
+import axios from 'axios';
 import { ApolloCache, FetchResult, useMutation, useQuery } from '@apollo/client';
 import { ITask, ITasks, TaskUpdateMutation } from '../../app/interfaces/task';
 import { ModalAlert, ModalViewTask } from '@cudo/shared-components'
@@ -24,6 +24,13 @@ export function Tasks(props: TasksProps) {
   const { loading, error, data } = useTaskQuery(GET_TASKS, {
     variables: { referenceID },
   });
+
+  React.useEffect(() => {
+    if (referenceID) {
+      getWorkType(referenceID)
+    }
+  }, [referenceID])
+
   // const { loading, error, data } = useQuery(GET_TASKS, {
   //   variables: { referenceID},
   // });
@@ -31,6 +38,7 @@ export function Tasks(props: TasksProps) {
   const [openD, setOpenD] = React.useState(false);
   const [viewTaskOpen, setViewTaskOpen] = React.useState(false);
   const [editTaskOpen, setEditTaskOpen] = React.useState(false);
+  const [workTypes, setWorkTypes] = React.useState([]);
 
   const [addTask] = useTaskUpdateMutation(UPDATE_TASK, {
     variables: { referenceID },
@@ -54,6 +62,42 @@ export function Tasks(props: TasksProps) {
   const [isUpdate, setIsUpdate] = React.useState(false);
   const [taskStatus, settaskStatus] = React.useState('');
 
+  const query = `query Game($projectId: String!) {
+    projectById( projectId: $projectId)
+    {
+      projectId
+      projectName
+      projectNum
+      client
+      buildingType
+      printingCom
+      projectWorkTypes{
+        workTypeName
+        projectWorkTypeID
+         workTypeName
+        estimatedCost
+        }
+      description
+    }
+ }`;
+
+  const getWorkType = (referenceID) => {
+    console.log('sasstoken');
+    return axios.post(
+      'http://localhost:5005/graphql',
+      {
+        query,
+        variables: {
+          projectId: referenceID
+        }
+      }
+    ).then(res => {
+      const wt = res.data.data.projectById[0].projectWorkTypes;
+      setWorkTypes(wt);
+    })
+      .catch(err => console.log(err))
+  }
+
 
   enum Status {
     INPROGRESS = 'INPROGRESS',
@@ -62,7 +106,7 @@ export function Tasks(props: TasksProps) {
   if (loading) return <h1> <LoaderPage /></h1>;
   if (error) return (
     <div style={{ marginLeft: 900 }} >
-      <CreateTask />
+      <CreateTask workTypes={workTypes} />
     </div>
   );
   if (data) {
@@ -79,7 +123,6 @@ export function Tasks(props: TasksProps) {
   }
   const confirmation = (data, task) => {
     console.log('data', task);
-
     setIsUpdate(data)
     setOpen(false)
     // updateTask(taskData);
@@ -222,7 +265,7 @@ export function Tasks(props: TasksProps) {
   return (
     <div>
       <div style={{ marginLeft: 900 }} >
-        <CreateTask onSuccess={refresh} />
+        <CreateTask workTypes={workTypes} onSuccess={refresh} />
       </div>
       {/* <MfAccountAppLib/> */}
 

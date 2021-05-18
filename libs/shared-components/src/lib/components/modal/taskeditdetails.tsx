@@ -151,7 +151,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
 
   return (
     <div id="navbar">
-      <Modal
+      <Modal style={{width: '670px', marginLeft: '345px'}}
         className="modal_media"
         onClose={cancel}
         onOpen={openf}
@@ -254,7 +254,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         type="text"
                       />
                     </Form.Field> */}
-                    <AssigneeIndex parentAsigneeSelect={setAsignee} />
+                    <AssigneeIndex parentAsigneeSelect={setAsignee} name="Assignee" />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>

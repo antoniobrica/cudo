@@ -14,7 +14,8 @@ const client = new ApolloClient({
 });
 /* eslint-disable-next-line */
 export interface AssigneeIndexProps {
-  parentAsigneeSelect
+  parentAsigneeSelect,
+  name?
 }
 
 export function AssigneeIndex(props: AssigneeIndexProps) {
@@ -24,7 +25,7 @@ export function AssigneeIndex(props: AssigneeIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <Assignee parentBKPSelect={onSelectAsignee} />
+        <Assignee parentBKPSelect={onSelectAsignee} name={props.name} />
       </ApolloHooksProvider>
     </ApolloProvider>
   );

@@ -12,7 +12,9 @@ import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex } from "@cudo/mf-ac
 import { useHistory } from 'react-router';
 /* eslint-disable-next-line */
 export interface CreateTaskProps {
-  onSuccess?
+  onSuccess?,
+  workTypes
+
 }
 
 export function CreateTask(props: CreateTaskProps) {
@@ -52,6 +54,11 @@ export function CreateTask(props: CreateTaskProps) {
   const [files, setFileList] = React.useState<any>([]);
   const [description, setDescription] = React.useState("")
 
+  const [workType, setworkType] = React.useState(null)
+  const [workTypeD, setworkTypeD] = React.useState(null)
+  const [workTypeData, setworkTypeData] = React.useState('')
+  const [worktypeID, setworktypeID] = React.useState("")
+  const [worktypeName, setworktypeName] = React.useState("")
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
@@ -59,10 +66,10 @@ export function CreateTask(props: CreateTaskProps) {
   //   variables: { referenceID },
   // });
 
-  const [addTask, { data }] = useMutation(ADD_TASK, 
+  const [addTask, { data }] = useMutation(ADD_TASK,
     {
       refetchQueries: [
-        {query: GET_TASKS, variables: { referenceID }}
+        { query: GET_TASKS, variables: { referenceID } }
       ],
       variables: { referenceID },
     }
@@ -110,6 +117,33 @@ export function CreateTask(props: CreateTaskProps) {
   }
   const onsetStatus = e => {
     setStatus(e.target.value)
+  }
+
+  React.useEffect(() => {
+    if (props.workTypes) {
+      console.log('worktypes', props.workTypes);
+      setworkType(props.workTypes.map(({ workTypeName, projectWorkTypeID }) => ({ key: projectWorkTypeID, value: workTypeName, text: workTypeName, id: projectWorkTypeID })));
+
+    }
+  }, [props.workTypes]);
+  const onMworkType = (event, data) => {
+    const workT = {
+      worktypeID: '',
+      worktypeName: ''
+    };
+    for (let i = 0; i < props.workTypes.length; i++) {
+      if (props.workTypes[i]?.workTypeName === data.value) {
+        console.log('props.worktypes[i]', props.workTypes[i]);
+        workT.worktypeID = props.workTypes[i].projectWorkTypeID;
+        workT.worktypeName = data.value;
+        setworktypeName(workT.worktypeName);
+        setworktypeID(workT.worktypeID);
+        setworkTypeD(workT)
+      }
+    }
+    setworkTypeData(data.value)
+
+    console.log('worktypeName-', workTypeD);
   }
 
   const handleSaveTask = () => {
@@ -183,7 +217,14 @@ export function CreateTask(props: CreateTaskProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>Associate with work type <span className="danger">*</span></label>
-                      <Select placeholder='Select' className="small" options={workTypes} />
+                      {/* <Select placeholder='Select' className="small" options={workTypes} /> */}
+                      <Select
+                        placeholder="Select"
+                        className="small"
+                        value={workTypeData}
+                        options={workType}
+                        onChange={onMworkType}
+                      />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -201,7 +242,7 @@ export function CreateTask(props: CreateTaskProps) {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <AssigneeIndex parentAsigneeSelect={setAsignee} />
+                    <AssigneeIndex parentAsigneeSelect={setAsignee} name="Assignee" />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
