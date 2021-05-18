@@ -108,8 +108,6 @@ export function FileSetting(props: FileProps) {
       setBKPIDTitle(data.BKPIDTitle)
       setBKPID(data.BKPID)
     }
-    console.log('folderName2', folderName);
-
   }
   const setFileStructureChange = (data) => {
     // setfileStructureID()

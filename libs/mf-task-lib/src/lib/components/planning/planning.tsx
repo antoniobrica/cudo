@@ -169,7 +169,7 @@ export function Planning(props: PlanningProps) {
   }
   if (loading) return <LoaderPage />;
   if (error) return (
-    <div style={{ marginLeft: 900 }} >
+    <div>
       <ModalPlanningNew worktypes={props.worktypes} getMilestoneData={getMilestoneData}></ModalPlanningNew>
     </div>
   );
