@@ -211,8 +211,8 @@ export function Planning(props: PlanningProps) {
                 return (
                   <Grid.Column>
                     <Card>
-                      <div className="ui card">
-                        <div className="content">
+                      <div className="ui card ui_width">
+                        <div className="content ui_width">
                           <div className="description">
                             <span className="time">{new Date(plan.dueDate).toDateString()}</span>
                             <span className="summary">
