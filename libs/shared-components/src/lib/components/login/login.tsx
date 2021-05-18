@@ -41,7 +41,7 @@ export function Loginbar(props: LoginProps) {
                   <div className="form-inner">
                     <Form>
                       <Form.Field>
-                        <Input placeholder='example@domain.com' className="full-width" icon='at' name="salary"
+                        <Input placeholder='example@domain.com' className="full-width paratext1" icon='at' name="salary"
                           onChange={handleChange}
                           type="email"
                           value={email}
