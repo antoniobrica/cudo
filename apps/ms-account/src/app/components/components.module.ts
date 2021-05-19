@@ -12,6 +12,7 @@ import { PhaseModule } from './Phase/phase.module';
 import { ProtocolTemplateModule } from './protocol_template/meeting.catagory.module';
 import { ReferenceModule } from './reference/reference.module';
 import { UsersModule } from './users/users.module';
+import { WorkTypesModule } from './workTypes/workTypes.module';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { UsersModule } from './users/users.module';
     MeetingCatagoryModule,
     InvitationTemplateModule,
     StructureModule,
-    ProtocolTemplateModule
+    ProtocolTemplateModule,
+    WorkTypesModule
   ],
   providers: []
 })

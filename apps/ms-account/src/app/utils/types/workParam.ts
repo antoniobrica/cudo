@@ -6,7 +6,7 @@ class WorkParams {
   workTypeID?: string;
 
   @Field({ description: `WorkType Tilte` })
-  workTypeTitle?: string;
+  name?: string;
 }
 
 export default WorkParams;
