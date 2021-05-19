@@ -3,11 +3,11 @@ import { Field, ObjectType } from '@nestjs/graphql';
 @ObjectType()
 export class FileParamModel {
 
+    @Field({ nullable: true, description: `File ID` })
+    fileID: string;
+
     @Field({ nullable: true, description: `file URL` })
     fileURL?: string;
-
-    // @Field({ nullable: true, description: `file exist or not` })
-    // generateFileName?: string;
 
     @Field({ nullable: true, description: `file Name` })
     fileTitle?: string;
