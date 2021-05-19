@@ -149,3 +149,30 @@ nx run mf-container-app:serve --host 0.0.0.0
 npm i apollo-server-express @nestjs/platform-express mssql
 ### Run production build dist/apps/ms-{domain_name}
 set "NODE_ENV=production" && set "PORT={port_number}" && node main.js
+
+
+# Developing Microservices - Node and Docker
+
+
+### Build and Run the App
+
+## Build the images:
+
+
+docker-compose build
+
+
+# Run all the services frontend and Api:
+
+
+docker-compose up -d
+
+
+# Run the individual micro-services:
+
+docker-compose up service-name
+docker-compose up ms-task
+
+### Run the front-end:
+
+docker-compose -f docker-compose-frontend.yaml up -d
