@@ -1,11 +1,15 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { getManager, Repository, TreeRepository } from 'typeorm';
 import { FileEntity } from '../../../entities/file.entity';
 import { FileParamEntity } from '../../../entities/file.param.entity';
+import FileReferencesEntity from '../../../entities/fileReference.entity';
 import { PeopleEntity } from '../../../entities/people.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
+import { FileFilterArgs } from '../dto/args/file-filter.args';
+import { FileReferenceParams } from '../dto/args/param/file-reference.param';
+import { FileParams } from '../dto/args/param/file.param';
 import { CreateFileInput } from '../dto/create-file.input';
 import { UpdateFileInput } from '../dto/update-file.input';
 
@@ -17,9 +21,11 @@ export class FileService {
     private FileRepository: Repository<FileEntity>,
     private referenceService: ReferenceService,
     @InjectRepository(FileParamEntity)
-    private fileParamRepository: Repository<FileParamEntity>,
+    private fileParamRepository: TreeRepository<FileParamEntity>,
     @InjectRepository(PeopleEntity)
     private peopleRepository: Repository<PeopleEntity>,
+    @InjectRepository(FileReferencesEntity)
+    private fileReferencesEntity: Repository<FileReferencesEntity>,
 
   ) { }
 
@@ -104,6 +110,59 @@ export class FileService {
       await this.FileRepository.save(fileDetail);
       const reference = await this.FileRepository.findOne({ where: { projectFileID: updateFileInput.projectFileID }, relations: ['files', 'people'] });
       return reference;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  public async uploadNewFileVersion(fileParams: FileParams): Promise<FileParamEntity> {
+    try {
+      const manager = getManager();
+      const parentStructure = await this.fileParamRepository.findOne({ where: { fileID: fileParams.majorFileID } });
+      if (parentStructure) {
+        const childStructure = new FileParamEntity(fileParams);
+        childStructure.parent = parentStructure;
+        await manager.save(childStructure);
+      }
+      else {
+        throw new HttpException('Major file version ID Not found', HttpStatus.NOT_FOUND);
+      }
+      const trees = await manager.getTreeRepository(FileParamEntity).findDescendantsTree(parentStructure);
+      return trees;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  public async allFileVersion(createStructureInput: FileParams): Promise<FileParamEntity> {
+    try {
+      const manager = getManager();
+      const parentStructure = await this.fileParamRepository.findOne({ where: { fileID: createStructureInput.majorFileID }, relations: ['fileReferences'] });
+      console.log(parentStructure, createStructureInput.majorFileID);
+      if (!parentStructure) {
+        throw new HttpException('Major file version ID Not found', HttpStatus.NOT_FOUND);
+      }
+      const trees = await manager.getTreeRepository(FileParamEntity).findDescendantsTree(parentStructure);
+      return trees;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  public async addReferenceToFile(fileParams: FileFilterArgs, fileReferenceParams: FileReferenceParams): Promise<FileParamEntity> {
+    try {
+      const manager = getManager();
+      const parentStructure = await this.fileParamRepository.findOne({ where: { fileID: fileParams.fileId }, relations: ['fileReferences'] });
+      if (parentStructure) {
+        const fileReference = new FileReferencesEntity(fileReferenceParams);
+        parentStructure.fileReferences.push(fileReference);
+        await manager.save(parentStructure);
+      }
+      else {
+        throw new HttpException('Major file version ID Not found', HttpStatus.NOT_FOUND);
+      }
+      const trees = await this.fileParamRepository.findOne({ where: { fileID: fileParams.fileId }, relations: ['fileReferences'] });
+      return trees;
     } catch (error) {
       return error;
     }

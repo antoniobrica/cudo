@@ -2,16 +2,20 @@ import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
 export class FileParams {
-  @Field({ description: `File URL` })
+
+  @Field({ nullable: true, description: `Mejor file Version ID` })
+  majorFileID?: string;
+
+  @Field({ nullable: true, description: `File URL` })
   fileURL?: string;
 
-  @Field({ description: `File title` })
+  @Field({ nullable: true, description: `File title` })
   fileTitle?: string;
 
-  @Field({ description: `File Type` })
+  @Field({ nullable: true, description: `File Type` })
   fileType?: string;
 
-  @Field({ description: `File Version` })
+  @Field({ nullable: true, description: `File Version` })
   fileVersion?: string;
 
 }
