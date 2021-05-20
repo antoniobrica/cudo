@@ -6,6 +6,7 @@ import { FileTypeEntity } from '../../../entities/file-type.entity';
 import { FileStructureEntity } from '../../../entities/filestructure.entity';
 import { FolderEntity } from '../../../entities/folder.entity';
 import { PhaseEntity } from '../../../entities/phase.entity';
+import { WorkTypeEntity } from '../../../entities/workType.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
 import { CreateBkpInput } from '../dto/create-bkp.input';
@@ -27,6 +28,8 @@ export class BkpService {
     private fileStructureRepository: Repository<FileStructureEntity>,
     @InjectRepository(FileTypeEntity)
     private FileTypeRepository: Repository<FileTypeEntity>,
+    @InjectRepository(WorkTypeEntity)
+    private WorkTypeRepository: Repository<WorkTypeEntity>,
   ) { }
 
   public async createBkp(createBkpInput: CreateBkpInput, referenceFilter: ReferenceFilterParams): Promise<BkpEntity> {
@@ -97,10 +100,17 @@ export class BkpService {
       }
     });
 
+    const worktypes =  await this.WorkTypeRepository.find({
+      "reference": {
+        id: selectedReference.id
+      }
+    });
+
     return {
       phases: phases,
-      structures: structures,
-      filetypes: filetypes
+      filestructures: structures,
+      filetypes: filetypes,
+      worktypes: worktypes
     };
 
   }
