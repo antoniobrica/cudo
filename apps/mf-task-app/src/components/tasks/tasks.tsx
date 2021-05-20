@@ -264,28 +264,28 @@ export function Tasks(props: TasksProps) {
   }
   return (
     <div>
-      <div style={{ marginLeft: 900 }} >
+      <div className="toptaskarea" style={{ marginLeft: 900 }} >
         <CreateTask workTypes={workTypes} onSuccess={refresh} />
       </div>
       {/* <MfAccountAppLib/> */}
 
       {open ?
-        <div style={{ marginLeft: 900 }} >
+        <div className="toptaskarea" style={{ marginLeft: 900 }} >
           <ModalAlert openAlertF={open} confirm={confirmation} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></ModalAlert>
         </div>
         : null}
       {openD ?
-        <div style={{ marginLeft: 900 }} >
+        <div className="toptaskarea" style={{ marginLeft: 900 }} >
           <TaskDelete openAlertF={openD} confirm={confirmationDelete} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></TaskDelete>
         </div>
         : null}
       {viewTaskOpen ?
-        <div style={{ marginLeft: 900 }} >
+        <div className="toptaskarea" style={{ marginLeft: 900 }} >
           <ModalViewTask openAlertF={viewTaskOpen} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></ModalViewTask>
         </div>
         : null}
       {editTaskOpen ?
-        <div style={{ marginLeft: 900 }} >
+        <div className="toptaskarea" style={{ marginLeft: 900 }} >
           <ModalTaskEdit openAlertF={editTaskOpen} taskData={taskData} taskStatus={taskStatus} cancel={cancel} editTaskData={editTaskData}></ModalTaskEdit>
         </div>
         : null}

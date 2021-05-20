@@ -72,7 +72,7 @@ export function Tabsbar(props: TabsProps) {
                               </a>
                             </span>
                           </div>
-                          <div className="header font-header paddingarea">
+                          <div className="header font-header ">
                             High priority things
                           </div>
                           <div className="description">
