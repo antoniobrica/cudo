@@ -47,6 +47,9 @@ import ModalEditInvitation from 'libs/shared-components/src/lib/components/modal
 
 import ModalAddInvitation from 'libs/shared-components/src/lib/components/modal/addinvitaton';
 
+import MeetingTab from 'libs/shared-components/src/lib/components/tabs/meetingtabs';
+import FilterPopup from 'libs/shared-components/src/lib/components/modal/fliter';
+import SelectFilePopup from 'libs/shared-components/src/lib/components/modal/selectfile';
 
 
 // import { Sidebar } from 'semantic-ui-react';
@@ -99,7 +102,10 @@ export function App() {
     <ModalEditViewMilestone></ModalEditViewMilestone><br/>
     <ModalAddProtocol></ModalAddProtocol><br/>
     <ModalEditInvitation></ModalEditInvitation><br/>
-    <ModalAddInvitation></ModalAddInvitation>
+    <ModalAddInvitation></ModalAddInvitation><br/>
+    <MeetingTab></MeetingTab><br/>
+    <FilterPopup></FilterPopup><br/>
+    <SelectFilePopup></SelectFilePopup>
     </div>
     
    
