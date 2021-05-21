@@ -20,7 +20,7 @@ import img8 from 'libs/shared-components/src/circle_blue.png';
 
 import img9 from 'libs/shared-components/src/grey_circle.png';
 
-function SelectFilePopup() {
+export function SelectFilePopup() {
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
@@ -71,15 +71,15 @@ function SelectFilePopup() {
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
-            </Form><br/>
+            </Form><br />
             <div className="d-flex align-items-center py-2">
               <span>
-                  <img src={img4} className="  mr-10 " /> 
+                <img src={img4} className="  mr-10 " />
               </span>
 
               <span className="font-weight-bold mb-0 mr-10">
                 Information Data
-                <br /> 
+                <br />
                 <span
                   className="navi-text"
                   style={{ color: '#9FB5C5', fontSize: '10px' }}
@@ -98,12 +98,12 @@ function SelectFilePopup() {
 
             <div className="d-flex align-items-center py-2">
               <span>
-                  <img src={img7} className="  mr-10 " /> 
+                <img src={img7} className="  mr-10 " />
               </span>
 
               <span className="font-weight-bold mb-0 mr-10">
                 Information Data
-                <br /> 
+                <br />
                 <span
                   className="navi-text"
                   style={{ color: '#9FB5C5', fontSize: '10px' }}
@@ -121,12 +121,12 @@ function SelectFilePopup() {
             </a>
             <div className="d-flex align-items-center py-2">
               <span>
-                  <img src={img7} className="  mr-10 " /> 
+                <img src={img7} className="  mr-10 " />
               </span>
 
               <span className="font-weight-bold mb-0 mr-10">
                 Information Data
-                <br /> 
+                <br />
                 <span
                   className="navi-text"
                   style={{ color: '#9FB5C5', fontSize: '10px' }}
@@ -143,8 +143,8 @@ function SelectFilePopup() {
               <img src={img9} />
             </a>
 
-            
-        </div>
+
+          </div>
         </Modal.Content>
         <Modal.Actions>
           <Button

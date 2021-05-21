@@ -9,7 +9,9 @@ import { LoaderPage, ModalTaskEdit, TaskArea } from "@cudo/shared-components"
 import axios from 'axios';
 import { ApolloCache, FetchResult, useMutation, useQuery } from '@apollo/client';
 import { ITask, ITasks, TaskMutation, TaskUpdateMutation } from '../../app/interfaces/task';
-import { ModalAlert, ModalViewTask } from '@cudo/shared-components'
+import { ModalAlert, ModalViewTask } from '@cudo/shared-components';
+import FilterPopup from 'libs/shared-components/src/lib/components/modal/fliter'
+import SelectFilePopup from 'libs/shared-components/src/lib/components/modal/selectfile'
 import { useHistory, useParams } from 'react-router';
 import TaskDelete from '../delete-task';
 import { useTranslation } from 'react-i18next';
@@ -304,9 +306,11 @@ export function Tasks(props: TasksProps) {
 
   return (
     <div>
+      <FilterPopup />
       <div style={{ marginLeft: 900 }} >
         <CreateTask workTypes={workTypes} onSuccess={refresh} />
       </div>
+      <SelectFilePopup />
       {/* <MfAccountAppLib/> */}
 
       {open ?
