@@ -154,6 +154,7 @@ export function CreateTask(props: CreateTaskProps) {
         sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
         files,
         description,
+        subtasks: []
       },
       update: (
         cache,

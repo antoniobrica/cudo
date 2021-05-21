@@ -1,14 +1,14 @@
 import React from 'react';
 import CreateTask from '../../app/components/create-task/create-task';
 
-import { DELETE_TASK, GET_TASKS, UPDATE_TASK } from '../../app/graphql/graphql';
+import { ADD_TASK, DELETE_TASK, GET_TASKS, UPDATE_TASK } from '../../app/graphql/graphql';
 import { useTaskDeleteMutation, useTaskQuery, useTaskUpdateMutation } from "../../app/services/useRequest";
 import './tasks.module.scss';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
 import { LoaderPage, ModalTaskEdit, TaskArea } from "@cudo/shared-components"
 import axios from 'axios';
 import { ApolloCache, FetchResult, useMutation, useQuery } from '@apollo/client';
-import { ITask, ITasks, TaskUpdateMutation } from '../../app/interfaces/task';
+import { ITask, ITasks, TaskMutation, TaskUpdateMutation } from '../../app/interfaces/task';
 import { ModalAlert, ModalViewTask } from '@cudo/shared-components'
 import { useHistory, useParams } from 'react-router';
 import TaskDelete from '../delete-task';
@@ -43,6 +43,15 @@ export function Tasks(props: TasksProps) {
   const [addTask] = useTaskUpdateMutation(UPDATE_TASK, {
     variables: { referenceID },
   });
+  const [addSubTask, { data: subtasks }] = useMutation(ADD_TASK,
+    {
+      refetchQueries: [
+        { query: GET_TASKS, variables: { referenceID } }
+      ],
+      variables: { referenceID },
+    }
+  )
+
   const [taskDelete] = useTaskDeleteMutation(DELETE_TASK, {
     variables: { referenceID },
   });
@@ -244,7 +253,7 @@ export function Tasks(props: TasksProps) {
         taskID: data.taskID, status: data.status, files: [], taskTitle: data.taskTitle, startDate: data.startDate, endDate: data.endDate,
         estimatedDays: data.estimatedDays, sendNotification: false, BKPID: data.BKPID, BKPTitle: data.BKPTitle,
         saveTaskAsTemplate: data.saveTaskAsTemplate, phaseID: data.phaseID, phaseName: data.phaseName, referenceID: data.referenceID,
-        description: data.description
+        description: data.description, subtasks: []
       },
       update: (
         cache,
@@ -262,6 +271,37 @@ export function Tasks(props: TasksProps) {
     });
 
   }
+  const subTask = (data, title) => {
+
+    let subtask = [];
+    const createSt = {
+      subtaskTitle: title, status: Status.INPROGRESS
+    }
+    subtask.push(createSt);
+    editTaskApi({
+      variables: {
+        taskID: data.taskID, status: data.status, files: [], taskTitle: data.taskTitle, startDate: data.startDate, endDate: data.endDate,
+        estimatedDays: data.estimatedDays, sendNotification: false, BKPID: data.BKPID, BKPTitle: data.BKPTitle,
+        saveTaskAsTemplate: data.saveTaskAsTemplate, phaseID: data.phaseID, phaseName: data.phaseName, referenceID: data.referenceID,
+        description: data.description, subtasks: subtask
+      },
+      update: (
+        cache,
+        data
+      ) => {
+        const cacheData = cache.readQuery({ query: GET_TASKS, variables: { referenceID }, }) as ITasks;
+        cache.writeQuery({
+          query: GET_TASKS,
+          data: {
+            tasksD: [...cacheData.tasks, data]
+          },
+          variables: { referenceID },
+        });
+      }
+    });
+
+  }
+
   return (
     <div>
       <div style={{ marginLeft: 900 }} >
@@ -294,7 +334,13 @@ export function Tasks(props: TasksProps) {
         {data.tasks.map((task, id) => {
           return (
             <div key={id}>
-              <TaskArea task={task} id={id} updateTask={updateTask} deleteTask={deleteTask} veiwTask={viewTask} editTask={editTask}></TaskArea>
+              <TaskArea task={task} id={id}
+                updateTask={updateTask}
+                deleteTask={deleteTask}
+                veiwTask={viewTask}
+                editTask={editTask}
+                subTask={subTask}>
+              </TaskArea>
             </div>
           )
         })}

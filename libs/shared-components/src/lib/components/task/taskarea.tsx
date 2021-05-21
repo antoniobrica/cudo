@@ -20,9 +20,15 @@ export interface Tasks {
 	veiwTask?,
 	deleteTask?,
 	editTask?
+	subTask?
 }
 export function TaskArea(props: Tasks) {
 	const { t, i18n } = useTranslation();
+	const [taskId, setTaskId] = React.useState(null);
+	const [subtaskTitle, setSubtaskTitle] = React.useState('')
+	const [subtaskData, setSubtaskData] = React.useState([])
+
+
 	const description = [
 		<Segment>Pellentesque habitant morbi tristique senectus.</Segment>
 
@@ -38,6 +44,22 @@ export function TaskArea(props: Tasks) {
 	}
 	const editTaskbyId = (task, id) => {
 		props.editTask(task, id)
+	}
+	const openSubTask = (task, id) => {
+		console.log(task.subtasks);
+
+		setSubtaskData(task.subtasks)
+		setTaskId(id)
+		console.log('subtaskTitle', taskId, subtaskData);
+
+		//props.subTask(task, id)
+	}
+	const onSubtaskTitle = (e) => {
+		setSubtaskTitle(e.target.value);
+	}
+	const createSubTask = (task) => {
+		const subTaskTitle = subtaskTitle;
+		props.subTask(task, subTaskTitle)
 	}
 	return (
 		<div>
@@ -109,10 +131,8 @@ export function TaskArea(props: Tasks) {
 				</div>
 				:
 
-				<div className="card1 card-custom gutter-b">
-
+				<div className="card1 card-custom gutter-b" onClick={() => openSubTask(props.task, props.id)}>
 					<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-
 						<div className="d-flex align-items-center py-2">
 							<span> <img src={img4} className="  mr-10 " />  </span>
 							<span className="textt">T-0{props.id + 1}</span>
@@ -172,6 +192,57 @@ export function TaskArea(props: Tasks) {
 							</div>
 
 						</div>
+						{
+							subtaskData && (taskId === props.id) ?
+								<div className="card1 card-custom gutter-b">
+
+									<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
+
+										<div className="  align-items-center py-2">
+											{subtaskData.map((subt, i) => {
+												return (
+													<div key={i}>
+														<span className="anchor_complete"><a title="Mark as complete"> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span>
+														<span className="font-weight-bold mb-0 mr-10">{i + 1}. {subt.subtaskTitle}</span>
+													</div>
+												)
+											})}
+											<br />
+
+											<span className="anchor_complete"><a title="Mark as complete"> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span>
+
+											<Grid columns={2} className="classtop">
+												<Grid.Row>
+													<Grid.Column>
+														<Form.Field className="fillarea">
+
+															<Input placeholder='Enter your text here....' size='small' className="full-width "
+																type="text"
+																value={subtaskTitle}
+																onChange={onSubtaskTitle}
+															/>
+														</Form.Field>
+													</Grid.Column>
+
+													<Grid.Column>
+														<Form.Field style={{ marginleft: '145px' }}>
+															<button className="greenbutton" onClick={() => createSubTask(props.task)}>
+																<i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
+															</button> &nbsp;  <button className="redbutton">
+																<i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> </button>
+														</Form.Field>
+													</Grid.Column>
+												</Grid.Row>
+											</Grid>
+										</div>
+
+
+									</div>
+								</div>
+								: null
+						}
+						{/* <button className="ui large button btn-dashed  btn-large"><i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> Add new task    </button> */}
+
 
 					</div>
 				</div>
