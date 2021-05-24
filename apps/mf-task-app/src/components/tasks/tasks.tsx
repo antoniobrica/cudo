@@ -307,29 +307,31 @@ export function Tasks(props: TasksProps) {
 
   return (
     <div>
-      <FilterPopup />
-      <div style={{ marginLeft: 900 }} >
+
+      <div className="pin_area" >
+        <FilterPopup />
+        <FileListIndex />
         <CreateTask workTypes={workTypes} onSuccess={refresh} />
       </div>
-      <SelectFilePopup />
+
       {/* <MfAccountAppLib/> */}
       {open ?
-        <div style={{ marginLeft: 900 }} >
+        <div className="pin_area" >
           <ModalAlert openAlertF={open} confirm={confirmation} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></ModalAlert>
         </div>
         : null}
       {openD ?
-        <div style={{ marginLeft: 900 }} >
+        <div className="pin_area" >
           <TaskDelete openAlertF={openD} confirm={confirmationDelete} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></TaskDelete>
         </div>
         : null}
       {viewTaskOpen ?
-        <div style={{ marginLeft: 900 }} >
+        <div className="pin_area" >
           <ModalViewTask openAlertF={viewTaskOpen} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></ModalViewTask>
         </div>
         : null}
       {editTaskOpen ?
-        <div style={{ marginLeft: 900 }} >
+        <div className="pin_area" >
           <ModalTaskEdit openAlertF={editTaskOpen} taskData={taskData} taskStatus={taskStatus} cancel={cancel} editTaskData={editTaskData}></ModalTaskEdit>
         </div>
         : null}

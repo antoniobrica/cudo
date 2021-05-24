@@ -22,7 +22,7 @@ export function FileList(props: FileListProps) {
     <div>
       {loading ?
         <LoaderPage /> : null}
-      <SelectFilePopup />
+      <SelectFilePopup files={data?.File} />
     </div>
   );
 }

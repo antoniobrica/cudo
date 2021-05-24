@@ -13,7 +13,7 @@ import {
   TextArea,
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
-
+import img1 from 'libs/shared-components/src/filter.png';
 export function FilterPopup() {
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
@@ -23,16 +23,18 @@ export function FilterPopup() {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <div id="navbar">
+    <div style={{ marginTop: 22 }}>
       <Modal style={{ width: '390px', marginLeft: '770px', height: '660px' }}
         className="modal_media"
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
         trigger={
-          <Button size="mini" className="grey-btn">
-            Filter
-          </Button>
+          // <Button size="mini" className="grey-btn">
+          //   Filter
+          // </Button>
+          <img src={img1} className="  mr-10 " />
+
         }
       >
 

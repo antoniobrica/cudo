@@ -59,7 +59,7 @@ export default class Canvas extends Component<MyProps> {
   render() {
     return (
       <div>
-        <canvas id="canvas" width="600" height="651" onClick={this.getPosition} />
+        <canvas id="canvas" width="900" height="801" onClick={this.getPosition} />
         <img ref="image" src={this.props.imgUrl} style={{ display: 'none' }} className="hidden" />
       </div>
     )
