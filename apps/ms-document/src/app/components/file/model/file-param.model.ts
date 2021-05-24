@@ -7,8 +7,8 @@ export class FileParamModel {
     @Field({ nullable: true, description: `File ID` })
     fileID: string;
 
-    @Field({ nullable: true, description: `Major Version File ID` })
-    majorFileID: string;
+    @Field({ nullable: true, description: `Parent File ID` })
+    parentFileID: string;
 
     @Field({ nullable: true, description: `file URL` })
     fileURL?: string;
@@ -20,12 +20,12 @@ export class FileParamModel {
     fileType?: string;
 
     @Field({ nullable: true, description: `file Version` })
-    fileVersion?: string;
+    fileVersion?: number;
 
-    @Field(type => [FileReferenceModel], { nullable: true, description: `Versions of File` })
+    @Field(() => [FileReferenceModel], { nullable: true, description: `File referenced` })
     fileReferences: FileReferenceModel[];
 
-    @Field(type => [FileParamModel], { nullable: true, description: `Versions of File` })
+    @Field(() => [FileParamModel], { nullable: true, description: `Files inside parent file or folder or BKP` })
     children: FileParamModel[];
 
 }

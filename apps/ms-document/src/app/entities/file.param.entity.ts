@@ -3,51 +3,6 @@ import { BaseEntity, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, Pr
 import * as uuid from 'uuid';
 import FileReferencesEntity from "./fileReference.entity";
 
-
-// @Entity({ name: 'files' })
-// export class FileParamEntity extends BaseEntity {
-
-//     @PrimaryGeneratedColumn()
-//     id: number;
-
-//     @Expose()
-//     @Column({ unique: true })
-//     fileID: string;
-
-//     @Column()
-//     @Expose()
-//     fileURL: string;
-
-//     @Expose()
-//     @Column({ nullable: true })
-//     majorFileID?: string;
-
-//     @Column()
-//     @Expose()
-//     fileTitle: string;
-
-//     @Column({ nullable: true })
-//     @Expose()
-//     fileType: string;
-
-//     @Column({ nullable: true })
-//     @Expose()
-//     fileVersion: string;
-
-//     constructor(fileParamEntity: Partial<FileParamEntity>) {
-//         super();
-//         if (fileParamEntity) {
-//             Object.assign(
-//                 this,
-//                 plainToClass(FileParamEntity, fileParamEntity, {
-//                     excludeExtraneousValues: true
-//                 })
-//             )
-//             this.fileID = this.fileID || uuid.v1();
-//         }
-//     }
-// }
-
 @Entity({ name: 'files' })
 @Tree("closure-table")
 export class FileParamEntity extends BaseEntity {
@@ -65,7 +20,7 @@ export class FileParamEntity extends BaseEntity {
 
     @Expose()
     @Column({ nullable: true })
-    majorFileID?: string;
+    parentFileID?: string;
 
     @Column()
     @Expose()
@@ -77,7 +32,7 @@ export class FileParamEntity extends BaseEntity {
 
     @Column({ nullable: true })
     @Expose()
-    fileVersion: string;
+    fileVersion: number;
 
     @TreeChildren()
     children: FileParamEntity[];
@@ -104,6 +59,18 @@ export class FileParamEntity extends BaseEntity {
     @Expose()
     @Column({ nullable: true })
     isDeleted?: boolean;
+
+    @Expose()
+    @Column({ nullable: true })
+    referenceID: string;
+
+    @Expose()
+    @Column({ nullable: true })
+    referenceType: string;
+
+    @Expose()
+    @Column({ nullable: true })
+    referenceTitle: string;
 
     @Expose()
     @ManyToMany(type => FileReferencesEntity, { cascade: true })

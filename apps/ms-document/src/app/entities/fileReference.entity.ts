@@ -1,8 +1,7 @@
 import { Expose, plainToClass } from 'class-transformer';
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToMany } from 'typeorm';
 import * as uuid from 'uuid';
-import { FileEntity } from './file.entity';
-import { FileParamEntity } from './file.param.entity';
+import { UploadedFilesEntity } from './uploaded-files.entity';
 
 /**
  * 
@@ -27,7 +26,7 @@ export default class FileReferencesEntity extends BaseEntity {
 
     @Expose()
     @Column()
-    name: string;
+    referenceTitle: string;
 
     @Expose()
     @CreateDateColumn()
@@ -49,8 +48,8 @@ export default class FileReferencesEntity extends BaseEntity {
     @Column({ nullable: true })
     isDeleted?: boolean;
 
-    @ManyToMany(type => FileParamEntity, fileParamEntity => fileParamEntity.fileReferences) // specify inverse side as a second parameter
-    files: FileParamEntity[];
+    @ManyToMany(type => UploadedFilesEntity, fileParamEntity => fileParamEntity.fileReferences) // specify inverse side as a second parameter
+    files: UploadedFilesEntity[];
 
     constructor(referanceTypeEntity: Partial<FileReferencesEntity>) {
         super();
