@@ -29,7 +29,7 @@ export function SelectFilePopup() {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <div id="navbar">
+    <div>
       <Modal
         style={{ width: '360px', marginLeft: '810px', height: '660px' }}
         className="modal_media"

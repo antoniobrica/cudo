@@ -15,6 +15,7 @@ import SelectFilePopup from 'libs/shared-components/src/lib/components/modal/sel
 import { useHistory, useParams } from 'react-router';
 import TaskDelete from '../delete-task';
 import { useTranslation } from 'react-i18next';
+import { FileListIndex } from '@cudo/mf-document-lib'
 /* eslint-disable-next-line */
 export interface TasksProps { }
 
@@ -312,7 +313,6 @@ export function Tasks(props: TasksProps) {
       </div>
       <SelectFilePopup />
       {/* <MfAccountAppLib/> */}
-
       {open ?
         <div style={{ marginLeft: 900 }} >
           <ModalAlert openAlertF={open} confirm={confirmation} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></ModalAlert>
