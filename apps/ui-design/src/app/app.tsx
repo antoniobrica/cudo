@@ -49,8 +49,7 @@ import MeetingTab from 'libs/shared-components/src/lib/components/tabs/meetingta
 import FilterPopup from 'libs/shared-components/src/lib/components/modal/fliter';
 import SelectFilePopup from 'libs/shared-components/src/lib/components/modal/selectfile';
 
-// import AccordionExampleMenu from 'libs/shared-components/src/lib/components/menu/sidebar';
-// const ListExampleFloated = React.lazy(() => import('libs/shared-components/src/lib/components/task/taskarea'));
+import ToggleButton from 'libs/shared-components/src/lib/components/tabs/togglebutton';
 
 // import { Sidebar } from 'semantic-ui-react';
 
@@ -105,7 +104,9 @@ export function App() {
       <ModalAddInvitation></ModalAddInvitation><br />
       <MeetingTab></MeetingTab><br />
       <FilterPopup></FilterPopup><br />
-      <SelectFilePopup></SelectFilePopup>
+      <SelectFilePopup></SelectFilePopup><br />
+      <ToggleButton></ToggleButton>
+
     </div>
 
 
