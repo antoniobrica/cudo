@@ -41,6 +41,8 @@ export default class TaskFileEntity extends BaseEntity {
                     excludeExtraneousValues: true
                 })
             )
+            this.fileID = this.fileID || uuid.v1();
+
         }
     }
 }
