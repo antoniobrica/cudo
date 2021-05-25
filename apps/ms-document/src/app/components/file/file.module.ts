@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { FileEntity } from '../../entities/file.entity';
 import { FileParamEntity } from '../../entities/file.param.entity';
 import FileReferencesEntity from '../../entities/fileReference.entity';
 import { PeopleEntity } from '../../entities/people.entity';
@@ -11,7 +10,7 @@ import { FileService } from './service/file.service';
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([FileEntity, FileParamEntity, PeopleEntity, FileReferencesEntity, UploadedFilesEntity]), ReferenceModule],
+  imports: [TypeOrmModule.forFeature([FileParamEntity, PeopleEntity, FileReferencesEntity, UploadedFilesEntity]), ReferenceModule],
   providers: [FileResolver, FileService],
   exports: [FileResolver, FileService]
 })

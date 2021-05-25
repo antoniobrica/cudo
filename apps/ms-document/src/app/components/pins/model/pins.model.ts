@@ -7,7 +7,7 @@ export class PinsModel {
     pinsID?: string;
 
     @Field({ description: `FileID is for work and building` })
-    fileID: string;
+    uploadedFileID: string;
 
     @Field({ description: `X-Axis of pin` })
     x_axis: number;

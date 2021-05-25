@@ -5,7 +5,7 @@ import { IsString } from 'class-validator';
 class PinsFilterParams {
 
   @Field({ nullable: true, description: `File ID` })
-  fileID?: string;
+  uploadedFileID?: string;
 
   @Field({ nullable: true, description: `File ID` })
   pinsID?: string;

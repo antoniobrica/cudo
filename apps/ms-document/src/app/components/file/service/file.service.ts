@@ -1,7 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { getManager, Repository, TreeRepository } from 'typeorm';
-import { FileEntity } from '../../../entities/file.entity';
 import { FileParamEntity } from '../../../entities/file.param.entity';
 import FileReferencesEntity from '../../../entities/fileReference.entity';
 import { PeopleEntity } from '../../../entities/people.entity';
@@ -20,8 +19,6 @@ import { UploadFileInfoInput } from '../dto/upload-file-info.input';
 @Injectable()
 export class FileService {
   constructor(
-    @InjectRepository(FileEntity)
-    private FileRepository: Repository<FileEntity>,
     private referenceService: ReferenceService,
     @InjectRepository(FileParamEntity)
     private fileParamRepository: TreeRepository<FileParamEntity>,
@@ -34,93 +31,34 @@ export class FileService {
 
   ) { }
 
-  public async createFile(createFileInput: CreateFileInput, referenceFilter: ReferenceFilterParams): Promise<FileEntity> {
+  public async updateUploadedFile(updateFileInput: UpdateFileInput): Promise<UploadedFilesEntity> {
     try {
-
-      const { files, fileBasics, people } = createFileInput;
-      const fileDetail = new FileEntity({ ...fileBasics });
-      fileDetail.files = [];
-      fileDetail.people = [];
-      for (let index = 0; index < files.length; index++) {
-        const fileParamentity = new FileParamEntity(files[index])
-        const newFile = await this.fileParamRepository.create({ ...fileParamentity });
-        const savedFile = await this.fileParamRepository.save(newFile);
-        fileDetail.files.push(savedFile)
-      }
-      for (let index = 0; index < people.length; index++) {
-        const followersentity = new PeopleEntity(people[index])
-        const newPeople = await this.peopleRepository.create({ ...followersentity });
-        const savedPeople = await this.peopleRepository.save(newPeople);
-        fileDetail.people.push(savedPeople)
-      }
-      fileDetail.isFolder = fileBasics.isFolder
-      if (fileDetail.isFolder == true) {
-        fileDetail.folderName = fileBasics.folderName
-        fileDetail.BKPID = ''
-        fileDetail.BKPIDTitle = ''
-      }
-      else {
-        fileDetail.BKPID = fileBasics.BKPID
-        fileDetail.BKPIDTitle = fileBasics.BKPIDTitle
-        fileDetail.folderName = ''
-      }
-      const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
-      const newPost = await this.FileRepository.create({
-        ...fileDetail,
-        reference: { id: selectedReference.id }
-      });
-      await this.FileRepository.save(newPost);
-      return newPost;
-    } catch (error) {
-      return error;
-    }
-  }
-
-  public async findAllFile(refFilter: ReferenceFilterParams): Promise<FileEntity[]> {
-    const selectedReference = await this.referenceService.getReferenceById(refFilter)
-    return await this.FileRepository.find({
-      where: {
-        "reference": {
-          id: selectedReference.id
-        }
-      }, relations: ['files', 'people']
-
-    });
-
-  }
-
-  public async updateFile(updateFileInput: UpdateFileInput): Promise<FileEntity> {
-    try {
-      const { files, fileBasics, people } = updateFileInput;
-      const fileDetail = await this.FileRepository.findOne({ where: { projectFileID: updateFileInput.projectFileID }, relations: ['files', 'people'] });
+      const { peoples } = updateFileInput;
+      const fileDetail = await this.uploadedFilesRepository.findOne({ where: { uploadedFileID: updateFileInput.uploadedFileID }, relations: ['fileReferences', 'people'] });
       if (!fileDetail) {
-        throw new HttpException('Project Not Found', HttpStatus.NOT_FOUND);
+        throw new HttpException('Uploaded file ID Not Found', HttpStatus.NOT_FOUND);
       }
-      if (files) {
-        for (let index = 0; index < files.length; index++) {
-          const fileParamentity = new FileParamEntity(files[index])
-          const newFile = await this.fileParamRepository.create({ ...fileParamentity });
-          const savedFile = await this.fileParamRepository.save(newFile);
-          fileDetail.files.push(savedFile)
-        }
-      }
-      if (people) {
-        for (let index = 0; index < people.length; index++) {
-          const followersentity = new PeopleEntity(people[index])
+
+      const res = new UploadedFilesEntity(updateFileInput);
+      Object.keys(fileDetail)
+        .forEach(k => res[k] = (updateFileInput[k] ?? fileDetail[k]));
+      if (peoples) {
+        for (let index = 0; index < peoples.length; index++) {
+          const followersentity = new PeopleEntity(peoples[index])
           const newPeople = await this.peopleRepository.create({ ...followersentity });
           const savedPeople = await this.peopleRepository.save(newPeople);
-          fileDetail.people.push(savedPeople)
+          res.people.push(savedPeople)
         }
       }
-      await this.FileRepository.save(fileDetail);
-      const reference = await this.FileRepository.findOne({ where: { projectFileID: updateFileInput.projectFileID }, relations: ['files', 'people'] });
+      await this.uploadedFilesRepository.save(res);
+      const reference = await this.uploadedFilesRepository.findOne({ where: { uploadedFileID: updateFileInput.uploadedFileID }, relations: ['fileReferences', 'people'] });
       return reference;
     } catch (error) {
       return error;
     }
   }
 
-  public async saveUploadedFile(uploadFileInfoInput: UploadFileInfoInput, referenceFilter: ReferenceFilterParams): Promise<UploadedFilesEntity> {
+  public async saveUploadedFile(uploadFileInfoInput: UploadFileInfoInput, referenceFilter: FileReferenceParams): Promise<UploadedFilesEntity> {
     try {
       const manager = getManager();
       const { peoples } = uploadFileInfoInput;

@@ -5,7 +5,7 @@ import { FileReferenceModel } from './file-refernce.model';
 export class FileParamModel {
 
     @Field({ nullable: true, description: `File ID` })
-    fileID: string;
+    uploadedFileID: string;
 
     @Field({ nullable: true, description: `Parent File ID` })
     parentFileID: string;

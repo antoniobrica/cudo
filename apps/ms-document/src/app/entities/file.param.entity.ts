@@ -12,7 +12,7 @@ export class FileParamEntity extends BaseEntity {
 
     @Expose()
     @Column({ unique: true })
-    fileID: string;
+    uploadedFileID: string;
 
     @Column()
     @Expose()
@@ -86,7 +86,7 @@ export class FileParamEntity extends BaseEntity {
                     excludeExtraneousValues: true
                 })
             )
-            this.fileID = this.fileID || uuid.v1();
+            this.uploadedFileID = this.uploadedFileID || uuid.v1();
         }
     }
 
