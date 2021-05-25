@@ -25,9 +25,9 @@ export default class Canvas extends Component<MyProps> {
       // context.font = "40px Courier"
       // context.fillText(this.context, 210, 75)
     }
-    const x = 357.75
-    const y = 457.75
-    this.drawCoordinates(x, y)
+    // const x = 357.75
+    // const y = 457.75
+    // this.drawCoordinates(x, y)
   }
 
   drawCoordinates = (x, y) => {
@@ -37,7 +37,7 @@ export default class Canvas extends Component<MyProps> {
     let canvas = document.getElementById('canvas') as
       HTMLCanvasElement;
     let context = canvas.getContext("2d");
-    context.fillStyle = "#ff2626"; // Red color
+    context.fillStyle = "#FFA500"; // Red color
     context.fillText('1', x + 20, y + 20)
     context.beginPath(); //Start path
     context.arc(x, y, pointSize, 0, Math.PI * 2, true); // Draw a point using the arc function of the canvas with a point structure.

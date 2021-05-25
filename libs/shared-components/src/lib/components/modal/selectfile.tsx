@@ -58,10 +58,10 @@ export function SelectFilePopup(props: FileStructureProps) {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={
-          <div>
+          <Button style={{ backgroundColor: 'blue' }}>
             <img src={img1} className="  mr-10 " />
             <span style={{ marginLeft: '-8px', fontSize: '12px' }}>Task from file</span>
-          </div>
+          </Button>
         }
       >
         <Modal.Header>
