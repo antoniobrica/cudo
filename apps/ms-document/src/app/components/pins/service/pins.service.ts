@@ -27,7 +27,7 @@ export class PinsService {
         if (pins) {
             return pins;
         }
-        throw new PinsNotFoundException(refFilter.fileID);
+        throw new PinsNotFoundException(refFilter.uploadedFileID);
     }
 
     async updatePins(refFilter: PinsFilterParams, pinsDetails: PinsUpdateInputDto) {
@@ -38,7 +38,7 @@ export class PinsService {
             const updatedPost = await this.referancesRepository.find({ where: { ...refFilter } });
             return updatedPost;
         }
-        throw new PinsNotFoundException(refFilter.fileID);
+        throw new PinsNotFoundException(refFilter.uploadedFileID);
     }
 
     async deletePins(refFilter: PinsFilterParams) {
@@ -47,7 +47,7 @@ export class PinsService {
         if (deleteResponse) {
             return deleteResponse;
         }
-        throw new PinsNotFoundException(refFilter.fileID);
+        throw new PinsNotFoundException(refFilter.uploadedFileID);
     }
 
 }

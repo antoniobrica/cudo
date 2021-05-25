@@ -1,7 +1,6 @@
 import { Expose, plainToClass } from 'class-transformer';
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import * as uuid from 'uuid';
-import { FileEntity } from './file.entity';
 
 /**
  * 
@@ -18,7 +17,7 @@ export default class PinsTypeEntity extends BaseEntity {
 
     @Expose()
     @Column()
-    fileID: string;
+    uploadedFileID: string;
 
     @Expose()
     @Column()

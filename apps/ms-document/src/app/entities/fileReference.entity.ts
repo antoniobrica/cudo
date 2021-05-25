@@ -1,18 +1,23 @@
 import { Expose, plainToClass } from 'class-transformer';
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToMany } from 'typeorm';
 import * as uuid from 'uuid';
+import { UploadedFilesEntity } from './uploaded-files.entity';
 
 /**
  * 
  */
-@Entity({ name: 'references' })
-export default class ReferanceTypeEntity extends BaseEntity {
+@Entity({ name: 'fileReferences' })
+export default class FileReferencesEntity extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;
 
     @Expose()
     @Column({ unique: true })
+    fileReferenceID: string;
+
+    @Expose()
+    @Column()
     referenceID: string;
 
     @Expose()
@@ -21,7 +26,7 @@ export default class ReferanceTypeEntity extends BaseEntity {
 
     @Expose()
     @Column()
-    name: string;
+    referenceTitle: string;
 
     @Expose()
     @CreateDateColumn()
@@ -43,15 +48,19 @@ export default class ReferanceTypeEntity extends BaseEntity {
     @Column({ nullable: true })
     isDeleted?: boolean;
 
-    constructor(referanceTypeEntity: Partial<ReferanceTypeEntity>) {
+    @ManyToMany(type => UploadedFilesEntity, fileParamEntity => fileParamEntity.fileReferences) // specify inverse side as a second parameter
+    files: UploadedFilesEntity[];
+
+    constructor(referanceTypeEntity: Partial<FileReferencesEntity>) {
         super();
         if (referanceTypeEntity) {
             Object.assign(
                 this,
-                plainToClass(ReferanceTypeEntity, referanceTypeEntity, {
+                plainToClass(FileReferencesEntity, referanceTypeEntity, {
                     excludeExtraneousValues: true
                 })
             )
+            this.fileReferenceID = this.fileReferenceID || uuid.v1();
         }
     }
 
