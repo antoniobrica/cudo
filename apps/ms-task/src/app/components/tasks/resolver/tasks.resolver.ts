@@ -20,13 +20,13 @@ export class TasksResolver {
     constructor(
         private readonly projectTasksService: TasksService) { }
 
-    @Query(() => [TasksModel], { nullable: true })
-    async tasks(@Args("referenceFilter") getTasksArgs: ReferenceFilterParams): Promise<TasksModel[]> {
-        return await this.projectTasksService.findAll(getTasksArgs)
-    }
+    // @Query(() => [TasksModel], { nullable: true })
+    // async tasks(@Args("referenceFilter") getTasksArgs: ReferenceFilterParams): Promise<TasksModel[]> {
+    //     return await this.projectTasksService.findAll(getTasksArgs)
+    // }
 
     @Query(() => [TasksModel], { nullable: true })
-    async tasksByStatus(@Args("referenceFilter") getTasksArgs: ReferenceFilterParams,
+    async tasks(@Args("referenceFilter") getTasksArgs: ReferenceFilterParams,
     @Args("statusFilter",{nullable: true}) status?:StatusFilterParam): Promise<TasksModel[]> {
         return await this.projectTasksService.findAllByStatus(getTasksArgs,status)
     }
