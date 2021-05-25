@@ -15,7 +15,7 @@ export class FolderEntity extends BaseEntity {
   @Expose()
   folderID: string;
 
-  @Column()
+  @Column({ unique: true })
   @Expose()
   folderTitle: string;
 
