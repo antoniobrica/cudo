@@ -240,10 +240,10 @@ export class TasksService {
     }
 
     public async deleteFileByID(fileDeleteInput: FileFilterInput): Promise<TaskFileEntity[]> {
-        const { fileID } = fileDeleteInput;
-        const fileDetails = await this.taskFileRepository.delete({ fileID: fileID });
+        const { taskFileID } = fileDeleteInput;
+        const fileDetails = await this.taskFileRepository.delete({ taskFileID: taskFileID });
         const files = await this.taskFileRepository.find({
-            where: { fileID: fileID },
+            where: { taskFileID: taskFileID },
         });
             return files; 
     }

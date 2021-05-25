@@ -74,7 +74,7 @@ export class TasksResolver {
 
     @Mutation(() => [TaskFileModel])
     async removeTaskFile(
-        @Args('fileDeleteInput') fileDeleteInput: FileFilterInput
+        @Args('taskFileDeleteInput') fileDeleteInput: FileFilterInput
     ) {
         return this.projectTasksService.deleteFileByID(fileDeleteInput);
     }
