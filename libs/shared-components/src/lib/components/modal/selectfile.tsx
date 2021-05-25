@@ -10,7 +10,7 @@ import {
   TextArea,
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
-import img1 from 'libs/shared-components/src/pin_file.png';
+import img1 from 'libs/shared-components/src/file_pin.png';
 import img3 from 'libs/shared-components/src/grey_arrow.png';
 
 import img7 from 'libs/shared-components/src/powerpoint.png';
@@ -47,7 +47,7 @@ export function SelectFilePopup(props: FileStructureProps) {
     setIsTick(isTick => !isTick)
   }
   return (
-    <div style={{ marginTop: 22, marginRight: 8 }}>
+    <div style={{ marginTop: -10, marginRight: 8 }}>
       {
         isPinFile && <AddPinFile isOpen={isPinFile} />
       }
@@ -58,9 +58,9 @@ export function SelectFilePopup(props: FileStructureProps) {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={
-          <Button style={{ backgroundColor: 'blue' }}>
+          <Button className="grey-btn" size="mini">
             <img src={img1} className="  mr-10 " />
-            <span style={{ marginLeft: '-8px', fontSize: '12px' }}>Task from file</span>
+            Task from file
           </Button>
         }
       >
@@ -68,7 +68,7 @@ export function SelectFilePopup(props: FileStructureProps) {
           <label>Select file </label>
         </Modal.Header>
         <Modal.Content body>
-          <div>
+          <div >
             {/* <FileStructure files={props.files} downloadFiles={props.downloadFiles} viewFiles={props.viewFiles} downloadedImg={''}></FileStructure> */}
 
             <Form>

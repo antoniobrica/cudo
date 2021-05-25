@@ -16,6 +16,7 @@ import { useHistory, useParams } from 'react-router';
 import TaskDelete from '../delete-task';
 import { useTranslation } from 'react-i18next';
 import { FileListIndex } from '@cudo/mf-document-lib'
+import ToggleButton from 'libs/shared-components/src/lib/components/tabs/togglebutton'
 /* eslint-disable-next-line */
 export interface TasksProps { }
 
@@ -310,10 +311,13 @@ export function Tasks(props: TasksProps) {
 
       <div className="pin_area" >
         <FilterPopup />
-        <FileListIndex />
-        <CreateTask workTypes={workTypes} onSuccess={refresh} />
-      </div>
 
+        <CreateTask workTypes={workTypes} onSuccess={refresh} />
+        {/* <ToggleButton></ToggleButton> */}
+      </div>
+      <div className="pin_area" style={{ marginLeft: 804 }} >
+        <FileListIndex />
+      </div>
       {/* <MfAccountAppLib/> */}
       {open ?
         <div className="pin_area" >
