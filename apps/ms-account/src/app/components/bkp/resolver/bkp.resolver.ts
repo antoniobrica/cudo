@@ -5,7 +5,6 @@ import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { FolderModel } from '../../folder/model/folder.model';
 import { FolderService } from '../../folder/service/folder.service';
 import { CreateBkpInput } from '../dto/create-bkp.input';
-import { AllModel } from '../model/all';
 import { BkpModel } from '../model/bkp.model';
 import { BkpService } from '../service/bkp.service';
 
@@ -40,11 +39,6 @@ export class BkpResolver {
   @Query(() => [FolderModel], { nullable: true })
   async BkpFolders(@Args("referenceFilter") referenceFilter: ReferenceFilterParams): Promise<FolderEntity[]> {
     return await this.folderService.findAllFolder(referenceFilter)
-  }
-
-  @Query(() => AllModel)
-  async findAll(@Args("referenceFilter") referenceFilter: ReferenceFilterParams) {
-    return  await this.bkpService.findAll(referenceFilter)
   }
 
 }
