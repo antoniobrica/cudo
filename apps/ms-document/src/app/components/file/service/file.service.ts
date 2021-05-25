@@ -9,9 +9,7 @@ import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
 import { FileFilterArgs } from '../dto/args/file-filter.args';
 import { FileReferenceParams } from '../dto/args/param/file-reference.param';
-import { FileParams } from '../dto/args/param/file.param';
 import { ParentFileParams } from '../dto/args/param/parent-file.param';
-import { CreateFileInput } from '../dto/create-file.input';
 import { UpdateFileInput } from '../dto/update-file.input';
 import { UploadFileInfoInput } from '../dto/upload-file-info.input';
 
