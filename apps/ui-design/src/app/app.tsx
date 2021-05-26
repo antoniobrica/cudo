@@ -9,7 +9,7 @@ import { AccordionExampleMenu, ModalExampleModal2, Cardbar, Menubar, Tabsbar, Me
 // import ModalExampleModal2 from 'libs/shared-components/src/lib/components/modal/modal2';
 import ModalExampleCompany from 'libs/shared-components/src/lib/components/modal/companypopup';
 import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
-// import ListExampleFloated from 'libs/shared-components/src/lib/components/task/taskarea';
+import ListExampleFloated from 'libs/shared-components/src/lib/components/task/taskarea';
 import ModalAddPrint from 'libs/shared-components/src/lib/components/modal/addfile';
 import ModalAddFile from 'libs/shared-components/src/lib/components/modal/addedfile';
 import FileStructure from 'libs/shared-components/src/lib/components/filestructure/filestask';
@@ -45,9 +45,13 @@ import ModalEditInvitation from 'libs/shared-components/src/lib/components/modal
 
 import ModalAddInvitation from 'libs/shared-components/src/lib/components/modal/addinvitaton';
 
+import MeetingTab from 'libs/shared-components/src/lib/components/tabs/meetingtabs';
+import FilterPopup from 'libs/shared-components/src/lib/components/modal/fliter';
+import SelectFilePopup from 'libs/shared-components/src/lib/components/modal/selectfile';
 
-// import AccordionExampleMenu from 'libs/shared-components/src/lib/components/menu/sidebar';
-// const ListExampleFloated = React.lazy(() => import('libs/shared-components/src/lib/components/task/taskarea'));
+import ToggleButton from 'libs/shared-components/src/lib/components/tabs/togglebutton';
+
+import ModalCost from 'libs/shared-components/src/lib/components/modal/addcostpopup';
 
 // import { Sidebar } from 'semantic-ui-react';
 
@@ -99,7 +103,13 @@ export function App() {
       <ModalEditViewMilestone></ModalEditViewMilestone><br />
       <ModalAddProtocol></ModalAddProtocol><br />
       <ModalEditInvitation></ModalEditInvitation><br />
-      <ModalAddInvitation></ModalAddInvitation>
+      <ModalAddInvitation></ModalAddInvitation><br />
+      <MeetingTab></MeetingTab><br />
+      <FilterPopup></FilterPopup><br />
+      <SelectFilePopup></SelectFilePopup><br />
+      <ToggleButton></ToggleButton><br />
+      <ModalCost></ModalCost>
+
     </div>
 
 
