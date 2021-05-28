@@ -9,6 +9,7 @@ import img4 from 'libs/shared-components/src/dots.png';
 import img6 from 'libs/shared-components/src/dotss.png';
 import img7 from 'libs/shared-components/src/Image 3.png';
 import Canvas from './canvas';
+import { CreateFileTaskIndex } from '@cudo/mf-task-lib'
 
 
 function exampleReducer(state, action) {
@@ -97,13 +98,14 @@ export const AddPinFile = (props: FileStructureProps) => {
               <Grid stackable columns={2}>
                 <Grid.Column style={{ width: '70%' }}>
                   <Segment>
-                    {/* <img src={img7} className=" fluid " /> */}
                     <Canvas imgUrl={img7} ></Canvas>
                   </Segment>
+
                 </Grid.Column>
                 <Grid.Column style={{ width: '30%' }}>
                   <div style={{ background: '#F1F5F8', padding: '10px' }}>
-                    <Form.Field>
+                    <CreateFileTaskIndex ></CreateFileTaskIndex>
+                    {/* <Form.Field>
                       <label>Task Title <span className="danger">*</span></label>
                       <Input placeholder='task title' size='small' className="full-width" type="text" />
                     </Form.Field>
@@ -190,7 +192,7 @@ export const AddPinFile = (props: FileStructureProps) => {
                         X  Cancel
         </Button>
 
-                    </Form.Field>
+                    </Form.Field> */}
                   </div>
                   {/* <Form.Field>
 

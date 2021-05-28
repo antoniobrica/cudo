@@ -1,20 +1,23 @@
 import React from 'react';
 
 import '../../../style/index.scss';
-import { Tab, Accordion } from 'semantic-ui-react'
+import { Tab, Accordion, Dropdown } from 'semantic-ui-react'
 
 import img4 from 'libs/shared-components/src/folder.png';
 import img5 from 'libs/shared-components/src/image2.png';
 import img6 from 'libs/shared-components/src/eyeview.png';
 import img1 from 'libs/shared-components/src/powerpoint.png';
 import img2 from 'libs/shared-components/src/pdf.png';
+import img from 'libs/shared-components/src/user2.png';
+
 import ViewFileDetail from '../modal/viewdetailsfile';
 /* eslint-disable-next-line */
 export interface FileStructureProps {
 	files?,
 	downloadFiles,
 	downloadedImg,
-	viewFiles
+	viewFiles,
+	uploadNewVersion
 }
 
 export function FileStructure(props: FileStructureProps) {
@@ -57,6 +60,11 @@ export function FileStructure(props: FileStructureProps) {
 
 		}
 	})
+	const uploadNewVersion = (file) => {
+		console.log('file', file);
+		props.uploadNewVersion(file);
+
+	}
 	React.useEffect(() => {
 		if (props.files) {
 			setItems(props.files.map((file, i) => ({ key: i, title: file.isFolder ? file.folderName : file.BKPIDTitle, content: { content: (renderItems(file.files)) } })));
@@ -99,7 +107,17 @@ export function FileStructure(props: FileStructureProps) {
 								<a onClick={() => download(file.fileTitle)}>  <i className="ms-Icon ms-Icon--Download mr-10" aria-hidden="true"></i></a>
 								<a onClick={() => viewFile(file)}> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a>
 
-								<span className="mr-2"  >...</span>
+								<span className="mr-2"  >
+									<Dropdown text='...'>
+										<Dropdown.Menu>
+											<Dropdown.Item icon='pencil' text='Edit file detail' />
+											<Dropdown.Item onClick={() => uploadNewVersion(file)} icon='eye' text='Upload new version' />
+											<Dropdown.Item icon='check circle outline' text='Add task to this file' />
+											<Dropdown.Item icon='trash alternate outline' text='Delete' />
+										</Dropdown.Menu>
+									</Dropdown>
+								</span>
+
 							</div>
 
 						</div>

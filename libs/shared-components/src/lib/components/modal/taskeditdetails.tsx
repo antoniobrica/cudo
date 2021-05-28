@@ -56,7 +56,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
 
   React.useEffect(() => {
     if (props.taskData) {
-      const date = new Date(props.taskData.startDate).toLocaleDateString();
+      const date = new Date(props.taskData.startDate).toLocaleString();
       console.log('date', date);
       setStartDate(date);
       setTaskTitle(props.taskData.taskTitle);
@@ -151,7 +151,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
 
   return (
     <div id="navbar">
-      <Modal style={{width: '670px', marginLeft: '345px'}}
+      <Modal style={{ width: '670px', marginLeft: '345px' }}
         className="modal_media"
         onClose={cancel}
         onOpen={openf}

@@ -6,7 +6,7 @@ import { DeletesViewStateContext, DownloadsViewStateContext, SharedViewStateCont
 import { BlobItemDownload, BlobItemUpload } from 'apps/mf-document-app/src/azure-storage/types/azure-storage';
 import { tap } from 'rxjs/operators';
 import { BlobItem, ContainerItem } from '@azure/storage-blob';
-import { LoaderPage } from "@cudo/shared-components"
+import { LoaderPage, UploadNewVersion } from "@cudo/shared-components"
 import { useFileQuery } from '../../services/useRequest';
 import { GET_FILES } from '../../graphql/graphql';
 import ItemsDownloaded from 'apps/mf-document-app/src/azure-storage/components/ItemsDownloaded';
@@ -18,8 +18,9 @@ export function FileListing(props: FileListingProps) {
   const context = React.useContext(UploadsViewStateContext);
   // const [items, setItems] = React.useState<BlobItemUpload[]>([]);
   const [loader, setLoader] = React.useState(true);
+  const [openNew, setOpenNew] = React.useState(false);
   const [fileName, setFileName] = React.useState('');
-
+  const [fileVersion, setFileVersion] = React.useState(null);
   const sharedContext = React.useContext(SharedViewStateContext);
   const downloadsContext = React.useContext(DownloadsViewStateContext);
   // const viewContext = React.useContext(DownloadsViewStateContext);
@@ -78,6 +79,16 @@ export function FileListing(props: FileListingProps) {
     setFileName(data);
     downloadsContext.viewItem(data)
   }
+
+  const uploadNewVersion = (data) => {
+    console.log('data', data);
+    setFileVersion(data);
+    setOpenNew(true)
+  }
+  const cancel = () => {
+    setOpenNew(false)
+  }
+
   // console.log('isLOading', isLoading);
 
   // const getContainerItemsEffect = () => {
@@ -101,7 +112,12 @@ export function FileListing(props: FileListingProps) {
       {loading ?
         <LoaderPage /> :
         <div>
-          <FileStructure files={data?.File} downloadFiles={downloadFiles} viewFiles={viewFiles} downloadedImg={itemsd}></FileStructure>
+          {openNew ?
+            <UploadNewVersion
+              opennewF={true}
+              cancel={cancel}
+              file={fileVersion} /> : null}
+          <FileStructure files={data?.File} downloadFiles={downloadFiles} viewFiles={viewFiles} uploadNewVersion={uploadNewVersion} downloadedImg={itemsd}></FileStructure>
           {/* {itemsd.map((item, i) => (
             <div key={i}>
               {item.containerName}:
