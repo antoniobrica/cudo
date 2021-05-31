@@ -9,7 +9,7 @@ import { AccordionExampleMenu, ModalExampleModal2, Cardbar, Menubar, Tabsbar, Me
 // import ModalExampleModal2 from 'libs/shared-components/src/lib/components/modal/modal2';
 import ModalExampleCompany from 'libs/shared-components/src/lib/components/modal/companypopup';
 import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
-// import ListExampleFloated from 'libs/shared-components/src/lib/components/task/taskarea';
+import ListExampleFloated from 'libs/shared-components/src/lib/components/task/taskarea';
 import ModalAddPrint from 'libs/shared-components/src/lib/components/modal/addfile';
 import ModalAddFile from 'libs/shared-components/src/lib/components/modal/addedfile';
 import FileStructure from 'libs/shared-components/src/lib/components/filestructure/filestask';
@@ -53,12 +53,15 @@ import ToggleButton from 'libs/shared-components/src/lib/components/tabs/toggleb
 
 import ModalCost from 'libs/shared-components/src/lib/components/modal/addcostpopup';
 
+
+
 // import { Sidebar } from 'semantic-ui-react';
 
 export function App() {
   return (
-    <div>
-      <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div>Loading...</div>}>
+
+      <div>
         <Menubar></Menubar>
         <AccordionExampleMenu></AccordionExampleMenu>
         <Tabsbar></Tabsbar>
@@ -71,7 +74,7 @@ export function App() {
         <ModalExampleModal2></ModalExampleModal2><br />
         <ModalExampleCompany></ModalExampleCompany><br />
         <ModalExamplePrinting></ModalExamplePrinting><br />
-        {/* <ListExampleFloated></ListExampleFloated><br /><br /> */}
+        <ListExampleFloated></ListExampleFloated><br /><br />
         <ModalAddPrint></ModalAddPrint><br />
         <ModalAddFile></ModalAddFile><br />
         <FileStructure></FileStructure><br />
@@ -91,7 +94,7 @@ export function App() {
         <EditProject></EditProject><br />
         <UserProfile></UserProfile><br />
         <RegisterPage></RegisterPage><br />
-        {/* <UserProfileView></UserProfileView><br /> */}
+        <UserProfileView></UserProfileView><br />
         <LoaderPage></LoaderPage><br />
         <ModalAlert></ModalAlert><br />
         <ModalPlanningNew></ModalPlanningNew><br />
@@ -109,11 +112,13 @@ export function App() {
         <FilterPopup></FilterPopup><br />
         <SelectFilePopup></SelectFilePopup><br />
         <ToggleButton></ToggleButton><br />
-        <ModalCost></ModalCost>
-      </Suspense>
-    </div>
+        <ModalCost></ModalCost><br />
 
 
+      </div>
+
+
+    </Suspense>
 
 
   );
