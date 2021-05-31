@@ -44,6 +44,14 @@ export function Tasks(props: TasksProps) {
   const [editTaskOpen, setEditTaskOpen] = React.useState(false);
   const [workTypes, setWorkTypes] = React.useState([]);
 
+  const [taskData, setTaskData] = React.useState();
+  const [projectId, setProjectId] = React.useState('');
+
+  const [isUpdate, setIsUpdate] = React.useState(false);
+  const [isTaskFile, setIsTaskFile] = React.useState(false);
+  const [isNewTask, setIsNewTask] = React.useState(false);
+  const [taskStatus, settaskStatus] = React.useState('');
+
   const [addTask] = useTaskUpdateMutation(UPDATE_TASK, {
     variables: { referenceID },
   });
@@ -69,11 +77,6 @@ export function Tasks(props: TasksProps) {
     }
   )
 
-  const [taskData, setTaskData] = React.useState();
-  const [projectId, setProjectId] = React.useState('');
-
-  const [isUpdate, setIsUpdate] = React.useState(false);
-  const [taskStatus, settaskStatus] = React.useState('');
 
   const query = `query Game($projectId: String!) {
     projectById( projectId: $projectId)
@@ -306,18 +309,42 @@ export function Tasks(props: TasksProps) {
 
   }
 
+  const changeAdd = (data) => {
+    console.log('changeTask', data);
+    if (data === 'add') {
+      setIsNewTask(true)
+    }
+    if (data === 'file') {
+      setIsTaskFile(true)
+    }
+
+  }
+  const cancelNew = () => {
+    setIsTaskFile(false)
+  }
+  const cancelTask = () => {
+    setIsNewTask(false)
+  }
+
   return (
     <div>
 
       <div className="pin_area" >
         <FilterPopup />
 
-        <CreateTask workTypes={workTypes} onSuccess={refresh} />
-        {/* <ToggleButton></ToggleButton> */}
+
+        <ToggleButton changeAdd={changeAdd}></ToggleButton>
+        {
+          isNewTask ?
+            <CreateTask workTypes={workTypes} onSuccess={refresh} cancel={cancelTask} isNewTask={isNewTask} />
+            : null
+        }
       </div>
-      <div className="pin_area" style={{ marginLeft: 804 }} >
-        <FileListIndex />
-      </div>
+      { isTaskFile ? <div className="pin_area" style={{ marginLeft: 804 }} >
+        <FileListIndex isTaskFile={isTaskFile} cancel={cancelNew} />
+      </div> : null
+      }
+
       {/* <MfAccountAppLib/> */}
       {open ?
         <div className="pin_area" >

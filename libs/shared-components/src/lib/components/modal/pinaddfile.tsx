@@ -30,7 +30,9 @@ const countryOptions = [
 
 ]
 export interface FileStructureProps {
-  isOpen
+  isOpen,
+  filesData,
+  dowloadFilesData
 }
 export const AddPinFile = (props: FileStructureProps) => {
   const [open, setOpen] = React.useState(false);
@@ -46,6 +48,8 @@ export const AddPinFile = (props: FileStructureProps) => {
   const [followers, setfollowers] = React.useState("")
   const [phaseName, setPhasesName] = React.useState("");
   const [BKPTitle, setBKPIDTitle] = React.useState("");
+  const [imgUrl, setimgUrl] = React.useState('');
+
   const phaseOptions = [
     { key: 'Phase_1', value: 'Preliminary', text: 'Preliminary' },
     { key: 'Phase_2', value: 'Project Planning', text: 'Project Planning' },
@@ -78,6 +82,24 @@ export const AddPinFile = (props: FileStructureProps) => {
     }
   }, [props.isOpen]);
 
+  React.useEffect(() => {
+    if (props.filesData) {
+      console.log('filesData==', props.filesData);
+
+    }
+  }, [props.filesData])
+  React.useEffect(() => {
+    if (props.dowloadFilesData) {
+      console.log('dowloadFilesData-s', props.dowloadFilesData);
+
+      for (let i = 0; i < props.dowloadFilesData.length; i++) {
+        if (props.dowloadFilesData[i].filename == props.filesData.fileTitle) {
+          setimgUrl(props.dowloadFilesData[i].url);
+        }
+      }
+
+    }
+  })
   return (
     <>
       <div >
@@ -98,7 +120,7 @@ export const AddPinFile = (props: FileStructureProps) => {
               <Grid stackable columns={2}>
                 <Grid.Column style={{ width: '70%' }}>
                   <Segment>
-                    <Canvas imgUrl={img7} ></Canvas>
+                    <Canvas imgUrl={imgUrl} ></Canvas>
                   </Segment>
 
                 </Grid.Column>

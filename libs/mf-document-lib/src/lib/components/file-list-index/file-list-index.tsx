@@ -12,14 +12,15 @@ const client = new ApolloClient({
 });
 /* eslint-disable-next-line */
 export interface FileListIndexProps {
-
+  isTaskFile,
+  cancel
 }
 
 export function FileListIndex(props: FileListIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <FileList />
+        <FileList isTaskFile={props.isTaskFile} cancel={props.cancel} />
       </ApolloHooksProvider>
     </ApolloProvider>
   );
