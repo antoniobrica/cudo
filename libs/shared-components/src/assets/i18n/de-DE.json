@@ -9,6 +9,11 @@
   },
   "user_profile": "user profile",
   "first_name": "First Name",
+  "add_cost": {
+    "add_new_item": "Add New Item help",
+    "add_new": "Add New",
+    "select_house": "Select house"
+  },
   "language": {
     "en-GB": "English",
     "de-DE": "Deutsche"

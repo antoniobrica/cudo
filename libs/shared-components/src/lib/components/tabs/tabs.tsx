@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../../style/index.scss';
+import './../../../assets/style/index.scss'
 import { Tab, Image, Form, Grid, Card, Dropdown } from 'semantic-ui-react';
 
 import img8 from 'libs/shared-components/src/default_area.png';

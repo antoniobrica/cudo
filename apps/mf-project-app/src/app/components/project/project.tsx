@@ -2,7 +2,7 @@ import React from 'react';
 
 import './project.module.scss';
 import { ITodo, IProject } from "../../interfaces/project";
-import '../../../assets/style/index.scss'
+import './../../../assets/style/index.scss'
 import { Card, Icon,Form, Grid } from 'semantic-ui-react'
 
 /* eslint-disable-next-line */

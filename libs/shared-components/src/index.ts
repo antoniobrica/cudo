@@ -39,3 +39,4 @@ export * from './lib/components/modal/taskdetails';
 export * from './lib/components/modal/taskeditdetails';
 export * from './lib/components/modal/modal2';
 export * from './lib/components/modal/modal';
+export * from './lib/components/modal/addcostpopup';

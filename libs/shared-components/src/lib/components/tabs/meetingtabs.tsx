@@ -1,8 +1,8 @@
 import React from 'react';
 
-import '../../../style/index.scss';
+import './../../../assets/style/index.scss'
 import { Segment, Dropdown, Input, Grid, Form } from 'semantic-ui-react';
-import img from 'libs/shared-components/src/user.png'; 
+import img from 'libs/shared-components/src/user.png';
 import img6 from 'libs/shared-components/src/yellow_calendar.png';
 import img1 from 'libs/shared-components/src/blue_file.png';
 import img3 from 'libs/shared-components/src/pink.png';
@@ -10,7 +10,7 @@ import img2 from 'libs/shared-components/src/star_img.png';
 import img5 from 'libs/shared-components/src/green.png';
 
 /* eslint-disable-next-line */
-export interface MeetingTab {}
+export interface MeetingTab { }
 
 export function MeetingTab(props: MeetingTab) {
   const description = [
@@ -151,8 +151,8 @@ export function MeetingTab(props: MeetingTab) {
           </div>
         </div>
       </div>
-	  <br/>
-	  <div style={{ padding: '10px' }}>
+      <br />
+      <div style={{ padding: '10px' }}>
         <span className="preliminary-font">
           <img src={img1} className="  mr-10 " />
           <div
@@ -162,11 +162,11 @@ export function MeetingTab(props: MeetingTab) {
               marginBottom: '22px',
             }}
           >
-            
+
             Bulider meetings <span className="sessiontext">(2 sessions)</span>
           </div>
         </span>
-		 <div className="card1 card-custom gutter-b">
+        <div className="card1 card-custom gutter-b">
           <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
             <div className="d-flex align-items-center py-2">
               <span className="textt  mb-0 mr-10">#251</span>
@@ -176,7 +176,7 @@ export function MeetingTab(props: MeetingTab) {
                   <div className="navi-item mr-2">
                     <a href=" " className="navi-link active">
                       <span className="navi-text">
-                     
+
                         3 invitation - 1 protocol
                       </span>
                     </a>
@@ -187,7 +187,7 @@ export function MeetingTab(props: MeetingTab) {
                       <span className="navi-text"> - Electrical Work </span>
                     </a>
                   </div>
- 
+
                 </div>
               </div>
             </div>
@@ -195,8 +195,8 @@ export function MeetingTab(props: MeetingTab) {
             <div className="symbol-group symbol-hover py-2">
               <div className="symbol symbol-30">
                 <img src={img} />
-				<img src={img2} />
-                
+                <img src={img2} />
+
                 <span className="mr-2">
                   <Dropdown text="...">
                     <Dropdown.Menu>
@@ -213,9 +213,9 @@ export function MeetingTab(props: MeetingTab) {
             </div>
           </div>
         </div>
-	 </div>
-	 <br/>
-	 <div style={{ padding: '10px' }}>
+      </div>
+      <br />
+      <div style={{ padding: '10px' }}>
         <span className="preliminary-font">
           <img src={img3} className="  mr-10 " />
           <div
@@ -225,11 +225,11 @@ export function MeetingTab(props: MeetingTab) {
               marginBottom: '22px',
             }}
           >
-            
+
             Official meetings <span className="sessiontext">(1 sessions)</span>
           </div>
         </span>
-		 <div className="card1 card-custom gutter-b">
+        <div className="card1 card-custom gutter-b">
           <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
             <div className="d-flex align-items-center py-2">
               <span className="textt  mb-0 mr-10">#251</span>
@@ -239,7 +239,7 @@ export function MeetingTab(props: MeetingTab) {
                   <div className="navi-item mr-2">
                     <a href=" " className="navi-link active">
                       <span className="navi-text">
-                     
+
                         3 invitation - 1 protocol
                       </span>
                     </a>
@@ -250,7 +250,7 @@ export function MeetingTab(props: MeetingTab) {
                       <span className="navi-text"> - Electrical Work </span>
                     </a>
                   </div>
- 
+
                 </div>
               </div>
             </div>
@@ -258,8 +258,8 @@ export function MeetingTab(props: MeetingTab) {
             <div className="symbol-group symbol-hover py-2">
               <div className="symbol symbol-30">
                 <img src={img} />
-				<img src={img2} />
-                
+                <img src={img2} />
+
                 <span className="mr-2">
                   <Dropdown text="...">
                     <Dropdown.Menu>
@@ -276,9 +276,9 @@ export function MeetingTab(props: MeetingTab) {
             </div>
           </div>
         </div>
-	 </div>
-	 <br/>
-	 <div style={{ padding: '10px' }}>
+      </div>
+      <br />
+      <div style={{ padding: '10px' }}>
         <span className="preliminary-font">
           <img src={img5} className="  mr-10 " />
           <div
@@ -288,11 +288,11 @@ export function MeetingTab(props: MeetingTab) {
               marginBottom: '22px',
             }}
           >
-            
+
             Official meetings <span className="sessiontext">(1 sessions)</span>
           </div>
         </span>
-		 <div className="card1 card-custom gutter-b">
+        <div className="card1 card-custom gutter-b">
           <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
             <div className="d-flex align-items-center py-2">
               <span className="textt  mb-0 mr-10">#251</span>
@@ -302,7 +302,7 @@ export function MeetingTab(props: MeetingTab) {
                   <div className="navi-item mr-2">
                     <a href=" " className="navi-link active">
                       <span className="navi-text">
-                     
+
                         3 invitation - 1 protocol
                       </span>
                     </a>
@@ -313,7 +313,7 @@ export function MeetingTab(props: MeetingTab) {
                       <span className="navi-text"> - Electrical Work </span>
                     </a>
                   </div>
- 
+
                 </div>
               </div>
             </div>
@@ -321,8 +321,8 @@ export function MeetingTab(props: MeetingTab) {
             <div className="symbol-group symbol-hover py-2">
               <div className="symbol symbol-30">
                 <img src={img} />
-				<img src={img2} />
-                
+                <img src={img2} />
+
                 <span className="mr-2">
                   <Dropdown text="...">
                     <Dropdown.Menu>
@@ -339,7 +339,7 @@ export function MeetingTab(props: MeetingTab) {
             </div>
           </div>
         </div>
-	 </div>		
+      </div>
 
     </div>
   );

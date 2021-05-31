@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../../style/index.scss';
+import './../../../assets/style/index.scss'
 import { Segment, Dropdown, Input, Grid, Form } from 'semantic-ui-react'
 import img from 'libs/shared-components/src/user.png';
 import img2 from 'libs/shared-components/src/user2.png';
