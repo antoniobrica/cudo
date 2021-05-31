@@ -54,7 +54,7 @@ import SelectFilePopup from 'libs/shared-components/src/lib/components/modal/sel
 import ToggleButton from 'libs/shared-components/src/lib/components/tabs/togglebutton';
 
 import ModalCost from 'libs/shared-components/src/lib/components/modal/addcostpopup';
-
+import UploadComponent from 'libs/shared-components/src/lib/components/tabs/uploadcomponent';
 
 
 // import { Sidebar } from 'semantic-ui-react';
@@ -113,7 +113,7 @@ export function App() {
     <SelectFilePopup></SelectFilePopup><br/>
     <ToggleButton></ToggleButton><br/>
     <ModalCost></ModalCost><br/>
-  
+  <UploadComponent></UploadComponent>
     
     </div>
     
