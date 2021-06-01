@@ -1,28 +1,27 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn, Tree, TreeChildren, TreeParent, UpdateDateColumn } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
-import ReferanceTypeEntity from './reference-type.entity';
-import { FileParamEntity } from './file.param.entity';
 import * as uuid from 'uuid';
 import { PeopleEntity } from './people.entity';
+import FileReferencesEntity from './fileReference.entity';
 
-@Entity({ name: 'File' })
-
-export class FileEntity extends BaseEntity {
+@Entity({ name: 'uploadedFile' })
+@Tree("closure-table")
+export class UploadedFilesEntity extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id: number;
 
   @Expose()
   @Column({ unique: true })
-  projectFileID: string;
+  uploadedFileID: string;
 
   @Expose()
-  @Column()
-  isFolder?: boolean;
+  @Column({ nullable: true })
+  parentUploadedFileID?: string;
 
   @Column({ nullable: true })
   @Expose()
-  folderName: string;
+  directory: string;
 
   @Column({ nullable: true })
   @Expose()
@@ -64,6 +63,34 @@ export class FileEntity extends BaseEntity {
   @Expose()
   isEveryOneAllowed?: boolean;
 
+  @Column()
+  @Expose()
+  fileURL: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  fileTitle: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  fileType: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  fileVersion: number;
+
+  @Expose()
+  @Column({ nullable: true })
+  referenceID: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  referenceType: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  referenceTitle: string;
+
   @Expose()
   @CreateDateColumn()
   createdAt?: Date;
@@ -84,31 +111,33 @@ export class FileEntity extends BaseEntity {
   @Column({ nullable: true })
   isDeleted?: boolean;
 
-  @Expose()
-  @ManyToMany(type => FileParamEntity, { cascade: true })
-  @JoinTable()
-  files: FileParamEntity[];
+  @TreeChildren()
+  children: UploadedFilesEntity[];
+
+  @TreeParent()
+  parent: UploadedFilesEntity;
 
   @Expose()
-  @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.file)
-  reference: ReferanceTypeEntity;
+  @ManyToMany(() => FileReferencesEntity, { cascade: true })
+  @JoinTable()
+  fileReferences: FileReferencesEntity[];
 
   @Expose()
   // n:n relation with PeopleEntity
-  @ManyToMany(type => PeopleEntity, { cascade: true })
+  @ManyToMany(() => PeopleEntity, { cascade: true })
   @JoinTable()
   people: PeopleEntity[];
 
-  constructor(fileEntity: Partial<FileEntity>) {
+  constructor(uploadedFilesEntity: Partial<UploadedFilesEntity>) {
     super();
-    if (fileEntity) {
+    if (uploadedFilesEntity) {
       Object.assign(
         this,
-        plainToClass(FileEntity, fileEntity, {
+        plainToClass(UploadedFilesEntity, uploadedFilesEntity, {
           excludeExtraneousValues: true
         })
       )
-      this.projectFileID = this.projectFileID || uuid.v1();
+      this.uploadedFileID = this.uploadedFileID || uuid.v1();
     }
   }
 }

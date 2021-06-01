@@ -1,13 +1,16 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
-import SubTaskParams from '../../../utils/types/subtask.param.';
+import StatusFilterParam from '../../../utils/types/status.filter';
 import TaskFilterParams from '../../../utils/types/taskFilterParams';
+import taskTypeFilterParam from '../../../utils/types/taskType.filter';
 import SubTaskInput from '../dto/input/create-subtask.input';
+import { FileFilterInput } from '../dto/input/file-delete.input ';
 import {  SubTaskFilterInput } from '../dto/input/subtask-delete.input';
 import { TaskDeleteInput } from '../dto/input/task-delete.input';
 import { TaskDetailsUpdateInput } from '../dto/input/task-details-update.input';
 import { TaskDetailsInput } from '../dto/input/task-details.input';
 import { SubTaskModel } from '../models/subtask.model';
+import { TaskFileModel } from '../models/taskfile.model';
 import { TasksModel } from '../models/tasks.model';
 import { TasksService } from '../service/tasks.service';
 
@@ -17,10 +20,23 @@ export class TasksResolver {
     constructor(
         private readonly projectTasksService: TasksService) { }
 
+    // @Query(() => [TasksModel], { nullable: true })
+    // async tasks(@Args("referenceFilter") getTasksArgs: ReferenceFilterParams): Promise<TasksModel[]> {
+    //     return await this.projectTasksService.findAll(getTasksArgs)
+    // }
+
     @Query(() => [TasksModel], { nullable: true })
-    async tasks(@Args("referenceFilter") getTasksArgs: ReferenceFilterParams): Promise<TasksModel[]> {
-        return await this.projectTasksService.findAll(getTasksArgs)
+    async tasks(@Args("referenceFilter") getTasksArgs: ReferenceFilterParams,
+    @Args("statusFilter",{nullable: true}) status?:StatusFilterParam): Promise<TasksModel[]> {
+        return await this.projectTasksService.findAllByStatus(getTasksArgs,status)
     }
+
+    @Query(() => [TasksModel], { nullable: true })
+    async tasksByTasktypes(@Args("referenceFilter") getTasksArgs: ReferenceFilterParams,
+    @Args("taskTypeFilter",{nullable:true}) taskType?: taskTypeFilterParam): Promise<TasksModel[]> {
+        return await this.projectTasksService.findAlltasksBYTaskTypes(getTasksArgs,taskType)
+    }
+
 
     @Query(() => [TasksModel], { nullable: true })
     async taskById(@Args("taskFilterParams") taskFilterParams: TaskFilterParams): Promise<TasksModel[]> {
@@ -54,6 +70,13 @@ export class TasksResolver {
         @Args('subtaskDeleteInput') taskDeleteInput: SubTaskFilterInput
     ) {
         return this.projectTasksService.deletesubTaskByID(taskDeleteInput);
+    }
+
+    @Mutation(() => [TaskFileModel])
+    async removeTaskFile(
+        @Args('taskFileDeleteInput') fileDeleteInput: FileFilterInput
+    ) {
+        return this.projectTasksService.deleteFileByID(fileDeleteInput);
     }
 
 

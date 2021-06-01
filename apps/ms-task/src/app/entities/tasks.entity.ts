@@ -88,8 +88,31 @@ export class TasksEntity extends BaseEntity {
 
   @Expose()
   @Column({ nullable: true })
+  fileID?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  fileName?: string;
+
+  @Expose()
+  @Column({ nullable: true })
   status?: string;
 
+  @Expose()
+  @Column({ nullable: true })
+  taskTypeID?: string;
+
+  // @Expose()
+  // @Column({ nullable: true })
+  // taskTypeParentID?: string;
+
+  // @Expose()
+  // @Column({ nullable: true })
+  // taskTypeChildID?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  taskType?: string;
 
   @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.tasks)
   reference: ReferanceTypeEntity;

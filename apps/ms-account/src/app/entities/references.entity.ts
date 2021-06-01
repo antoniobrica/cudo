@@ -8,6 +8,7 @@ import { FileStructureEntity } from './filestructure.entity';
 import { FolderEntity } from './folder.entity';
 import { PhaseEntity } from './phase.entity';
 import UsersEntity from './users.entity';
+import { WorkTypeEntity } from './workType.entity';
 
 /**
  * 
@@ -81,6 +82,10 @@ export default class ReferanceTypeEntity extends BaseEntity {
     @Expose()
     @OneToMany(() => FileEntity, (file: FileEntity) => file.reference)
     file: FileEntity[];
+
+    @Expose()
+    @OneToMany(() => WorkTypeEntity, (worktype: WorkTypeEntity) => worktype.reference)
+    worktype: WorkTypeEntity[];
 
     constructor(referanceTypeEntity: Partial<ReferanceTypeEntity>) {
         super();

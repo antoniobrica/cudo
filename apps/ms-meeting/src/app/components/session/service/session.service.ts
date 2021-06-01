@@ -94,6 +94,9 @@ export class SessionService {
         return pagination
     }
 
+    public async findAllSessions(): Promise<SessionEntity[]> {
+        return await this.sessionRepository.find({relations:['reference','admins','members']});
+      }
     public async updateSessionByID(createInput: SessionDetailsUpdateInput): Promise<SessionEntity[]> {
         const { sessionBasics, admins, members } = createInput;
         const sessionDetails = await this.sessionRepository.find({

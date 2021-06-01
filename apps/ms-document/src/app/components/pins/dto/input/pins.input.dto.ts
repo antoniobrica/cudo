@@ -6,7 +6,7 @@ import { OneToMany } from "typeorm";
 export class PinsInputDto {
 
     @Field({ description: `FileID is for work and building` })
-    fileID: string;
+    uploadedFileID: string;
 
     @Field({ description: `X-Axis of pin` })
     x_axis: number;

@@ -7,10 +7,13 @@ import TaskFileEntity from '../../../entities/task-file.entity';
 import TaskFllowersEntity from '../../../entities/task-followers.entity';
 import { TasksEntity } from '../../../entities/tasks.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
+import StatusFilterParam from '../../../utils/types/status.filter';
 import TaskFilterParams from '../../../utils/types/taskFilterParams';
+import taskTypeFilterParam from '../../../utils/types/taskType.filter';
 import { ReferenceService } from '../../reference/service/reference.service';
 import SubTaskNotFoundException from '../dto/args/subTaskNotFound';
 import SubTaskInput from '../dto/input/create-subtask.input';
+import { FileFilterInput } from '../dto/input/file-delete.input ';
 import { SubTaskFilterInput } from '../dto/input/subtask-delete.input';
 import { TaskDeleteInput } from '../dto/input/task-delete.input';
 import { TaskDetailsUpdateInput } from '../dto/input/task-details-update.input';
@@ -91,6 +94,28 @@ export class TasksService {
             ,
             relations: ['reference', 'assignees', 'followers', 'files','subtasks']
         });
+    }
+
+    public async findAllByStatus(refFilter: ReferenceFilterParams, statusFilter?: StatusFilterParam): Promise<TasksEntity[]> {
+        const selectedReference = await this.referenceService.getReferenceById(refFilter)
+        if(statusFilter){
+         return await this.projectTasksRepository.find({
+            where: {status:statusFilter.status,
+                "reference": {
+                    id: selectedReference.id
+                }
+            }
+            ,
+            relations: ['reference', 'assignees', 'followers', 'files','subtasks'],
+        })} else{ return await this.projectTasksRepository.find({
+            where: {
+                "reference": {
+                    id: selectedReference.id
+                }
+            }
+            ,
+            relations: ['reference', 'assignees', 'followers', 'files','subtasks'],
+        }) }
     }
 
     public async findTaskById(taskFilterParams: TaskFilterParams): Promise<TasksEntity[]> {
@@ -195,5 +220,32 @@ export class TasksService {
         }
         throw new SubTaskNotFoundException(subtask.subtaskID);
       }
+
+
+    public async findAlltasksBYTaskTypes(refFilter: ReferenceFilterParams, taskTypeFilter: taskTypeFilterParam): Promise<TasksEntity[]> {
+        const selectedReference = await this.referenceService.getReferenceById(refFilter)
+        const query: any = {
+            where: {
+             taskType: taskTypeFilter.taskType,
+             reference: {
+               id: selectedReference.id,
+              },
+            },
+            relations: ['reference','assignees', 'followers', 'files','subtasks'],
+          };
+          if (taskTypeFilter.fileID) query.where.fileID = taskTypeFilter.fileID;
+          if (taskTypeFilter.taskTypeID) query.where.taskTypeID = taskTypeFilter.taskTypeID;
+          const result = await this.projectTasksRepository.find(query);
+          return result;
+    }
+
+    public async deleteFileByID(fileDeleteInput: FileFilterInput): Promise<TaskFileEntity[]> {
+        const { taskFileID } = fileDeleteInput;
+        const fileDetails = await this.taskFileRepository.delete({ taskFileID: taskFileID });
+        const files = await this.taskFileRepository.find({
+            where: { taskFileID: taskFileID },
+        });
+            return files; 
+    }
 
 }

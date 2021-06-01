@@ -17,6 +17,10 @@ export default class TaskFileEntity extends BaseEntity {
     fileID: string;
 
     @Expose()
+    @Column({ unique:true })
+    taskFileID: string;
+
+    @Expose()
     @Column({ nullable: true })
     fileName: string;
 
@@ -41,6 +45,8 @@ export default class TaskFileEntity extends BaseEntity {
                     excludeExtraneousValues: true
                 })
             )
+            this.taskFileID = this.taskFileID || uuid.v1();
+
         }
     }
 }
