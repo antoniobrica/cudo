@@ -34,7 +34,8 @@ export function PinFileStructure(props: FileStructureProps) {
     const [fType, setFtype] = React.useState('');
     const [isPinFile, setIsPinFile] = React.useState(false);
 
-    const [isTick, setIsTick] = React.useState(false);
+    const [tick, setTick] = React.useState([[]]);
+    const [isTick, setIsTick] = React.useState('');
 
     React.useEffect(() => {
         if (props.isPinFile) {
@@ -43,20 +44,24 @@ export function PinFileStructure(props: FileStructureProps) {
             setIsPinFile(props.isPinFile)
         }
     }, [props.isPinFile])
-    const tick = () => {
-        setIsTick(t => !t)
-        console.log();
+    // const tick = () => {
+    //     setIsTick(t => !t)
+    //     console.log();
 
-        console.log('istibcj', isTick);
+    //     console.log('istibcj', isTick);
 
-    }
+    // }
 
-    const viewFile = (data) => {
+    const viewFile = (data, id) => {
+        console.log('tick', isTick);
+
+        setIsTick(id)
+        console.log('tick', isTick);
+
         console.log('viewfile', data);
         setFtype(data.fileType);
         setView(true);
         setFilesData(data);
-        setIsTick(t => !t)
 
         props.viewFiles(data)
     }
@@ -89,15 +94,21 @@ export function PinFileStructure(props: FileStructureProps) {
     }
     React.useEffect(() => {
         if (props.files) {
-            setItems(props.files.map((file, i) => ({ key: i, title: file.isFolder ? file.folderName : file.BKPIDTitle, content: { content: (renderItems(file.files)) } })));
+            setItems(props.files.map((file, i) => ({ key: i, title: file.isFolder ? file.folderName : file.BKPIDTitle, content: { content: (renderItems(file.files, i)) } })));
         }
     }, [props.files]);
 
 
-    const renderItems = (data) => {
-        const files = data.map((file) => {
+    const renderItems = (data, i) => {
+        const files = data.map((file, id) => {
+            // console.log('idx', id, i);
+
+            // let set = tick;
+
+            // set[i][id] = false;
+            // setTick(set)
             return (
-                <div className="card1 card-custom gutter-b width_card">
+                <div className="card1 card-custom gutter-b width_card" key={id}>
 
                     <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
 
@@ -131,11 +142,11 @@ export function PinFileStructure(props: FileStructureProps) {
                                 {/* <a onClick={() => download(file.fileTitle)}>  <i className="ms-Icon ms-Icon--Download mr-10" aria-hidden="true"></i></a> */}
                                 {/* <a onClick={() => viewFile(file)}> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a> */}
                                 <a
-                                    onClick={() => viewFile(file)}
+                                    onClick={() => viewFile(file, id)}
                                     className="navi-link active"
                                     style={{ marginLeft: '320px' }}
                                 >
-                                    {isTick ? <img src={img8} /> : <img src={img9} />}
+                                    {isTick != id ? <img src={img8} /> : <img src={img9} />}
 
                                 </a>
 
