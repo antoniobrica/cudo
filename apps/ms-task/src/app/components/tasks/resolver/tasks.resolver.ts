@@ -1,8 +1,10 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
+import SortFilterParam from '../../../utils/types/sortParam';
 import StatusFilterParam from '../../../utils/types/status.filter';
 import TaskFilterParams from '../../../utils/types/taskFilterParams';
 import taskTypeFilterParam from '../../../utils/types/taskType.filter';
+import { DeleteTaskBooleanInput } from '../dto/args/delete.task';
 import SubTaskInput from '../dto/input/create-subtask.input';
 import { FileFilterInput } from '../dto/input/file-delete.input ';
 import {  SubTaskFilterInput } from '../dto/input/subtask-delete.input';
@@ -27,8 +29,10 @@ export class TasksResolver {
 
     @Query(() => [TasksModel], { nullable: true })
     async tasks(@Args("referenceFilter") getTasksArgs: ReferenceFilterParams,
-    @Args("statusFilter",{nullable: true}) status?:StatusFilterParam): Promise<TasksModel[]> {
-        return await this.projectTasksService.findAllByStatus(getTasksArgs,status)
+    @Args("statusFilter",{nullable: true}) status?:StatusFilterParam,
+    @Args("sortFilter",{nullable: true}) sortFilter?:SortFilterParam,
+    ): Promise<TasksModel[]> {
+        return await this.projectTasksService.findAllByStatus(getTasksArgs,status,sortFilter)
     }
 
     @Query(() => [TasksModel], { nullable: true })
@@ -58,12 +62,12 @@ export class TasksResolver {
         return this.projectTasksService.updateTaskByID(createProjectTaskInput);
     }
 
-    @Mutation(() => [TasksModel])
-    async deleteTask(
-        @Args('taskDeleteInput') taskDeleteInput: TaskDeleteInput
-    ) {
-        return this.projectTasksService.deleteTaskByID(taskDeleteInput);
-    }
+    // @Mutation(() => [TasksModel])
+    // async deleteTask(
+    //     @Args('taskDeleteInput') taskDeleteInput: TaskDeleteInput
+    // ) {
+    //     return this.projectTasksService.deleteTaskByID(taskDeleteInput);
+    // }
 
     @Mutation(() => [SubTaskModel])
     async deleteSubTask(
@@ -87,7 +91,15 @@ export class TasksResolver {
     ) {
       return this.projectTasksService.updateSubTask(update,createsub);
     }
-  
 
+
+    @Mutation(() => TasksModel)
+    async deleteTask(
+        @Args('taskDeleteInput') taskDeleteInput: TaskDeleteInput,
+        @Args('taskDeleteBoolean') taskDeleteBoolean: DeleteTaskBooleanInput
+    ) {
+        return this.projectTasksService.deleteTask(taskDeleteInput,taskDeleteBoolean);
+    }
+  
 }
 

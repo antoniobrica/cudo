@@ -7,10 +7,12 @@ import TaskFileEntity from '../../../entities/task-file.entity';
 import TaskFllowersEntity from '../../../entities/task-followers.entity';
 import { TasksEntity } from '../../../entities/tasks.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
+import SortFilterParam from '../../../utils/types/sortParam';
 import StatusFilterParam from '../../../utils/types/status.filter';
 import TaskFilterParams from '../../../utils/types/taskFilterParams';
 import taskTypeFilterParam from '../../../utils/types/taskType.filter';
 import { ReferenceService } from '../../reference/service/reference.service';
+import { DeleteTaskBooleanInput } from '../dto/args/delete.task';
 import SubTaskNotFoundException from '../dto/args/subTaskNotFound';
 import SubTaskInput from '../dto/input/create-subtask.input';
 import { FileFilterInput } from '../dto/input/file-delete.input ';
@@ -96,20 +98,78 @@ export class TasksService {
         });
     }
 
-    public async findAllByStatus(refFilter: ReferenceFilterParams, statusFilter?: StatusFilterParam): Promise<TasksEntity[]> {
+    public async findAllByStatus(refFilter: ReferenceFilterParams, statusFilter?: StatusFilterParam, sortFilter?: SortFilterParam): Promise<TasksEntity[]> {
         const selectedReference = await this.referenceService.getReferenceById(refFilter)
         if(statusFilter){
          return await this.projectTasksRepository.find({
-            where: {status:statusFilter.status,
+            where: {"isDeleted":false||null,
+                status:statusFilter.status,
                 "reference": {
                     id: selectedReference.id
                 }
             }
             ,
             relations: ['reference', 'assignees', 'followers', 'files','subtasks'],
-        })} else{ return await this.projectTasksRepository.find({
+        })}
+        
+        if(sortFilter){
+            if(sortFilter.sortBy=="DESC"){
+                return await this.projectTasksRepository.find({
+                    where: {"isDeleted":false||null,
+                        "reference": {
+                            id: selectedReference.id
+                        }
+                    },order:{createdAt:"DESC"}
+                    ,
+                    relations: ['reference', 'assignees', 'followers', 'files','subtasks'],
+                }) 
+            }
+            else{
+                return await this.projectTasksRepository.find({
+                    where: {"isDeleted":false||null,
+                        "reference": {
+                            id: selectedReference.id
+                        }
+                    }
+                    ,
+                    relations: ['reference', 'assignees', 'followers', 'files','subtasks'],
+                })
+
+            }
+        }
+
+        if(statusFilter && sortFilter){
+            if(sortFilter.sortBy=="DESC"){
+                return await this.projectTasksRepository.find({
+                    where: {"isDeleted":false||null,
+                        status:statusFilter.status,
+                        "reference": {
+                            id: selectedReference.id
+                        }
+                    },order:{createdAt:"DESC"}
+                    ,
+                    relations: ['reference', 'assignees', 'followers', 'files','subtasks'],
+                }) 
+            }
+            else{
+                return await this.projectTasksRepository.find({
+                    where: {"isDeleted":false||null,
+                        status:statusFilter.status,
+                        "reference": {
+                            id: selectedReference.id
+                        }
+                    }
+                    ,
+                    relations: ['reference', 'assignees', 'followers', 'files','subtasks'],
+                })
+
+            }
+        }
+
+
+        else{ return await this.projectTasksRepository.find({
             where: {
-                "reference": {
+                "reference": {"isDeleted":false||null,
                     id: selectedReference.id
                 }
             }
@@ -133,13 +193,14 @@ export class TasksService {
             where: { taskID: taskBasics.taskID },
             relations: ['reference', 'assignees', 'followers', 'files','subtasks']
         });
+
         if (taskeDetails.length <= 0)
             throw new HttpException('Task Not Found', HttpStatus.NOT_FOUND);
         const taskeDetail = taskeDetails[0];
-        taskeDetail.assignees = [];
-        taskeDetail.followers = [];
-        taskeDetail.files = [];
-        taskeDetail.subtasks = [];
+        // taskeDetail.assignees = [];
+        // taskeDetail.followers = [];
+        // taskeDetail.files = [];
+        // taskeDetail.subtasks = [];
         if (assignees)
             for (let index = 0; index < assignees.length; index++) {
                 const assigneesentity = new TaskAssigneessEntity(assignees[index])
@@ -164,9 +225,13 @@ export class TasksService {
         if (subtasks)
             for (let index = 0; index < subtasks.length; index++) {
                 const subtaskEntity = new SubTaskEntity(subtasks[index])
+                // const subtask = await this.subTaskRepository.find({where:{subtaskTitle:subtasks[0].subtaskTitle}})
+                // if(subtask){
                 const newSubTask = await this.subTaskRepository.create({ ...subtaskEntity });
                 const savedSubTask = await this.subTaskRepository.save(newSubTask);
                 taskeDetail.subtasks.push(savedSubTask)
+                // }else throw new HttpException('SubTask Exists', HttpStatus.NOT_FOUND);
+
             }
 
         taskBasics.BKPID ? taskeDetail.BKPID = taskBasics.BKPID : null;
@@ -225,7 +290,7 @@ export class TasksService {
     public async findAlltasksBYTaskTypes(refFilter: ReferenceFilterParams, taskTypeFilter: taskTypeFilterParam): Promise<TasksEntity[]> {
         const selectedReference = await this.referenceService.getReferenceById(refFilter)
         const query: any = {
-            where: {
+            where: {"isDeleted":false||null,
              taskType: taskTypeFilter.taskType,
              reference: {
                id: selectedReference.id,
@@ -248,4 +313,14 @@ export class TasksService {
             return files; 
     }
 
+    public async deleteTask(taskDeleteInput: TaskDeleteInput, deleteTaskBooleanInput:DeleteTaskBooleanInput): Promise<TasksEntity> {
+        const task = await this.projectTasksRepository.findOne({ where:{taskID:taskDeleteInput.taskID} });
+        if (task) {
+            await this.projectTasksRepository.update(task.id, { ...deleteTaskBooleanInput });
+            const updatedPost = await this.projectTasksRepository.findOne(task.id);
+            return updatedPost;
+          }
+          throw new HttpException('Task Not Found', HttpStatus.NOT_FOUND);
+        }
+            
 }

@@ -44,6 +44,9 @@ export class TasksModel {
   @Field({ nullable: true, description: `Task Status` })
   status?: string;
 
+  @Field({ nullable: true, description: `Task Deleted or not` })
+  isDeleted?: Boolean;
+
   @Field({ nullable: true, description: `Description of task` })
   description?: string;
 
