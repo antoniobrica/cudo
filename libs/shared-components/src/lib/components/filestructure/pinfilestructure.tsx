@@ -133,7 +133,7 @@ export function PinFileStructure(props: FileStructureProps) {
                                 <a
                                     onClick={() => viewFile(file)}
                                     className="navi-link active"
-                                    style={{ marginLeft: '260px' }}
+                                    style={{ marginLeft: '320px' }}
                                 >
                                     {isTick ? <img src={img8} /> : <img src={img9} />}
 
@@ -152,7 +152,7 @@ export function PinFileStructure(props: FileStructureProps) {
 
 
     return (
-        <div className=" navbar-collapse box-shadow ">
+        <div className=" navbar-collapse box-shadow " style={{ marginTop: '-36px', marginLeft: '-19px' }}>
             {/* {view && imgUrl.length > 0 ?
                 <div>
                     <ViewFileDetail open={view} fType={fType} filesData={filesData} dowloadFilesData={props.downloadedImg} ></ViewFileDetail>

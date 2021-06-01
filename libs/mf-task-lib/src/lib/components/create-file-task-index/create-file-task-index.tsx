@@ -13,13 +13,15 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 /* eslint-disable-next-line */
-export interface CreateFileTaskIndexProps { }
+export interface CreateFileTaskIndexProps {
+  close
+}
 
 export function CreateFileTaskIndex(props: CreateFileTaskIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <CreateFileTask ></CreateFileTask>
+        <CreateFileTask close={props.close}></CreateFileTask>
       </ApolloHooksProvider>
     </ApolloProvider>
   );

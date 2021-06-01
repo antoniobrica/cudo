@@ -13,7 +13,7 @@ import axios from 'axios';
 
 
 /* eslint-disable-next-line */
-export interface CreateFileTaskProps { }
+export interface CreateFileTaskProps { close }
 
 export function CreateFileTask(props: CreateFileTaskProps) {
   const [open, setOpen] = React.useState(false)
@@ -167,8 +167,13 @@ export function CreateFileTask(props: CreateFileTaskProps) {
     console.log('worktypeName-', workTypeD);
   }
 
+  const cancel = () => {
+    setOpen(false)
+    props.close()
+  }
   const handleSaveTask = () => {
-    setOpen(false);
+    // setOpen(false);
+
     addTask({
       variables: {
         taskTitle, startDate, endDate, estimatedDays,
@@ -191,7 +196,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
         });
       }
     });
-
+    props.close()
   };
   const onDescriptionChange = e => {
     console.log('des=>', e.target.value);
@@ -344,7 +349,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
           positive
           size='mini' className="grey-btn"
         />
-        <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+        <Button size='mini' className="icon-border" onClick={cancel}>
           X  Cancel
         </Button>
       </div>

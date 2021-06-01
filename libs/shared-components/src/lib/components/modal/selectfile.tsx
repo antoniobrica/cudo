@@ -21,6 +21,7 @@ import img8 from 'libs/shared-components/src/circle_blue.png';
 import img9 from 'libs/shared-components/src/grey_circle.png';
 import PinFileStructure from '../filestructure/pinfilestructure';
 import AddPinFile from './pinaddfile';
+import FilterPopup from './fliter';
 export interface FileStructureProps {
   // files?,
   downloadFiles,
@@ -140,6 +141,7 @@ export function SelectFilePopup(props: FileStructureProps) {
                     <Form.Field>
                       &nbsp;&nbsp;
                       <img src={img1} className="  mr-10 " />
+                      {/* <FilterPopup /> */}
                       <Button size="mini" className="grey-btn" style={{ marginLeft: 40 }}>
                         + Add New
                       </Button>

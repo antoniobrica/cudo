@@ -25,8 +25,10 @@ export function ToggleButton(props: BtnProps) {
           floating
           options={options}
           onChange={changeAdd}
+          trigger={<></>}
         />
       </Button.Group>
+
     </div>
 
   )

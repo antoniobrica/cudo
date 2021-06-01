@@ -126,7 +126,7 @@ export const AddPinFile = (props: FileStructureProps) => {
                 </Grid.Column>
                 <Grid.Column style={{ width: '30%' }}>
                   <div style={{ background: '#F1F5F8', padding: '10px' }}>
-                    <CreateFileTaskIndex ></CreateFileTaskIndex>
+                    <CreateFileTaskIndex close={close}></CreateFileTaskIndex>
                     {/* <Form.Field>
                       <label>Task Title <span className="danger">*</span></label>
                       <Input placeholder='task title' size='small' className="full-width" type="text" />
