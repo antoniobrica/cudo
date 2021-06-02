@@ -9,15 +9,9 @@
     "database": "democudodevdb",
     "synchronize": false,
     "logging": false,
-    "entities": [
-      "src/app/entities/**/*.ts"
-    ],
-    "migrations": [
-      "src/app/migration/**/*.ts"
-    ],
-    "subscribers": [
-      "src/app/subscriber/**/*.ts"
-    ],
+    "entities": ["src/app/entities/**/*.ts"],
+    "migrations": ["src/app/migration/**/*.ts"],
+    "subscribers": ["src/app/subscriber/**/*.ts"],
     "cli": {
       "entitiesDir": "src/app/entity",
       "migrationsDir": "src/app/migration",
@@ -34,15 +28,9 @@
     "database": "democudodevdb",
     "synchronize": false,
     "logging": false,
-    "entities": [
-      "src/app/entities/**/*.ts"
-    ],
-    "migrations": [
-      "src/app/migration/**/*.ts"
-    ],
-    "subscribers": [
-      "src/app/subscriber/**/*.ts"
-    ],
+    "entities": ["src/app/entities/**/*.ts"],
+    "migrations": ["src/app/migration/**/*.ts"],
+    "subscribers": ["src/app/subscriber/**/*.ts"],
     "cli": {
       "entitiesDir": "src/app/entity",
       "migrationsDir": "src/app/migration",
@@ -60,15 +48,9 @@
     "synchronize": true,
     "logging": false,
     "dropSchema": true,
-    "entities": [
-      "../**/*.entity.{ts,js}"
-    ],
-    "migrations": [
-      "../**/*.entity.{ts,js}"
-    ],
-    "subscribers": [
-      "../**/*.entity.{ts,js}"
-    ],
+    "entities": ["../**/*.entity.{ts,js}"],
+    "migrations": ["../**/*.entity.{ts,js}"],
+    "subscribers": ["../**/*.entity.{ts,js}"],
     "cli": {
       "entitiesDir": "../apps/ms-task/src/entity",
       "migrationsDir": "../apps/ms-task/src/migration",

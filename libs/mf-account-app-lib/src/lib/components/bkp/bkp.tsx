@@ -91,7 +91,7 @@ export function Bkp(props: BkpProps) {
   return (
     <Form.Field>
       <label>Select BKP   </label>
-      <Select placeholder='Select' className="small"
+      <Select name='bkp' placeholder='Select' className="small"
         options={items2}
         value={BKPID}
         onChange={onBkp}

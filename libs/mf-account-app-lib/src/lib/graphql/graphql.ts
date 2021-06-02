@@ -30,7 +30,7 @@ export const GET_BKP = gql`{
 }`
 
 export const GET_FOLDER = gql`{
-  Folders(referenceFilter: { referenceID: "dapr", referenceType: COMPANY }) { 
+  Folders(referenceFilter: { referenceID: "3", referenceType: COMPANY }) { 
     folderTitle 
     folderID 
   } 
@@ -51,6 +51,15 @@ export const GET_FILE_STRUCTURE = gql`{
       fileStructureID
       fileStructureTitle
       
+    }
+}`
+
+export const GET_STRUCTURE = gql`{
+  structureRoots(referenceFilter: {referenceType:COMPANY,referenceID:"Sftobiz_1234" }) {
+    structureID
+    referenceID
+    referenceType
+    structureName
     }
 }`
 

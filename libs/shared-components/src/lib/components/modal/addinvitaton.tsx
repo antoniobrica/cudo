@@ -217,8 +217,7 @@ function ModalAddInvitation() {
                   <Grid.Column>
                     <Form.Field>
                       <label>Select protocols</label>
-                      <Select placeholder='Select Company'   className="full-width" />
-                   
+                      <Select options={countryOptions} placeholder='Select Company' className="full-width" />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>

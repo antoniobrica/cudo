@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../../style/index.scss';
+import './../../../assets/style/index.scss'
 import { Tab, Grid, Accordion, Table, Form } from 'semantic-ui-react'
 import img4 from 'libs/shared-components/src/Burj-Khalifa.png';
 import img5 from 'libs/shared-components/src/edit.png';
