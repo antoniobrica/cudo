@@ -160,6 +160,9 @@ export function CreateTask(props: CreateTaskProps) {
       variables: {
         taskTitle, startDate, endDate, estimatedDays,
         sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
+        fileID: "",
+        fileName: "$fileName",
+        taskTypeID: "$taskTypeID",
         files,
         description,
         subtasks: []

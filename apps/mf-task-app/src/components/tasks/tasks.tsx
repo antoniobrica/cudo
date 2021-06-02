@@ -156,7 +156,7 @@ export function Tasks(props: TasksProps) {
         taskID, status, files: [], taskTitle: task.taskTitle, startDate: task.startDate, endDate: task.endDate,
         estimatedDays: task.estimatedDays, sendNotification: false, BKPID: task.BKPID, BKPTitle: task.BKPTitle,
         saveTaskAsTemplate: task.saveTaskAsTemplate, phaseID: task.phaseID, phaseName: task.phaseName, referenceID: task.referenceID,
-        description: task.description
+        description: task.description, subtasks: []
       },
       update: (
         cache

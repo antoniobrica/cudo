@@ -117,7 +117,7 @@ export function FileListing(props: FileListingProps) {
               opennewF={true}
               cancel={cancel}
               file={fileVersion} /> : null}
-          <FileStructure files={data?.File} downloadFiles={downloadFiles} viewFiles={viewFiles} uploadNewVersion={uploadNewVersion} downloadedImg={itemsd}></FileStructure>
+          <FileStructure files={data?.uploadedFiles} downloadFiles={downloadFiles} viewFiles={viewFiles} uploadNewVersion={uploadNewVersion} downloadedImg={itemsd}></FileStructure>
           {/* {itemsd.map((item, i) => (
             <div key={i}>
               {item.containerName}:

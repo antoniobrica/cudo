@@ -21,7 +21,7 @@ export const GET_USERS = gql`
 `;
 
 export const GET_BKP = gql`{
-    Bkp(referenceFilter:{referenceType:COMPANY,referenceID:"3"})
+    Bkp(referenceFilter:{referenceType:COMPANY,referenceID:"dapr"})
    {
     bkpID
     bkpTitle
@@ -38,7 +38,7 @@ export const GET_FOLDER = gql`{
 }`
 
 export const GET_FILE_TYPE = gql`{
-    FileTypes(referenceFilter: { referenceType: COMPANY, referenceID: "3" }
+    FileTypes(referenceFilter: { referenceType: COMPANY, referenceID: "dapr" }
   ){
       fileTypeID                      
       fileTypeTitle
@@ -46,7 +46,7 @@ export const GET_FILE_TYPE = gql`{
     }
 }`
 export const GET_FILE_STRUCTURE = gql`{
-  FileStructure(referenceFilter: { referenceType: COMPANY, referenceID: "3" }
+  FileStructure(referenceFilter: { referenceType: COMPANY, referenceID: "dapr" }
   ){
       fileStructureID
       fileStructureTitle
@@ -55,7 +55,7 @@ export const GET_FILE_STRUCTURE = gql`{
 }`
 
 export const GET_PHASE = gql`{
-  Phase(referenceFilter:{referenceType:COMPANY,referenceID:"3"})
+  Phase(referenceFilter:{referenceType:COMPANY,referenceID:"dapr"})
  {
   id
 phaseTitle

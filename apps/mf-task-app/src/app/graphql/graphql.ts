@@ -53,6 +53,9 @@ mutation CreateTask(
   $phaseName: String!,
   $referenceID: String!,
   $description: String!,
+  $fileID: String! 
+  $fileName: String!
+  $taskTypeID: String!
   $files: [TaskFileParams!]!
   $subtasks: [SubTaskParams!]!
   ){ 
@@ -75,6 +78,10 @@ mutation CreateTask(
       phaseName: $phaseName,
       status: INPROGRESS,
       description: $description
+     fileID : $fileID
+     fileName:$fileName
+     taskTypeID:$taskTypeID
+     taskType:PROTOCOL
         }
       assignees:[{userID:"2",userName:"Ashutosh"},{userID:"3",userName:"Ashutosh"}]
       followers:[{userID:"1",userName:"Ashutosh"}]

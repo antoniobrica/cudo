@@ -67,28 +67,32 @@ export function FileStructure(props: FileStructureProps) {
 	}
 	React.useEffect(() => {
 		if (props.files) {
-			setItems(props.files.map((file, i) => ({ key: i, title: file.isFolder ? file.folderName : file.BKPIDTitle, content: { content: (renderItems(file.files)) } })));
+			console.log('files==', props.files);
+
+			setItems(props.files.map((file, i) => ({ key: i, title: file.directory ? file.directory : file.BKPIDTitle, content: { content: (renderItems(file)) } })));
 		}
 	}, [props.files]);
 	const renderItems = (data) => {
-		const files = data.map((file) => {
-			return (
-				<div className="card1 card-custom gutter-b width_card">
+		console.log("files==>", data);
 
-					<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
+		// const files = data.map((file) => {
+		return (
+			<div className="card1 card-custom gutter-b width_card">
 
-						<div className="d-flex align-items-center py-2">
-							<span>
-								{file.fileType == ("image/jpeg" || "image/png")
-									?
-									<img src={img5} className="  mr-10 " /> :
-									<img src={img2} className="  mr-10 " />
-								}
+				<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
 
-							</span>
+					<div className="d-flex align-items-center py-2">
+						<span>
+							{data.fileType == ("image/jpeg" || "image/png")
+								?
+								<img src={img5} className="  mr-10 " /> :
+								<img src={img2} className="  mr-10 " />
+							}
 
-							<span className="font-weight-bold mb-0 mr-10">{file.fileTitle}</span>
-							{/* <div className="d-flex mr-3">
+						</span>
+
+						<span className="font-weight-bold mb-0 mr-10">{data.fileTitle}</span>
+						{/* <div className="d-flex mr-3">
 
 								<div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
 
@@ -100,33 +104,33 @@ export function FileStructure(props: FileStructureProps) {
 
 							</div> */}
 
-						</div>
+					</div>
 
-						<div className="symbol-group symbol-hover py-2">
-							<div className="symbol symbol-30">
-								<a onClick={() => download(file.fileTitle)}>  <i className="ms-Icon ms-Icon--Download mr-10" aria-hidden="true"></i></a>
-								<a onClick={() => viewFile(file)}> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a>
+					<div className="symbol-group symbol-hover py-2">
+						<div className="symbol symbol-30">
+							<a onClick={() => download(data.fileTitle)}>  <i className="ms-Icon ms-Icon--Download mr-10" aria-hidden="true"></i></a>
+							<a onClick={() => viewFile(data)}> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a>
 
-								<span className="mr-2"  >
-									<Dropdown text='...'>
-										<Dropdown.Menu>
-											<Dropdown.Item icon='pencil' text='Edit file detail' />
-											<Dropdown.Item onClick={() => uploadNewVersion(file)} icon='eye' text='Upload new version' />
-											<Dropdown.Item icon='check circle outline' text='Add task to this file' />
-											<Dropdown.Item icon='trash alternate outline' text='Delete' />
-										</Dropdown.Menu>
-									</Dropdown>
-								</span>
-
-							</div>
+							<span className="mr-2"  >
+								<Dropdown text='...'>
+									<Dropdown.Menu>
+										<Dropdown.Item icon='pencil' text='Edit file detail' />
+										<Dropdown.Item onClick={() => uploadNewVersion(data)} icon='eye' text='Upload new version' />
+										<Dropdown.Item icon='check circle outline' text='Add task to this file' />
+										<Dropdown.Item icon='trash alternate outline' text='Delete' />
+									</Dropdown.Menu>
+								</Dropdown>
+							</span>
 
 						</div>
 
 					</div>
+
 				</div>
-			)
-		})
-		return files;
+			</div>
+		)
+		// })
+		// return data;
 	}
 	const rootPanels = [
 		{ key: 'panel-1', title: 'General', content: { content: <a href=''>+ Add item</a> }, },

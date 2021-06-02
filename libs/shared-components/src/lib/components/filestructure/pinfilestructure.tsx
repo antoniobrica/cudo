@@ -94,36 +94,30 @@ export function PinFileStructure(props: FileStructureProps) {
     }
     React.useEffect(() => {
         if (props.files) {
-            setItems(props.files.map((file, i) => ({ key: i, title: file.isFolder ? file.folderName : file.BKPIDTitle, content: { content: (renderItems(file.files, i)) } })));
+            setItems(props.files.map((file, i) => ({ key: i, title: file.directory ? file.directory : file.BKPIDTitle, content: { content: (renderItems(file, i)) } })));
         }
     }, [props.files]);
 
 
     const renderItems = (data, i) => {
-        const files = data.map((file, id) => {
-            // console.log('idx', id, i);
+        // const files = data.map((file, id) => {
+        return (
+            <div className="card1 card-custom gutter-b width_card" >
 
-            // let set = tick;
+                <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
 
-            // set[i][id] = false;
-            // setTick(set)
-            return (
-                <div className="card1 card-custom gutter-b width_card" key={id}>
+                    <div className="d-flex align-items-center py-2">
+                        <span>
+                            {data.fileType == ("image/jpeg" || "image/png")
+                                ?
+                                <img src={img5} className="  mr-10 " /> :
+                                <img src={img2} className="  mr-10 " />
+                            }
 
-                    <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
+                        </span>
 
-                        <div className="d-flex align-items-center py-2">
-                            <span>
-                                {file.fileType == ("image/jpeg" || "image/png")
-                                    ?
-                                    <img src={img5} className="  mr-10 " /> :
-                                    <img src={img2} className="  mr-10 " />
-                                }
-
-                            </span>
-
-                            <span className="font-weight-bold mb-0 mr-10">{file.fileTitle}</span>
-                            {/* <div className="d-flex mr-3">
+                        <span className="font-weight-bold mb-0 mr-10">{data.fileTitle}</span>
+                        {/* <div className="d-flex mr-3">
 
 								<div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
 
@@ -135,30 +129,30 @@ export function PinFileStructure(props: FileStructureProps) {
 
 							</div> */}
 
-                        </div>
+                    </div>
 
-                        <div className="symbol-group symbol-hover">
-                            <div style={{ marginTop: '-33px' }}>
-                                {/* <a onClick={() => download(file.fileTitle)}>  <i className="ms-Icon ms-Icon--Download mr-10" aria-hidden="true"></i></a> */}
-                                {/* <a onClick={() => viewFile(file)}> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a> */}
-                                <a
-                                    onClick={() => viewFile(file, id)}
-                                    className="navi-link active"
-                                    style={{ marginLeft: '320px' }}
-                                >
-                                    {isTick != id ? <img src={img8} /> : <img src={img9} />}
+                    <div className="symbol-group symbol-hover">
+                        <div style={{ marginTop: '-33px' }}>
+                            {/* <a onClick={() => download(file.fileTitle)}>  <i className="ms-Icon ms-Icon--Download mr-10" aria-hidden="true"></i></a> */}
+                            {/* <a onClick={() => viewFile(file)}> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a> */}
+                            <a
+                                onClick={() => viewFile(data, i)}
+                                className="navi-link active"
+                                style={{ marginLeft: '320px' }}
+                            >
+                                <img src={img8} />
 
-                                </a>
-
-                            </div>
+                            </a>
 
                         </div>
 
                     </div>
+
                 </div>
-            )
-        })
-        return files;
+            </div>
+        )
+        // })
+        // return files;
     }
 
 
