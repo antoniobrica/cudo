@@ -10,7 +10,7 @@ export interface SessionInvitationIndexProps {
   parentInvitationSelect
 }
 const client = new ApolloClient({
-  uri: 'http://localhost:5001/graphql',
+  uri: 'http://192.168.0.31:5001/graphql',
   cache: new InMemoryCache()
 });
 

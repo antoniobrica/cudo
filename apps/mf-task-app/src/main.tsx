@@ -19,7 +19,7 @@ declare global {
   }
 }
 const client = new ApolloClient({
-  uri: 'http://localhost:5007/graphql',
+  uri: 'http://192.168.0.31:5007/graphql',
   cache: new InMemoryCache()
 });
 

@@ -8,7 +8,14 @@ import img3 from 'libs/shared-components/src/green_tick.png';
 import img4 from 'libs/shared-components/src/dots.png';
 import img5 from 'libs/shared-components/src/tasks.png';
 /* eslint-disable-next-line */
-export interface Tasks { }
+export interface Tasks {
+  task?
+  id?
+  updateTask?
+  deleteTask?
+  veiwTask?
+  editTask?
+}
 
 export function TaskArea(props: Tasks) {
   const description = [

@@ -14,7 +14,6 @@ import { UploadsViewStateContext, SharedViewStateContext, DownloadsViewStateCont
 import { BlobItem } from '@azure/storage-blob';
 import { tap } from 'rxjs/operators';
 import { BlobItemUpload, BlobItemDownload } from 'apps/mf-document-app/src/azure-storage/types/azure-storage';
-import '../../../../../../libs/shared-components/src/style/index.scss';
 
 import { LoaderPage } from "@cudo/shared-components"
 import { useFileMutation } from '../../services/useRequest';
