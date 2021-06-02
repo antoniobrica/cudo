@@ -14,7 +14,7 @@ export function AddNewItem(props: AddNewItemProps) {
   const [user, setUser] = useState<User | null>(null);
   const [val, toggle] = React.useState(false);
   return (
-    <ModalCost></ModalCost>
+    <ModalCost house={null} ></ModalCost>
   );
 }
 

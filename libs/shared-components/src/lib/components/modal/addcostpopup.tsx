@@ -1,11 +1,17 @@
 import { radios } from '@storybook/addon-knobs';
 import React, { useState } from 'react';
-import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
+import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea, Dropdown, Segment } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import './../../../assets/style/index.scss'
-import { types } from '@hapi/joi';
+import { options, types } from '@hapi/joi';
+import { BkpIndex, HouseStructureIndex } from '@cudo/mf-account-app-lib';
+export interface IHouse {
+  option
+  value
+  onChange
+}
 export interface ModalCostProps {
-
+  house: IHouse
 }
 type Iitem = {
   index?: number
@@ -17,10 +23,6 @@ type Iitem = {
 }
 export function ModalCost(props: ModalCostProps) {
   const { t } = useTranslation();
-  const countryOptions = [
-    { key: 'af', value: 'af', text: 'Afghanistan' },
-    { key: 'ax', value: 'ax', text: 'Aland Islands' },
-  ]
   const [open, setOpen] = React.useState(false)
   const [items, setItems] = React.useState<Iitem[]>([])
   const handleChange = (event, index) => {
@@ -30,11 +32,8 @@ export function ModalCost(props: ModalCostProps) {
     itemValue[event.target.name] = event.target.value;
     values[index] = itemValue;
     setItems(values);
-    items.map((tiem) => console.log("!!!!!", tiem))
-    console.log("@@@@@@@", items)
   }
   function CostItem() {
-    console.log("!!!!!!!!@@@@@@2", items)
     return items.map((item, index) =>
       <Table.Row>
         <Table.Cell>
@@ -69,7 +68,8 @@ export function ModalCost(props: ModalCostProps) {
               <Grid.Row>
                 <Grid.Column>
                   <Form.Field>
-                    <Input name="bkp" size='small' className="full-width" style={{ width: '130px' }} onChange={e => handleChange(e, index)} value={item.bkp || ''} />
+                    <BkpIndex bkp={item.bkp || ''} parentBKPSelect={e => handleChange(e, index)} ></BkpIndex>
+                    {/* <Input name="bkp" size='small' className="full-width" style={{ width: '130px' }} onChange={e => handleChange(e, index)} value={item.bkp || ''} /> */}
                   </Form.Field>
                 </Grid.Column>
               </Grid.Row>
@@ -175,9 +175,7 @@ export function ModalCost(props: ModalCostProps) {
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
-                    <Form.Field>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
-                    </Form.Field>
+                    <HouseStructureIndex></HouseStructureIndex>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>

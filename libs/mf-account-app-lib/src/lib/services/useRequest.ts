@@ -1,5 +1,5 @@
-import { DocumentNode, useQuery, useMutation } from "@apollo/react-hooks";
-import { IBkps, ICatagories, ICountries, ICountry, IFileStructures, IFileTypes, IFolderMutation, IFolders, IInvitations, Iphases, IProtocols, IUsers, } from "../interfaces/task";
+import { DocumentNode, useQuery, useMutation, } from "@apollo/react-hooks";
+import { IBkps, ICatagories, ICountries, ICountry, IFileStructures, IFileTypes, IFolderMutation, IFolders, IInvitations, Iphases, IProtocols, IStructures, IUsers, } from "../interfaces/task";
 
 export function useCountrykQuery(gqlQuery: DocumentNode) {
   const { loading, error, data } = useQuery<ICountries>(gqlQuery);
@@ -51,6 +51,10 @@ export function useFileStructureQuery(gqlQuery: DocumentNode) {
   return { loading, error, data };
 }
 
+export function useStructureQuery(gqlQuery: DocumentNode) {
+  const { loading, error, data } = useQuery<IStructures>(gqlQuery);
+  return { loading, error, data };
+}
 
 export function useAddFolderMutation(gqlQuery: DocumentNode) {
   const [addFolder] = useMutation<IFolderMutation>(gqlQuery);

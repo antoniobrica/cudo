@@ -2,11 +2,6 @@ import React from 'react';
 
 import './../../../assets/style/index.scss'
 import { Tab, Image, Input, Accordion, Form, Grid, Card, Dropdown } from 'semantic-ui-react';
-
-import img1 from 'libs/shared-components/src/money.png';
-
-import img8 from 'libs/shared-components/src/default_area.png';
-
 /* eslint-disable-next-line */
 export interface TabsProps { }
 
@@ -306,7 +301,7 @@ export function Tabsbar(props: TabsProps) {
               <Grid.Row>
                 <Grid.Column>
                   <Form.Field className="fillarea" style={{ display: 'flex' }}>
-                    <img src={img1}></img>  <label style={{ marginLeft: '10px' }}>Estimated Cost</label>
+                    <img src='/assets/images/money.png'></img>  <label style={{ marginLeft: '10px' }}>Estimated Cost</label>
                   </Form.Field>
                 </Grid.Column>
                 <Grid.Column>
@@ -335,14 +330,8 @@ export function Tabsbar(props: TabsProps) {
             Items
             </h6>
           <div className="ui card " style={{ width: '80%' }}>
-
             <Accordion className="widtharea" defaultActiveIndex={0} panels={rootPanels} styled  >
-
-
             </Accordion>
-
-
-
           </div>
         </div>
 

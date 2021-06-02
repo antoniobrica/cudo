@@ -235,7 +235,7 @@ export function CreateTask(props: CreateTaskProps) {
                     <PhaseIndex parentPhaseSelect={onsetPhasesID} />
                   </Grid.Column>
                   <Grid.Column>
-                    <BkpIndex parentBKPSelect={setBKPIDChange} />
+                    <BkpIndex bkp={BKPID} parentBKPSelect={setBKPIDChange} />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
