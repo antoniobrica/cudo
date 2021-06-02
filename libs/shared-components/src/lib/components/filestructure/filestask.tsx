@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../../style/index.scss';
+import './../../../assets/style/index.scss'
 import { Tab, Accordion, Dropdown } from 'semantic-ui-react'
 
 import img4 from 'libs/shared-components/src/folder.png';
@@ -53,7 +53,7 @@ export function FileStructure(props: FileStructureProps) {
 		if (props.downloadedImg) {
 			console.log('downloadedImg', props.downloadedImg);
 			for (let i = 0; i < props.downloadedImg.length; i++) {
-				if (props.downloadedImg[i].filename == filesData.fileTitle) {
+				if (props.downloadedImg[i].filename == filesData['fileTitle']) {
 					setimgUrl(props.downloadedImg[i].url);
 				}
 			}

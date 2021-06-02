@@ -5,7 +5,6 @@ import { ITask, ITasks, TaskMutation } from "../../interfaces/task";
 import { useTaskMutation } from '../../services/useRequest';
 import { ApolloCache, FetchResult, useMutation } from '@apollo/client';
 import { ADD_TASK, GET_TASKS } from "../../graphql/graphql";
-import '../../../../../../libs/shared-components/src/style/index.scss';
 import './create-task.module.scss';
 import moment, { calendarFormat } from 'moment';
 import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex } from "@cudo/mf-account-app-lib"
@@ -78,7 +77,16 @@ export function CreateTask(props: CreateTaskProps) {
       refetchQueries: [
         { query: GET_TASKS, variables: { referenceID } }
       ],
-      variables: { referenceID },
+      // variables: {
+      //   taskTitle, startDate, endDate, estimatedDays,
+      //   sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
+      //   fileID,
+      //   fileName,
+      //   taskTypeID,
+      //   files,
+      //   description, referenceID,
+
+      // },
     }
   )
 
@@ -165,7 +173,8 @@ export function CreateTask(props: CreateTaskProps) {
         taskTypeID: "$taskTypeID",
         files,
         description,
-        subtasks: []
+        subtasks: [],
+        referenceID
       },
       update: (
         cache,
@@ -251,7 +260,7 @@ export function CreateTask(props: CreateTaskProps) {
                     <PhaseIndex parentPhaseSelect={onsetPhasesID} />
                   </Grid.Column>
                   <Grid.Column>
-                    <BkpIndex parentBKPSelect={setBKPIDChange} />
+                    <BkpIndex bkp={BKPID} parentBKPSelect={setBKPIDChange} />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>

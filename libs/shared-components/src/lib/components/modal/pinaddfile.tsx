@@ -29,12 +29,12 @@ const countryOptions = [
   { key: 'ax', value: 'ax', text: 'Aland' },
 
 ]
-export interface FileStructureProps {
+export interface AddPinProps {
   isOpen,
   filesData,
   dowloadFilesData
 }
-export const AddPinFile = (props: FileStructureProps) => {
+export const AddPinFile = (props: AddPinProps) => {
   const [open, setOpen] = React.useState(false);
   const [taskTitle, setTaskTitle] = React.useState("")
   const [startDate, setStartDate] = React.useState('')

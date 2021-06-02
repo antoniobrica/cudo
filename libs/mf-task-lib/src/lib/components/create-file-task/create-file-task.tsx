@@ -4,7 +4,7 @@ import { radios } from '@storybook/addon-knobs';
 import { ITask, ITasks, TaskMutation } from "../../interfaces/task";
 import { ApolloCache, FetchResult, useMutation } from '@apollo/client';
 import { ADD_TASK, GET_TASKS } from "../../graphql/graphql";
-import '../../../../../../libs/shared-components/src/style/index.scss';
+// import '../../../../../../libs/shared-components/src/style/index.scss';
 import moment, { calendarFormat } from 'moment';
 import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex } from "@cudo/mf-account-app-lib"
 import { useHistory } from 'react-router';
@@ -51,7 +51,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
       refetchQueries: [
         { query: GET_TASKS, variables: { referenceID } }
       ],
-      variables: { referenceID },
+      // variables: { referenceID },
     }
   )
   React.useEffect(() => {
@@ -183,7 +183,8 @@ export function CreateFileTask(props: CreateFileTaskProps) {
         taskTypeID: "$taskTypeID",
         files,
         description,
-        subtasks: []
+        subtasks: [],
+        referenceID
       },
       update: (
         cache,
@@ -265,7 +266,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
                 <PhaseIndex parentPhaseSelect={onsetPhasesID} />
               </Grid.Column>
               <Grid.Column>
-                <BkpIndex parentBKPSelect={setBKPIDChange} />
+                <BkpIndex bkp={BKPID} parentBKPSelect={setBKPIDChange} />
               </Grid.Column>
             </Grid.Row>
           </Grid>

@@ -38,7 +38,6 @@ query Tasks($referenceID: String!)
   }
 `;
 
-
 export const ADD_TASK = gql`
 mutation CreateTask(
   $taskTitle: String!, 
@@ -94,8 +93,6 @@ mutation CreateTask(
   }
 }`;
 
-
-
 export const UPDATE_TASK = gql`
 mutation UpdateTask(
   $taskID: String!,    
@@ -142,6 +139,7 @@ mutation UpdateTask(
     status    
   }
 }`;
+
 export const DELETE_TASK = gql`
 mutation DeleteTask(
   $taskID: String!,    

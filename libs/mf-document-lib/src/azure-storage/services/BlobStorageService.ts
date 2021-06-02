@@ -4,8 +4,6 @@ import { BlobServiceClient, BlockBlobClient } from '@azure/storage-blob';
 import axios from 'axios';
 import { from, Observable, Subscriber } from 'rxjs';
 import { distinctUntilChanged, scan, startWith } from 'rxjs/operators';
-import { GET_TOKEN } from '../../app/graphql/graphql';
-import { useTokenQuery } from '../../app/services/useRequest';
 import {
   BlobContainerRequest,
   BlobFileRequest,
@@ -55,8 +53,8 @@ export class BlobStorageService {
   }
 
   private uploadFile(blockBlobClient: BlockBlobClient, file: File) {
-    console.log('file>',file);
-    
+    console.log('file>', file);
+
     return new Observable<number>(observer => {
       blockBlobClient
         .uploadBrowserData(file, {

@@ -73,7 +73,6 @@ export function Tasks(props: TasksProps) {
       refetchQueries: [
         { query: GET_TASKS, variables: { referenceID } }
       ],
-      variables: { referenceID },
     }
   )
 
@@ -100,7 +99,7 @@ export function Tasks(props: TasksProps) {
   const getWorkType = (referenceID) => {
     console.log('sasstoken');
     return axios.post(
-      'http://localhost:5005/graphql',
+      'http://192.168.0.31:5005/graphql',
       {
         query,
         variables: {
@@ -120,11 +119,11 @@ export function Tasks(props: TasksProps) {
     COMPLETED = 'COMPLETED',
   }
   if (loading) return <h1> <LoaderPage /></h1>;
-  if (error) return (
-    <div style={{ marginLeft: 900 }} >
-      <CreateTask workTypes={workTypes} />
-    </div>
-  );
+  // if (error) return (
+  //   <div style={{ marginLeft: 900 }} >
+  //     <CreateTask workTypes={workTypes} onSuccess={refresh} cancel={cancelTask} isNewTask={isNewTask} />
+  //   </div>
+  // );
   if (data) {
     console.log('tasks=>', data.tasks)
   }
@@ -371,13 +370,15 @@ export function Tasks(props: TasksProps) {
         {data.tasks.map((task, id) => {
           return (
             <div key={id}>
-              <TaskArea task={task} id={id}
+              <TaskArea
+                task={task}
+                id={id}
                 updateTask={updateTask}
                 deleteTask={deleteTask}
                 veiwTask={viewTask}
                 editTask={editTask}
-                subTask={subTask}>
-              </TaskArea>
+                subTask={subTask} />
+              {/* </TaskArea> */}
             </div>
           )
         })}

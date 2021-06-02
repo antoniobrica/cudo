@@ -78,7 +78,7 @@ export function SelectFilePopup(props: FileStructureProps) {
     if (props.downloadedImg) {
       console.log('downloadedImg', props.downloadedImg);
       for (let i = 0; i < props.downloadedImg.length; i++) {
-        if (props.downloadedImg[i].filename == filesData.fileTitle) {
+        if (props.downloadedImg[i].filename == filesData['fileTitle']) {
           console.log('url', props.downloadedImg[i].url);
 
           setimgUrl(props.downloadedImg[i].url);

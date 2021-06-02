@@ -100,7 +100,7 @@ export function FileList(props: FileListProps) {
       {loading ?
         <LoaderPage /> : null}
       <SelectFilePopup isTaskFile={props.isTaskFile} cancel={props.cancel} files={data?.uploadedFiles}
-        downloadFiles={downloadFiles} viewFiles={viewFiles} uploadNewVersion={uploadNewVersion} downloadedImg={itemsd}
+        downloadFiles={downloadFiles} viewFiles={viewFiles} downloadedImg={itemsd}
       />
     </div>
   );

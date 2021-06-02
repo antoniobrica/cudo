@@ -59,6 +59,12 @@ export interface IFileStructure {
   fileStructureTitle: string
 }
 
+export interface IStructure {
+  structureID: string
+  referenceID: string
+  referenceType: string
+  structureName: string
+}
 
 export interface IPhase {
   id: string
@@ -81,6 +87,9 @@ export interface IFileTypes {
 }
 export interface IFileStructures {
   FileStructure: IFileStructure[];
+}
+export interface IStructures {
+  structureRoots: IStructure[];
 }
 export interface IUsers {
   userByEmail: IUser[];

@@ -20,7 +20,7 @@ export class BlobDeletesViewStateService {
   constructor(
     private blobStorage: BlobStorageService,
     private blobState: BlobSharedViewStateService
-  ) {}
+  ) { }
 
   deleteItem(filename: string): void {
     this.deleteQueueInner$.next(filename);
@@ -45,14 +45,16 @@ export class BlobDeletesViewStateService {
     filename: string,
     options: BlobContainerRequest
   ): OperatorFunction<BlobDeleteResponse, BlobItem> => source =>
-    source.pipe(
-      map(() => ({
-        filename,
-        containerName: options.containerName
-      })),
-      startWith({
-        filename,
-        containerName: options.containerName
-      })
-    );
+      source.pipe(
+        map(() => ({
+          filename,
+          containerName: options.containerName,
+          type: ''
+        })),
+        startWith({
+          filename,
+          containerName: options.containerName,
+          type: ''
+        })
+      );
 }
