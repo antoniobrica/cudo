@@ -37,7 +37,7 @@ Libraries are sharable across libraries and applications. They can be imported f
 
 ## Development server
 
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+Run `nx serve my-app` for a dev server. Navigate to http://192.168.0.31:4200/. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 

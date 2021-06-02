@@ -5,7 +5,6 @@ import { ITask, ITasks, TaskMutation } from "../../interfaces/task";
 import { useTaskMutation } from '../../services/useRequest';
 import { ApolloCache, FetchResult, useMutation } from '@apollo/client';
 import { ADD_TASK, GET_TASKS } from "../../graphql/graphql";
-import '../../../../../../libs/shared-components/src/style/index.scss';
 import './create-task.module.scss';
 import moment, { calendarFormat } from 'moment';
 import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex } from "@cudo/mf-account-app-lib"
@@ -71,7 +70,12 @@ export function CreateTask(props: CreateTaskProps) {
       refetchQueries: [
         { query: GET_TASKS, variables: { referenceID } }
       ],
-      variables: { referenceID },
+      variables: {
+        taskTitle, startDate, endDate, estimatedDays,
+        sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
+        files,
+        description, referenceID
+      },
     }
   )
 
@@ -153,7 +157,7 @@ export function CreateTask(props: CreateTaskProps) {
         taskTitle, startDate, endDate, estimatedDays,
         sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
         files,
-        description,
+        description, referenceID
       },
       update: (
         cache,

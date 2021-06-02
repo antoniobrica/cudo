@@ -103,12 +103,15 @@ export class FileService {
   public async uploadNewFileVersion(fileParams: UploadFileInfoInput): Promise<UploadedFilesEntity> {
     try {
       const manager = getManager();
-      const parentFileDetails = await this.uploadedFilesRepository.findOne({ where: { uploadedFileID: fileParams.parentUploadedFileID } });
+      const parentFileDetails = await this.uploadedFilesRepository.findOne({ where: { uploadedFileID: fileParams.parentUploadedFileID }, relations: ['fileReferences', 'people'] });
       if (parentFileDetails) {
         const childStructure = new UploadedFilesEntity(fileParams);
         childStructure.parent = parentFileDetails;
         const trees = await manager.getTreeRepository(UploadedFilesEntity).findDescendantsTree(parentFileDetails);
-        childStructure.fileVersion = trees.children[trees.children.length - 1].fileVersion + 1;
+        if (trees.children.length)
+          childStructure.fileVersion = trees.children[trees.children.length - 1].fileVersion + 1;
+        else
+          childStructure.fileVersion = 1;
         await manager.save(childStructure);
       }
       else {

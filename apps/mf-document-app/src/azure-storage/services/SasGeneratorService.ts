@@ -10,9 +10,9 @@ export class SasGeneratorService {
 
   getSasToken(): Observable<BlobStorageRequest> {
     console.log('sasstoken');
-    
+
     return Axios.post<BlobStorageRequest>(
-      'http://localhost:5003/graphql',
+      'http://192.168.0.31:5003/graphql',
       {
         query: `
      {

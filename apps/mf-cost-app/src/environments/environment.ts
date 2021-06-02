@@ -3,5 +3,5 @@
 
 export const environment = {
   production: false,
-  API_URL: 'http://localhost:5002/graphql',
+  API_URL: 'http://192.168.0.31:5002/graphql',
 };

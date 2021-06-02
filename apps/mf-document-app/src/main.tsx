@@ -19,19 +19,19 @@ declare global {
   }
 }
 const client = new ApolloClient({
-  uri: 'http://localhost:5003/graphql',
+  uri: 'http://192.168.0.31:5003/graphql',
   cache: new InMemoryCache()
 });
 
 window.renderDocumentApp = (containerId, history) => {
   ReactDOM.render(
-      <BrowserRouter>
-        <ApolloProvider client={client}>
-          <ApolloHooksProvider client={client as any}>
-            <App />
-          </ApolloHooksProvider>
-        </ApolloProvider>
-      </BrowserRouter>,
+    <BrowserRouter>
+      <ApolloProvider client={client}>
+        <ApolloHooksProvider client={client as any}>
+          <App />
+        </ApolloHooksProvider>
+      </ApolloProvider>
+    </BrowserRouter>,
     document.getElementById(containerId)
   );
   serviceWorker.unregister();
@@ -44,13 +44,13 @@ window.unmountMeetingApp = (containerId) => {
 if (!document.getElementById("DocumentApp-container")) {
   // ReactDOM.render(<App />, document.getElementById("root"));
   ReactDOM.render(
-      <BrowserRouter>
-        <ApolloProvider client={client}>
-          <ApolloHooksProvider  client={client as any}>
-            <App />
-          </ApolloHooksProvider>
-        </ApolloProvider>
-      </BrowserRouter>
+    <BrowserRouter>
+      <ApolloProvider client={client}>
+        <ApolloHooksProvider client={client as any}>
+          <App />
+        </ApolloHooksProvider>
+      </ApolloProvider>
+    </BrowserRouter>
     ,
     document.getElementById("root")
   );

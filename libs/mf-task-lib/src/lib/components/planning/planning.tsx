@@ -102,7 +102,7 @@ export function Planning(props: PlanningProps) {
         cache.writeQuery({
           query: GET_MILESTONES,
           data: {
-            getMileStones: [...cacheData.MileStones, data?.createMileStone]
+            getMileStones: [...cacheData.MileStones, data['createMileStone']]
           },
         });
       }
