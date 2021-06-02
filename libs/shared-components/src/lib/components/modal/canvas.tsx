@@ -1,37 +1,141 @@
-import React, { Component } from 'react'
-// import img1 from 'libs/shared-components/src/powerpoint.png';
-type MyProps = {
-  // using `interface` is also ok
-  imgUrl: string;
-};
-export default class Canvas extends Component<MyProps> {
-  componentDidMount() {
-    // const canvas = this.refs.canvas
-    // const ctx = canvas.getContext("2d")
 
-    const canvas = document.getElementById('canvas') as
-      HTMLCanvasElement;
-    const context = canvas.getContext("2d");
-    console.log('context', context);
-    console.log('canvas', canvas);
-
-    // const img = this.refs.image;
-    // console.log('img', img)
-    // const img = document.getElementById('img')
-    // console.log('img', img);
-
-    // img.onload = () => {
-    //   context.drawImage(img, 0, 0)
-    //   // context.font = "40px Courier"
-    //   // context.fillText(this.context, 210, 75)
-    // }
-  }
-  render() {
-    return (
-      <div>
-        <canvas id="canvas" />
-        {/* <img ref="image" src={this.props.imgUrl} style={{ display: 'none' }} className="hidden" /> */}
-      </div>
-    )
-  }
+import { boolean, number } from '@storybook/addon-knobs';
+import { title } from 'process';
+import React, { Component, useEffect, useRef } from 'react'
+interface CanvasProps {
+  imgUrl
 }
+export function Canvas(props: CanvasProps) {
+  const canvas = useRef<HTMLCanvasElement>();
+  const image = useRef<HTMLImageElement>(null);
+  let ctx = null;
+  const boxes = []
+  let isDown = false;
+  let dragTarget = null;
+  let startX = null;
+  let startY = null;
+
+  // initialize the canvas context
+  useEffect(() => {
+    // dynamically assign the width and height to canvas
+    const canvasEle = canvas.current;
+    canvasEle.width = canvasEle.clientWidth + 150;
+    canvasEle.height = canvasEle.clientHeight + 500;
+    ctx = canvasEle.getContext("2d");
+    drawImages();
+  }, []);
+
+  useEffect(() => {
+    draw();
+  }, []);
+
+  const drawImages = () => {
+    const imgagDraw = new Image();
+    imgagDraw.src = props.imgUrl
+
+    imgagDraw.onload = function () {
+      const hRatio = canvas.current.clientWidth / imgagDraw.width;
+      const vRatio = canvas.current.clientHeight / imgagDraw.height;
+      const ratio = Math.min(hRatio, vRatio);
+      ctx.drawImage(imgagDraw, 0, 0, imgagDraw.width, imgagDraw.height, 0, 0, imgagDraw.width * ratio, imgagDraw.height * ratio);
+      boxes.map(info => drawFillRect(info));
+    }
+  }
+
+  // draw rectangle
+  const draw = () => {
+    ctx.clearRect(0, 0, canvas.current.clientWidth, canvas.current.clientHeight);
+    drawImages();
+  }
+
+  // draw rectangle with background
+  const drawFillRect = (info, style = {}) => {
+    const { x, y, w, h, title } = info;
+    console.log("Info", info)
+    const pointSize = 10; // Change according to the size of the point.
+    ctx.fillStyle = "yellow"; // Red color   
+    ctx.beginPath(); //Start path
+    ctx.arc(x, y, pointSize, 0, Math.PI * 2, true); // Draw a point using the arc function of the canvas with a point structure.
+    ctx.fill(); // Close the path and fill.
+    ctx.closePath();
+    ctx.stroke();
+    ctx.beginPath(); //Start path
+    ctx.fillStyle = "blue";
+    ctx.fillText(title, x - 3, y + 3)
+    ctx.fill();
+    ctx.closePath();
+    ctx.stroke();
+  }
+
+  // identify the click event in the rectangle
+  const hitBox = (x, y) => {
+    let isTarget = null;
+    for (let i = 0; i < boxes.length; i++) {
+      const box = boxes[i];
+      const d = Math.pow(box.r, 2) - (((Math.pow(box.x - x, 2))) + ((Math.pow(box.y - y, 2))))
+      if (d > 0) {
+        console.log("inside", box);
+        dragTarget = box;
+        isTarget = true;
+        break;
+      }
+      else if (d == 0) { console.log("on the circumference"); }
+      else { console.log("outside"); }
+    }
+    return isTarget;
+  }
+
+  const handleMouseDown = e => {
+    startX = e.nativeEvent.offsetX - canvas.current.clientLeft;
+    startY = e.nativeEvent.offsetY - canvas.current.clientTop;
+    isDown = hitBox(startX, startY);
+    if (isDown) return;
+    const draw = {
+      x: startX,
+      y: startY, r: 10,
+      title: JSON.stringify(boxes.length + 1)
+    }
+    drawFillRect(draw)
+    boxes.push(draw)
+    console.log('boxes', boxes)
+
+  }
+  const handleMouseMove = e => {
+    if (!isDown) return;
+    const mouseX = e.nativeEvent.offsetX - canvas.current.clientLeft;
+    const mouseY = e.nativeEvent.offsetY - canvas.current.clientTop;
+    const dx = mouseX - startX;
+    const dy = mouseY - startY;
+    startX = mouseX;
+    startY = mouseY;
+    dragTarget.x += dx;
+    dragTarget.y += dy;
+  }
+  const handleMouseUp = e => {
+    draw();
+    dragTarget = null;
+    isDown = false;
+  }
+  const handleMouseOut = e => {
+    handleMouseUp(e);
+  }
+
+  return (
+    <div className="outsideWrapper">
+      <div className="insideWrapper">
+        <canvas className="coveringCanvas"
+          width="800" height="700"
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseOut={handleMouseOut}
+          ref={canvas}></canvas>
+      </div>
+    </div>
+  );
+}
+
+
+export default Canvas;
+
+

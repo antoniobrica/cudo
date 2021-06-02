@@ -1,18 +1,22 @@
 import React from 'react';
 import CreateTask from '../../app/components/create-task/create-task';
 
-import { DELETE_TASK, GET_TASKS, UPDATE_TASK } from '../../app/graphql/graphql';
+import { ADD_TASK, DELETE_TASK, GET_TASKS, UPDATE_TASK } from '../../app/graphql/graphql';
 import { useTaskDeleteMutation, useTaskQuery, useTaskUpdateMutation } from "../../app/services/useRequest";
 import './tasks.module.scss';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
 import { LoaderPage, ModalTaskEdit, TaskArea } from "@cudo/shared-components"
 import axios from 'axios';
 import { ApolloCache, FetchResult, useMutation, useQuery } from '@apollo/client';
-import { ITask, ITasks, TaskUpdateMutation } from '../../app/interfaces/task';
-import { ModalAlert, ModalViewTask } from '@cudo/shared-components'
+import { ITask, ITasks, TaskMutation, TaskUpdateMutation } from '../../app/interfaces/task';
+import { ModalAlert, ModalViewTask } from '@cudo/shared-components';
+import FilterPopup from 'libs/shared-components/src/lib/components/modal/fliter'
+import SelectFilePopup from 'libs/shared-components/src/lib/components/modal/selectfile'
 import { useHistory, useParams } from 'react-router';
 import TaskDelete from '../delete-task';
 import { useTranslation } from 'react-i18next';
+import { FileListIndex } from '@cudo/mf-document-lib'
+import ToggleButton from 'libs/shared-components/src/lib/components/tabs/togglebutton'
 /* eslint-disable-next-line */
 export interface TasksProps { }
 
@@ -40,9 +44,26 @@ export function Tasks(props: TasksProps) {
   const [editTaskOpen, setEditTaskOpen] = React.useState(false);
   const [workTypes, setWorkTypes] = React.useState([]);
 
+  const [taskData, setTaskData] = React.useState();
+  const [projectId, setProjectId] = React.useState('');
+
+  const [isUpdate, setIsUpdate] = React.useState(false);
+  const [isTaskFile, setIsTaskFile] = React.useState(false);
+  const [isNewTask, setIsNewTask] = React.useState(false);
+  const [taskStatus, settaskStatus] = React.useState('');
+
   const [addTask] = useTaskUpdateMutation(UPDATE_TASK, {
     variables: { referenceID },
   });
+  const [addSubTask, { data: subtasks }] = useMutation(ADD_TASK,
+    {
+      refetchQueries: [
+        { query: GET_TASKS, variables: { referenceID } }
+      ],
+      variables: { referenceID },
+    }
+  )
+
   const [taskDelete] = useTaskDeleteMutation(DELETE_TASK, {
     variables: { referenceID },
   });
@@ -55,11 +76,6 @@ export function Tasks(props: TasksProps) {
     }
   )
 
-  const [taskData, setTaskData] = React.useState();
-  const [projectId, setProjectId] = React.useState('');
-
-  const [isUpdate, setIsUpdate] = React.useState(false);
-  const [taskStatus, settaskStatus] = React.useState('');
 
   const query = `query Game($projectId: String!) {
     projectById( projectId: $projectId)
@@ -103,11 +119,11 @@ export function Tasks(props: TasksProps) {
     COMPLETED = 'COMPLETED',
   }
   if (loading) return <h1> <LoaderPage /></h1>;
-  if (error) return (
-    <div style={{ marginLeft: 900 }} >
-      <CreateTask workTypes={workTypes} />
-    </div>
-  );
+  // if (error) return (
+  //   <div style={{ marginLeft: 900 }} >
+  //     <CreateTask workTypes={workTypes} onSuccess={refresh} cancel={cancelTask} isNewTask={isNewTask} />
+  //   </div>
+  // );
   if (data) {
     console.log('tasks=>', data.tasks)
   }
@@ -139,7 +155,7 @@ export function Tasks(props: TasksProps) {
         taskID, status, files: [], taskTitle: task.taskTitle, startDate: task.startDate, endDate: task.endDate,
         estimatedDays: task.estimatedDays, sendNotification: false, BKPID: task.BKPID, BKPTitle: task.BKPTitle,
         saveTaskAsTemplate: task.saveTaskAsTemplate, phaseID: task.phaseID, phaseName: task.phaseName, referenceID: task.referenceID,
-        description: task.description
+        description: task.description, subtasks: []
       },
       update: (
         cache
@@ -243,7 +259,7 @@ export function Tasks(props: TasksProps) {
         taskID: data.taskID, status: data.status, files: [], taskTitle: data.taskTitle, startDate: data.startDate, endDate: data.endDate,
         estimatedDays: data.estimatedDays, sendNotification: false, BKPID: data.BKPID, BKPTitle: data.BKPTitle,
         saveTaskAsTemplate: data.saveTaskAsTemplate, phaseID: data.phaseID, phaseName: data.phaseName, referenceID: data.referenceID,
-        description: data.description
+        description: data.description, subtasks: []
       },
       update: (
         cache,
@@ -261,30 +277,91 @@ export function Tasks(props: TasksProps) {
     });
 
   }
+  const subTask = (data, title) => {
+
+    let subtask = [];
+    const createSt = {
+      subtaskTitle: title, status: Status.INPROGRESS
+    }
+    subtask.push(createSt);
+    editTaskApi({
+      variables: {
+        taskID: data.taskID, status: data.status, files: [], taskTitle: data.taskTitle, startDate: data.startDate, endDate: data.endDate,
+        estimatedDays: data.estimatedDays, sendNotification: false, BKPID: data.BKPID, BKPTitle: data.BKPTitle,
+        saveTaskAsTemplate: data.saveTaskAsTemplate, phaseID: data.phaseID, phaseName: data.phaseName, referenceID: data.referenceID,
+        description: data.description, subtasks: subtask
+      },
+      update: (
+        cache,
+        data
+      ) => {
+        const cacheData = cache.readQuery({ query: GET_TASKS, variables: { referenceID }, }) as ITasks;
+        cache.writeQuery({
+          query: GET_TASKS,
+          data: {
+            tasksD: [...cacheData.tasks, data]
+          },
+          variables: { referenceID },
+        });
+      }
+    });
+
+  }
+
+  const changeAdd = (data) => {
+    console.log('changeTask', data);
+    if (data === 'add') {
+      setIsNewTask(true)
+    }
+    if (data === 'file') {
+      setIsTaskFile(true)
+    }
+
+  }
+  const cancelNew = () => {
+    setIsTaskFile(false)
+  }
+  const cancelTask = () => {
+    setIsNewTask(false)
+  }
+
   return (
     <div>
-      <div style={{ marginLeft: 900 }} >
-        <CreateTask workTypes={workTypes} onSuccess={refresh} />
-      </div>
-      {/* <MfAccountAppLib/> */}
 
+      <div className="pin_area" >
+        <FilterPopup />
+
+
+        <ToggleButton changeAdd={changeAdd}></ToggleButton>
+        {
+          isNewTask ?
+            <CreateTask workTypes={workTypes} onSuccess={refresh} cancel={cancelTask} isNewTask={isNewTask} />
+            : null
+        }
+      </div>
+      { isTaskFile ? <div className="pin_area" style={{ marginLeft: 804 }} >
+        <FileListIndex isTaskFile={isTaskFile} cancel={cancelNew} />
+      </div> : null
+      }
+
+      {/* <MfAccountAppLib/> */}
       {open ?
-        <div style={{ marginLeft: 900 }} >
+        <div className="pin_area" >
           <ModalAlert openAlertF={open} confirm={confirmation} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></ModalAlert>
         </div>
         : null}
       {openD ?
-        <div style={{ marginLeft: 900 }} >
+        <div className="pin_area" >
           <TaskDelete openAlertF={openD} confirm={confirmationDelete} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></TaskDelete>
         </div>
         : null}
       {viewTaskOpen ?
-        <div style={{ marginLeft: 900 }} >
+        <div className="pin_area" >
           <ModalViewTask openAlertF={viewTaskOpen} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></ModalViewTask>
         </div>
         : null}
       {editTaskOpen ?
-        <div style={{ marginLeft: 900 }} >
+        <div className="pin_area" >
           <ModalTaskEdit openAlertF={editTaskOpen} taskData={taskData} taskStatus={taskStatus} cancel={cancel} editTaskData={editTaskData}></ModalTaskEdit>
         </div>
         : null}
@@ -293,7 +370,15 @@ export function Tasks(props: TasksProps) {
         {data.tasks.map((task, id) => {
           return (
             <div key={id}>
-              <TaskArea task={task} id={id} updateTask={updateTask} deleteTask={deleteTask} veiwTask={viewTask} editTask={editTask}></TaskArea>
+              <TaskArea
+                task={task}
+                id={id}
+                updateTask={updateTask}
+                deleteTask={deleteTask}
+                veiwTask={viewTask}
+                editTask={editTask}
+                subTask={subTask} />
+              {/* </TaskArea> */}
             </div>
           )
         })}

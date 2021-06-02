@@ -42,7 +42,7 @@ export function FileSetting(props: FileProps) {
   const [phaseName, setPhasesName] = React.useState("");
   const [phaseID, setPhasesID] = React.useState("");
   const [folderName, setfolderName] = React.useState("");
-
+  const [directory, setDirectory] = React.useState("");
 
 
 
@@ -101,14 +101,15 @@ export function FileSetting(props: FileProps) {
     setisFolder(data.isFolder)
     if (data.isFolder) {
       setfolderName(data.folderTitle)
+      setDirectory(data.folderTitle)
       console.log('folderName', folderName);
     }
     else {
       setBKPIDTitle(data.BKPIDTitle)
+      setDirectory(data.BKPIDTitle)
+
       setBKPID(data.BKPID)
     }
-    console.log('folderName2', folderName);
-
   }
   const setFileStructureChange = (data) => {
     // setfileStructureID()
@@ -151,26 +152,43 @@ export function FileSetting(props: FileProps) {
 
     // setFileList(fileArr);
   }
-
+  enum fileType {
+    IMAGE = "IMAGE",
+    PDF = "PDF",
+    BIM = "BIM"
+  }
   const handleSaveFile = () => {
     setOpen(false);
-    addFile({
-      variables: {
-        fileTypeName, folderName, people, BKPIDTitle, files, phaseName, fileTypeID, phaseID, structureTitle, structureID, isFolder, isEveryOneAllowed: false, BKPID
-      },
-      update: (
-        cache,
-        data
-      ) => {
-        const cacheData = cache.readQuery({ query: GET_FILES }) as IFiles;
-        cache.writeQuery({
-          query: GET_FILES,
-          data: {
-            tasks: [...cacheData.File, data?.createFile]
-          }
-        });
-      }
-    });
+    files.map((file, i) => {
+      console.log('file==', file);
+      addFile({
+        variables: {
+          directory,
+          fileURL: file.fileURL,
+          fileTitle: file.fileTitle,
+          fileType: file.fileType == "image/png" ? fileType.IMAGE : fileType.PDF,
+          fileVersion: 1,
+          fileTypeName, people, BKPIDTitle,
+          phaseName, fileTypeID, phaseID,
+          structureTitle, structureID,
+          isFolder, isEveryOneAllowed: false,
+          BKPID
+        },
+        update: (
+          cache,
+          data
+        ) => {
+          const cacheData = cache.readQuery({ query: GET_FILES }) as IFiles;
+          cache.writeQuery({
+            query: GET_FILES,
+            data: {
+              tasks: [...cacheData.uploadedFiles, data?.createFile]
+            }
+          });
+        }
+      });
+    })
+
 
   };
 

@@ -12,7 +12,9 @@ import { useHistory } from 'react-router';
 /* eslint-disable-next-line */
 export interface CreateTaskProps {
   onSuccess?,
-  workTypes
+  workTypes,
+  isNewTask,
+  cancel
 
 }
 
@@ -65,17 +67,26 @@ export function CreateTask(props: CreateTaskProps) {
   //   variables: { referenceID },
   // });
 
+  React.useEffect(() => {
+    if (props.isNewTask) {
+      setOpen(props.isNewTask)
+    }
+  }, [props.isNewTask])
   const [addTask, { data }] = useMutation(ADD_TASK,
     {
       refetchQueries: [
         { query: GET_TASKS, variables: { referenceID } }
       ],
-      variables: {
-        taskTitle, startDate, endDate, estimatedDays,
-        sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
-        files,
-        description, referenceID
-      },
+      // variables: {
+      //   taskTitle, startDate, endDate, estimatedDays,
+      //   sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
+      //   fileID,
+      //   fileName,
+      //   taskTypeID,
+      //   files,
+      //   description, referenceID,
+
+      // },
     }
   )
 
@@ -151,13 +162,19 @@ export function CreateTask(props: CreateTaskProps) {
   }
 
   const handleSaveTask = () => {
-    setOpen(false);
+    // setOpen(false);
+    cancel();
     addTask({
       variables: {
         taskTitle, startDate, endDate, estimatedDays,
         sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
+        fileID: "",
+        fileName: "$fileName",
+        taskTypeID: "$taskTypeID",
         files,
-        description, referenceID
+        description,
+        subtasks: [],
+        referenceID
       },
       update: (
         cache,
@@ -179,15 +196,19 @@ export function CreateTask(props: CreateTaskProps) {
     console.log('des=>', e.target.value);
     setDescription(e.target.value);
   }
-
+  const cancel = () => {
+    setOpen(false)
+    props.cancel(false)
+  }
 
   return (
     <div >
       <Modal className="modal_media" style={{ width: '800px', marginLeft: '155px' }}
-        onClose={() => setOpen(false)}
+        onClose={cancel}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button size='mini' className="grey-btn taskmargin">+ Add  New Task</Button>}      >
+      // trigger={<Button size='mini' className="grey-btn taskmargin">+ Add  New Task</Button>} 
+      >
         <Modal.Header><h3>Add New Task </h3></Modal.Header>
         <Modal.Content body>
           <div>
@@ -326,7 +347,7 @@ export function CreateTask(props: CreateTaskProps) {
               positive
               size='mini' className="grey-btn"
             />
-            <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+            <Button size='mini' className="icon-border" onClick={cancel}>
               X  Cancel
         </Button>
           </div>

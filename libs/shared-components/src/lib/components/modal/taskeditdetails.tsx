@@ -56,7 +56,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
 
   React.useEffect(() => {
     if (props.taskData) {
-      const date = new Date(props.taskData.startDate).toLocaleDateString();
+      const date = new Date(props.taskData.startDate).toLocaleString();
       console.log('date', date);
       setStartDate(date);
       setTaskTitle(props.taskData.taskTitle);

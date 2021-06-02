@@ -1,20 +1,20 @@
- 
+
 import React from 'react';
 import {
   Button,
   Header,
   Modal,
-  
+
   Input,
   Form,
   Grid,
-  
+
   Select,
   TextArea,
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
-
-function FilterPopup() {
+import img1 from 'libs/shared-components/src/filter.png';
+export function FilterPopup() {
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
@@ -23,16 +23,18 @@ function FilterPopup() {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <div id="navbar">
-      <Modal style={{width:'390px', marginLeft:'770px', height:'660px'}}
+    <div style={{ marginTop: 22 }}>
+      <Modal style={{ width: '390px', marginLeft: '770px', height: '660px' }}
         className="modal_media"
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
         trigger={
-          <Button size="mini" className="grey-btn">
-            Filter   
-          </Button>
+          // <Button size="mini" className="grey-btn">
+          //   Filter
+          // </Button>
+          <img src={img1} className="  mr-10 " />
+
         }
       >
 
@@ -56,7 +58,7 @@ function FilterPopup() {
                       />
                     </Form.Field>
                   </Grid.Column>
-              
+
                 </Grid.Row>
               </Grid>
 
@@ -79,7 +81,7 @@ function FilterPopup() {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                       Status  
+                        Status
                       </label>
                       <Select
                         placeholder="Select"
@@ -95,7 +97,7 @@ function FilterPopup() {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                       Start date  
+                        Start date
                       </label>
                       <Input
                         placeholder="Default"
@@ -108,7 +110,7 @@ function FilterPopup() {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                       End date  
+                        End date
                       </label>
                       <Input
                         placeholder="Default"
@@ -125,7 +127,7 @@ function FilterPopup() {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                       Type  
+                        Type
                       </label>
                       <Select
                         placeholder="Select"

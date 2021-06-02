@@ -106,19 +106,20 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                         <Page pageNumber={pageNumber} />
                       </Document>
                       :
-                      // <Canvas imgUrl={imgUrl} ></Canvas> 
-                      <Image src={imgUrl} fluid />
+                      <Canvas imgUrl={imgUrl} ></Canvas>
+                      // <Image src={imgUrl} fluid />
                     }
 
                     <div className="align_center">File versions
-    <Pagination
+                        <Pagination
                         defaultActivePage={1}
                         firstItem={null}
                         lastItem={null}
                         pointing
                         secondary
                         totalPages={3}
-                      /> </div>
+                      />
+                    </div>
                   </div>
                 </Grid.Column>
                 <Grid.Column>
