@@ -32,6 +32,14 @@ export default class PinsTypeEntity extends BaseEntity {
     z_axis: number;
 
     @Expose()
+    @Column()
+    pageNumber: number;
+
+    @Expose()
+    @Column()
+    pinNumber: number;
+
+    @Expose()
     @CreateDateColumn()
     createdAt?: Date;
 

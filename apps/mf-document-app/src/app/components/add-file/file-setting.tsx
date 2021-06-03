@@ -10,10 +10,10 @@ import img5 from 'libs/shared-components/src/file_1.png';
 import img6 from 'libs/shared-components/src/file_2.png';
 import ProgressBar from 'libs/shared-components/src/lib/components/progress_bar/progressbar';
 import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex, FileTypeIndex, FileStructureIndex, AddFolderIndex } from "@cudo/mf-account-app-lib"
-import { UploadsViewStateContext, SharedViewStateContext, DownloadsViewStateContext } from 'apps/mf-document-app/src/azure-storage/contexts/viewStateContext';
+import { UploadsViewStateContext, SharedViewStateContext, DownloadsViewStateContext } from './../../../azure-storage/contexts/viewStateContext';
 import { BlobItem } from '@azure/storage-blob';
 import { tap } from 'rxjs/operators';
-import { BlobItemUpload, BlobItemDownload } from 'apps/mf-document-app/src/azure-storage/types/azure-storage';
+import { BlobItemUpload, BlobItemDownload } from './../../../azure-storage/types/azure-storage';
 
 import { LoaderPage } from "@cudo/shared-components"
 import { useFileMutation } from '../../services/useRequest';
@@ -166,7 +166,7 @@ export function FileSetting(props: FileProps) {
           directory,
           fileURL: file.fileURL,
           fileTitle: file.fileTitle,
-          fileType: file.fileType == "image/png" ? fileType.IMAGE : fileType.PDF,
+          fileType: file.fileType === "image/png" ? fileType.IMAGE : fileType.PDF,
           fileVersion: 1,
           fileTypeName, people, BKPIDTitle,
           phaseName, fileTypeID, phaseID,
@@ -182,7 +182,7 @@ export function FileSetting(props: FileProps) {
           cache.writeQuery({
             query: GET_FILES,
             data: {
-              tasks: [...cacheData.uploadedFiles, data?.createFile]
+              tasks: [...cacheData.uploadedFiles, data['createFile']]
             }
           });
         }
@@ -353,7 +353,7 @@ export function FileSetting(props: FileProps) {
               <Grid columns={3}>
                 <Grid.Row>
                   <Grid.Column>
-                    <BkpIndex parentBKPSelect={setBKPIDChange}></BkpIndex>
+                    <BkpIndex bkp={BKPID} parentBKPSelect={setBKPIDChange}></BkpIndex>
                     <Form.Field>
                       <a className="anchor-color" onClick={folderOpen}>+ Add New</a>
                     </Form.Field>
