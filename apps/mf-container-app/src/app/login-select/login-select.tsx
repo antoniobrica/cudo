@@ -29,7 +29,7 @@ export function LoginSelect(props: LoginSelectProps) {
       // Need to handle with redux
       setEmail(localStorage.getItem('email'))
       axios({
-        url: 'http://192.168.0.31:5001/graphql',
+        url: 'http://192.168.1.5:5001/graphql',
         method: 'post',
         data: {
           query: `
