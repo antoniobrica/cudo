@@ -12,6 +12,8 @@ import {
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex } from "@cudo/mf-account-app-lib";
+import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 function exampleReducer(state, action) {
   switch (action.type) {
@@ -117,8 +119,8 @@ export const ModalTaskEdit = (props: AlertProps) => {
     setPhasesName(data.phaseName)
   }
   const onDescriptionChange = e => {
-    console.log('des=>', e.target.value);
-    setDescription(e.target.value);
+    console.log('des=>', e);
+    setDescription(e);
   }
 
   const editTask = () => {
@@ -193,9 +195,28 @@ export const ModalTaskEdit = (props: AlertProps) => {
                   <Grid.Column>
                     <Form.Field>
                       <label>Description </label>
-                      <TextArea placeholder="Tell us more"
+                      {/* <TextArea placeholder="Tell us more"
                         value={description}
-                        onChange={onDescriptionChange} />
+                        onChange={onDescriptionChange} /> */}
+                      <ReactQuill
+                        value={description}
+                        modules={{
+                          toolbar: {
+                            container: [
+                              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                              ['bold', 'italic', 'underline'],
+                              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                              [{ 'align': [] }],
+                              ['link', 'image'],
+                              ['clean'],
+                              [{ 'color': [] }]
+                            ],
+                          }
+                        }}
+                        placeholder="Add a description"
+                        onChange={(content, delta, source, editor) => onDescriptionChange(content)}
+                        id="txtDescription"
+                      />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>

@@ -6,6 +6,8 @@ import { useTaskMutation } from '../../services/useRequest';
 import { ApolloCache, FetchResult, useMutation } from '@apollo/client';
 import { ADD_TASK, GET_TASKS } from "../../graphql/graphql";
 import './create-task.module.scss';
+import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import moment, { calendarFormat } from 'moment';
 import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex } from "@cudo/mf-account-app-lib"
 import { useHistory } from 'react-router';
@@ -23,7 +25,7 @@ export function CreateTask(props: CreateTaskProps) {
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
   ]
-
+  let quillObj: any;
   const phaseOptions = [
     { key: 'Phase_1', value: 'Phase_1', text: 'Phase 1' },
     { key: 'Phase_2', value: 'Phase_2', text: 'Phase 2' },
@@ -192,9 +194,9 @@ export function CreateTask(props: CreateTaskProps) {
     });
 
   };
-  const onDescriptionChange = e => {
-    console.log('des=>', e.target.value);
-    setDescription(e.target.value);
+  const onDescriptionChange = (e) => {
+    console.log('des=>', e);
+    setDescription(e);
   }
   const cancel = () => {
     setOpen(false)
@@ -230,9 +232,28 @@ export function CreateTask(props: CreateTaskProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>Description </label>
-                      <TextArea placeholder='Tell us more'
+                      {/* <TextArea placeholder='Tell us more'
                         value={description}
-                        onChange={onDescriptionChange} />
+                        onChange={onDescriptionChange} /> */}
+                      <ReactQuill
+                        value={description}
+                        modules={{
+                          toolbar: {
+                            container: [
+                              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                              ['bold', 'italic', 'underline'],
+                              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                              [{ 'align': [] }],
+                              ['link', 'image'],
+                              ['clean'],
+                              [{ 'color': [] }]
+                            ]
+                          }
+                        }}
+                        placeholder="Add a description"
+                        onChange={(content, delta, source, editor) => onDescriptionChange(content)}
+                        id="txtDescription"
+                      />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>

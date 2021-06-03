@@ -279,7 +279,7 @@ export function Tasks(props: TasksProps) {
   }
   const subTask = (data, title) => {
 
-    let subtask = [];
+    const subtask = [];
     const createSt = {
       subtaskTitle: title, status: Status.INPROGRESS
     }
