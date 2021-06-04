@@ -25,6 +25,17 @@ export const GET_FILES = gql`
     updatedBy 
     createdBy 
     isEveryOneAllowed 
+    children{
+      fileURL
+      fileTitle
+      fileType
+      fileTypeID
+      fileVersion
+      fileTypeName
+      isEveryOneAllowed
+      uploadedFileID
+      
+    }
     people { 
       userID 
       userName 

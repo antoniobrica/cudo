@@ -25,6 +25,17 @@ export const GET_FILES = gql`
     updatedBy 
     createdBy 
     isEveryOneAllowed 
+    children{
+      fileURL
+      fileTitle
+      fileType
+      fileTypeID
+      fileVersion
+      fileTypeName
+      isEveryOneAllowed
+      uploadedFileID
+      
+    }
     people { 
       userID 
       userName 
@@ -32,7 +43,6 @@ export const GET_FILES = gql`
   } 
   }
 `;
-
 
 export const UPLOAD_FILE = gql`
 mutation SaveUploadedFile(
@@ -108,5 +118,43 @@ mutation SaveUploadedFile(
       }
       }
 }`;
+
+export const SAVE_PINS = gql`
+mutation 
+CreatePins(
+$pinsID: String
+$uploadedFileID: String!
+$x_axis: Float!
+$y_axis: Float!
+$z_axis: Float!
+$isDeleted: Boolean!
+  )
+ { 
+  createPins(
+    pinsDetails:{ 
+    x_axis:$x_axis
+    y_axis:$y_axis
+    z_axis:$z_axis
+    isDeleted:$isDeleted 
+    uploadedFileID: $uploadedFileID
+  }) 
+
+  { 
+
+    pinsID 
+    uploadedFileID 
+    x_axis 
+    y_axis 
+    z_axis 
+    isDeleted 
+    updatedBy 
+    createdBy 
+    createdAt 
+    updatedAt 
+  } 
+
+} 
+`;
+
 
 

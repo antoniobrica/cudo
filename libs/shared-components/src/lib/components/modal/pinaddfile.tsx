@@ -32,7 +32,10 @@ const countryOptions = [
 export interface AddPinProps {
   isOpen,
   filesData,
-  dowloadFilesData
+  dowloadFilesData,
+  onSuccess,
+  savePins
+
 }
 export const AddPinFile = (props: AddPinProps) => {
   const [open, setOpen] = React.useState(false);
@@ -48,7 +51,9 @@ export const AddPinFile = (props: AddPinProps) => {
   const [followers, setfollowers] = React.useState("")
   const [phaseName, setPhasesName] = React.useState("");
   const [BKPTitle, setBKPIDTitle] = React.useState("");
+  const [cord, setCord] = React.useState(null);
   const [imgUrl, setimgUrl] = React.useState('');
+  const [fileId, setFileId] = React.useState('');
 
   const phaseOptions = [
     { key: 'Phase_1', value: 'Preliminary', text: 'Preliminary' },
@@ -84,8 +89,8 @@ export const AddPinFile = (props: AddPinProps) => {
 
   React.useEffect(() => {
     if (props.filesData) {
-      console.log('filesData==', props.filesData);
-
+      console.log('filesData==', props.filesData.uploadedFileID);
+      setFileId(props.filesData.uploadedFileID)
     }
   }, [props.filesData])
   React.useEffect(() => {
@@ -94,12 +99,23 @@ export const AddPinFile = (props: AddPinProps) => {
 
       for (let i = 0; i < props.dowloadFilesData.length; i++) {
         if (props.dowloadFilesData[i].filename == props.filesData.fileTitle) {
+          console.log('uploadedfileid', props.dowloadFilesData[i]);
           setimgUrl(props.dowloadFilesData[i].url);
         }
       }
 
     }
   })
+
+  const getCoardinates = (data) => {
+    console.log('getCoardinates', data);
+
+    //setCord(data)
+  }
+  const onSuccess = () => {
+    console.log('onSuccess');
+    props.savePins(cord)
+  }
   return (
     <>
       <div >
@@ -120,13 +136,13 @@ export const AddPinFile = (props: AddPinProps) => {
               <Grid stackable columns={2}>
                 <Grid.Column style={{ width: '70%' }}>
                   <Segment>
-                    <Canvas imgUrl={imgUrl} ></Canvas>
+                    <Canvas imgUrl={imgUrl} coardinates={getCoardinates} fileId={fileId}></Canvas>
                   </Segment>
 
                 </Grid.Column>
                 <Grid.Column style={{ width: '30%' }}>
                   <div style={{ background: '#F1F5F8', padding: '10px' }}>
-                    <CreateFileTaskIndex close={close}></CreateFileTaskIndex>
+                    <CreateFileTaskIndex close={close} onSuccess={onSuccess}></CreateFileTaskIndex>
                     {/* <Form.Field>
                       <label>Task Title <span className="danger">*</span></label>
                       <Input placeholder='task title' size='small' className="full-width" type="text" />
