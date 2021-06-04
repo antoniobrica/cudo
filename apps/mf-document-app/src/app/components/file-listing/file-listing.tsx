@@ -6,7 +6,7 @@ import { DeletesViewStateContext, DownloadsViewStateContext, SharedViewStateCont
 import { BlobItemDownload, BlobItemUpload } from 'apps/mf-document-app/src/azure-storage/types/azure-storage';
 import { tap } from 'rxjs/operators';
 import { BlobItem, ContainerItem } from '@azure/storage-blob';
-import { LoaderPage, UploadNewVersion } from "@cudo/shared-components"
+import { LoaderPage, UploadNewVersion, AddPinFile } from "@cudo/shared-components"
 import { useFileQuery } from '../../services/useRequest';
 import { GET_FILES } from '../../graphql/graphql';
 import ItemsDownloaded from 'apps/mf-document-app/src/azure-storage/components/ItemsDownloaded';
@@ -30,6 +30,10 @@ export function FileListing(props: FileListingProps) {
   const [items, setItems] = React.useState<ContainerItem[]>([]);
   const [itemsd, setItemsd] = React.useState<BlobItemDownload[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [openPinFile, setOpenPinFile] = React.useState(false)
+  const [imgUrl, setimgUrl] = React.useState('');
+  const [filesData, setFilesData] = React.useState([]);
+
 
   const getDownloadedItems = () => {
     setIsLoading(true)
@@ -85,6 +89,10 @@ export function FileListing(props: FileListingProps) {
     setFileVersion(data);
     setOpenNew(true)
   }
+  const addPinTask = (data) => {
+    setFileName(data);
+    downloadsContext.viewItem(data)
+  }
   const cancel = () => {
     setOpenNew(false)
   }
@@ -117,7 +125,10 @@ export function FileListing(props: FileListingProps) {
               opennewF={true}
               cancel={cancel}
               file={fileVersion} /> : null}
-          <FileStructure files={data?.uploadedFiles} downloadFiles={downloadFiles} viewFiles={viewFiles} uploadNewVersion={uploadNewVersion} downloadedImg={itemsd}></FileStructure>
+          <FileStructure files={data?.uploadedFiles} downloadFiles={downloadFiles} viewFiles={viewFiles}
+            uploadNewVersion={uploadNewVersion}
+            addPinTask={addPinTask}
+            downloadedImg={itemsd}></FileStructure>
           {/* {itemsd.map((item, i) => (
             <div key={i}>
               {item.containerName}:

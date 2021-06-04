@@ -89,6 +89,10 @@ export function FileList(props: FileListProps) {
     setFileVersion(data);
     //setOpenNew(true)
   }
+  const savePins = (data) => {
+    console.log('savePins==>', data);
+
+  }
   // const cancel = () => {
   //   //setOpenNew(false)
   // }
@@ -101,6 +105,7 @@ export function FileList(props: FileListProps) {
         <LoaderPage /> : null}
       <SelectFilePopup isTaskFile={props.isTaskFile} cancel={props.cancel} files={data?.uploadedFiles}
         downloadFiles={downloadFiles} viewFiles={viewFiles} downloadedImg={itemsd}
+        savePins={savePins}
       />
     </div>
   );

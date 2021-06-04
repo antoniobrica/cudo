@@ -13,7 +13,10 @@ import axios from 'axios';
 
 
 /* eslint-disable-next-line */
-export interface CreateFileTaskProps { close }
+export interface CreateFileTaskProps {
+  close,
+  onSuccess
+}
 
 export function CreateFileTask(props: CreateFileTaskProps) {
   const [open, setOpen] = React.useState(false)
@@ -173,7 +176,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   }
   const handleSaveTask = () => {
     // setOpen(false);
-
+    props.onSuccess();
     addTask({
       variables: {
         taskTitle, startDate, endDate, estimatedDays,

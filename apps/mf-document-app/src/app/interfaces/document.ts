@@ -26,13 +26,19 @@ export interface IFile {
   fileType: string
   fileVersion: number
   people: [IPeople]
+  children: [IFileParam]
 }
 export interface IFileParam {
   fileURL: string
   fileTitle: string
   fileType: string
   fileVersion: string
+  isEveryOneAllowed: boolean
+  fileTypeName: string
+  fileTypeID: string,
+  uploadedFileID: string
 }
+
 export interface IPeople {
   userID: string
   userName: string

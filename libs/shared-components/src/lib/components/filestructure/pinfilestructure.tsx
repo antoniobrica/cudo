@@ -36,6 +36,7 @@ export function PinFileStructure(props: FileStructureProps) {
 
     const [tick, setTick] = React.useState([[]]);
     const [isTick, setIsTick] = React.useState('');
+    const [fileId, setFileId] = React.useState('');
 
     React.useEffect(() => {
         if (props.isPinFile) {
@@ -80,7 +81,7 @@ export function PinFileStructure(props: FileStructureProps) {
             for (let i = 0; i < props.downloadedImg.length; i++) {
                 if (props.downloadedImg[i].filename == filesData['fileTitle']) {
                     console.log('url', props.downloadedImg[i].url);
-
+                    setFileId(props.downloadedImg[i].url)
                     setimgUrl(props.downloadedImg[i].url);
                 }
             }
@@ -94,30 +95,30 @@ export function PinFileStructure(props: FileStructureProps) {
     }
     React.useEffect(() => {
         if (props.files) {
-            setItems(props.files.map((file, i) => ({ key: i, title: file.directory ? file.directory : file.BKPIDTitle, content: { content: (renderItems(file, i)) } })));
+            setItems(props.files.map((file, i) => ({ key: i, title: file.directory ? file.directory : file.BKPIDTitle, content: { content: (renderItems(file.children, i)) } })));
         }
     }, [props.files]);
 
 
     const renderItems = (data, i) => {
-        // const files = data.map((file, id) => {
-        return (
-            <div className="card1 card-custom gutter-b width_card" >
+        const files = data.map((data, id) => {
+            return (
+                <div className="card1 card-custom gutter-b width_card" >
 
-                <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
+                    <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
 
-                    <div className="d-flex align-items-center py-2">
-                        <span>
-                            {data.fileType == ("image/jpeg" || "image/png")
-                                ?
-                                <img src={img5} className="  mr-10 " /> :
-                                <img src={img2} className="  mr-10 " />
-                            }
+                        <div className="d-flex align-items-center py-2">
+                            <span>
+                                {data.fileType == ("image/jpeg" || "image/png")
+                                    ?
+                                    <img src={img5} className="  mr-10 " /> :
+                                    <img src={img2} className="  mr-10 " />
+                                }
 
-                        </span>
+                            </span>
 
-                        <span className="font-weight-bold mb-0 mr-10">{data.fileTitle}</span>
-                        {/* <div className="d-flex mr-3">
+                            <span className="font-weight-bold mb-0 mr-10">{data.fileTitle}</span>
+                            {/* <div className="d-flex mr-3">
 
 								<div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
 
@@ -129,30 +130,30 @@ export function PinFileStructure(props: FileStructureProps) {
 
 							</div> */}
 
-                    </div>
+                        </div>
 
-                    <div className="symbol-group symbol-hover">
-                        <div style={{ marginTop: '-33px' }}>
-                            {/* <a onClick={() => download(file.fileTitle)}>  <i className="ms-Icon ms-Icon--Download mr-10" aria-hidden="true"></i></a> */}
-                            {/* <a onClick={() => viewFile(file)}> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a> */}
-                            <a
-                                onClick={() => viewFile(data, i)}
-                                className="navi-link active"
-                                style={{ marginLeft: '320px' }}
-                            >
-                                <img src={img8} />
+                        <div className="symbol-group symbol-hover">
+                            <div style={{ marginTop: '-33px' }}>
+                                {/* <a onClick={() => download(file.fileTitle)}>  <i className="ms-Icon ms-Icon--Download mr-10" aria-hidden="true"></i></a> */}
+                                {/* <a onClick={() => viewFile(file)}> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a> */}
+                                <a
+                                    onClick={() => viewFile(data, i)}
+                                    className="navi-link active"
+                                    style={{ marginLeft: '320px' }}
+                                >
+                                    <img src={img8} />
 
-                            </a>
+                                </a>
+
+                            </div>
 
                         </div>
 
                     </div>
-
                 </div>
-            </div>
-        )
-        // })
-        // return files;
+            )
+        })
+        return files;
     }
 
 
