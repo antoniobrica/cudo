@@ -53,7 +53,7 @@ import ToggleButton from 'libs/shared-components/src/lib/components/tabs/toggleb
 
 import ModalCost from 'libs/shared-components/src/lib/components/modal/addcostpopup';
 
-
+import PinMaskTask from 'libs/shared-components/src/lib/components/modal/pinmasktask';
 
 // import { Sidebar } from 'semantic-ui-react';
 
@@ -113,7 +113,7 @@ export function App() {
         <SelectFilePopup></SelectFilePopup><br />
         <ToggleButton></ToggleButton><br />
         <ModalCost></ModalCost><br />
-
+        <PinMaskTask></PinMaskTask>
 
       </div>
 
