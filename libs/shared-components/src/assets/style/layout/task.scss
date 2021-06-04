@@ -256,3 +256,28 @@
 .marginestimate {
   margin-left: 770px;
 }
+
+
+.dotlinearea{
+  font-size: 15px;
+}
+.button.ui.mini.button.pinbutton{
+  height: 4rem;
+  background: #fff;
+  color: #bfbebe;
+  box-shadow: none;
+  border: 1px solid #D0D8DF;
+  width: 100%;
+  font-size: 12px;
+  text-align: left;
+}
+.pinadd{
+  position: relative;
+  top: 50%;
+  left: 93%;
+  transform: translate(-50%, -132%);
+  -ms-transform: translate(-50%, -132%);
+}
+ .colorback{
+   background: #F9F8FF;
+ }
