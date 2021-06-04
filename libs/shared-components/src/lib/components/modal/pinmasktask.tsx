@@ -83,7 +83,7 @@ const PinMaskTask = () => {
                         <div className="d-flex align-items-center  py-2">
                           <span>
                          
-                            <img src="assets/images/dots.png" className="  mr-10 " />
+                            <img src="assets/images/dots.png" style={{  marginRight: '6px !important;'}} className="  mr-10 " />
                           </span>
 
                           <span>
@@ -123,7 +123,7 @@ const PinMaskTask = () => {
                             <i
                               className="ms-Icon ms-Icon--LocationDot "
                               aria-hidden="true"
-                              style={{ color: '#D0D8DF' }}
+                              style={{ color: '#D0D8DF', verticalAlign:'middle' }}
                             ></i>
                              {t('pin_mask.tender')} 
                           </span>
@@ -132,7 +132,7 @@ const PinMaskTask = () => {
                             <i
                               className="ms-Icon ms-Icon--LocationDot "
                               aria-hidden="true"
-                              style={{ color: '#D0D8DF' }}
+                              style={{ color: '#D0D8DF',verticalAlign:'middle' }}
                             ></i>
                             {t('pin_mask.paint_work')} 
                           </span>
@@ -168,7 +168,7 @@ const PinMaskTask = () => {
                         <div className="d-flex align-items-center  py-2">
                           <span>
                          
-                          <img src="assets/images/dots.png" className="  mr-10 " />
+                          <img src="assets/images/dots.png" className="  mr-10 " style={{  marginRight: '6px !important;'}} />
                           </span>
 
                           <span>
@@ -209,7 +209,7 @@ const PinMaskTask = () => {
                             <i
                               className="ms-Icon ms-Icon--LocationDot "
                               aria-hidden="true"
-                              style={{ color: '#D0D8DF' }}
+                              style={{ color: '#D0D8DF', verticalAlign:'middle' }}
                             ></i>
                        {t('pin_mask.tender')} 
                           </span>
@@ -218,7 +218,7 @@ const PinMaskTask = () => {
                             <i
                               className="ms-Icon ms-Icon--LocationDot "
                               aria-hidden="true"
-                              style={{ color: '#D0D8DF' }}
+                              style={{ color: '#D0D8DF',verticalAlign:'middle' }}
                             ></i>
                             {t('pin_mask.paint_work')} 
                           </span>
