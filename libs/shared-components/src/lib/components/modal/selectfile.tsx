@@ -24,13 +24,13 @@ import AddPinFile from './pinaddfile';
 import FilterPopup from './fliter';
 export interface FileStructureProps {
   // files?,
-  downloadFiles,
-  downloadedImg,
-  viewFiles
-  isTaskFile,
-  files,
-  cancel,
-  savePins
+  downloadFiles?,
+  downloadedImg?,
+  viewFiles?
+  isTaskFile?,
+  files?,
+  cancel?,
+  savePins?
 }
 export function SelectFilePopup(props: FileStructureProps) {
   const countryOptions = [

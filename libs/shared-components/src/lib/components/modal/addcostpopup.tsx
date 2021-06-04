@@ -11,15 +11,15 @@ export interface IHouse {
   onChange
 }
 export interface ModalCostProps {
-  house: IHouse
+  house?: IHouse
 }
 type Iitem = {
   index?: number
   bkp?: string;
   description?: string;
   files?: string[];
-  itemQuantity: number;
-  itemPrice: number;
+  itemQuantity?: number;
+  itemPrice?: number;
 }
 export function ModalCost(props: ModalCostProps) {
   const { t } = useTranslation();

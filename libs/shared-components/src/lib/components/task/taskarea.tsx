@@ -61,7 +61,7 @@ export function TaskArea(props: Tasks) {
   return (
     <div>
 
-      {props.task.status === "COMPLETED" ?
+      {props?.task?.status === "COMPLETED" ?
         <div className="card1 card-custom gutter-b card-complete">
 
           <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
@@ -70,7 +70,7 @@ export function TaskArea(props: Tasks) {
               <span> <img src={img4} className="  mr-10 " />  </span>
               <span className="textt">T-0{props.id + 1}</span>
               <span onClick={() => updateStatus(props.task, props.id)} className="anchor_complete">  <img src={img3} className=" mr-2 mr-10 " />   </span>
-              <span className="font-weight-bold mb-0 mr-10 line-through">{props.task.taskTitle}</span>
+              <span className="font-weight-bold mb-0 mr-10 line-through">{props?.task?.taskTitle}</span>
               <div className="d-flex mr-3">
 
                 <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
@@ -134,14 +134,14 @@ export function TaskArea(props: Tasks) {
               <span> <img src={img4} className="  mr-10 " />  </span>
               <span className="textt">T-0{props.id + 1}</span>
               <span onClick={() => updateStatus(props.task, props.id)}><span className="anchor_complete"><a title="Mark as complete"> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span></span>
-              <span className="font-weight-bold mb-0 mr-10">{props.task.taskTitle}</span>
+              <span className="font-weight-bold mb-0 mr-10">{props?.task?.taskTitle}</span>
               <div className="d-flex mr-3">
 
                 <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
 
                   <div className="navi-item mr-2">
                     <a href=" " className="navi-link active">
-                      <span className="navi-text">( {new Date(props.task.startDate).toDateString()} ↦ Due {new Date(props.task.endDate).toDateString()})</span>
+                      <span className="navi-text">( {new Date(props?.task?.startDate).toDateString()} ↦ Due {new Date(props?.task?.endDate).toDateString()})</span>
                     </a>
                   </div>
 
@@ -153,7 +153,7 @@ export function TaskArea(props: Tasks) {
 
                   <div className="navi-item mr-2">
                     <a href="" className="navi-link">
-                      <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> {props.task.estimatedDays} Days- </span>
+                      <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> {props?.task?.estimatedDays} Days- </span>
                     </a>
                   </div>
                   <div className="navi-item mr-2">

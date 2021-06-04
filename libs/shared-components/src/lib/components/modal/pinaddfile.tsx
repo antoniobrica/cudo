@@ -30,11 +30,11 @@ const countryOptions = [
 
 ]
 export interface AddPinProps {
-  isOpen,
-  filesData,
-  dowloadFilesData,
-  onSuccess,
-  savePins
+  isOpen?,
+  filesData?,
+  dowloadFilesData?,
+  onSuccess?,
+  savePins?
 
 }
 export const AddPinFile = (props: AddPinProps) => {
@@ -117,33 +117,32 @@ export const AddPinFile = (props: AddPinProps) => {
     props.savePins(cord)
   }
   return (
-    <>
-      <div >
+    <div >
 
-        {/* <Button size='mini' className="grey-btn" onClick={openM}>
+      {/* <Button size='mini' className="grey-btn" onClick={openM}>
           Pin File
         </Button> */}
 
-        <Modal
-          size={'fullscreen'}
-          onClose={close}
-          onOpen={openM}
-          open={open}
-        >
-          <Modal.Header>File_name.cad</Modal.Header>
-          <Modal.Content>
-            <Form>
-              <Grid stackable columns={2}>
-                <Grid.Column style={{ width: '70%' }}>
-                  <Segment>
-                    <Canvas imgUrl={imgUrl} coardinates={getCoardinates} fileId={fileId}></Canvas>
-                  </Segment>
+      <Modal
+        size={'fullscreen'}
+        onClose={close}
+        onOpen={openM}
+        open={open}
+      >
+        <Modal.Header>File_name.cad</Modal.Header>
+        <Modal.Content>
+          <Form>
+            <Grid stackable columns={2}>
+              <Grid.Column style={{ width: '70%' }}>
+                <Segment>
+                  <Canvas imgUrl={imgUrl} coardinates={getCoardinates} fileId={fileId}></Canvas>
+                </Segment>
 
-                </Grid.Column>
-                <Grid.Column style={{ width: '30%' }}>
-                  <div style={{ background: '#F1F5F8', padding: '10px' }}>
-                    <CreateFileTaskIndex close={close} onSuccess={onSuccess}></CreateFileTaskIndex>
-                    {/* <Form.Field>
+              </Grid.Column>
+              <Grid.Column style={{ width: '30%' }}>
+                <div style={{ background: '#F1F5F8', padding: '10px' }}>
+                  <CreateFileTaskIndex close={close} onSuccess={onSuccess}></CreateFileTaskIndex>
+                  {/* <Form.Field>
                       <label>Task Title <span className="danger">*</span></label>
                       <Input placeholder='task title' size='small' className="full-width" type="text" />
                     </Form.Field>
@@ -231,8 +230,8 @@ export const AddPinFile = (props: AddPinProps) => {
         </Button>
 
                     </Form.Field> */}
-                  </div>
-                  {/* <Form.Field>
+                </div>
+                {/* <Form.Field>
 
                     <div className="card1 card-custom gutter-b" style={{ border: '1px solid #ddd' }}>
 
@@ -349,15 +348,14 @@ export const AddPinFile = (props: AddPinProps) => {
 
 
                   </Form.Field> */}
-                </Grid.Column>
+              </Grid.Column>
 
-              </Grid>
-            </Form>
-          </Modal.Content>
+            </Grid>
+          </Form>
+        </Modal.Content>
 
-        </Modal>
-      </div>
-    </>
+      </Modal>
+    </div >
   )
 }
 

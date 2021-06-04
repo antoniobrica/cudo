@@ -15,11 +15,11 @@ import AddPinFile from '../modal/pinaddfile';
 /* eslint-disable-next-line */
 export interface FileStructureProps {
 	files?,
-	downloadFiles,
-	downloadedImg,
-	viewFiles,
-	uploadNewVersion,
-	addPinTask
+	downloadFiles?,
+	downloadedImg?,
+	viewFiles?,
+	uploadNewVersion?,
+	addPinTask?
 }
 
 export function FileStructure(props: FileStructureProps) {
