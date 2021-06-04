@@ -38,7 +38,7 @@ spec:
     spec:
       containers:
         - name: ms-task-container
-          image: 192.168.1.5:5000/ms-task
+          image: 192.168.0.31:5000/ms-task
           ports:
             - containerPort: 5007
           imagePullPolicy: Always

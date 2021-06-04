@@ -1,10 +1,11 @@
 export const environment = {
   production: true,
   SERVER_TIMEOUT: 1080000,
-  DATABASE_HOST: '192.168.1.5',
+  DATABASE_HOST: '192.168.0.31',
   DATABASE_PORT: 1433,
-  DATABASE_USERNAME: 'sa',
-  DATABASE_PASSWORD: 'Welcome@1',
+  DATABASE_USERNAME: 'cudo',
+  DATABASE_PASSWORD: 'apl$dsfTJ#20',
+
   DATABASE_NAME: 'accounts',
   DATABASE_TYPE: 'mssql',
   DATABASE_CONNECTION_TIME_OUT: 150000,
