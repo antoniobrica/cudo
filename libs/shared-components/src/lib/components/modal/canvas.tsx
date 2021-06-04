@@ -5,9 +5,9 @@ import React, { Component, useEffect, useRef } from 'react'
 import axios from 'axios';
 
 export interface CanvasProps {
-  imgUrl,
-  coardinates,
-  fileId
+  imgUrl?,
+  coardinates?,
+  fileId?
 }
 export function Canvas(props: CanvasProps) {
   const canvas = useRef<HTMLCanvasElement>();

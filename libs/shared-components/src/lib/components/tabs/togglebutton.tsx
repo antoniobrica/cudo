@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Dropdown } from 'semantic-ui-react'
 interface BtnProps {
-  changeAdd
+  changeAdd?
 }
 
 export function ToggleButton(props: BtnProps) {

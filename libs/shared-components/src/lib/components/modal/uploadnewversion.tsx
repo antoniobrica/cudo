@@ -7,7 +7,7 @@ import img from 'libs/shared-components/src/default.png';
 interface AlertProps {
   opennewF?,
   cancel?,
-  file
+  file?
 }
 export function UploadNewVersion(props: AlertProps) {
   const countryOptions = [
