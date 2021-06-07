@@ -12,7 +12,8 @@ const client = new ApolloClient({
 });
 /* eslint-disable-next-line */
 export interface FileTypeIndexProps {
-  parentFileTypeSelect
+  parentFileTypeSelect?
+  fileTypeName?
 }
 
 export function FileTypeIndex(props: FileTypeIndexProps) {
@@ -23,7 +24,7 @@ export function FileTypeIndex(props: FileTypeIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <FileType parentFileTypeSelect={onFileType} />
+        <FileType fileTypeName={props.fileTypeName} parentFileTypeSelect={onFileType} />
       </ApolloHooksProvider>
     </ApolloProvider>
   );

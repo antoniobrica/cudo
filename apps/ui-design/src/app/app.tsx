@@ -1,5 +1,12 @@
 import React, { Suspense } from 'react';
 
+import { initI18n } from "@cudo/mf-core";
+
+
+const defaultLanguage = 'en-GB';
+const supportedLanguages = [defaultLanguage, 'en-GB'];
+initI18n('./assets/i18n/{{lng}}.json', defaultLanguage);
+
 
 import { ReactComponent as Logo } from './logo.svg';
 import star from './star.svg';

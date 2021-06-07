@@ -14,6 +14,15 @@
     "add_new": "Add New",
     "select_house": "Select house"
   },
+
+  "pin_mask":{"pin_mark_task":"Klicken Sie hier, um eine Stecknadel-Aufgabe hinzuzufügen",
+  "paint_work": "Lackierarbeiten",
+  "this_task":"  Dies ist der Aufgabenname hier",
+  "tender":"zärtlich"
+
+  }
+,
+
   "language": {
     "en-GB": "English",
     "de-DE": "Deutsche"

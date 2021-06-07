@@ -10,18 +10,11 @@ import {
   TextArea,
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
-import img1 from 'libs/shared-components/src/file_pin.png';
-import img3 from 'libs/shared-components/src/grey_arrow.png';
 
-import img7 from 'libs/shared-components/src/powerpoint.png';
-import img4 from 'libs/shared-components/src/folder.png';
-
-import img8 from 'libs/shared-components/src/circle_blue.png';
-
-import img9 from 'libs/shared-components/src/grey_circle.png';
 import PinFileStructure from '../filestructure/pinfilestructure';
 import AddPinFile from './pinaddfile';
 import FilterPopup from './fliter';
+import { relative } from 'path';
 export interface FileStructureProps {
   // files?,
   downloadFiles?,
@@ -130,21 +123,24 @@ export function SelectFilePopup(props: FileStructureProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
+                      <img src="assets/images/search_white.png" style={{ position: 'relative', top: '11px', zIndex: '99999' }}></img>
+
                       <Input
-                        placeholder="search"
+                        placeholder="search.."
                         size="small"
-                        className="full-width inputfieldarea"
+                        className="full-width inputfieldarea bordernone"
                         type="search"
                       />
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
-                      &nbsp;&nbsp;
-                      <img src={img1} className="  mr-10 " />
+
+                      <img src="assets/images/filter.png" style={{ position: 'relative', left: '30px', top: '6px' }}></img>
                       {/* <FilterPopup /> */}
-                      <Button size="mini" className="grey-btn" style={{ marginLeft: 40 }}>
-                        + Add New
+                      <img src="assets/images/plus_white.png" style={{ position: 'relative', top: '4px', marginRight: '-22px', left: '49px' }} />
+                      <Button size="mini" className="grey-btn" style={{ marginLeft: '40', height: '37px', width: '62%' }}>
+                        Add New
                       </Button>
                     </Form.Field>
                   </Grid.Column>
@@ -246,7 +242,7 @@ export function SelectFilePopup(props: FileStructureProps) {
           </Button>
         </Modal.Actions>
       </Modal>
-    </div>
+    </div >
   );
 }
 

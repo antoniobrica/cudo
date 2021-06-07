@@ -21,11 +21,7 @@ export function UploadNewVersion(props: AlertProps) {
 
   const [open, setOpen] = React.useState(false)
   const [fileData, setFileData] = React.useState(null)
-  const [showPeople, setShowPeople] = React.useState(false);
   const [isFolder, setisFolder] = React.useState(false);
-  const [folderopen, setFolderOpen] = React.useState(false);
-  const [people, setAsignis] = React.useState([]);
-  const [files, setFileList] = React.useState<any>([]);
   const [fileTypeName, setfileTypeName] = React.useState("");
   const [fileTypeID, setfileTypeID] = React.useState("");
   const [structureTitle, setstructureTitle] = React.useState("");
@@ -45,7 +41,9 @@ export function UploadNewVersion(props: AlertProps) {
       console.log('files-data', props.file);
       setFileData(props.file);
       setPhasesName(props.file.phaseName);
-      setBKPIDTitle(props.file.BKPIDTitle)
+      setBKPIDTitle(props.file.directory);
+      setfileTypeName(props.file.fileTypeName);
+      setstructureTitle(props.file.structureTitle);
     }
   }, [props.file]);
 
@@ -213,7 +211,7 @@ export function UploadNewVersion(props: AlertProps) {
                       <Select placeholder='Select' className="small" options={countryOptions} />
 
                     </Form.Field> */}
-                    <FileTypeIndex parentFileTypeSelect={setFileTypeChange} />
+                    <FileTypeIndex fileTypeName={fileTypeName} parentFileTypeSelect={setFileTypeChange} />
 
                   </Grid.Column>
                   <Grid.Column>
@@ -222,7 +220,7 @@ export function UploadNewVersion(props: AlertProps) {
                       <Select placeholder='Select' className="small" options={countryOptions} />
 
                     </Form.Field> */}
-                    <FileStructureIndex parentFileStructureSelect={setFileStructureChange} />
+                    <FileStructureIndex structureTitle={structureTitle} parentFileStructureSelect={setFileStructureChange} />
 
                   </Grid.Column>
                 </Grid.Row>
