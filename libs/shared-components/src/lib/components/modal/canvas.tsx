@@ -85,7 +85,7 @@ export function Canvas(props: CanvasProps) {
     $z_axis: Float!
     $isDeleted: Boolean!
     $pageNumber: Float!
-    $pinId:Float!
+    $pinNumber:Float!
       )
      { 
       createPins(
@@ -96,7 +96,7 @@ export function Canvas(props: CanvasProps) {
         isDeleted:$isDeleted 
         uploadedFileID: $uploadedFileID
         pageNumber: $pageNumber
-        pinId: $pinId
+        pinNumber: $pinNumber
       }) 
     
       { 
@@ -167,7 +167,7 @@ export function Canvas(props: CanvasProps) {
               z_axis: box.r,
               isDeleted: false,
               uploadedFileID: props.fileId,
-              pinId: 1,
+              pinNumber: 1,
               pageNumber: 1
             }
           }
