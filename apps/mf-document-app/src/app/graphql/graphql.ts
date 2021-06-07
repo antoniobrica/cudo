@@ -29,12 +29,18 @@ export const GET_FILES = gql`
       fileURL
       fileTitle
       fileType
-      fileTypeID
       fileVersion
       fileTypeName
       isEveryOneAllowed
       uploadedFileID
-      
+     BKPID 
+    BKPIDTitle 
+    phaseID 
+    phaseName 
+    fileTypeID  
+    structureID 
+    directory
+    structureTitle  
     }
     people { 
       userID 

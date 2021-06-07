@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button, Checkbox, Modal, Input, Form, Grid, Select } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
+import { BkpIndex, PhaseIndex, FileTypeIndex, FileStructureIndex } from "@cudo/mf-account-app-lib";
+
 
 import img from 'libs/shared-components/src/default.png';
 
@@ -18,11 +20,41 @@ export function UploadNewVersion(props: AlertProps) {
 
 
   const [open, setOpen] = React.useState(false)
+  const [fileData, setFileData] = React.useState(null)
+  const [showPeople, setShowPeople] = React.useState(false);
+  const [isFolder, setisFolder] = React.useState(false);
+  const [folderopen, setFolderOpen] = React.useState(false);
+  const [people, setAsignis] = React.useState([]);
+  const [files, setFileList] = React.useState<any>([]);
+  const [fileTypeName, setfileTypeName] = React.useState("");
+  const [fileTypeID, setfileTypeID] = React.useState("");
+  const [structureTitle, setstructureTitle] = React.useState("");
+  const [structureID, setstructureID] = React.useState("");
+  const [BKPIDTitle, setBKPIDTitle] = React.useState("");
+  const [BKPID, setBKPID] = React.useState("");
+  const [phaseName, setPhasesName] = React.useState("");
+  const [phaseID, setPhasesID] = React.useState("");
+  const [folderName, setfolderName] = React.useState("");
+  const [directory, setDirectory] = React.useState("");
+  const [workTypeData, setworkTypeData] = React.useState('')
+
+
+
+  React.useEffect(() => {
+    if (props.file) {
+      console.log('files-data', props.file);
+      setFileData(props.file);
+      setPhasesName(props.file.phaseName);
+      setBKPIDTitle(props.file.BKPIDTitle)
+    }
+  }, [props.file]);
+
   React.useEffect(() => {
     if (props.opennewF) {
       setOpen(props.opennewF);
     }
   }, [props.opennewF]);
+
   const openf = () => {
     setOpen(true)
   }
@@ -34,6 +66,35 @@ export function UploadNewVersion(props: AlertProps) {
     setOpen(false)
     props.cancel()
   }
+  const onsetPhasesID = (data) => {
+    setPhasesID((data.phaseID).toString());
+    setPhasesName(data.phaseName)
+  }
+  const setFileTypeChange = (data) => {
+    setfileTypeName(data.fileTypeTitle);
+    setfileTypeID(data.fileTypeID)
+  }
+  const setBKPIDChange = (data) => {
+    console.log('bkp=f', data.isFolder);
+    setisFolder(data.isFolder)
+    if (data.isFolder) {
+      setfolderName(data.folderTitle)
+      setDirectory(data.folderTitle)
+      console.log('folderName', folderName);
+    }
+    else {
+      setBKPIDTitle(data.BKPIDTitle)
+      setDirectory(data.BKPIDTitle)
+
+      setBKPID(data.BKPID)
+    }
+  }
+  const setFileStructureChange = (data) => {
+    // setfileStructureID()
+    setstructureID(data.structureID)
+    setstructureTitle(data.structureTitle)
+  }
+
   return (
     <div>
       <Modal className="modal_media modal_center modal_media_1"
@@ -56,8 +117,8 @@ export function UploadNewVersion(props: AlertProps) {
                     <Form.Field>
                       <label>File to replace:</label>
 
-                      <img src={img} className="mr-10 " /> 1542.313.3231_project_plan_0358.cad
-    </Form.Field>
+                      <img src={img} className="mr-10 " /> {props.file.fileTitle}
+                    </Form.Field>
                   </Grid.Column>
 
                 </Grid.Row>
@@ -126,38 +187,43 @@ export function UploadNewVersion(props: AlertProps) {
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
-                    <Form.Field>
+                    {/* <Form.Field>
                       <label>Phase</label>
                       <Select placeholder='Select' className="small" options={countryOptions} />
 
-                    </Form.Field>
+                    </Form.Field> */}
+                    <PhaseIndex phaseName={phaseName} parentPhaseSelect={onsetPhasesID} />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
               <Grid columns={3}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
+                    {/* <Form.Field>
                       <label>BKP/Folder</label>
                       <Select placeholder='Select' className="small" options={countryOptions} />
 
-                    </Form.Field>
-
+                    </Form.Field> */}
+                    <BkpIndex bkp={BKPIDTitle} parentBKPSelect={setBKPIDChange} />
                   </Grid.Column>
 
                   <Grid.Column>
-                    <Form.Field>
+                    {/* <Form.Field>
                       <label>File type</label>
                       <Select placeholder='Select' className="small" options={countryOptions} />
 
-                    </Form.Field>
+                    </Form.Field> */}
+                    <FileTypeIndex parentFileTypeSelect={setFileTypeChange} />
+
                   </Grid.Column>
                   <Grid.Column>
-                    <Form.Field>
+                    {/* <Form.Field>
                       <label>File structure</label>
                       <Select placeholder='Select' className="small" options={countryOptions} />
 
-                    </Form.Field>
+                    </Form.Field> */}
+                    <FileStructureIndex parentFileStructureSelect={setFileStructureChange} />
+
                   </Grid.Column>
                 </Grid.Row>
               </Grid>

@@ -13,7 +13,7 @@ import {
 import img2 from 'libs/shared-components/src/people_1.png';
 import img from 'libs/shared-components/src/assets/images/grey_pin.png'
 import img3 from 'libs/shared-components/src/check_grey.png';
-import img4 from 'libs/shared-components/src/dots.png'; 
+import img4 from 'libs/shared-components/src/dots.png';
 import img7 from 'libs/shared-components/src/Image 3.png';
 
 function exampleReducer(state, action) {
@@ -31,7 +31,7 @@ const countryOptions = [
   { key: 'af', value: 'af', text: 'Afghanistan' },
   { key: 'ax', value: 'ax', text: 'Aland Islands' },
 ];
-const PinMaskTask = () => {
+export const PinMaskTask = () => {
   const [state, dispatch] = React.useReducer(exampleReducer, {
     open: false,
     size: undefined,
@@ -56,7 +56,7 @@ const PinMaskTask = () => {
           style={{ marginLeft: '35px' }}
         >
           <Modal.Header>File_name.cad</Modal.Header>
-          <Modal.Content style={{    marginTop: '-1px'}}>
+          <Modal.Content style={{ marginTop: '-1px' }}>
             <Form>
               <Grid stackable columns={2}>
                 <Grid.Column className="colorback" style={{ width: '70%' }}>
@@ -64,12 +64,12 @@ const PinMaskTask = () => {
                     <img src={img7} className=" fluid " />
                   </Segment>
                 </Grid.Column>
-                <Grid.Column style={{ width: '30%',  marginLeft: '-9px', marginTop: '-10px'}}>
-                  <div style={{ background: '#F1F5F8', padding: '10px',    marginBottom: '-18px' }}>
+                <Grid.Column style={{ width: '30%', marginLeft: '-9px', marginTop: '-10px' }}>
+                  <div style={{ background: '#F1F5F8', padding: '10px', marginBottom: '-18px' }}>
                     <Form.Field classname="buttonbluedown">
                       <label> </label>
-                      <button  className="ui mini button pinbutton">Click to add pin-mark task</button>
-                      <img src={img} className="pinadd"/>
+                      <button className="ui mini button pinbutton">Click to add pin-mark task</button>
+                      <img src={img} className="pinadd" />
                     </Form.Field>
                   </div>
                   <Form.Field>
@@ -77,12 +77,12 @@ const PinMaskTask = () => {
                       <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
                         <div className="d-flex align-items-center  py-2">
                           <span>
-                         
+
                             <img src={img4} className="  mr-10 " />{' '}
                           </span>
 
                           <span>
-                      
+
                             <img src={img3} className=" mr-2 mr-10 " />{' '}
                           </span>
                           <span className="font-weight-bold mb-0 mr-10  ">
@@ -114,7 +114,7 @@ const PinMaskTask = () => {
                         <div className="d-flex align-items-center  py-2">
                           <span className=" mr-2 mr-10 li_area"></span>
                           <span className=" mr-2 mr-10 li_area">
-                            
+
                             <i
                               className="ms-Icon ms-Icon--LocationDot "
                               aria-hidden="true"
@@ -123,7 +123,7 @@ const PinMaskTask = () => {
                             Tender
                           </span>
                           <span className=" mr-2 mr-10 li_area">
-                         
+
                             <i
                               className="ms-Icon ms-Icon--LocationDot "
                               aria-hidden="true"
@@ -135,25 +135,25 @@ const PinMaskTask = () => {
 
                         <div className="symbol-group symbol-hover py-2 text-right">
                           <div className="symbol symbol-30">
-                          <span className="mr-2">
-                                <Dropdown text="..." className="dotlinearea">
-                                  <Dropdown.Menu>
-                                    <Dropdown.Item
-                                      icon="eye"
-                                      text="View detail"
-                                    />
-                                    <Dropdown.Item icon="pencil" text="Edit" />
-                                    <Dropdown.Item
-                                      icon="check circle outline"
-                                      text="Mark as complete"
-                                    />
-                                    <Dropdown.Item
-                                      icon="trash alternate outline"
-                                      text="Delete"
-                                    />
-                                  </Dropdown.Menu>
-                                </Dropdown>
-                              </span>
+                            <span className="mr-2">
+                              <Dropdown text="..." className="dotlinearea">
+                                <Dropdown.Menu>
+                                  <Dropdown.Item
+                                    icon="eye"
+                                    text="View detail"
+                                  />
+                                  <Dropdown.Item icon="pencil" text="Edit" />
+                                  <Dropdown.Item
+                                    icon="check circle outline"
+                                    text="Mark as complete"
+                                  />
+                                  <Dropdown.Item
+                                    icon="trash alternate outline"
+                                    text="Delete"
+                                  />
+                                </Dropdown.Menu>
+                              </Dropdown>
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -162,12 +162,12 @@ const PinMaskTask = () => {
                         <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
                           <div className="d-flex align-items-center  py-2">
                             <span>
-                            
+
                               <img src={img4} className="  mr-10 " />{' '}
                             </span>
 
                             <span>
-                            
+
                               <img src={img3} className=" mr-2 mr-10 " />{' '}
                             </span>
                             <span className="font-weight-bold mb-0 mr-10  ">
@@ -199,7 +199,7 @@ const PinMaskTask = () => {
                           <div className="d-flex align-items-center  py-2">
                             <span className=" mr-2 mr-10 li_area"></span>
                             <span className=" mr-2 mr-10 li_area">
-                          
+
                               <i
                                 className="ms-Icon ms-Icon--LocationDot "
                                 aria-hidden="true"
@@ -208,7 +208,7 @@ const PinMaskTask = () => {
                               Tender
                             </span>
                             <span className=" mr-2 mr-10 li_area">
-                         
+
                               <i
                                 className="ms-Icon ms-Icon--LocationDot "
                                 aria-hidden="true"
@@ -220,7 +220,7 @@ const PinMaskTask = () => {
 
                           <div className="symbol-group symbol-hover py-2 text-right">
                             <div className="symbol symbol-30">
-                             
+
                               <span className="mr-2">
                                 <Dropdown text="..." className="dotlinearea">
                                   <Dropdown.Menu>
