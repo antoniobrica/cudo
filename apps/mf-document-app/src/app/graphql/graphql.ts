@@ -26,6 +26,7 @@ export const GET_FILES = gql`
     createdBy 
     isEveryOneAllowed 
     children{
+      parentUploadedFileID
       fileURL
       fileTitle
       fileType
@@ -144,7 +145,6 @@ mutation UploadNewFileVersion(
   $fileTitle: String!,
   $fileType: FileTypeEnum!,
   $fileVersion:Float!
-  $people: [PeopleParams!]!
 
   ){ 
     uploadNewFileVersion(
@@ -171,8 +171,12 @@ mutation UploadNewFileVersion(
       referenceType:PROJECTTYPE
       referenceID:"13"
       referenceTitle:"gamesoft"
-      peoples:$people
-      }){
+      peoples: [{
+        userID: "1",
+        userName: "S1",
+        imageUrl: "url1"
+      }]
+    }){
       uploadedFileID
       parentUploadedFileID
       directory

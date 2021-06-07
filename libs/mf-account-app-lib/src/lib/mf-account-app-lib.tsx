@@ -11,7 +11,7 @@ export interface MfAccountAppLibProps {
   parentCallback
 }
 const client = new ApolloClient({
-  uri: 'http://192.168.0.31:5001/graphql',
+  uri: 'http://192.168.1.5:5001/graphql',
   cache: new InMemoryCache()
 });
 export function MfAccountAppLib(props: MfAccountAppLibProps) {
