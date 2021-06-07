@@ -366,7 +366,7 @@ export function Tasks(props: TasksProps) {
         </div>
         : null}
       <div className="TaskApp-container">
-        <h3 className="alltask">All Tasks</h3><br />
+        <h3 className="alltask">All Tasks</h3>
         {data.tasks.map((task, id) => {
           return (
             <div key={id}>

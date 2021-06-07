@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useContext, useRef } from 'react';
 import { Button, Checkbox, Modal, Input, Form, Grid, Select } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 import { BkpIndex, PhaseIndex, FileTypeIndex, FileStructureIndex } from "@cudo/mf-account-app-lib";
-
+// import { UploadsViewStateContext, SharedViewStateContext, BlobItemUpload } from '@cudo/mf-document-lib'
+import { UploadsViewStateContext, SharedViewStateContext } from 'libs/mf-document-lib/src/azure-storage/contexts/viewStateContext';
+import { BlobItemUpload } from 'libs/mf-document-lib/src/azure-storage/types/azure-storage';
+import { BlobItem, ContainerItem } from '@azure/storage-blob';
 
 import img from 'libs/shared-components/src/default.png';
+import { tap } from 'rxjs/operators';
+// import { BlobItemUpload } from 'libs/mf-document-lib/src/azure-storage/types/azure-storage';
 
 interface AlertProps {
   opennewF?,
@@ -17,7 +22,10 @@ export function UploadNewVersion(props: AlertProps) {
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
 
   ]
+  const context = useContext(UploadsViewStateContext);
+  const sharedContext = React.useContext(SharedViewStateContext);
 
+  const [items, setItems] = React.useState<BlobItemUpload[]>([]);
 
   const [open, setOpen] = React.useState(false)
   const [fileData, setFileData] = React.useState(null)
@@ -33,8 +41,49 @@ export function UploadNewVersion(props: AlertProps) {
   const [folderName, setfolderName] = React.useState("");
   const [directory, setDirectory] = React.useState("");
   const [workTypeData, setworkTypeData] = React.useState('')
+  const [files, setFileList] = React.useState<any>([]);
+  const [people, setAsignis] = React.useState([]);
+  const projectOptions = [
+    { key: 'ew', value: 'ew', text: 'Electrical Work' },
+    { key: 'hv', value: 'hv', text: 'HVAC Work' },
+    { key: 'pw', value: 'pw', text: 'Paint Work' },
+  ]
+  const getContainerItemsEffect = () => {
+    // setLoader(true);
+    const sub = sharedContext.itemsInContainer$
+      .pipe(tap(items => {
+        setFileData(items)
+        // setLoader(false);
+      }
+      ))
+      .subscribe();
+    return () => sub.unsubscribe();
+  };
+  React.useEffect(getContainerItemsEffect, []);
 
+  const getContainersEffect = () => {
+    setItems([{ name: "test" }] as ContainerItem[])
+    sharedContext.getContainerItems("test");
+    return
+  };
+  React.useEffect(getContainersEffect, []);
+  const getUploadsEffect = () => {
+    const sub = context.uploadedItems$
+      .pipe(tap(items => {
+        console.log('getUploadsEffect', items);
+        setItems(items);
+        const fileArr = [];
+        for (let i = 0; i < items.length; i++) {
+          fileArr.push({ fileURL: items[i].filename, fileTitle: items[i].filename, fileType: items[i].type, fileVersion: "v1" });
+        }
+        console.log('fileArr', fileArr);
 
+        setFileList(fileArr);
+      }))
+      .subscribe();
+    return () => sub.unsubscribe();
+  };
+  React.useEffect(getUploadsEffect, []);
 
   React.useEffect(() => {
     if (props.file) {
@@ -60,8 +109,31 @@ export function UploadNewVersion(props: AlertProps) {
     setOpen(false)
     props.cancel()
   }
+  const uploadFiles = (files: FileList | null) => {
+    console.log('files', files);
+    files && context.uploadItems(files);
+  }
+  enum fileType {
+    IMAGE = "IMAGE",
+    PDF = "PDF",
+    BIM = "BIM"
+  }
   const submit = () => {
     setOpen(false)
+    const data = {
+      directory,
+      fileURL: files["fileURL"],
+      fileTitle: files["fileTitle"],
+      fileType: files["fileType"] === "image/png" ? fileType.IMAGE : fileType.PDF,
+      fileVersion: 1,
+      fileTypeName, people, BKPIDTitle,
+      phaseName, fileTypeID, phaseID,
+      structureTitle, structureID,
+      isFolder, isEveryOneAllowed: false,
+      BKPID
+    }
+    console.log('save-versions', data);
+
     props.cancel()
   }
   const onsetPhasesID = (data) => {
@@ -133,7 +205,9 @@ export function UploadNewVersion(props: AlertProps) {
                             <i className="ms-Icon ms-Icon--Upload" aria-hidden="true"></i>  Click to upload new file</p>
 
                         </div>
-                        <Input type="file" className="file-upload-input" />
+                        <Input type="file" className="file-upload-input"
+                          multiple={false} onChange={e => uploadFiles(e.target.files)}
+                        />
                       </div>
                     </Form.Field>
                   </Grid.Column>
@@ -173,14 +247,14 @@ export function UploadNewVersion(props: AlertProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>Project</label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select placeholder='Select' className="small" options={projectOptions} />
 
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
                       <label>Work type</label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select placeholder='Select' className="small" options={projectOptions} />
 
                     </Form.Field>
                   </Grid.Column>
