@@ -21,8 +21,7 @@ variables:
 - name: stage_test_release
   value: false
 
-pool:
-  vmImage: 'ubuntu-latest'
+pool: dbc-selfhosted
 
 stages:
   - stage: Build
