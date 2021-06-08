@@ -29,14 +29,22 @@ export interface IFile {
   children: [IFileParam]
 }
 export interface IFileParam {
-  fileURL: string
-  fileTitle: string
-  fileType: string
-  fileVersion: string
-  isEveryOneAllowed: boolean
-  fileTypeName: string
+  parentUploadedFileID: string,
+  fileURL: string,
+  fileTitle: string,
+  fileType: string,
   fileTypeID: string,
-  uploadedFileID: string
+  fileVersion: number,
+  fileTypeName: string,
+  isEveryOneAllowed: Boolean
+  uploadedFileID: string,
+  BKPID: string,
+  BKPIDTitle: string,
+  phaseID: string,
+  phaseName: string
+  structureID: string
+  directory: string
+  structureTitle: string
 }
 
 export interface IPeople {

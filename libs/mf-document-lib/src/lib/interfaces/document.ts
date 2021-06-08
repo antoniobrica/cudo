@@ -45,6 +45,8 @@ export interface ISavePins {
   y_axis: string
   z_axis: string
   isDeleted: string
+  pageNumber: number
+  pinId: number
 
 }
 export interface IPeople {
