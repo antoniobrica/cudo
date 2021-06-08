@@ -158,7 +158,7 @@ export const AddPinFile = (props: AddPinProps) => {
                           <img src={img} className="pinadd" />
                         </Form.Field>
                       </div>
-                      <Form.Field>
+                      {/* <Form.Field>
                         <div className="card1 card-custom gutter-b">
                           <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
                             <div className="d-flex align-items-center  py-2">
@@ -331,7 +331,7 @@ export const AddPinFile = (props: AddPinProps) => {
                             </div>
                           </div>
                         </div>
-                      </Form.Field>
+                      </Form.Field> */}
                       <Form.Field>
                         <div className="card1 card-custom gutter-b"></div>
                       </Form.Field>
