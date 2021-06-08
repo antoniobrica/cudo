@@ -1,0 +1,35 @@
+name: $(Date:yyyyMMdd).$(Rev:r).$(Build.BuildId)
+
+trigger:
+  branches:
+    include:
+      - dev
+      - test
+      - uat
+
+  paths:
+    exclude:
+      - '*'
+    include:
+      - 'package.json'
+
+variables:
+- name: stage_dev_release
+  value: false
+- name: stage_uat_release
+  value: true
+- name: stage_test_release
+  value: false
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+  - stage: Build
+    displayName: Build
+    jobs:
+      - job: Build_Root
+        steps:
+          - script: |
+              npm install
+            displayName: 'CI for Root'
