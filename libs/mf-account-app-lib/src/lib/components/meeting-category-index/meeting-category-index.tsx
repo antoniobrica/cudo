@@ -10,7 +10,7 @@ import MeetingCategory from '../meeting-category/meeting-category';
 
 /* eslint-disable-next-line */
 const client = new ApolloClient({
-  uri: 'http://192.168.0.31:5001/graphql',
+  uri: 'http://192.168.29.131:5001/graphql',
   cache: new InMemoryCache()
 });
 export interface MeetingCategoryIndexProps {

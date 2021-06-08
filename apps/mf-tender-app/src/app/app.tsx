@@ -13,7 +13,7 @@
 // const client = new ApolloClient({
 //   cache: new InMemoryCache(),
 //   link: new HttpLink({
-//     uri: 'http://192.168.0.31:3333/graphql',
+//     uri: 'http://192.168.29.131:3333/graphql',
 //   }),
 // });
 // const App = () => (

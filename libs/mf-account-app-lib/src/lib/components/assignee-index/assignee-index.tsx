@@ -9,7 +9,7 @@ import Assignee from '../assignee/assignee';
 
 /* eslint-disable-next-line */
 const client = new ApolloClient({
-  uri: 'http://192.168.0.31:5001/graphql',
+  uri: 'http://192.168.29.131:5001/graphql',
   cache: new InMemoryCache()
 });
 /* eslint-disable-next-line */

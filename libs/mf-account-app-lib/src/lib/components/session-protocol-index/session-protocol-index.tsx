@@ -8,7 +8,7 @@ import SessionProtocol from '../session-protocol/session-protocol';
 /* eslint-disable-next-line */
 export interface SessionProtocolIndexProps { }
 const client = new ApolloClient({
-  uri: 'http://192.168.0.31:5001/graphql',
+  uri: 'http://192.168.29.131:5001/graphql',
   cache: new InMemoryCache()
 });
 export interface SessionProtocolIndexProps {

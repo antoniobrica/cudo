@@ -12,7 +12,7 @@ export class SasGeneratorService {
     console.log('sasstoken');
 
     return Axios.post<BlobStorageRequest>(
-      'http://192.168.0.31:5003/graphql',
+      'http://192.168.29.131:5003/graphql',
       {
         query: `
      {

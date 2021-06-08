@@ -16,7 +16,7 @@ declare global {
   }
 }
 const client = new ApolloClient({
-  uri: 'http://192.168.0.31:5004/graphql',
+  uri: 'http://192.168.29.131:5004/graphql',
   cache: new InMemoryCache()
 });
 
