@@ -4,12 +4,17 @@ trigger:
   branches:
     include:
       - dev
-      - test
-      - uat
-
   paths:
     include:
       - '*'
+parameters:
+- name: clean
+  displayName: Checkout clean
+  type: boolean
+  default: false
+  values:
+  - false
+  - true
 
 variables:
 - name: stage_dev_release
@@ -20,6 +25,10 @@ variables:
   value: false
 
 pool: cudo-selfhosted-agent
+
+steps:
+- checkout: self
+  clean: ${{ parameters.clean }}
 
 stages:
   - stage: Build
