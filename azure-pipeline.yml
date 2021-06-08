@@ -21,7 +21,7 @@ variables:
 - name: stage_test_release
   value: false
 
-pool: dbc-selfhosted
+pool: cudo-selfhosted-agent
 
 stages:
   - stage: Build
