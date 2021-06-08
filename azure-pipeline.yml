@@ -23,6 +23,8 @@ stages:
     jobs:
       - job: Build_Root
         steps:
+          - use: node
+            cache: true
           - task: RestoreCache@0
             inputs:
               key: |
