@@ -34,7 +34,7 @@ stages:
         steps:
           - checkout: self
             clean: ${{ parameters.clean }}
-            script: |
+          - script: |
                find . -path ./node_modules -prune -false -o  -iname package.json -newermt '60 seconds ago' -exec npm install \;
                # npm install
             displayName: 'CI for Root'
