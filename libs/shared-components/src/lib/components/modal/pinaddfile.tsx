@@ -11,7 +11,7 @@ import img7 from 'libs/shared-components/src/Image 3.png';
 import img from 'libs/shared-components/src/assets/images/grey_pin.png'
 import Canvas from './canvas';
 import { CreateFileTaskIndex } from '@cudo/mf-task-lib'
-import PinMaskTask from './pinmasktask';
+// import PinMaskTask from './pinmasktask';
 
 
 function exampleReducer(state, action) {
