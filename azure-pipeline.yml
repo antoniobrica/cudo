@@ -23,12 +23,21 @@ stages:
     jobs:
       - job: Build_Root
         steps:
-          - script: npm install 
-          - task: Cache@2
-            inputs:
-              key: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
-              path: '$(System.DefaultWorkingDirectory)/node_modules'
-              displayName: 'Cache Node Modules'
+        - task: Cache@2
+          displayName: Cache node_modules
+          inputs:
+            key: 'npm | "$(Agent.OS)" | $(Build.SourcesDirectory)/package-lock.json'
+            path: $(Build.SourcesDirectory)/node_modules
+            cacheHitVar: CACHE_RESTORED
+
+        - task: Npm@1
+          displayName: 'Install the dependencies'
+          inputs:
+            command: custom
+            verbose: false
+            customCommand: 'ci'
+            condition: ne(variables.CACHE_RESTORED, 'true')
+
                   #find . -path ./node_modules -prune -false -o  -iname package.json -newermt '60 seconds ago' -exec npm install \;
                   #npm install
             displayName: 'CI for Root'
