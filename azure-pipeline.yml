@@ -26,9 +26,6 @@ variables:
 
 pool: cudo-selfhosted-agent
 
-- checkout: self
-  clean: ${{ parameters.clean }}
-
 stages:
   - stage: Build
     displayName: Build
