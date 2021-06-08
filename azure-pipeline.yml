@@ -7,15 +7,6 @@ trigger:
   paths:
     include:
       - '*'
-parameters:
-- name: clean
-  displayName: Checkout clean
-  type: boolean
-  default: false
-  values:
-  - false
-  - true
-
 variables:
 - name: stage_dev_release
   value: false
@@ -32,9 +23,12 @@ stages:
     jobs:
       - job: Build_Root
         steps:
-          - checkout: self
-            clean: ${{ parameters.clean }}
+         - task: RestoreAndSaveCache@1
+           inputs:
+             keyfile: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
+             targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
+             vstsFeed: '106881c5-1e85-4e16-a467-be2702084631'
           - script: |
-               find . -path ./node_modules -prune -false -o  -iname package.json -newermt '60 seconds ago' -exec npm install \;
-               # npm install
+                  #find . -path ./node_modules -prune -false -o  -iname package.json -newermt '60 seconds ago' -exec npm install \;
+                npm install
             displayName: 'CI for Root'
