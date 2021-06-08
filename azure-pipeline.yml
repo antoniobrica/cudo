@@ -25,6 +25,7 @@ stages:
         steps:
           - use: node
             cache: true
+          - script: npm install 
           - task: RestoreCache@0
             inputs:
               key: |
