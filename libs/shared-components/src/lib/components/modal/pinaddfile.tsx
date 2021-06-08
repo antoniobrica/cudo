@@ -11,7 +11,7 @@ import img7 from 'libs/shared-components/src/Image 3.png';
 import img from 'libs/shared-components/src/assets/images/grey_pin.png'
 import Canvas from './canvas';
 import { CreateFileTaskIndex } from '@cudo/mf-task-lib'
-import PinMaskTask from './pinmasktask';
+// import PinMaskTask from './pinmasktask';
 
 
 function exampleReducer(state, action) {
@@ -158,7 +158,7 @@ export const AddPinFile = (props: AddPinProps) => {
                           <img src={img} className="pinadd" />
                         </Form.Field>
                       </div>
-                      <Form.Field>
+                      {/* <Form.Field>
                         <div className="card1 card-custom gutter-b">
                           <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
                             <div className="d-flex align-items-center  py-2">
@@ -331,7 +331,7 @@ export const AddPinFile = (props: AddPinProps) => {
                             </div>
                           </div>
                         </div>
-                      </Form.Field>
+                      </Form.Field> */}
                       <Form.Field>
                         <div className="card1 card-custom gutter-b"></div>
                       </Form.Field>

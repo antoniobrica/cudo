@@ -14,7 +14,8 @@ import { tap } from 'rxjs/operators';
 interface AlertProps {
   opennewF?,
   cancel?,
-  file?
+  file?,
+  uploadNewVersion
 }
 export function UploadNewVersion(props: AlertProps) {
   const countryOptions = [
@@ -26,6 +27,7 @@ export function UploadNewVersion(props: AlertProps) {
   const sharedContext = React.useContext(SharedViewStateContext);
 
   const [items, setItems] = React.useState<BlobItemUpload[]>([]);
+  const [items1, setItems1] = React.useState<ContainerItem[]>([]);
 
   const [open, setOpen] = React.useState(false)
   const [fileData, setFileData] = React.useState(null)
@@ -41,6 +43,7 @@ export function UploadNewVersion(props: AlertProps) {
   const [folderName, setfolderName] = React.useState("");
   const [directory, setDirectory] = React.useState("");
   const [workTypeData, setworkTypeData] = React.useState('')
+  const [parentUploadedFileID, setparentUploadedFileID] = React.useState('');
   const [files, setFileList] = React.useState<any>([]);
   const [people, setAsignis] = React.useState([]);
   const projectOptions = [
@@ -62,7 +65,7 @@ export function UploadNewVersion(props: AlertProps) {
   React.useEffect(getContainerItemsEffect, []);
 
   const getContainersEffect = () => {
-    setItems([{ name: "test" }] as ContainerItem[])
+    setItems1([{ name: "test" }] as ContainerItem[])
     sharedContext.getContainerItems("test");
     return
   };
@@ -93,6 +96,7 @@ export function UploadNewVersion(props: AlertProps) {
       setBKPIDTitle(props.file.directory);
       setfileTypeName(props.file.fileTypeName);
       setstructureTitle(props.file.structureTitle);
+      setparentUploadedFileID(props.file.parentUploadedFileID)
     }
   }, [props.file]);
 
@@ -120,21 +124,28 @@ export function UploadNewVersion(props: AlertProps) {
   }
   const submit = () => {
     setOpen(false)
+    console.log('new file', files);
+
     const data = {
       directory,
-      fileURL: files["fileURL"],
-      fileTitle: files["fileTitle"],
-      fileType: files["fileType"] === "image/png" ? fileType.IMAGE : fileType.PDF,
-      fileVersion: 1,
-      fileTypeName, people, BKPIDTitle,
+      fileURL: files[0].fileURL,
+      fileTitle: files[0].fileTitle,
+      fileType: files[0].fileType === "image/png" ? fileType.IMAGE : fileType.PDF,
+      fileVersion: 2,
+      fileTypeName, BKPIDTitle,
       phaseName, fileTypeID, phaseID,
       structureTitle, structureID,
       isFolder, isEveryOneAllowed: false,
-      BKPID
+      BKPID,
+      parentUploadedFileID,
+      // peoples: [{
+      //   'userID': "1",
+      //   'userName': "S1",
+      //   'imageUrl': "url1"
+      // }]
     }
     console.log('save-versions', data);
-
-    props.cancel()
+    props.uploadNewVersion(data);
   }
   const onsetPhasesID = (data) => {
     setPhasesID((data.phaseID).toString());

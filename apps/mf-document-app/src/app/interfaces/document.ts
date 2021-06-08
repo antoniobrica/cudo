@@ -29,6 +29,7 @@ export interface IFile {
   children: [IFileParam]
 }
 export interface IFileParam {
+  parentUploadedFileID: string,
   fileURL: string,
   fileTitle: string,
   fileType: string,
