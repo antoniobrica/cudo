@@ -8,10 +8,8 @@ trigger:
       - uat
 
   paths:
-    exclude:
-      - '*'
     include:
-      - 'package.json'
+      - '*'
 
 variables:
 - name: stage_dev_release
