@@ -17,7 +17,7 @@ declare global {
   }
 }
 const client = new ApolloClient({
-  uri: 'http://192.168.0.31:5005/graphql',
+  uri: 'http://cudo-ms-project.softobiz.net/graphql',
   cache: new InMemoryCache()
 });
 

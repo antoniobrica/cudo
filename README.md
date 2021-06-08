@@ -140,7 +140,9 @@ Change 192.168.0.31 to 'your-local-ip' in following files 1: apps\mf-container-a
 
 ### To Run Container
 nx run mf-container-app:serve --host 0.0.0.0
-
+nx run mf-project-app:serve --host 0.0.0.0
+nx run mf-document-app:serve --host 0.0.0.0
+nx run mf-task-app:serve --host 0.0.0.0
 
 ## Build Process
  nx run-many --target=build --projects='ms-account,ms-document,ms-project,ms-task' --with-deps --generatePackageJson=true --configuration=production

@@ -98,7 +98,7 @@ export function Tasks(props: TasksProps) {
   const getWorkType = (referenceID) => {
     console.log('sasstoken');
     return axios.post(
-      'http://192.168.0.31:5005/graphql',
+      'http://cudo-ms-project.softobiz.net/graphql',
       {
         query,
         variables: {

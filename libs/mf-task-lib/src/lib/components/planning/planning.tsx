@@ -218,48 +218,52 @@ export function Planning(props: PlanningProps) {
                     <Card>
                       <div className="ui card ui_width">
                         <div className="content ui_width">
-                          <div className="description">
+                          <div className="description" style={{padding:'20'}}>
                             <span className="time">{new Date(plan.dueDate).toDateString()}</span>
                             <span className="summary">
-                              {' '}
+                            
                               <a href="">
-                                {' '}
-                                <i
+                              <img src="assets/images/check_grey.png"  />
+                                {/* <i
                                   className="ms-Icon ms-Icon--Completed mr-10"
                                   aria-hidden="true"
-                                ></i>
+                                ></i> */}
                               </a>
                             </span>
                           </div>
-                          <div className="header font-header" style={{ color: '#1B1B40' }}>
+                          <div className="header font-header" style={{ color: '#1B1B40', padding: '20px',
+    marginTop: '-15px', fontSize: '16px', fontWeight:'600' }}>
                             {plan.milestoneTitle}
                           </div>
-                          <div className="description">
+                          <div className="description planing-module">
                             John & co. +2 others responsible
                           </div>
                         </div>
 
-                        <div className="content">
-                          <div className="data-built">
+                        <div className="content" style={{borderTop:'none',     height: '122px'}}>
+                          <div className="data-built para-data">
                             <p>
-                              {' '}
+                             
                               {plan.description}
                             </p>
                           </div>
-                          <br /> <br />
-                          <div className="data-built">
+                           
+                          <div className="data-built top-level">
                             Project/Work type
-                            <span className="summary">{plan.worktypeName}</span>
+                            <span className="summary" style={{    fontWeight: '500'
+}}>{plan.worktypeName}</span>
                           </div>
-                          <div className="data-built">
+                          <div className="data-built sub-area">
                             Phase
-                            <span className="summary">{plan.phaseName}</span>
+                            <span className="summary" style={{    fontWeight: '500'
+}}>{plan.phaseName}</span>
                           </div>
-                          <br />
-                          <div className="description">
+                          
+                          <div className="description days-area">
                             <span className="daysarea">26 days away </span>
                             <span className="summary mr-2">
-                              <Dropdown text="...">
+                              <Dropdown text="..." style={{    color:'#9FB5C5'
+}}>
                                 <Dropdown.Menu>
                                   <Dropdown.Item
                                     onClick={() => viewDetail(plan.milestoneID)}

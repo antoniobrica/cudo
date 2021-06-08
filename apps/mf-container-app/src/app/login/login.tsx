@@ -18,7 +18,7 @@ export function Email(props: LoginProps) {
   const handleLogin = () => {
     // Need to implement using redux
     axios({
-      url: 'http://192.168.0.31:5001/graphql',
+      url: 'http://cudo-ms-account.softobiz.net/graphql',
       method: 'post',
       data: {
         query: `

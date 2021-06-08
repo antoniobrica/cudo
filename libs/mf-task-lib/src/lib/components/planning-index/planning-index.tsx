@@ -7,7 +7,7 @@ import Planning from '../planning/planning';
 
 /* eslint-disable-next-line */
 const client = new ApolloClient({
-  uri: 'http://192.168.0.31:5007/graphql',
+  uri: 'http://cudo-ms-task.softobiz.net/graphql',
   cache: new InMemoryCache()
 });
 /* eslint-disable-next-line */
