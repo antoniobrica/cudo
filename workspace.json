@@ -1473,7 +1473,16 @@
             "tsConfig": "apps/ui-design/tsconfig.app.json",
             "assets": [
               "apps/ui-design/src/favicon.ico",
-              "apps/ui-design/src/assets"
+              "apps/ui-design/src/assets",
+              {
+
+                "input": "libs/shared-components/src/assets",
+
+                "glob": "**/*",
+
+                "output": "assets"
+
+              }
             ],
             "styles": ["apps/ui-design/src/styles.scss"],
             "scripts": [],
