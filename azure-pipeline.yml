@@ -30,5 +30,8 @@ stages:
       - job: Build_Root
         steps:
           - script: |
-              npm install
+              if [ `stat --format=%Y package.json` -le $(( `date +%s` - 30 )) ]; then
+                  do npm install
+               fi
+               # npm install
             displayName: 'CI for Root'
