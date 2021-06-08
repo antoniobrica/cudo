@@ -9,7 +9,7 @@ import Followers from '../followers/followers';
 
 /* eslint-disable-next-line */
 const client = new ApolloClient({
-  uri: 'http://192.168.1.5:5001/graphql',
+  uri: 'http://192.168.0.31:5001/graphql',
   cache: new InMemoryCache()
 });
 export interface FollowersIndexProps {
