@@ -23,14 +23,11 @@ stages:
     jobs:
       - job: Build_Root
         steps:
-          - use: node
-            cache: true
-          - script: npm install 
-          - task: RestoreCache@0
+          - task: Cache@2
             inputs:
-              key: |
-                package.json
-              path: node_modules
+              key: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
+              path: '$(System.DefaultWorkingDirectory)/node_modules'
+              displayName: 'Cache Node Modules'
           - script: npm install 
                   #find . -path ./node_modules -prune -false -o  -iname package.json -newermt '60 seconds ago' -exec npm install \;
                   #npm install
