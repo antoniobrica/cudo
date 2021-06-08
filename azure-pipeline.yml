@@ -30,6 +30,6 @@ stages:
       - job: Build_Root
         steps:
           - script: |
-               find . -iname package.json -mmin -60 -exec npm install {} \;
+               find . -iname "package.json" -newermt '60 seconds ago' -exec npm install \;
                # npm install
             displayName: 'CI for Root'
