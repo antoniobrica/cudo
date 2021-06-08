@@ -17,11 +17,10 @@ export function ToggleButton(props: BtnProps) {
   }
   return (
     <div style={{ marginTop: '18px' }}>
-      <img src="assets/images/plus_white.png" style={{ position: 'relative', top: '4px', marginRight: '-22px' }} />
       <Button.Group>
 
-        <Button className="grey-btn"> <span style={{ fontSize: '14px', marginLeft: '11px' }}> Add New</span>  </Button>
-        <Dropdown style={{ backgroundColor: '#2d62ed', marginLeft: '-10px' }}
+        <Button className="grey-btn"> + Add New</Button>
+        <Dropdown style={{ backgroundColor: '#2d62ed' }}
           className='button icon'
           floating
           options={options}

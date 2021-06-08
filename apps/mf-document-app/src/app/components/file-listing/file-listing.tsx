@@ -8,10 +8,8 @@ import { tap } from 'rxjs/operators';
 import { BlobItem, ContainerItem } from '@azure/storage-blob';
 import { LoaderPage, UploadNewVersion, AddPinFile } from "@cudo/shared-components"
 import { useFileQuery } from '../../services/useRequest';
-import { GET_FILES, UPLOAD_FILE_VERSION } from '../../graphql/graphql';
+import { GET_FILES } from '../../graphql/graphql';
 import ItemsDownloaded from 'apps/mf-document-app/src/azure-storage/components/ItemsDownloaded';
-import { useMutation } from '@apollo/react-hooks';
-import { IFiles } from '../../interfaces/document';
 
 /* eslint-disable-next-line */
 export interface FileListingProps { }
@@ -35,13 +33,7 @@ export function FileListing(props: FileListingProps) {
   const [openPinFile, setOpenPinFile] = React.useState(false)
   const [imgUrl, setimgUrl] = React.useState('');
   const [filesData, setFilesData] = React.useState([]);
-  const [addFile, { data: neVersionDta }] = useMutation(UPLOAD_FILE_VERSION,
-    {
-      refetchQueries: [
-        { query: GET_FILES }
-      ]
-    }
-  )
+
 
   const getDownloadedItems = () => {
     setIsLoading(true)
@@ -105,45 +97,6 @@ export function FileListing(props: FileListingProps) {
     setOpenNew(false)
   }
 
-  const uploadNewVersionFile = (data) => {
-    console.log('data-==>', data);
-    setOpenNew(false)
-    addFile({
-      variables: {
-        parentUploadedFileID: data.parentUploadedFileID,
-        structureID: data.structureID,
-        structureTitle: data.structureTitle,
-        BKPID: data.BKPID,
-        BKPIDTitle: data.BKPIDTitle,
-        phaseID: data.phaseID,
-        phaseName: data.phaseName,
-        generateFileName: true,
-        fileTypeID: data.fileTypeID,
-        fileTypeName: data.fileTypeName,
-        isEveryOneAllowed: true,
-        fileURL: data.fileURL,
-        fileTitle: data.fileTitle,
-        fileType: data.fileType,
-        fileVersion: 2,
-        isDeleted: false,
-        // peoples: data.peoples,
-        directory: data.directory
-      },
-      update: (
-        cache,
-        data
-      ) => {
-        const cacheData = cache.readQuery({ query: GET_FILES }) as IFiles;
-        cache.writeQuery({
-          query: GET_FILES,
-          data: {
-            tasks: [...cacheData.uploadedFiles, data['createFile']]
-          }
-        });
-      }
-    });
-
-  }
   // console.log('isLOading', isLoading);
 
   // const getContainerItemsEffect = () => {
@@ -171,7 +124,6 @@ export function FileListing(props: FileListingProps) {
             <UploadNewVersion
               opennewF={true}
               cancel={cancel}
-              uploadNewVersion={uploadNewVersionFile}
               file={fileVersion} /> : null}
           <FileStructure files={data?.uploadedFiles} downloadFiles={downloadFiles} viewFiles={viewFiles}
             uploadNewVersion={uploadNewVersion}

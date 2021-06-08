@@ -1,12 +1,5 @@
 import React, { Suspense } from 'react';
 
-import { initI18n } from "@cudo/mf-core";
-
-
-const defaultLanguage = 'en-GB';
-const supportedLanguages = [defaultLanguage, 'en-GB'];
-initI18n('./assets/i18n/{{lng}}.json', defaultLanguage);
-
 
 import { ReactComponent as Logo } from './logo.svg';
 import star from './star.svg';
@@ -60,7 +53,7 @@ import ToggleButton from 'libs/shared-components/src/lib/components/tabs/toggleb
 
 import ModalCost from 'libs/shared-components/src/lib/components/modal/addcostpopup';
 
-import PinMaskTask from 'libs/shared-components/src/lib/components/modal/pinmasktask';
+
 
 // import { Sidebar } from 'semantic-ui-react';
 
@@ -120,7 +113,7 @@ export function App() {
         <SelectFilePopup></SelectFilePopup><br />
         <ToggleButton></ToggleButton><br />
         <ModalCost></ModalCost><br />
-        <PinMaskTask></PinMaskTask>
+
 
       </div>
 

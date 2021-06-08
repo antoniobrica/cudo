@@ -13,8 +13,7 @@ const client = new ApolloClient({
 });
 /* eslint-disable-next-line */
 export interface FileStructureIndexProps {
-  parentFileStructureSelect,
-  structureTitle
+  parentFileStructureSelect
 }
 
 export function FileStructureIndex(props: FileStructureIndexProps) {
@@ -24,7 +23,7 @@ export function FileStructureIndex(props: FileStructureIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <FileStructure structureTitle={props.structureTitle} parentFileStructureSelect={onFileStructure} />
+        <FileStructure parentFileStructureSelect={onFileStructure} />
       </ApolloHooksProvider>
     </ApolloProvider>
   );

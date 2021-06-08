@@ -137,8 +137,6 @@ $isDeleted: Boolean!
     z_axis:$z_axis
     isDeleted:$isDeleted 
     uploadedFileID: $uploadedFileID
-    pageNumber: 0
-    pinId: 0
   }) 
 
   { 

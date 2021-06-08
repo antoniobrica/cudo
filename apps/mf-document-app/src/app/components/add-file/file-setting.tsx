@@ -366,7 +366,7 @@ export function FileSetting(props: FileProps) {
                     <FileTypeIndex parentFileTypeSelect={setFileTypeChange} />
                   </Grid.Column>
                   <Grid.Column>
-                    <FileStructureIndex structureTitle={structureTitle} parentFileStructureSelect={setFileStructureChange} />
+                    <FileStructureIndex parentFileStructureSelect={setFileStructureChange} />
                     {/* <Form.Field>
                       <label>File structure</label>
                       <Select placeholder='Select' className="small" options={fileOptions} />

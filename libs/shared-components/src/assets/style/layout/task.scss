@@ -221,10 +221,10 @@
 }
 
 .planningbelow {
-  margin-bottom: 25px;
-  font-size: 18px;
-  font-weight: 500;
-  margin-top: -39px;
+    margin-bottom: 25px;
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: -39px;
 }
 .headingactive {
   color: #000;
@@ -235,7 +235,7 @@
 
 .alltask {
   color: black;
-  margin-top: 2px !important;
+  margin-top: -42px !important;
   font-size: 18px;
 }
 .textt2 {
@@ -255,46 +255,4 @@
 }
 .marginestimate {
   margin-left: 770px;
-}
-
-.dotlinearea {
-  font-size: 15px;
-}
-.button.ui.mini.button.pinbutton {
-  height: 4rem;
-  background: #fff;
-  color: #bfbebe;
-  box-shadow: none;
-  border: 1px solid #d0d8df;
-  width: 100%;
-  font-size: 12px;
-  text-align: left;
-}
-.pinadd {
-  position: relative;
-  top: 50%;
-  left: 93%;
-  transform: translate(-50%, -132%);
-  -ms-transform: translate(-50%, -132%);
-}
-.colorback {
-  background: #f9f8ff;
-}
-
-.pin_area {
-  display: flex;
-  margin-right: 281px;
-  float: right;
-  margin-top: -19px;
-}
-.button.icon i.dropdown.icon {
-  display: none;
-}
-.ui.small.input.full-width.inputfieldarea.bordernone input[type='search'] {
-  border: none !important;
-  margin-top: -14px;
-  margin-left: 13px;
-}
-.ql-container.ql-snow {
-  height: 100px;
 }

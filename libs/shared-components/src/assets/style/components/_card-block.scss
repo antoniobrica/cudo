@@ -42,27 +42,24 @@
 }
 .label-light-purple-circle {
   width: 7%;
-  height: 26px;
+  height: 22px;
   border-radius: 500rem;
   background-color: #6fc968;
-  padding: 6px 0px 0px 7px;
-  font-size: 11px;
+  padding: 4px 0px 0px 5px;
 }
 .label-light-black-circle {
   width: 7%;
-  height: 26px;
+  height: 22px;
   border-radius: 500rem;
   background-color: #1b1b40;
-  padding: 6px 0px 0px 7px;
-  font-size: 11px;
+  padding: 4px 0px 0px 5px;
 }
 .label-light-blue-circle {
   width: 7%;
-  height: 26px;
+  height: 22px;
   border-radius: 500rem;
   background-color: #2d62ed;
-  padding: 6px 0px 0px 7px;
-  font-size: 11px;
+  padding: 4px 0px 0px 5px;
 }
 .event.top-event {
   margin-top: 31px;
@@ -72,14 +69,14 @@
   margin-top: 1.78575em;
 }
 .dot {
-  height: 30px;
-  width: 30px;
-  background-color: #f1f5ff;
-  border-radius: 50%;
-  display: inline-block;
-  color: #2d62ed;
-  padding: 0 12px 0 8px;
-}
+    height: 30px;
+    width: 30px;
+    background-color: #F1F5FF;
+    border-radius: 50%;
+    display: inline-block;
+    color: #2D62ED;
+    padding: 0 12px 0 8px;
+  }
 
 .event {
   @include flexbox;
@@ -343,14 +340,15 @@
     span {
       margin: 0 0 0 0.5rem;
     }
-  }
+}
 
-  .app-content-body {
+.app-content-body{
+    
     margin-left: 290px;
     top: -120px;
-
-    .project {
-      color: #1b1b40;
+    
+    .project{
+        color:#1B1B40;
     }
   }
 }
@@ -407,7 +405,7 @@
   margin-bottom: 20px;
 }
 .width_card {
-  width: 100%;
+  width: 80%;
 }
 .ui.progress .bar {
   background: #2d62ed;
@@ -423,34 +421,35 @@
   font-size: 12px;
 }
 
-.blue_color {
-  color: #2d62ed;
+.blue_color{
+    color: #2D62ED;
 }
-.ui_width {
-  width: 288px !important;
+.ui_width{
+    width: 288px !important;
 }
 .content.paddingcontent {
-  padding: 25px !important;
+    padding: 25px !important;
 }
 
-.paddingarea {
-  margin-top: 25px;
+.paddingarea{
+    margin-top: 25px;
 }
-.noborder {
-  border-top: none !important;
+.noborder{
+    border-top: none !important;
 }
-.data_area {
-  margin-top: -35px;
-  padding: 15px;
+.data_area{
+    margin-top: -35px;
+    padding: 15px;
 }
-.data_pad {
-  margin-top: -15px;
-  padding: 15px;
+.data_pad{
+    margin-top: -15px;
+    padding: 15px;
 }
-.data_field {
-  padding: 15px;
-  margin-top: -30px;
+.data_field{
+    padding: 15px;
+    margin-top: -30px;
 }
-.details {
-  padding: 15px;
+.details{
+    padding: 15px;
 }
+ 
