@@ -23,8 +23,8 @@ stages:
     jobs:
       - job: Build_Root
         steps:
-        - checkout: none 
-        - script: |  
+          - checkout: none 
+          - script: |  
+                npm install
                   #find . -path ./node_modules -prune -false -o  -iname package.json -newermt '60 seconds ago' -exec npm install \;
-            npm install
             displayName: 'CI for Root'
