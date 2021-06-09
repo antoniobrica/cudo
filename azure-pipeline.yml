@@ -29,4 +29,4 @@ stages:
           - bash : |
                   find . -path ./node_modules -prune -false -o  -iname package.json -newermt '60 seconds ago' -exec rm -f package-lock.json \;
                   find . -path ./node_modules -prune -false -o  -iname package.json -newermt '60 seconds ago' -exec npm install \;
-            displayName: 'CI forr Root'
+            displayName: 'CI for Root'
