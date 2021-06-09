@@ -25,7 +25,7 @@ stages:
         steps:
           - checkout: self
             clean: false
-            ##lfs: false
+            lfs: false
           - script: |  
                   rm -f package-lock.json
                   find . -path ./node_modules -prune -false -o  -iname package.json -newermt '60 seconds ago' -exec npm install \;
