@@ -28,7 +28,7 @@ stages:
           inputs:
             key: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
             path: '$(Build.SourcesDirectory)/node_modules'
-          cacheHitVar: CacheRestored
+            cacheHitVar: CacheRestored
 
         - task: Npm@1
           displayName: 'npm ci'
