@@ -23,9 +23,25 @@ stages:
     jobs:
       - job: Build_Root
         steps:
-          - checkout: self
-            clean: false
-          - script: |  
-                npm install
+        - task: Cache@2
+  displayName: 'Cache npm Dependencies'
+  inputs:
+    key: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
+    path: '$(Build.SourcesDirectory)/node_modules'
+    cacheHitVar: CacheRestored
+
+- task: Npm@1
+  displayName: 'npm ci'
+  inputs:
+    command: ci
+    verbose: false
+  condition: eq(variables['CacheRestored'],False)
+
+- task: Npm@1
+  displayName: 'npm build'
+  inputs:
+    command: custom
+    verbose: false
+    customCommand: 'run build'
                   #finsd . -path ./node_modules -prune -false -o  -iname package.json -newermt '60 seconds ago' -exec npm install \;
             displayName: 'CI for Root'
