@@ -1,10 +1,13 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { TasksEntity } from '../../../entities/tasks.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import SortFilterParam from '../../../utils/types/sortParam';
 import StatusFilterParam from '../../../utils/types/status.filter';
 import TaskFilterParams from '../../../utils/types/taskFilterParams';
 import taskTypeFilterParam from '../../../utils/types/taskType.filter';
-import { DeleteTaskBooleanInput } from '../dto/args/delete.task';
+import { Pagination } from '../../paginate';
+import { pageParams } from '../../paginate/pagination.param';
+import { PaginationTaskModel } from '../../paginate/pagination.task.model';
 import SubTaskInput from '../dto/input/create-subtask.input';
 import { FileFilterInput } from '../dto/input/file-delete.input ';
 import {  SubTaskFilterInput } from '../dto/input/subtask-delete.input';
@@ -62,12 +65,6 @@ export class TasksResolver {
         return this.projectTasksService.updateTaskByID(createProjectTaskInput);
     }
 
-    // @Mutation(() => [TasksModel])
-    // async deleteTask(
-    //     @Args('taskDeleteInput') taskDeleteInput: TaskDeleteInput
-    // ) {
-    //     return this.projectTasksService.deleteTaskByID(taskDeleteInput);
-    // }
 
     @Mutation(() => [SubTaskModel])
     async deleteSubTask(
@@ -96,9 +93,15 @@ export class TasksResolver {
     @Mutation(() => TasksModel)
     async deleteTask(
         @Args('taskDeleteInput') taskDeleteInput: TaskDeleteInput,
-        @Args('taskDeleteBoolean') taskDeleteBoolean: DeleteTaskBooleanInput
     ) {
-        return this.projectTasksService.deleteTask(taskDeleteInput,taskDeleteBoolean);
+        return this.projectTasksService.deleteTask(taskDeleteInput);
+    }
+
+    @Query(() => PaginationTaskModel, { nullable: true })
+    async paginatedTasks(@Args('options')options:pageParams,
+    @Args("referenceFilter") getTasksArgs: ReferenceFilterParams): Promise<Pagination<TasksEntity>>  {
+        return await this.projectTasksService.paginate(options,getTasksArgs
+          )
     }
   
 }

@@ -108,7 +108,7 @@ export class UploadedFilesEntity extends BaseEntity {
   updatedBy?: string;
 
   @Expose()
-  @Column({ nullable: true })
+  @Column({ nullable: true, default:false })
   isDeleted?: boolean;
 
   @TreeChildren()

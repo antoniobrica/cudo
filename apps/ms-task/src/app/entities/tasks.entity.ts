@@ -9,9 +9,9 @@ import { SubTaskEntity } from './subtask.entity';
 
 @Entity({
   name: 'tasks',
-  orderBy: {
-    createdAt: 'ASC'
-  }
+  // orderBy: {
+  //   createdAt: 'ASC'
+  // }
 })
 export class TasksEntity extends BaseEntity {
 
@@ -83,7 +83,7 @@ export class TasksEntity extends BaseEntity {
   updatedBy?: string;
 
   @Expose()
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: false })
   isDeleted?: boolean;
 
   @Expose()
