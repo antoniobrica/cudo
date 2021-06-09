@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../../style/index.scss';
+import './../../../assets/style/index.scss'
 import { Progress } from 'semantic-ui-react'
 /* eslint-disable-next-line */
 export interface Tasks {

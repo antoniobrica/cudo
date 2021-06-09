@@ -17,6 +17,12 @@ export class PinsInputDto {
     @Field({ description: `Z-Axis of pin` })
     z_axis: number;
 
+    @Field({ description: `Page Number of PDF and 0 for images` })
+    pageNumber: number;
+
+    @Field({ description: `Pin Number` })
+    pinNumber: number;
+
     @Field({ description: `Pins Deleted or not` })
     isDeleted?: boolean;
 

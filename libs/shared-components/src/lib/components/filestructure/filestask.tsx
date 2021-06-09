@@ -1,20 +1,25 @@
 import React from 'react';
 
-import '../../../style/index.scss';
-import { Tab, Accordion } from 'semantic-ui-react'
+import './../../../assets/style/index.scss'
+import { Tab, Accordion, Dropdown } from 'semantic-ui-react'
 
 import img4 from 'libs/shared-components/src/folder.png';
 import img5 from 'libs/shared-components/src/image2.png';
 import img6 from 'libs/shared-components/src/eyeview.png';
 import img1 from 'libs/shared-components/src/powerpoint.png';
 import img2 from 'libs/shared-components/src/pdf.png';
+import img from 'libs/shared-components/src/user2.png';
+
 import ViewFileDetail from '../modal/viewdetailsfile';
+import AddPinFile from '../modal/pinaddfile';
 /* eslint-disable-next-line */
 export interface FileStructureProps {
 	files?,
-	downloadFiles,
-	downloadedImg,
-	viewFiles
+	downloadFiles?,
+	downloadedImg?,
+	viewFiles?,
+	uploadNewVersion?,
+	addPinTask?
 }
 
 export function FileStructure(props: FileStructureProps) {
@@ -27,6 +32,7 @@ export function FileStructure(props: FileStructureProps) {
 	const [fname, setFname] = React.useState('');
 	const [fType, setFtype] = React.useState('');
 
+	const [openPinFile, setOpenPinFile] = React.useState(false)
 
 
 	const viewFile = (data) => {
@@ -50,20 +56,36 @@ export function FileStructure(props: FileStructureProps) {
 		if (props.downloadedImg) {
 			console.log('downloadedImg', props.downloadedImg);
 			for (let i = 0; i < props.downloadedImg.length; i++) {
-				if (props.downloadedImg[i].filename == filesData.fileTitle) {
+				if (props.downloadedImg[i].filename == filesData['fileTitle']) {
 					setimgUrl(props.downloadedImg[i].url);
 				}
 			}
 
 		}
 	})
+	const uploadNewVersion = (file) => {
+		console.log('file', file);
+		props.uploadNewVersion(file);
+
+	}
+	const addPinTask = (data) => {
+
+		setFilesData(data)
+		setFtype(data.fileType);
+		setOpenPinFile(true)
+		props.addPinTask(data.fileTitle)
+	}
 	React.useEffect(() => {
 		if (props.files) {
-			setItems(props.files.map((file, i) => ({ key: i, title: file.isFolder ? file.folderName : file.BKPIDTitle, content: { content: (renderItems(file.files)) } })));
+			console.log('files==', props.files);
+
+			setItems(props.files.map((file, i) => ({ key: i, title: file.directory ? file.directory : file.BKPIDTitle, content: { content: (renderItems(file.children)) } })));
 		}
 	}, [props.files]);
 	const renderItems = (data) => {
-		const files = data.map((file) => {
+		console.log("files==>", data);
+
+		const files = data.map((data) => {
 			return (
 				<div className="card1 card-custom gutter-b width_card">
 
@@ -71,7 +93,7 @@ export function FileStructure(props: FileStructureProps) {
 
 						<div className="d-flex align-items-center py-2">
 							<span>
-								{file.fileType == ("image/jpeg" || "image/png")
+								{data.fileType == ("image/jpeg" || "image/png")
 									?
 									<img src={img5} className="  mr-10 " /> :
 									<img src={img2} className="  mr-10 " />
@@ -79,7 +101,7 @@ export function FileStructure(props: FileStructureProps) {
 
 							</span>
 
-							<span className="font-weight-bold mb-0 mr-10">{file.fileTitle}</span>
+							<span className="font-weight-bold mb-0 mr-10">{data.fileTitle}</span>
 							{/* <div className="d-flex mr-3">
 
 								<div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
@@ -96,10 +118,20 @@ export function FileStructure(props: FileStructureProps) {
 
 						<div className="symbol-group symbol-hover py-2">
 							<div className="symbol symbol-30">
-								<a onClick={() => download(file.fileTitle)}>  <i className="ms-Icon ms-Icon--Download mr-10" aria-hidden="true"></i></a>
-								<a onClick={() => viewFile(file)}> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a>
+								<a onClick={() => download(data.fileTitle)}>  <i className="ms-Icon ms-Icon--Download mr-10" aria-hidden="true"></i></a>
+								<a onClick={() => viewFile(data)}> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a>
 
-								<span className="mr-2"  >...</span>
+								<span className="mr-2"  >
+									<Dropdown text='...'>
+										<Dropdown.Menu>
+											<Dropdown.Item icon='pencil' text='Edit file detail' />
+											<Dropdown.Item onClick={() => uploadNewVersion(data)} icon='eye' text='Upload new version' />
+											<Dropdown.Item onClick={() => addPinTask(data)} icon='check circle outline' text='Add task to this file' />
+											<Dropdown.Item icon='trash alternate outline' text='Delete' />
+										</Dropdown.Menu>
+									</Dropdown>
+								</span>
+
 							</div>
 
 						</div>
@@ -305,6 +337,10 @@ export function FileStructure(props: FileStructureProps) {
 			{view && imgUrl.length > 0 ?
 				<div>
 					<ViewFileDetail open={view} fType={fType} filesData={filesData} dowloadFilesData={props.downloadedImg} ></ViewFileDetail>
+				</div> : null}
+			{openPinFile && imgUrl.length > 0 ?
+				<div>
+					<AddPinFile isOpen={openPinFile} filesData={filesData} dowloadFilesData={props.downloadedImg} savePins={''} onSuccess={""} />
 				</div> : null}
 
 			<Tab className="ui-tabs" menu={{ secondary: true, pointing: true }} panes={panes} />

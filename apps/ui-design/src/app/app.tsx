@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+
+import { initI18n } from "@cudo/mf-core";
+
+
+const defaultLanguage = 'en-GB';
+const supportedLanguages = [defaultLanguage, 'en-GB'];
+initI18n('./assets/i18n/{{lng}}.json', defaultLanguage);
 
 
 import { ReactComponent as Logo } from './logo.svg';
 import star from './star.svg';
 
-import { AccordionExampleMenu, ModalExampleModal2, Cardbar, Menubar, Tabsbar, Messagebar, Loginbar, Logindrop, Loginpassword, ModalExampleModal, UserProfileView, TaskArea } from '@cudo/shared-components';
+import { AccordionExampleMenu, ModalExampleModal2, Cardbar, Menubar, Tabsbar, Messagebar, Loginbar, Logindrop, Loginpassword, ModalExampleModal, UserProfileView } from '@cudo/shared-components';
 
 // import ModalExampleModal2 from 'libs/shared-components/src/lib/components/modal/modal2';
 import ModalExampleCompany from 'libs/shared-components/src/lib/components/modal/companypopup';
 import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
-// import ListExampleFloated from 'libs/shared-components/src/lib/components/task/taskarea';
+import ListExampleFloated from 'libs/shared-components/src/lib/components/task/taskarea';
 import ModalAddPrint from 'libs/shared-components/src/lib/components/modal/addfile';
 import ModalAddFile from 'libs/shared-components/src/lib/components/modal/addedfile';
 import FileStructure from 'libs/shared-components/src/lib/components/filestructure/filestask';
@@ -45,64 +52,80 @@ import ModalEditInvitation from 'libs/shared-components/src/lib/components/modal
 
 import ModalAddInvitation from 'libs/shared-components/src/lib/components/modal/addinvitaton';
 
+import MeetingTab from 'libs/shared-components/src/lib/components/tabs/meetingtabs';
+import FilterPopup from 'libs/shared-components/src/lib/components/modal/fliter';
+import SelectFilePopup from 'libs/shared-components/src/lib/components/modal/selectfile';
 
-// import AccordionExampleMenu from 'libs/shared-components/src/lib/components/menu/sidebar';
-// const ListExampleFloated = React.lazy(() => import('libs/shared-components/src/lib/components/task/taskarea'));
+import ToggleButton from 'libs/shared-components/src/lib/components/tabs/togglebutton';
+
+import ModalCost from 'libs/shared-components/src/lib/components/modal/addcostpopup';
+
+import PinMaskTask from 'libs/shared-components/src/lib/components/modal/pinmasktask';
 
 // import { Sidebar } from 'semantic-ui-react';
 
 export function App() {
   return (
-    <div>
-      <Menubar></Menubar>
-      <AccordionExampleMenu></AccordionExampleMenu>
-      <Tabsbar></Tabsbar>
-      <ModalExampleModal></ModalExampleModal> <br /> <br /><br />
-      <Cardbar></Cardbar>
-      <Messagebar></Messagebar><br />
-      <Loginbar></Loginbar><br />
-      <Logindrop></Logindrop><br />
-      <Loginpassword></Loginpassword>
-      <ModalExampleModal2></ModalExampleModal2><br />
-      <ModalExampleCompany></ModalExampleCompany><br />
-      <ModalExamplePrinting></ModalExamplePrinting><br />
-      <ListExampleFloated></ListExampleFloated><br /><br />
-      <ModalAddPrint></ModalAddPrint><br />
-      <ModalAddFile></ModalAddFile><br />
-      <FileStructure></FileStructure><br />
-      <ModalExampleSize></ModalExampleSize><br />
-      <UploadNewVersion></UploadNewVersion><br />
-      <AddNewFolder></AddNewFolder><br />
-      <AddNewPeople></AddNewPeople><br />
-      <PeopleList></PeopleList><br />
-      <ModalDelete></ModalDelete><br />
-      <PremissionPeople></PremissionPeople><br />
-      <AddPeoplePermission></AddPeoplePermission><br />
-      <ProgressBar></ProgressBar><br />
-      <ModalPin></ModalPin><br />
-      <ManageFileStructure></ManageFileStructure><br />
-      <ProjectSetting></ProjectSetting><br />
-      <ModalAddSubLevel></ModalAddSubLevel><br />
-      <EditProject></EditProject><br />
-      <UserProfile></UserProfile><br />
-      <RegisterPage></RegisterPage><br />
-      <UserProfileView></UserProfileView><br />
-      <LoaderPage></LoaderPage><br />
-      <ModalAlert></ModalAlert><br />
-      <ModalPlanningNew></ModalPlanningNew><br />
-      <ModalViewPlanning></ModalViewPlanning><br />
-      <ModalSession></ModalSession><br />
-      <ModalViewTask></ModalViewTask><br />
-      <ModalTaskEdit></ModalTaskEdit><br />
-      <InvitationTab></InvitationTab><br />
-      <EditMileStonePopup></EditMileStonePopup><br />
-      <ModalEditViewMilestone></ModalEditViewMilestone><br />
-      <ModalAddProtocol></ModalAddProtocol><br />
-      <ModalEditInvitation></ModalEditInvitation><br />
-      <ModalAddInvitation></ModalAddInvitation>
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+
+      <div>
+        <Menubar></Menubar>
+        <AccordionExampleMenu></AccordionExampleMenu>
+        <Tabsbar></Tabsbar>
+        <ModalExampleModal></ModalExampleModal> <br /> <br /><br />
+        <Cardbar></Cardbar>
+        <Messagebar></Messagebar><br />
+        <Loginbar></Loginbar><br />
+        <Logindrop></Logindrop><br />
+        <Loginpassword></Loginpassword>
+        <ModalExampleModal2></ModalExampleModal2><br />
+        <ModalExampleCompany></ModalExampleCompany><br />
+        <ModalExamplePrinting></ModalExamplePrinting><br />
+        <ListExampleFloated></ListExampleFloated><br /><br />
+        <ModalAddPrint></ModalAddPrint><br />
+        <ModalAddFile></ModalAddFile><br />
+        <FileStructure></FileStructure><br />
+        <ModalExampleSize></ModalExampleSize><br />
+        <UploadNewVersion></UploadNewVersion><br />
+        <AddNewFolder></AddNewFolder><br />
+        <AddNewPeople></AddNewPeople><br />
+        <PeopleList></PeopleList><br />
+        <ModalDelete></ModalDelete><br />
+        <PremissionPeople></PremissionPeople><br />
+        <AddPeoplePermission></AddPeoplePermission><br />
+        <ProgressBar></ProgressBar><br />
+        <ModalPin></ModalPin><br />
+        <ManageFileStructure></ManageFileStructure><br />
+        <ProjectSetting></ProjectSetting><br />
+        <ModalAddSubLevel></ModalAddSubLevel><br />
+        <EditProject></EditProject><br />
+        <UserProfile></UserProfile><br />
+        <RegisterPage></RegisterPage><br />
+        <UserProfileView></UserProfileView><br />
+        <LoaderPage></LoaderPage><br />
+        <ModalAlert></ModalAlert><br />
+        <ModalPlanningNew></ModalPlanningNew><br />
+        <ModalViewPlanning></ModalViewPlanning><br />
+        <ModalSession></ModalSession><br />
+        <ModalViewTask></ModalViewTask><br />
+        <ModalTaskEdit></ModalTaskEdit><br />
+        <InvitationTab></InvitationTab><br />
+        <EditMileStonePopup></EditMileStonePopup><br />
+        <ModalEditViewMilestone></ModalEditViewMilestone><br />
+        <ModalAddProtocol></ModalAddProtocol><br />
+        <ModalEditInvitation></ModalEditInvitation><br />
+        <ModalAddInvitation></ModalAddInvitation><br />
+        <MeetingTab></MeetingTab><br />
+        <FilterPopup></FilterPopup><br />
+        <SelectFilePopup></SelectFilePopup><br />
+        <ToggleButton></ToggleButton><br />
+        <ModalCost></ModalCost><br />
+        <PinMaskTask></PinMaskTask>
+
+      </div>
 
 
+    </Suspense>
 
 
   );

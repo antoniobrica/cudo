@@ -6,7 +6,7 @@ export class CreateStructureInput {
   @Field({ description: 'Structure name for all level' })
   parentStructureName: string;
 
-  @Field({ description: 'Structure name for all level' })
+  @Field({ nullable: true, description: 'Structure name for all level' })
   childStructureName?: string;
 
 }

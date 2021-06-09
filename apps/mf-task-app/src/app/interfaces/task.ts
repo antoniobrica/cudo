@@ -25,6 +25,10 @@ export interface ITask {
   createdAt: string
   updatedBy: string
   createdBy: string
+  fileID: string
+  fileName: string
+  taskTypeID: string
+  taskType: string
 }
 export interface ITodos {
   getTodos: ITodo[];

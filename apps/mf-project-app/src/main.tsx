@@ -17,7 +17,7 @@ declare global {
   }
 }
 const client = new ApolloClient({
-  uri: 'http://localhost:5005/graphql',
+  uri: 'http://192.168.0.31:5005/graphql',
   cache: new InMemoryCache()
 });
 
@@ -43,13 +43,13 @@ if (!document.getElementById("ProjectApp-container")) {
   // ReactDOM.render(<App />, document.getElementById("root"));
   ReactDOM.render(
     // <React.StrictMode>
-      <BrowserRouter>
-        <ApolloProvider client={client}>
-          <ApolloHooksProvider client={client as any}>
-            <App />
-          </ApolloHooksProvider>
-        </ApolloProvider>
-      </BrowserRouter>
+    <BrowserRouter>
+      <ApolloProvider client={client}>
+        <ApolloHooksProvider client={client as any}>
+          <App />
+        </ApolloHooksProvider>
+      </ApolloProvider>
+    </BrowserRouter>
     // </React.StrictMode>
     ,
     document.getElementById("root")

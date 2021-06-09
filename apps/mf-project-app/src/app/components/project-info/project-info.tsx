@@ -7,7 +7,6 @@ import { ITodo, IProject } from "../../interfaces/project";
 import Modal from 'react-modal';
 import { Card, Icon, Form, Grid } from 'semantic-ui-react'
 import { useHistory } from "react-router";
-import '../../../../../../libs/shared-components/src/style/index.scss';
 import { LoaderPage } from "@cudo/shared-components"
 
 //import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';

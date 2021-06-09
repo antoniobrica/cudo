@@ -4,26 +4,27 @@ import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
 import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
 import FileType from '../file-type/file-type';
- 
+
 /* eslint-disable-next-line */
 const client = new ApolloClient({
-  uri: 'http://localhost:5001/graphql',
+  uri: 'http://192.168.0.31:5001/graphql',
   cache: new InMemoryCache()
 });
 /* eslint-disable-next-line */
 export interface FileTypeIndexProps {
-  parentFileTypeSelect
+  parentFileTypeSelect?
+  fileTypeName?
 }
 
 export function FileTypeIndex(props: FileTypeIndexProps) {
-  const onFileType =(data)=>{
-   props.parentFileTypeSelect(data)
+  const onFileType = (data) => {
+    props.parentFileTypeSelect(data)
   }
 
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <FileType parentFileTypeSelect={onFileType}/>
+        <FileType fileTypeName={props.fileTypeName} parentFileTypeSelect={onFileType} />
       </ApolloHooksProvider>
     </ApolloProvider>
   );

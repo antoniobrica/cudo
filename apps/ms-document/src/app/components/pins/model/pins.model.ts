@@ -18,6 +18,12 @@ export class PinsModel {
     @Field({ description: `Z-Axis of pin` })
     z_axis: number;
 
+    @Field({ nullable: true, description: `Page Number of PDF and 0 for images` })
+    pageNumber: number;
+
+    @Field({ nullable: true, description: `Pin Number` })
+    pinNumber: number;
+
     @Field({ description: `Pins Deleted or not` })
     isDeleted?: boolean;
 

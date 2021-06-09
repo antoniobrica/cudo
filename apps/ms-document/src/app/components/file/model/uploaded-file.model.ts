@@ -61,8 +61,14 @@ export class UploadedFileModel {
     @Field({ nullable: true, description: `File created by user` })
     createdBy?: string;
 
-    @Field({ nullable: true, description: `File Updated by user` })
+    @Field({ nullable: true, description: `File Updated at by user` })
     updatedBy?: string;
+
+    @Field({ nullable: true, description: `File created at by user` })
+    createdAt?: Date;
+
+    @Field({ nullable: true, description: `File Updated by user` })
+    updatedAt?: Date;
 
     @Field({ nullable: true, description: `True if file is deleted` })
     isDeleted?: boolean;

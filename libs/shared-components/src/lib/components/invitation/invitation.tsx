@@ -1,12 +1,12 @@
 import React from 'react';
 
-import '../../../style/index.scss';
+import './../../../assets/style/index.scss'
 import { Tab, Dropdown } from 'semantic-ui-react';
 import img from 'libs/shared-components/src/user.png';
 import img3 from 'libs/shared-components/src/calendar.png';
 
 /* eslint-disable-next-line */
-export interface TabsProps {}
+export interface TabsProps { }
 
 export function InvitationTab(props: TabsProps) {
   const panes = [
@@ -164,7 +164,7 @@ export function InvitationTab(props: TabsProps) {
                   </span>
                   <span className="textt2" style={{ marginTop: '-21px' }}>
                     45 min
-                  </span>       
+                  </span>
                   <span
                     className="font-weight-bold mb-0 mr-10"
                     style={{ marginTop: '-21px' }}
@@ -172,7 +172,7 @@ export function InvitationTab(props: TabsProps) {
                     &nbsp;
                     <i
                       className="ms-Icon ms-Icon--Clock"
-                      aria-hidden="true"                                                             
+                      aria-hidden="true"
                     ></i>
                     11:00 AM - 11:45 AM
                   </span>

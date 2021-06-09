@@ -5,15 +5,18 @@ import { ITask, ITasks, TaskMutation } from "../../interfaces/task";
 import { useTaskMutation } from '../../services/useRequest';
 import { ApolloCache, FetchResult, useMutation } from '@apollo/client';
 import { ADD_TASK, GET_TASKS } from "../../graphql/graphql";
-import '../../../../../../libs/shared-components/src/style/index.scss';
 import './create-task.module.scss';
+import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import moment, { calendarFormat } from 'moment';
 import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex } from "@cudo/mf-account-app-lib"
 import { useHistory } from 'react-router';
 /* eslint-disable-next-line */
 export interface CreateTaskProps {
   onSuccess?,
-  workTypes
+  workTypes,
+  isNewTask,
+  cancel
 
 }
 
@@ -22,7 +25,7 @@ export function CreateTask(props: CreateTaskProps) {
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
   ]
-
+  let quillObj: any;
   const phaseOptions = [
     { key: 'Phase_1', value: 'Phase_1', text: 'Phase 1' },
     { key: 'Phase_2', value: 'Phase_2', text: 'Phase 2' },
@@ -66,12 +69,26 @@ export function CreateTask(props: CreateTaskProps) {
   //   variables: { referenceID },
   // });
 
+  React.useEffect(() => {
+    if (props.isNewTask) {
+      setOpen(props.isNewTask)
+    }
+  }, [props.isNewTask])
   const [addTask, { data }] = useMutation(ADD_TASK,
     {
       refetchQueries: [
         { query: GET_TASKS, variables: { referenceID } }
       ],
-      variables: { referenceID },
+      // variables: {
+      //   taskTitle, startDate, endDate, estimatedDays,
+      //   sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
+      //   fileID,
+      //   fileName,
+      //   taskTypeID,
+      //   files,
+      //   description, referenceID,
+
+      // },
     }
   )
 
@@ -147,13 +164,19 @@ export function CreateTask(props: CreateTaskProps) {
   }
 
   const handleSaveTask = () => {
-    setOpen(false);
+    // setOpen(false);
+    cancel();
     addTask({
       variables: {
         taskTitle, startDate, endDate, estimatedDays,
         sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
+        fileID: "",
+        fileName: "$fileName",
+        taskTypeID: "$taskTypeID",
         files,
         description,
+        subtasks: [],
+        referenceID
       },
       update: (
         cache,
@@ -171,19 +194,23 @@ export function CreateTask(props: CreateTaskProps) {
     });
 
   };
-  const onDescriptionChange = e => {
-    console.log('des=>', e.target.value);
-    setDescription(e.target.value);
+  const onDescriptionChange = (e) => {
+    console.log('des=>', e);
+    setDescription(e);
   }
-
+  const cancel = () => {
+    setOpen(false)
+    props.cancel(false)
+  }
 
   return (
     <div >
       <Modal className="modal_media" style={{ width: '800px', marginLeft: '155px' }}
-        onClose={() => setOpen(false)}
+        onClose={cancel}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button size='mini' className="grey-btn taskmargin">+ Add  New Task</Button>}      >
+      // trigger={<Button size='mini' className="grey-btn taskmargin">+ Add  New Task</Button>} 
+      >
         <Modal.Header><h3>Add New Task </h3></Modal.Header>
         <Modal.Content body>
           <div>
@@ -205,9 +232,28 @@ export function CreateTask(props: CreateTaskProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>Description </label>
-                      <TextArea placeholder='Tell us more'
+                      {/* <TextArea placeholder='Tell us more'
                         value={description}
-                        onChange={onDescriptionChange} />
+                        onChange={onDescriptionChange} /> */}
+                      <ReactQuill
+                        value={description}
+                        modules={{
+                          toolbar: {
+                            container: [
+                              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                              ['bold', 'italic', 'underline'],
+                              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                              [{ 'align': [] }],
+                              ['link', 'image'],
+                              ['clean'],
+                              [{ 'color': [] }]
+                            ]
+                          }
+                        }}
+                        placeholder="Add a description"
+                        onChange={(content, delta, source, editor) => onDescriptionChange(content)}
+                        id="txtDescription"
+                      />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -235,7 +281,7 @@ export function CreateTask(props: CreateTaskProps) {
                     <PhaseIndex parentPhaseSelect={onsetPhasesID} />
                   </Grid.Column>
                   <Grid.Column>
-                    <BkpIndex parentBKPSelect={setBKPIDChange} />
+                    <BkpIndex bkp={BKPID} parentBKPSelect={setBKPIDChange} />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
@@ -322,7 +368,7 @@ export function CreateTask(props: CreateTaskProps) {
               positive
               size='mini' className="grey-btn"
             />
-            <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+            <Button size='mini' className="icon-border" onClick={cancel}>
               X  Cancel
         </Button>
           </div>
