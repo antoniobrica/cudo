@@ -153,7 +153,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
 
   return (
     <div id="navbar">
-      <Modal style={{ width: '670px', marginLeft: '345px' }}
+      <Modal style={{ width: '800px', marginLeft: '155px' }}
         className="modal_media"
         onClose={cancel}
         onOpen={openf}

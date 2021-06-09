@@ -4,8 +4,9 @@
 .textt {
   background: #f2f6fe;
   color: #2d62ed;
-  font-size: 1.2rem;
-  padding: 4px;
+  font-size: 12px;
+  padding: 1px 3px 1px 3px;
+  border-radius: 3px;
 }
 .pb-3,
 .py-3 {
@@ -332,4 +333,12 @@
 .ui.button.grey-btn:hover{
       background: #0000ff;
     color: #ffffff;
+}
+.ui.active.visible.floating.dropdown.button.icon i.add.icon{
+  color: #777A89;
+}
+
+.ui.active.visible.floating.dropdown.button.icon i.pin.icon{
+  color: #777A89;
+
 }

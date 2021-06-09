@@ -102,17 +102,17 @@ export function FileStructure(props: FileStructureProps) {
 							</span>
 
 							<span className="font-weight-bold mb-0 mr-10">{data.fileTitle}</span>
-							{/* <div className="d-flex mr-3">
+							<div className="d-flex mr-3">
 
 								<div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
 
 									<div className="navi-item mr-2">
-										<button className="ui mini button grey-btn">{file.fileVersion}</button>
+										<button className="ui mini button grey-btn">{data.fileVersion}</button>
 									</div>
 
 								</div>
 
-							</div> */}
+							</div> 
 
 						</div>
 

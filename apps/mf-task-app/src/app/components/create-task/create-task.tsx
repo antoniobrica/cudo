@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
+import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea,Checkbox } from 'semantic-ui-react';
 import { radios } from '@storybook/addon-knobs';
 import { ITask, ITasks, TaskMutation } from "../../interfaces/task";
 import { useTaskMutation } from '../../services/useRequest';
@@ -356,7 +356,9 @@ export function CreateTask(props: CreateTaskProps) {
                     <Form.Field>
                       <label>Task Configuration  </label>
                       <div className="content">
-                        <p className="paragraph">Send notification to assignee/followers for the task</p></div>
+                        <p className="paragraph">Send notification to assignee/followers for the task</p>
+                        <Checkbox toggle className="toggle_area" />
+                        </div>
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
