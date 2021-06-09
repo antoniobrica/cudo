@@ -27,5 +27,5 @@ stages:
             clean: false
           - script: |  
                 npm install
-                  #find . -path ./node_modules -prune -false -o  -iname package.json -newermt '60 seconds ago' -exec npm install \;
+                  #finsd . -path ./node_modules -prune -false -o  -iname package.json -newermt '60 seconds ago' -exec npm install \;
             displayName: 'CI for Root'
