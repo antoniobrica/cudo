@@ -19,6 +19,7 @@
     "affected": "nx affected",
     "format": "nx format:write",
 
+
     "format:write": "nx format:write",
     "format:check": "nx format:check",
     "update": "nx migrate latest",
