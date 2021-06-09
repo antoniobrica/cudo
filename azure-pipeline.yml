@@ -24,7 +24,7 @@ stages:
       - job: Build_Root
         steps:
           - checkout: self
-            clean: true
+            clean: false
             lfs: false
           - bash : |
                   find . -path ./node_modules -prune -false -o  -iname package.json -newermt '30 seconds ago' -exec rm -f package-lock.json \;
