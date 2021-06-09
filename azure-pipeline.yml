@@ -23,10 +23,10 @@ stages:
     jobs:
       - job: Build_Root
         steps:
-                #- checkout: self
-            #clean: false
+          - checkout: self
+            clean: false
             #lfs: false
           - script: |  
-                  #npm install
-                  #find . -path ./node_modules -prune -false -o  -iname package.json -newermt '60 seconds ago' -exec npm install \;
+                  rm -f package.json.lock
+                  find . -path ./node_modules -prune -false -o  -iname package.json -newermt '60 seconds ago' -exec npm install \;
             displayName: 'CI for Root'
