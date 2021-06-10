@@ -3,6 +3,6 @@
 
 export const environment = {
   production: false,
-  EACT_APP_COST_HOST: "http://192.168.0.31:6004",
-  REACT_APP_MEETING_HOST: "http://192.168.0.31:6005",
+  EACT_APP_COST_HOST: "http://192.168.0.131:6004",
+  REACT_APP_MEETING_HOST: "http://192.168.0.131:6005",
 };

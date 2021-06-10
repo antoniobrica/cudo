@@ -3,7 +3,7 @@ import { boolean, number } from '@storybook/addon-knobs';
 import { title } from 'process';
 import React, { Component, useEffect, useRef } from 'react'
 import axios from 'axios';
-
+import { MS_SERVICE_URL } from '@cudo/mf-core'
 export interface CanvasProps {
   imgUrl?,
   coardinates?,
@@ -49,7 +49,7 @@ export function Canvas(props: CanvasProps) {
   }, []);
   const getPins = async () => {
     return axios.post(
-      'http://localhost:5003/graphql',
+      MS_SERVICE_URL['ms_document'].url,
       {
         query: getPinQuery,
         variables: {
@@ -158,7 +158,7 @@ export function Canvas(props: CanvasProps) {
     boxes.map((box, id) => {
       if (box.pinId == "") {
         return axios.post(
-          'http://localhost:5003/graphql',
+          MS_SERVICE_URL['ms_document'].url,
           {
             query,
             variables: {
@@ -183,7 +183,7 @@ export function Canvas(props: CanvasProps) {
       else {
         console.log('update-pins');
         return axios.post(
-          'http://localhost:5003/graphql',
+          MS_SERVICE_URL['ms_document'].url,
           {
             query: updateQuery,
             variables: {
