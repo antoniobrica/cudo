@@ -29,7 +29,7 @@ export class ProjectService {
             proejctDetails.projectWorkTypes = [];
             const { projectWorkEstimates } = createProjectInput;
             for (let index = 0; index < projectWorkEstimates.length; index++) {
-                const selectedWorkType = await this.workTypeService.getWorktypeByWorkTypeID({ workTypeID: projectWorkEstimates[index].workTypeID, name: projectWorkEstimates[index].workTypeName })
+                const selectedWorkType = await this.workTypeService.getWorktypeByWorkTypeID({ workTypeID: projectWorkEstimates[index].workTypeID,  })
                 const projectworkentity = new ProjectWorkTypeEntity({ estimatedCost: projectWorkEstimates[index].estimatedCost, workTypeName: projectWorkEstimates[index].workTypeName });
                 projectworkentity.workID = selectedWorkType.workTypeID;
                 const newProjectWork = await this.projectWorkRepository.create({ ...projectworkentity, workType: { id: selectedWorkType.id } });

@@ -1,4 +1,5 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import configOrm from 'apps/ms-task/src/config.orm';
 import { TasksEntity } from '../../../entities/tasks.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import SortFilterParam from '../../../utils/types/sortParam';
@@ -30,12 +31,14 @@ export class TasksResolver {
     //     return await this.projectTasksService.findAll(getTasksArgs)
     // }
 
-    @Query(() => [TasksModel], { nullable: true })
-    async tasks(@Args("referenceFilter") getTasksArgs: ReferenceFilterParams,
+    @Query(() => PaginationTaskModel, { nullable: true })
+    async tasks(
+    @Args("referenceFilter") getTasksArgs: ReferenceFilterParams,
+    @Args('options',{nullable: true})options:pageParams,
     @Args("statusFilter",{nullable: true}) status?:StatusFilterParam,
-    @Args("sortFilter",{nullable: true}) sortFilter?:SortFilterParam,
-    ): Promise<TasksModel[]> {
-        return await this.projectTasksService.findAllByStatus(getTasksArgs,status,sortFilter)
+    @Args("sortFilter",{nullable: true}) sortFilter?:SortFilterParam,): Promise<Pagination<TasksEntity>>  {
+        return await this.projectTasksService.findAllByStatus(getTasksArgs,options,status,sortFilter
+          )
     }
 
     @Query(() => [TasksModel], { nullable: true })
@@ -95,13 +98,6 @@ export class TasksResolver {
         @Args('taskDeleteInput') taskDeleteInput: TaskDeleteInput,
     ) {
         return this.projectTasksService.deleteTask(taskDeleteInput);
-    }
-
-    @Query(() => PaginationTaskModel, { nullable: true })
-    async paginatedTasks(@Args('options')options:pageParams,
-    @Args("referenceFilter") getTasksArgs: ReferenceFilterParams): Promise<Pagination<TasksEntity>>  {
-        return await this.projectTasksService.paginate(options,getTasksArgs
-          )
     }
   
 }

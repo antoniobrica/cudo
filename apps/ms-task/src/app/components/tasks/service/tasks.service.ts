@@ -98,84 +98,108 @@ export class TasksService {
         });
     }
 
-    public async findAllByStatus(refFilter: ReferenceFilterParams, statusFilter?: StatusFilterParam, sortFilter?: SortFilterParam): Promise<TasksEntity[]> {
+     async findAllByStatus(
+         refFilter: ReferenceFilterParams, 
+         options?: PaginationOptionsInterface,
+         statusFilter?: StatusFilterParam, 
+         sortFilter?: SortFilterParam): Promise<Pagination<TasksEntity>> {
+
         const selectedReference = await this.referenceService.getReferenceById(refFilter)
+
+        if(options){
+            if(options && statusFilter){
+                const [results, total] = await this.projectTasksRepository.findAndCount({ where: {
+                    isDeleted:false,
+                    status:statusFilter.status,
+                    "reference": {
+                        id: selectedReference.id
+                    }
+                },
+                relations: ['reference','assignees', 'followers', 'files','subtasks'],
+                take: options.limit,
+                skip: options.page * options.limit,
+                }
+                );            
+                const pagination =  new Pagination({
+                    results,
+                    total,
+                });      
+                return pagination
+            }
+            if(options && statusFilter && sortFilter){
+                    if(sortFilter.sortBy=="DESC"){
+                    const [results, total] = await this.projectTasksRepository.findAndCount({ where: {
+                        isDeleted:false,
+                        status:statusFilter.status,
+                        "reference": {
+                            id: selectedReference.id
+                        }
+                    },
+                    relations: ['reference','assignees', 'followers', 'files','subtasks'],
+                    take: options.limit,
+                    skip: options.page * options.limit,
+                    }
+                    );            
+                    const pagination =  new Pagination({
+                        results,
+                        total,
+                    });      
+                    return pagination
+                }  
+            }
+        }
         if(statusFilter){
-         return await this.projectTasksRepository.find({
-            where: {"isDeleted":false,
+            const [results, total] = await this.projectTasksRepository.findAndCount({ where: {
+                isDeleted:false,
                 status:statusFilter.status,
                 "reference": {
                     id: selectedReference.id
                 }
+            },
+            relations: ['reference','assignees', 'followers', 'files','subtasks'],
             }
-            ,
-            relations: ['reference', 'assignees', 'followers', 'files','subtasks'],
-        })}
-        
+            );            
+            const pagination =  new Pagination({
+                results,
+                total,
+            });      
+            return pagination
+        }
         if(sortFilter){
             if(sortFilter.sortBy=="DESC"){
-                return await this.projectTasksRepository.find({
-                    where: {"isDeleted":false,
-                        "reference": {
-                            id: selectedReference.id
-                        }
+                const [results, total] = await this.projectTasksRepository.findAndCount({ where: {
+                    isDeleted:false,
+                    "reference": {
+                        id: selectedReference.id
                     },order:{createdAt:"DESC"}
-                    ,
-                    relations: ['reference', 'assignees', 'followers', 'files','subtasks'],
-                }) 
-            }
-            else{
-                return await this.projectTasksRepository.find({
-                    where: {"isDeleted":false,
-                        "reference": {
-                            id: selectedReference.id
-                        }
-                    }
-                    ,
-                    relations: ['reference', 'assignees', 'followers', 'files','subtasks'],
-                })
-
-            }
-        }
-
-        if(statusFilter && sortFilter){
-            if(sortFilter.sortBy=="DESC"){
-                return await this.projectTasksRepository.find({
-                    where: {"isDeleted":false,
-                        status:statusFilter.status,
-                        "reference": {
-                            id: selectedReference.id
-                        }
-                    },order:{createdAt:"DESC"}
-                    ,
-                    relations: ['reference', 'assignees', 'followers', 'files','subtasks'],
-                }) 
-            }
-            else{
-                return await this.projectTasksRepository.find({
-                    where: {"isDeleted":false,
-                        status:statusFilter.status,
-                        "reference": {
-                            id: selectedReference.id
-                        }
-                    }
-                    ,
-                    relations: ['reference', 'assignees', 'followers', 'files','subtasks'],
-                })
-
-            }
-        }
-
-
-        else{ return await this.projectTasksRepository.find({
-            where: {
-                "reference": {"isDeleted":false,
-                    id: selectedReference.id
+                },
+                relations: ['reference','assignees', 'followers', 'files','subtasks'],
                 }
+                );            
+                const pagination =  new Pagination({
+                    results,
+                    total,
+                });
+                return pagination
             }
-            ,
-            relations: ['reference', 'assignees', 'followers', 'files','subtasks'],
-        }) }
+        }
+        else{ 
+                     const [results, total] = await this.projectTasksRepository.findAndCount({ where: {
+                    isDeleted:false,
+                    "reference": {
+                        id: selectedReference.id
+                    }
+                },
+                relations: ['reference','assignees', 'followers', 'files','subtasks'],
+                }
+                );            
+                const pagination =  new Pagination({
+                    results,
+                    total,
+                });      
+                return pagination
+        
+           }
     }
 
     public async findTaskById(taskFilterParams: TaskFilterParams): Promise<TasksEntity[]> {
@@ -311,33 +335,4 @@ export class TasksService {
           throw new HttpException('Task Not Found', HttpStatus.NOT_FOUND);
         }
 
-        
-
-        async paginate(
-            options: PaginationOptionsInterface,
-            refFilter: ReferenceFilterParams
-        ): Promise<Pagination<TasksEntity>> {
-
-            const selectedReference = await this.referenceService.getReferenceById(refFilter)
-
-            
-            const [results, total] = await this.projectTasksRepository.findAndCount({ where: {
-                isDeleted:false,
-                "reference": {
-                    id: selectedReference.id
-                }
-            },
-            relations: ['reference','assignees', 'followers', 'files','subtasks'],
-            take: options.limit,
-            skip: options.page * options.limit,
-            }
-            );            
-            const pagination =  new Pagination({
-                results,
-                total,
-            });      
-            return pagination
-        }
-     
-            
 }
