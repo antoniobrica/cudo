@@ -15,7 +15,7 @@ interface AlertProps {
   opennewF?,
   cancel?,
   file?,
-  uploadNewVersion
+  uploadNewVersion?
 }
 export function UploadNewVersion(props: AlertProps) {
   const countryOptions = [
