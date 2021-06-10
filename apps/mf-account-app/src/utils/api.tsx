@@ -9,7 +9,7 @@ interface ServerData {
 const call = method => async (url, { body, query, headers }: any = {}) => {
   const response = await axios({
     method,
-    baseURL: `http://192.168.0.31:3003${url}`,
+    baseURL: `http://192.168.1.5:3003${url}`,
     data: body,
     headers,
     params: query
