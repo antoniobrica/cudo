@@ -10,6 +10,8 @@ import img6 from 'libs/shared-components/src/dotss.png';
 import img7 from 'libs/shared-components/src/Image 3.png';
 import img from 'libs/shared-components/src/assets/images/grey_pin.png'
 import Canvas from './canvas';
+import { useHistory } from 'react-router';
+import axios from 'axios';
 import { CreateFileTaskIndex } from '@cudo/mf-task-lib'
 // import PinMaskTask from './pinmasktask';
 
@@ -42,21 +44,66 @@ export interface AddPinProps {
 export const AddPinFile = (props: AddPinProps) => {
   const [open, setOpen] = React.useState(false);
   const [isPinTask, setIsPinTask] = React.useState(true);
-  const [taskTitle, setTaskTitle] = React.useState("")
-  const [startDate, setStartDate] = React.useState('')
-  const [endDate, setEndDate] = React.useState("")
-  const [estimatedDays, setEstimatedDays] = React.useState("")
-  const [sendNotification, setEendNotification] = React.useState(false)
-  const [BKPID, setBKPID] = React.useState("")
-  const [saveTaskAsTemplate, setSaveTaskAsTemplate] = React.useState("")
-  const [phaseID, setPhasesID] = React.useState("")
-  const [status, setStatus] = React.useState("")
-  const [followers, setfollowers] = React.useState("")
-  const [phaseName, setPhasesName] = React.useState("");
-  const [BKPTitle, setBKPIDTitle] = React.useState("");
+  const [fileData, setFileData] = React.useState(null);
+  const [pinTasks, setPinTasks] = React.useState([]);
+
   const [cord, setCord] = React.useState(null);
   const [imgUrl, setimgUrl] = React.useState('');
   const [fileId, setFileId] = React.useState('');
+  const history = useHistory();
+  const res = history.location.pathname.split("/");
+  const referenceID = res[3].toString();
+
+  const getPinQuery = `query TasksByTasktypes(
+   $referenceID: String!,
+  $fileID: String!
+    ) {
+    tasksByTasktypes(
+    referenceFilter:{referenceID: $referenceID ,referenceType:PROJECTTYPE} 
+    taskTypeFilter:{fileID: $fileID,taskType:PIN})
+    { 
+    taskTitle 
+    fileID 
+    fileName
+    taskID 
+    taskType
+    taskTypeID
+    taskType 
+    status
+    startDate
+    endDate
+    description
+    estimatedDays
+    BKPID
+    BKPTitle
+    phaseID
+    phaseName
+    
+    } 
+   }`;
+
+  const getPins = async () => {
+    return axios.post(
+      'http://localhost:5007/graphql',
+      {
+        query: getPinQuery,
+        variables: {
+          fileID: props.filesData.uploadedFileID,
+          referenceID: referenceID
+        }
+      }
+    ).then(res => {
+      //setisRedraw(true)
+      console.log('get_pin_tasks', res.data.data);
+      setPinTasks(res.data.data.tasksByTasktypes)
+
+    })
+      .catch(err => console.log(err))
+  }
+
+  React.useEffect(() => {
+    getPins();
+  }, [])
 
   const phaseOptions = [
     { key: 'Phase_1', value: 'Preliminary', text: 'Preliminary' },
@@ -92,8 +139,9 @@ export const AddPinFile = (props: AddPinProps) => {
 
   React.useEffect(() => {
     if (props.filesData) {
-      console.log('filesData==', props.filesData.uploadedFileID);
+      console.log('filesData==', props.filesData);
       setFileId(props.filesData.uploadedFileID)
+      setFileData(props.filesData)
     }
   }, [props.filesData])
   React.useEffect(() => {
@@ -113,7 +161,7 @@ export const AddPinFile = (props: AddPinProps) => {
   const getCoardinates = (data) => {
     console.log('getCoardinates', data);
 
-    //setCord(data)
+    setCord(data)
   }
   const onSuccess = () => {
     console.log('onSuccess');
@@ -142,7 +190,7 @@ export const AddPinFile = (props: AddPinProps) => {
             <Grid stackable columns={2}>
               <Grid.Column style={{ width: '70%' }}>
                 <Segment>
-                  <Canvas imgUrl={imgUrl} coardinates={getCoardinates} fileId={fileId}></Canvas>
+                  <Canvas imgUrl={imgUrl} coardinates={getCoardinates} fileId={fileId} isPinTask={isPinTask}></Canvas>
                 </Segment>
 
               </Grid.Column>
@@ -158,185 +206,192 @@ export const AddPinFile = (props: AddPinProps) => {
                           <img src={img} className="pinadd" />
                         </Form.Field>
                       </div>
-                      {/* <Form.Field>
+
+                      <Form.Field >
                         <div className="card1 card-custom gutter-b">
-                          <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-                            <div className="d-flex align-items-center  py-2">
-                              <span>
+                          {pinTasks && pinTasks.map((task, i) => {
+                            return (
+                              <div key={i}>
+                                <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
+                                  <div className="d-flex align-items-center  py-2">
+                                    <span>
 
-                                <img src={img4} className="  mr-10 " />{' '}
-                              </span>
+                                      <img src={img4} className="  mr-10 " />{' '}
+                                    </span>
 
-                              <span>
+                                    <span>
 
-                                <img src={img3} className=" mr-2 mr-10 " />{' '}
-                              </span>
-                              <span className="font-weight-bold mb-0 mr-10  ">
-                                This is task name here
+                                      <img src={img3} className=" mr-2 mr-10 " />{' '}
+                                    </span>
+                                    <span className="font-weight-bold mb-0 mr-10  ">
+                                      {task.taskTitle}
+                                    </span>
+                                  </div>
+
+                                  <div className="symbol-group symbol-hover py-2 text-right">
+                                    <div className="symbol symbol-30">
+                                      <img src={img2} />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
+                                  <div className="d-flex align-items-center  py-2">
+                                    <span className="  mr-10 "> </span>
+
+                                    <span className=" mr-2 mr-10 "> </span>
+                                    <span
+                                      style={{ color: '#718898' }}
+                                      className="font-weight-bold mb-0 mr-10  "
+                                    >
+                                      ( {new Date(task?.startDate).toDateString()} ↦ Due {new Date(task?.endDate).toDateString()})
                           </span>
-                            </div>
+                                  </div>
+                                </div>
+                                <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
+                                  <div className="d-flex align-items-center  py-2">
+                                    <span className=" mr-2 mr-10 li_area"></span>
+                                    <span className=" mr-2 mr-10 li_area">
 
-                            <div className="symbol-group symbol-hover py-2 text-right">
-                              <div className="symbol symbol-30">
-                                <img src={img2} />
-                              </div>
-                            </div>
-                          </div>
-                          <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-                            <div className="d-flex align-items-center  py-2">
-                              <span className="  mr-10 "> </span>
-
-                              <span className=" mr-2 mr-10 "> </span>
-                              <span
-                                style={{ color: '#718898' }}
-                                className="font-weight-bold mb-0 mr-10  "
-                              >
-                                Starts Tomorrow ↦ Due Fri Aug 28th
-                          </span>
-                            </div>
-                          </div>
-
-                          <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-                            <div className="d-flex align-items-center  py-2">
-                              <span className=" mr-2 mr-10 li_area"></span>
-                              <span className=" mr-2 mr-10 li_area">
-
-                                <i
-                                  className="ms-Icon ms-Icon--LocationDot "
-                                  aria-hidden="true"
-                                  style={{ color: '#D0D8DF' }}
-                                ></i>
+                                      <i
+                                        className="ms-Icon ms-Icon--LocationDot "
+                                        aria-hidden="true"
+                                        style={{ color: '#D0D8DF' }}
+                                      ></i>
                             Tender
                           </span>
-                              <span className=" mr-2 mr-10 li_area">
+                                    <span className=" mr-2 mr-10 li_area">
 
-                                <i
-                                  className="ms-Icon ms-Icon--LocationDot "
-                                  aria-hidden="true"
-                                  style={{ color: '#D0D8DF' }}
-                                ></i>
+                                      <i
+                                        className="ms-Icon ms-Icon--LocationDot "
+                                        aria-hidden="true"
+                                        style={{ color: '#D0D8DF' }}
+                                      ></i>
                             Paint Work
                           </span>
-                            </div>
+                                  </div>
 
-                            <div className="symbol-group symbol-hover py-2 text-right">
-                              <div className="symbol symbol-30">
-                                <span className="mr-2">
-                                  <Dropdown text="..." className="dotlinearea">
-                                    <Dropdown.Menu>
-                                      <Dropdown.Item
-                                        icon="eye"
-                                        text="View detail"
-                                      />
-                                      <Dropdown.Item icon="pencil" text="Edit" />
-                                      <Dropdown.Item
-                                        icon="check circle outline"
-                                        text="Mark as complete"
-                                      />
-                                      <Dropdown.Item
-                                        icon="trash alternate outline"
-                                        text="Delete"
-                                      />
-                                    </Dropdown.Menu>
-                                  </Dropdown>
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div style={{ borderTop: '1px solid #ddd' }}>
-                            <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-                              <div className="d-flex align-items-center  py-2">
-                                <span>
-
-                                  <img src={img4} className="  mr-10 " />{' '}
-                                </span>
-
-                                <span>
-
-                                  <img src={img3} className=" mr-2 mr-10 " />{' '}
-                                </span>
-                                <span className="font-weight-bold mb-0 mr-10  ">
-                                  This is task name here
-                            </span>
-                              </div>
-
-                              <div className="symbol-group symbol-hover py-2 text-right">
-                                <div className="symbol symbol-30">
-                                  <img src={img2} />
+                                  <div className="symbol-group symbol-hover py-2 text-right">
+                                    <div className="symbol symbol-30">
+                                      <span className="mr-2">
+                                        <Dropdown text="..." className="dotlinearea">
+                                          <Dropdown.Menu>
+                                            <Dropdown.Item
+                                              icon="eye"
+                                              text="View detail"
+                                            />
+                                            <Dropdown.Item icon="pencil" text="Edit" />
+                                            <Dropdown.Item
+                                              icon="check circle outline"
+                                              text="Mark as complete"
+                                            />
+                                            <Dropdown.Item
+                                              icon="trash alternate outline"
+                                              text="Delete"
+                                            />
+                                          </Dropdown.Menu>
+                                        </Dropdown>
+                                      </span>
+                                    </div>
+                                  </div>
                                 </div>
-                              </div>
-                            </div>
-                            <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-                              <div className="d-flex align-items-center  py-2">
-                                <span className="  mr-10 "> </span>
 
-                                <span className=" mr-2 mr-10 "> </span>
-                                <span
-                                  style={{ color: '#718898' }}
-                                  className="font-weight-bold mb-0 mr-10  "
-                                >
-                                  Starts Tomorrow ↦ Due Fri Aug 28th
+                                {/* <div style={{ borderTop: '1px solid #ddd' }}>
+                                <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
+                                  <div className="d-flex align-items-center  py-2">
+                                    <span>
+
+                                      <img src={img4} className="  mr-10 " />{' '}
+                                    </span>
+
+                                    <span>
+
+                                      <img src={img3} className=" mr-2 mr-10 " />{' '}
+                                    </span>
+                                    <span className="font-weight-bold mb-0 mr-10  ">
+                                      This is task name here
                             </span>
-                              </div>
-                            </div>
+                                  </div>
 
-                            <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-                              <div className="d-flex align-items-center  py-2">
-                                <span className=" mr-2 mr-10 li_area"></span>
-                                <span className=" mr-2 mr-10 li_area">
+                                  <div className="symbol-group symbol-hover py-2 text-right">
+                                    <div className="symbol symbol-30">
+                                      <img src={img2} />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
+                                  <div className="d-flex align-items-center  py-2">
+                                    <span className="  mr-10 "> </span>
 
-                                  <i
-                                    className="ms-Icon ms-Icon--LocationDot "
-                                    aria-hidden="true"
-                                    style={{ color: '#D0D8DF' }}
-                                  ></i>
+                                    <span className=" mr-2 mr-10 "> </span>
+                                    <span
+                                      style={{ color: '#718898' }}
+                                      className="font-weight-bold mb-0 mr-10  "
+                                    >
+                                      Starts Tomorrow ↦ Due Fri Aug 28th
+                            </span>
+                                  </div>
+                                </div>
+
+                                <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
+                                  <div className="d-flex align-items-center  py-2">
+                                    <span className=" mr-2 mr-10 li_area"></span>
+                                    <span className=" mr-2 mr-10 li_area">
+
+                                      <i
+                                        className="ms-Icon ms-Icon--LocationDot "
+                                        aria-hidden="true"
+                                        style={{ color: '#D0D8DF' }}
+                                      ></i>
                               Tender
                             </span>
-                                <span className=" mr-2 mr-10 li_area">
+                                    <span className=" mr-2 mr-10 li_area">
 
-                                  <i
-                                    className="ms-Icon ms-Icon--LocationDot "
-                                    aria-hidden="true"
-                                    style={{ color: '#D0D8DF' }}
-                                  ></i>
+                                      <i
+                                        className="ms-Icon ms-Icon--LocationDot "
+                                        aria-hidden="true"
+                                        style={{ color: '#D0D8DF' }}
+                                      ></i>
                               Paint Work
                             </span>
-                              </div>
+                                  </div>
 
-                              <div className="symbol-group symbol-hover py-2 text-right">
-                                <div className="symbol symbol-30">
+                                  <div className="symbol-group symbol-hover py-2 text-right">
+                                    <div className="symbol symbol-30">
 
-                                  <span className="mr-2">
-                                    <Dropdown text="..." className="dotlinearea">
-                                      <Dropdown.Menu>
-                                        <Dropdown.Item
-                                          icon="eye"
-                                          text="View detail"
-                                        />
-                                        <Dropdown.Item icon="pencil" text="Edit" />
-                                        <Dropdown.Item
-                                          icon="check circle outline"
-                                          text="Mark as complete"
-                                        />
-                                        <Dropdown.Item
-                                          icon="trash alternate outline"
-                                          text="Delete"
-                                        />
-                                      </Dropdown.Menu>
-                                    </Dropdown>
-                                  </span>
+                                      <span className="mr-2">
+                                        <Dropdown text="..." className="dotlinearea">
+                                          <Dropdown.Menu>
+                                            <Dropdown.Item
+                                              icon="eye"
+                                              text="View detail"
+                                            />
+                                            <Dropdown.Item icon="pencil" text="Edit" />
+                                            <Dropdown.Item
+                                              icon="check circle outline"
+                                              text="Mark as complete"
+                                            />
+                                            <Dropdown.Item
+                                              icon="trash alternate outline"
+                                              text="Delete"
+                                            />
+                                          </Dropdown.Menu>
+                                        </Dropdown>
+                                      </span>
+                                    </div>
+                                  </div>
                                 </div>
+                              </div> */}
                               </div>
-                            </div>
-                          </div>
+                            )
+                          })}
                         </div>
-                      </Form.Field> */}
+                      </Form.Field>
+
                       <Form.Field>
                         <div className="card1 card-custom gutter-b"></div>
                       </Form.Field>
                     </div> :
-                    <CreateFileTaskIndex close={close} onSuccess={onSuccess}></CreateFileTaskIndex>
+                    <CreateFileTaskIndex close={close} onSuccess={onSuccess} cord={cord} fileData={fileData}></CreateFileTaskIndex>
                   }
                   {/* <Form.Field>
                       <label>Task Title <span className="danger">*</span></label>

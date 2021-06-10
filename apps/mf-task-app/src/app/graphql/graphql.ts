@@ -23,6 +23,9 @@ query Tasks($referenceID: String!)
     createdAt
     updatedBy
     createdBy
+    taskTypeID
+    fileID
+    taskType
   reference{
   referenceID
   }
