@@ -10,6 +10,7 @@ import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex } from "@cudo/mf-ac
 import { useHistory } from 'react-router';
 import './create-file-task.module.scss';
 import axios from 'axios';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 
 /* eslint-disable-next-line */
@@ -104,7 +105,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   const getWorkType = (referenceID) => {
     console.log('sasstoken');
     return axios.post(
-      'http://localhost:5005/graphql',
+      MS_SERVICE_URL['ms_project'].url,
       {
         query,
         variables: {

@@ -15,7 +15,7 @@ interface AlertProps {
   opennewF?,
   cancel?,
   file?,
-  uploadNewVersion
+  uploadNewVersion?
 }
 export function UploadNewVersion(props: AlertProps) {
   const countryOptions = [
@@ -65,6 +65,8 @@ export function UploadNewVersion(props: AlertProps) {
   React.useEffect(getContainerItemsEffect, []);
 
   const getContainersEffect = () => {
+    // const blobItem = { containerName: "test" } as BlobItemUpload
+    // setItems1([blobItem])
     setItems1([{ name: "test" }] as ContainerItem[])
     sharedContext.getContainerItems("test");
     return

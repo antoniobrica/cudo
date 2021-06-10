@@ -16,6 +16,7 @@ import TaskDelete from '../delete-task';
 import { useTranslation } from 'react-i18next';
 import { FileListIndex } from '@cudo/mf-document-lib'
 import ToggleButton from 'libs/shared-components/src/lib/components/tabs/togglebutton'
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 /* eslint-disable-next-line */
 export interface TasksProps { }
 
@@ -98,7 +99,7 @@ export function Tasks(props: TasksProps) {
   const getWorkType = (referenceID) => {
     console.log('sasstoken');
     return axios.post(
-      'http://192.168.1.5:5005/graphql',
+      MS_SERVICE_URL['ms_project'].url,
       {
         query,
         variables: {
