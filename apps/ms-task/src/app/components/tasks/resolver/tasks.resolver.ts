@@ -1,5 +1,4 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import configOrm from 'apps/ms-task/src/config.orm';
 import { TasksEntity } from '../../../entities/tasks.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import SortFilterParam from '../../../utils/types/sortParam';
