@@ -1,13 +1,13 @@
 import React from 'react';
 
 import './file-list-index.module.scss';
-
+import { MS_SERVICE_URL } from '@cudo/mf-core'
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
 import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
 import FileList from '../file-list/file-list';
 const client = new ApolloClient({
-  uri: 'http://localhost:5003/graphql',
+  uri: MS_SERVICE_URL['ms_document'].url,
   cache: new InMemoryCache()
 });
 /* eslint-disable-next-line */

@@ -9,6 +9,7 @@ import "./SubscriberWidgetElement";
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
 import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
+import { environment } from './environments/environment';
 declare global {
   interface Window {
     renderCostApp: any;
@@ -17,7 +18,7 @@ declare global {
 }
 
 const client = new ApolloClient({
-  uri: 'http://192.168.0.31:5002/graphql',
+  uri: environment.API_URL,
   cache: new InMemoryCache()
 });
 window.renderCostApp = (containerId, history) => {

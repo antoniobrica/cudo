@@ -9,6 +9,7 @@ import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
 import * as serviceWorker from "./serviceWorker";
 import "./SubscriberWidgetElement";
 import App from './app/app';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 declare global {
   interface Window {
@@ -17,7 +18,7 @@ declare global {
   }
 }
 const client = new ApolloClient({
-  uri: 'http://192.168.0.31:5005/graphql',
+  uri: MS_SERVICE_URL['ms_project'].url,
   cache: new InMemoryCache()
 });
 
