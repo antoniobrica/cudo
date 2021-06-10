@@ -153,6 +153,9 @@ query Tasks($referenceID: String!)
     createdAt
     updatedBy
     createdBy
+    taskTypeID
+    fileID
+    taskType
   reference{
   referenceID
   }
@@ -186,6 +189,7 @@ mutation CreateTask(
   $fileID: String! 
   $fileName: String!
   $taskTypeID: String!
+  $taskType: TASKTYPE!
   $files: [TaskFileParams!]!
   $subtasks: [SubTaskParams!]!
   ){ 
@@ -211,7 +215,7 @@ mutation CreateTask(
      fileID : $fileID
      fileName:$fileName
      taskTypeID:$taskTypeID
-     taskType:PROTOCOL
+     taskType: $taskType
         }
       assignees:[{userID:"2",userName:"Ashutosh"},{userID:"3",userName:"Ashutosh"}]
       followers:[{userID:"1",userName:"Ashutosh"}]
