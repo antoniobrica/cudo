@@ -58,12 +58,12 @@ Where sql2017 is the name of the container.
 2. Connect to SQL Server
 Once connected, we can run the sqlcmd tool to connect to the instance.
 
-/opt/mssql-tools/bin/sqlcmd -S 192.168.29.131 -U sa -P 'Welcome@1'
+/opt/mssql-tools/bin/sqlcmd -S 192.168.0.131 -U sa -P 'Welcome@1'
 N.B 'Welcome@1' is the password that was set in the docker compose file earlier.
 You should see a 1> prompt once succesfully connected. Here's the full output from the above steps:
 
 root@sql01:/home/deploy# docker exec -it sql2017 "bash"
-root@df2561f10b5c:/# /opt/mssql-tools/bin/sqlcmd -S 192.168.29.131 -U sa -P 'Welcome@1'
+root@df2561f10b5c:/# /opt/mssql-tools/bin/sqlcmd -S 192.168.0.131 -U sa -P 'Welcome@1'
 1>
 3. Execute a SQL query
 Now type SELECT Name from sys.Databases and hit enter.
@@ -89,7 +89,7 @@ Connect to SQL Server from outside of the container
 Now that SQL server is up and running, it would be useful if we can actually connect to it from outside of the Docker container.
 Since I'm using DigitalOcean, it will just simply be the public ip address that was assigned to the droplet and the port that was specified in the docker compose file. I can either connect using SQL Server Management Studio, or Azure Data Studio which is cross platform.
 
-If, however, you are running this locally on either Windows or Mac, we need to obtain the ip address. Generally, 192.168.29.131 will work fine, however when I was testing on windows, I had to run ipconfig on windows.
+If, however, you are running this locally on either Windows or Mac, we need to obtain the ip address. Generally, 192.168.0.131 will work fine, however when I was testing on windows, I had to run ipconfig on windows.
 
 https://docs.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio?view=sql-server-2017
 

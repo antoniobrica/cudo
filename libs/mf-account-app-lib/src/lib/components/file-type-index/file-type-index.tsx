@@ -4,10 +4,10 @@ import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
 import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
 import FileType from '../file-type/file-type';
-
+import { MS_SERVICE_URL } from '@cudo/mf-core'
 /* eslint-disable-next-line */
 const client = new ApolloClient({
-  uri: 'http://192.168.29.131:5001/graphql',
+  uri: MS_SERVICE_URL['ms_account'].url,
   cache: new InMemoryCache()
 });
 /* eslint-disable-next-line */

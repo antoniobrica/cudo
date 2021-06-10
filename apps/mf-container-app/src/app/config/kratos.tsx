@@ -1,7 +1,7 @@
-export const BASE_URL = "http://192.168.29.131:4455"
-export const KRATOS_BROWSER_URL = "http://192.168.29.131:4455/.ory/kratos/public"
-export const KRATOS_PUBLIC_URL = "http://192.168.29.131:4455/.ory/kratos/public"
-export const KRATOS_ADMIN_URL = "http://192.168.29.131:4434"
+export const BASE_URL = "http://192.168.0.131:4455"
+export const KRATOS_BROWSER_URL = "http://192.168.0.131:4455/.ory/kratos/public"
+export const KRATOS_PUBLIC_URL = "http://192.168.0.131:4455/.ory/kratos/public"
+export const KRATOS_ADMIN_URL = "http://192.168.0.131:4434"
 
 export default {
   kratos: {

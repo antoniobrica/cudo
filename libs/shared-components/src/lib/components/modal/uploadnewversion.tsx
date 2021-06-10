@@ -62,7 +62,8 @@ export function UploadNewVersion(props: AlertProps) {
   React.useEffect(getContainerItemsEffect, []);
 
   const getContainersEffect = () => {
-    setItems([{ name: "test" }] as ContainerItem[])
+    const blobItem = { containerName: "test" } as BlobItemUpload
+    setItems([blobItem])
     sharedContext.getContainerItems("test");
     return
   };

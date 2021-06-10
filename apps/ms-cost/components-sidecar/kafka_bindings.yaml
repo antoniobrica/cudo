@@ -7,7 +7,7 @@ spec:
   metadata:
     # Kafka broker connection setting
     - name: brokers
-      value: 192.168.29.131:9092
+      value: 192.168.0.131:9092
     # consumer configuration: topic and consumer group
     - name: topics
       value: sample
