@@ -1,18 +1,17 @@
 interface IURL {
   url: string;
 }
-
 export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
   "ms_account": {
-    url: "http://localhost:5001/graphql"
+    url: "http://cudo-ms-account.softobiz.net/graphql"
   },
   "ms_document": {
-    url: "http://localhost:5003/graphql"
+    url: "http://cudo-ms-document.softobiz.net/graphql"
   },
   "ms_project": {
-    url: "http://localhost:5005/graphql"
+    url: "http://cudo-ms-project.softobiz.net/graphql"
   },
   "ms_task": {
-    url: "http://localhost:5007/graphql"
+    url: "http://cudo-ms-task.softobiz.net/graphql"
   }
 }
