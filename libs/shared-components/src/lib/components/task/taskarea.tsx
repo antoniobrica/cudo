@@ -74,12 +74,14 @@ export function TaskArea(props: Tasks) {
               <div className="d-flex mr-3">
 
                 <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
+                  {props.task.file &&
+                    <div className="navi-item mr-2">
+                      <a className="navi-link">
+                        <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.files.length} files  -  </span>
+                      </a>
+                    </div>
+                  }
 
-                  <div className="navi-item mr-2">
-                    <a className="navi-link">
-                      <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>2 files  -  </span>
-                    </a>
-                  </div>
 
                   <div className="navi-item mr-2">
                     <a href="" className="navi-link">
@@ -89,7 +91,7 @@ export function TaskArea(props: Tasks) {
 
                   <div className="navi-item mr-2">
                     <a className="navi-link">
-                      <span className="navi-text">Tender  -  </span>
+                      <span className="navi-text">{props?.task?.phaseName}  -  </span>
                     </a>
                   </div>
 
@@ -98,6 +100,22 @@ export function TaskArea(props: Tasks) {
                       <span className="navi-text">Paint Work  </span>
                     </a>
                   </div>
+                  {props.task.taskType &&
+                    <div className="navi-item mr-2">
+                      <a className="navi-link">
+                        <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.taskType} </span>
+                      </a>
+                    </div>
+                  }
+                  {props.task.assignees && props.task.assignees.map((as, i) => {
+                    return (
+                      <div className="navi-item mr-2">
+                        <a className="navi-link">
+                          <span className="navi-text">as  - </span>
+                        </a>
+                      </div>
+                    )
+                  })}
                 </div>
 
               </div>
@@ -145,11 +163,13 @@ export function TaskArea(props: Tasks) {
                     </a>
                   </div>
 
-                  <div className="navi-item mr-2">
-                    <a className="navi-link">
-                      <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>2 files  - </span>
-                    </a>
-                  </div>
+                  {props.task.file &&
+                    <div className="navi-item mr-2">
+                      <a className="navi-link">
+                        <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.files.length} files  -  </span>
+                      </a>
+                    </div>
+                  }
 
                   <div className="navi-item mr-2">
                     <a href="" className="navi-link">
@@ -158,7 +178,7 @@ export function TaskArea(props: Tasks) {
                   </div>
                   <div className="navi-item mr-2">
                     <a href="" className="navi-link">
-                      <span className="navi-text">Preliminary Studies  - </span>
+                      <span className="navi-text">{props?.task?.phaseName}  - </span>
                     </a>
                   </div>
                   <div className="navi-item mr-2">
@@ -166,6 +186,22 @@ export function TaskArea(props: Tasks) {
                       <span className="navi-text">HVAC Work  </span>
                     </a>
                   </div>
+                  {props.task.taskType &&
+                    <div className="navi-item mr-2">
+                      <a className="navi-link">
+                        <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.taskType} </span>
+                      </a>
+                    </div>
+                  }
+                  {props.task.assignees && props.task.assignees.map((as, i) => {
+                    return (
+                      <div className="navi-item mr-2">
+                        <a className="navi-link">
+                          <span className="navi-text">as  - </span>
+                        </a>
+                      </div>
+                    )
+                  })}
                 </div>
 
               </div>
