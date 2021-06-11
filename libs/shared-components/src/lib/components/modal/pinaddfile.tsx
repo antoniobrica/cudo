@@ -13,6 +13,7 @@ import Canvas from './canvas';
 import { useHistory } from 'react-router';
 import axios from 'axios';
 import { CreateFileTaskIndex } from '@cudo/mf-task-lib'
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 // import PinMaskTask from './pinmasktask';
 
 
@@ -81,10 +82,11 @@ export const AddPinFile = (props: AddPinProps) => {
     
     } 
    }`;
-
+  console.log("referenceID", referenceID)
+  console.log("referenceID", props.filesData.uploadedFileID)
   const getPins = async () => {
     return axios.post(
-      'http://localhost:5007/graphql',
+      MS_SERVICE_URL['ms_task'].url,
       {
         query: getPinQuery,
         variables: {

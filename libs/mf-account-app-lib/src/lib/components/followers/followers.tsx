@@ -1,25 +1,30 @@
 import React from 'react';
-
 import './followers.module.scss';
 import { Form, Select } from 'semantic-ui-react';
 import { useUsersQuery } from '../../services/useRequest';
-import { GET_USERS } from '../../graphql/graphql';
-
+import { GET_REFERENCES, GET_USERS } from '../../graphql/graphql';
+import { useQuery } from '@apollo/client';
 
 /* eslint-disable-next-line */
 export interface FollowersProps {
   parentFollowersSelect
 }
-
+enum ReferenceType {
+  COMPANY = "COMPANY"
+}
 export function Followers(props: FollowersProps) {
   const [items, setItems] = React.useState([])
   const [followers, setFollowers] = React.useState("")
 
-  const { loading, error, data } = useUsersQuery(GET_USERS);
+  const { loading, error, data } = useQuery(GET_REFERENCES, {
+    variables: {
+      referenceType: ReferenceType.COMPANY,
+      referenceID: "Sftobiz_1234"
+    }
+  });
   React.useEffect(() => {
     if (data) {
-      setItems(data.userByEmail.map(({ userName }) => ({ key: userName, value: userName, text: userName })));
-
+      setItems(data.references.users.map(({ userName, userID }) => ({ key: userID, value: userName, text: userName, id: userID })));
     }
   }, [data]);
 

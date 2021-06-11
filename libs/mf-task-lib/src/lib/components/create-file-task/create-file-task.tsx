@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
 import { radios } from '@storybook/addon-knobs';
 import { ITask, ITasks, TaskMutation } from "../../interfaces/task";
-import { ApolloCache, FetchResult, useMutation } from '@apollo/client';
+import { ApolloCache, FetchResult, useMutation, useQuery } from '@apollo/client';
 import { ADD_TASK, GET_TASKS } from "../../graphql/graphql";
 // import '../../../../../../libs/shared-components/src/style/index.scss';
 import moment, { calendarFormat } from 'moment';

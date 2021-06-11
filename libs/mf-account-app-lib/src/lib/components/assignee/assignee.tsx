@@ -1,24 +1,32 @@
 import React from 'react';
 import { Form, Select, Dropdown } from 'semantic-ui-react';
-import { useUsersQuery } from '../../services/useRequest';
-import { GET_USERS } from '../../graphql/graphql';
+import { useReferencesQuery, useUsersQuery } from '../../services/useRequest';
+import { GET_REFERENCES } from '../../graphql/graphql';
 
 import './assignee.module.scss';
+import { useQuery } from '@apollo/client';
 
 /* eslint-disable-next-line */
 export interface AssigneeProps {
   parentBKPSelect,
   name?
 }
-
+enum ReferenceType {
+  COMPANY = "COMPANY"
+}
 export function Assignee(props: AssigneeProps) {
   const [items, setItems] = React.useState([])
   const [assignee, setAssignee] = React.useState("")
 
-  const { loading, error, data } = useUsersQuery(GET_USERS);
+  const { loading, error, data } = useQuery(GET_REFERENCES, {
+    variables: {
+      referenceType: ReferenceType.COMPANY,
+      referenceID: "Sftobiz_1234"
+    }
+  });
   React.useEffect(() => {
     if (data) {
-      setItems(data.userByEmail.map(({ userName, userID }) => ({ key: userName, value: userName, text: userName, id: userID })));
+      setItems(data.references.users.map(({ userName, userID }) => ({ key: userID, value: userName, text: userName, id: userID })));
 
     }
   }, [data]);

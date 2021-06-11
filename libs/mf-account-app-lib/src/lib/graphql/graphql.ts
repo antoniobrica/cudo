@@ -151,7 +151,22 @@ mutation CreateTask(
   }
 }`;
 
-
+export const GET_REFERENCES = gql`
+query references(
+  $referenceID: String!, 
+  $referenceType: ReferenceType!,
+  ){ 
+    references( 
+      referenceFilter: { referenceID: $referenceID, referenceType:$referenceType } 
+    ) { 
+      users{
+      userID
+      userName
+      imageUrl
+      email
+    }
+    } 
+}`;
 
 //dummy data
 
