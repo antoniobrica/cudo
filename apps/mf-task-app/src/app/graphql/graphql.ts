@@ -33,6 +33,7 @@ query Tasks($referenceID: String!)
   userID
   userName
   }
+  files{fileID,fileName,fileUrl} 
   followers{
   userID
   }
