@@ -6,7 +6,9 @@ trigger:
       - dev
   paths:
     include:
-      - '*'
+      - 'apps/ms-account/*'
+    exclude:
+   - '*'
 variables:
 - name: stage_dev_release
   value: false
