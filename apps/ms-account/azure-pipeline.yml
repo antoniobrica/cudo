@@ -43,12 +43,7 @@ jobs:
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
   condition: eq(dependencies.getchangepath.outputs['cudovars.ms-account'], 'true')
-  stages:
-  - stage: Build
-    #displayName: Build
-    jobs:
-      - job: Build_Root
-        steps:
+  steps:
           - checkout: self
             clean: false
             lfs: false
