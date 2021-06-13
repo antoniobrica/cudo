@@ -21,7 +21,7 @@ jobs:
      
       foreach($path in $changesFolder){
         if($path -match '/apps/ms-account/'){
-          echo "##vso[task.setvariable variable=ms-account;isOutput=true]$True"
+          echo "##vso[task.setvariable variable=msaccount;isOutput=true]$True"
           break
         }
       }
@@ -39,10 +39,10 @@ jobs:
   #  value: 
   #- group: dev 
 
-- job: ms-account
+- job: msaccount
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
-  condition: eq(dependencies.getchangepath.outputs['cudovars.ms-account'], 'true')
+  condition: eq(dependencies.getchangepath.outputs['cudovars.msaccount'], 'true')
   steps:
           - checkout: self
             clean: false
