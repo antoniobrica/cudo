@@ -23,7 +23,7 @@ jobs:
             $changesFolder = $result.changes | Where-Object{$_.item.gitObjectType -match "tree"} | Select-Object -Property {$_.item.path}
      
             foreach($path in $changesFolder){
-              if($path -match 'apps/ms-account/'){
+              if($path -match '/apps/ms-account/'){
              echo "##vso[task.setvariable variable=msaccount;isOutput=true]$True"
             break
             }
