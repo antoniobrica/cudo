@@ -45,7 +45,7 @@ jobs:
 - job: msaccount
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
-  condition: eq(dependencies.getchangepath.outputs['cudovars.msaccount'], 'true')
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.msaccount'], 'true')
   steps:
           - checkout: self
             clean: false
