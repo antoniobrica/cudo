@@ -18,9 +18,7 @@ variables:
   value: false
 - name: imageRepository
   value: 
-
-variables:
-  - group: dev 
+- group: dev 
 
 pool: cudo-selfhosted-agent
 
