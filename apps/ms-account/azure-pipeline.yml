@@ -39,7 +39,7 @@ variables:
   value: 
 - group: dev 
 
-- job: client
+- job: ms-account
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
   condition: eq(dependencies.getchangepath.outputs['cudovars.ms-account'], 'true')
