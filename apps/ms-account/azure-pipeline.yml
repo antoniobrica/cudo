@@ -54,7 +54,7 @@ jobs:
           - bash : |
                   find . -path ./node_modules -prune -false -o  -iname package.json -newermt '60 seconds ago' -exec rm -f package-lock.json \;
                   find . -path ./node_modules -prune -false -o  -iname package.json -newermt '60 seconds ago' -exec npm install \;
-                  #npm run nx run-many -- --target=build --projects='ms-account' --with-deps --generatePackageJson=true
+                  npm run nx run-many -- --target=build --projects='ms-account' --with-deps --generatePackageJson=true
                   #cp docker/ms-dockerfile dist/apps/ms-account/Dockerfile
           - task: Docker@2
             displayName: Build and push an image to container registry
