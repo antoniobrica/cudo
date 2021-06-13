@@ -45,6 +45,6 @@ stages:
               dockerfile: apps/ms-account/Dockerfile
               containerRegistry: dev-docker-registry
               tags: |
-                $(Build.BuildId)
+                latest
                 #displayName: 'CI for Root'
   
