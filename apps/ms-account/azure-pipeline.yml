@@ -28,16 +28,16 @@ jobs:
     name: cudovars
 
 
-variables:
-- name: stage_dev_release
-  value: false
-- name: stage_uat_release
-  value: true
-- name: stage_test_release
-  value: false
-- name: imageRepository
-  value: 
-- group: dev 
+    #variables:
+    #- name: stage_dev_release
+    #  value: false
+    #- name: stage_uat_release
+    #  value: true
+  #- name: stage_test_release
+  #  value: false
+  #- name: imageRepository
+  #  value: 
+  #- group: dev 
 
 - job: ms-account
   pool: cudo-selfhosted-agent
