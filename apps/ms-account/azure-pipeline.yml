@@ -52,8 +52,10 @@ jobs:
             lfs: false
             #           path: abc
           - bash : |
-                  find . -path ./node_modules -prune -false -o  -iname package.json -newermt '60 seconds ago' -exec rm -f package-lock.json \;
-                  find . -path ./node_modules -prune -false -o  -iname package.json -newermt '60 seconds ago' -exec npm install \;
+                  #find . -path ./node_modules -prune -false -o  -iname package.json -newermt '60 seconds ago' -exec rm -f package-lock.json \;
+                  rm -f package-lock.json
+                  npm install
+                  #find . -path ./node_modules -prune -false -o  -iname package.json -newermt '60 seconds ago' -exec npm install \;
                   npm run nx run-many -- --target=build --projects='ms-account' --with-deps --generatePackageJson=true
                   cp docker/ms-dockerfile dist/apps/ms-account/Dockerfile
           - task: Docker@2
