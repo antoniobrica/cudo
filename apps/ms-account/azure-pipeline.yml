@@ -45,5 +45,5 @@ stages:
               containerRegistry: $(dockerRegistryServiceConnection)
               tags: |
                 $(tag)
-            displayName: 'CI for Root'
+                #displayName: 'CI for Root'
   
