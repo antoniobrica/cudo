@@ -66,5 +66,5 @@ jobs:
               dockerfile: dist/apps/ms-account/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
-                #displayName: 'CI for Root'
+                ##displayName: 'CI for Root'
   
