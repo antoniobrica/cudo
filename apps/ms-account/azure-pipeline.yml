@@ -23,7 +23,7 @@ pool: cudo-selfhosted-agent
 
 stages:
   - stage: Build
-    displayName: Build
+    #displayName: Build
     jobs:
       - job: Build_Root
         steps:
