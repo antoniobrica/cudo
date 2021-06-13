@@ -28,7 +28,7 @@ jobs:
             break
             }
             }
-    name: cudovars
+      name: cudovars
 
 
     #variables:
