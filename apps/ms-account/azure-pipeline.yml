@@ -43,7 +43,7 @@ stages:
               command: buildAndPush
               repository: ms-account-dev
               dockerfile: apps/ms-account/Dockerfile
-              containerRegistry: $(dockerRegistryServiceConnection)
+              containerRegistry: dev-docker-registry
               tags: |
                 $(tag)
                 #displayName: 'CI for Root'
