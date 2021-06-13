@@ -26,8 +26,8 @@ jobs:
               if($path -match '/apps/ms-account/'){
              echo "##vso[task.setvariable variable=msaccount;isOutput=true]$True"
             break
-        }
-      }
+            }
+            }
     name: cudovars
 
 
