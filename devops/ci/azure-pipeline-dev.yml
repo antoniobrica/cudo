@@ -6,7 +6,7 @@ trigger:
       - dev
   paths:
     include:
-      - package.json
+      - package.json*
       - apps/ms-account/*
       - apps/ms-document/*
         #   exclude:
@@ -65,8 +65,6 @@ jobs:
             clean: false
             lfs: false
           - bash : |
-                  rm -f package-lock.json
-                  npm install
                   npm run nx run-many -- --target=build --projects='ms-account' --with-deps --generatePackageJson=true
                   cp devops/docker/ms-dockerfile dist/apps/ms-account/Dockerfile
           - task: Docker@2
@@ -87,8 +85,6 @@ jobs:
             clean: false
             lfs: false
           - bash : |
-                  rm -f package-lock.json
-                  npm install
                   npm run nx run-many -- --target=build --projects='ms-document' --with-deps --generatePackageJson=true
                   cp devops/docker/ms-dockerfile dist/apps/ms-document/Dockerfile
           - task: Docker@2
