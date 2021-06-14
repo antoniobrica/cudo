@@ -73,11 +73,31 @@ export class TasksService {
                     const savedSubTask = await this.subTaskRepository.save(newSubTask);
                     taskeDetails.subtasks.push(savedSubTask)
                 }    
+
             const selectedReference = await this.referenceService.getReferenceById(referenceFilter)
+                const seq = await this.projectTasksRepository.find({where:{"reference": {
+                    id: selectedReference.id
+                }
+            },order: {sequenceNumber:"DESC"}, take:1,
+        })
+        if (!seq) {
+            taskeDetails.sequenceNumber = 0            
+        }
+        var result = seq.reduce((acc, shot) => acc = acc > shot.sequenceNumber ? acc : shot.sequenceNumber, 0);
+
+
+        function increment(){
+            result++;
+            return result
+          }
+          increment()
+        taskeDetails.sequenceNumber = result;    
+
             const newTask = await this.projectTasksRepository.create({
                 ...taskeDetails,
                 reference: { id: selectedReference.id }
             });
+            
             await this.projectTasksRepository.save(newTask);
             return newTask;
         } catch (error) {

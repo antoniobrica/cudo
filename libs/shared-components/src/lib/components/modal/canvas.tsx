@@ -7,7 +7,9 @@ import { MS_SERVICE_URL } from '@cudo/mf-core'
 export interface CanvasProps {
   imgUrl?,
   coardinates?,
-  fileId?
+  fileId?,
+  isPinTask?
+
 }
 export function Canvas(props: CanvasProps) {
   const canvas = useRef<HTMLCanvasElement>();
@@ -36,17 +38,22 @@ export function Canvas(props: CanvasProps) {
   useEffect(() => {
 
     // dynamically assign the width and height to canvas
+
     const canvasEle = canvas.current;
     canvasEle.width = canvasEle.clientWidth + 150;
     canvasEle.height = canvasEle.clientHeight + 500;
     ctx = canvasEle.getContext("2d");
     drawImages();
-  }, []);
+    if (props.isPinTask == false) {
+      getPins()
+      draw();
+    }
+  }, [props.isPinTask]);
 
   useEffect(() => {
     getPins()
     draw();
-  }, []);
+  }, [props.isPinTask]);
   const getPins = async () => {
     return axios.post(
       MS_SERVICE_URL['ms_document'].url,
@@ -172,7 +179,8 @@ export function Canvas(props: CanvasProps) {
             }
           }
         ).then(res => {
-          console.log('pin-response', res.data);
+          console.log('pin-response', res.data.data);
+          props.coardinates(res.data.data)
 
           box.pinId = res.data.data.createPins.pinsID;
           boxes[id] = box
@@ -219,9 +227,9 @@ export function Canvas(props: CanvasProps) {
       });
 
       createPinsUp(boxes)
-
-      props.coardinates(boxes)
-
+      // if (props.isPinTask == false) {
+      //   props.coardinates(boxes)
+      // }
     }
   }
 
@@ -276,7 +284,9 @@ export function Canvas(props: CanvasProps) {
     startX = e.nativeEvent.offsetX - canvas.current.clientLeft;
     startY = e.nativeEvent.offsetY - canvas.current.clientTop;
     isDown = hitBox(startX, startY);
-    if (isDown) return;
+    console.log('props.isPinTask', props.isPinTask);
+
+    if (isDown || props.isPinTask == true) return;
     const draw = {
       x: startX,
       y: startY, r: 10,

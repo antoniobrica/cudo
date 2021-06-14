@@ -16,7 +16,9 @@ import { MS_SERVICE_URL } from '@cudo/mf-core';
 /* eslint-disable-next-line */
 export interface CreateFileTaskProps {
   close,
-  onSuccess
+  onSuccess,
+  cord,
+  fileData
 }
 
 export function CreateFileTask(props: CreateFileTaskProps) {
@@ -42,7 +44,8 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   const [worktypeID, setworktypeID] = React.useState("")
   const [worktypeName, setworktypeName] = React.useState("")
   const [workTypes, setWorkTypes] = React.useState([]);
-
+  const [fileData, setfileData] = React.useState(null)
+  const [taskTypeID, settaskTypeID] = React.useState('')
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
@@ -63,6 +66,22 @@ export function CreateFileTask(props: CreateFileTaskProps) {
       getWorkType(referenceID)
     }
   }, [referenceID])
+
+  React.useEffect(() => {
+    if (props.fileData) {
+      console.log('fileData-task', props.fileData);
+
+      setfileData(props.fileData)
+    }
+  }, [props.fileData])
+
+  React.useEffect(() => {
+    if (props.cord) {
+      console.log('props.cord', props.cord);
+      settaskTypeID(props.cord.createPins.pinsID)
+
+    }
+  })
 
   const query = `query Game($projectId: String!) {
     projectById( projectId: $projectId)
@@ -175,16 +194,23 @@ export function CreateFileTask(props: CreateFileTaskProps) {
     setOpen(false)
     props.close()
   }
+  enum taskType {
+    PIN = "PIN",
+    PROTOCOL = "PROTOCOL",
+    FILE = "FILE"
+  }
   const handleSaveTask = () => {
     // setOpen(false);
+
     props.onSuccess();
     addTask({
       variables: {
         taskTitle, startDate, endDate, estimatedDays,
         sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
-        fileID: "",
-        fileName: "$fileName",
-        taskTypeID: "$taskTypeID",
+        fileID: fileData.uploadedFileID,
+        fileName: fileData.fileTitle,
+        taskTypeID,
+        taskType: taskType.PIN,
         files,
         description,
         subtasks: [],

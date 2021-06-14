@@ -24,6 +24,10 @@ export class TasksEntity extends BaseEntity {
 
   @Expose()
   @Column({ nullable: true })
+  sequenceNumber?: number;
+
+  @Expose()
+  @Column({ nullable: true })
   taskTitle?: string;
 
   @Expose()

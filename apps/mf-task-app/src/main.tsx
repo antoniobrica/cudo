@@ -11,6 +11,7 @@ import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
 import * as serviceWorker from "./serviceWorker";
 import App from './app/app';
 import { environment } from './environments/environment';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 // import "./SubscriberWidgetElement";
 
 declare global {
@@ -20,7 +21,7 @@ declare global {
   }
 }
 const client = new ApolloClient({
-  uri: environment.MS_TASK_API_URL,
+  uri: MS_SERVICE_URL['ms_task'].url,
   cache: new InMemoryCache()
 });
 
