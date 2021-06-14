@@ -65,7 +65,7 @@ export function Canvas(props: CanvasProps) {
     console.log('props.isPinTask :', props.isPinTask);
     console.log('isCircleSelected :', isCircleSelected);
     if (isCircleSelected || props.isPinTask) {
-      props.coardinates({ pinsID: dragTarget?.pinID, pinNumber: dragTarget?.pinNumber })
+      props.coardinates({ pinsID: dragTarget?.pinsID, pinNumber: dragTarget?.pinNumber })
       return;
     }
     if (!isMouseDown) {

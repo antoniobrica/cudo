@@ -201,8 +201,6 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   }
   const handleSaveTask = () => {
     // setOpen(false);
-
-    props.onSuccess();
     addTask({
       variables: {
         taskTitle, startDate, endDate, estimatedDays,
@@ -221,6 +219,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
         { data: { addTask } }: FetchResult<TaskMutation>
       ) => {
         const cacheData = cache.readQuery({ query: GET_TASKS, variables: { referenceID }, }) as ITasks;
+        props.onSuccess();
         cache.writeQuery({
           query: GET_TASKS,
           data: {
@@ -228,9 +227,11 @@ export function CreateFileTask(props: CreateFileTaskProps) {
           },
           variables: { referenceID },
         });
+
       }
     });
-    props.close()
+
+    // props.close()
   };
   const onDescriptionChange = e => {
     console.log('des=>', e.target.value);
