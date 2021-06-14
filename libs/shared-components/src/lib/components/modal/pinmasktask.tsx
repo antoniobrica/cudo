@@ -64,12 +64,12 @@ export const PinMaskTask = () => {
           <Modal.Content style={{ marginTop: '-1px' }}>
             <Form>
               <Grid stackable columns={2}>
-                <Grid.Column className="colorback" style={{ width: '70%' }}>
+                <Grid.Column className="colorback" style={{ width: '65%' }}>
                   <Segment>
                     <img src="assets/images/Image 3.png" className=" fluid " />
                   </Segment>
                 </Grid.Column>
-                <Grid.Column style={{ width: '30%', marginLeft: '-9px', marginTop: '-10px' }}>
+                <Grid.Column style={{ width: '35%', marginLeft: '-9px', marginTop: '-10px' }}>
                   <div style={{ background: '#F1F5F8', padding: '10px', marginBottom: '-18px' }}>
                     <Form.Field classname="buttonbluedown">
                       <label> </label>

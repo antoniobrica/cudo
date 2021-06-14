@@ -203,13 +203,13 @@ export const AddPinFile = (props: AddPinProps) => {
         <Modal.Content style={{ marginTop: '-1px' }}>
           <Form>
             <Grid stackable columns={2}>
-              <Grid.Column className="colorback" style={{ width: '70%' }}>
+              <Grid.Column className="colorback" style={{ width: '65%' }}>
                 <Segment>
-                  <Canvas imgUrl={imgUrl} coardinates={getCoardinates} fileId={fileId} isPinTask={isPinTask}></Canvas>
+                  <Canvas   imgUrl={imgUrl} coardinates={getCoardinates} fileId={fileId} isPinTask={isPinTask}></Canvas>
                 </Segment>
 
               </Grid.Column>
-              <Grid.Column style={{ width: '30%', marginLeft: '-9px', marginTop: '-10px' }}>
+              <Grid.Column style={{ width: '35%', marginLeft: '-9px', marginTop: '-10px' }}>
               <div style={{ background: '#F1F5F8', padding: '10px', marginBottom: '-18px' }}>
                   {/* <Grid.Column style={{ width: '30%', marginLeft: '-9px', marginTop: '-10px' }}> */}
 
@@ -225,7 +225,7 @@ export const AddPinFile = (props: AddPinProps) => {
                       :
                       <CreateFileTaskIndex close={taskClose} onSuccess={onSuccess} cord={cord} fileData={fileData}></CreateFileTaskIndex>
                     }
-                    <Form.Field >
+                    <Form.Field style={{    marginTop: '20px'}} >
                       <div className="card1 card-custom gutter-b" style={{ paddingTop: '12px' }}>
                         {pinTasks && pinTasks.map((task, i) => {
                           return (
