@@ -109,7 +109,7 @@ export function TaskArea(props: Tasks) {
             </div>
 
             {props.task.taskType &&
-              <div className="navi-item mr-2">
+              <div className="navi-item">
                 <a className="navi-link">
                   <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.taskType} </span>
                 </a>
@@ -117,7 +117,7 @@ export function TaskArea(props: Tasks) {
             }
             {props.task.assignees && props.task.assignees.map((as, i) => {
               return (
-                <div className="navi-item mr-2  mr-14">
+                <div className="navi-item " style={{paddingLeft:'154px'}}>
                   <a className="navi-link">
                     <span className="navi-text"> <img src={img} /> </span>
                   </a>
@@ -196,7 +196,7 @@ export function TaskArea(props: Tasks) {
 
             </div>
             {props.task.taskType &&
-              <div className="navi-item mr-2 ">
+              <div className="navi-item  " style={{paddingLeft:'154px'}}>
                 <a className="navi-link">
                   <span className="navi-text">
                     {props.task.taskType == 'PIN' &&
@@ -209,7 +209,7 @@ export function TaskArea(props: Tasks) {
             }
             {props.task.assignees && props.task.assignees.map((as, i) => {
               return (
-                <div className="navi-item mr-2  mr-14">
+                <div className="navi-item ">
                   <a className="navi-link">
                     <span className="navi-text"> <img src={img} /> </span>
                   </a>
