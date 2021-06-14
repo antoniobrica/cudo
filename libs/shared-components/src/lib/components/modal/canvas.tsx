@@ -37,8 +37,8 @@ export function Canvas(props: CanvasProps) {
   // initialize the canvas context
   useEffect(() => {
     const canvasEle = canvas.current;
-    canvasEle.width = canvasEle.clientWidth + 150;
-    canvasEle.height = canvasEle.clientHeight + 500;
+    canvasEle.width = canvasEle.clientWidth + 100;
+    canvasEle.height = canvasEle.clientHeight + 100;
     setctx(canvasEle.getContext("2d"));
     console.log("Calling from useeffect pinList", pinList)
     if (props.isPinTask == false) {

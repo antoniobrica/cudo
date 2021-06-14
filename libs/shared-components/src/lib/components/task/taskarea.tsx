@@ -166,7 +166,7 @@ export function TaskArea(props: Tasks) {
                     </a>
                   </div>
 
-                  {props.task.file &&
+                  {props.task?.file &&
                     <div className="navi-item mr-2">
                       <a className="navi-link">
                         <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.files.length} files  -  </span>
@@ -195,7 +195,7 @@ export function TaskArea(props: Tasks) {
               </div>
 
             </div>
-            {props.task.taskType &&
+            {props.task?.taskType &&
               <div className="navi-item  " style={{paddingLeft:'154px'}}>
                 <a className="navi-link">
                   <span className="navi-text">
@@ -207,7 +207,7 @@ export function TaskArea(props: Tasks) {
                 </a>
               </div>
             }
-            {props.task.assignees && props.task.assignees.map((as, i) => {
+            {props.task?.assignees && props.task.assignees.map((as, i) => {
               return (
                 <div className="navi-item ">
                   <a className="navi-link">
