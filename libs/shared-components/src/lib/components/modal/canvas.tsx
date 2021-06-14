@@ -16,7 +16,8 @@ export function Canvas(props: CanvasProps) {
   const image = useRef<HTMLImageElement>(null);
   const [isRedraw, setisRedraw] = React.useState(false)
   let ctx = null;
-  const boxes = []
+  let isLoader = true;
+  let boxes = []
   let isDown = false;
   //let isRedraw = true;
   let dragTarget = null;
@@ -36,23 +37,23 @@ export function Canvas(props: CanvasProps) {
 
   // initialize the canvas context
   useEffect(() => {
-
-    // dynamically assign the width and height to canvas
-
     const canvasEle = canvas.current;
     canvasEle.width = canvasEle.clientWidth + 150;
     canvasEle.height = canvasEle.clientHeight + 500;
     ctx = canvasEle.getContext("2d");
     drawImages();
     if (props.isPinTask == false) {
+      boxes = []
       getPins()
       draw();
     }
   }, [props.isPinTask]);
 
   useEffect(() => {
-    getPins()
-    draw();
+    if (props.isPinTask) {
+      getPins();
+      draw();
+    }
   }, [props.isPinTask]);
   const getPins = async () => {
     return axios.post(
@@ -75,7 +76,10 @@ export function Canvas(props: CanvasProps) {
           title: JSON.stringify(id + 1),
           pinId: box.pinsID
         })
-        draw()
+        // draw()
+        if (props.isPinTask == false) {
+          draw();
+        }
         if (id == res.data.data.pins.length - 1) {
           // setisRedraw(false)
         }
