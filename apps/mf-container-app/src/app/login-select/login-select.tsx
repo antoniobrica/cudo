@@ -5,6 +5,7 @@ import { Logindrop } from '@cudo/shared-components';
 import { useHistory } from 'react-router';
 import { isAuthenticated, ToEmail } from '../services/auth';
 import axios from 'axios';
+import { environment } from '../../environments/environment';
 
 
 /* eslint-disable-next-line */
@@ -29,7 +30,7 @@ export function LoginSelect(props: LoginSelectProps) {
       // Need to handle with redux
       setEmail(localStorage.getItem('email'))
       axios({
-        url: 'http://localhost:5001/graphql',
+        url: environment.MS_ACCOUNT_URL,
         method: 'post',
         data: {
           query: `

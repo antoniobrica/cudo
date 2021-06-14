@@ -6,13 +6,13 @@ import { SessionBasicDetailsInput } from "./session-basic-details.input";
 @InputType()
 export class SessionDetailsInput {
 
-    @Field(type => SessionBasicDetailsInput)
+    @Field(type => SessionBasicDetailsInput, { description: `session`,nullable:true })
     sessionBasics?: SessionBasicDetailsInput;
 
-    @Field(type => [PeopleParams], { description: `admins for session` })
+    @Field(type => [PeopleParams], { description: `admins for session`,nullable:true })
     admins?: PeopleParams[];
 
-    @Field(type => [MemberParams], { description: `Task Followers` })
+    @Field(type => [MemberParams], { description: `Task Followers`,nullable:true })
     members?: MemberParams[];
 
 }

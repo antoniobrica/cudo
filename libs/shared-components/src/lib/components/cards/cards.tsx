@@ -1,6 +1,6 @@
 import React from 'react';
  
-import '../../../style/index.scss';
+// import './index.scss';
 import { Card, Icon,Form, Grid } from 'semantic-ui-react'
 
 /* eslint-disable-next-line */

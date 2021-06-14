@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import '../../../style/index.scss';
+import './../../../assets/style/index.scss'
 import { Icon, Sidebar, Accordion, Form } from 'semantic-ui-react'
 const ColorForm = (
   <Form>

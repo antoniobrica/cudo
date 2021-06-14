@@ -1,3 +1,5 @@
+export * from './lib/components/house-structure-index/house-structure-index';
+export * from './lib/components/house-structure/house-structure';
 export * from './lib/components/session-invitation-index/session-invitation-index';
 export * from './lib/components/session-invitation/session-invitation';
 export * from './lib/components/session-protocol/session-protocol';

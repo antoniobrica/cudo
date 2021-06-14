@@ -18,12 +18,12 @@ import { PhaseIndex } from "@cudo/mf-account-app-lib"
 
 
 export interface PlanningProps {
-  getMilestoneData,
-  planData,
-  openEdit,
-  confirm,
-  cancel,
-  worktypes
+  getMilestoneData?,
+  planData?,
+  openEdit?,
+  confirm?,
+  cancel?,
+  worktypes?
 }
 export function EditMileStonePopup(props: PlanningProps) {
   const countryOptions = [

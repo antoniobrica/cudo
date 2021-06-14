@@ -7,6 +7,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_SESSION, GET_SESSIONS } from '../graphql/graphql'
 import { ISessions } from '../interfaces/meeting';
 import { ProjectWorktypes } from '@cudo/mf-project-lib';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 /* eslint-disable-next-line */
 export interface AddSessionProps { }
@@ -53,7 +54,7 @@ export function AddSession(props: AddSessionProps) {
   const getWorkType = (referenceID) => {
     console.log('sasstoken');
     return axios.post(
-      'http://localhost:5005/graphql',
+      MS_SERVICE_URL['ms_project'].url,
       {
         query,
         variables: {

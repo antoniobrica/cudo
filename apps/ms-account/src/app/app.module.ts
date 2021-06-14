@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmService } from '../config/typeorm/type-orm.service';
 import { ComponentsModule } from './components/components.module';
 import { SecretService } from '@cudo/ms-core'
+import loggerMiddleware from './middlewares/logger.middleware';
 // import { I18nModule, I18nJsonParser } from 'nestjs-i18n';
 
 @Module({
@@ -22,6 +23,9 @@ import { SecretService } from '@cudo/ms-core'
     GraphQLModule.forRoot({
       context: ({ req, connection }) => connection ? { req: connection.context } : { req },
       autoSchemaFile: true,
+      buildSchemaOptions: {
+        fieldMiddleware: [loggerMiddleware],
+      },
     }),
     ComponentsModule,
     TypeOrmModule.forRootAsync({

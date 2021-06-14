@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../../style/index.scss';
+import './../../../assets/style/index.scss'
 
 
 /* eslint-disable-next-line */

@@ -9,6 +9,13 @@
   },
   "user_profile": "User Profile",
   "first_name": "First Name",
+  "add_cost": { "add_new_item": "Add New Item" },
+  "pin_mask":{"pin_mark_task":"Click to add pin-mark task",
+    "paint_work": "Paint Work",
+    "this_task":" This is task name here",
+    "tender":"Tender"
+
+  },
   "language": {
     "en-GB": "English",
     "de-DE": "Deutsche"

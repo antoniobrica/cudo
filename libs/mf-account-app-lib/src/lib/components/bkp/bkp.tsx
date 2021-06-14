@@ -16,8 +16,6 @@ export function Bkp(props: BkpProps) {
   const [items, setItems] = React.useState([])
   const [items1, setItems1] = React.useState([])
   const [items2, setItems2] = React.useState([])
-
-
   const [BKPID, setBKPID] = React.useState("")
 
   const { loading, error, data } = useBkpQuery(GET_BKP);
@@ -91,7 +89,7 @@ export function Bkp(props: BkpProps) {
   return (
     <Form.Field>
       <label>Select BKP   </label>
-      <Select placeholder='Select' className="small"
+      <Select name='bkp' placeholder='Select' className="small"
         options={items2}
         value={BKPID}
         onChange={onBkp}

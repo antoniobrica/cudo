@@ -3,4 +3,5 @@
 
 export const environment = {
   production: false,
+  MS_TASK_API_URL: 'http://cudo-ms-task.softobiz.net/graphql'
 };
