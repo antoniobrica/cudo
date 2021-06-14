@@ -16,9 +16,9 @@ selfservice:
   whitelisted_return_urls:
     - http://192.168.1.38:4455
 =======
-  default_browser_return_url: http://192.168.0.131:4455/
+  default_browser_return_url: http://192.168.1.38:4455/
   whitelisted_return_urls:
-    - http://192.168.0.131:4455
+    - http://192.168.1.38:4455
 >>>>>>> 2680fbfd708fa0f566a380e3c861100de528698b
 
   methods:
@@ -33,10 +33,10 @@ selfservice:
     settings:
       ui_url: http://192.168.1.38:4455/home/settings
 =======
-      ui_url: http://192.168.0.131:4455/error
+      ui_url: http://192.168.1.38:4455/error
 
     settings:
-      ui_url: http://192.168.0.131:4455/home/settings
+      ui_url: http://192.168.1.38:4455/home/settings
 >>>>>>> 2680fbfd708fa0f566a380e3c861100de528698b
       privileged_session_max_age: 15m
 
@@ -58,20 +58,20 @@ selfservice:
     login:
       ui_url: http://192.168.1.38:4455/auth/login
 =======
-      ui_url: http://192.168.0.131:4455/recovery
+      ui_url: http://192.168.1.38:4455/recovery
 
     verification:
       enabled: true
-      ui_url: http://192.168.0.131:4455/verify
+      ui_url: http://192.168.1.38:4455/verify
       after:
-        default_browser_return_url: http://192.168.0.131:4455/
+        default_browser_return_url: http://192.168.1.38:4455/
 
     logout:
       after:
-        default_browser_return_url: http://192.168.0.131:4455/auth/login
+        default_browser_return_url: http://192.168.1.38:4455/auth/login
 
     login:
-      ui_url: http://192.168.0.131:4455/auth/login
+      ui_url: http://192.168.1.38:4455/auth/login
 >>>>>>> 2680fbfd708fa0f566a380e3c861100de528698b
       lifespan: 10m
 
@@ -80,7 +80,7 @@ selfservice:
 <<<<<<< HEAD
       ui_url: http://192.168.1.38:4455/auth/registration
 =======
-      ui_url: http://192.168.0.131:4455/auth/registration
+      ui_url: http://192.168.1.38:4455/auth/registration
 >>>>>>> 2680fbfd708fa0f566a380e3c861100de528698b
       after:
         password:
