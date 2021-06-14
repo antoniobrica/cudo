@@ -6,7 +6,7 @@ trigger:
       - dev
   paths:
     include:
-      - package.json*
+      - package/*
       - apps/ms-account/*
       - apps/ms-document/*
         #   exclude:
@@ -25,7 +25,7 @@ jobs:
             $changesFolder = $result.changes | Where-Object{$_.item.gitObjectType -match "tree"} | Select-Object -Property {$_.item.path}
      
             foreach($path in $changesFolder){
-              if($path -match './package.json'){
+              if($path -match '/package'){
              echo "##vso[task.setvariable variable=packages;isOutput=true]$True"
             break
             }
@@ -54,6 +54,8 @@ jobs:
             lfs: false
           - bash : |
                   rm -f package-lock.json
+                  rm -f package.json
+                  cp package/package.json .
                   npm install
 
 - job: msaccount
