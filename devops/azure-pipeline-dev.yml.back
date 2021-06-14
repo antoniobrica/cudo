@@ -6,11 +6,11 @@ trigger:
       - dev
   paths:
     include:
-      - package/*
+      - package.json
       - apps/ms-account/*
       - apps/ms-document/*
-      - apps/ms-project/*
-      - apps/ms-task/*
+        #   exclude:
+        #- '*'
 jobs:
 - job: cudogetchp
   pool: cudo-selfhosted-agent
@@ -25,8 +25,8 @@ jobs:
             $changesFolder = $result.changes | Where-Object{$_.item.gitObjectType -match "tree"} | Select-Object -Property {$_.item.path}
      
             foreach($path in $changesFolder){
-              if($path -match '/package'){
-             echo "##vso[task.setvariable variable=packages;isOutput=true]$True"
+              if($path -match '/package.json'){
+             echo "##vso[task.setvariable variable=package;isOutput=true]$True"
             break
             }
             }
@@ -42,32 +42,18 @@ jobs:
             break
             }
             }
-            foreach($path in $changesFolder){
-              if($path -match '/apps/ms-project'){
-             echo "##vso[task.setvariable variable=msproject;isOutput=true]$True"
-            break
-            }
-            }
-            foreach($path in $changesFolder){
-              if($path -match '/apps/ms-task'){
-             echo "##vso[task.setvariable variable=mstask;isOutput=true]$True"
-            break
-            }
-            }
       name: cudovars
 
-- job: packages
+- job: package
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
-  condition: eq(dependencies.cudogetchp.outputs['cudovars.packages'], 'true')
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.package'], 'true')
   steps:
           - checkout: self
             clean: false
             lfs: false
           - bash : |
                   rm -f package-lock.json
-                  rm -f package.json
-                  cp package/package.json .
                   npm install
 
 - job: msaccount
@@ -79,6 +65,8 @@ jobs:
             clean: false
             lfs: false
           - bash : |
+                  rm -f package-lock.json
+                  npm install
                   npm run nx run-many -- --target=build --projects='ms-account' --with-deps --generatePackageJson=true
                   cp devops/docker/ms-dockerfile dist/apps/ms-account/Dockerfile
           - task: Docker@2
@@ -99,6 +87,8 @@ jobs:
             clean: false
             lfs: false
           - bash : |
+                  rm -f package-lock.json
+                  npm install
                   npm run nx run-many -- --target=build --projects='ms-document' --with-deps --generatePackageJson=true
                   cp devops/docker/ms-dockerfile dist/apps/ms-document/Dockerfile
           - task: Docker@2
@@ -108,43 +98,3 @@ jobs:
               repository: ms-document-dev
               dockerfile: dist/apps/ms-document/Dockerfile
               containerRegistry: dev-docker-registry
-              tags: latest
-- job: msproject
-  pool: cudo-selfhosted-agent
-  dependsOn: cudogetchp
-  condition: eq(dependencies.cudogetchp.outputs['cudovars.msproject'], 'true')
-  steps:
-          - checkout: self
-            clean: false
-            lfs: false
-          - bash : |
-                  npm run nx run-many -- --target=build --projects='ms-project' --with-deps --generatePackageJson=true
-                  cp devops/docker/ms-dockerfile dist/apps/ms-project/Dockerfile
-          - task: Docker@2
-            displayName: Build and push an image to container registry
-            inputs:
-              command: buildAndPush
-              repository: ms-project-dev
-              dockerfile: dist/apps/ms-project/Dockerfile
-              containerRegistry: dev-docker-registry
-              tags: latest
-
-- job: mstask
-  pool: cudo-selfhosted-agent
-  dependsOn: cudogetchp
-  condition: eq(dependencies.cudogetchp.outputs['cudovars.mstask'], 'true')
-  steps:
-          - checkout: self
-            clean: false
-            lfs: false
-          - bash : |
-                  npm run nx run-many -- --target=build --projects='ms-task' --with-deps --generatePackageJson=true
-                  cp devops/docker/ms-dockerfile dist/apps/ms-task/Dockerfile
-          - task: Docker@2
-            displayName: Build and push an image to container registry
-            inputs:
-              command: buildAndPush
-              repository: ms-task-dev
-              dockerfile: dist/apps/ms-task/Dockerfile
-              containerRegistry: dev-docker-registry
-              tags: latest
