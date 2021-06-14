@@ -7,6 +7,7 @@ import { useHistory } from "react-router";
 import { LoginFlow } from '@oryd/kratos-client';
 import { initialiseRequest } from '../services/kratos';
 import axios from 'axios';
+import { environment } from '../../environments/environment';
 /* eslint-disable-next-line */
 export interface LoginProps {
 }
@@ -18,7 +19,7 @@ export function Email(props: LoginProps) {
   const handleLogin = () => {
     // Need to implement using redux
     axios({
-      url: 'http://cudo-ms-account.softobiz.net/graphql',
+      url: environment.MS_ACCOUNT_URL,
       method: 'post',
       data: {
         query: `

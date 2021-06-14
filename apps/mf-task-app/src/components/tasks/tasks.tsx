@@ -16,6 +16,7 @@ import TaskDelete from '../delete-task';
 import { useTranslation } from 'react-i18next';
 import { FileListIndex } from '@cudo/mf-document-lib'
 import ToggleButton from 'libs/shared-components/src/lib/components/tabs/togglebutton'
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 /* eslint-disable-next-line */
 export interface TasksProps { }
 
@@ -98,7 +99,7 @@ export function Tasks(props: TasksProps) {
   const getWorkType = (referenceID) => {
     console.log('sasstoken');
     return axios.post(
-      'http://cudo-ms-project.softobiz.net/graphql',
+      MS_SERVICE_URL['ms_project'].url,
       {
         query,
         variables: {
@@ -366,7 +367,7 @@ export function Tasks(props: TasksProps) {
         </div>
         : null}
       <div className="TaskApp-container">
-        <h3 className="alltask">All Tasks</h3><br />
+        <h3 className="alltask">All Tasks</h3>
         {data.tasks.map((task, id) => {
           return (
             <div key={id}>

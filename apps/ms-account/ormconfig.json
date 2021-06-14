@@ -2,7 +2,7 @@
   {
     "name": "development",
     "type": "mssql",
-    "host": "192.168.0.31",
+    "host": "192.168.0.131",
     "port": 1433,
     "username": "sa",
     "password": "Welcome@1",
@@ -21,7 +21,7 @@
   {
     "name": "default",
     "type": "mssql",
-    "host": "192.168.0.31",
+    "host": "192.168.0.131",
     "port": 1433,
     "username": "sa",
     "password": "Welcome@1",
@@ -40,7 +40,7 @@
   {
     "name": "test",
     "type": "postgres",
-    "host": "192.168.0.31",
+    "host": "192.168.0.131",
     "port": 5432,
     "username": "postgres",
     "password": "postgres",

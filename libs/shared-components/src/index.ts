@@ -41,3 +41,4 @@ export * from './lib/components/modal/modal2';
 export * from './lib/components/modal/modal';
 export * from './lib/components/modal/addcostpopup';
 export * from './lib/components/cost/costList';
+export * from './lib/components/task/searchfile'

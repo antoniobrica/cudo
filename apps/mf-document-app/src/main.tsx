@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 
 import { BrowserRouter } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css'
-
+import { MS_SERVICE_URL } from '@cudo/mf-core'
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
 import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
@@ -19,7 +19,7 @@ declare global {
   }
 }
 const client = new ApolloClient({
-  uri: 'http://cudo-ms-document.softobiz.net/graphql',
+  uri: MS_SERVICE_URL['ms_document'].url,
   cache: new InMemoryCache()
 });
 
