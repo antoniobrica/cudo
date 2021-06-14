@@ -75,6 +75,10 @@ export function FileStructure(props: FileStructureProps) {
 		setOpenPinFile(true)
 		props.addPinTask(data.fileTitle)
 	}
+	const savePins = (data) => {
+		console.log('savePins==>', data);
+
+	}
 	React.useEffect(() => {
 		if (props.files) {
 			console.log('files==', props.files);
@@ -108,7 +112,7 @@ export function FileStructure(props: FileStructureProps) {
 									<div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
 
 										<div className="navi-item mr-2">
-											<button className="ui mini button grey-btn">{data.fileVersion}</button>
+											<button className="ui mini button grey-btn">Ver {data.fileVersion}</button>
 										</div>
 
 									</div>
@@ -340,11 +344,11 @@ export function FileStructure(props: FileStructureProps) {
 			{view && imgUrl.length > 0 ?
 				<div>
 					{/* <ViewFileDetail open={view} fType={fType} filesData={filesData} dowloadFilesData={props.downloadedImg} ></ViewFileDetail> */}
-					<AddPinFile isOpen={view} filesData={filesData} dowloadFilesData={props.downloadedImg} savePins={''} onSuccess={""} />
+					<AddPinFile isOpen={view} filesData={filesData} dowloadFilesData={props.downloadedImg} savePins={savePins} onSuccess={""} />
 				</div> : null}
 			{openPinFile && imgUrl.length > 0 ?
 				<div>
-					<AddPinFile isOpen={openPinFile} filesData={filesData} dowloadFilesData={props.downloadedImg} savePins={''} onSuccess={""} />
+					<AddPinFile isOpen={openPinFile} filesData={filesData} dowloadFilesData={props.downloadedImg} savePins={savePins} onSuccess={""} />
 				</div> : null}
 
 			<Tab className="ui-tabs" menu={{ secondary: true, pointing: true }} panes={panes} />
