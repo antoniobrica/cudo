@@ -37,7 +37,7 @@ import { FileListIndex } from '@cudo/mf-document-lib';
 import ToggleButton from 'libs/shared-components/src/lib/components/tabs/togglebutton';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 /* eslint-disable-next-line */
-export interface TasksProps {}
+export interface TasksProps { }
 
 export function Tasks(props: TasksProps) {
   const history = useHistory();
@@ -355,9 +355,11 @@ export function Tasks(props: TasksProps) {
   const changeAdd = (data) => {
     console.log('changeTask', data);
     if (data === 'add') {
+      setIsTaskFile(false);
       setIsNewTask(true);
     }
     if (data === 'file') {
+      setIsNewTask(false);
       setIsTaskFile(true);
     }
   };
