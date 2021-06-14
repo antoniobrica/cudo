@@ -25,7 +25,7 @@ jobs:
             $changesFolder = $result.changes | Where-Object{$_.item.gitObjectType -match "tree"} | Select-Object -Property {$_.item.path}
      
             foreach($path in $changesFile){
-              if($path -match 'package.json'){
+              if($path -match '/package.json'){
              echo "##vso[task.setvariable variable=packages;isOutput=true]$True"
             break
             }
