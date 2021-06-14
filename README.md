@@ -139,11 +139,16 @@ Change 192.168.0.31 to 'your-local-ip' in following files 1: apps\mf-container-a
  docker-compose -f .\deploy\docker-compose-ory\quickstart.yml -f .\deploy\docker-compose-ory\docker-compose-nginx.yml up --build
 
 ### To Run Container
-nx run mf-container-app:serve --host 0.0.0.0
-
+npm run nx run mf-container-app:serve -- --host 0.0.0.0
+npm run nx run mf-project-app:serve -- --host 0.0.0.0
+npm run nx run mf-task-app:serve -- --host 0.0.0.0
+npm run nx run mf-document-app:serve -- --host 0.0.0.0
+npm run nx run mf-account-app:serve -- --host 0.0.0.0
 
 ## Build Process
- nx run-many --target=build --projects='ms-account,ms-document,ms-project,ms-task' --with-deps --generatePackageJson=true --configuration=production
+ npm run nx run-many -- --target=build --projects='ms-account,ms-document,ms-project,ms-task' --with-deps --generatePackageJson=true --configuration=production
+
+  npm run nx run-many -- --target=build --projects='mf-account-app,mf-container-app,mf-task-app,mf-account-app' --with-deps --generatePackageJson=true 
 
 ### Install Dependancy
 npm i apollo-server-express @nestjs/platform-express mssql

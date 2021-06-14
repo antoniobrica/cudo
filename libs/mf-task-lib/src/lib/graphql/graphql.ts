@@ -54,7 +54,7 @@ query MileStone($milestoneID: String!) {
     
 }`
 export const ADD_MILESTONE = gql`
-mutation CreateTask(
+mutation CreateMileStone(
   $milestoneTitle: String!, 
   $dueDate: DateTime!,
   $description: String!,
