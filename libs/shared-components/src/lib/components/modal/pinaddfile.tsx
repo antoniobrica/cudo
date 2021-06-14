@@ -186,7 +186,7 @@ export const AddPinFile = (props: AddPinProps) => {
         onOpen={openM}
         open={open}
       >
-        <Modal.Header>File_name.cad</Modal.Header>
+        <Modal.Header>{props.filesData.fileTitle}</Modal.Header>
         <Modal.Content>
           <Form>
             <Grid stackable columns={2}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Select, Dropdown } from 'semantic-ui-react';
-import { useReferencesQuery, useUsersQuery } from '../../services/useRequest';
+import { useUsersQuery } from '../../services/useRequest';
 import { GET_REFERENCES } from '../../graphql/graphql';
 
 import './assignee.module.scss';

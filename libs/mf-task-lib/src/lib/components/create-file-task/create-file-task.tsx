@@ -78,7 +78,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   React.useEffect(() => {
     if (props.cord) {
       console.log('props.cord', props.cord);
-      settaskTypeID(props.cord.createPins.pinsID)
+      settaskTypeID(props.cord.pinsID)
 
     }
   })
@@ -249,6 +249,15 @@ export function CreateFileTask(props: CreateFileTaskProps) {
         <Modal.Content body> */}
       <div>
         <Form>
+          <Grid columns={1}>
+            <Grid.Row>
+              <Grid.Column>
+                <Form.Field>
+                  <label>Pin Number {props.cord?.pinNumber} <span className="danger">*</span></label>
+                </Form.Field>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
           <Grid columns={1}>
             <Grid.Row>
               <Grid.Column>

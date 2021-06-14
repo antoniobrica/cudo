@@ -1,6 +1,4 @@
 
-import { boolean, number } from '@storybook/addon-knobs';
-import { title } from 'process';
 import React, { Component, useEffect, useRef } from 'react'
 import axios from 'axios';
 import { MS_SERVICE_URL } from '@cudo/mf-core'
@@ -17,9 +15,11 @@ export function Canvas(props: CanvasProps) {
   const [isRedraw, setisRedraw] = React.useState(false)
   const [pinList, setboxes] = React.useState([]);
   const [ctx, setctx] = React.useState(null);
-
-  let isDown = false;
-  let dragTarget = null;
+  const [isCircleSelected, setIsDown] = React.useState<boolean>(false);
+  const [dragTarget, setDragTarget] = React.useState(null);
+  const [isMouseDown, setIsMouseDown] = React.useState<boolean>(false);
+  const [x_axis, setx_Axis] = React.useState<number>(0);
+  const [y_axis, sety_Axis] = React.useState<number>(0);
   let startX = null;
   let startY = null;
 
@@ -42,9 +42,9 @@ export function Canvas(props: CanvasProps) {
     setctx(canvasEle.getContext("2d"));
     console.log("Calling from useeffect pinList", pinList)
     if (props.isPinTask == false) {
-      getPins().then((lastBoxes) => {
+      getPins().then(() => {
         console.log("getPins Done props.isPinTask", props.isPinTask)
-        draw();
+        // redrawAfterPinPotionChanged();
       })
 
     }
@@ -53,13 +53,55 @@ export function Canvas(props: CanvasProps) {
   useEffect(() => {
     getPins().then(() => {
       console.log("getPins Done", props.isPinTask)
-      draw();
+      // redrawAfterPinPotionChanged();
     })
-  }, []);
+  }, [props.isPinTask]);
 
   useEffect(() => {
-    drawImages();
+    redrawAfterPinPotionChanged();
   }, [pinList]);
+
+  useEffect(() => {
+    console.log('props.isPinTask :', props.isPinTask);
+    console.log('isCircleSelected :', isCircleSelected);
+    if (isCircleSelected || props.isPinTask) {
+      props.coardinates({ pinsID: dragTarget?.pinID, pinNumber: dragTarget?.pinNumber })
+      return;
+    }
+    if (!isMouseDown) {
+      return;
+    }
+    const drawObj = {
+      x: x_axis,
+      y: y_axis, r: 10,
+      pinNumber: JSON.stringify(pinList.length + 1),
+      pinsID: ""
+    }
+
+    console.log('pinList :', pinList)
+    drawFillCircle(drawObj)
+    const lastBoxes = [...pinList];
+    lastBoxes.push(drawObj)
+    setboxes([...lastBoxes])
+    console.log('pinList after new', lastBoxes)
+  }, [isCircleSelected, isMouseDown, x_axis, y_axis]);
+
+
+  useEffect(() => {
+    console.log("Selected dragTarget", dragTarget)
+    let lastBoxes = [...pinList];
+    lastBoxes = lastBoxes.map((box) => {
+      if (box.pinsID == dragTarget.pinsID) {
+        const dragObj = { ...box }
+        dragObj.x = dragTarget.x;
+        dragObj.y = dragTarget.y;
+        return { ...dragObj }
+      }
+      return box
+    })
+    if (!isCircleSelected)
+      setboxes([...lastBoxes])
+  }, [dragTarget, isCircleSelected])
 
   const getPins = async () => {
     try {
@@ -78,13 +120,14 @@ export function Canvas(props: CanvasProps) {
         return {
           x: box.x_axis,
           y: box.y_axis,
-          r: box.z_axis,
-          title: JSON.stringify(id + 1),
-          pinId: box.pinsID
+          r: 10,
+          pinNumber: JSON.stringify(id + 1),
+          pinsID: box.pinsID
         }
       });
+      props.coardinates(lastBoxes[lastBoxes.length - 1])
       console.log("After Set Boxess ", lastBoxes)
-      setboxes(lastBoxes)
+      await setboxes(lastBoxes)
 
       await setisRedraw(false);
       return lastBoxes;
@@ -92,6 +135,7 @@ export function Canvas(props: CanvasProps) {
       console.log(error)
     }
   }
+
   const query = `mutation 
     CreatePins(
     $uploadedFileID: String!
@@ -129,6 +173,7 @@ export function Canvas(props: CanvasProps) {
       } 
     
     } `;
+
   const updateQuery = `mutation 
     UpdatePins(
     $uploadedFileID: String!
@@ -171,7 +216,7 @@ export function Canvas(props: CanvasProps) {
   const createPinsUp = async () => {
     console.log('cordinates', pinList);
     pinList.map(async (box, id) => {
-      if (box.pinId == "") {
+      if (box.pinsID == "") {
         try {
           const res = await axios.post(
             MS_SERVICE_URL['ms_document'].url,
@@ -189,8 +234,8 @@ export function Canvas(props: CanvasProps) {
             }
           )
           console.log('create pin-response', res.data.data);
-          props.coardinates(res.data.data)
-          box.pinId = res.data.data.createPins.pinsID;
+          props.coardinates(res.data.data.createPins)
+          box.pinsID = res.data.data.createPins.pinsID;
           pinList[id] = box
         } catch (error) {
           console.log(error)
@@ -208,7 +253,7 @@ export function Canvas(props: CanvasProps) {
               z_axis: box.r,
               isDeleted: false,
               uploadedFileID: props.fileId,
-              pinsID: box.pinId
+              pinsID: box.pinsID
             }
           }
         ).then(res => {
@@ -220,7 +265,8 @@ export function Canvas(props: CanvasProps) {
     })
 
   }
-  const drawImages = () => {
+
+  const drawImagesWithPins = () => {
     console.log("Loading image with pinList", pinList)
     const imgagDraw = new Image();
     imgagDraw.src = props.imgUrl;
@@ -237,27 +283,20 @@ export function Canvas(props: CanvasProps) {
         drawFillCircle(info)
       });
       console.log("Calling createPinsUp")
-      createPinsUp()
-      // if (props.isPinTask == false) {
-      //   props.coardinates(pinList)
-      // }
+      createPinsUp();
     }
   }
 
-  // draw rectangle
-  const draw = () => {
-    ctx.clearRect(0, 0, canvas.current.clientWidth, canvas.current.clientHeight);
-    console.log("draw circle ", pinList)
-    drawImages();
-
+  const redrawAfterPinPotionChanged = () => {
+    if (ctx) {
+      ctx.clearRect(0, 0, canvas.current.clientWidth, canvas.current.clientHeight);
+      console.log("redrawAfterPinPotionChanged circle ", pinList)
+      drawImagesWithPins();
+    }
   }
 
-
-  // draw rectangle with background
   const drawFillCircle = (info, style = {}) => {
-    const { x, y, w, h, title } = info;
-    console.log("Info", ctx)
-
+    const { x, y, w, h, pinNumber } = info;
     const pointSize = 10; // Change according to the size of the point.
     ctx.fillStyle = "yellow"; // Red color   
     ctx.beginPath(); //Start path
@@ -267,22 +306,23 @@ export function Canvas(props: CanvasProps) {
     ctx.stroke();
     ctx.beginPath(); //Start path
     ctx.fillStyle = "blue";
-    ctx.fillText(title, x - 3, y + 3)
+    ctx.fillText(pinNumber, x - 3, y + 3)
     ctx.fill();
     ctx.closePath();
     ctx.stroke();
   }
 
-  // identify the click event in the rectangle
-  const hitBox = (x, y) => {
-    let isTarget = null;
+  const hitCircle = (x, y) => {
+    let isTarget = false;
     for (let i = 0; i < pinList.length; i++) {
       const box = pinList[i];
       const d = Math.pow(box.r, 2) - (((Math.pow(box.x - x, 2))) + ((Math.pow(box.y - y, 2))))
       if (d > 0) {
         console.log("inside", box);
-        dragTarget = box;
+        setDragTarget(box);
         isTarget = true;
+        setIsDown(isTarget);
+        console.log(dragTarget)
         break;
       }
       else if (d == 0) { console.log("on the circumference"); }
@@ -295,44 +335,33 @@ export function Canvas(props: CanvasProps) {
     // setisRedraw(false)
     startX = e.nativeEvent.offsetX - canvas.current.clientLeft;
     startY = e.nativeEvent.offsetY - canvas.current.clientTop;
-    isDown = hitBox(startX, startY);
-    console.log('props.isPinTask :', props.isPinTask);
-    console.log('isDown :', isDown);
-    if (isDown || props.isPinTask == true) return;
-    const drawObj = {
-      x: startX,
-      y: startY, r: 10,
-      title: JSON.stringify(pinList.length + 1),
-      pinId: ""
-    }
-
-    console.log('pinList :', pinList)
-    drawFillCircle(drawObj)
-    const lastBoxes = [...pinList];
-    lastBoxes.push(drawObj)
-    setboxes([...lastBoxes])
-    // draw();
-    console.log('pinList after new', lastBoxes)
-
+    setx_Axis(startX);
+    sety_Axis(startY);
+    console.log('startX, startY :', startX, startY);
+    hitCircle(startX, startY)
+    setIsMouseDown(!isMouseDown)
   }
+
   const handleMouseMove = e => {
-    if (!isDown) return;
+    if (!isCircleSelected) return;
     const mouseX = e.nativeEvent.offsetX - canvas.current.clientLeft;
     const mouseY = e.nativeEvent.offsetY - canvas.current.clientTop;
     const dx = mouseX - startX;
     const dy = mouseY - startY;
     startX = mouseX;
     startY = mouseY;
-    dragTarget.x += dx;
-    dragTarget.y += dy;
+    const dragObj = { ...dragTarget }
+    dragObj.x = dx;
+    dragObj.y = dy;
+    setDragTarget({ ...dragObj });
   }
+
   const handleMouseUp = e => {
-    if (!isDown) return;
-    console.log("Mouse UP")
-    draw();
-    dragTarget = null;
-    isDown = false;
+    setIsDown(false);
+    if (isMouseDown)
+      setIsMouseDown(!isMouseDown)
   }
+
   const handleMouseOut = e => {
     handleMouseUp(e);
   }
