@@ -23,7 +23,6 @@
     "update": "nx migrate latest",
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph" ,
-
     "help": "nx help"
 
   },
