@@ -5,6 +5,7 @@
     "tsconfig.base.json": "*",
     "tslint.json": "*",
     ".eslintrc.json": "*",
+
     "nx.json": "*"
   },
   "affected": { "defaultBase": "master" },
