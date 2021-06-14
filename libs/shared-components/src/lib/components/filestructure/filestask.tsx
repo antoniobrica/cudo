@@ -102,17 +102,20 @@ export function FileStructure(props: FileStructureProps) {
 							</span>
 
 							<span className="font-weight-bold mb-0 mr-10">{data.fileTitle}</span>
-							{/* <div className="d-flex mr-3">
+							{data.fileVersion > 0 ?
+								<div className="d-flex mr-3">
 
-								<div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
+									<div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
 
-									<div className="navi-item mr-2">
-										<button className="ui mini button grey-btn">{file.fileVersion}</button>
+										<div className="navi-item mr-2">
+											<button className="ui mini button grey-btn">{data.fileVersion}</button>
+										</div>
+
 									</div>
 
-								</div>
-
-							</div> */}
+								</div> :
+								null
+							}
 
 						</div>
 
@@ -336,7 +339,8 @@ export function FileStructure(props: FileStructureProps) {
 		<div className=" navbar-collapse box-shadow " style={{ marginTop: '-63px' }}>
 			{view && imgUrl.length > 0 ?
 				<div>
-					<ViewFileDetail open={view} fType={fType} filesData={filesData} dowloadFilesData={props.downloadedImg} ></ViewFileDetail>
+					{/* <ViewFileDetail open={view} fType={fType} filesData={filesData} dowloadFilesData={props.downloadedImg} ></ViewFileDetail> */}
+					<AddPinFile isOpen={view} filesData={filesData} dowloadFilesData={props.downloadedImg} savePins={''} onSuccess={""} />
 				</div> : null}
 			{openPinFile && imgUrl.length > 0 ?
 				<div>
