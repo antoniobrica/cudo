@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
 import { radios } from '@storybook/addon-knobs';
 import { ITask, ITasks, TaskMutation } from "../../interfaces/task";
-import { ApolloCache, FetchResult, useMutation } from '@apollo/client';
+import { ApolloCache, FetchResult, useMutation, useQuery } from '@apollo/client';
 import { ADD_TASK, GET_TASKS } from "../../graphql/graphql";
 // import '../../../../../../libs/shared-components/src/style/index.scss';
 import moment, { calendarFormat } from 'moment';
@@ -78,7 +78,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   React.useEffect(() => {
     if (props.cord) {
       console.log('props.cord', props.cord);
-      settaskTypeID(props.cord.createPins.pinsID)
+      settaskTypeID(props.cord.pinsID)
 
     }
   })
@@ -249,6 +249,15 @@ export function CreateFileTask(props: CreateFileTaskProps) {
         <Modal.Content body> */}
       <div>
         <Form>
+          <Grid columns={1}>
+            <Grid.Row>
+              <Grid.Column>
+                <Form.Field>
+                  <label>Pin Number {props.cord?.pinNumber} <span className="danger">*</span></label>
+                </Form.Field>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
           <Grid columns={1}>
             <Grid.Row>
               <Grid.Column>
