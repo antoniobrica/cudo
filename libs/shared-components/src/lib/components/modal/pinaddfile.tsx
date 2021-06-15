@@ -83,7 +83,7 @@ export const AddPinFile = (props: AddPinProps) => {
     } 
    }`;
   console.log("referenceID", referenceID)
- // console.log("referenceID", props.filesData.uploadedFileID)
+  // console.log("referenceID", props.filesData.uploadedFileID)
   const getPins = async () => {
     return axios.post(
       MS_SERVICE_URL['ms_task'].url,
@@ -196,29 +196,29 @@ export const AddPinFile = (props: AddPinProps) => {
         style={{ marginLeft: '35px' }}
       >
         <Modal.Header>{props.filesData?.fileTitle}
-               <div style={{ textAlign: 'center', marginBottom: '-30px' }}>
-              <img src="/assets/images/icons_top.png" style={{ position: 'relative', top: '-17px' }} />
-              
-              <a href=""><img src="assets/images/cross_grey.png" style={{ position: 'relative', top: '-17px',left: '540px'}} /></a>
-            </div>
+          <div style={{ textAlign: 'center', marginBottom: '-30px' }}>
+            <img src="/assets/images/icons_top.png" style={{ position: 'relative', top: '-17px' }} />
+
+            <a onClick={close}><img src="assets/images/cross_grey.png" style={{ position: 'relative', top: '-17px', left: '540px' }} /></a>
+          </div>
         </Modal.Header>
         <Modal.Content style={{ marginTop: '-1px' }}>
           <Form>
             <Grid stackable columns={2}>
               <Grid.Column className="colorback" style={{ width: '65%' }}>
                 <Segment>
-                  <Canvas   imgUrl={imgUrl} coardinates={getCoardinates} fileId={fileId} isPinTask={isPinTask}></Canvas>
+                  <Canvas imgUrl={imgUrl} coardinates={getCoardinates} fileId={fileId} isPinTask={isPinTask}></Canvas>
                 </Segment>
 
               </Grid.Column>
               <Grid.Column style={{ width: '35%', marginLeft: '-9px', marginTop: '-10px' }}>
-              <div style={{ background: '#F1F5F8', padding: '10px', marginBottom: '-18px' }}>
+                <div style={{ background: '#F1F5F8', padding: '10px', marginBottom: '-18px' }}>
                   {/* <Grid.Column style={{ width: '30%', marginLeft: '-9px', marginTop: '-10px' }}> */}
 
                   <div>
                     {isPinTask ?
                       <div style={{ background: '#F1F5F8', padding: '10px', marginBottom: '-18px' }}>
-                          <Form.Field classname="buttonbluedown">
+                        <Form.Field classname="buttonbluedown">
                           <label> </label>
                           <button className="ui mini button pinbutton" onClick={changePinTask}>Click to add pin-mark task</button>
                           <img src={img} className="pinadd" />
@@ -227,7 +227,7 @@ export const AddPinFile = (props: AddPinProps) => {
                       :
                       <CreateFileTaskIndex close={taskClose} onSuccess={onSuccess} cord={cord} fileData={fileData}></CreateFileTaskIndex>
                     }
-                    <Form.Field style={{    marginTop: '20px'}} >
+                    <Form.Field style={{ marginTop: '20px' }} >
                       <div className="card1 card-custom gutter-b" style={{ paddingTop: '12px' }}>
                         {pinTasks && pinTasks.map((task, i) => {
                           return (
@@ -260,7 +260,7 @@ export const AddPinFile = (props: AddPinProps) => {
 
                                   <span className=" mr-2 mr-10 "> </span>
                                   <span
-                                   style={{ color: '#718898', fontSize: '11px;', fontWeight: 'normal', marginTop: '-12px' }}
+                                    style={{ color: '#718898', fontSize: '11px;', fontWeight: 'normal', marginTop: '-12px' }}
                                     className="font-weight-bold mb-0 mr-10 fontcad "
                                   >
                                     ( {new Date(task?.startDate).toDateString()} ↦ Due {new Date(task?.endDate).toDateString()})
@@ -275,7 +275,7 @@ export const AddPinFile = (props: AddPinProps) => {
                                     <i
                                       className="ms-Icon ms-Icon--LocationDot "
                                       aria-hidden="true"
-                                      style={{ color: '#D0D8DF',verticalAlign: 'middle' }}
+                                      style={{ color: '#D0D8DF', verticalAlign: 'middle' }}
                                     ></i>
                                     Tender
                                   </span>
@@ -284,13 +284,13 @@ export const AddPinFile = (props: AddPinProps) => {
                                     <i
                                       className="ms-Icon ms-Icon--LocationDot "
                                       aria-hidden="true"
-                                      style={{ color: '#D0D8DF',verticalAlign: 'middle' }}
+                                      style={{ color: '#D0D8DF', verticalAlign: 'middle' }}
                                     ></i>
                                     Paint Work
                                   </span>
                                 </div>
 
-                                <div className="symbol-group symbol-hover py-2 text-right"  style={{ marginTop: '-9px' }}>
+                                <div className="symbol-group symbol-hover py-2 text-right" style={{ marginTop: '-9px' }}>
                                   <div className="symbol symbol-30">
                                     <span className="mr-2">
                                       <Dropdown text="..." className="dotlinearea">
@@ -315,7 +315,7 @@ export const AddPinFile = (props: AddPinProps) => {
                                 </div>
                               </div>
                               <div style={{ borderTop: '1px solid #ddd', paddingTop: '12px' }}>
-                                </div>
+                              </div>
 
 
                               {/* <div style={{ borderTop: '1px solid #ddd' }}>
