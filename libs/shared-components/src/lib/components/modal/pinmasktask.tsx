@@ -58,6 +58,7 @@ export const PinMaskTask = () => {
           <Modal.Header>File_name.cad
        <div style={{ textAlign: 'center', marginBottom: '-30px' }}>
               <img src="assets/images/icons_top.png" style={{ position: 'relative', top: '-17px' }} />
+
             </div>
 
           </Modal.Header>
