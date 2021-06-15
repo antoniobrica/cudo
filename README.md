@@ -37,7 +37,7 @@ Libraries are sharable across libraries and applications. They can be imported f
 
 ## Development server
 
-Run `nx serve my-app` for a dev server. Navigate to http://192.168.1.38:4200/. The app will automatically reload if you change any of the source files.
+Run `nx serve my-app` for a dev server. Navigate to http://192.168.0.31:4200/. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
@@ -131,7 +131,7 @@ ex. nx run ms-project:migration-revert --mode=development
 
 
 ## To Run Ory Kratos
-Change 192.168.1.38 to 'your-local-ip' in following files 1: apps\mf-container-app\src\app\config\kratos.tsx
+Change 192.168.0.31 to 'your-local-ip' in following files 1: apps\mf-container-app\src\app\config\kratos.tsx
 2: deploy\docker-compose-ory\.kratos-config\kratos.yml
 3: deploy\docker-compose-ory\.nginx\nginx.conf
 

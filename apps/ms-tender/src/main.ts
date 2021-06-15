@@ -19,7 +19,7 @@ async function bootstrap() {
   // const daprGRPCPort = process.env.DAPR_GRPC_PORT;
 
   const stateStoreName = `statestore`;
-  const stateUrl = `http://192.168.1.38:${daprPort}/v1.0/state/${stateStoreName}`;
+  const stateUrl = `http://192.168.0.31:${daprPort}/v1.0/state/${stateStoreName}`;
 
   await app.listen(port, () => {
     Logger.log("state url" + stateUrl);
