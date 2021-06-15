@@ -5,7 +5,8 @@
     background: #F2F6FE;
     color: #2D62ED;
     font-size: 1.2rem;
-    padding: 4px;
+    padding: 2px;
+    border-radius: 4px;
 }
 .pb-3, .py-3 {
     padding-bottom: .25rem!important;
@@ -90,7 +91,8 @@
 .mr-2, .mx-2 {
     margin-left: 1.5rem!important;
 }
-.check-grey{color: #A2B7C7;font-size: 2.2rem;}
+.check-grey{color: #A2B7C7;font-size: 2.2rem;
+vertical-align: middle;}
 .navi .navi-item .navi-link {
     font-size: 1.2rem;
 }
@@ -217,4 +219,15 @@
 }
 .marginestimate{
     margin-left: 770px;
+}
+.symbol.symbol-30 {
+    margin-right: 2.2rem;
+}
+.ui.small.input.full-width.areawidth input[type="text"] {
+    height: 2.4rem;
+    font-size: 12px;
+    max-width: 183%;
+}
+.m-400{
+    margin-left: 410px;
 }

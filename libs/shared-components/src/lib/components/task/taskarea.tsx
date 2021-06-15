@@ -7,6 +7,8 @@ import img2 from 'libs/shared-components/src/user2.png';
 import img3 from 'libs/shared-components/src/green_tick.png';
 import img4 from 'libs/shared-components/src/dots.png';
 import img5 from 'libs/shared-components/src/tasks.png';
+import img6 from 'libs/shared-components/src/calendar1.png';
+import img7 from 'libs/shared-components/src/plus_icon_grey.png';
 /* eslint-disable-next-line */
 export interface Tasks {}
 
@@ -26,18 +28,18 @@ export function TaskArea(props: Tasks) {
             <span className="textt">T-001</span>
             <span className="anchor_complete">
               <a title="Mark as complete">
-                {' '}
+               
                 <span className="material-icons mr-2 mr-10 check-grey">
                   check_circle_outline
-                </span>{' '}
-              </a>{' '}
+                </span>
+              </a>
             </span>
             <span className="font-weight-bold mb-0 mr-10">
               This is task name here
             </span>
-            <div className="d-flex mr-3">
+            <div className="d-flex">
               <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
-                <div className="navi-item mr-2">
+                <div className="navi-item">
                   <a href=" " className="navi-link active">
                     <span className="navi-text">
                       ( Starts Tomorrow ↦ Due Fri Aug 28th )
@@ -48,36 +50,32 @@ export function TaskArea(props: Tasks) {
                 <div className="navi-item mr-2">
                   <a className="navi-link">
                     <span className="navi-text">
-                      {' '}
+                     
                       <i
                         className="ms-Icon ms-Icon--Attach"
                         aria-hidden="true"
                       ></i>
-                      2 files -{' '}
+                      2 files - 
                     </span>
                   </a>
                 </div>
 
-                <div className="navi-item mr-2">
+                <div className="navi-item">
                   <a href="" className="navi-link">
                     <span className="navi-text">
-                      {' '}
-                      <i
-                        className="ms-Icon ms-Icon--CalendarAgenda"
-                        aria-hidden="true"
-                      ></i>{' '}
-                      5 days -{' '}
+                    <img src={img6}  style={{verticalAlign:'middle'}}/>
+                     &nbsp; 5 days -
                     </span>
                   </a>
                 </div>
-                <div className="navi-item mr-2">
+                <div className="navi-item">
                   <a href="" className="navi-link">
-                    <span className="navi-text">Preliminary Studies - </span>
+                    <span className="navi-text">&nbsp;Preliminary Studies - </span>
                   </a>
                 </div>
-                <div className="navi-item mr-2">
+                <div className="navi-item">
                   <a href="" className="navi-link">
-                    <span className="navi-text">HVAC Work </span>
+                    <span className="navi-text">&nbsp;HVAC Work </span>
                   </a>
                 </div>
               </div>
@@ -124,9 +122,9 @@ export function TaskArea(props: Tasks) {
             <span className="font-weight-bold mb-0 mr-10">
               This is task name here
             </span>
-            <div className="d-flex mr-3">
+            <div className="d-flex">
               <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
-                <div className="navi-item mr-2">
+                <div className="navi-item">
                   <a href=" " className="navi-link active">
                     <span className="navi-text">
                       ( Starts Tomorrow ↦ Due Fri Aug 28th )
@@ -134,15 +132,15 @@ export function TaskArea(props: Tasks) {
                   </a>
                 </div>
 
-                <div className="navi-item mr-2">
+                <div className="navi-item">
                   <a className="navi-link">
-                    <span className="navi-text">Project Planning - </span>
+                    <span className="navi-text">&nbsp;Project Planning - </span>
                   </a>
                 </div>
 
-                <div className="navi-item mr-2">
+                <div className="navi-item">
                   <a href="" className="navi-link">
-                    <span className="navi-text">HVAC Work </span>
+                    <span className="navi-text">&nbsp;HVAC Work </span>
                   </a>
                 </div>
               </div>
@@ -180,25 +178,25 @@ export function TaskArea(props: Tasks) {
         <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
           <div className="d-flex align-items-center   py-2">
             <span>
-              {' '}
-              <img src={img4} className="  mr-10 " />{' '}
+              
+              <img src={img4} className="  mr-10 " /> 
             </span>
             <span className="textt">T-003</span>
             <span>
-              {' '}
+              
               <a href=" " title="Mark as complete">
-                {' '}
+               
                 <span className="material-icons mr-2 mr-10 check-grey">
                   check_circle_outline
-                </span>{' '}
-              </a>{' '}
+                </span>
+              </a>
             </span>
             <span className="font-weight-bold mb-0 mr-10">
               This is task name here
             </span>
-            <div className="d-flex mr-3">
+            <div className="d-flex">
               <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
-                <div className="navi-item mr-2">
+                <div className="navi-item">
                   <a href=" " className="navi-link active">
                     <span className="navi-text">
                       ( Starts Tomorrow ↦ Due Fri Aug 28th )
@@ -206,15 +204,15 @@ export function TaskArea(props: Tasks) {
                   </a>
                 </div>
 
-                <div className="navi-item mr-2">
+                <div className="navi-item">
                   <a className="navi-link">
-                    <span className="navi-text">Tender - </span>
+                    <span className="navi-text">&nbsp;Tender - </span>
                   </a>
                 </div>
 
-                <div className="navi-item mr-2">
+                <div className="navi-item">
                   <a href="" className="navi-link">
-                    <span className="navi-text">Paint Work </span>
+                    <span className="navi-text">&nbsp;Paint Work </span>
                   </a>
                 </div>
               </div>
@@ -249,54 +247,50 @@ export function TaskArea(props: Tasks) {
         <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
           <div className="d-flex align-items-center  py-2">
             <span>
-              {' '}
-              <img src={img4} className="  mr-10 " />{' '}
+          
+              <img src={img4} className="  mr-10 " />
             </span>
             <span className="textt">T-004</span>
             <span>
-              {' '}
-              <img src={img3} className=" mr-2 mr-10 " />{' '}
+            
+              <img src={img3} className=" mr-2 mr-10 " />
             </span>
             <span className="font-weight-bold mb-0 mr-10 line-through">
               This is task name here
             </span>
-            <div className="d-flex mr-3">
+            <div className="d-flex">
               <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
-                <div className="navi-item mr-2">
+                <div className="navi-item">
                   <a className="navi-link">
                     <span className="navi-text">
-                      {' '}
+                   
                       <i
                         className="ms-Icon ms-Icon--Attach"
                         aria-hidden="true"
                       ></i>
-                      2 files -{' '}
+                      2 files - 
                     </span>
                   </a>
                 </div>
 
-                <div className="navi-item mr-2">
+                <div className="navi-item">
                   <a href="" className="navi-link">
                     <span className="navi-text">
-                      {' '}
-                      <i
-                        className="ms-Icon ms-Icon--CalendarAgenda"
-                        aria-hidden="true"
-                      ></i>{' '}
-                      5 days -{' '}
+                    <img src={img6}  style={{verticalAlign:'middle'}}/>
+                     &nbsp; 5 days -
                     </span>
                   </a>
                 </div>
 
-                <div className="navi-item mr-2">
+                <div className="navi-item">
                   <a className="navi-link">
-                    <span className="navi-text">Tender - </span>
+                    <span className="navi-text">&nbsp;Tender - </span>
                   </a>
                 </div>
 
-                <div className="navi-item mr-2">
+                <div className="navi-item">
                   <a href="" className="navi-link">
-                    <span className="navi-text">Paint Work </span>
+                    <span className="navi-text">&nbsp;Paint Work </span>
                   </a>
                 </div>
               </div>
@@ -326,77 +320,79 @@ export function TaskArea(props: Tasks) {
 
       <div className="card1 card-custom gutter-b">
         <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-          <div className="  align-items-center py-2">
+        <div className="  align-items-center" style={{marginLeft: '-17px'}}>
             <span className="anchor_complete">
               <a title="Mark as complete">
-                {' '}
+             
                 <span className="material-icons mr-2 mr-10 check-grey">
                   check_circle_outline
-                </span>{' '}
-              </a>{' '}
+                </span> 
+              </a> 
             </span>
             <span className="font-weight-bold mb-0 mr-10">
               1. This is the checklist point text here
             </span>
-            <br />
+            </div>
+          </div>
+          </div>
+        
+          <div className="card1 card-custom gutter-b">
+        <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
+        <div className="  align-items-center" style={{marginLeft: '-17px', marginBottom: '-23px'}}>
             <span className="anchor_complete">
               <a title="Mark as complete">
-                {' '}
+             
                 <span className="material-icons mr-2 mr-10 check-grey">
                   check_circle_outline
-                </span>{' '}
-              </a>{' '}
+                </span> 
+              </a> 
             </span>
             <span className="font-weight-bold mb-0 mr-10">
-              2. This is the checklist point text here
-            </span>
-            <br />
-            <span className="anchor_complete">
-              <a title="Mark as complete">
-                {' '}
-                <span className="material-icons mr-2 mr-10 check-grey">
-                  check_circle_outline
-                </span>{' '}
-              </a>{' '}
-            </span>
-
-            <Grid columns={2} className="classtop">
+            <Grid columns={2} className="classtop" style={{position: 'relative',
+    top: '5px'}}>
               <Grid.Row>
                 <Grid.Column>
                   <Form.Field className="fillarea">
-                    <Input
+                    <Input 
                       placeholder="Enter your text here...."
                       size="small"
-                      className="full-width "
+                      className="full-width areawidth"
                       type="text"
                     />
                   </Form.Field>
                 </Grid.Column>
 
                 <Grid.Column>
-                  <Form.Field style={{ marginleft: '145px' }}>
+                  <Form.Field className="m-400" >
                     <button className="greenbutton">
                       <i
                         className="ms-Icon ms-Icon--CheckMark"
                         aria-hidden="true"
-                      ></i>{' '}
+                      ></i> 
                     </button>
-                    &nbsp;{' '}
+                    &nbsp; 
                     <button className="redbutton">
                       <i
                         className="ms-Icon ms-Icon--ChromeClose"
                         aria-hidden="true"
-                      ></i>{' '}
+                      ></i> 
                     </button>
                   </Form.Field>
                 </Grid.Column>
               </Grid.Row>
             </Grid>
+            </span>
+            </div>
+            <div>
+            <span> <img src={img7}  style={{verticalAlign:'middle'}}/></span>  Add New
+            </div>
           </div>
-        </div>
-      </div>
+          </div>
+
+
       <button className="ui large button btn-dashed  btn-large">
-        <i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> Add new
+        <i className="ms-Icon ms-Icon--AddTo" aria-hidden="true" style={{marginLeft: '-80px',
+    verticalAlign: 'middle'}}></i> Add new
         task{' '}
       </button>
     </div>
