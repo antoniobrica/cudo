@@ -14,9 +14,9 @@ import { useHistory } from 'react-router';
 /* eslint-disable-next-line */
 export interface CreateTaskProps {
   onSuccess?,
-  workTypes,
-  isNewTask,
-  cancel
+  workTypes?,
+  isNewTask?,
+  cancel?
 
 }
 

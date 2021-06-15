@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
 import { radios } from '@storybook/addon-knobs';
 import { ITask, ITasks, TaskMutation } from "../../interfaces/task";
-import { ApolloCache, FetchResult, useMutation } from '@apollo/client';
+import { ApolloCache, FetchResult, useMutation, useQuery } from '@apollo/client';
 import { ADD_TASK, GET_TASKS } from "../../graphql/graphql";
 // import '../../../../../../libs/shared-components/src/style/index.scss';
 import moment, { calendarFormat } from 'moment';
@@ -78,7 +78,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   React.useEffect(() => {
     if (props.cord) {
       console.log('props.cord', props.cord);
-      settaskTypeID(props.cord.createPins.pinsID)
+      settaskTypeID(props.cord.pinsID)
 
     }
   })
@@ -201,8 +201,6 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   }
   const handleSaveTask = () => {
     // setOpen(false);
-
-    props.onSuccess();
     addTask({
       variables: {
         taskTitle, startDate, endDate, estimatedDays,
@@ -221,6 +219,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
         { data: { addTask } }: FetchResult<TaskMutation>
       ) => {
         const cacheData = cache.readQuery({ query: GET_TASKS, variables: { referenceID }, }) as ITasks;
+        props.onSuccess();
         cache.writeQuery({
           query: GET_TASKS,
           data: {
@@ -228,9 +227,11 @@ export function CreateFileTask(props: CreateFileTaskProps) {
           },
           variables: { referenceID },
         });
+
       }
     });
-    props.close()
+
+    // props.close()
   };
   const onDescriptionChange = e => {
     console.log('des=>', e.target.value);
@@ -249,6 +250,15 @@ export function CreateFileTask(props: CreateFileTaskProps) {
         <Modal.Content body> */}
       <div>
         <Form>
+          <Grid columns={1}>
+            <Grid.Row>
+              <Grid.Column>
+                <Form.Field>
+                  <label>Pin Number {props.cord?.pinNumber} <span className="danger">*</span></label>
+                </Form.Field>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
           <Grid columns={1}>
             <Grid.Row>
               <Grid.Column>
@@ -315,13 +325,13 @@ export function CreateFileTask(props: CreateFileTaskProps) {
               <Grid.Column>
                 <Form.Field>
                   <div className="event top-event">
-                    <div className="label-light-purple-circle label-spacer">
+                    <div className="label-light-purple-circle label-spacer" style={{width:'26px'}}>
                       <span className="white-text">AB</span>
                     </div>
-                    <div className="label-light-black-circle label-spacer">
+                    <div className="label-light-black-circle label-spacer"  style={{width:'26px'}}>
                       <span className="white-text ">RJ</span>
                     </div>
-                    <div className="label-light-blue-circle label-spacer">
+                    <div className="label-light-blue-circle label-spacer"  style={{width:'26px'}}>
                       <span className="white-text">JB</span>
                     </div>
                   </div>
