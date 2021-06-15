@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
         - name: node
-          image: 192.168.0.31:5000/ms-account
+          image: 192.168.1.5:5000/ms-account
           ports:
             - containerPort: 3000
           imagePullPolicy: Always
