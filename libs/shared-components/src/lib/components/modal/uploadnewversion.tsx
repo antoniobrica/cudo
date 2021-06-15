@@ -200,7 +200,7 @@ export function UploadNewVersion(props: AlertProps) {
                     <Form.Field>
                       <label>File to replace:</label>
 
-                      <img src={img} className="mr-10 " /> {props.file.fileTitle}
+                      <img src={img} className="mr-10 " /> {props?.file?.fileTitle}
                     </Form.Field>
                   </Grid.Column>
 
