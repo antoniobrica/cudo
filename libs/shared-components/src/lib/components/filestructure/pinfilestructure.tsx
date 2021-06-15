@@ -101,6 +101,7 @@ export function PinFileStructure(props: FileStructureProps) {
 
 
     const renderItems = (data, i) => {
+
         const files = data.map((data, id) => {
             return (
                 <div className="card1 card-custom gutter-b width_card" >
@@ -141,7 +142,7 @@ export function PinFileStructure(props: FileStructureProps) {
                                     className="navi-link active"
                                     style={{ marginLeft: '320px' }}
                                 >
-                                    <img src={img8} />
+                                    <img src={img9} />
 
                                 </a>
 
