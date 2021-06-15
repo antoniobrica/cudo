@@ -325,13 +325,13 @@ export function CreateFileTask(props: CreateFileTaskProps) {
               <Grid.Column>
                 <Form.Field>
                   <div className="event top-event">
-                    <div className="label-light-purple-circle label-spacer">
+                    <div className="label-light-purple-circle label-spacer" style={{width:'26px'}}>
                       <span className="white-text">AB</span>
                     </div>
-                    <div className="label-light-black-circle label-spacer">
+                    <div className="label-light-black-circle label-spacer"  style={{width:'26px'}}>
                       <span className="white-text ">RJ</span>
                     </div>
-                    <div className="label-light-blue-circle label-spacer">
+                    <div className="label-light-blue-circle label-spacer"  style={{width:'26px'}}>
                       <span className="white-text">JB</span>
                     </div>
                   </div>
