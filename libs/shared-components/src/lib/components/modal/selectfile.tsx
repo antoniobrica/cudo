@@ -123,13 +123,13 @@ export function SelectFilePopup(props: FileStructureProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <img src="assets/images/search_white.png" style={{ position: 'relative', top: '11px', ZIndex:'9' }}></img>
+                      <img src="assets/images/search_white.png" style={{ position: 'relative', top: '11px' }}></img>
 
                       <Input
                         placeholder="search.."
                         size="small"
                         className="full-width inputfieldarea bordernone"
-                        type="search" style={{    marginLeft: '5px'}}
+                        type="search" style={{ marginLeft: '5px' }}
                       />
                     </Form.Field>
                   </Grid.Column>
