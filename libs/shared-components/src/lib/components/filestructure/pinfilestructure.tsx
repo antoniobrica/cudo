@@ -159,15 +159,15 @@ export function PinFileStructure(props: FileStructureProps) {
 
 
     return (
-        <div className=" navbar-collapse box-shadow " style={{ marginTop: '-36px', marginLeft: '-19px' }}>
+        <div className=" navbar-collapse " style={{ marginTop: '-36px', marginLeft: '-19px' }}>
             {/* {view && imgUrl.length > 0 ?
                 <div>
                     <ViewFileDetail open={view} fType={fType} filesData={filesData} dowloadFilesData={props.downloadedImg} ></ViewFileDetail>
                 </div> : null} */}
 
             {/* <Tab className="ui-tabs" menu={{ secondary: true, pointing: true }} panes={panes} /> */}
-            <div className="ui card " style={{ width: '100%' }}>
-                <Accordion className="widtharea" defaultActiveIndex={0} panels={items} styled  >
+            <div className=" " style={{ width: '100%' }}>
+                <Accordion className="widtharea" defaultActiveIndex={0} panels={items}   style={{border:'0px'}} >
 
 
                 </Accordion>
