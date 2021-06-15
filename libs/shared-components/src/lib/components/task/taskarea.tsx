@@ -7,6 +7,8 @@ import img2 from 'libs/shared-components/src/user2.png';
 import img3 from 'libs/shared-components/src/green_tick.png';
 import img4 from 'libs/shared-components/src/dots.png';
 import img5 from 'libs/shared-components/src/tasks.png';
+import img6 from 'libs/shared-components/src/assets/images/pin_blue.png';
+
 import { useTranslation } from 'react-i18next';
 /* eslint-disable-next-line */
 export interface Tasks {
@@ -74,12 +76,14 @@ export function TaskArea(props: Tasks) {
               <div className="d-flex mr-3">
 
                 <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
+                  {props.task.file &&
+                    <div className="navi-item mr-2">
+                      <a className="navi-link">
+                        <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.files.length} files  -  </span>
+                      </a>
+                    </div>
+                  }
 
-                  <div className="navi-item mr-2">
-                    <a className="navi-link">
-                      <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>2 files  -  </span>
-                    </a>
-                  </div>
 
                   <div className="navi-item mr-2">
                     <a href="" className="navi-link">
@@ -89,7 +93,7 @@ export function TaskArea(props: Tasks) {
 
                   <div className="navi-item mr-2">
                     <a className="navi-link">
-                      <span className="navi-text">Tender  -  </span>
+                      <span className="navi-text">{props?.task?.phaseName}  -  </span>
                     </a>
                   </div>
 
@@ -98,14 +102,55 @@ export function TaskArea(props: Tasks) {
                       <span className="navi-text">Paint Work  </span>
                     </a>
                   </div>
+                  {props.task.taskType &&
+                    <div className="navi-item mr-2">
+                      <a className="navi-link">
+                        <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.taskType} </span>
+                      </a>
+                    </div>
+                  }
+                  {props.task.assignees && props.task.assignees.map((as, i) => {
+                    return (
+                      <div className="navi-item mr-2">
+                        <a className="navi-link">
+                          <span className="navi-text">as  - </span>
+                        </a>
+                      </div>
+                    )
+                  })}
                 </div>
 
               </div>
 
             </div>
 
-            <div className="symbol-group symbol-hover py-2">
+            {props.task.taskType &&
+              <div className="navi-item">
+                <a className="navi-link">
+                  <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.taskType} </span>
+                </a>
+              </div>
+            }
+            {/* {props.task.assignees && props.task.assignees.map((as, i) => {
+              return (
+                <div className="navi-item " style={{ paddingLeft: '154px' }}>
+                  <a className="navi-link">
+                    <span className="navi-text"> <img src={img} /> </span>
+                  </a>
+                </div>
+              )
+            })} */}
+            {props.task?.assignees.length > 0 ?
+
+              <div className="navi-item ">
+                <a className="navi-link">
+                  <span className="navi-text"> <img src={img} /> </span>
+                </a>
+              </div> : null
+            }
+            <div className="symbol-group symbol-hover py-2" >
               <div className="symbol symbol-30">
+
 
                 <img src={img2} />
                 <span className="mr-2"  >
@@ -145,11 +190,13 @@ export function TaskArea(props: Tasks) {
                     </a>
                   </div>
 
-                  <div className="navi-item mr-2">
-                    <a className="navi-link">
-                      <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>2 files  - </span>
-                    </a>
-                  </div>
+                  {props.task?.file &&
+                    <div className="navi-item mr-2">
+                      <a className="navi-link">
+                        <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.files.length} files  -  </span>
+                      </a>
+                    </div>
+                  }
 
                   <div className="navi-item mr-2">
                     <a href="" className="navi-link">
@@ -158,7 +205,7 @@ export function TaskArea(props: Tasks) {
                   </div>
                   <div className="navi-item mr-2">
                     <a href="" className="navi-link">
-                      <span className="navi-text">Preliminary Studies  - </span>
+                      <span className="navi-text">{props?.task?.phaseName}  - </span>
                     </a>
                   </div>
                   <div className="navi-item mr-2">
@@ -171,9 +218,30 @@ export function TaskArea(props: Tasks) {
               </div>
 
             </div>
+            {props.task?.taskType &&
+              <div className="navi-item  " style={{ paddingLeft: '154px' }}>
+                <a className="navi-link">
+                  <span className="navi-text">
+                    {props.task.taskType == 'PIN' &&
+                      <img src={img6} />
+                    }
 
+                  </span>
+                </a>
+              </div>
+            }
+            {props.task?.assignees.length > 0 ?
+
+              <div className="navi-item ">
+                <a className="navi-link">
+                  <span className="navi-text"> <img src={img} /> </span>
+                </a>
+              </div> : null
+            }
             <div className="symbol-group symbol-hover py-2">
               <div className="symbol symbol-30">
+
+
                 {/* <img src={img} /> */}
                 <span className="mr-2"  >
 

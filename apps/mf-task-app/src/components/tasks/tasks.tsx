@@ -1,21 +1,40 @@
 import React from 'react';
 import CreateTask from '../../app/components/create-task/create-task';
 
-import { ADD_TASK, DELETE_TASK, GET_TASKS, UPDATE_TASK } from '../../app/graphql/graphql';
-import { useTaskDeleteMutation, useTaskQuery, useTaskUpdateMutation } from "../../app/services/useRequest";
+import {
+  ADD_TASK,
+  DELETE_TASK,
+  GET_TASKS,
+  UPDATE_TASK,
+} from '../../app/graphql/graphql';
+import {
+  useTaskDeleteMutation,
+  useTaskQuery,
+  useTaskUpdateMutation,
+} from '../../app/services/useRequest';
 import './tasks.module.scss';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
-import { LoaderPage, ModalTaskEdit, TaskArea } from "@cudo/shared-components"
+import { LoaderPage, ModalTaskEdit, TaskArea } from '@cudo/shared-components';
 import axios from 'axios';
-import { ApolloCache, FetchResult, useMutation, useQuery } from '@apollo/client';
-import { ITask, ITasks, TaskMutation, TaskUpdateMutation } from '../../app/interfaces/task';
+import {
+  ApolloCache,
+  FetchResult,
+  useMutation,
+  useQuery,
+} from '@apollo/client';
+import {
+  ITask,
+  ITasks,
+  TaskMutation,
+  TaskUpdateMutation,
+} from '../../app/interfaces/task';
 import { ModalAlert, ModalViewTask } from '@cudo/shared-components';
-import FilterPopup from 'libs/shared-components/src/lib/components/modal/fliter'
+import FilterPopup from 'libs/shared-components/src/lib/components/modal/fliter';
 import { useHistory, useParams } from 'react-router';
 import TaskDelete from '../delete-task';
 import { useTranslation } from 'react-i18next';
-import { FileListIndex } from '@cudo/mf-document-lib'
-import ToggleButton from 'libs/shared-components/src/lib/components/tabs/togglebutton'
+import { FileListIndex } from '@cudo/mf-document-lib';
+import ToggleButton from 'libs/shared-components/src/lib/components/tabs/togglebutton';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 /* eslint-disable-next-line */
 export interface TasksProps { }
@@ -23,7 +42,7 @@ export interface TasksProps { }
 export function Tasks(props: TasksProps) {
   const history = useHistory();
   const { t } = useTranslation();
-  const res = history.location.pathname.split("/");
+  const res = history.location.pathname.split('/');
   const referenceID = res[3].toString();
   const { loading, error, data } = useTaskQuery(GET_TASKS, {
     variables: { referenceID },
@@ -31,9 +50,9 @@ export function Tasks(props: TasksProps) {
 
   React.useEffect(() => {
     if (referenceID) {
-      getWorkType(referenceID)
+      getWorkType(referenceID);
     }
-  }, [referenceID])
+  }, [referenceID]);
 
   // const { loading, error, data } = useQuery(GET_TASKS, {
   //   variables: { referenceID},
@@ -55,27 +74,18 @@ export function Tasks(props: TasksProps) {
   const [addTask] = useTaskUpdateMutation(UPDATE_TASK, {
     variables: { referenceID },
   });
-  const [addSubTask, { data: subtasks }] = useMutation(ADD_TASK,
-    {
-      refetchQueries: [
-        { query: GET_TASKS, variables: { referenceID } }
-      ],
-      variables: { referenceID },
-    }
-  )
+  const [addSubTask, { data: subtasks }] = useMutation(ADD_TASK, {
+    refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
+    variables: { referenceID },
+  });
 
   const [taskDelete] = useTaskDeleteMutation(DELETE_TASK, {
     variables: { referenceID },
   });
 
-  const [editTaskApi, { data: editData }] = useMutation(UPDATE_TASK,
-    {
-      refetchQueries: [
-        { query: GET_TASKS, variables: { referenceID } }
-      ],
-    }
-  )
-
+  const [editTaskApi, { data: editData }] = useMutation(UPDATE_TASK, {
+    refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
+  });
 
   const query = `query Game($projectId: String!) {
     projectById( projectId: $projectId)
@@ -98,75 +108,90 @@ export function Tasks(props: TasksProps) {
 
   const getWorkType = (referenceID) => {
     console.log('sasstoken');
-    return axios.post(
-      MS_SERVICE_URL['ms_project'].url,
-      {
+    return axios
+      .post(MS_SERVICE_URL['ms_project'].url, {
         query,
         variables: {
-          projectId: referenceID
-        }
-      }
-    ).then(res => {
-      const wt = res.data.data.projectById[0].projectWorkTypes;
-      setWorkTypes(wt);
-    })
-      .catch(err => console.log(err))
-  }
-
+          projectId: referenceID,
+        },
+      })
+      .then((res) => {
+        const wt = res.data.data.projectById[0].projectWorkTypes;
+        setWorkTypes(wt);
+      })
+      .catch((err) => console.log(err));
+  };
 
   enum Status {
     INPROGRESS = 'INPROGRESS',
     COMPLETED = 'COMPLETED',
   }
-  if (loading) return <h1> <LoaderPage /></h1>;
+  if (loading)
+    return (
+      <h1>
+        {' '}
+        <LoaderPage />
+      </h1>
+    );
   // if (error) return (
   //   <div style={{ marginLeft: 900 }} >
   //     <CreateTask workTypes={workTypes} onSuccess={refresh} cancel={cancelTask} isNewTask={isNewTask} />
   //   </div>
   // );
   if (data) {
-    console.log('tasks=>', data.tasks)
+    console.log('tasks=>', data.tasks);
   }
 
   // setProjectId(res[3]);
 
   const cancel = () => {
-    setOpen(false)
-    setOpenD(false)
-    setViewTaskOpen(false)
-    setEditTaskOpen(false)
-  }
+    setOpen(false);
+    setOpenD(false);
+    setViewTaskOpen(false);
+    setEditTaskOpen(false);
+  };
   const confirmation = (data, task) => {
     console.log('data', task);
-    setIsUpdate(data)
-    setOpen(false)
+    setIsUpdate(data);
+    setOpen(false);
     // updateTask(taskData);
 
     let status;
     if (task.status === 'COMPLETED') {
-      status = Status.INPROGRESS
-    }
-    else {
-      status = Status.COMPLETED
+      status = Status.INPROGRESS;
+    } else {
+      status = Status.COMPLETED;
     }
     const taskID = task.taskID;
     addTask({
       variables: {
-        taskID, status, files: [], taskTitle: task.taskTitle, startDate: task.startDate, endDate: task.endDate,
-        estimatedDays: task.estimatedDays, sendNotification: false, BKPID: task.BKPID, BKPTitle: task.BKPTitle,
-        saveTaskAsTemplate: task.saveTaskAsTemplate, phaseID: task.phaseID, phaseName: task.phaseName, referenceID: task.referenceID,
-        description: task.description, subtasks: []
+        taskID,
+        status,
+        files: [],
+        taskTitle: task.taskTitle,
+        startDate: task.startDate,
+        endDate: task.endDate,
+        estimatedDays: task.estimatedDays,
+        sendNotification: false,
+        BKPID: task.BKPID,
+        BKPTitle: task.BKPTitle,
+        saveTaskAsTemplate: task.saveTaskAsTemplate,
+        phaseID: task.phaseID,
+        phaseName: task.phaseName,
+        referenceID: task.referenceID,
+        description: task.description,
+        subtasks: [],
       },
-      update: (
-        cache
-      ) => {
-        const cacheData = cache.readQuery({ query: GET_TASKS, variables: { referenceID } }) as ITasks;
-        const newTask = cacheData.tasks.map(t => {
+      update: (cache) => {
+        const cacheData = cache.readQuery({
+          query: GET_TASKS,
+          variables: { referenceID },
+        }) as ITasks;
+        const newTask = cacheData.tasks.map((t) => {
           if (t.taskID === taskID) {
             if (t.status === 'INPROGRESS') {
               return { ...t, status: Status.COMPLETED };
-            }
-            else {
+            } else {
               return { ...t, status: Status.INPROGRESS };
             }
           } else {
@@ -177,28 +202,27 @@ export function Tasks(props: TasksProps) {
         cache.writeQuery({
           query: GET_TASKS,
           data: {
-            tasks: newTask
+            tasks: newTask,
           },
           variables: { referenceID },
         });
-      }
-
+      },
     });
-
-  }
+  };
   const confirmationDelete = (data, task) => {
-    setIsUpdate(data)
-    setOpenD(false)
+    setIsUpdate(data);
+    setOpenD(false);
     // updateTask(taskData);
     const taskID = task.taskID;
     taskDelete({
       variables: {
-        taskID
+        taskID,
       },
-      update: (
-        cache
-      ) => {
-        const cacheData = cache.readQuery({ query: GET_TASKS, variables: { referenceID } }) as ITasks;
+      update: (cache) => {
+        const cacheData = cache.readQuery({
+          query: GET_TASKS,
+          variables: { referenceID },
+        }) as ITasks;
         // const newTask = cacheData.tasks.map(t => {
         //   if (t.taskID === taskID) {
         //     if (t.status === 'INPROGRESS') {
@@ -212,165 +236,214 @@ export function Tasks(props: TasksProps) {
         //   }
         // });
 
-        const newTask = cacheData.tasks.filter(item => item.taskID !== taskID);
+        const newTask = cacheData.tasks.filter(
+          (item) => item.taskID !== taskID
+        );
         cache.writeQuery({
           query: GET_TASKS,
           data: {
-            tasks: newTask
+            tasks: newTask,
           },
           variables: { referenceID },
         });
-      }
-
+      },
     });
-
-  }
+  };
   const updateTask = (task) => {
-    setTaskData(task)
-    setOpen(true)
+    setTaskData(task);
+    setOpen(true);
     if (task.status === 'COMPLETED') {
-      settaskStatus('Re-open')
+      settaskStatus('Re-open');
+    } else {
+      settaskStatus('Mark as Complete');
     }
-    else {
-      settaskStatus('Mark as Complete')
-    }
-
-  }
+  };
   const deleteTask = (task) => {
-    setTaskData(task)
-    setOpenD(true)
-  }
+    setTaskData(task);
+    setOpenD(true);
+  };
   const viewTask = (task) => {
-    setTaskData(task)
-    setViewTaskOpen(true)
-  }
+    setTaskData(task);
+    setViewTaskOpen(true);
+  };
   const editTask = (task) => {
-    setTaskData(task)
-    setEditTaskOpen(true)
-  }
+    setTaskData(task);
+    setEditTaskOpen(true);
+  };
 
   const refresh = (data) => {
     console.log('refresh is called', data);
-  }
+  };
   const editTaskData = (data) => {
     console.log('editTaskData', data);
     editTaskApi({
       variables: {
-        taskID: data.taskID, status: data.status, files: [], taskTitle: data.taskTitle, startDate: data.startDate, endDate: data.endDate,
-        estimatedDays: data.estimatedDays, sendNotification: false, BKPID: data.BKPID, BKPTitle: data.BKPTitle,
-        saveTaskAsTemplate: data.saveTaskAsTemplate, phaseID: data.phaseID, phaseName: data.phaseName, referenceID: data.referenceID,
-        description: data.description, subtasks: []
+        taskID: data.taskID,
+        status: data.status,
+        files: [],
+        taskTitle: data.taskTitle,
+        startDate: data.startDate,
+        endDate: data.endDate,
+        estimatedDays: data.estimatedDays,
+        sendNotification: false,
+        BKPID: data.BKPID,
+        BKPTitle: data.BKPTitle,
+        saveTaskAsTemplate: data.saveTaskAsTemplate,
+        phaseID: data.phaseID,
+        phaseName: data.phaseName,
+        referenceID: data.referenceID,
+        description: data.description,
+        subtasks: [],
       },
-      update: (
-        cache,
-        data
-      ) => {
-        const cacheData = cache.readQuery({ query: GET_TASKS, variables: { referenceID }, }) as ITasks;
+      update: (cache, data) => {
+        const cacheData = cache.readQuery({
+          query: GET_TASKS,
+          variables: { referenceID },
+        }) as ITasks;
         cache.writeQuery({
           query: GET_TASKS,
           data: {
-            tasksD: [...cacheData.tasks, data]
+            tasksD: [...cacheData.tasks, data],
           },
           variables: { referenceID },
         });
-      }
+      },
     });
-
-  }
+  };
   const subTask = (data, title) => {
-
     const subtask = [];
     const createSt = {
-      subtaskTitle: title, status: Status.INPROGRESS
-    }
+      subtaskTitle: title,
+      status: Status.INPROGRESS,
+    };
     subtask.push(createSt);
     editTaskApi({
       variables: {
-        taskID: data.taskID, status: data.status, files: [], taskTitle: data.taskTitle, startDate: data.startDate, endDate: data.endDate,
-        estimatedDays: data.estimatedDays, sendNotification: false, BKPID: data.BKPID, BKPTitle: data.BKPTitle,
-        saveTaskAsTemplate: data.saveTaskAsTemplate, phaseID: data.phaseID, phaseName: data.phaseName, referenceID: data.referenceID,
-        description: data.description, subtasks: subtask
+        taskID: data.taskID,
+        status: data.status,
+        files: [],
+        taskTitle: data.taskTitle,
+        startDate: data.startDate,
+        endDate: data.endDate,
+        estimatedDays: data.estimatedDays,
+        sendNotification: false,
+        BKPID: data.BKPID,
+        BKPTitle: data.BKPTitle,
+        saveTaskAsTemplate: data.saveTaskAsTemplate,
+        phaseID: data.phaseID,
+        phaseName: data.phaseName,
+        referenceID: data.referenceID,
+        description: data.description,
+        subtasks: subtask,
       },
-      update: (
-        cache,
-        data
-      ) => {
-        const cacheData = cache.readQuery({ query: GET_TASKS, variables: { referenceID }, }) as ITasks;
+      update: (cache, data) => {
+        const cacheData = cache.readQuery({
+          query: GET_TASKS,
+          variables: { referenceID },
+        }) as ITasks;
         cache.writeQuery({
           query: GET_TASKS,
           data: {
-            tasksD: [...cacheData.tasks, data]
+            tasksD: [...cacheData.tasks, data],
           },
           variables: { referenceID },
         });
-      }
+      },
     });
-
-  }
+  };
 
   const changeAdd = (data) => {
     console.log('changeTask', data);
     if (data === 'add') {
-      setIsNewTask(true)
+      setIsTaskFile(false);
+      setIsNewTask(true);
     }
     if (data === 'file') {
-      setIsTaskFile(true)
+      setIsNewTask(false);
+      setIsTaskFile(true);
     }
-
-  }
+  };
   const cancelNew = () => {
-    setIsTaskFile(false)
-  }
+    setIsTaskFile(false);
+  };
   const cancelTask = () => {
-    setIsNewTask(false)
-  }
+    setIsNewTask(false);
+  };
+
+  const clickBottomAddTask = () => {
+    setIsNewTask(true);
+  };
 
   return (
     <div>
-
-      <div className="pin_area" >
-
+      <div className="pin_area">
         <FilterPopup />
 
-
         <ToggleButton changeAdd={changeAdd}></ToggleButton>
-        {
-          isNewTask ?
-            <CreateTask workTypes={workTypes} onSuccess={refresh} cancel={cancelTask} isNewTask={isNewTask} />
-            : null
-        }
+        {isNewTask ? (
+          <CreateTask
+            workTypes={workTypes}
+            onSuccess={refresh}
+            cancel={cancelTask}
+            isNewTask={isNewTask}
+          />
+        ) : null}
       </div>
-      { isTaskFile ? <div className="pin_area" style={{ marginLeft: 804 }} >
-        <FileListIndex isTaskFile={isTaskFile} cancel={cancelNew} />
-      </div> : null
-      }
+      {isTaskFile ? (
+        <div className="pin_area" style={{ marginLeft: 804 }}>
+          <FileListIndex isTaskFile={isTaskFile} cancel={cancelNew} />
+        </div>
+      ) : null}
 
       {/* <MfAccountAppLib/> */}
-      {open ?
-        <div className="pin_area" >
-          <ModalAlert openAlertF={open} confirm={confirmation} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></ModalAlert>
+      {open ? (
+        <div className="pin_area">
+          <ModalAlert
+            openAlertF={open}
+            confirm={confirmation}
+            taskData={taskData}
+            taskStatus={taskStatus}
+            cancel={cancel}
+          ></ModalAlert>
         </div>
-        : null}
-      {openD ?
-        <div className="pin_area" >
-          <TaskDelete openAlertF={openD} confirm={confirmationDelete} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></TaskDelete>
+      ) : null}
+      {openD ? (
+        <div className="pin_area">
+          <TaskDelete
+            openAlertF={openD}
+            confirm={confirmationDelete}
+            taskData={taskData}
+            taskStatus={taskStatus}
+            cancel={cancel}
+          ></TaskDelete>
         </div>
-        : null}
-      {viewTaskOpen ?
-        <div className="pin_area" >
-          <ModalViewTask openAlertF={viewTaskOpen} taskData={taskData} taskStatus={taskStatus} cancel={cancel}></ModalViewTask>
+      ) : null}
+      {viewTaskOpen ? (
+        <div className="pin_area">
+          <ModalViewTask
+            openAlertF={viewTaskOpen}
+            taskData={taskData}
+            taskStatus={taskStatus}
+            cancel={cancel}
+          ></ModalViewTask>
         </div>
-        : null}
-      {editTaskOpen ?
-        <div className="pin_area" >
-          <ModalTaskEdit openAlertF={editTaskOpen} taskData={taskData} taskStatus={taskStatus} cancel={cancel} editTaskData={editTaskData}></ModalTaskEdit>
+      ) : null}
+      {editTaskOpen ? (
+        <div className="pin_area">
+          <ModalTaskEdit
+            openAlertF={editTaskOpen}
+            taskData={taskData}
+            taskStatus={taskStatus}
+            cancel={cancel}
+            editTaskData={editTaskData}
+          ></ModalTaskEdit>
         </div>
-        : null}
+      ) : null}
       <div className="TaskApp-container">
-        <h3 className="alltask">All Tasks</h3>
+        <h3 className="alltask" style={{marginBottom:'20px;'}}>All Tasks</h3>
         {data.tasks.map((task, id) => {
           return (
-            <div key={id}>
+            <div key={id} >
               <TaskArea
                 task={task}
                 id={id}
@@ -378,13 +451,20 @@ export function Tasks(props: TasksProps) {
                 deleteTask={deleteTask}
                 veiwTask={viewTask}
                 editTask={editTask}
-                subTask={subTask} />
+                subTask={subTask}
+              />
               {/* </TaskArea> */}
             </div>
-          )
+          );
         })}
       </div>
-      {/* <button className="ui large button btn-dashed  btn-large"><i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> Add new task    </button> */}
+      <button
+        onClick={clickBottomAddTask}
+        className="ui large button btn-dashed  btn-large"
+      >
+        <i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> Add new
+        task{' '}
+      </button>
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
 import { radios } from '@storybook/addon-knobs';
 import { ITask, ITasks, TaskMutation } from "../../interfaces/task";
-import { ApolloCache, FetchResult, useMutation } from '@apollo/client';
+import { ApolloCache, FetchResult, useMutation, useQuery } from '@apollo/client';
 import { ADD_TASK, GET_TASKS } from "../../graphql/graphql";
 // import '../../../../../../libs/shared-components/src/style/index.scss';
 import moment, { calendarFormat } from 'moment';
@@ -16,7 +16,9 @@ import { MS_SERVICE_URL } from '@cudo/mf-core';
 /* eslint-disable-next-line */
 export interface CreateFileTaskProps {
   close,
-  onSuccess
+  onSuccess,
+  cord,
+  fileData
 }
 
 export function CreateFileTask(props: CreateFileTaskProps) {
@@ -42,7 +44,8 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   const [worktypeID, setworktypeID] = React.useState("")
   const [worktypeName, setworktypeName] = React.useState("")
   const [workTypes, setWorkTypes] = React.useState([]);
-
+  const [fileData, setfileData] = React.useState(null)
+  const [taskTypeID, settaskTypeID] = React.useState('')
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
@@ -63,6 +66,22 @@ export function CreateFileTask(props: CreateFileTaskProps) {
       getWorkType(referenceID)
     }
   }, [referenceID])
+
+  React.useEffect(() => {
+    if (props.fileData) {
+      console.log('fileData-task', props.fileData);
+
+      setfileData(props.fileData)
+    }
+  }, [props.fileData])
+
+  React.useEffect(() => {
+    if (props.cord) {
+      console.log('props.cord', props.cord);
+      settaskTypeID(props.cord.pinsID)
+
+    }
+  })
 
   const query = `query Game($projectId: String!) {
     projectById( projectId: $projectId)
@@ -175,16 +194,21 @@ export function CreateFileTask(props: CreateFileTaskProps) {
     setOpen(false)
     props.close()
   }
+  enum taskType {
+    PIN = "PIN",
+    PROTOCOL = "PROTOCOL",
+    FILE = "FILE"
+  }
   const handleSaveTask = () => {
     // setOpen(false);
-    props.onSuccess();
     addTask({
       variables: {
         taskTitle, startDate, endDate, estimatedDays,
         sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
-        fileID: "",
-        fileName: "$fileName",
-        taskTypeID: "$taskTypeID",
+        fileID: fileData.uploadedFileID,
+        fileName: fileData.fileTitle,
+        taskTypeID,
+        taskType: taskType.PIN,
         files,
         description,
         subtasks: [],
@@ -195,6 +219,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
         { data: { addTask } }: FetchResult<TaskMutation>
       ) => {
         const cacheData = cache.readQuery({ query: GET_TASKS, variables: { referenceID }, }) as ITasks;
+        props.onSuccess();
         cache.writeQuery({
           query: GET_TASKS,
           data: {
@@ -202,9 +227,11 @@ export function CreateFileTask(props: CreateFileTaskProps) {
           },
           variables: { referenceID },
         });
+
       }
     });
-    props.close()
+
+    // props.close()
   };
   const onDescriptionChange = e => {
     console.log('des=>', e.target.value);
@@ -223,6 +250,15 @@ export function CreateFileTask(props: CreateFileTaskProps) {
         <Modal.Content body> */}
       <div>
         <Form>
+          <Grid columns={1}>
+            <Grid.Row>
+              <Grid.Column>
+                <Form.Field>
+                  <label>Pin Number {props.cord?.pinNumber} <span className="danger">*</span></label>
+                </Form.Field>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
           <Grid columns={1}>
             <Grid.Row>
               <Grid.Column>
@@ -289,13 +325,13 @@ export function CreateFileTask(props: CreateFileTaskProps) {
               <Grid.Column>
                 <Form.Field>
                   <div className="event top-event">
-                    <div className="label-light-purple-circle label-spacer">
+                    <div className="label-light-purple-circle label-spacer" style={{width:'26px'}}>
                       <span className="white-text">AB</span>
                     </div>
-                    <div className="label-light-black-circle label-spacer">
+                    <div className="label-light-black-circle label-spacer"  style={{width:'26px'}}>
                       <span className="white-text ">RJ</span>
                     </div>
-                    <div className="label-light-blue-circle label-spacer">
+                    <div className="label-light-blue-circle label-spacer"  style={{width:'26px'}}>
                       <span className="white-text">JB</span>
                     </div>
                   </div>

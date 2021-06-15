@@ -1,6 +1,7 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { FileFilterArgs } from '../dto/args/file-filter.args';
+import { FileDeleteInput } from '../dto/args/file.delete';
 import { FileReferenceParams } from '../dto/args/param/file-reference.param';
 import { ParentFileParams } from '../dto/args/param/parent-file.param';
 import { UpdateFileInput } from '../dto/update-file.input';
@@ -60,4 +61,25 @@ export class FileResolver {
   // async uploadedRootFiles(@Args("referenceFilter") referenceFilter: ReferenceFilterParams) {
   //   return await this.fileService.uploadedRootFiles(referenceFilter)
   // }
+
+  @Mutation(() => UploadedFileModel)
+  async deleteFile(
+      @Args('fileDeleteInput') fileDeleteInput: FileDeleteInput,
+  ) {
+      return this.fileService.deleteFile(fileDeleteInput);
+  }
+
+  @Mutation(() => UploadedFileModel)
+  async deleteFileVersion(
+      @Args('fileVersionDeleteInput') fileDeleteInput: FileDeleteInput,
+  ) {
+      return this.fileService.deleteFile(fileDeleteInput);
+  }
+
+  @Query(() => UploadedFileModel)
+  async uploadedFileByID(@Args("fileFilter") fileFilter?: FileDeleteInput
+  ) {
+      const file = await this.fileService.getuploadedFileByID(fileFilter);
+      return file;
+  }
 }

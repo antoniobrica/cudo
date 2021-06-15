@@ -23,6 +23,9 @@ query Tasks($referenceID: String!)
     createdAt
     updatedBy
     createdBy
+    taskTypeID
+    fileID
+    taskType
   reference{
   referenceID
   }
@@ -30,6 +33,7 @@ query Tasks($referenceID: String!)
   userID
   userName
   }
+  files{fileID,fileName,fileUrl} 
   followers{
   userID
   }
