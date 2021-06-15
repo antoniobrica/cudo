@@ -38,7 +38,7 @@ spec:
     spec:
       containers:
         - name: ms-tender-container
-          image: 192.168.0.31:5000/ms-tender
+          image: 192.168.1.38:5000/ms-tender
           ports:
             - containerPort: 5008
           imagePullPolicy: Always
