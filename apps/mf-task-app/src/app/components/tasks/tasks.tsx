@@ -1,17 +1,5 @@
 import React from 'react';
-import CreateTask from '../../app/components/create-task/create-task';
 
-import {
-  ADD_TASK,
-  DELETE_TASK,
-  GET_TASKS,
-  UPDATE_TASK,
-} from '../../app/graphql/graphql';
-import {
-  useTaskDeleteMutation,
-  useTaskQuery,
-  useTaskUpdateMutation,
-} from '../../app/services/useRequest';
 import './tasks.module.scss';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
 import { LoaderPage, ModalTaskEdit, TaskArea } from '@cudo/shared-components';
@@ -22,33 +10,35 @@ import {
   useMutation,
   useQuery,
 } from '@apollo/client';
-import {
-  ITask,
-  ITasks,
-  TaskMutation,
-  TaskUpdateMutation,
-} from '../../app/interfaces/task';
 import { ModalAlert, ModalViewTask } from '@cudo/shared-components';
-import FilterPopup from 'libs/shared-components/src/lib/components/modal/fliter';
-import { useHistory, useParams } from 'react-router';
-import TaskDelete from '../delete-task';
 import { useTranslation } from 'react-i18next';
-import { FileListIndex } from '@cudo/mf-document-lib';
-import ToggleButton from 'libs/shared-components/src/lib/components/tabs/togglebutton';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
-/* eslint-disable-next-line */
+import { ADD_TASK, GET_TASKS } from '../../graphql/graphql';
+import { ITasks } from '../../interfaces/task';
+import { useHistory } from 'react-router-dom';
+import { UPDATE_TASK, DELETE_TASK } from '../../graphql/graphql';
+import { useTaskQuery, useTaskUpdateMutation, useTaskDeleteMutation } from '../../services/useRequest';
+import CreateTask from '../create-task/create-task';
+import TaskDelete from '../delete-task/delete-task';
+import { FilterPopup, ToggleButton } from '@cudo/shared-components';
+import { FileListIndex } from '@cudo/mf-document-lib';
 export interface TasksProps { }
 
 export function Tasks(props: TasksProps) {
   const history = useHistory();
   const { t } = useTranslation();
-  const res = history.location.pathname.split('/');
-  const referenceID = res[3].toString();
+  const [referenceID, setReferenceID] = React.useState<string>('')
   const { loading, error, data } = useTaskQuery(GET_TASKS, {
     variables: { referenceID },
   });
 
   React.useEffect(() => {
+    const res = history.location.pathname.split('/');
+    console.log("URL Path", res);
+    setReferenceID(res[3].toString());
+  }, [history]);
+  React.useEffect(() => {
+    console.log("Refernce ID", referenceID);
     if (referenceID) {
       getWorkType(referenceID);
     }
@@ -87,7 +77,7 @@ export function Tasks(props: TasksProps) {
     refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
   });
 
-  const query = `query Game($projectId: String!) {
+  const query = `query ProjectById($projectId: String!) {
     projectById( projectId: $projectId)
     {
       projectId
@@ -107,7 +97,7 @@ export function Tasks(props: TasksProps) {
  }`;
 
   const getWorkType = (referenceID) => {
-    console.log('sasstoken');
+    console.log('sasstoken', referenceID);
     return axios
       .post(MS_SERVICE_URL['ms_project'].url, {
         query,
@@ -116,6 +106,7 @@ export function Tasks(props: TasksProps) {
         },
       })
       .then((res) => {
+        console.log("Value of project query", res);
         const wt = res.data.data.projectById[0].projectWorkTypes;
         setWorkTypes(wt);
       })
@@ -139,7 +130,7 @@ export function Tasks(props: TasksProps) {
   //   </div>
   // );
   if (data) {
-    console.log('tasks=>', data.tasks);
+    console.log('tasks=>', data.tasks.results);
   }
 
   // setProjectId(res[3]);
@@ -187,7 +178,7 @@ export function Tasks(props: TasksProps) {
           query: GET_TASKS,
           variables: { referenceID },
         }) as ITasks;
-        const newTask = cacheData.tasks.map((t) => {
+        const newTask = cacheData?.tasks?.results?.map((t) => {
           if (t.taskID === taskID) {
             if (t.status === 'INPROGRESS') {
               return { ...t, status: Status.COMPLETED };
@@ -236,7 +227,7 @@ export function Tasks(props: TasksProps) {
         //   }
         // });
 
-        const newTask = cacheData.tasks.filter(
+        const newTask = cacheData?.tasks?.results?.filter(
           (item) => item.taskID !== taskID
         );
         cache.writeQuery({
@@ -303,7 +294,7 @@ export function Tasks(props: TasksProps) {
         cache.writeQuery({
           query: GET_TASKS,
           data: {
-            tasksD: [...cacheData.tasks, data],
+            tasksD: [...cacheData.tasks.results, data],
           },
           variables: { referenceID },
         });
@@ -344,7 +335,7 @@ export function Tasks(props: TasksProps) {
         cache.writeQuery({
           query: GET_TASKS,
           data: {
-            tasksD: [...cacheData.tasks, data],
+            tasksD: [...cacheData.tasks.results, data],
           },
           variables: { referenceID },
         });
@@ -440,8 +431,8 @@ export function Tasks(props: TasksProps) {
         </div>
       ) : null}
       <div className="TaskApp-container">
-        <h3 className="alltask" style={{marginBottom:'20px;'}}>All Tasks</h3>
-        {data.tasks.map((task, id) => {
+        <h3 className="alltask" style={{ marginBottom: '20px;' }}>All Tasks</h3>
+        {data?.tasks?.results?.map((task, id) => {
           return (
             <div key={id} >
               <TaskArea
