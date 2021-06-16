@@ -13,6 +13,8 @@ import ModalViewPlanning from '../../../../../shared-components/src/lib/componen
 import { useMilestonesQuery, useMilestoneMutation, useIMileStoneQuery, useMilestoneDeleteMutation, useMilestoneUpdateMutation } from '../../services/useRequest';
 import { GET_MILESTONES, ADD_MILESTONE, GET_MILESTONES_BY_ID, DELETE_MILESTONE, UPDATE_MILESTONE } from '../../graphql/graphql';
 import { LoaderPage } from "@cudo/shared-components";
+import { ModalAlert } from '@cudo/shared-components';
+
 import { ApolloCache, FetchResult, from, useMutation } from '@apollo/client';
 import { MilestoneMutation, IMileStones } from '../../interfaces/task'
 import PlanDelete from './delete-task';
@@ -26,13 +28,21 @@ export interface PlanningProps {
 export function Planning(props: PlanningProps) {
   const [open, setOpen] = React.useState(false);
   const [openD, setOpenD] = React.useState(false);
+  const [openUpdate, setOpenUpdate] = React.useState(false);
+
   const [openEdit, setOpenEdit] = React.useState(false);
   const [milestoneID, setmilestoneID] = React.useState('');
   const [milestoneIDd, setmilestoneIDd] = React.useState('');
   const [milestoneIDe, setmilestoneIDE] = React.useState('');
+  const [updateStaus, setUpdateStatus] = React.useState('');
+  const [milestoneStatus, setMilestoneStatus] = React.useState('')
   const [milestoneByID, setmilestoneByID] = React.useState({});
   const { loading, error, data } = useMilestonesQuery(GET_MILESTONES);
   // const [addPlan] = useMilestoneMutation(ADD_MILESTONE);
+  enum Status {
+    INPROGRESS = 'INPROGRESS',
+    COMPLETED = 'COMPLETED',
+  }
   const [addPlan, { data: refreshData }] = useMutation(ADD_MILESTONE,
     {
       refetchQueries: [
@@ -83,6 +93,54 @@ export function Planning(props: PlanningProps) {
     setPlanData(data)
     setmilestoneIDd(data.milestoneID);
     setOpenD(true)
+  }
+  const update = (data) => {
+    setPlanData(data)
+    if (data.status === 'COMPLETED') {
+      setMilestoneStatus('Re-open');
+    } else {
+      setMilestoneStatus('Mark as Complete');
+    }
+    setUpdateStatus(data.milestoneID)
+    setOpenUpdate(true)
+  }
+
+  const confirmation = (data, task) => {
+    console.log('data', task);
+    setOpenUpdate(false);
+    let status;
+    if (task.status === 'COMPLETED') {
+      status = Status.INPROGRESS;
+    } else {
+      status = Status.COMPLETED;
+    }
+    const updatedMilestone = {
+      milestoneID: task.milestoneID,
+      description: task.description,
+      worktypeName: task.worktypeName,
+      milestoneTitle: task.milestoneTitle,
+      phaseName: task.phaseName,
+      dueDate: task.dueDate,
+      status: status
+    }
+
+    milestoneUpdate({
+      variables: updatedMilestone,
+      update: (cache) => {
+        console.log('updatedMilestone', updatedMilestone)
+        const cacheData = cache.readQuery({ query: GET_MILESTONES }) as IMileStones;
+        cache.writeQuery({
+          query: GET_MILESTONES,
+          data: {
+            tasks: [...cacheData.MileStones, milestoneUpdate]
+          },
+        });
+      }
+
+    });
+  };
+  const cancelUpdate = () => {
+    setOpenUpdate(false);
   }
   const edittPlan = (data) => {
     setPlanData(data)
@@ -179,7 +237,7 @@ export function Planning(props: PlanningProps) {
   return (
     <div>
       <ModalPlanningNew worktypes={props.worktypes} getMilestoneData={getMilestoneData}></ModalPlanningNew>
-      { open ?
+      {open ?
         <div style={{ marginLeft: 900 }} >
           <ModalViewPlanning
             openPlanningDetail={open}
@@ -189,6 +247,18 @@ export function Planning(props: PlanningProps) {
           ></ModalViewPlanning>
         </div>
         : null}
+      {openUpdate ? (
+        <div className="pin_area">
+          <ModalAlert
+            name='Milestone'
+            openAlertF={openUpdate}
+            confirm={confirmation}
+            taskData={planData}
+            taskStatus={milestoneStatus}
+            cancel={cancelUpdate}
+          ></ModalAlert>
+        </div>
+      ) : null}
       {openD ?
         <div style={{ marginLeft: 900 }} >
           <PlanDelete openAlertF={openD} confirm={confirmationDelete} planData={planData} cancel={cancel}></PlanDelete>
@@ -202,8 +272,8 @@ export function Planning(props: PlanningProps) {
       <div className="ui-tabs">
         <h6 className="h5heading planningtop planningbelow">
           Planning
-            </h6>
-        <hr style={{ borderColor: 'rgba(34,36,38,.1)' }}></hr>
+        </h6>
+        {/* <hr style={{ borderColor: 'rgba(34,36,38,.1)' }}></hr> */}
         <h6 className="headingactive">
           Active Milestone{' '}
         </h6>
@@ -222,7 +292,7 @@ export function Planning(props: PlanningProps) {
                             <span className="time">{new Date(plan.dueDate).toDateString()}</span>
                             <span className="summary">
                               {' '}
-                              <a href="">
+                              <a onClick={() => update(plan)}>
                                 {' '}
                                 <i
                                   className="ms-Icon ms-Icon--Completed mr-10"
@@ -273,6 +343,11 @@ export function Planning(props: PlanningProps) {
                                     onClick={() => deletePlan(plan)}
                                     icon="trash alternate outline"
                                     text="Delete"
+                                  />
+                                  <Dropdown.Item
+                                    onClick={() => update(plan)}
+                                    icon="ms-Icon ms-Icon--Completed"
+                                    text="update"
                                   />
                                 </Dropdown.Menu>
                               </Dropdown>

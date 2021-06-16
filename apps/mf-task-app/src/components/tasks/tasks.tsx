@@ -399,6 +399,7 @@ export function Tasks(props: TasksProps) {
       {open ? (
         <div className="pin_area">
           <ModalAlert
+            name='task'
             openAlertF={open}
             confirm={confirmation}
             taskData={taskData}
@@ -440,7 +441,7 @@ export function Tasks(props: TasksProps) {
         </div>
       ) : null}
       <div className="TaskApp-container">
-        <h3 className="alltask" style={{marginBottom:'20px;'}}>All Tasks</h3>
+        <h3 className="alltask" style={{ marginBottom: '20px;' }}>All Tasks</h3>
         {data.tasks.map((task, id) => {
           return (
             <div key={id} >

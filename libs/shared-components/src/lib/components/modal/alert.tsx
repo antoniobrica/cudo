@@ -17,7 +17,8 @@ export interface AlertProps {
   confirm?,
   taskData?,
   cancel?,
-  taskStatus?
+  taskStatus?,
+  name?
 }
 export const ModalAlert = (props: AlertProps) => {
   const [state, dispatch] = React.useReducer(exampleReducer, {
@@ -50,20 +51,20 @@ export const ModalAlert = (props: AlertProps) => {
       open={open} className="mini"
     >
       {/* <Modal.Header>Update your Task</Modal.Header> */}
-      <Modal.Header>Update Task Status
+      <Modal.Header>Update {props.name} Status
         <a className="float_right" onClick={cancel}>  <i className="ms-Icon ms-Icon--CalculatorMultiply mr-10" aria-hidden="true"></i></a>
 
       </Modal.Header>
       <Modal.Content>
-        <p className="text-center" style={{ color: "black" }}>Are you sure you want to {props.taskStatus} the task? </p>
+        <p className="text-center" style={{ color: "black" }}>Are you sure you want to {props.taskStatus} the  {props.name}? </p>
       </Modal.Content>
       <Modal.Actions className="float_right">
         <Button positive onClick={yes}>
           Yes
-          </Button>
+        </Button>
         <Button negative onClick={cancel}>
           No
-          </Button>
+        </Button>
       </Modal.Actions>
     </Modal>
   )
