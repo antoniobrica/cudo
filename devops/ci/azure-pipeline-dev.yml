@@ -27,7 +27,6 @@ jobs:
             $result = Invoke-RestMethod -Uri $url -Headers @{Authorization = "Bearer $(System.AccessToken)"} -Method GET
                        
             $changesFolder = $result.changes | Where-Object{$_.item.gitObjectType -match "tree"} | Select-Object -Property {$_.item.path}
-######################################################Frontend###################################################################
             foreach($path in $changesFolder){
               if($path -match '/mf-account-app'){
              echo "##vso[task.setvariable variable=mfaccountapp;isOutput=true]$True"
