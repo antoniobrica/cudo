@@ -14,7 +14,7 @@ trigger:
       - apps/mf-account-app/*
       - apps/mf-container-app/*
       - apps/mf-task-app/*
-      - apps/mf-account-app/*
+      - apps/mf-document-app/*
 jobs:
 - job: cudogetchp
   pool: cudo-selfhosted-agent
@@ -27,6 +27,14 @@ jobs:
             $result = Invoke-RestMethod -Uri $url -Headers @{Authorization = "Bearer $(System.AccessToken)"} -Method GET
                        
             $changesFolder = $result.changes | Where-Object{$_.item.gitObjectType -match "tree"} | Select-Object -Property {$_.item.path}
+            ######################################################common####################################################################            
+            foreach($path in $changesFolder){
+              if($path -match '/package'){
+             echo "##vso[task.setvariable variable=packages;isOutput=true]$True"
+            break
+            }
+            }
+            ######################################################Frontend####################################################################            
             foreach($path in $changesFolder){
               if($path -match '/mf-account-app'){
              echo "##vso[task.setvariable variable=mfaccountapp;isOutput=true]$True"
@@ -46,18 +54,12 @@ jobs:
             }
             }
             foreach($path in $changesFolder){
-              if($path -match '/mf-account-app'){
-             echo "##vso[task.setvariable variable=mfaccountapp;isOutput=true]$True"
+              if($path -match '/mf-document-app'){
+             echo "##vso[task.setvariable variable=mfdocumentapp;isOutput=true]$True"
             break
             }
             }
             ######################################################Backend####################################################################            
-            foreach($path in $changesFolder){
-              if($path -match '/package'){
-             echo "##vso[task.setvariable variable=packages;isOutput=true]$True"
-            break
-            }
-            }
             foreach($path in $changesFolder){
               if($path -match '/apps/ms-account'){
              echo "##vso[task.setvariable variable=msaccount;isOutput=true]$True"
@@ -83,7 +85,7 @@ jobs:
             }
             }
       name: cudovars
-##################################################Common#####################################################################################
+      ##################################################Common#####################################################################################
 - job: packages
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -97,7 +99,7 @@ jobs:
                   rm -f package.json
                   cp package/package.json .
                   npm install
-###################################################Frontend###############################################################################
+      ###################################################Frontend###############################################################################
 - job: mfaccountapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -161,24 +163,24 @@ jobs:
 - job: mfaccountapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
-  condition: eq(dependencies.cudogetchp.outputs['cudovars.mfaccountapp'], 'true')
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.mfdocumentapp'], 'true')
   steps:
           - checkout: self
             clean: false
             lfs: false
           - bash : |
-                  npm run nx run-many -- --target=build --projects='mf-account-app' --with-deps --generatePackageJson=true
-                  cp devops/docker/mf-dockerfile dist/apps/mf-account-app/Dockerfile
-                  cp devops/docker/nginx.conf dist/apps/mf-account-app/
+                  npm run nx run-many -- --target=build --projects='mf-document-app' --with-deps --generatePackageJson=true
+                  cp devops/docker/mf-dockerfile dist/apps/mf-document-app/Dockerfile
+                  cp devops/docker/nginx.conf dist/apps/mf-document-app/
           - task: Docker@2
             displayName: Build and push an image to container registry
             inputs:
               command: buildAndPush
-              repository: mf-account-app-dev
+              repository: mf-document-app-dev
               dockerfile: dist/apps/mf-account-app/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
-###################################################Backend####################################################################################
+     ###################################################Backend####################################################################################
 - job: msaccount
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
