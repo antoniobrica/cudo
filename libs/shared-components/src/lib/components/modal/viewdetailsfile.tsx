@@ -106,7 +106,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                         <Page pageNumber={pageNumber} />
                       </Document>
                       :
-                      <Canvas imgUrl={imgUrl} setIsPinCreated={setIsPinCreated}></Canvas>
+                      <Canvas imgUrl={imgUrl} isPinCreated={isPinCreated} setIsPinCreated={setIsPinCreated}></Canvas>
                       // <Image src={imgUrl} fluid />
                     }
 

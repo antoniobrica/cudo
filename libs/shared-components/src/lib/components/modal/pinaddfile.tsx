@@ -44,7 +44,7 @@ export interface AddPinProps {
 }
 export const AddPinFile = (props: AddPinProps) => {
   const [open, setOpen] = React.useState(false);
-  const [isPinTask, setIsPinTask] = React.useState(true);
+  const [allowToCreateNewPin, setAllowToCreateNewPin] = React.useState(false);
   const [fileData, setFileData] = React.useState(null);
   const [pinTasks, setPinTasks] = React.useState([]);
   const [isPinCreated, setIsPinCreated] = React.useState<boolean>(false);
@@ -105,7 +105,7 @@ export const AddPinFile = (props: AddPinProps) => {
 
   React.useEffect(() => {
     console.log("New Pin created ", isPinCreated);
-    setIsPinTask(false);
+    setAllowToCreateNewPin(false);
   }, [isPinCreated])
 
   React.useEffect(() => {
@@ -176,15 +176,15 @@ export const AddPinFile = (props: AddPinProps) => {
   const onSuccess = async () => {
     console.log('onSuccess');
     await getPins();
-    setIsPinTask(true);
+    setAllowToCreateNewPin(false);
     props.savePins(cord)
   }
   const changePinTask = () => {
     console.log('changePinTask');
-    setIsPinTask(false);
+    setAllowToCreateNewPin(true);
   }
   const taskClose = () => {
-    setIsPinTask(true);
+    setAllowToCreateNewPin(false);
     setIsPinCreated(false);
   }
   return (
@@ -213,7 +213,7 @@ export const AddPinFile = (props: AddPinProps) => {
             <Grid stackable columns={2}>
               <Grid.Column className="colorback" style={{ width: '65%' }}>
                 <Segment>
-                  <Canvas imgUrl={imgUrl} coardinates={getCoardinates} fileId={fileId} isPinTask={isPinTask} setIsPinCreated={setIsPinCreated}></Canvas>
+                  <Canvas imgUrl={imgUrl} coardinates={getCoardinates} fileId={fileId} allowToCreateNewPin={allowToCreateNewPin} isPinCreated={isPinCreated} setIsPinCreated={setIsPinCreated}></Canvas>
                 </Segment>
 
               </Grid.Column>
