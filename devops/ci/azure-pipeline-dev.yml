@@ -11,6 +11,10 @@ trigger:
       - apps/ms-document/*
       - apps/ms-project/*
       - apps/ms-task/*
+      - apps/mf-account-app/*
+      - apps/mf-container-app/*
+      - apps/mf-task-app/*
+      - apps/mf-account-app/*
 jobs:
 - job: cudogetchp
   pool: cudo-selfhosted-agent
@@ -23,7 +27,32 @@ jobs:
             $result = Invoke-RestMethod -Uri $url -Headers @{Authorization = "Bearer $(System.AccessToken)"} -Method GET
                        
             $changesFolder = $result.changes | Where-Object{$_.item.gitObjectType -match "tree"} | Select-Object -Property {$_.item.path}
-     
+ ######################################################Frontend###################################################################
+            foreach($path in $changesFolder){
+              if($path -match '/mf-account-app'){
+             echo "##vso[task.setvariable variable=mfaccountapp;isOutput=true]$True"
+            break
+            }
+            }
+            foreach($path in $changesFolder){
+              if($path -match '/mf-container-app'){
+             echo "##vso[task.setvariable variable=mfcontainerapp;isOutput=true]$True"
+            break
+            }
+            }
+            foreach($path in $changesFolder){
+              if($path -match '/mf-task-app'){
+             echo "##vso[task.setvariable variable=mftaskapp;isOutput=true]$True"
+            break
+            }
+            }
+            foreach($path in $changesFolder){
+              if($path -match '/mf-account-app'){
+             echo "##vso[task.setvariable variable=mfaccountapp;isOutput=true]$True"
+            break
+            }
+            }
+ ######################################################Backend####################################################################            
             foreach($path in $changesFolder){
               if($path -match '/package'){
              echo "##vso[task.setvariable variable=packages;isOutput=true]$True"
@@ -55,7 +84,7 @@ jobs:
             }
             }
       name: cudovars
-
+##################################################Common#####################################################################################
 - job: packages
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -69,7 +98,88 @@ jobs:
                   rm -f package.json
                   cp package/package.json .
                   npm install
-
+###################################################Frontend###############################################################################
+- job: mfaccountapp
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.mfaccountapp'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='mf-account-app' --with-deps --generatePackageJson=true
+                  cp devops/docker/mf-dockerfile dist/apps/mf-account-app/Dockerfile
+                  cp devops/docker/nginx.conf dist/apps/mf-account-app/
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: mf-account-app-dev
+              dockerfile: dist/apps/mf-account-app/Dockerfile
+              containerRegistry: dev-docker-registry
+              tags: latest
+- job: mfcontainerapp
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.mfcontainerapp'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='mf-container-app' --with-deps --generatePackageJson=true
+                  cp devops/docker/mf-dockerfile dist/apps/mf-container-app/Dockerfile
+                  cp devops/docker/nginx.conf dist/apps/mf-container-app/
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: mf-container-app-dev
+              dockerfile: dist/apps/mf-container-app/Dockerfile
+              containerRegistry: dev-docker-registry
+              tags: latest
+- job: mftaskapp
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.mftaskapp'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='mf-task-app' --with-deps --generatePackageJson=true
+                  cp devops/docker/mf-dockerfile dist/apps/mf-task-app/Dockerfile
+                  cp devops/docker/nginx.conf dist/apps/mf-task-app/
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: mf-task-app-dev
+              dockerfile: dist/apps/mf-task-app/Dockerfile
+              containerRegistry: dev-docker-registry
+              tags: latest
+- job: mfaccountapp
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.mfaccountapp'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='mf-account-app' --with-deps --generatePackageJson=true
+                  cp devops/docker/mf-dockerfile dist/apps/mf-account-app/Dockerfile
+                  cp devops/docker/nginx.conf dist/apps/mf-account-app/
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: mf-account-app-dev
+              dockerfile: dist/apps/mf-account-app/Dockerfile
+              containerRegistry: dev-docker-registry
+              tags: latest
+###################################################Backend####################################################################################
 - job: msaccount
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
