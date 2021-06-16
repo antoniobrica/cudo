@@ -160,7 +160,7 @@ jobs:
               dockerfile: dist/apps/mf-task-app/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
-- job: mfaccountapp
+- job: mfdocumentapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
   condition: eq(dependencies.cudogetchp.outputs['cudovars.mfdocumentapp'], 'true')
