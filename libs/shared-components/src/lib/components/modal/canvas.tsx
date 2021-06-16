@@ -7,7 +7,7 @@ export interface CanvasProps {
   coardinates?,
   fileId?,
   isPinTask?
-
+  setIsPinCreated
 }
 export function Canvas(props: CanvasProps) {
   const canvas = useRef<HTMLCanvasElement>();
@@ -37,8 +37,8 @@ export function Canvas(props: CanvasProps) {
   // initialize the canvas context
   useEffect(() => {
     const canvasEle = canvas.current;
-    canvasEle.width = canvasEle.clientWidth ;
-    canvasEle.height = canvasEle.clientHeight ;
+    canvasEle.width = canvasEle.clientWidth;
+    canvasEle.height = canvasEle.clientHeight;
     setctx(canvasEle.getContext("2d"));
     console.log("Calling from useeffect pinList", pinList)
     if (props.isPinTask == false) {
@@ -83,6 +83,7 @@ export function Canvas(props: CanvasProps) {
     const lastBoxes = [...pinList];
     lastBoxes.push(drawObj)
     setboxes([...lastBoxes])
+    props.setIsPinCreated(true);
     console.log('pinList after new', lastBoxes)
   }, [isCircleSelected, isMouseDown, x_axis, y_axis]);
 

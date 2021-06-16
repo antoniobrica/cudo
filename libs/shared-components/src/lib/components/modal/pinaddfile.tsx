@@ -47,7 +47,7 @@ export const AddPinFile = (props: AddPinProps) => {
   const [isPinTask, setIsPinTask] = React.useState(true);
   const [fileData, setFileData] = React.useState(null);
   const [pinTasks, setPinTasks] = React.useState([]);
-
+  const [isPinCreated, setIsPinCreated] = React.useState<boolean>(false);
   const [cord, setCord] = React.useState(null);
   const [imgUrl, setimgUrl] = React.useState('');
   const [fileId, setFileId] = React.useState('');
@@ -102,6 +102,11 @@ export const AddPinFile = (props: AddPinProps) => {
     })
       .catch(err => console.log(err))
   }
+
+  React.useEffect(() => {
+    console.log("New Pin created ", isPinCreated);
+    setIsPinTask(false);
+  }, [isPinCreated])
 
   React.useEffect(() => {
     getPins();
@@ -180,6 +185,7 @@ export const AddPinFile = (props: AddPinProps) => {
   }
   const taskClose = () => {
     setIsPinTask(true);
+    setIsPinCreated(false);
   }
   return (
     <div >
@@ -207,7 +213,7 @@ export const AddPinFile = (props: AddPinProps) => {
             <Grid stackable columns={2}>
               <Grid.Column className="colorback" style={{ width: '65%' }}>
                 <Segment>
-                  <Canvas imgUrl={imgUrl} coardinates={getCoardinates} fileId={fileId} isPinTask={isPinTask}></Canvas>
+                  <Canvas imgUrl={imgUrl} coardinates={getCoardinates} fileId={fileId} isPinTask={isPinTask} setIsPinCreated={setIsPinCreated}></Canvas>
                 </Segment>
 
               </Grid.Column>
@@ -216,7 +222,7 @@ export const AddPinFile = (props: AddPinProps) => {
                   {/* <Grid.Column style={{ width: '30%', marginLeft: '-9px', marginTop: '-10px' }}> */}
 
                   <div>
-                    {isPinTask ?
+                    {!isPinCreated ?
                       <div style={{ background: '#F1F5F8', padding: '10px', marginBottom: '-18px' }}>
                         <Form.Field classname="buttonbluedown">
                           <label> </label>

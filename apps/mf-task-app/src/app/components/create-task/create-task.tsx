@@ -186,7 +186,7 @@ export function CreateTask(props: CreateTaskProps) {
         cache.writeQuery({
           query: GET_TASKS,
           data: {
-            tasksD: [...cacheData.tasks, addTask]
+            tasksD: [...cacheData.tasks.results, addTask]
           },
           variables: { referenceID },
         });
