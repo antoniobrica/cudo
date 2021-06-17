@@ -50,6 +50,17 @@ export class TaskBasicDetailsInput {
     @Field(type => TaskTypeEnum, { description: `Task status` })
     taskType?: TaskTypeEnum;
 
+    @Field({ nullable: true, description: ` Task Type Name`  })
+    taskTypeName?: string;
+  
+  
+    @Field({ nullable: true, description: ` work Type ParentID`  })
+    workTypeID?: string;
+  
+  
+    @Field({ nullable: true, description: ` work Type Name `  })
+    workTypeName?: string;
+
     @Field({ description: `Description of task` })
     description?: string;
 

@@ -53,10 +53,10 @@ export class TasksModel {
   @Field({ nullable: true, description: `Description of task` })
   description?: string;
 
-  @Field({ nullable: true, description: ` Task ParentID`  })
+  @Field({ nullable: true, description: ` file ID`  })
   fileID?: string;
 
-  @Field({ nullable: true, description: ` Task ParentID`  })
+  @Field({ nullable: true, description: ` file Name`  })
   fileName?: string;
 
   @Field({ nullable: true, description: ` Task ParentID`  })
@@ -70,6 +70,18 @@ export class TasksModel {
 
   @Field({ nullable: true, description: `Description of task` })
   taskType?: string;
+
+
+  @Field({ nullable: true, description: ` Task Type Name`  })
+  taskTypeName?: string;
+
+
+  @Field({ nullable: true, description: ` work Type ParentID`  })
+  workTypeID?: string;
+
+
+  @Field({ nullable: true, description: ` work Type Name `  })
+  workTypeName?: string;
 
   @Field({ description: `Task updated at` })
   updatedAt?: Date;
