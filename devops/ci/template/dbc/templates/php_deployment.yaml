@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.env }}-php
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.env }}-php 
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.env}}-php
+    spec:
+      volumes:
+      - name: {{ .Values.env }}-code
+        persistentVolumeClaim:
+          claimName: {{ .Values.env }}-code
+      containers:
+      - name: {{ .Values.env}}-php
+        image: dbcpiacr01.azurecr.io/php-fpm-8.0:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: {{ .Values.service.phpport }}
+        livenessProbe:
+          tcpSocket:
+            port: {{ .Values.service.phpport }}
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          timeoutSeconds: 2
+        volumeMounts:
+        - name: {{ .Values.env }}-code
+          mountPath: /code
+          # resources:
+          #requests:
+          #  memory: "64Mi"
+          #  cpu: "250m"
+          #limits:
+          #  memory: "128Mi"
+          #  cpu: "500m"
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+      initContainers:
+      - name: install
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        #image: dbcacrdev1.azurecr.io/dbc-pi-uat:1284
+        volumeMounts:
+        - name: {{ .Values.env }}-code
+          mountPath: /code
+        command: ["/bin/sh", "-c", "chown -R 1000:1000 /code ; cp -vr /var/www/. /code ; find /code -type d -print0 | xargs -0 chmod 775 ;  find /code -type f -print0 | xargs -0 chmod 664 ; chown -R 1000:33 /code/storage"]
+
+
