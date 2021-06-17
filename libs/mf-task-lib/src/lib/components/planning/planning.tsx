@@ -19,6 +19,7 @@ import { ApolloCache, FetchResult, from, useMutation } from '@apollo/client';
 import { MilestoneMutation, IMileStones } from '../../interfaces/task'
 import PlanDelete from './delete-task';
 import moment, { calendarFormat } from 'moment';
+import img3 from 'libs/shared-components/src/green_tick.png';
 
 
 export interface PlanningProps {
@@ -294,10 +295,13 @@ export function Planning(props: PlanningProps) {
                               {' '}
                               <a onClick={() => update(plan)}>
                                 {' '}
-                                <i
-                                  className="ms-Icon ms-Icon--Completed mr-10"
-                                  aria-hidden="true"
-                                ></i>
+                                {plan.status == "INPROGRESS" ?
+                                  <i
+                                    className="ms-Icon ms-Icon--Completed mr-10"
+                                    aria-hidden="true"
+                                  ></i> : <img src={img3} className=" mr-2 mr-10 " />
+                                }
+
                               </a>
                             </span>
                           </div>
