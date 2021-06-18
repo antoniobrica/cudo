@@ -177,7 +177,7 @@ jobs:
             inputs:
               command: buildAndPush
               repository: mf-document-app-dev
-              dockerfile: dist/apps/mf-account-app/Dockerfile
+              dockerfile: dist/apps/mf-document-app/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
      ###################################################Backend####################################################################################
