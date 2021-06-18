@@ -9,8 +9,8 @@ export interface CanvasProps {
   allowToCreateNewPin?
   isPinCreated?
   setIsPinCreated?
-  savePin
-  pinSaved
+  savePin?
+  pinSaved?
 }
 export function Canvas(props: CanvasProps) {
   const canvasToDrawCircle = useRef<HTMLCanvasElement>();
