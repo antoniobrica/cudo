@@ -6,7 +6,8 @@ query Tasks($referenceID: String!)
     referenceType: PROJECTTYPE
     referenceID: $referenceID
   }){
-    taskID
+    results{
+      taskID
     taskTitle
     startDate
     endDate
@@ -39,6 +40,7 @@ query Tasks($referenceID: String!)
   }
   subtasks{subtaskID, subtaskTitle, status}
   }
+    } 
   }
 `;
 

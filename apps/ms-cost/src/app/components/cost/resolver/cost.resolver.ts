@@ -3,6 +3,7 @@ import { CostEntity } from '../../../entities/cost.entity';
 import CostFilterParams from '../../../utils/types/costFilterParams';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { CreateCostInput } from '../dto/create-cost.input';
+import { CostDeleteInput } from '../dto/delete-cost.input';
 import { CostModel } from '../model/cost.model';
 import { CostService } from '../service/cost.service';
 
@@ -29,6 +30,13 @@ export class CostResolver {
   async costsByID(@Args("referenceFilter") referenceFilter: ReferenceFilterParams,
     @Args("costFilterParams") costFilterParams: CostFilterParams): Promise<CostEntity[]> {
     return await this.costService.findCostByID(referenceFilter, costFilterParams)
+  }
+
+  @Mutation(() => CostModel)
+  async deleteCost(
+      @Args('costFilter') costDeleteInput: CostDeleteInput,
+  ) {
+      return this.costService.deleteCost(costDeleteInput);
   }
 
 }

@@ -54,10 +54,10 @@ export class SessionResolver {
             return this.sessionService.updateSessionByID(createInput);
         }
 
-        @Mutation(() => [SessionModel])
+        @Mutation(() => SessionModel)
         async deleteSession(
-            @Args('sessionDeleteInput') sessionDeleteInput: SessionDeleteInput
+            @Args('sessionFilter') sessionDeleteInput: SessionDeleteInput
         ) {
-            return this.sessionService.deleteSessionByID(sessionDeleteInput);
+            return this.sessionService.deleteSession(sessionDeleteInput);
         }
 }

@@ -14,8 +14,6 @@ import { useHistory } from 'react-router';
 import axios from 'axios';
 import { CreateFileTaskIndex } from '@cudo/mf-task-lib'
 import { MS_SERVICE_URL } from '@cudo/mf-core';
-// import PinMaskTask from './pinmasktask';
-
 
 function exampleReducer(state, action) {
   switch (action.type) {
@@ -39,22 +37,23 @@ export interface AddPinProps {
   filesData?,
   dowloadFilesData?,
   onSuccess?,
-  savePins?
+  savePin?
 
 }
 export const AddPinFile = (props: AddPinProps) => {
   const [open, setOpen] = React.useState(false);
-  const [isPinTask, setIsPinTask] = React.useState(true);
+  const [allowToCreateNewPin, setAllowToCreateNewPin] = React.useState(false);
   const [fileData, setFileData] = React.useState(null);
   const [pinTasks, setPinTasks] = React.useState([]);
-
+  const [isPinCreated, setIsPinCreated] = React.useState<boolean>(false);
   const [cord, setCord] = React.useState(null);
   const [imgUrl, setimgUrl] = React.useState('');
   const [fileId, setFileId] = React.useState('');
+  const [saveNewPinOnCanvase, setSaveNewPinOnCanvase] = React.useState(false);
+  const [pinSavedOnCanvase, setPinSavedOnCanvase] = React.useState(false);
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3]?.toString();
-
   const getPinQuery = `query TasksByTasktypes(
    $referenceID: String!,
   $fileID: String!
@@ -82,8 +81,7 @@ export const AddPinFile = (props: AddPinProps) => {
     
     } 
    }`;
-  console.log("referenceID", referenceID)
-  // console.log("referenceID", props.filesData.uploadedFileID)
+  console.log("referenceID", referenceID);
   const getPins = async () => {
     return axios.post(
       MS_SERVICE_URL['ms_task'].url,
@@ -95,7 +93,6 @@ export const AddPinFile = (props: AddPinProps) => {
         }
       }
     ).then(res => {
-      //setisRedraw(true)
       console.log('get_pin_tasks', res.data.data);
       setPinTasks(res.data.data.tasksByTasktypes)
 
@@ -104,12 +101,13 @@ export const AddPinFile = (props: AddPinProps) => {
   }
 
   React.useEffect(() => {
+    console.log("New Pin created ", isPinCreated);
+    setAllowToCreateNewPin(false);
+  }, [isPinCreated])
+
+  React.useEffect(() => {
     getPins();
-  }, [])
-
-  //  const onCreateTaskSuccess=()=>{
-
-  //  }
+  }, []);
   const phaseOptions = [
     { key: 'Phase_1', value: 'Preliminary', text: 'Preliminary' },
     { key: 'Phase_2', value: 'Project Planning', text: 'Project Planning' },
@@ -152,42 +150,42 @@ export const AddPinFile = (props: AddPinProps) => {
   React.useEffect(() => {
     if (props.dowloadFilesData) {
       console.log('dowloadFilesData-s', props.dowloadFilesData);
-
       for (let i = 0; i < props.dowloadFilesData.length; i++) {
         if (props.dowloadFilesData[i].filename == props.filesData.fileTitle) {
           console.log('uploadedfileid', props.dowloadFilesData[i]);
           setimgUrl(props.dowloadFilesData[i].url);
         }
       }
-
     }
   })
 
   const getCoardinates = (data) => {
     console.log('getCoardinates', data);
-
     setCord(data)
   }
   const onSuccess = async () => {
     console.log('onSuccess');
     await getPins();
-    setIsPinTask(true);
-    props.savePins(cord)
+    setAllowToCreateNewPin(false);
+    setIsPinCreated(false);
   }
   const changePinTask = () => {
     console.log('changePinTask');
-    setIsPinTask(false);
+    setAllowToCreateNewPin(true);
   }
   const taskClose = () => {
-    setIsPinTask(true);
+    setAllowToCreateNewPin(false);
+    setIsPinCreated(false);
   }
+  const savePinInPinAddFile = (data) => {
+    console.log('savePinInPinAddFile', data);
+    // setCord(data)
+  }
+  // React.useEffect(() => {
+  //   getPins();
+  // }, [props.savePin]);
   return (
     <div >
-
-      {/* <Button size='mini' className="grey-btn" onClick={openM}>
-          Pin File
-        </Button> */}
-
       <Modal
         size={'fullscreen'}
         onClose={close}
@@ -207,16 +205,13 @@ export const AddPinFile = (props: AddPinProps) => {
             <Grid stackable columns={2}>
               <Grid.Column className="colorback" style={{ width: '65%' }}>
                 <Segment>
-                  <Canvas imgUrl={imgUrl} coardinates={getCoardinates} fileId={fileId} isPinTask={isPinTask}></Canvas>
+                  <Canvas pinSaved={setPinSavedOnCanvase} savePin={saveNewPinOnCanvase} imgUrl={imgUrl} coardinates={getCoardinates} fileId={fileId} allowToCreateNewPin={allowToCreateNewPin} isPinCreated={isPinCreated} setIsPinCreated={setIsPinCreated}></Canvas>
                 </Segment>
-
               </Grid.Column>
               <Grid.Column style={{ width: '35%', marginLeft: '-9px', marginTop: '-10px' }}>
                 <div style={{ background: '#F1F5F8', padding: '10px', marginBottom: '-18px' }}>
-                  {/* <Grid.Column style={{ width: '30%', marginLeft: '-9px', marginTop: '-10px' }}> */}
-
                   <div>
-                    {isPinTask ?
+                    {!isPinCreated ?
                       <div style={{ background: '#F1F5F8', padding: '10px', marginBottom: '-18px' }}>
                         <Form.Field classname="buttonbluedown">
                           <label> </label>
@@ -225,29 +220,25 @@ export const AddPinFile = (props: AddPinProps) => {
                         </Form.Field>
                       </div>
                       :
-                      <CreateFileTaskIndex close={taskClose} onSuccess={onSuccess} cord={cord} fileData={fileData}></CreateFileTaskIndex>
+                      <CreateFileTaskIndex pinsaved={pinSavedOnCanvase} savePin={setSaveNewPinOnCanvase} close={taskClose} onSuccess={onSuccess} cord={cord} fileData={fileData}></CreateFileTaskIndex>
                     }
                     <Form.Field style={{ marginTop: '20px' }} >
                       <div className="card1 card-custom gutter-b" style={{ paddingTop: '12px' }}>
                         {pinTasks && pinTasks.map((task, i) => {
                           return (
-                            <div key={i}>
+                            <div key={task?.taskTypeID}>
                               <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-                                <div className="d-flex align-items-center  py-2">
+                                <div style={{ color: cord.pinsID === task?.taskTypeID ? "red" : "" }} className="d-flex align-items-center  py-2">
                                   <span>
-
                                     <img src={img4} style={{ marginRight: '6px !important;' }} />
                                   </span>
-
                                   <span>
-
                                     <img src={img3} className=" mr-10 " />
                                   </span>
                                   <span className="font-weight-bold mb-0 mr-10  ">
-                                    {task.taskTitle}
+                                    <div style={{ color: cord.pinsID === task?.taskTypeID ? "red" : "black" }}>{task.taskTitle}</div>
                                   </span>
                                 </div>
-
                                 <div className="symbol-group symbol-hover py-2 text-right">
                                   <div className="symbol symbol-30">
                                     <img src={img2} />
@@ -257,7 +248,6 @@ export const AddPinFile = (props: AddPinProps) => {
                               <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
                                 <div className="d-flex align-items-center  py-2">
                                   <span className="  mr-10 "> </span>
-
                                   <span className=" mr-2 mr-10 "> </span>
                                   <span
                                     style={{ color: '#718898', fontSize: '11px;', fontWeight: 'normal', marginTop: '-12px' }}
@@ -271,7 +261,6 @@ export const AddPinFile = (props: AddPinProps) => {
                                 <div className="d-flex align-items-center  py-2" style={{ marginTop: '-9px' }}>
                                   <span className=" mr-2 mr-10 li_area"></span>
                                   <span className=" mr-2 mr-10 li_area">
-
                                     <i
                                       className="ms-Icon ms-Icon--LocationDot "
                                       aria-hidden="true"
@@ -280,16 +269,14 @@ export const AddPinFile = (props: AddPinProps) => {
                                     Tender
                                   </span>
                                   <span className=" mr-2 mr-10 li_area">
-
                                     <i
                                       className="ms-Icon ms-Icon--LocationDot "
                                       aria-hidden="true"
                                       style={{ color: '#D0D8DF', verticalAlign: 'middle' }}
                                     ></i>
-                                    Paint Work
+                                    {task?.phaseName}
                                   </span>
                                 </div>
-
                                 <div className="symbol-group symbol-hover py-2 text-right" style={{ marginTop: '-9px' }}>
                                   <div className="symbol symbol-30">
                                     <span className="mr-2">
@@ -316,94 +303,6 @@ export const AddPinFile = (props: AddPinProps) => {
                               </div>
                               <div style={{ borderTop: '1px solid #ddd', paddingTop: '12px' }}>
                               </div>
-
-
-                              {/* <div style={{ borderTop: '1px solid #ddd' }}>
-                                <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-                                  <div className="d-flex align-items-center  py-2">
-                                    <span>
-
-                                      <img src={img4} className="  mr-10 " />{' '}
-                                    </span>
-
-                                    <span>
-
-                                      <img src={img3} className=" mr-2 mr-10 " />{' '}
-                                    </span>
-                                    <span className="font-weight-bold mb-0 mr-10  ">
-                                      This is task name here
-                            </span>
-                                  </div>
-
-                                  <div className="symbol-group symbol-hover py-2 text-right">
-                                    <div className="symbol symbol-30">
-                                      <img src={img2} />
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-                                  <div className="d-flex align-items-center  py-2">
-                                    <span className="  mr-10 "> </span>
-
-                                    <span className=" mr-2 mr-10 "> </span>
-                                    <span
-                                      style={{ color: '#718898' }}
-                                      className="font-weight-bold mb-0 mr-10  "
-                                    >
-                                      Starts Tomorrow ↦ Due Fri Aug 28th
-                            </span>
-                                  </div>
-                                </div>
-
-                                <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-                                  <div className="d-flex align-items-center  py-2">
-                                    <span className=" mr-2 mr-10 li_area"></span>
-                                    <span className=" mr-2 mr-10 li_area">
-
-                                      <i
-                                        className="ms-Icon ms-Icon--LocationDot "
-                                        aria-hidden="true"
-                                        style={{ color: '#D0D8DF' }}
-                                      ></i>
-                              Tender
-                            </span>
-                                    <span className=" mr-2 mr-10 li_area">
-
-                                      <i
-                                        className="ms-Icon ms-Icon--LocationDot "
-                                        aria-hidden="true"
-                                        style={{ color: '#D0D8DF' }}
-                                      ></i>
-                              Paint Work
-                            </span>
-                                  </div>
-
-                                  <div className="symbol-group symbol-hover py-2 text-right">
-                                    <div className="symbol symbol-30">
-
-                                      <span className="mr-2">
-                                        <Dropdown text="..." className="dotlinearea">
-                                          <Dropdown.Menu>
-                                            <Dropdown.Item
-                                              icon="eye"
-                                              text="View detail"
-                                            />
-                                            <Dropdown.Item icon="pencil" text="Edit" />
-                                            <Dropdown.Item
-                                              icon="check circle outline"
-                                              text="Mark as complete"
-                                            />
-                                            <Dropdown.Item
-                                              icon="trash alternate outline"
-                                              text="Delete"
-                                            />
-                                          </Dropdown.Menu>
-                                        </Dropdown>
-                                      </span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div> */}
                             </div>
                           )
                         })}
@@ -414,212 +313,7 @@ export const AddPinFile = (props: AddPinProps) => {
                       <div className="card1 card-custom gutter-b"></div>
                     </Form.Field>
                   </div>
-                  {/* <Form.Field>
-                      <label>Task Title <span className="danger">*</span></label>
-                      <Input placeholder='task title' size='small' className="full-width" type="text" />
-                    </Form.Field>
-                    <Form.Field>
-                      <label>Description </label>
-                      <TextArea placeholder='type here...' />
-                    </Form.Field>
-                    <Form.Field>
-                      <label>Assoicate with work type  </label>
-                      <Select placeholder='Select' className="small" options={workTypes} />
-                    </Form.Field>
-                    <Form.Field>
-                      <label>Select phase  </label>
-                      <Select placeholder='Select' className="small" options={phaseOptions} />
-                    </Form.Field>
-                    <Form.Field>
-                      <label>Select BKP  </label>
-                      <Select placeholder='Select' className="small" options={bkpOptions} />
-                    </Form.Field>
-                    <Form.Field>
-                      <label>Assignee <span className="danger">*</span></label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
-                    </Form.Field>
-                    <Grid columns={2}>
-                      <Grid.Row>
-                        <Grid.Column>
-                          <Form.Field>
-                            <label>Followers </label>
-                            <Select placeholder='Select' className="small" options={countryOptions} />
-
-                          </Form.Field>
-                        </Grid.Column>
-
-                        <Grid.Column>
-                          <Form.Field>
-                            <div className="event">
-                              <div className="label-green label-spacer" style={{ width: '30px', height: '30px', padding: '6px 0px 0px 8px' }}>
-                                <span className="white-text">AB</span>
-                              </div>
-                              <div className="label-purple label-spacer" style={{ width: '30px', height: '30px', padding: '6px 0px 0px 8px' }}>
-                                <span className="white-text ">RJ</span>
-                              </div>
-
-                            </div>
-                          </Form.Field>
-                        </Grid.Column>
-                      </Grid.Row>
-                    </Grid>
-                    <Form.Field>
-                      <Checkbox label='send notification to assignee/followers for the task' />
-                    </Form.Field>
-                    <Form.Field>
-                      <Grid columns={2}>
-                        <Grid.Row>
-                          <Grid.Column>
-                            <Form.Field>
-                              <label>Start Date </label>
-                              <Input size='small' className="full-width" type="date" />
-                            </Form.Field>
-                          </Grid.Column>
-
-                          <Grid.Column>
-                            <Form.Field>
-                              <label>End Date </label>
-                              <Input size='small' className="full-width" type="date" />
-                            </Form.Field>
-                          </Grid.Column>
-                        </Grid.Row>
-                      </Grid>
-                    </Form.Field>
-                    <Form.Field>
-                      <label>Estimated Days </label>
-                      <Input placeholder='Estimated Days' size='small' className="full-width" type="text" />
-                    </Form.Field>
-                    <Form.Field>
-
-                      <Button
-                        content="Submit"
-                        onClick={close}
-                        positive
-                        size='mini' className="grey-btn"
-                      />
-                      <Button size='mini' className="icon-border" onClick={close}>
-                        X  Cancel
-        </Button>
-
-                    </Form.Field> */}
                 </div>
-                {/* <Form.Field>
-
-                    <div className="card1 card-custom gutter-b" style={{ border: '1px solid #ddd' }}>
-
-                      <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-
-                        <div className="d-flex align-items-center  py-2">
-                          <span> <img src={img4} className="  mr-10 " />  </span>
-
-                          <span>  <img src={img3} className=" mr-2 mr-10 " />   </span>
-                          <span className="font-weight-bold mb-0 mr-10  ">This is task name here</span>
-
-                        </div>
-
-                        <div className="symbol-group symbol-hover py-2 text-right">
-                          <div className="symbol symbol-30">
-
-                            <img src={img2} />
-
-                          </div>
-
-                        </div>
-
-                      </div>
-                      <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-                        <div className="d-flex align-items-center  py-2">
-                          <span className="  mr-10 " >    </span>
-
-                          <span className=" mr-2 mr-10 " >   </span>
-                          <span style={{ color: '#718898' }} className="font-weight-bold mb-0 mr-10  ">Starts Tomorrow ↦ Due Fri Aug 28th</span>
-
-                        </div>
-
-                      </div>
-
-                      <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-
-                        <div className="d-flex align-items-center  py-2">
-                          <span className=" mr-2 mr-10 li_area"></span>
-                          <span className=" mr-2 mr-10 li_area">  <i className="ms-Icon ms-Icon--LocationDot " aria-hidden="true" style={{ color: '#D0D8DF' }}></i>Tender</span>
-                          <span className=" mr-2 mr-10 li_area">  <i className="ms-Icon ms-Icon--LocationDot " aria-hidden="true" style={{ color: '#D0D8DF' }}></i>Paint Work</span>
-                        </div>
-
-                        <div className="symbol-group symbol-hover py-2 text-right">
-                          <div className="symbol symbol-30">
-
-                            <img src={img6} />
-
-                          </div>
-
-                        </div>
-
-                      </div>
-
-
-                    </div>
-
-
-                  </Form.Field>
-                  <Form.Field>
-
-                    <div className="card1 card-custom gutter-b" style={{ border: '1px solid #ddd' }}>
-
-                      <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-
-                        <div className="d-flex align-items-center  py-2">
-                          <span> <img src={img4} className="  mr-10 " />  </span>
-
-                          <span>  <img src={img3} className=" mr-2 mr-10 " />   </span>
-                          <span className="font-weight-bold mb-0 mr-10  ">This is task name here</span>
-
-                        </div>
-
-                        <div className="symbol-group symbol-hover py-2 text-right">
-                          <div className="symbol symbol-30">
-
-                            <img src={img2} />
-
-                          </div>
-
-                        </div>
-
-                      </div>
-                      <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-                        <div className="d-flex align-items-center  py-2">
-                          <span className="  mr-10 " >    </span>
-
-                          <span className=" mr-2 mr-10 " >   </span>
-                          <span style={{ color: '#718898' }} className="font-weight-bold mb-0 mr-10  ">Starts Tomorrow ↦ Due Fri Aug 28th</span>
-
-                        </div>
-
-                      </div>
-
-                      <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-
-                        <div className="d-flex align-items-center  py-2">
-                          <span className=" mr-2 mr-10 li_area"></span>
-                          <span className=" mr-2 mr-10 li_area">  <i className="ms-Icon ms-Icon--LocationDot " aria-hidden="true" style={{ color: '#D0D8DF' }}></i>Tender</span>
-                          <span className=" mr-2 mr-10 li_area">  <i className="ms-Icon ms-Icon--LocationDot " aria-hidden="true" style={{ color: '#D0D8DF' }}></i>Paint Work</span>
-                        </div>
-
-                        <div className="symbol-group symbol-hover py-2 text-right">
-                          <div className="symbol symbol-30">
-                            <img src={img6} />
-
-                          </div>
-
-                        </div>
-
-                      </div>
-
-
-                    </div>
-
-
-                  </Form.Field> */}
               </Grid.Column>
 
             </Grid>

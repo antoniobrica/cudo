@@ -34,8 +34,12 @@ export interface ITodos {
   getTodos: ITodo[];
 }
 
+export interface ITaskResults {
+  results: ITask[];
+}
+
 export interface ITasks {
-  tasks: ITask[];
+  tasks: ITaskResults;
 }
 
 export interface TaskMutation {
