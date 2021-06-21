@@ -14,7 +14,7 @@ export const GET_TODOS = gql`
 export const GET_PROJECTS = gql`
   {
     projects(referenceFilter:{
-      referenceType:"Company",
+      referenceType:COMPANY,
       referenceID:"Sftobiz_123"
       })
     {
@@ -60,7 +60,7 @@ query ProjectById($projectId: String!)
 export const GET_WORKTYPES = gql`
   {
     workTypes(referenceFilter:{
-      referenceType:"Company",
+      referenceType:COMPANY,
       referenceID:"Sftobiz_123"
       })
     {
@@ -74,7 +74,7 @@ export const GET_WORKTYPES = gql`
 export const GET_BUILDINGTYPES = gql`
   {
     buildingTypes(referenceFilter:{
-      referenceType:"Company",
+      referenceType:COMPANY,
       referenceID:"Sftobiz_123"
       }){
       name
@@ -86,7 +86,7 @@ export const GET_BUILDINGTYPES = gql`
 export const GET_PRINTING_COMPANY = gql`
   {
     company(referenceFilter:{
-      referenceType:"Company",
+      referenceType:COMPANY,
       referenceID:"Sftobiz_123"
 }, companyType:PRINTING)
     {
@@ -100,7 +100,7 @@ export const GET_PRINTING_COMPANY = gql`
 export const GET_CLIENT_COMPANY = gql`
   {
     company(referenceFilter:{
-      referenceType:"Company",
+      referenceType:COMPANY,
       referenceID:"Sftobiz_123"
 }, companyType:CLIENT)
     {
@@ -127,7 +127,7 @@ export const CREATE_COMPANY = gql`
   mutation CreateCompany($companyName: String!, $companyType: String!) {
     createCompany(
       referenceFilter:{
-      referenceType:"Company",
+      referenceType:COMPANY,
       referenceID:"Sftobiz_123"
       },companyDetails:{
       companyName: $companyName
@@ -163,7 +163,7 @@ mutation CreateProject(
    }
    projectWorkEstimates: $projectWorkEstimates
    }
-   referenceFilter: { referenceType: "Company", referenceID: "Sftobiz_123" }
+   referenceFilter: { referenceType: COMPANY, referenceID: "Sftobiz_123" }
    ){
     projectId
     projectName

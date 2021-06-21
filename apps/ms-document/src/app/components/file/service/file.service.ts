@@ -8,6 +8,7 @@ import { UploadedFilesEntity } from '../../../entities/uploaded-files.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
 import { FileFilterArgs } from '../dto/args/file-filter.args';
+import { FileDeleteInput } from '../dto/args/file.delete';
 import { FileReferenceParams } from '../dto/args/param/file-reference.param';
 import { ParentFileParams } from '../dto/args/param/parent-file.param';
 import { UpdateFileInput } from '../dto/update-file.input';
@@ -157,26 +158,115 @@ export class FileService {
     }
   }
 
+
+
   // public async uploadedFiles(fileReferenceParams: ReferenceFilterParams): Promise<UploadedFilesEntity[]> {
   //   try {
-  //     const trees = await this.uploadedFilesRepository.find({ where: { referenceID: fileReferenceParams.referenceID }, relations: ['fileReferences', 'people'] });
-  //     return trees;
+  //     const manager = getManager();
+  //     const trees = await manager.getTreeRepository(UploadedFilesEntity).findTrees();
+  //     this.uploadedFilesRepository.createQueryBuilder()
+  //     const rootFiles = trees.filter(tree => ( tree.isDeleted==false && tree.referenceID == fileReferenceParams.referenceID && tree.referenceType == fileReferenceParams.referenceType));
+  //     return rootFiles;
   //   } catch (error) {
   //     return error;
   //   }
   // }
 
+
+  // public async uploadedFiles(fileReferenceParams: ReferenceFilterParams): Promise<UploadedFilesEntity[]> {
+  //   try {
+  //     const trees = await this.uploadedFilesRepository.createQueryBuilder('tree')
+  //         .where({parentUploadedFileID: IsNull()})
+  //         .andWhere("tree.isDeleted = :isDeleted",{ isDeleted: false })
+  //         .andWhere('tree.referenceID = :referenceId', { referenceId: fileReferenceParams.referenceID })
+  //         .andWhere('tree.referenceType = :referenceType', { referenceType: fileReferenceParams.referenceType })
+  //         .getMany();
+  //       return trees
+
+  //       } catch (error){
+  //     return error}
+
+  //       }
+
+
   public async uploadedFiles(fileReferenceParams: ReferenceFilterParams): Promise<UploadedFilesEntity[]> {
     try {
-      const manager = getManager();
-      const trees = await manager.getTreeRepository(UploadedFilesEntity).findTrees();
-      this.uploadedFilesRepository.createQueryBuilder()
-      const rootFiles = trees.filter(tree => (tree.referenceID == fileReferenceParams.referenceID && tree.referenceType == fileReferenceParams.referenceType));
-      return rootFiles;
-    } catch (error) {
+      const parent = await this.uploadedFilesRepository.find({
+        where: {
+          parentUploadedFileID: null,
+          isDeleted: false,
+          referenceID: fileReferenceParams.referenceID,
+          referenceType: fileReferenceParams.referenceType,
+        },relations:['fileReferences','people','children']
+      })
+      return parent           
+   } catch (error) {
       return error;
     }
   }
+
+  //   public async uploadedFiles(fileReferenceParams: ReferenceFilterParams): Promise<UploadedFilesEntity[]> {
+  //   try {
+  //     const parent = await this.uploadedFilesRepository.findOne({
+  //       where: {
+  //         parentUploadedFileID: null,
+  //         isDeleted: false,
+  //         referenceID: fileReferenceParams.referenceID,
+  //         referenceType: fileReferenceParams.referenceType,
+  //       }
+  //     })
+      
+  //     const children = await this.uploadedFilesRepository.findDescendants(parent)
+  //     const ids = children.map(child => child.uploadedFileID)
+      
+  //     return UploadedFilesEntity
+  //       .createQueryBuilder("upload")
+  //       .distinct(true)
+  //       .innerJoin("upload.children", "child", "child.uploadedFileID IN (:...ids)", { ids })
+  //       .innerJoinAndSelect("upload.children", "children")
+  //       .orderBy("upload.uploadedFileID")
+  //       .getMany()         
+  //  } catch (error) {
+  //     return error;
+  //   }
+  // }
+
+
+  public async deleteFile(fileDeleteInput: FileDeleteInput): Promise<UploadedFilesEntity> {
+    const file = await this.uploadedFilesRepository.findOne({ where:{uploadedFileID:fileDeleteInput.uploadedFileID} });
+    if (file) {
+      file.isDeleted=!(file.isDeleted)
+      const updatedPost = await file.save()
+      return updatedPost
+      }
+      throw new HttpException('File Not Found', HttpStatus.NOT_FOUND);
+    }
+
+
+  public async getuploadedFileByID(fileFilter: FileDeleteInput) {
+      const parent = await this.uploadedFilesRepository.findOne({
+        where: {
+          parentUploadedFileID: null,
+          isDeleted: false,
+          uploadedFileID:fileFilter.uploadedFileID
+        },relations:['fileReferences','people','children']
+      })
+      if(parent){
+      return parent  
+      }
+      throw new HttpException('File Not Found', HttpStatus.NOT_FOUND);
+
+  }
+
+  public async deleteFileVersion(fileDeleteInput: FileDeleteInput): Promise<UploadedFilesEntity> {
+    const file = await this.uploadedFilesRepository.findOne({ where:{uploadedFileID:fileDeleteInput.uploadedFileID} });
+    if (file) {
+      file.isDeleted=!(file.isDeleted)
+      const updatedPost = await file.save()
+      return updatedPost
+      }
+      throw new HttpException('File Version with uploadedFileId Not Found', HttpStatus.NOT_FOUND);
+    }
 
 
 }

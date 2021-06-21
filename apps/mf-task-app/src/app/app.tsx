@@ -1,12 +1,14 @@
-import React from 'react';
-import Tasks from '../components/tasks/tasks';
+import React, { Suspense } from 'react';
+import Tasks from './components/tasks/tasks';
 
 export function App() {
   return (
-    <div>
-    <Tasks/>
-    </div>
-       
+    <Suspense fallback={<div>Loading...</div>}>
+      <div>
+        <Tasks />
+      </div>
+    </Suspense>
+
   );
 }
 

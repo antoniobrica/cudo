@@ -102,6 +102,22 @@ export function TaskArea(props: Tasks) {
                       <span className="navi-text">Paint Work  </span>
                     </a>
                   </div>
+                  {props.task.taskType &&
+                    <div className="navi-item mr-2">
+                      <a className="navi-link">
+                        <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.taskType} </span>
+                      </a>
+                    </div>
+                  }
+                  {props.task.assignees && props.task.assignees.map((as, i) => {
+                    return (
+                      <div className="navi-item mr-2">
+                        <a className="navi-link">
+                          <span className="navi-text">as  - </span>
+                        </a>
+                      </div>
+                    )
+                  })}
                 </div>
 
               </div>
@@ -197,7 +213,6 @@ export function TaskArea(props: Tasks) {
                       <span className="navi-text">HVAC Work  </span>
                     </a>
                   </div>
-
                 </div>
 
               </div>

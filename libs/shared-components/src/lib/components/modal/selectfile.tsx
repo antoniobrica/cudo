@@ -97,7 +97,7 @@ export function SelectFilePopup(props: FileStructureProps) {
       } */}
       {view && imgUrl.length > 0 ?
         <div>
-          <AddPinFile isOpen={view} filesData={filesData} dowloadFilesData={props.downloadedImg} savePins={props.savePins} />
+          <AddPinFile isOpen={view} filesData={filesData} dowloadFilesData={props.downloadedImg} savePin={props.savePins} />
         </div> : null}
       <Modal
         style={{ width: '500px', marginLeft: '605px', height: '660px' }}
