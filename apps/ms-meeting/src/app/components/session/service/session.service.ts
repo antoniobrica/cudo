@@ -95,7 +95,7 @@ export class SessionService {
     }
 
     public async findAllSessions(): Promise<SessionEntity[]> {
-        return await this.sessionRepository.find({relations:['reference','admins','members']});
+        return await this.sessionRepository.find({where:{'isDeleted': false,}, relations:['reference','admins','members']});
       }
     public async updateSessionByID(createInput: SessionDetailsUpdateInput): Promise<SessionEntity[]> {
         const { sessionBasics, admins, members } = createInput;
@@ -143,14 +143,13 @@ export class SessionService {
     }
 
 
-    public async deleteSessionByID(sessionDeleteInput: SessionDeleteInput): Promise<SessionEntity[]> {
-        const { sessionID } = sessionDeleteInput;
-        const sessioneDetails = await this.sessionRepository.delete({ sessionID: sessionID });
-        console.log(sessioneDetails)
-        const sessions = await this.sessionRepository.find({
-            where: { sessionID: sessionID },
-            relations: ['reference', 'admins', 'members']
-        });
-        return sessions;
-    }
+    public async deleteSession(sessionDeleteInput: SessionDeleteInput): Promise<SessionEntity> {
+        const session = await this.sessionRepository.findOne({ where:{sessionID:sessionDeleteInput.sessionID} });
+        if (session) {
+          session.isDeleted=!(session.isDeleted)
+          const updatedPost = await session.save()
+          return updatedPost
+          }
+          throw new HttpException('session with sessionId Not Found', HttpStatus.NOT_FOUND);
+        }
 }

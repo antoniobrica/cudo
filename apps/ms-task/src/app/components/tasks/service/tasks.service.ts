@@ -287,6 +287,9 @@ export class TasksService {
         taskBasics.fileName ? taskeDetail.fileName = taskBasics.fileName : null;
         taskBasics.taskTypeID ? taskeDetail.taskTypeID = taskBasics.taskTypeID : null;
         taskBasics.taskType ? taskeDetail.taskType = taskBasics.taskType : null;
+        taskBasics.taskTypeName ? taskeDetail.taskTypeName = taskBasics.taskTypeName : null;
+        taskBasics.workTypeID ? taskeDetail.workTypeID = taskBasics.workTypeID : null;
+        taskBasics.workTypeName ? taskeDetail.workTypeName = taskBasics.workTypeName : null;
 
         await this.projectTasksRepository.save(taskeDetail);
         const tasks = await this.projectTasksRepository.find({
