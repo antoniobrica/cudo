@@ -38,7 +38,7 @@ spec:
     spec:
       containers:
         - name: ms-project-container
-          image: 192.168.1.38:5000/ms-project
+          image: 192.168.0.31:5000/ms-project
           ports:
             - containerPort: 5005
           imagePullPolicy: Always
