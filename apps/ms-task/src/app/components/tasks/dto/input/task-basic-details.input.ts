@@ -1,8 +1,7 @@
 import { Field, InputType } from "@nestjs/graphql";
 import { TaskTypeEnum } from "apps/ms-task/src/app/enums/taskType.enum";
 import { StatusEnum } from "../../../../enums/status.enum";
-import { TaskAssigneesInput } from "./task-assignees.input";
-import { TaskFollowersInput } from "./task-followers.input";
+
 @InputType()
 export class TaskBasicDetailsInput {
 
@@ -48,14 +47,19 @@ export class TaskBasicDetailsInput {
     @Field({ nullable: true, description: ` Task ParentID`  })
     taskTypeID?: string;
 
-    // @Field({ nullable: true, description: ` Task ParentID`  })
-    // taskTypeParentID?: string;
-  
-    // @Field({ nullable: true, description: ` Task ChileID`  })
-    // taskTypeChildID?: string;
-
     @Field(type => TaskTypeEnum, { description: `Task status` })
     taskType?: TaskTypeEnum;
+
+    @Field({ nullable: true, description: ` Task Type Name`  })
+    taskTypeName?: string;
+  
+  
+    @Field({ nullable: true, description: ` work Type ParentID`  })
+    workTypeID?: string;
+  
+  
+    @Field({ nullable: true, description: ` work Type Name `  })
+    workTypeName?: string;
 
     @Field({ description: `Description of task` })
     description?: string;

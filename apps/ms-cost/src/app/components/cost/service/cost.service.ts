@@ -8,6 +8,7 @@ import CostFilterParams from '../../../utils/types/costFilterParams';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
 import { CreateCostInput } from '../dto/create-cost.input';
+import { CostDeleteInput } from '../dto/delete-cost.input';
 
 
 @Injectable()
@@ -60,7 +61,7 @@ export class CostService {
       where: {
         "references": {
           id: selectedReference.id
-        }
+        },'isDeleted': false,
       }, relations: ['BKPCosts', 'BKPCosts.bkpCostFiles']
 
     });
@@ -80,4 +81,16 @@ export class CostService {
     });
 
   }
+
+  public async deleteCost(costDeleteInput: CostDeleteInput): Promise<CostEntity> {
+    const cost = await this.costRepository.findOne({ where:{costID:costDeleteInput.costID} });
+    if (cost) {
+      cost.isDeleted=!(cost.isDeleted)
+      const updatedPost = await cost.save()
+      return updatedPost
+      }
+      throw new HttpException('cost with costId Not Found', HttpStatus.NOT_FOUND);
+    }
+
+  
 }

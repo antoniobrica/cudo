@@ -11,8 +11,6 @@ import img2 from 'libs/shared-components/src/pdf.png';
 import img from 'libs/shared-components/src/user2.png';
 import img8 from 'libs/shared-components/src/circle_blue.png';
 import img9 from 'libs/shared-components/src/grey_circle.png';
-import ViewFileDetail from '../modal/viewdetailsfile';
-import AddPinFile from '../modal/pinaddfile';
 /* eslint-disable-next-line */
 export interface FileStructureProps {
     files?,
@@ -101,6 +99,7 @@ export function PinFileStructure(props: FileStructureProps) {
 
 
     const renderItems = (data, i) => {
+
         const files = data.map((data, id) => {
             return (
                 <div className="card1 card-custom gutter-b width_card" >
@@ -141,7 +140,7 @@ export function PinFileStructure(props: FileStructureProps) {
                                     className="navi-link active"
                                     style={{ marginLeft: '320px' }}
                                 >
-                                    <img src={img8} />
+                                    <img src={img9} />
 
                                 </a>
 
@@ -166,7 +165,7 @@ export function PinFileStructure(props: FileStructureProps) {
 
             {/* <Tab className="ui-tabs" menu={{ secondary: true, pointing: true }} panes={panes} /> */}
             <div className=" " style={{ width: '100%' }}>
-                <Accordion className="widtharea" defaultActiveIndex={0} panels={items}   style={{border:'0px'}} >
+                <Accordion className="widtharea" defaultActiveIndex={0} panels={items} style={{ border: '0px' }} >
 
 
                 </Accordion>

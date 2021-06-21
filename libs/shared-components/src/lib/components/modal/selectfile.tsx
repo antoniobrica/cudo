@@ -97,7 +97,7 @@ export function SelectFilePopup(props: FileStructureProps) {
       } */}
       {view && imgUrl.length > 0 ?
         <div>
-          <AddPinFile isOpen={view} filesData={filesData} dowloadFilesData={props.downloadedImg} savePins={props.savePins} />
+          <AddPinFile isOpen={view} filesData={filesData} dowloadFilesData={props.downloadedImg} savePin={props.savePins} />
         </div> : null}
       <Modal
         style={{ width: '500px', marginLeft: '605px', height: '660px' }}
@@ -123,13 +123,13 @@ export function SelectFilePopup(props: FileStructureProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <img src="assets/images/search_white.png" style={{ position: 'relative', top: '11px', ZIndex:'9' }}></img>
+                      <img src="assets/images/search_white.png" style={{ position: 'relative', top: '11px' }}></img>
 
                       <Input
                         placeholder="search.."
                         size="small"
                         className="full-width inputfieldarea bordernone"
-                        type="search" style={{    marginLeft: '5px'}}
+                        type="search" style={{ marginLeft: '5px' }}
                       />
                     </Form.Field>
                   </Grid.Column>

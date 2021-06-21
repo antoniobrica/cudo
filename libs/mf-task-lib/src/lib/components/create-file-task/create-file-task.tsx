@@ -15,10 +15,12 @@ import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 /* eslint-disable-next-line */
 export interface CreateFileTaskProps {
-  close,
-  onSuccess,
-  cord,
-  fileData
+  close?,
+  onSuccess?,
+  cord?,
+  fileData?
+  savePin?
+  pinsaved?
 }
 
 export function CreateFileTask(props: CreateFileTaskProps) {
@@ -49,16 +51,12 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
-  // const [addTask] = useTaskMutation(ADD_TASK, {
-  //   variables: { referenceID },
-  // });
 
   const [addTask, { data }] = useMutation(ADD_TASK,
     {
       refetchQueries: [
         { query: GET_TASKS, variables: { referenceID } }
       ],
-      // variables: { referenceID },
     }
   )
   React.useEffect(() => {
@@ -70,7 +68,6 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   React.useEffect(() => {
     if (props.fileData) {
       console.log('fileData-task', props.fileData);
-
       setfileData(props.fileData)
     }
   }, [props.fileData])
@@ -78,10 +75,9 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   React.useEffect(() => {
     if (props.cord) {
       console.log('props.cord', props.cord);
-      settaskTypeID(props.cord.pinsID)
-
+      settaskTypeID(props.cord.pinsID);
     }
-  })
+  }, [props.cord])
 
   const query = `query Game($projectId: String!) {
     projectById( projectId: $projectId)
@@ -167,7 +163,6 @@ export function CreateFileTask(props: CreateFileTaskProps) {
     if (workTypes) {
       console.log('worktypes', workTypes);
       setworkType(workTypes.map(({ workTypeName, projectWorkTypeID }) => ({ key: projectWorkTypeID, value: workTypeName, text: workTypeName, id: projectWorkTypeID })));
-
     }
   }, [workTypes]);
   const onMworkType = (event, data) => {
@@ -185,8 +180,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
         setworkTypeD(workT)
       }
     }
-    setworkTypeData(data.value)
-
+    setworkTypeData(data.value);
     console.log('worktypeName-', workTypeD);
   }
 
@@ -199,8 +193,17 @@ export function CreateFileTask(props: CreateFileTaskProps) {
     PROTOCOL = "PROTOCOL",
     FILE = "FILE"
   }
+  React.useEffect(() => {
+    if (props.pinsaved) {
+      console.log("Pin is saved now creating task on pin ")
+      addTak()
+    }
+  }, [props.pinsaved])
   const handleSaveTask = () => {
-    // setOpen(false);
+    props.savePin(true);
+    console.log("Save Pin flag set on submit button")
+  };
+  const addTak = () => {
     addTask({
       variables: {
         taskTitle, startDate, endDate, estimatedDays,
@@ -220,6 +223,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
       ) => {
         const cacheData = cache.readQuery({ query: GET_TASKS, variables: { referenceID }, }) as ITasks;
         props.onSuccess();
+        props.savePin(false);
         cache.writeQuery({
           query: GET_TASKS,
           data: {
@@ -230,9 +234,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
 
       }
     });
-
-    // props.close()
-  };
+  }
   const onDescriptionChange = e => {
     console.log('des=>', e.target.value);
     setDescription(e.target.value);
@@ -325,13 +327,13 @@ export function CreateFileTask(props: CreateFileTaskProps) {
               <Grid.Column>
                 <Form.Field>
                   <div className="event top-event">
-                    <div className="label-light-purple-circle label-spacer" style={{width:'26px'}}>
+                    <div className="label-light-purple-circle label-spacer" style={{ width: '26px' }}>
                       <span className="white-text">AB</span>
                     </div>
-                    <div className="label-light-black-circle label-spacer"  style={{width:'26px'}}>
+                    <div className="label-light-black-circle label-spacer" style={{ width: '26px' }}>
                       <span className="white-text ">RJ</span>
                     </div>
-                    <div className="label-light-blue-circle label-spacer"  style={{width:'26px'}}>
+                    <div className="label-light-blue-circle label-spacer" style={{ width: '26px' }}>
                       <span className="white-text">JB</span>
                     </div>
                   </div>

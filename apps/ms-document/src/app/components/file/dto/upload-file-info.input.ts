@@ -63,13 +63,13 @@ export class UploadFileInfoInput {
   @Field({ nullable: true, description: `True if file is deleted` })
   isDeleted?: boolean;
 
-  @Field({ nullable: true, description: `ReferenceID ` })
+  @Field({ description: `ReferenceID ` })
   referenceID: string;
 
-  @Field(() => ReferenceTypeEnum, { nullable: true, description: `Reference Type` })
+  @Field(() => ReferenceTypeEnum, { description: `Reference Type` })
   referenceType: ReferenceTypeEnum;
 
-  @Field({ nullable: true, description: `Reference Title` })
+  @Field({  description: `Reference Title` })
   referenceTitle: string;
 
   @Field(type => [PeopleParams], { description: `People assigned for this file` })

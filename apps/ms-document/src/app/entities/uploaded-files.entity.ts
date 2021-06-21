@@ -80,15 +80,15 @@ export class UploadedFilesEntity extends BaseEntity {
   fileVersion: number;
 
   @Expose()
-  @Column({ nullable: true })
+  @Column()
   referenceID: string;
 
   @Expose()
-  @Column({ nullable: true })
+  @Column()
   referenceType: string;
 
   @Expose()
-  @Column({ nullable: true })
+  @Column()
   referenceTitle: string;
 
   @Expose()
@@ -108,7 +108,7 @@ export class UploadedFilesEntity extends BaseEntity {
   updatedBy?: string;
 
   @Expose()
-  @Column({ nullable: true })
+  @Column({ nullable: true, default:false })
   isDeleted?: boolean;
 
   @TreeChildren()

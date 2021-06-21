@@ -102,6 +102,22 @@ export function TaskArea(props: Tasks) {
                       <span className="navi-text">Paint Work  </span>
                     </a>
                   </div>
+                  {props.task.taskType &&
+                    <div className="navi-item mr-2">
+                      <a className="navi-link">
+                        <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.taskType} </span>
+                      </a>
+                    </div>
+                  }
+                  {props.task.assignees && props.task.assignees.map((as, i) => {
+                    return (
+                      <div className="navi-item mr-2">
+                        <a className="navi-link">
+                          <span className="navi-text">as  - </span>
+                        </a>
+                      </div>
+                    )
+                  })}
                 </div>
 
               </div>
@@ -115,15 +131,23 @@ export function TaskArea(props: Tasks) {
                 </a>
               </div>
             }
-            {props.task.assignees && props.task.assignees.map((as, i) => {
+            {/* {props.task.assignees && props.task.assignees.map((as, i) => {
               return (
-                <div className="navi-item " style={{paddingLeft:'154px'}}>
+                <div className="navi-item " style={{ paddingLeft: '154px' }}>
                   <a className="navi-link">
                     <span className="navi-text"> <img src={img} /> </span>
                   </a>
                 </div>
               )
-            })}
+            })} */}
+            {props.task?.assignees.length > 0 ?
+
+              <div className="navi-item ">
+                <a className="navi-link">
+                  <span className="navi-text"> <img src={img} /> </span>
+                </a>
+              </div> : null
+            }
             <div className="symbol-group symbol-hover py-2" >
               <div className="symbol symbol-30">
 
@@ -189,14 +213,13 @@ export function TaskArea(props: Tasks) {
                       <span className="navi-text">HVAC Work  </span>
                     </a>
                   </div>
-
                 </div>
 
               </div>
 
             </div>
             {props.task?.taskType &&
-              <div className="navi-item  " style={{paddingLeft:'154px'}}>
+              <div className="navi-item  " style={{ paddingLeft: '154px' }}>
                 <a className="navi-link">
                   <span className="navi-text">
                     {props.task.taskType == 'PIN' &&
@@ -207,15 +230,14 @@ export function TaskArea(props: Tasks) {
                 </a>
               </div>
             }
-            {props.task?.assignees && props.task.assignees.map((as, i) => {
-              return (
-                <div className="navi-item ">
-                  <a className="navi-link">
-                    <span className="navi-text"> <img src={img} /> </span>
-                  </a>
-                </div>
-              )
-            })}
+            {props.task?.assignees.length > 0 ?
+
+              <div className="navi-item ">
+                <a className="navi-link">
+                  <span className="navi-text"> <img src={img} /> </span>
+                </a>
+              </div> : null
+            }
             <div className="symbol-group symbol-hover py-2">
               <div className="symbol symbol-30">
 

@@ -15,17 +15,19 @@ const client = new ApolloClient({
 });
 /* eslint-disable-next-line */
 export interface CreateFileTaskIndexProps {
-  close,
-  onSuccess,
-  cord,
-  fileData
+  close?,
+  onSuccess?,
+  cord?,
+  fileData?
+  savePin?
+  pinsaved?
 }
 
 export function CreateFileTaskIndex(props: CreateFileTaskIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <CreateFileTask close={props.close} onSuccess={props.onSuccess} cord={props.cord} fileData={props.fileData}></CreateFileTask>
+        <CreateFileTask pinsaved={props.pinsaved} savePin={props.savePin} close={props.close} onSuccess={props.onSuccess} cord={props.cord} fileData={props.fileData}></CreateFileTask>
       </ApolloHooksProvider>
     </ApolloProvider>
   );
