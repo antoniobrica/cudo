@@ -1,19 +1,20 @@
- 
+
 import React from 'react';
 import {
   Button,
   Header,
   Modal,
-  
+
   Input,
   Form,
   Grid,
-  
+
   Select,
   TextArea,
 } from 'semantic-ui-react';
 import { PhaseIndex } from "@cudo/mf-account-app-lib"
 import moment, { calendarFormat } from 'moment';
+import ReactQuill, { Quill } from 'react-quill';
 
 // import SampleModal from './sample-modal';
 
@@ -42,9 +43,9 @@ export function ModalPlanningNew(props: PlanningProps) {
   const [description, setDescription] = React.useState("")
   const [worktypeID, setworktypeID] = React.useState("")
   const [worktypeName, setworktypeName] = React.useState("")
-  const [workTypeData, setworkTypeData]= React.useState('')
-  const [workType, setworkType] = React.useState(null) 
-  const [workTypeD, setworkTypeD] = React.useState(null) 
+  const [workTypeData, setworkTypeData] = React.useState('')
+  const [workType, setworkType] = React.useState(null)
+  const [workTypeD, setworkTypeD] = React.useState(null)
 
 
   const [open, setOpen] = React.useState(false);
@@ -56,10 +57,10 @@ export function ModalPlanningNew(props: PlanningProps) {
     }
   }, [props.worktypes]);
   const onMworkType = (event, data) => {
-    const workT = { 
+    const workT = {
       worktypeID: '',
       worktypeName: ''
-     };
+    };
     for (let i = 0; i < props.worktypes.length; i++) {
       if (props.worktypes[i]?.workTypeName === data.value) {
         console.log('props.worktypes[i]', props.worktypes[i]);
@@ -75,50 +76,49 @@ export function ModalPlanningNew(props: PlanningProps) {
     console.log('worktypeName-', workTypeD);
   }
   const onsetPhasesID = (data) => {
-    console.log('phase',data);
-    
+    console.log('phase', data);
+
     setPhasesID((data.phaseID).toString());
     setPhasesName(data.phaseName)
   }
 
-   const onMilestoneChange=(e)=>{
-     console.log('milestone=>',e.target.value);
-     setMilestoneName(e.target.value);
-   }
+  const onMilestoneChange = (e) => {
+    console.log('milestone=>', e.target.value);
+    setMilestoneName(e.target.value);
+  }
 
-   const onDueDateChange = e => {
-    const date= moment.utc(moment(e.target.value).utc()).format();
+  const onDueDateChange = e => {
+    const date = moment.utc(moment(e.target.value).utc()).format();
     setDueDate(e.target.value)
   }
 
-  const onDescriptionChange = e=>{
-    console.log('des=>',e.target.value);
-    setDescription(e.target.value);
+  const onDescriptionChange = e => {
+    setDescription(e);
   }
-const createMilestone=()=>{
-  
-   const data ={
-    milestoneTitle: milestone,
-    dueDate: dueDate,
-    description: description,
-    phaseID: phaseID,
-    phaseName: phaseName,
-    worktypeID: workTypeD.worktypeID,
-    worktypeName: workTypeD.worktypeName
-   }
-   props.getMilestoneData(data);
-   setOpen(false)
-}
+  const createMilestone = () => {
+
+    const data = {
+      milestoneTitle: milestone,
+      dueDate: dueDate,
+      description: description,
+      phaseID: phaseID,
+      phaseName: phaseName,
+      worktypeID: workTypeD.worktypeID,
+      worktypeName: workTypeD.worktypeName
+    }
+    props.getMilestoneData(data);
+    setOpen(false)
+  }
   return (
     <div style={{ marginLeft: 900 }} >
-      <Modal style={{height: '650px'}}
+      <Modal style={{ height: '650px' }}
         className="modal_media"
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
         trigger={
           <Button size="mini" className="grey-btn">
-            + Add New  
+            + Add New
           </Button>
         }
       >
@@ -167,10 +167,29 @@ const createMilestone=()=>{
                   <Grid.Column>
                     <Form.Field>
                       <label>Description </label>
-                      <TextArea placeholder="Tell us more"    
+                      {/* <TextArea placeholder="Tell us more"    
                        value={description}
                        onChange={onDescriptionChange}
-                     />
+                     /> */}
+                      <ReactQuill
+                        value={description}
+                        modules={{
+                          toolbar: {
+                            container: [
+                              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                              ['bold', 'italic', 'underline'],
+                              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                              [{ 'align': [] }],
+                              ['link', 'image'],
+                              ['clean'],
+                              [{ 'color': [] }]
+                            ]
+                          }
+                        }}
+                        placeholder="Add a description"
+                        onChange={(content, delta, source, editor) => onDescriptionChange(content)}
+                        id="txtDescription"
+                      />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -180,15 +199,15 @@ const createMilestone=()=>{
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                        Associate with work type 
-                        
+                        Associate with work type
+
                       </label>
                       <Select
                         placeholder="Select"
                         className="small"
                         value={workTypeData}
                         options={workType}
-                        onChange={onMworkType}                        
+                        onChange={onMworkType}
                       />
                     </Form.Field>
                   </Grid.Column>
@@ -205,9 +224,9 @@ const createMilestone=()=>{
                         options={countryOptions}
                       />
                     </Form.Field> */}
-                <PhaseIndex parentPhaseSelect={onsetPhasesID} />
+                    <PhaseIndex parentPhaseSelect={onsetPhasesID} />
                   </Grid.Column>
- 
+
                 </Grid.Row>
               </Grid>
             </Form>

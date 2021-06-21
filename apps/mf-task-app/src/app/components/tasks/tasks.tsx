@@ -368,6 +368,7 @@ export function Tasks(props: TasksProps) {
       {open ? (
         <div className="pin_area">
           <ModalAlert
+            name='task'
             openAlertF={open}
             confirm={confirmation}
             taskData={taskData}
