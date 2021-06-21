@@ -44,23 +44,17 @@ export function Tasks(props: TasksProps) {
     }
   }, [referenceID]);
 
-  // const { loading, error, data } = useQuery(GET_TASKS, {
-  //   variables: { referenceID},
-  // });
   const [open, setOpen] = React.useState(false);
   const [openD, setOpenD] = React.useState(false);
   const [viewTaskOpen, setViewTaskOpen] = React.useState(false);
   const [editTaskOpen, setEditTaskOpen] = React.useState(false);
   const [workTypes, setWorkTypes] = React.useState([]);
-
   const [taskData, setTaskData] = React.useState();
   const [projectId, setProjectId] = React.useState('');
-
   const [isUpdate, setIsUpdate] = React.useState(false);
   const [isTaskFile, setIsTaskFile] = React.useState(false);
   const [isNewTask, setIsNewTask] = React.useState(false);
   const [taskStatus, settaskStatus] = React.useState('');
-
   const [addTask] = useTaskUpdateMutation(UPDATE_TASK, {
     variables: { referenceID },
   });
@@ -124,16 +118,6 @@ export function Tasks(props: TasksProps) {
         <LoaderPage />
       </h1>
     );
-  // if (error) return (
-  //   <div style={{ marginLeft: 900 }} >
-  //     <CreateTask workTypes={workTypes} onSuccess={refresh} cancel={cancelTask} isNewTask={isNewTask} />
-  //   </div>
-  // );
-  if (data) {
-    console.log('tasks=>', data.tasks.results);
-  }
-
-  // setProjectId(res[3]);
 
   const cancel = () => {
     setOpen(false);
@@ -261,7 +245,6 @@ export function Tasks(props: TasksProps) {
     setTaskData(task);
     setEditTaskOpen(true);
   };
-
   const refresh = (data) => {
     console.log('refresh is called', data);
   };
@@ -342,7 +325,6 @@ export function Tasks(props: TasksProps) {
       },
     });
   };
-
   const changeAdd = (data) => {
     console.log('changeTask', data);
     if (data === 'add') {
@@ -360,7 +342,6 @@ export function Tasks(props: TasksProps) {
   const cancelTask = () => {
     setIsNewTask(false);
   };
-
   const clickBottomAddTask = () => {
     setIsNewTask(true);
   };
@@ -369,7 +350,6 @@ export function Tasks(props: TasksProps) {
     <div>
       <div className="pin_area">
         <FilterPopup />
-
         <ToggleButton changeAdd={changeAdd}></ToggleButton>
         {isNewTask ? (
           <CreateTask
@@ -385,8 +365,6 @@ export function Tasks(props: TasksProps) {
           <FileListIndex isTaskFile={isTaskFile} cancel={cancelNew} />
         </div>
       ) : null}
-
-      {/* <MfAccountAppLib/> */}
       {open ? (
         <div className="pin_area">
           <ModalAlert
