@@ -103,8 +103,7 @@ $white: #ffffff;
 }
 .app-content-body-dash {
   margin-left: 275px;
-
-  width: 100%;
+  width: calc(100% - 275px);
 }
 
 .dash_area {

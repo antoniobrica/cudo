@@ -5,7 +5,7 @@
   background: #f2f6fe;
   color: #2d62ed;
   font-size: 1.2rem;
-  padding: 4px;
+  padding: 1px 10px;
 }
 .pb-3,
 .py-3 {
@@ -162,10 +162,17 @@
 }
 .button.ui.large.button.btn-dashed.btn-large {
   background: #ffffff;
-  border: 1px dotted #e0e6eb;
+  border: 1px dashed #e0e6eb;
   color: #9fb5c5;
   font-size: 1.4rem;
   border-style: dashed;
+  align-items: center;
+  @include flex(flex);
+  @include align-items(center);
+}
+.button.ui.large.button.btn-dashed.btn-large i {
+  font-size: 18px;
+  margin-right: 5px;
 }
 .small_drop {
   height: 20px !important;
@@ -283,9 +290,9 @@
 
 .pin_area {
   display: flex;
-  margin-right: 281px;
+  margin-right: 0;
   float: right;
-  margin-top: -19px;
+  margin-top: -25px;
 }
 .button.icon i.dropdown.icon {
   display: none;
@@ -331,4 +338,18 @@ canvas.coveringCanvas{
 .ui.multiple.dropdown > .label {
  
   top: -14px;
+}
+
+.tasks-action-area {
+  display: flex;
+  align-items: center;
+}
+.tasks-action-area .navi-item {
+  margin: 0 5px;
+}
+.tasks-action-area .symbol-group .symbol span {
+  margin-left: 0.7rem !important;
+}
+.tasks-action-area .symbol-group .symbol span i.dropdown.icon {
+  display: none;
 }
