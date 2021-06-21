@@ -3,19 +3,19 @@ interface IURL {
 }
 export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
   "ms_account": {
-    url: "http://192.168.0.31:5001/graphql"
+    url: "http://cudo-ms-account.softobiz.net/graphql"
   },
   "ms_document": {
-    url: "http://192.168.0.31:5003/graphql"
+    url: "http://cudo-ms-document.softobiz.net/graphql"
   },
   "ms_project": {
-    url: "http://192.168.0.31:5005/graphql"
+    url: "http://cudo-ms-project.softobiz.net/graphql"
   },
   "ms_task": {
-    url: "http://192.168.0.31:5007/graphql"
+    url: "http://cudo-ms-task.softobiz.net/graphql"
   },
   "ms_cost": {
-    url: 'http://192.168.0.31:5002/graphql'
+    url: "http://cudo-ms-cost.softobiz.net/graphql"
   },
   "mf_cost_app": {
     url: "http://192.168.0.31:6004"
