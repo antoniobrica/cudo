@@ -3,46 +3,46 @@ interface IURL {
 }
 export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
   "ms_account": {
-    url: "http://192.168.1.5:5001/graphql"
+    url: "http://192.168.0.31:5001/graphql"
   },
   "ms_document": {
-    url: "http://192.168.1.5:5003/graphql"
+    url: "http://192.168.0.31:5003/graphql"
   },
   "ms_project": {
-    url: "http://192.168.1.5:5005/graphql"
+    url: "http://192.168.0.31:5005/graphql"
   },
   "ms_task": {
-    url: "http://192.168.1.5:5007/graphql"
+    url: "http://192.168.0.31:5007/graphql"
   },
   "ms_cost": {
-    url: 'http://192.168.1.5:5002/graphql'
+    url: 'http://192.168.0.31:5002/graphql'
   },
   "mf_cost_app": {
-    url: "http://192.168.1.5:6004"
+    url: "http://192.168.0.31:6004"
   },
   "mf_meeting_app": {
-    url: "http://192.168.1.5:6005"
+    url: "http://192.168.0.31:6005"
   },
   "mf_project_app": {
-    url: "http://192.168.1.5:6006"
+    url: "http://192.168.0.31:6006"
   },
   "mf_task_app": {
-    url: "http://192.168.1.5:6009"
+    url: "http://192.168.0.31:6009"
   },
   "mf_document_app": {
-    url: "http://192.168.1.5:6010"
+    url: "http://192.168.0.31:6010"
   },
   "kratos_BASE_URL": {
-    url: "http://192.168.1.5:4455"
+    url: "http://192.168.0.31:4455"
   },
   "kratos_KRATOS_BROWSER_URL": {
-    url: "http://192.168.1.5:4455/.ory/kratos/public"
+    url: "http://192.168.0.31:4455/.ory/kratos/public"
   },
   "kratos_KRATOS_PUBLIC_URL": {
-    url: "http://192.168.1.5:4455/.ory/kratos/public"
+    url: "http://192.168.0.31:4455/.ory/kratos/public"
   },
   "kratos_KRATOS_ADMIN_URL": {
-    url: "http://192.168.1.5:4434"
+    url: "http://192.168.0.31:4434"
   }
 
 }
