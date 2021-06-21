@@ -11,7 +11,7 @@ import img6 from 'libs/shared-components/src/file_2.png';
 import ProgressBar from 'libs/shared-components/src/lib/components/progress_bar/progressbar';
 import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex, FileTypeIndex, FileStructureIndex, AddFolderIndex } from "@cudo/mf-account-app-lib"
 import { UploadsViewStateContext, SharedViewStateContext, DownloadsViewStateContext } from './../../../azure-storage/contexts/viewStateContext';
-import { BlobItem } from '@azure/storage-blob';
+import { BlobItem, ContainerItem } from '@azure/storage-blob';
 import { tap } from 'rxjs/operators';
 import { BlobItemUpload, BlobItemDownload } from './../../../azure-storage/types/azure-storage';
 
@@ -22,7 +22,9 @@ import { FileMutation, IFiles } from '../../interfaces/document';
 import { FetchResult, useMutation } from '@apollo/client';
 import { AddNewFolder } from '@cudo/shared-components';
 export interface FileProps {
-  openSettingF
+  openSettingF?,
+  close?,
+  confirm?,
 }
 export function FileUpload(props: FileProps) {
   const context = useContext(UploadsViewStateContext);
@@ -56,9 +58,17 @@ export function FileUpload(props: FileProps) {
   )
 
   const [items, setItems] = React.useState<BlobItemUpload[]>([]);
+  const [itemsC, setItemsC] = React.useState<ContainerItem[]>([]);
+
   const [download, setDownload] = React.useState<BlobItemDownload[]>([]);
 
   const sharedContext = React.useContext(SharedViewStateContext);
+  const getContainersEffect = () => {
+    setItemsC([{ name: "test" }] as ContainerItem[])
+    sharedContext.getContainerItems("test");
+    return
+  };
+  React.useEffect(getContainersEffect, []);
 
   const getContainerItemsEffect = () => {
     setLoader(true);
@@ -158,36 +168,37 @@ export function FileUpload(props: FileProps) {
     BIM = "BIM"
   }
   const handleSaveFile = () => {
-    setOpen(false);
-    files.map((file, i) => {
-      console.log('file==', file);
-      addFile({
-        variables: {
-          directory,
-          fileURL: file.fileURL,
-          fileTitle: file.fileTitle,
-          fileType: file.fileType === "image/png" ? fileType.IMAGE : fileType.PDF,
-          fileVersion: 1,
-          fileTypeName, people, BKPIDTitle,
-          phaseName, fileTypeID, phaseID,
-          structureTitle, structureID,
-          isFolder, isEveryOneAllowed: false,
-          BKPID
-        },
-        update: (
-          cache,
-          data
-        ) => {
-          const cacheData = cache.readQuery({ query: GET_FILES }) as IFiles;
-          cache.writeQuery({
-            query: GET_FILES,
-            data: {
-              tasks: [...cacheData.uploadedFiles, data['createFile']]
-            }
-          });
-        }
-      });
-    })
+
+    props.confirm(files)
+    // files.map((file, i) => {
+    //   console.log('file==', file);
+    //   addFile({
+    //     variables: {
+    //       directory,
+    //       fileURL: file.fileURL,
+    //       fileTitle: file.fileTitle,
+    //       fileType: file.fileType === "image/png" ? fileType.IMAGE : fileType.PDF,
+    //       fileVersion: 1,
+    //       fileTypeName, people, BKPIDTitle,
+    //       phaseName, fileTypeID, phaseID,
+    //       structureTitle, structureID,
+    //       isFolder, isEveryOneAllowed: false,
+    //       BKPID
+    //     },
+    //     update: (
+    //       cache,
+    //       data
+    //     ) => {
+    //       const cacheData = cache.readQuery({ query: GET_FILES }) as IFiles;
+    //       cache.writeQuery({
+    //         query: GET_FILES,
+    //         data: {
+    //           tasks: [...cacheData.uploadedFiles, data['createFile']]
+    //         }
+    //       });
+    //     }
+    //   });
+    // })
 
 
   };
@@ -204,7 +215,10 @@ export function FileUpload(props: FileProps) {
     setFolderOpen(false);
   }
 
-
+  const close = () => {
+    setOpen(false);
+    props.close();
+  }
   return (
     <div >
       {folderopen ?
@@ -212,7 +226,7 @@ export function FileUpload(props: FileProps) {
           <AddFolderIndex open={folderopen} cancel={cancel} folderData={folderData}></AddFolderIndex>
         </div> : null}
       <Modal className="modal_media modal_center modal_media_1"
-        onClose={() => setOpen(false)}
+        onClose={close}
         onOpen={openf}
         open={open}
         trigger={<Button size='mini' className="grey-btn">Uploaded File</Button>}
@@ -466,7 +480,7 @@ export function FileUpload(props: FileProps) {
             positive
             size='mini' className="grey-btn"
           />
-          <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+          <Button size='mini' className="icon-border" onClick={close}>
             X  Cancel
           </Button>
 
