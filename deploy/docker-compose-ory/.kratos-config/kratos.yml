@@ -4,16 +4,16 @@ dsn: memory
 
 serve:
   public:
-    base_url: http://192.168.0.31:4455/.ory/kratos/public/
+          base_url: http://dev.cudo.ch/.ory/kratos/public/
     cors:
       enabled: true
   admin:
     base_url: http://kratos:4434/
 
 selfservice:
-  default_browser_return_url: http://192.168.0.31:4455/
+  default_browser_return_url: http://dev.cudo.ch/
   whitelisted_return_urls:
-    - http://192.168.0.31:4455
+    - http://dev.cudo.ch
 
   methods:
     password:
@@ -21,33 +21,33 @@ selfservice:
 
   flows:
     error:
-      ui_url: http://192.168.0.31:4455/error
+      ui_url: http://dev.cudo.ch/error
 
     settings:
-      ui_url: http://192.168.0.31:4455/home/settings
+      ui_url: http://dev.cudo.ch/home/settings
       privileged_session_max_age: 15m
 
     recovery:
       enabled: true
-      ui_url: http://192.168.0.31:4455/recovery
+      ui_url: http://dev.cudo.ch/recovery
 
     verification:
       enabled: true
-      ui_url: http://192.168.0.31:4455/verify
+      ui_url: http://dev.cudo.ch/verify
       after:
-        default_browser_return_url: http://192.168.0.31:4455/
+        default_browser_return_url: http://dev.cudo.ch/
 
     logout:
       after:
-        default_browser_return_url: http://192.168.0.31:4455/auth/login
+        default_browser_return_url: http://dev.cudo.ch/auth/login
 
     login:
-      ui_url: http://192.168.0.31:4455/auth/login
+      ui_url: http://dev.cudo.ch/auth/login
       lifespan: 10m
 
     registration:
       lifespan: 10m
-      ui_url: http://192.168.0.31:4455/auth/registration
+      ui_url: http://dev.cudo.ch/auth/registration
       after:
         password:
           hooks:
