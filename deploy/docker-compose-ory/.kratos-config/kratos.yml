@@ -4,7 +4,7 @@ dsn: memory
 
 serve:
   public:
-          base_url: http://dev.cudo.ch/.ory/kratos/public/
+    base_url: http://dev.cudo.ch/.ory/kratos/public/
     cors:
       enabled: true
   admin:
@@ -13,7 +13,7 @@ serve:
 selfservice:
   default_browser_return_url: http://dev.cudo.ch/
   whitelisted_return_urls:
-    - http://dev.cudo.ch
+    - http://dev.cudo.ch/
 
   methods:
     password:
@@ -80,4 +80,3 @@ courier:
     from_address: test@softobiz.com
 
 dsn: mysql://cudo:Welcome@1@tcp(112.196.20.249:3306)/cudo?max_conns=20&max_idle_conns=4
-
