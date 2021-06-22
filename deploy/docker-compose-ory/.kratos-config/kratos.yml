@@ -78,3 +78,5 @@ courier:
     # connection_uri: smtps://test:test@mailslurper:1025/?skip_ssl_verify=true
     connection_uri: smtp://test@softobiz.com:Xum83875@smtp.office365.com:587/?skip_ssl_verify=false
     from_address: test@softobiz.com
+dsn: mysql://cudo:Welcome@1@tcp(112.196.20.249:3306)/cudo?max_conns=20&max_idle_conns=4
+
