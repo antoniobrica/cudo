@@ -50,7 +50,7 @@ export function Email(props: LoginProps) {
   };
   return (
     <div>
-      <Loginbar emailSubmitHandle={handleLogin} email={setEmail} isEmailExist={isEmailExist} />
+      <Loginbar emailSubmitHandle={handleLogin} email={setEmail} isEmailExist={isEmailExist} setIsEmailExist={setIsEmailExist} />
     </div>
   );
 }
