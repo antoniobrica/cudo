@@ -34,7 +34,7 @@ export function Followers(props: FollowersProps) {
   }
   return (
     <Form.Field>
-      <label>Followers  </label>
+      <label>Assignee  </label>
       <Select placeholder='Select' className="small"
         options={items}
         value={followers}

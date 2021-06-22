@@ -9,7 +9,7 @@ import './create-task.module.scss';
 import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import moment, { calendarFormat } from 'moment';
-import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex } from "@cudo/mf-account-app-lib"
+import { FollowersIndex, AssigneeIndex, BkpsIndex, PhaseIndex } from "@cudo/mf-account-app-lib"
 import { useHistory } from 'react-router';
 /* eslint-disable-next-line */
 export interface CreateTaskProps {
@@ -281,14 +281,14 @@ export function CreateTask(props: CreateTaskProps) {
                     <PhaseIndex parentPhaseSelect={onsetPhasesID} />
                   </Grid.Column>
                   <Grid.Column>
-                    <BkpIndex bkp={BKPID} parentBKPSelect={setBKPIDChange} />
+                    <BkpsIndex bkp={''} parentBKPSelect={setBKPIDChange} />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <AssigneeIndex parentAsigneeSelect={setAsignee} name="Assignee" />
+                    <AssigneeIndex parentAsigneeSelect={setAsignee} name="Followers" />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
@@ -370,7 +370,7 @@ export function CreateTask(props: CreateTaskProps) {
             />
             <Button size='mini' className="icon-border" onClick={cancel}>
               X  Cancel
-        </Button>
+            </Button>
           </div>
         </Modal.Content>
         <Modal.Actions>
