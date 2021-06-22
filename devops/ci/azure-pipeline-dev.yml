@@ -36,7 +36,7 @@ jobs:
             }
             }
             foreach($path in $changesFolder){
-              if($path -match '/deploy/docker-compose-ory/'){
+              if($path -match '/deploy/docker-compose-ory'){
              echo "##vso[task.setvariable variable=orydev;isOutput=true]$True"
             break
             }
