@@ -15,6 +15,7 @@ trigger:
       - apps/mf-container-app/*
       - apps/mf-task-app/*
       - apps/mf-document-app/*
+      - deploy/docker-compose-ory/*
 jobs:
 - job: cudogetchp
   pool: cudo-selfhosted-agent
@@ -31,6 +32,12 @@ jobs:
             foreach($path in $changesFolder){
               if($path -match '/package'){
              echo "##vso[task.setvariable variable=packages;isOutput=true]$True"
+            break
+            }
+            }
+            foreach($path in $changesFolder){
+              if($path -match '/deploy/docker-compose-ory/'){
+             echo "##vso[task.setvariable variable=orydev;isOutput=true]$True"
             break
             }
             }
@@ -99,6 +106,23 @@ jobs:
                   rm -f package.json
                   cp package/package.json .
                   npm install
+- job: orydev
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.orydev'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: ory-dev
+              dockerfile: deploy/docker-compose-ory/Dockerfile
+              containerRegistry: dev-docker-registry
+              tags: latest
       ###################################################Frontend###############################################################################
 - job: mfaccountapp
   pool: cudo-selfhosted-agent
