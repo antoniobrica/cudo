@@ -25,10 +25,10 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
     url: "http://192.168.1.5:6005"
   },
   "mf_project_app": {
-    url: "http://cudo-mf-project.softobiz.net"
+    url: "http://192.168.1.5:6006"
   },
   "mf_task_app": {
-    url: "http://cudo-mf-task.softobiz.net"
+    url: "http://192.168.1.5:6009"
   },
   "mf_document_app": {
     url: "http://cudo-mf-document.softobiz.net"

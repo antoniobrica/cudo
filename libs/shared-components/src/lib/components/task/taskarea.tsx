@@ -128,10 +128,15 @@ export function TaskArea(props: Tasks) {
 
               <div className="tasks-action-area">
 
-                {props.task.taskType &&
-                  <div className="navi-item">
+                {props.task?.taskType &&
+                  <div className="navi-item  ">
                     <a className="navi-link">
-                      <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.taskType} </span>
+                      <span className="navi-text">
+                        {props.task.taskType == 'PIN' &&
+                          <img src={img6} />
+                        }
+
+                      </span>
                     </a>
                   </div>
                 }
@@ -158,7 +163,7 @@ export function TaskArea(props: Tasks) {
                   <div className="symbol symbol-30">
 
 
-                    <img src={img2} />
+                    {/* <img src={img2} /> */}
                     <span  >
 
                       <Dropdown text='...'>

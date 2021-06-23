@@ -130,9 +130,7 @@ export function CreateTask(props: CreateTaskProps) {
     console.log('====================================');
     console.log('asignee', data);
     console.log('====================================');
-    const ppl = []
-    ppl.push(data)
-    setAssignees(ppl)
+    setfollowers(data)
   }
   const setBKPIDChange = (data) => {
     setBKPIDTitle(data.BKPIDTitle)
@@ -141,7 +139,10 @@ export function CreateTask(props: CreateTaskProps) {
   }
   const setAsignee = (data) => {
     console.log('assignee', data)
-    setfollowers(data)
+
+    const ppl = []
+    ppl.push(data)
+    setAssignees(ppl)
     // setAsignis(data)
   }
 
@@ -316,15 +317,14 @@ export function CreateTask(props: CreateTaskProps) {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <FollowersIndex parentFollowersSelect={onFollowers} />
+                    <AssigneeIndex parentAsigneeSelect={setAsignee} name="Assignee" />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
               <Grid columns={2}>
                 <Grid.Row>
                   <Grid.Column>
-                    <AssigneeIndex parentAsigneeSelect={setAsignee} name="Followers" />
-
+                    <FollowersIndex parentFollowersSelect={onFollowers} />
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
