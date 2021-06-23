@@ -354,7 +354,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-          <Grid columns={3}>
+          <Grid columns={2}>
             <Grid.Row>
               <Grid.Column>
                 <Form.Field>
@@ -377,7 +377,14 @@ export function CreateFileTask(props: CreateFileTaskProps) {
                   />
                 </Form.Field>
               </Grid.Column>
-              <Grid.Column>
+           
+            </Grid.Row>
+            <Grid.Row>
+            </Grid.Row>
+          </Grid>
+          <Grid columns={1}>
+          <Grid.Row>
+          <Grid.Column>
                 <Form.Field>
                   <label>Estimated Days  </label>
                   <Input placeholder='Enter days' className="small"
@@ -386,9 +393,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
                   />
                 </Form.Field>
               </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-            </Grid.Row>
+          </Grid.Row>
           </Grid>
           <Grid columns={1}>
             <Grid.Row>

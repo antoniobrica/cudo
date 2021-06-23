@@ -314,7 +314,7 @@ export function ProjectSetting(props: TabsProps) {
 
   return (
     <div className="app-content-body-dash navbar-collapse box-shadow bg-white-only" style={{ background: '#e6e6e6' }}>
-      <div>
+      <div className="main-page-heading">
         <span className="preliminary-font">Project Setting</span>
       </div>
 

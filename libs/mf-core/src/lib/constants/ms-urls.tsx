@@ -15,7 +15,7 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
     url: "http://cudo-ms-task.softobiz.net/graphql"
   },
   "ms_cost": {
-    url: "http://192.168.1.5:5002/graphql"
+    url: 'http://192.168.1.5:5002/graphql'
   },
   "mf_cost_app": {
     url: "http://192.168.1.5:6004"

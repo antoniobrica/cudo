@@ -330,9 +330,11 @@ export function CreateTask(props: CreateTaskProps) {
                     <Form.Field>
                       <div className="event top-event">
                         {followers.map((p, id) => {
+                          const name = p.userName.split(" ").map((n) => n[0]).join("");
+                          //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
                           return (
                             <div className="label-light-purple-circle label-spacer" key={id}>
-                              <span className="white-text">AB</span>
+                              <span className="white-text">{name}</span>
                             </div>
                           )
                         })
