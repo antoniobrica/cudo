@@ -26,7 +26,7 @@ export function AssigneeIndex(props: AssigneeIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <Assignee parentBKPSelect={onSelectAsignee} name={props.name} />
+        <Assignee parentAsigneeSelect={onSelectAsignee} name={props.name} />
       </ApolloHooksProvider>
     </ApolloProvider>
   );

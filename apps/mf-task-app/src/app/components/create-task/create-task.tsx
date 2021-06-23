@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
 import { radios } from '@storybook/addon-knobs';
-import { ITask, ITasks, TaskMutation } from "../../interfaces/task";
+import { IPeople, IPeoples, ITask, ITasks, TaskMutation } from "../../interfaces/task";
 import { useTaskMutation } from '../../services/useRequest';
 import { ApolloCache, FetchResult, useMutation } from '@apollo/client';
 import { ADD_TASK, GET_TASKS } from "../../graphql/graphql";
@@ -51,7 +51,6 @@ export function CreateTask(props: CreateTaskProps) {
   const [saveTaskAsTemplate, setSaveTaskAsTemplate] = React.useState("")
   const [phaseID, setPhasesID] = React.useState("")
   const [status, setStatus] = React.useState("")
-  const [followers, setfollowers] = React.useState("")
   const [phaseName, setPhasesName] = React.useState("");
   const [BKPTitle, setBKPIDTitle] = React.useState("");
   const [files, setFileList] = React.useState<any>([]);
@@ -62,6 +61,9 @@ export function CreateTask(props: CreateTaskProps) {
   const [workTypeData, setworkTypeData] = React.useState('')
   const [worktypeID, setworktypeID] = React.useState("")
   const [worktypeName, setworktypeName] = React.useState("")
+  const [assignees, setAssignees] = React.useState<any>([]);
+  const [followers, setfollowers] = React.useState<any>([]);
+  const [date, setDate] = React.useState(null)
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
@@ -96,14 +98,27 @@ export function CreateTask(props: CreateTaskProps) {
     setTaskTitle(e.target.value)
   }
   const onStartDateChange = e => {
+    setDate(e.target.value)
     const date = moment.utc(moment(e.target.value).utc()).format();
+    console.log('====================================');
+    console.log('date', date);
+    console.log('====================================');
     setStartDate(e.target.value)
   }
   const onEndDateChange = e => {
-    const date = moment.utc(moment(e.target.value).utc()).format();
+    // const date = moment.utc(moment(e.target.value).utc()).format();
+    const date1 = new Date(e.target.value)
+    const date2 = new Date(date)
+    var Difference_In_Time = date1.getTime() - date2.getTime();
+
+    // To calculate the no. of days between two dates
+    var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
     setEndDate(e.target.value);
+    setEstimatedDays(Difference_In_Days.toString())
   }
   const onsetEstimatedDays = (event, data) => {
+    // To calculate the time difference of two dates
+
     setEstimatedDays(data.value)
   }
 
@@ -112,7 +127,12 @@ export function CreateTask(props: CreateTaskProps) {
   }
 
   const onFollowers = (data) => {
-    setfollowers(data.value);
+    console.log('====================================');
+    console.log('asignee', data);
+    console.log('====================================');
+    const ppl = []
+    ppl.push(data)
+    setAssignees(ppl)
   }
   const setBKPIDChange = (data) => {
     setBKPIDTitle(data.BKPIDTitle)
@@ -120,6 +140,8 @@ export function CreateTask(props: CreateTaskProps) {
     console.log('bkp==>', data);
   }
   const setAsignee = (data) => {
+    console.log('assignee', data)
+    setfollowers(data)
     // setAsignis(data)
   }
 
@@ -165,6 +187,10 @@ export function CreateTask(props: CreateTaskProps) {
 
   const handleSaveTask = () => {
     // setOpen(false);
+    console.log('====================================');
+    console.log('assignee', assignees);
+    console.log('followes', followers);
+    console.log('====================================');
     cancel();
     addTask({
       variables: {
@@ -174,6 +200,8 @@ export function CreateTask(props: CreateTaskProps) {
         fileName: "$fileName",
         taskTypeID: "$taskTypeID",
         files,
+        assignees,
+        followers,
         description,
         subtasks: [],
         referenceID
@@ -288,27 +316,34 @@ export function CreateTask(props: CreateTaskProps) {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <AssigneeIndex parentAsigneeSelect={setAsignee} name="Followers" />
+                    <FollowersIndex parentFollowersSelect={onFollowers} />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
               <Grid columns={2}>
                 <Grid.Row>
                   <Grid.Column>
-                    <FollowersIndex parentFollowersSelect={onFollowers} />
+                    <AssigneeIndex parentAsigneeSelect={setAsignee} name="Followers" />
+
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
                       <div className="event top-event">
-                        <div className="label-light-purple-circle label-spacer">
-                          <span className="white-text">AB</span>
-                        </div>
-                        <div className="label-light-black-circle label-spacer">
+                        {followers.map((p, id) => {
+                          return (
+                            <div className="label-light-purple-circle label-spacer" key={id}>
+                              <span className="white-text">AB</span>
+                            </div>
+                          )
+                        })
+                        }
+
+                        {/* <div className="label-light-black-circle label-spacer">
                           <span className="white-text ">RJ</span>
                         </div>
                         <div className="label-light-blue-circle label-spacer">
                           <span className="white-text">JB</span>
-                        </div>
+                        </div> */}
                       </div>
                     </Form.Field>
                   </Grid.Column>
