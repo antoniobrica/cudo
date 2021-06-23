@@ -376,7 +376,7 @@ export function Tabsbar(props: TabsProps) {
 
   return (
     <div className="app-content-body-dash navbar-collapse box-shadow bg-white-only">
-      <div>
+      <div className="main-page-heading">
         <span className="">Electrical Work</span> |{' '}
         <span className="preliminary-font">Preliminary Studies</span>
       </div>

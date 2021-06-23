@@ -8,7 +8,7 @@ import { useQuery } from '@apollo/client';
 
 /* eslint-disable-next-line */
 export interface AssigneeProps {
-  parentBKPSelect,
+  parentAsigneeSelect,
   name?
 }
 enum ReferenceType {
@@ -43,7 +43,7 @@ export function Assignee(props: AssigneeProps) {
     }
 
     setAssignee(data.value)
-    props.parentBKPSelect(peopleArr)
+    props.parentAsigneeSelect(peopleArr)
   }
   return (
     <Form.Field>

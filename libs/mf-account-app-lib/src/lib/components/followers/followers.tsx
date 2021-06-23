@@ -28,13 +28,25 @@ export function Followers(props: FollowersProps) {
     }
   }, [data]);
 
+  // const onFollowers = (event, data) => {
+  //   setFollowers(data.value)
+  //   props.parentFollowersSelect(data)
+  // }
   const onFollowers = (event, data) => {
+    const people = { userID: '', userName: '' };
+    for (let i = 0; i <= items.length; i++) {
+      if (items[i]?.value === data.value) {
+        people.userID = items[i].key;
+        people.userName = data.value;
+      }
+    }
+
     setFollowers(data.value)
-    props.parentFollowersSelect(data)
+    props.parentFollowersSelect(people);
   }
   return (
     <Form.Field>
-      <label>Followers  </label>
+      <label>Assignee  </label>
       <Select placeholder='Select' className="small"
         options={items}
         value={followers}

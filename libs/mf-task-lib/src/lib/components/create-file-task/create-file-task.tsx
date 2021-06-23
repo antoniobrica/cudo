@@ -34,7 +34,6 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   const [saveTaskAsTemplate, setSaveTaskAsTemplate] = React.useState("")
   const [phaseID, setPhasesID] = React.useState("")
   const [status, setStatus] = React.useState("")
-  const [followers, setfollowers] = React.useState("")
   const [phaseName, setPhasesName] = React.useState("");
   const [BKPTitle, setBKPIDTitle] = React.useState("");
   const [files, setFileList] = React.useState<any>([]);
@@ -48,6 +47,8 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   const [workTypes, setWorkTypes] = React.useState([]);
   const [fileData, setfileData] = React.useState(null)
   const [taskTypeID, settaskTypeID] = React.useState('')
+  const [assignees, setAssignees] = React.useState<any>([]);
+  const [followers, setfollowers] = React.useState<any>([]);
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
@@ -135,7 +136,9 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   }
 
   const onFollowers = (data) => {
-    setfollowers(data.value);
+    const ppl = []
+    ppl.push(data)
+    setAssignees(ppl)
   }
   const setBKPIDChange = (data) => {
     setBKPIDTitle(data.BKPIDTitle)
@@ -143,6 +146,8 @@ export function CreateFileTask(props: CreateFileTaskProps) {
     console.log('bkp==>', data);
   }
   const setAsignee = (data) => {
+    setfollowers(data)
+
     // setAsignis(data)
   }
 
@@ -213,6 +218,8 @@ export function CreateFileTask(props: CreateFileTaskProps) {
         taskTypeID,
         taskType: taskType.PIN,
         files,
+        assignees,
+        followers,
         description,
         subtasks: [],
         referenceID
@@ -315,33 +322,39 @@ export function CreateFileTask(props: CreateFileTaskProps) {
           <Grid columns={1}>
             <Grid.Row>
               <Grid.Column>
-                <AssigneeIndex parentAsigneeSelect={setAsignee} name="Assignee" />
+                <FollowersIndex parentFollowersSelect={onFollowers} />
               </Grid.Column>
             </Grid.Row>
           </Grid>
           <Grid columns={2}>
             <Grid.Row>
               <Grid.Column>
-                <FollowersIndex parentFollowersSelect={onFollowers} />
+                <AssigneeIndex parentAsigneeSelect={setAsignee} name="Followers" />
               </Grid.Column>
               <Grid.Column>
                 <Form.Field>
                   <div className="event top-event">
-                    <div className="label-light-purple-circle label-spacer" style={{ width: '26px' }}>
-                      <span className="white-text">AB</span>
-                    </div>
-                    <div className="label-light-black-circle label-spacer" style={{ width: '26px' }}>
+                    {followers.map((p, id) => {
+                      return (
+                        <div className="label-light-purple-circle label-spacer" key={id}>
+                          <span className="white-text">AB</span>
+                        </div>
+                      )
+                    })
+                    }
+
+                    {/* <div className="label-light-black-circle label-spacer" style={{ width: '26px' }}>
                       <span className="white-text ">RJ</span>
                     </div>
                     <div className="label-light-blue-circle label-spacer" style={{ width: '26px' }}>
                       <span className="white-text">JB</span>
-                    </div>
+                    </div> */}
                   </div>
                 </Form.Field>
               </Grid.Column>
             </Grid.Row>
           </Grid>
-          <Grid columns={3}>
+          <Grid columns={2}>
             <Grid.Row>
               <Grid.Column>
                 <Form.Field>
@@ -364,7 +377,14 @@ export function CreateFileTask(props: CreateFileTaskProps) {
                   />
                 </Form.Field>
               </Grid.Column>
-              <Grid.Column>
+           
+            </Grid.Row>
+            <Grid.Row>
+            </Grid.Row>
+          </Grid>
+          <Grid columns={1}>
+          <Grid.Row>
+          <Grid.Column>
                 <Form.Field>
                   <label>Estimated Days  </label>
                   <Input placeholder='Enter days' className="small"
@@ -373,9 +393,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
                   />
                 </Form.Field>
               </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-            </Grid.Row>
+          </Grid.Row>
           </Grid>
           <Grid columns={1}>
             <Grid.Row>
