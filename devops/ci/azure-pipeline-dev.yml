@@ -154,8 +154,8 @@ jobs:
             lfs: false
           - bash : |
                   npm run nx run-many -- --target=build --projects='mf-container-app' --with-deps --generatePackageJson=true
-                  cp devops/docker/mf-dockerfile dist/apps/mf-container-app/Dockerfile
-                  cp devops/docker/nginx.conf dist/apps/mf-container-app/
+                  cp devops/docker/mf-contain-dockerfile dist/apps/mf-container-app/Dockerfile
+                  cp devops/docker/mf-contain-nginx.conf dist/apps/mf-container-app/
           - task: Docker@2
             displayName: Build and push an image to container registry
             inputs:
