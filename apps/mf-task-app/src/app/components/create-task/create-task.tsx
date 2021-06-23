@@ -109,10 +109,10 @@ export function CreateTask(props: CreateTaskProps) {
     // const date = moment.utc(moment(e.target.value).utc()).format();
     const date1 = new Date(e.target.value)
     const date2 = new Date(date)
-    var Difference_In_Time = date1.getTime() - date2.getTime();
+    const Difference_In_Time = date1.getTime() - date2.getTime();
 
     // To calculate the no. of days between two dates
-    var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+    const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
     setEndDate(e.target.value);
     setEstimatedDays(Difference_In_Days.toString())
   }
@@ -324,7 +324,6 @@ export function CreateTask(props: CreateTaskProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <AssigneeIndex parentAsigneeSelect={setAsignee} name="Followers" />
-
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>

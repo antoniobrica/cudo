@@ -8,8 +8,8 @@ import './bkp.module.scss';
 
 /* eslint-disable-next-line */
 export interface BkpProps {
-  parentBKPSelect,
-  bkp
+  parentBKPSelect?,
+  bkp?
 }
 
 export function Bkp(props: BkpProps) {

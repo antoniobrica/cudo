@@ -7,8 +7,8 @@ import { useBkpQuery, useFolderQuery } from '../../services/useRequest';
 
 /* eslint-disable-next-line */
 export interface BkpsProps {
-  parentBKPSelect,
-  bkp
+  parentBKPSelect?,
+  bkp?
 }
 
 export function Bkps(props: BkpsProps) {
