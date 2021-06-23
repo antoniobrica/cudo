@@ -13,8 +13,8 @@ const client = new ApolloClient({
 });
 /* eslint-disable-next-line */
 export interface BkpIndexProps {
-  parentBKPSelect
-  bkp
+  parentBKPSelect?
+  bkp?
 }
 
 export function BkpIndex(props: BkpIndexProps) {
