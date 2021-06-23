@@ -109,28 +109,19 @@ export function TaskArea(props: Tasks) {
                       </a>
                     </div>
                   }
-                  {props.task.assignees && props.task.assignees.map((as, i) => {
-                    return (
-                      <div className="navi-item mr-2">
-                        <a className="navi-link">
-                          <span className="navi-text">as  - </span>
-                        </a>
-                      </div>
-                    )
-                  })}
                 </div>
 
               </div>
 
             </div>
 
-            {props.task.taskType &&
+            {/* {props.task.taskType &&
               <div className="navi-item">
                 <a className="navi-link">
                   <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.taskType} </span>
                 </a>
               </div>
-            }
+            } */}
             {/* {props.task.assignees && props.task.assignees.map((as, i) => {
               return (
                 <div className="navi-item " style={{ paddingLeft: '154px' }}>
