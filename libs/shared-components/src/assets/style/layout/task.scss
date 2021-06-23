@@ -97,11 +97,12 @@
   margin-left: 1.5rem !important;
 }
 .check-grey {
-  color: #a2b7c7;
+  color: #9FB5C5;
   font-size: 2.2rem;
 }
 .navi .navi-item .navi-link {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  color: #718898;
 }
 .btn.btn-default {
   color: #ffffff;
@@ -352,4 +353,24 @@ canvas.coveringCanvas{
 }
 .tasks-action-area .symbol-group .symbol span i.dropdown.icon {
   display: none;
+}
+.task-listing-desc {
+  font-weight: $font-medium;
+  .navi-item {
+    margin: 0 5px;
+    @include flex(flex);
+    @include align-items(center);
+    a {
+      span {
+        @include flex(flex);
+        @include align-items(center);
+        i {
+          margin-right: 7px;
+        }
+      }
+    }
+    &:first-child {
+      margin-right: 15px;
+    }
+  }
 }

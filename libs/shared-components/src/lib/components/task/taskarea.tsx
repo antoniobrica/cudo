@@ -77,9 +77,9 @@ export function TaskArea(props: Tasks) {
                 <span className="font-weight-bold mb-0 mr-10 line-through">{props?.task?.taskTitle}</span>
                 <div className="d-flex mr-3">
 
-                  <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
+                  <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row task-listing-desc">
                     {props.task.file &&
-                      <div className="navi-item mr-2">
+                      <div className="navi-item">
                         <a className="navi-link">
                           <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.files.length} files  -  </span>
                         </a>
@@ -87,25 +87,25 @@ export function TaskArea(props: Tasks) {
                     }
 
 
-                    <div className="navi-item mr-2">
+                    <div className="navi-item">
                       <a href="" className="navi-link">
-                        <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> 5 days  - </span>
+                        <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> 5 days <span className="dash-seperator">-</span> </span>
                       </a>
                     </div>
 
-                    <div className="navi-item mr-2">
+                    <div className="navi-item">
                       <a className="navi-link">
-                        <span className="navi-text">{props?.task?.phaseName}  -  </span>
+                        <span className="navi-text">{props?.task?.phaseName}  <span className="dash-seperator">-</span>  </span>
                       </a>
                     </div>
 
-                    <div className="navi-item mr-2">
+                    <div className="navi-item">
                       <a href="" className="navi-link">
                         <span className="navi-text">Paint Work  </span>
                       </a>
                     </div>
                     {props.task.taskType &&
-                      <div className="navi-item mr-2">
+                      <div className="navi-item">
                         <a className="navi-link">
                           <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.taskType} </span>
                         </a>
@@ -113,7 +113,7 @@ export function TaskArea(props: Tasks) {
                     }
                     {props.task.assignees && props.task.assignees.map((as, i) => {
                       return (
-                        <div className="navi-item mr-2">
+                        <div className="navi-item">
                           <a className="navi-link">
                             <span className="navi-text">as  - </span>
                           </a>
@@ -187,36 +187,36 @@ export function TaskArea(props: Tasks) {
                 <span> <img src={img4} className="  mr-10 " />  </span>
                 <span className="textt">T-0{props.id + 1}</span>
                 <span onClick={() => updateStatus(props.task, props.id)}><span className="anchor_complete"><a title="Mark as complete"> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span></span>
-                <span className="font-weight-bold mb-0 mr-10">{props?.task?.taskTitle}</span>
+                <span className="task-heading">{props?.task?.taskTitle}</span>
                 <div className="d-flex mr-3">
 
-                  <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
+                  <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row task-listing-desc">
 
-                    <div className="navi-item mr-2">
+                    <div className="navi-item">
                       <a href=" " className="navi-link active">
                         <span className="navi-text">( {new Date(props?.task?.startDate).toDateString()} ↦ Due {new Date(props?.task?.endDate).toDateString()})</span>
                       </a>
                     </div>
 
                     {props.task?.file &&
-                      <div className="navi-item mr-2">
+                      <div className="navi-item">
                         <a className="navi-link">
                           <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.files.length} files  -  </span>
                         </a>
                       </div>
                     }
 
-                    <div className="navi-item mr-2">
+                    <div className="navi-item">
                       <a href="" className="navi-link">
-                        <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> {props?.task?.estimatedDays} Days- </span>
+                        <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> {props?.task?.estimatedDays} Days <span className="dash-seperator">-</span> </span>
                       </a>
                     </div>
-                    <div className="navi-item mr-2">
+                    <div className="navi-item">
                       <a href="" className="navi-link">
-                        <span className="navi-text">{props?.task?.phaseName}  - </span>
+                        <span className="navi-text">{props?.task?.phaseName}  <span className="dash-seperator">-</span> </span>
                       </a>
                     </div>
-                    <div className="navi-item mr-2">
+                    <div className="navi-item">
                       <a href="" className="navi-link">
                         <span className="navi-text">HVAC Work  </span>
                       </a>
@@ -275,12 +275,12 @@ export function TaskArea(props: Tasks) {
 
                   <div className="card-body py-3">
 
-                    <div className="  align-items-center py-2">
+                    <div>
                       {subtaskData.map((subt, i) => {
                         return (
-                          <div key={i}>
+                          <div className="d-flex align-items-center checklist-listing-main" key={i}>
                             <span className="anchor_complete"><a title="Mark as complete"> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span>
-                            <span className="font-weight-bold mb-0 mr-10">{i + 1}. {subt.subtaskTitle}</span>
+                            <span className="task-checklisting-text">{i + 1}. {subt.subtaskTitle}</span>
                           </div>
                         )
                       })}
