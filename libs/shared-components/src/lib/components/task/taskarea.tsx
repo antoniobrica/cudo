@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './../../../assets/style/index.scss'
-import { Segment, Dropdown, Input, Grid, Form } from 'semantic-ui-react';
+import { Segment, Dropdown, Input, Grid, Form, Icon } from 'semantic-ui-react';
 import img from 'libs/shared-components/src/user.png';
 import img2 from 'libs/shared-components/src/user2.png';
 import img3 from 'libs/shared-components/src/green_tick.png';
@@ -66,7 +66,7 @@ export function TaskArea(props: Tasks) {
       {props?.task?.status === "COMPLETED" ?
         <div className="card1 card-custom gutter-b card-complete">
 
-          <div className="card-body py-3">
+          <div className="card-body">
 
             <div className="task-upper-con d-flex justify-content-between">
 
@@ -74,7 +74,7 @@ export function TaskArea(props: Tasks) {
                 <span> <img src={img4} className="  mr-10 " />  </span>
                 <span className="textt">T-0{props.id + 1}</span>
                 <span onClick={() => updateStatus(props.task, props.id)} className="anchor_complete">  <img src={img3} className=" mr-2 mr-10 " />   </span>
-                <span className="font-weight-bold mb-0 mr-10 line-through">{props?.task?.taskTitle}</span>
+                <span className="completed-task-list-text line-through">{props?.task?.taskTitle}</span>
                 <div className="d-flex mr-3">
 
                   <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row task-listing-desc">
@@ -153,20 +153,20 @@ export function TaskArea(props: Tasks) {
 
                   <div className="navi-item ">
                     <a className="navi-link">
-                      <span className="navi-text"> <img src={img} /> </span>
+                      <span className="navi-text pin-action"> <img src={img} /> </span>
                     </a>
                   </div> : null
                 }
 
 
                 <div className="symbol-group symbol-hover py-2" >
-                  <div className="symbol symbol-30">
+                  <div className="symbol symbol-30 d-flex">
 
 
                     {/* <img src={img2} /> */}
                     <span  >
 
-                      <Dropdown text='...'>
+                      <Dropdown icon='ellipsis horizontal'>
                         <Dropdown.Menu>
 
                           <Dropdown.Item onClick={() => veiwTaskbyId(props.task, props.id)} icon='eye' text='View detail' />
@@ -185,8 +185,8 @@ export function TaskArea(props: Tasks) {
         </div>
         :
 
-        <div className="card1 card-custom gutter-b" onClick={() => openSubTask(props.task, props.id)}>
-          <div className="card-body py-3">
+        <div className="card1 card-custom gutter-b task-main-con" onClick={() => openSubTask(props.task, props.id)}>
+          <div className="card-body">
             <div className="task-upper-con d-flex justify-content-between">
               <div className="d-flex align-items-center py-2">
                 <span> <img src={img4} className="  mr-10 " />  </span>
@@ -236,7 +236,7 @@ export function TaskArea(props: Tasks) {
                 {props.task?.taskType &&
                   <div className="navi-item  ">
                     <a className="navi-link">
-                      <span className="navi-text">
+                      <span className="navi-text pin-action">
                         {props.task.taskType == 'PIN' &&
                           <img src={img6} />
                         }
@@ -254,13 +254,13 @@ export function TaskArea(props: Tasks) {
                   </div> : null
                 }
                 <div className="symbol-group symbol-hover py-2">
-                  <div className="symbol symbol-30">
+                  <div className="symbol symbol-30 d-flex">
 
 
                     {/* <img src={img} /> */}
                     <span  >
 
-                      <Dropdown text='...'>
+                      <Dropdown icon='ellipsis horizontal'>
                         <Dropdown.Menu className="dropdowncomplete">
                           <Dropdown.Item onClick={() => veiwTaskbyId(props.task, props.id)} icon='eye' text='View detail' />
                           <Dropdown.Item onClick={() => editTaskbyId(props.task, props.id)} icon='pencil' text='Edit' />
@@ -276,22 +276,22 @@ export function TaskArea(props: Tasks) {
             </div>
             {
               subtaskData && (taskId === props.id) ?
-                <div className="card1 card-custom gutter-b">
+                <div className="card1 card-custom gutter-b checklist-main-con">
 
-                  <div className="card-body py-3">
+                  <div className="card-body">
 
                     <div>
                       {subtaskData.map((subt, i) => {
                         return (
                           <div className="d-flex align-items-center checklist-listing-main" key={i}>
-                            <span className="anchor_complete"><a title="Mark as complete"> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span>
+                            <span className="anchor_complete"><a title="Mark as complete"> <span className="material-icons check-grey">check_circle_outline</span> </a> </span>
                             <span className="task-checklisting-text">{i + 1}. {subt.subtaskTitle}</span>
                           </div>
                         )
                       })}
                       <br />
 
-                      <span className="anchor_complete"><a title="Mark as complete"> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span>
+                      <span className="anchor_complete checklist-complete-box"><a title="Mark as complete"> <span className="material-icons check-grey">check_circle_outline</span> </a> </span>
 
                       <Grid columns={2} className="classtop">
                         <Grid.Row>
@@ -307,7 +307,7 @@ export function TaskArea(props: Tasks) {
                           </Grid.Column>
 
                           <Grid.Column>
-                            <Form.Field style={{ marginleft: '145px' }}>
+                            <Form.Field className="d-flex">
                               <button className="greenbutton" onClick={() => createSubTask(props.task)}>
                                 <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
                               </button> &nbsp;  <button className="redbutton">

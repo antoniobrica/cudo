@@ -13,20 +13,23 @@
   margin-top: 30px;
   margin-bottom: 0;
   padding: 0 30px;
+  border-bottom: 2px solid #fff;
 }
 .ui.secondary.pointing.menu .active.item {
   color: #2d62ed;
   border-color: #2d62ed;
   border-bottom: 2px solid #2d62ed;
-  padding: 13px;
+  padding: 18px 13px;
+  font-weight: $font-medium;
   &:hover {
     color: #2d62ed;
+    border-color: #2d62ed;
   }
 }
 .ui.secondary.pointing.menu .item {
   color: #718898;
   font-size: 14px;
-  padding: 13px;
+  padding: 18px 13px;
 }
 .ui.secondary.pointing.menu .item:first-child {
   padding-left: 0;
@@ -109,9 +112,10 @@ $white: #ffffff;
   padding: 30px;
 }
 .app-content-body-dash {
-  margin-left: 285px;
-  width: calc(100% - 285px);
-  padding: 20px 0;
+  margin-left: 283px;
+  width: calc(100% - 283px);
+  padding: 0 0 20px;
+  height: 100%;
 }
 
 .dash_area {
@@ -124,7 +128,8 @@ $white: #ffffff;
   width: 100%;
 }
 .main-page-heading {
-  padding: 0 30px;
+  padding: 20px 30px 5px;
+  background: #fff;
   span {
     font-size: 20px;
     font-weight: 600;
@@ -156,4 +161,27 @@ span.task-heading {
 }
 span.dash-seperator {
   margin-left: 10px;
+}
+.ui-tabs {
+  margin-top: 0;
+}
+.ui-tabs .ui.segment {
+  margin: 0;
+}
+.ui.menu {
+  font-family: $font-family;
+}
+.app-content-body-dash {
+  .ui-tabs {
+    .ui.secondary.menu {
+      box-shadow: 0px 1px 1px #0000000d;
+      position: relative;
+      z-index: 1;
+      background: #fff;
+    }
+    .ui.bottom.segment {
+      border: $none;
+      padding: 3em;
+    }
+  }
 }

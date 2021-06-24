@@ -139,6 +139,14 @@ export function Tasks(props: TasksProps) {
       status = Status.COMPLETED;
     }
     const taskID = task.taskID;
+    let assignees = [];
+    task.assignees.map((data, i) => {
+      assignees.push({ userID: data.userID, userName: data.userName })
+    })
+    let followers = [];
+    task.followers.map((data, i) => {
+      followers.push({ userID: data.userID, userName: data.userName })
+    })
     addTask({
       variables: {
         taskID,
@@ -157,8 +165,8 @@ export function Tasks(props: TasksProps) {
         referenceID: task.referenceID,
         description: task.description,
         subtasks: [],
-        assignees: task.assignees,
-        followers: task.followers
+        assignees: assignees,
+        followers: followers
       },
       update: (cache) => {
         const cacheData = cache.readQuery({
@@ -254,6 +262,14 @@ export function Tasks(props: TasksProps) {
   };
   const editTaskData = (data) => {
     console.log('editTaskData', data);
+    let assignees = [];
+    data.assignees.map((data, i) => {
+      assignees.push({ userID: data.userID, userName: data.userName })
+    })
+    let followers = [];
+    data.followers.map((data, i) => {
+      followers.push({ userID: data.userID, userName: data.userName })
+    })
     editTaskApi({
       variables: {
         taskID: data.taskID,
@@ -272,8 +288,8 @@ export function Tasks(props: TasksProps) {
         referenceID: data.referenceID,
         description: data.description,
         subtasks: [],
-        assignees: data.assignees,
-        followers: data.followers
+        assignees: assignees,
+        followers: followers
       },
       update: (cache, data) => {
         const cacheData = cache.readQuery({
