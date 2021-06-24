@@ -11,12 +11,14 @@
 }
 .ui.pointing.secondary.menu {
   margin-top: 30px;
+  margin-bottom: 0;
+  padding: 0 30px;
 }
 .ui.secondary.pointing.menu .active.item {
   color: #2d62ed;
   border-color: #2d62ed;
   border-bottom: 2px solid #2d62ed;
-  padding: 10px;
+  padding: 13px;
   &:hover {
     color: #2d62ed;
   }
@@ -25,6 +27,9 @@
   color: #718898;
   font-size: 14px;
   padding: 13px;
+}
+.ui.secondary.pointing.menu .item:first-child {
+  padding-left: 0;
 }
 span.material-icons.middle {
   vertical-align: middle;
@@ -100,11 +105,13 @@ $white: #ffffff;
 .app-content-body-dash.navbar-collapse.box-shadow.bg-white-only
   .ui.segment.active.tab {
   background: #f9f8ff;
+  border: medium none;
+  padding: 30px;
 }
 .app-content-body-dash {
-  margin-left: 275px;
-
-  width: 100%;
+  margin-left: 285px;
+  width: calc(100% - 285px);
+  padding: 20px 0;
 }
 
 .dash_area {
@@ -115,4 +122,38 @@ $white: #ffffff;
 }
 .App {
   width: 100%;
+}
+.main-page-heading {
+  padding: 0 30px;
+  span {
+    font-size: 20px;
+    font-weight: 600;
+    &.preliminary-font {
+      font-size: 14px;
+      font-weight: 500;
+      color: #718898;
+      border-left: 1px solid #e0e0e0;
+      padding: 0 0 0 10px;
+      margin: 0 0 0 5px;
+    }
+  }
+}
+
+span.task-heading {
+  font-size: 1.3rem;
+  font-weight: $font-semibold;
+  color: color('blue', 'dark');
+  margin-right: 10px;
+}
+.task-checklisting-text {
+  font-size: 1.3rem;
+  font-weight: $font-semibold;
+  color: color('blue', 'dark');
+}
+.checklist-listing-main {
+  padding: 10px 0;
+  box-shadow: 0 1px 0 #f1f5f8;
+}
+span.dash-seperator {
+  margin-left: 10px;
 }

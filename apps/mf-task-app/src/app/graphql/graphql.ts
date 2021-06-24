@@ -6,7 +6,8 @@ query Tasks($referenceID: String!)
     referenceType: PROJECTTYPE
     referenceID: $referenceID
   }){
-    taskID
+    results{
+      taskID
     taskTitle
     startDate
     endDate
@@ -39,6 +40,7 @@ query Tasks($referenceID: String!)
   }
   subtasks{subtaskID, subtaskTitle, status}
   }
+    } 
   }
 `;
 
@@ -114,7 +116,8 @@ mutation UpdateTask(
   $description: String!
   $files: [TaskFileParams!]!
   $subtasks: [SubTaskParams!]!
-
+  $assignees: [PeopleParams!]!
+  $followers: [PeopleParams!]!
   ){ 
     updateTask(
         taskDetailsUpdate: {
@@ -133,8 +136,8 @@ mutation UpdateTask(
           phaseName: $phaseName,
           description: $description
         }
-      assignees:[{userID:"2",userName:"Ashutosh"},{userID:"3",userName:"Ashutosh"}]
-      followers:[{userID:"1",userName:"Ashutosh"}]
+      assignees: $assignees
+      followers: $followers
       files: $files
       subtasks: $subtasks
 

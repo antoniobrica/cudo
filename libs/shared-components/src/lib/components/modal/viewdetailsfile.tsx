@@ -40,7 +40,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
   const [imgUrl, setimgUrl] = React.useState('');
   const [numPages, setNumPages] = React.useState(null);
   const [pageNumber, setPageNumber] = React.useState(1);
-
+  const [isPinCreated, setIsPinCreated] = React.useState<boolean>(false);
   function onDocumentLoadSuccess({ numPages }) {
     console.log('numPages', numPages);
     setNumPages(numPages);
@@ -106,7 +106,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                         <Page pageNumber={pageNumber} />
                       </Document>
                       :
-                      <Canvas imgUrl={imgUrl} ></Canvas>
+                      <Canvas imgUrl={imgUrl} isPinCreated={isPinCreated} setIsPinCreated={setIsPinCreated}></Canvas>
                       // <Image src={imgUrl} fluid />
                     }
 

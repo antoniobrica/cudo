@@ -7,6 +7,14 @@ export interface ITaskUpdate {
   taskID?: string;
   status: string;
 }
+export interface IPeople {
+  userID: string,
+  userName: string,
+  imageUrl: string
+}
+export interface IPeoples {
+  peoples: IPeoples[];
+}
 export interface ITask {
   taskID: string
   taskTitle: string
@@ -34,8 +42,12 @@ export interface ITodos {
   getTodos: ITodo[];
 }
 
+export interface ITaskResults {
+  results: ITask[];
+}
+
 export interface ITasks {
-  tasks: ITask[];
+  tasks: ITaskResults;
 }
 
 export interface TaskMutation {

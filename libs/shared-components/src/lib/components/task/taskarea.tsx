@@ -66,107 +66,114 @@ export function TaskArea(props: Tasks) {
       {props?.task?.status === "COMPLETED" ?
         <div className="card1 card-custom gutter-b card-complete">
 
-          <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
+          <div className="card-body py-3">
 
-            <div className="d-flex align-items-center  py-2">
-              <span> <img src={img4} className="  mr-10 " />  </span>
-              <span className="textt">T-0{props.id + 1}</span>
-              <span onClick={() => updateStatus(props.task, props.id)} className="anchor_complete">  <img src={img3} className=" mr-2 mr-10 " />   </span>
-              <span className="font-weight-bold mb-0 mr-10 line-through">{props?.task?.taskTitle}</span>
-              <div className="d-flex mr-3">
+            <div className="task-upper-con d-flex justify-content-between">
 
-                <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
-                  {props.task.file &&
-                    <div className="navi-item mr-2">
-                      <a className="navi-link">
-                        <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.files.length} files  -  </span>
-                      </a>
-                    </div>
-                  }
+              <div className="d-flex align-items-center py-2">
+                <span> <img src={img4} className="  mr-10 " />  </span>
+                <span className="textt">T-0{props.id + 1}</span>
+                <span onClick={() => updateStatus(props.task, props.id)} className="anchor_complete">  <img src={img3} className=" mr-2 mr-10 " />   </span>
+                <span className="font-weight-bold mb-0 mr-10 line-through">{props?.task?.taskTitle}</span>
+                <div className="d-flex mr-3">
 
-
-                  <div className="navi-item mr-2">
-                    <a href="" className="navi-link">
-                      <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> 5 days  - </span>
-                    </a>
-                  </div>
-
-                  <div className="navi-item mr-2">
-                    <a className="navi-link">
-                      <span className="navi-text">{props?.task?.phaseName}  -  </span>
-                    </a>
-                  </div>
-
-                  <div className="navi-item mr-2">
-                    <a href="" className="navi-link">
-                      <span className="navi-text">Paint Work  </span>
-                    </a>
-                  </div>
-                  {props.task.taskType &&
-                    <div className="navi-item mr-2">
-                      <a className="navi-link">
-                        <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.taskType} </span>
-                      </a>
-                    </div>
-                  }
-                  {props.task.assignees && props.task.assignees.map((as, i) => {
-                    return (
-                      <div className="navi-item mr-2">
+                  <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row task-listing-desc">
+                    {props.task.file &&
+                      <div className="navi-item">
                         <a className="navi-link">
-                          <span className="navi-text">as  - </span>
+                          <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.files.length} files  -  </span>
                         </a>
                       </div>
-                    )
-                  })}
+                    }
+
+
+                    <div className="navi-item">
+                      <a href="" className="navi-link">
+                        <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> 5 days <span className="dash-seperator">-</span> </span>
+                      </a>
+                    </div>
+
+                    <div className="navi-item">
+                      <a className="navi-link">
+                        <span className="navi-text">{props?.task?.phaseName}  <span className="dash-seperator">-</span>  </span>
+                      </a>
+                    </div>
+
+                    <div className="navi-item">
+                      <a href="" className="navi-link">
+                        <span className="navi-text">Paint Work  </span>
+                      </a>
+                    </div>
+                    {/* {props.task.taskType &&
+                      <div className="navi-item">
+                        <a className="navi-link">
+                          <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.taskType} </span>
+                        </a>
+                      </div>
+                    } */}
+                    {/* {props.task.assignees && props.task.assignees.map((as, i) => {
+                      return (
+                        <div className="navi-item">
+                          <a className="navi-link">
+                            <span className="navi-text">as  - </span>
+                          </a>
+                        </div>
+                      )
+                    })} */}
+                  </div>
+
                 </div>
 
               </div>
 
-            </div>
+              <div className="tasks-action-area">
 
-            {props.task.taskType &&
-              <div className="navi-item">
-                <a className="navi-link">
-                  <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.taskType} </span>
-                </a>
-              </div>
-            }
-            {/* {props.task.assignees && props.task.assignees.map((as, i) => {
-              return (
-                <div className="navi-item " style={{ paddingLeft: '154px' }}>
-                  <a className="navi-link">
-                    <span className="navi-text"> <img src={img} /> </span>
-                  </a>
+                {props.task.taskType &&
+                  <div className="navi-item">
+                    <a className="navi-link">
+                      <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.taskType} </span>
+                    </a>
+                  </div>
+                }
+                {/* {props.task.assignees && props.task.assignees.map((as, i) => {
+                  return (
+                    <div className="navi-item " style={{ paddingLeft: '154px' }}>
+                      <a className="navi-link">
+                        <span className="navi-text"> <img src={img} /> </span>
+                      </a>
+                    </div>
+                  )
+                })} */}
+                {props.task?.assignees.length > 0 ?
+
+                  <div className="navi-item ">
+                    <a className="navi-link">
+                      <span className="navi-text"> <img src={img} /> </span>
+                    </a>
+                  </div> : null
+                }
+
+
+                <div className="symbol-group symbol-hover py-2" >
+                  <div className="symbol symbol-30">
+
+
+                    <img src={img2} />
+                    <span  >
+
+                      <Dropdown text='...'>
+                        <Dropdown.Menu>
+
+                          <Dropdown.Item onClick={() => veiwTaskbyId(props.task, props.id)} icon='eye' text='View detail' />
+                          <Dropdown.Item onClick={() => editTaskbyId(props.task, props.id)} icon='pencil' text='Edit' />
+                          <Dropdown.Item onClick={() => updateStatus(props.task, props.id)} icon='check circle outline' text='Re-open' />
+                          <Dropdown.Item onClick={() => deleteTaskbyId(props.task, props.id)} icon='trash alternate outline' text='Delete' />
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </span>
+                  </div>
                 </div>
-              )
-            })} */}
-            {props.task?.assignees.length > 0 ?
-
-              <div className="navi-item ">
-                <a className="navi-link">
-                  <span className="navi-text"> <img src={img} /> </span>
-                </a>
-              </div> : null
-            }
-            <div className="symbol-group symbol-hover py-2" >
-              <div className="symbol symbol-30">
-
-
-                <img src={img2} />
-                <span className="mr-2"  >
-
-                  <Dropdown text='...'>
-                    <Dropdown.Menu>
-
-                      <Dropdown.Item onClick={() => veiwTaskbyId(props.task, props.id)} icon='eye' text='View detail' />
-                      <Dropdown.Item onClick={() => editTaskbyId(props.task, props.id)} icon='pencil' text='Edit' />
-                      <Dropdown.Item onClick={() => updateStatus(props.task, props.id)} icon='check circle outline' text='Re-open' />
-                      <Dropdown.Item onClick={() => deleteTaskbyId(props.task, props.id)} icon='trash alternate outline' text='Delete' />
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </span>
               </div>
-
             </div>
 
           </div>
@@ -174,101 +181,106 @@ export function TaskArea(props: Tasks) {
         :
 
         <div className="card1 card-custom gutter-b" onClick={() => openSubTask(props.task, props.id)}>
-          <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-            <div className="d-flex align-items-center py-2">
-              <span> <img src={img4} className="  mr-10 " />  </span>
-              <span className="textt">T-0{props.id + 1}</span>
-              <span onClick={() => updateStatus(props.task, props.id)}><span className="anchor_complete"><a title="Mark as complete"> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span></span>
-              <span className="font-weight-bold mb-0 mr-10">{props?.task?.taskTitle}</span>
-              <div className="d-flex mr-3">
+          <div className="card-body py-3">
+            <div className="task-upper-con d-flex justify-content-between">
+              <div className="d-flex align-items-center py-2">
+                <span> <img src={img4} className="  mr-10 " />  </span>
+                <span className="textt">T-0{props.id + 1}</span>
+                <span onClick={() => updateStatus(props.task, props.id)}><span className="anchor_complete"><a title="Mark as complete"> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span></span>
+                <span className="task-heading">{props?.task?.taskTitle}</span>
+                <div className="d-flex mr-3">
 
-                <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
+                  <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row task-listing-desc">
 
-                  <div className="navi-item mr-2">
-                    <a href=" " className="navi-link active">
-                      <span className="navi-text">( {new Date(props?.task?.startDate).toDateString()} ↦ Due {new Date(props?.task?.endDate).toDateString()})</span>
-                    </a>
-                  </div>
-
-                  {props.task?.file &&
-                    <div className="navi-item mr-2">
-                      <a className="navi-link">
-                        <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.files.length} files  -  </span>
+                    <div className="navi-item">
+                      <a href=" " className="navi-link active">
+                        <span className="navi-text">( {new Date(props?.task?.startDate).toDateString()} ↦ Due {new Date(props?.task?.endDate).toDateString()})</span>
                       </a>
                     </div>
-                  }
 
-                  <div className="navi-item mr-2">
-                    <a href="" className="navi-link">
-                      <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> {props?.task?.estimatedDays} Days- </span>
-                    </a>
+                    {props.task?.file &&
+                      <div className="navi-item">
+                        <a className="navi-link">
+                          <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.files.length} files  -  </span>
+                        </a>
+                      </div>
+                    }
+
+                    <div className="navi-item">
+                      <a href="" className="navi-link">
+                        <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> {props?.task?.estimatedDays} Days <span className="dash-seperator">-</span> </span>
+                      </a>
+                    </div>
+                    <div className="navi-item">
+                      <a href="" className="navi-link">
+                        <span className="navi-text">{props?.task?.phaseName}  <span className="dash-seperator">-</span> </span>
+                      </a>
+                    </div>
+                    <div className="navi-item">
+                      <a href="" className="navi-link">
+                        <span className="navi-text">HVAC Work  </span>
+                      </a>
+                    </div>
                   </div>
-                  <div className="navi-item mr-2">
-                    <a href="" className="navi-link">
-                      <span className="navi-text">{props?.task?.phaseName}  - </span>
-                    </a>
-                  </div>
-                  <div className="navi-item mr-2">
-                    <a href="" className="navi-link">
-                      <span className="navi-text">HVAC Work  </span>
-                    </a>
-                  </div>
+
                 </div>
 
               </div>
 
-            </div>
-            {props.task?.taskType &&
-              <div className="navi-item  " style={{ paddingLeft: '154px' }}>
-                <a className="navi-link">
-                  <span className="navi-text">
-                    {props.task.taskType == 'PIN' &&
-                      <img src={img6} />
-                    }
+              <div className="tasks-action-area">
+                {props.task?.taskType &&
+                  <div className="navi-item  ">
+                    <a className="navi-link">
+                      <span className="navi-text">
+                        {props.task.taskType == 'PIN' &&
+                          <img src={img6} />
+                        }
 
-                  </span>
-                </a>
+                      </span>
+                    </a>
+                  </div>
+                }
+                {props.task?.assignees.length > 0 ?
+
+                  <div className="navi-item ">
+                    <a className="navi-link">
+                      <span className="navi-text"> <img src={img} /> </span>
+                    </a>
+                  </div> : null
+                }
+                <div className="symbol-group symbol-hover py-2">
+                  <div className="symbol symbol-30">
+
+
+                    {/* <img src={img} /> */}
+                    <span  >
+
+                      <Dropdown text='...'>
+                        <Dropdown.Menu className="dropdowncomplete">
+                          <Dropdown.Item onClick={() => veiwTaskbyId(props.task, props.id)} icon='eye' text='View detail' />
+                          <Dropdown.Item onClick={() => editTaskbyId(props.task, props.id)} icon='pencil' text='Edit' />
+                          <Dropdown.Item onClick={() => updateStatus(props.task, props.id)} icon='check circle outline' text='Mark as complete' />
+                          <Dropdown.Item onClick={() => deleteTaskbyId(props.task, props.id)} icon='trash alternate outline' text='Delete' />
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </span>
+                  </div>
+
+                </div>
               </div>
-            }
-            {props.task?.assignees.length > 0 ?
-
-              <div className="navi-item ">
-                <a className="navi-link">
-                  <span className="navi-text"> <img src={img} /> </span>
-                </a>
-              </div> : null
-            }
-            <div className="symbol-group symbol-hover py-2">
-              <div className="symbol symbol-30">
-
-
-                {/* <img src={img} /> */}
-                <span className="mr-2"  >
-
-                  <Dropdown text='...'>
-                    <Dropdown.Menu className="dropdowncomplete">
-                      <Dropdown.Item onClick={() => veiwTaskbyId(props.task, props.id)} icon='eye' text='View detail' />
-                      <Dropdown.Item onClick={() => editTaskbyId(props.task, props.id)} icon='pencil' text='Edit' />
-                      <Dropdown.Item onClick={() => updateStatus(props.task, props.id)} icon='check circle outline' text='Mark as complete' />
-                      <Dropdown.Item onClick={() => deleteTaskbyId(props.task, props.id)} icon='trash alternate outline' text='Delete' />
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </span>
-              </div>
-
             </div>
             {
               subtaskData && (taskId === props.id) ?
                 <div className="card1 card-custom gutter-b">
 
-                  <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
+                  <div className="card-body py-3">
 
-                    <div className="  align-items-center py-2">
+                    <div>
                       {subtaskData.map((subt, i) => {
                         return (
-                          <div key={i}>
+                          <div className="d-flex align-items-center checklist-listing-main" key={i}>
                             <span className="anchor_complete"><a title="Mark as complete"> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span>
-                            <span className="font-weight-bold mb-0 mr-10">{i + 1}. {subt.subtaskTitle}</span>
+                            <span className="task-checklisting-text">{i + 1}. {subt.subtaskTitle}</span>
                           </div>
                         )
                       })}

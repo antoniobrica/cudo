@@ -1,3 +1,5 @@
+export * from './lib/components/file-upload-index/file-upload-index';
+export * from './lib/components/file-upload/file-upload';
 export * from './lib/components/save-pins-index/save-pins-index';
 export * from './lib/components/save-pins/save-pins';
 export * from './lib/components/file-list-index/file-list-index';
