@@ -277,7 +277,7 @@ export function InvitationTab(props: TabsProps) {
   ];
 
   return (
-    <div className="app-content-body-dash navbar-collapse box-shadow">
+    <div className="app-content-body-dash navbar-collapse">
       <div>
         <i className="ms-Icon ms-Icon--Back" aria-hidden="true"></i>{' '}
         <span className="">Invitation</span> /{' '}

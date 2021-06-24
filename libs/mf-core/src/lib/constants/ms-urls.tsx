@@ -1,4 +1,3 @@
-
 interface IURL {
   url: string;
 }
@@ -47,4 +46,3 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
   }
 
 }
-
