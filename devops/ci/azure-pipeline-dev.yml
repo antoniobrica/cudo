@@ -16,6 +16,7 @@ trigger:
       - apps/mf-task-app/*
       - apps/mf-document-app/*
       - deploy/docker-compose-ory/*
+      - libs/*
 jobs:
 - job: cudogetchp
   pool: cudo-selfhosted-agent
@@ -29,6 +30,12 @@ jobs:
                        
             $changesFolder = $result.changes | Where-Object{$_.item.gitObjectType -match "tree"} | Select-Object -Property {$_.item.path}
             ######################################################common####################################################################            
+            foreach($path in $changesFolder){
+              if($path -match '/libs'){
+             echo "##vso[task.setvariable variable=libs;isOutput=true]$True"
+            break
+            }
+            }
             foreach($path in $changesFolder){
               if($path -match '/package'){
              echo "##vso[task.setvariable variable=packages;isOutput=true]$True"
@@ -96,7 +103,7 @@ jobs:
 - job: packages
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
-  condition: eq(dependencies.cudogetchp.outputs['cudovars.packages'], 'true')
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.packages','cudovars.libs'], 'true')
   steps:
           - checkout: self
             clean: false
