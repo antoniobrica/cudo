@@ -4,7 +4,7 @@ interface IURL {
 }
 export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
   "ms_account": {
-    url: "http://cudo-ms-account.softobiz.net/graphql"
+    url: "http://cudo-aa-ms-account-app-dev.cudo-b-dev.svc.cluster.local:8080"
   },
   "ms_document": {
     url: "http://cudo-ms-document.softobiz.net/graphql"
@@ -25,22 +25,22 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
     url: "http://192.168.0.31:6005"
   },
   "mf_project_app": {
-    url: "http://cudo-mf-project.softobiz.net"
+    url: "http://cudo-pa-mf-project-app-dev.cudo-f-dev.svc.cluster.local:8080"
   },
   "mf_task_app": {
-    url: "http://cudo-mf-task.softobiz.net"
+    url: "http://cudo-ta-mf-task-app-dev.cudo-f-dev.svc.cluster.local:8080"
   },
   "mf_document_app": {
-    url: "http://cudo-mf-document.softobiz.net"
+    url: "http://cudo-da-mf-document-app-dev.cudo-f-dev.svc.cluster.local:8080"
   },
   "kratos_BASE_URL": {
-    url: "http://cudoapp.softobiz.net"
+    url: "http://dev.cudo.ch"
   },
   "kratos_KRATOS_BROWSER_URL": {
-    url: "http://cudoapp.softobiz.net/.ory/kratos/public"
+    url: "http://dev.cudo.ch/.ory/kratos/public"
   },
   "kratos_KRATOS_PUBLIC_URL": {
-    url: "http://cudoapp.softobiz.net/.ory/kratos/public"
+    url: "http://dev.cudo.ch/.ory/kratos/public"
   },
   "kratos_KRATOS_ADMIN_URL": {
     url: "http://192.168.0.31:4434"
