@@ -33,7 +33,7 @@ jobs:
             foreach($path in $changesFolder){
               if($path -match '/package')
              echo "##vso[task.setvariable variable=packages;isOutput=true]$True"
-              else($path -match '/libs'){
+              else($path -match '/libs')
              echo "##vso[task.setvariable variable=packages;isOutput=true]$True"
             break
             }
