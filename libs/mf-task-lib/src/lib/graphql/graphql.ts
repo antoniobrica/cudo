@@ -166,6 +166,7 @@ query Tasks($referenceID: String!)
   }
   followers{
   userID
+  userName
   }
   subtasks{subtaskID, subtaskTitle, status}
   }
@@ -193,6 +194,8 @@ mutation CreateTask(
   $taskType: TASKTYPE!
   $files: [TaskFileParams!]!
   $subtasks: [SubTaskParams!]!
+  $assignees: [PeopleParams!]!
+  $followers: [PeopleParams!]!
   ){ 
     createTask(
       referenceFilter: {
@@ -218,8 +221,8 @@ mutation CreateTask(
      taskTypeID:$taskTypeID
      taskType: $taskType
         }
-      assignees:[{userID:"2",userName:"Ashutosh"},{userID:"3",userName:"Ashutosh"}]
-      followers:[{userID:"1",userName:"Ashutosh"}]
+      assignees: $assignees
+      followers: $followers
       files: $files,
       subtasks: $subtasks
    }){

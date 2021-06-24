@@ -19,6 +19,7 @@ interface AlertProps {
   taskData?,
   cancel?,
   taskStatus?
+  id?
 }
 
 export const ModalViewTask = (props: AlertProps) => {
@@ -33,6 +34,9 @@ export const ModalViewTask = (props: AlertProps) => {
       setOpen(props.openAlertF);
     }
   }, [props.openAlertF]);
+  React.useEffect(() => {
+    console.log('taskData', props.taskData)
+  })
   const openf = () => {
     setOpen(true)
   }
@@ -43,7 +47,7 @@ export const ModalViewTask = (props: AlertProps) => {
 
   return (
     <div id="navbar">
-      <Modal style={{ width: '670px', marginLeft: '345px'}}
+      <Modal style={{ width: '670px', marginLeft: '345px' }}
         className="modal_media"
         onClose={cancel}
         onOpen={openf}
@@ -60,7 +64,7 @@ export const ModalViewTask = (props: AlertProps) => {
             <span className="material-icons mr-2 mr-10 check-grey">
               check_circle_outline
             </span>
-            Task Details <span className="textt">T-002</span>
+            Task Details <span className="textt">T-00{props.id} </span>
             <span className="taskdetails">Edit</span>
           </h3>
           <span style={{ color: '#718898', fontSize: '12px' }}>
@@ -117,9 +121,15 @@ export const ModalViewTask = (props: AlertProps) => {
                     <Form.Field>
                       <label>Assignee</label>
                       <div className="event">
-                        <div className="label-green4 label-spacer">
-                          <span className="white-text">AB</span>
-                        </div>
+                        {(props?.taskData?.assignees || []).map((as, i) => {
+                          const name = as.userName.split(" ").map((n) => n[0]).join("");
+                          return (
+                            <div className="label-green4 label-spacer">
+                              <span className="white-text">{name}</span>
+                            </div>
+                          )
+                        })}
+
                       </div>
                     </Form.Field>
                   </Grid.Column>
@@ -127,12 +137,22 @@ export const ModalViewTask = (props: AlertProps) => {
                     <Form.Field>
                       <label>Followers</label>
                       <div className="event">
-                        <div className="label-purple4 label-spacer">
+                        {(props?.taskData?.followers || []).map((p, id) => {
+                          const name = p.userName.split(" ").map((n) => n[0]).join("");
+                          //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
+                          return (
+                            <div className="label-purple4 label-spacer">
+                              <span className="white-text ">{name}</span>
+                            </div>
+                          )
+                        })
+                        }
+                        {/* <div className="label-purple4 label-spacer">
                           <span className="white-text ">RJ</span>
                         </div>
                         <div className="label-blue4 label-spacer">
                           <span className="white-text">JB</span>
-                        </div>
+                        </div> */}
                       </div>
                     </Form.Field>
                   </Grid.Column>
@@ -143,13 +163,13 @@ export const ModalViewTask = (props: AlertProps) => {
                   <Grid.Column>
                     <Form.Field>
                       <label>Start date</label>
-                      <span>{props?.taskData?.startDate}</span>
+                      <span>{new Date(props?.taskData?.startDate).toDateString()}</span>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
                       <label>End date</label>
-                      <span>{props?.taskData?.endDate}</span>
+                      <span>{new Date(props?.taskData?.endDate).toDateString()}</span>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>

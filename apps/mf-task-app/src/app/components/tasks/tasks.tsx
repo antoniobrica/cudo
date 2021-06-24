@@ -55,6 +55,7 @@ export function Tasks(props: TasksProps) {
   const [isTaskFile, setIsTaskFile] = React.useState(false);
   const [isNewTask, setIsNewTask] = React.useState(false);
   const [taskStatus, settaskStatus] = React.useState('');
+  const [idx, setId] = React.useState('');
   const [addTask] = useTaskUpdateMutation(UPDATE_TASK, {
     variables: { referenceID },
   });
@@ -156,6 +157,8 @@ export function Tasks(props: TasksProps) {
         referenceID: task.referenceID,
         description: task.description,
         subtasks: [],
+        assignees: task.assignees,
+        followers: task.followers
       },
       update: (cache) => {
         const cacheData = cache.readQuery({
@@ -237,8 +240,9 @@ export function Tasks(props: TasksProps) {
     setTaskData(task);
     setOpenD(true);
   };
-  const viewTask = (task) => {
+  const viewTask = (task, id) => {
     setTaskData(task);
+    setId(id)
     setViewTaskOpen(true);
   };
   const editTask = (task) => {
@@ -268,6 +272,8 @@ export function Tasks(props: TasksProps) {
         referenceID: data.referenceID,
         description: data.description,
         subtasks: [],
+        assignees: data.assignees,
+        followers: data.followers
       },
       update: (cache, data) => {
         const cacheData = cache.readQuery({
@@ -285,11 +291,20 @@ export function Tasks(props: TasksProps) {
     });
   };
   const subTask = (data, title) => {
+    console.log('data-sub task', data)
     const subtask = [];
     const createSt = {
       subtaskTitle: title,
       status: Status.INPROGRESS,
     };
+    let assignees = [];
+    data.assignees.map((data, i) => {
+      assignees.push({ userID: data.userID, userName: data.userName })
+    })
+    let followers = [];
+    data.followers.map((data, i) => {
+      followers.push({ userID: data.userID, userName: data.userName })
+    })
     subtask.push(createSt);
     editTaskApi({
       variables: {
@@ -309,6 +324,8 @@ export function Tasks(props: TasksProps) {
         referenceID: data.referenceID,
         description: data.description,
         subtasks: subtask,
+        assignees: assignees,
+        followers: followers
       },
       update: (cache, data) => {
         const cacheData = cache.readQuery({
@@ -395,6 +412,7 @@ export function Tasks(props: TasksProps) {
             taskData={taskData}
             taskStatus={taskStatus}
             cancel={cancel}
+            id={idx}
           ></ModalViewTask>
         </div>
       ) : null}
