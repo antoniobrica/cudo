@@ -211,7 +211,7 @@ jobs:
               repository: mf-document-app-dev
               dockerfile: dist/apps/mf-document-app/Dockerfile
               containerRegistry: dev-docker-registry
-               tags: latest
+              tags: latest
 - job: mfprojectapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -231,7 +231,7 @@ jobs:
               repository: mf-project-app-dev
               dockerfile: dist/apps/mf-project-app/Dockerfile
               containerRegistry: dev-docker-registry
-               tags: latest
+              tags: latest
 ###################################################Backend####################################################################################
 - job: msaccount
   pool: cudo-selfhosted-agent
