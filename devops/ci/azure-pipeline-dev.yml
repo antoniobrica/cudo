@@ -31,6 +31,12 @@ jobs:
             $changesFolder = $result.changes | Where-Object{$_.item.gitObjectType -match "tree"} | Select-Object -Property {$_.item.path}
             ######################################################common####################################################################            
             foreach($path in $changesFolder){
+              if($path -match '/libs'){
+             echo "##vso[task.setvariable variable=packages;isOutput=true]$True"
+            break
+            }
+            }
+            foreach($path in $changesFolder){
               if($path -match '/package', '/libs'){
              echo "##vso[task.setvariable variable=packages;isOutput=true]$True"
             break
