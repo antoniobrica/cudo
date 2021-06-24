@@ -40,9 +40,6 @@ export function Loginpassword(props: LoginPasswordProps) {
     }
     )
   }, [props?.fields])
-  // const handleLogin = () => {
-  //   props.login();
-  // }
   return (
     <div className=" ">
       <div className="main-outer-area">
@@ -55,7 +52,7 @@ export function Loginpassword(props: LoginPasswordProps) {
                   <div className="form-header">
                     <span className="welcome">Welcome Back</span>
                     <h2 className="login">Login to your account</h2>
-                    {props.messages && <Messagebar error={props.messages} />}
+                    {/* {props.messages && <Messagebar error={props.messages} />} */}
                   </div>
                   <div className="form-inner">
                     <Form action={props.action} method="POST">

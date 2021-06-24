@@ -344,11 +344,11 @@ export function FileStructure(props: FileStructureProps) {
 			{view && imgUrl.length > 0 ?
 				<div>
 					{/* <ViewFileDetail open={view} fType={fType} filesData={filesData} dowloadFilesData={props.downloadedImg} ></ViewFileDetail> */}
-					<AddPinFile isOpen={view} filesData={filesData} dowloadFilesData={props.downloadedImg} savePins={savePins} onSuccess={""} />
+					<AddPinFile isOpen={view} filesData={filesData} dowloadFilesData={props.downloadedImg} savePin={savePins} onSuccess={""} />
 				</div> : null}
 			{openPinFile && imgUrl.length > 0 ?
 				<div>
-					<AddPinFile isOpen={openPinFile} filesData={filesData} dowloadFilesData={props.downloadedImg} savePins={savePins} onSuccess={""} />
+					<AddPinFile isOpen={openPinFile} filesData={filesData} dowloadFilesData={props.downloadedImg} savePin={savePins} onSuccess={""} />
 				</div> : null}
 
 			<Tab className="ui-tabs" menu={{ secondary: true, pointing: true }} panes={panes} />
