@@ -14,17 +14,17 @@ export function CostList(props: CostListProps) {
     { key: 'panel-2', title: 'Freehold Two Solar LLC', content: { content: <a href=''>+ Add item</a> } },
   ]
   return (
-    <div className="app-content-body-dash navbar-collapse box-shadow bg-white-only">
+    <div className="app-content-body-dash navbar-collapse">
 
       <div className="ui-tabs">
         <h6 style={{ fontWeight: 'normal' }} className="h5heading">
           Cost managment
-            </h6>
+        </h6>
         <span className="sessiontext" style={{ display: 'flex' }}>Please manage the cost for Electrical Work
 
-                       <div className="symbol-group symbol-hover py-2 marginestimate">
+          <div className="symbol-group symbol-hover py-2 marginestimate">
             <div className="symbol symbol-30">
-              <span className="mr-2" style={{ background: '#fff', padding: '3px' }} >
+              <span className="mr-2" style={{ background: '#fff', padding: '3px', paddingBottom: '6px;' }} >
                 <Dropdown text='...'>
                   <Dropdown.Menu>
                     <Dropdown.Item icon='print' text='Print' />
@@ -55,7 +55,7 @@ export function CostList(props: CostListProps) {
               <Grid.Column style={{ marginTop: '5px' }}>
                 <Form.Field style={{ marginleft: '145px' }}>
                   <button className="greenbutton"><i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i> </button>
-	 &nbsp;  <button className="redbutton"><i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> </button>
+                  &nbsp;  <button className="redbutton"><i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> </button>
                 </Form.Field>
               </Grid.Column>
             </Grid.Row>
@@ -69,7 +69,7 @@ export function CostList(props: CostListProps) {
         <br />
         <h6 style={{ fontWeight: 'normal' }} className="h5heading">
           Items
-            </h6>
+        </h6>
         <div className="ui card " style={{ width: '80%' }}>
           <Accordion className="widtharea" defaultActiveIndex={0} panels={rootPanels} styled  >
           </Accordion>

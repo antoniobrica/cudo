@@ -7,6 +7,14 @@ export interface ITaskUpdate {
   taskID?: string;
   status: string;
 }
+export interface IPeople {
+  userID: string,
+  userName: string,
+  imageUrl: string
+}
+export interface IPeoples {
+  peoples: IPeoples[];
+}
 export interface ITask {
   taskID: string
   taskTitle: string

@@ -4,35 +4,27 @@ import { Form, Select } from 'semantic-ui-react';
 
 import { useBkpQuery, useFolderQuery } from '../../services/useRequest';
 
-import './bkp.module.scss';
 
 /* eslint-disable-next-line */
-export interface BkpProps {
+export interface BkpsProps {
   parentBKPSelect?,
   bkp?
 }
 
-export function Bkp(props: BkpProps) {
+export function Bkps(props: BkpsProps) {
   const [items, setItems] = React.useState([])
-  const [items1, setItems1] = React.useState([])
-  const [items2, setItems2] = React.useState([])
   const [BKPID, setBKPID] = React.useState("")
 
   const { loading, error, data } = useBkpQuery(GET_BKP);
   const { loading: folderL, error: folderE, data: FolderD } = useFolderQuery(GET_FOLDER)
   React.useEffect(() => {
-    if (data && FolderD) {
-      console.log('FolderD', FolderD);
-      const bkps = data.Bkp.map(({ bkpTitle, bkpID }) => ({ key: bkpID, value: bkpTitle, text: bkpID + " - " + bkpTitle }))
+    if (data) {
       setItems(data.Bkp.map(({ bkpTitle, bkpID }) => ({ key: bkpID, value: bkpTitle, text: bkpID + " - " + bkpTitle })));
-      const arr = FolderD.Folders.map(({ folderTitle, folderID }) => ({ key: folderID, value: folderTitle, text: folderTitle }))
-      setItems1(arr);
-      const bkpF = bkps.concat(arr);
-      setItems2(bkpF);
     }
   }, [data, FolderD]);
   React.useEffect(() => {
     if (props.bkp) {
+      console.log('bkps', props.bkp)
       setBKPID(props.bkp)
     }
   }, [props.bkp])
@@ -54,35 +46,15 @@ export function Bkp(props: BkpProps) {
 
   const onBkp = (event, data) => {
     console.log('data==', data)
-    const bkpID = { BKPID: '', BKPIDTitle: '', isFolder: false };
+    const bkpID = { BKPID: '', BKPIDTitle: '' };
     for (let i = 0; i <= items.length; i++) {
       if (items[i]?.value === data.value) {
         bkpID.BKPID = items[i].key;
         bkpID.BKPIDTitle = data.value;
       }
     }
-    const folder = { folderID: '', folderTitle: '', isFolder: true };
-    for (let i = 0; i <= items1.length; i++) {
-      if (items1[i]?.value === data.value) {
-        folder.folderID = items1[i].key;
-        folder.folderTitle = data.value;
-      }
-    }
     setBKPID(data.value)
-    let bkpFolder = null;
-    let isFolder = false;
-    if (bkpID.BKPIDTitle.length > 0) {
-      // bkpFolder = bkpID;
-      props.parentBKPSelect(bkpID);
-
-    }
-    else {
-      bkpFolder = folder;
-      props.parentBKPSelect(folder);
-      isFolder = true;
-    }
-
-    // props.parentBKPSelect(bkpFolder);
+    props.parentBKPSelect(bkpID);
   }
 
 
@@ -90,7 +62,7 @@ export function Bkp(props: BkpProps) {
     <Form.Field>
       <label>Select BKP   </label>
       <Select name='bkp' placeholder='Select' className="small"
-        options={items2}
+        options={items}
         value={BKPID}
         onChange={onBkp}
       />
@@ -99,4 +71,4 @@ export function Bkp(props: BkpProps) {
   );
 }
 
-export default Bkp;
+export default Bkps;

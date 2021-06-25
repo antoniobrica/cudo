@@ -15,7 +15,7 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
     url: "http://cudo-ms-task.softobiz.net/graphql"
   },
   "ms_cost": {
-    url: 'http://192.168.0.31:5002/graphql'
+    url: "http://cudo-ms-cost.softobiz.net/graphql"
   },
   "mf_cost_app": {
     url: "http://192.168.0.31:6004"
@@ -33,13 +33,13 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
     url: "http://cudo-mf-document.softobiz.net"
   },
   "kratos_BASE_URL": {
-    url: "http://cudo-ory.symple.co.in"
+    url: "http://cudoapp.softobiz.net"
   },
   "kratos_KRATOS_BROWSER_URL": {
-    url: "http://cudo-ory.symple.co.in/.ory/kratos/public"
+    url: "http://cudoapp.softobiz.net/.ory/kratos/public"
   },
   "kratos_KRATOS_PUBLIC_URL": {
-    url: "http://cudo-ory.symple.co.in/.ory/kratos/public"
+    url: "http://cudoapp.softobiz.net/.ory/kratos/public"
   },
   "kratos_KRATOS_ADMIN_URL": {
     url: "http://192.168.0.31:4434"
