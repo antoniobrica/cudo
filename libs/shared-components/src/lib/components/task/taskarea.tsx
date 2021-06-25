@@ -26,6 +26,7 @@ export function TaskArea(props: Tasks) {
   const [taskId, setTaskId] = React.useState(null);
   const [subtaskTitle, setSubtaskTitle] = React.useState('')
   const [subtaskData, setSubtaskData] = React.useState([])
+  const [vewSubTask, setViewSubtask] = React.useState(true);
 
 
   const description = [
@@ -57,6 +58,15 @@ export function TaskArea(props: Tasks) {
   const createSubTask = (task) => {
     const subTaskTitle = subtaskTitle;
     props.subTask(task, subTaskTitle)
+    setViewSubtask(false)
+    setSubtaskTitle('')
+  }
+
+  const cancelSubtask = (task) => {
+    setViewSubtask(false)
+  }
+  const addNew = () => {
+    setViewSubtask(true)
   }
   return (
     <div>
@@ -287,31 +297,40 @@ export function TaskArea(props: Tasks) {
                       })}
                       <br />
 
-                      <span className="anchor_complete checklist-complete-box"><a title="Mark as complete"> <span className="material-icons check-grey">check_circle_outline</span> </a> </span>
 
-                      <Grid columns={2} className="classtop">
-                        <Grid.Row>
-                          <Grid.Column>
-                            <Form.Field className="fillarea">
+                      {
+                        vewSubTask ?
+                          <div>
+                            <span className="anchor_complete checklist-complete-box"><a title="Mark as complete"> <span className="material-icons check-grey">check_circle_outline</span> </a> </span>
+                            <Grid columns={2} className="classtop">
+                              <Grid.Row>
+                                <Grid.Column>
+                                  <Form.Field className="fillarea">
 
-                              <Input placeholder='Enter your text here....' size='small' className="full-width "
-                                type="text"
-                                value={subtaskTitle}
-                                onChange={onSubtaskTitle}
-                              />
-                            </Form.Field>
-                          </Grid.Column>
+                                    <Input placeholder='Enter your text here....' size='small' className="full-width "
+                                      type="text"
+                                      value={subtaskTitle}
+                                      onChange={onSubtaskTitle}
+                                    />
+                                  </Form.Field>
+                                </Grid.Column>
 
-                          <Grid.Column>
-                            <Form.Field className="d-flex">
-                              <button className="greenbutton" onClick={() => createSubTask(props.task)}>
-                                <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
-                              </button> &nbsp;  <button className="redbutton">
-                                <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> </button>
-                            </Form.Field>
-                          </Grid.Column>
-                        </Grid.Row>
-                      </Grid>
+                                <Grid.Column>
+                                  <Form.Field className="d-flex">
+                                    <button className="greenbutton" onClick={() => createSubTask(props.task)}>
+                                      <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
+                                    </button> &nbsp;  <button className="redbutton" onClick={cancelSubtask}>
+                                      <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> </button>
+                                  </Form.Field>
+                                </Grid.Column>
+                              </Grid.Row>
+                            </Grid>
+                          </div>
+                          :
+                          <div onClick={addNew}> <span>add new +</span></div>
+
+                      }
+
                     </div>
 
 
