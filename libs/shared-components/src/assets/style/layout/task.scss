@@ -183,9 +183,6 @@
 .mr-2 i.dropdown.icon {
   display: none;
 }
-.menu.transition.visible {
-  margin-left: -90px;
-}
 .menu.transition.visible.dropdowncomplete {
   margin-left: -140px;
 }
@@ -263,7 +260,10 @@
   background-color: #ffe8e6;
 }
 .marginestimate {
-  margin-left: 770px;
+  
+  margin-left: 757px;
+  position: relative;
+  top: -39px;
 }
 
 .dotlinearea {
@@ -294,7 +294,8 @@
   display: flex;
   margin-right: 0;
   float: right;
-  margin-top: -25px;
+  margin-top: -8px;
+  @include align-items(center);
 }
 .button.icon i.dropdown.icon {
   display: none;
@@ -460,4 +461,35 @@ span.anchor_complete.checklist-complete-box span.material-icons.check-grey {
 }
 .add-new-task-con {
   margin-top: 15px;
+}
+.add-new-link {
+  padding: 15px 15px 0;
+}
+.add-task-dropdown .ui.dropdown {
+  background: #2d62ed;
+  width: 120px;
+  height: 33px;
+  padding: 0 0 0 18px !important;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  > i.add.icon {
+    color: #fff;
+    background: #2d62ed !important;
+    left: 6px !important;
+  }
+  .menu {
+    min-width: 190px !important;
+    left: auto !important;
+    right: 0 !important;
+  }
+  .divider.text {
+    font-size: 13px;
+    min-width: 67px;
+    margin-right: 13px;
+  }
+}
+.add-task-dropdown .ui.active.visible.button.floating.labeled.dropdown:hover {
+  background: #2d62ed;
+  color: #fff;
 }

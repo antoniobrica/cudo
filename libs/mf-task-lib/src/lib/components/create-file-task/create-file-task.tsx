@@ -6,7 +6,7 @@ import { ApolloCache, FetchResult, useMutation, useQuery } from '@apollo/client'
 import { ADD_TASK, GET_TASKS } from "../../graphql/graphql";
 // import '../../../../../../libs/shared-components/src/style/index.scss';
 import moment, { calendarFormat } from 'moment';
-import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex } from "@cudo/mf-account-app-lib"
+import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex, BkpsIndex } from "@cudo/mf-account-app-lib"
 import { useHistory } from 'react-router';
 import './create-file-task.module.scss';
 import axios from 'axios';
@@ -34,12 +34,11 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   const [saveTaskAsTemplate, setSaveTaskAsTemplate] = React.useState("")
   const [phaseID, setPhasesID] = React.useState("")
   const [status, setStatus] = React.useState("")
-  const [followers, setfollowers] = React.useState("")
   const [phaseName, setPhasesName] = React.useState("");
   const [BKPTitle, setBKPIDTitle] = React.useState("");
   const [files, setFileList] = React.useState<any>([]);
   const [description, setDescription] = React.useState("")
-
+  const [date, setDate] = React.useState(null)
   const [workType, setworkType] = React.useState(null)
   const [workTypeD, setworkTypeD] = React.useState(null)
   const [workTypeData, setworkTypeData] = React.useState('')
@@ -48,6 +47,8 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   const [workTypes, setWorkTypes] = React.useState([]);
   const [fileData, setfileData] = React.useState(null)
   const [taskTypeID, settaskTypeID] = React.useState('')
+  const [assignees, setAssignees] = React.useState<any>([]);
+  const [followers, setfollowers] = React.useState<any>([]);
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
@@ -119,12 +120,23 @@ export function CreateFileTask(props: CreateFileTaskProps) {
     setTaskTitle(e.target.value)
   }
   const onStartDateChange = e => {
+    setDate(e.target.value)
     const date = moment.utc(moment(e.target.value).utc()).format();
+    console.log('====================================');
+    console.log('date', date);
+    console.log('====================================');
     setStartDate(e.target.value)
   }
   const onEndDateChange = e => {
-    const date = moment.utc(moment(e.target.value).utc()).format();
+    // const date = moment.utc(moment(e.target.value).utc()).format();
+    const date1 = new Date(e.target.value)
+    const date2 = new Date(date)
+    const Difference_In_Time = date1.getTime() - date2.getTime();
+
+    // To calculate the no. of days between two dates
+    const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
     setEndDate(e.target.value);
+    setEstimatedDays(Difference_In_Days.toString())
   }
   const onsetEstimatedDays = (event, data) => {
     setEstimatedDays(data.value)
@@ -135,7 +147,9 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   }
 
   const onFollowers = (data) => {
-    setfollowers(data.value);
+    const ppl = []
+    ppl.push(data)
+    setAssignees(ppl)
   }
   const setBKPIDChange = (data) => {
     setBKPIDTitle(data.BKPIDTitle)
@@ -143,6 +157,8 @@ export function CreateFileTask(props: CreateFileTaskProps) {
     console.log('bkp==>', data);
   }
   const setAsignee = (data) => {
+    setfollowers(data)
+
     // setAsignis(data)
   }
 
@@ -213,6 +229,8 @@ export function CreateFileTask(props: CreateFileTaskProps) {
         taskTypeID,
         taskType: taskType.PIN,
         files,
+        assignees,
+        followers,
         description,
         subtasks: [],
         referenceID
@@ -308,34 +326,41 @@ export function CreateFileTask(props: CreateFileTaskProps) {
                 <PhaseIndex parentPhaseSelect={onsetPhasesID} />
               </Grid.Column>
               <Grid.Column>
-                <BkpIndex bkp={BKPID} parentBKPSelect={setBKPIDChange} />
+                <BkpsIndex bkp={BKPID} parentBKPSelect={setBKPIDChange} />
               </Grid.Column>
             </Grid.Row>
           </Grid>
           <Grid columns={1}>
             <Grid.Row>
               <Grid.Column>
-                <AssigneeIndex parentAsigneeSelect={setAsignee} name="Assignee" />
+                <FollowersIndex parentFollowersSelect={onFollowers} />
               </Grid.Column>
             </Grid.Row>
           </Grid>
           <Grid columns={2}>
             <Grid.Row>
               <Grid.Column>
-                <FollowersIndex parentFollowersSelect={onFollowers} />
+                <AssigneeIndex parentAsigneeSelect={setAsignee} name="Followers" />
               </Grid.Column>
               <Grid.Column>
                 <Form.Field>
                   <div className="event top-event">
-                    <div className="label-light-purple-circle label-spacer" style={{ width: '26px' }}>
-                      <span className="white-text">AB</span>
-                    </div>
-                    <div className="label-light-black-circle label-spacer" style={{ width: '26px' }}>
-                      <span className="white-text ">RJ</span>
-                    </div>
-                    <div className="label-light-blue-circle label-spacer" style={{ width: '26px' }}>
-                      <span className="white-text">JB</span>
-                    </div>
+                    {followers.map((p, id) => {
+                      const name = p.userName.split(" ").map((n) => n[0]).join("");
+                      return (
+                        <div className="label-light-purple-circle label-spacer" key={id}>
+                          <span className="white-text">{name}</span>
+                        </div>
+                      )
+                    })
+                    }
+
+                    {/* <div className="label-light-black-circle label-spacer">
+                          <span className="white-text ">RJ</span>
+                        </div>
+                        <div className="label-light-blue-circle label-spacer">
+                          <span className="white-text">JB</span>
+                        </div> */}
                   </div>
                 </Form.Field>
               </Grid.Column>
@@ -364,14 +389,14 @@ export function CreateFileTask(props: CreateFileTaskProps) {
                   />
                 </Form.Field>
               </Grid.Column>
-           
+
             </Grid.Row>
             <Grid.Row>
             </Grid.Row>
           </Grid>
           <Grid columns={1}>
-          <Grid.Row>
-          <Grid.Column>
+            <Grid.Row>
+              <Grid.Column>
                 <Form.Field>
                   <label>Estimated Days  </label>
                   <Input placeholder='Enter days' className="small"
@@ -380,7 +405,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
                   />
                 </Form.Field>
               </Grid.Column>
-          </Grid.Row>
+            </Grid.Row>
           </Grid>
           <Grid columns={1}>
             <Grid.Row>

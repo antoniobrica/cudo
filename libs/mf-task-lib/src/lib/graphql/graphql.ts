@@ -77,7 +77,7 @@ mutation CreateMileStone(
           status: INPROGRESS
         }
         files: [
-          { fileID: "milestone1", fileUrl: "Pull.comm", fileName: "requeest" }
+          {  fileUrl: "Pull.comm", fileName: "requeest" }
         ]
       }
     ) {
@@ -89,7 +89,7 @@ mutation CreateMileStone(
       worktypeID
       worktypeName
       files {
-        fileID
+        fileUrl
       }
     }
 }`;
@@ -101,6 +101,7 @@ mutation UpdateMileStone(
   $dueDate: DateTime!,
   $description: String!,
   $phaseName: String!,
+  $status: TASKSTATUS!
   ){ 
     updateMileStone(
       milestoneDetailsUpdate: {
@@ -111,10 +112,10 @@ mutation UpdateMileStone(
           description: $description
           phaseName: $phaseName
           worktypeName: "Whateever"
-          status: INPROGRESS
+          status: $status
         }
         files: [
-          { fileID: "milestone1", fileUrl: "Pull.comm", fileName: "requeest" }
+          { fileUrl: "Pull.comm", fileName: "requeest" }
         ]
       }
     ) {
@@ -124,7 +125,7 @@ mutation UpdateMileStone(
       phaseName
       status
       files {
-        fileID
+        fileUrl
       }
     }
 }`;
@@ -165,6 +166,7 @@ query Tasks($referenceID: String!)
   }
   followers{
   userID
+  userName
   }
   subtasks{subtaskID, subtaskTitle, status}
   }
@@ -192,6 +194,8 @@ mutation CreateTask(
   $taskType: TASKTYPE!
   $files: [TaskFileParams!]!
   $subtasks: [SubTaskParams!]!
+  $assignees: [PeopleParams!]!
+  $followers: [PeopleParams!]!
   ){ 
     createTask(
       referenceFilter: {
@@ -217,8 +221,8 @@ mutation CreateTask(
      taskTypeID:$taskTypeID
      taskType: $taskType
         }
-      assignees:[{userID:"2",userName:"Ashutosh"},{userID:"3",userName:"Ashutosh"}]
-      followers:[{userID:"1",userName:"Ashutosh"}]
+      assignees: $assignees
+      followers: $followers
       files: $files,
       subtasks: $subtasks
    }){

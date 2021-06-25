@@ -26,6 +26,7 @@ export function TaskArea(props: Tasks) {
   const [taskId, setTaskId] = React.useState(null);
   const [subtaskTitle, setSubtaskTitle] = React.useState('')
   const [subtaskData, setSubtaskData] = React.useState([])
+  const [vewSubTask, setViewSubtask] = React.useState(true);
 
 
   const description = [
@@ -59,6 +60,15 @@ export function TaskArea(props: Tasks) {
   const createSubTask = (task) => {
     const subTaskTitle = subtaskTitle;
     props.subTask(task, subTaskTitle)
+    setViewSubtask(false)
+    setSubtaskTitle('')
+  }
+
+  const cancelSubtask = (task) => {
+    setViewSubtask(false)
+  }
+  const addNew = () => {
+    setViewSubtask(true)
   }
   return (
     <div>
@@ -104,14 +114,14 @@ export function TaskArea(props: Tasks) {
                         <span className="navi-text">Paint Work  </span>
                       </a>
                     </div>
-                    {props.task.taskType &&
+                    {/* {props.task.taskType &&
                       <div className="navi-item">
                         <a className="navi-link">
                           <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.taskType} </span>
                         </a>
                       </div>
-                    }
-                    {props.task.assignees && props.task.assignees.map((as, i) => {
+                    } */}
+                    {/* {props.task.assignees && props.task.assignees.map((as, i) => {
                       return (
                         <div className="navi-item">
                           <a className="navi-link">
@@ -119,7 +129,7 @@ export function TaskArea(props: Tasks) {
                           </a>
                         </div>
                       )
-                    })}
+                    })} */}
                   </div>
 
                 </div>
@@ -132,10 +142,15 @@ export function TaskArea(props: Tasks) {
 
               <div className="tasks-action-area">
 
-                {props.task.taskType &&
-                  <div className="navi-item">
+                {props.task?.taskType &&
+                  <div className="navi-item  ">
                     <a className="navi-link">
-                      <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.taskType} </span>
+                      <span className="navi-text">
+                        {props.task.taskType == 'PIN' &&
+                          <img src={img6} />
+                        }
+
+                      </span>
                     </a>
                   </div>
                 }
@@ -162,8 +177,8 @@ export function TaskArea(props: Tasks) {
                   <div className="symbol symbol-30 d-flex">
 
 
-                    <img src={img2} />
-                    <span>
+                    {/* <img src={img2} /> */}
+                    <span  >
 
                       <Dropdown icon='ellipsis horizontal'>
                         <Dropdown.Menu>
@@ -178,7 +193,7 @@ export function TaskArea(props: Tasks) {
                   </div>
                 </div>
               </div>
-            </div>  
+            </div>
 
           </div>
         </div>
@@ -293,10 +308,11 @@ export function TaskArea(props: Tasks) {
                         )
                       })}
 
-                      <div className="add-new-task-con">
-                        <span className="anchor_complete checklist-complete-box">
-                          <a title="Mark as complete"> <span className="material-icons check-grey">check_circle_outline</span></a></span>
-                        <div className="classtop add-new-task-field">
+                      {
+                        vewSubTask ?
+                          <div className="add-new-task-con">
+                            <span className="anchor_complete checklist-complete-box"><a title="Mark as complete"> <span className="material-icons check-grey">check_circle_outline</span> </a> </span>
+                            <div className="classtop add-new-task-field">
                               <Form.Field className="fillarea">
                                 <Input placeholder='Enter your text here....' size='small' className="full-width "
                                   type="text"
@@ -307,14 +323,20 @@ export function TaskArea(props: Tasks) {
                               <Form.Field className="d-flex">
                                 <button className="greenbutton" onClick={() => createSubTask(props.task)}>
                                   <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
-                                </button> &nbsp;  <button className="redbutton">
+                                </button> &nbsp;  <button className="redbutton" onClick={cancelSubtask}>
                                   <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> </button>
                               </Form.Field>
-                        </div>
-                      </div>
+                            </div>
+                          </div>
+                          :
+                          <div onClick={addNew} className="add-new-link"> <span><Icon name="plus"></Icon> Add new</span></div>
+
+                      }
+
+                    </div>
+
                     </div>
                   </div>
-                </div>
                 : null
             }
             {/* <button className="ui large button btn-dashed  btn-large"><i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> Add new task    </button> */}

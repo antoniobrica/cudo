@@ -10,6 +10,7 @@ export interface LoginProps {
   emailSubmitHandle?
   email?
   isEmailExist?
+  setIsEmailExist?
 }
 
 export function Loginbar(props: LoginProps) {
@@ -17,7 +18,11 @@ export function Loginbar(props: LoginProps) {
   const description = [
   ]
   const handleLogin = () => {
-    props.emailSubmitHandle();
+    if (email?.length)
+      props.emailSubmitHandle();
+    else {
+      props.setIsEmailExist(false);
+    }
   }
   const handleChange = e => {
     const { name, value } = e.target;

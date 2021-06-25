@@ -234,7 +234,7 @@ export function ModalExampleModal() {
           />
           <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
             X  Cancel
-        </Button>
+          </Button>
         </Form>
       </Tab.Pane>,
     },
@@ -311,11 +311,11 @@ export function ModalExampleModal() {
           </Grid>
           <Button size='mini' className="disabled" onClick={() => setOpen(false)}>
             Skip
-        </Button>
+          </Button>
           <div className="float-area">
             <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
               X  Cancel
-        </Button>
+            </Button>
             <Button
               content="Submit"
               onClick={() => setOpen(false)}
@@ -492,7 +492,7 @@ export function ModalExampleModal() {
               />
               <Button size='mini' className="icon-border" onClick={() => setSecondOpen(false)}>
                 X  Cancel
-        </Button>
+              </Button>
             </div>
           </Modal.Content>
         </Modal>

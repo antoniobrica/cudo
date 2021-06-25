@@ -5,33 +5,78 @@ import { useTranslation } from 'react-i18next';
 import './../../../assets/style/index.scss'
 import { options, types } from '@hapi/joi';
 import { BkpIndex, HouseStructureIndex } from '@cudo/mf-account-app-lib';
+import { FileUpload } from '@cudo/mf-document-lib';
 export interface IHouse {
   option
   value
   onChange
 }
 export interface ModalCostProps {
-  house?: IHouse
+  house?: IHouse,
+  createCost?
 }
 type Iitem = {
   index?: number
-  bkp?: string;
+  BKPTitle?: string,
+  BKPID: string,
   description?: string;
   files?: string[];
   itemQuantity?: number;
   itemPrice?: number;
+  uploadedFileID?: string;
+  uploadedFileTitle?: string;
 }
 export function ModalCost(props: ModalCostProps) {
   const { t } = useTranslation();
   const [open, setOpen] = React.useState(false)
+  const [idx, setIdx] = React.useState(0)
+
+  const [openFile, setOpenFile] = React.useState(false)
+  const [files, setFileList] = React.useState<any>([]);
   const [items, setItems] = React.useState<Iitem[]>([])
   const handleChange = (event, index) => {
-    console.log(event.target, index);
+    if (event.target == undefined) {
+      console.log('e', event)
+      const values = [...items];
+      const itemValue = values[index];
+      console.log('itemValue', itemValue)
+      itemValue['BKPTitle'] = event.BKPIDTitle;
+      itemValue['BKPID'] = event.BKPID;
+      values[index] = itemValue;
+      setItems(values);
+    }
+    else {
+      const values = [...items];
+      const itemValue = values[index];
+      itemValue[event.target.name] = event.target.value;
+      values[index] = itemValue;
+      setItems(values);
+    }
+
+  }
+  const uploadFile = (index) => {
+    setIdx(index)
+    setOpenFile(true)
+  }
+  const close = () => {
+    setOpenFile(false)
+  }
+  const confirm = (data) => {
+    console.log('files-cost', data);
     const values = [...items];
-    const itemValue = values[index];
-    itemValue[event.target.name] = event.target.value;
-    values[index] = itemValue;
+    const itemValue = values[idx];
+    itemValue['uploadedFileID'] = data.fileTitle;
+    itemValue['uploadedFileTitle'] = data.fileURL;
+    values[idx] = itemValue;
     setItems(values);
+    setFileList(data)
+    setOpenFile(false)
+
+  }
+  const createCost = () => {
+    console.log('cost-items==>', items);
+    props.createCost(items)
+    setOpen(false);
   }
   function CostItem() {
     return items.map((item, index) =>
@@ -68,7 +113,7 @@ export function ModalCost(props: ModalCostProps) {
               <Grid.Row>
                 <Grid.Column>
                   <Form.Field>
-                    <BkpIndex bkp={item.bkp || ''} parentBKPSelect={e => handleChange(e, index)} ></BkpIndex>
+                    <BkpIndex bkp={item.BKPID || ''} parentBKPSelect={e => handleChange(e, index)} ></BkpIndex>
                     {/* <Input name="bkp" size='small' className="full-width" style={{ width: '130px' }} onChange={e => handleChange(e, index)} value={item.bkp || ''} /> */}
                   </Form.Field>
                 </Grid.Column>
@@ -95,7 +140,7 @@ export function ModalCost(props: ModalCostProps) {
               <Grid.Row>
                 <Grid.Column>
                   <Form.Field>
-                    <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <button className="ui mini button grey-btn" >2</button> </span>
+                    <span onClick={() => uploadFile(index)} className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <button className="ui mini button grey-btn" >2</button> </span>
                   </Form.Field>
                 </Grid.Column>
               </Grid.Row>
@@ -154,7 +199,10 @@ export function ModalCost(props: ModalCostProps) {
     setItems(values);
   }
   return (
-    <div id="navbar">
+    <div style={{ marginLeft: 920 }}>
+      {openFile ?
+        <FileUpload openSettingF={openFile} close={close} confirm={confirm} /> : null
+      }
       <Modal className="modal_media" style={{ height: '660px' }}
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
@@ -200,7 +248,7 @@ export function ModalCost(props: ModalCostProps) {
                 {CostItem()}
                 <Table.Row>
                   <Table.Cell>
-                    <a href="#" onClick={() => addItem()}>+ Add more </a>
+                    <a onClick={() => addItem()}>+ Add more </a>
                   </Table.Cell>
                   <Table.Cell></Table.Cell>
                   <Table.Cell>
@@ -224,13 +272,13 @@ export function ModalCost(props: ModalCostProps) {
         <Modal.Actions>
           <Button
             content="Submit"
-            onClick={() => setOpen(false)}
+            onClick={createCost}
             positive
             size='mini' className="grey-btn"
           />
           <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
             X  Cancel
-        </Button>
+          </Button>
         </Modal.Actions>
       </Modal>
     </div>
