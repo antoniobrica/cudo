@@ -3,6 +3,7 @@ COPY .kratos-config/identity.schema.json /home/ory
 COPY .kratos-config/kratos.yml /home/ory/.kratos.yml
 RUN ls -ld /home/ory/.kratos.yml
 RUN kratos --config  /home/ory/.kratos.yml migrate sql -e --yes
+COPY sh.sh /home/ory
 #RUN kratos --config  /etc/config/kratos.yml migrate sql -e --yes
 #COPY .kratos-config/identity.schema.json /etc/config/
 #COPY .kratos-config/kratos.yml /etc/config/
