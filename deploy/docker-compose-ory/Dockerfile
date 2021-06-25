@@ -7,7 +7,7 @@ RUN kratos --config  /home/ory/.kratos.yml migrate sql -e --yes
 #COPY .kratos-config/identity.schema.json /etc/config/
 #COPY .kratos-config/kratos.yml /etc/config/
 #RUN kratos --config  /etc/config/kratos.yml migrate sql -e --yes
-ENV DSN=mysql://cudo:Welcome@1@tcp(112.196.20.249:3306)/cudoi-dev?max_conns=20&max_idle_conns=4
+ENV DSN=mysql://cudo:Welcome@1@tcp(112.196.20.249:3306)/cudo-dev?max_conns=20&max_idle_conns=4
 ENV LOG_LEVEL=trace
 
 #ENTRYPOINT ["kratos"]

@@ -71,7 +71,7 @@ hashers:
     key_length: 16
 
 identity:
-  default_schema_url: file:///etc/config/kratos/identity.schema.json
+  default_schema_url: file:///home/ory/identity.schema.json
 
 courier:
   smtp:
@@ -79,4 +79,4 @@ courier:
     connection_uri: smtp://test@softobiz.com:Xum83875@smtp.office365.com:587/?skip_ssl_verify=false
     from_address: test@softobiz.com
 
-dsn: mysql://cudo:Welcome@1@tcp(112.196.20.249:3306)/cudo?max_conns=20&max_idle_conns=4
+dsn: mysql://cudo:Welcome@1@tcp(112.196.20.249:3306)/cudo-dev?max_conns=20&max_idle_conns=4
