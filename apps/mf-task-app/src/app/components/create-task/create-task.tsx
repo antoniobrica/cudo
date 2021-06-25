@@ -128,7 +128,7 @@ export function CreateTask(props: CreateTaskProps) {
 
   const onFollowers = (data) => {
     console.log('====================================');
-    console.log('asignee', data);
+    console.log('followers', data);
     console.log('====================================');
     setfollowers(data)
   }

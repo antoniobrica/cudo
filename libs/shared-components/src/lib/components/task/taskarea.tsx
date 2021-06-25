@@ -30,7 +30,6 @@ export function TaskArea(props: Tasks) {
 
   const description = [
     <Segment>Pellentesque habitant morbi tristique senectus.</Segment>
-
   ]
   const updateStatus = (task, id) => {
     props.updateTask(task, id)
@@ -46,7 +45,6 @@ export function TaskArea(props: Tasks) {
   }
   const openSubTask = (task, id) => {
     console.log(task.subtasks);
-
     setSubtaskData(task.subtasks)
     setTaskId(id)
     console.log('subtaskTitle', taskId, subtaskData);
@@ -62,7 +60,6 @@ export function TaskArea(props: Tasks) {
   }
   return (
     <div>
-
       {props?.task?.status === "COMPLETED" ?
         <div className="card1 card-custom gutter-b card-complete">
 
@@ -168,7 +165,6 @@ export function TaskArea(props: Tasks) {
 
                       <Dropdown icon='ellipsis horizontal'>
                         <Dropdown.Menu>
-
                           <Dropdown.Item onClick={() => veiwTaskbyId(props.task, props.id)} icon='eye' text='View detail' />
                           <Dropdown.Item onClick={() => editTaskbyId(props.task, props.id)} icon='pencil' text='Edit' />
                           <Dropdown.Item onClick={() => updateStatus(props.task, props.id)} icon='check circle outline' text='Re-open' />
