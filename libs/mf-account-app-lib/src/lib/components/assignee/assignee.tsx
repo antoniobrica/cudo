@@ -9,7 +9,8 @@ import { useQuery } from '@apollo/client';
 /* eslint-disable-next-line */
 export interface AssigneeProps {
   parentAsigneeSelect,
-  name?
+  name?,
+  assignees?,
 }
 enum ReferenceType {
   COMPANY = "COMPANY"
@@ -24,6 +25,14 @@ export function Assignee(props: AssigneeProps) {
       referenceID: "Sftobiz_1234"
     }
   });
+
+  React.useEffect(() => {
+    if (props.assignees) {
+      console.log('props.assignees[0].userName', props.assignees[0].userName);
+      setAssignee(props.assignees[0].userName)
+    }
+  }, [props.assignees])
+
   React.useEffect(() => {
     if (data) {
       setItems(data.references.users.map(({ userName, userID }) => ({ key: userID, value: userName, text: userName, id: userID })));
