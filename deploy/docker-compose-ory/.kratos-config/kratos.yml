@@ -71,7 +71,8 @@ hashers:
     key_length: 16
 
 identity:
-  default_schema_url: file:///home/ory/identity.schema.json
+  default_schema_url: file:///etc/config/identity.schema.json
+  #default_schema_url: file:///home/ory/identity.schema.json
 
 courier:
   smtp:
