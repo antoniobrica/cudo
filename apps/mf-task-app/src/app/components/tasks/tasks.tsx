@@ -139,11 +139,11 @@ export function Tasks(props: TasksProps) {
       status = Status.COMPLETED;
     }
     const taskID = task.taskID;
-    let assignees = [];
+    const assignees = [];
     task.assignees.map((data, i) => {
       assignees.push({ userID: data.userID, userName: data.userName })
     })
-    let followers = [];
+    const followers = [];
     task.followers.map((data, i) => {
       followers.push({ userID: data.userID, userName: data.userName })
     })
@@ -262,11 +262,11 @@ export function Tasks(props: TasksProps) {
   };
   const editTaskData = (data) => {
     console.log('editTaskData', data);
-    let assignees = [];
+    const assignees = [];
     data.assignees.map((data, i) => {
       assignees.push({ userID: data.userID, userName: data.userName })
     })
-    let followers = [];
+    const followers = [];
     data.followers.map((data, i) => {
       followers.push({ userID: data.userID, userName: data.userName })
     })
@@ -313,11 +313,11 @@ export function Tasks(props: TasksProps) {
       subtaskTitle: title,
       status: Status.INPROGRESS,
     };
-    let assignees = [];
+    const assignees = [];
     data.assignees.map((data, i) => {
       assignees.push({ userID: data.userID, userName: data.userName })
     })
-    let followers = [];
+    const followers = [];
     data.followers.map((data, i) => {
       followers.push({ userID: data.userID, userName: data.userName })
     })
