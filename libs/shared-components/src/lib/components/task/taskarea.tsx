@@ -92,14 +92,11 @@ export function TaskArea(props: Tasks) {
                         </a>
                       </div>
                     }
-
-
                     <div className="navi-item">
                       <a href="" className="navi-link">
                         <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> 5 days <span className="dash-seperator">-</span> </span>
                       </a>
                     </div>
-
                     <div className="navi-item">
                       <a className="navi-link">
                         <span className="navi-text">{props?.task?.phaseName}  <span className="dash-seperator">-</span>  </span>
@@ -331,8 +328,8 @@ export function TaskArea(props: Tasks) {
 
                     </div>
 
-                    </div>
                   </div>
+                </div>
                 : null
             }
             {/* <button className="ui large button btn-dashed  btn-large"><i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> Add new task    </button> */}

@@ -94,6 +94,7 @@ export function PinTaskList(props: PinTaskListProps) {
   }
 
   const cancel = () => {
+    console.log('canceled');
     setOpen(false);
     setOpenD(false);
     setViewTaskOpen(false);
@@ -101,9 +102,8 @@ export function PinTaskList(props: PinTaskListProps) {
   };
   const confirmation = (data, task) => {
     console.log('data', task);
-
     setOpen(false);
-    // updateTask(taskData);
+    updateTask(taskData);
 
     let status;
     if (task.status === 'COMPLETED') {
@@ -141,22 +141,54 @@ export function PinTaskList(props: PinTaskListProps) {
     } else {
       settaskStatus('Mark as Complete');
     }
+    editTaskApi({
+      variables: {
+        taskID: task.taskID,
+        status: task.status,
+        files: [],
+        taskTitle: task.taskTitle,
+        startDate: task.startDate,
+        endDate: task.endDate,
+        estimatedDays: task.estimatedDays,
+        sendNotification: false,
+        BKPID: task.BKPID,
+        BKPTitle: task.BKPTitle,
+        saveTaskAsTemplate: task.saveTaskAsTemplate,
+        phaseID: task.phaseID,
+        phaseName: task.phaseName,
+        referenceID: task.referenceID,
+        description: task.description,
+        subtasks: [],
+        assignees: task.assignees,
+        followers: task.followers
+      },
+      update: (cache, data) => {
+        const cacheData = cache.readQuery({
+          query: GET_TASKS,
+          variables: { referenceID },
+        }) as ITasks;
+        cache.writeQuery({
+          query: GET_TASKS,
+          data: {
+            tasksD: [...cacheData?.tasks?.results, data],
+          },
+          variables: { referenceID },
+        });
+      },
+    });
   };
   const deleteTask = (task) => {
     setTaskData(task);
     setOpenD(true);
   };
-  const viewTask = (task, id) => {
+  const viewTask = (task) => {
     setTaskData(task);
-    setId(id)
+    setId(task.taskID)
     setViewTaskOpen(true);
   };
   const editTask = (task) => {
     setTaskData(task);
     setEditTaskOpen(true);
-  };
-  const refresh = (data) => {
-    console.log('refresh is called', data);
   };
   const editTaskData = (data) => {
     console.log('editTaskData', data);
@@ -197,7 +229,7 @@ export function PinTaskList(props: PinTaskListProps) {
         cache.writeQuery({
           query: GET_TASKS,
           data: {
-            tasksD: [...cacheData.tasks.results, data],
+            tasksD: [...cacheData?.tasks?.results, data],
           },
           variables: { referenceID },
         });
@@ -227,6 +259,18 @@ export function PinTaskList(props: PinTaskListProps) {
             taskStatus={taskStatus}
             cancel={cancel}
           ></TaskDelete>
+        </div>
+      ) : null}
+      {open ? (
+        <div className="pin_area">
+          <ModalAlert
+            name='task'
+            openAlertF={open}
+            confirm={confirmation}
+            taskData={taskData}
+            taskStatus={taskStatus}
+            cancel={cancel}
+          ></ModalAlert>
         </div>
       ) : null}
       {viewTaskOpen ? (
