@@ -1,8 +1,10 @@
 interface IURL {
   url: string;
 }
-const environment = "devServerDeploy";
+let environment;
+environment = "developer";
 export let MS_SERVICE_URL: { [serviceName: string]: IURL };
+environment = "devServerDeploy";
 if (environment === "devServerDeploy") {
   MS_SERVICE_URL = {
     "ms_account": {

@@ -170,7 +170,7 @@ export function PinTaskList(props: PinTaskListProps) {
         cache.writeQuery({
           query: GET_TASKS,
           data: {
-            tasksD: [...cacheData?.tasks?.results, data],
+            tasksD: [...cacheData?.tasks, data],
           },
           variables: { referenceID },
         });
@@ -229,7 +229,7 @@ export function PinTaskList(props: PinTaskListProps) {
         cache.writeQuery({
           query: GET_TASKS,
           data: {
-            tasksD: [...cacheData?.tasks?.results, data],
+            tasksD: [...cacheData?.tasks, data],
           },
           variables: { referenceID },
         });
