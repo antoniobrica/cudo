@@ -1,9 +1,9 @@
 interface IURL {
   url: string;
 }
-const environment = "local";
+const environment = "devServerDeploy";
 export let MS_SERVICE_URL: { [serviceName: string]: IURL };
-if (environment === "dev") {
+if (environment === "devServerDeploy") {
   MS_SERVICE_URL = {
     "ms_account": {
       url: "http://cudo-ms-account.softobiz.net/graphql"
@@ -49,7 +49,7 @@ if (environment === "dev") {
     }
   }
 }
-else if (environment === "local") {
+else if (environment === "developer") {
   MS_SERVICE_URL = {
     "ms_account": {
       url: "http://cudo-ms-account.softobiz.net/graphql"
@@ -67,31 +67,77 @@ else if (environment === "local") {
       url: "http://cudo-ms-cost.softobiz.net/graphql"
     },
     "mf_cost_app": {
-      url: "http://192.168.29.131:6004"
+      url: "http://192.168.0.31:6004"
     },
     "mf_meeting_app": {
-      url: "http://192.168.29.131:6005"
+      url: "http://192.168.0.31:6005"
     },
     "mf_project_app": {
-      url: "http://192.168.29.131:6006"
+      url: "http://192.168.0.31:6006"
     },
     "mf_task_app": {
-      url: "http://192.168.29.131:6009"
+      url: "http://192.168.0.31:6009"
     },
     "mf_document_app": {
-      url: "http://192.168.29.131:6010"
+      url: "http://192.168.0.31:6010"
     },
     "kratos_BASE_URL": {
-      url: "http://192.168.29.131:4455"
+      url: "http://192.168.0.31:4455"
     },
     "kratos_KRATOS_BROWSER_URL": {
-      url: "http://192.168.29.131:4455/.ory/kratos/public"
+      url: "http://192.168.0.31:4455/.ory/kratos/public"
     },
     "kratos_KRATOS_PUBLIC_URL": {
-      url: "http://192.168.29.131:4455/.ory/kratos/public"
+      url: "http://192.168.0.31:4455/.ory/kratos/public"
     },
     "kratos_KRATOS_ADMIN_URL": {
-      url: "http://192.168.29.131:4434"
+      url: "http://192.168.0.31:4434"
+    }
+  }
+}
+else if (environment === "design") {
+  MS_SERVICE_URL = {
+    "ms_account": {
+      url: "http://cudo-ms-account.softobiz.net/graphql"
+    },
+    "ms_document": {
+      url: "http://cudo-ms-document.softobiz.net/graphql"
+    },
+    "ms_project": {
+      url: "http://cudo-ms-project.softobiz.net/graphql"
+    },
+    "ms_task": {
+      url: "http://cudo-ms-task.softobiz.net/graphql"
+    },
+    "ms_cost": {
+      url: "http://cudo-ms-cost.softobiz.net/graphql"
+    },
+    "mf_cost_app": {
+      url: "http://192.168.0.31:6004"
+    },
+    "mf_meeting_app": {
+      url: "http://192.168.0.31:6005"
+    },
+    "mf_project_app": {
+      url: "http://192.168.0.31:6006"
+    },
+    "mf_task_app": {
+      url: "http://192.168.0.31:6009"
+    },
+    "mf_document_app": {
+      url: "http://192.168.0.31:6010"
+    },
+    "kratos_BASE_URL": {
+      url: "http://192.168.0.31:4455"
+    },
+    "kratos_KRATOS_BROWSER_URL": {
+      url: "http://192.168.0.31:4455/.ory/kratos/public"
+    },
+    "kratos_KRATOS_PUBLIC_URL": {
+      url: "http://192.168.0.31:4455/.ory/kratos/public"
+    },
+    "kratos_KRATOS_ADMIN_URL": {
+      url: "http://192.168.0.31:4434"
     }
   }
 }

@@ -173,7 +173,6 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
                       <div style={{ borderTop: '1px solid #ddd', paddingTop: '12px' }}>
                       </div>
                     </div>
-
                 }
               </div>
             )
