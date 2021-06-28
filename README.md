@@ -148,7 +148,7 @@ npm run nx run mf-account-app:serve -- --host 0.0.0.0
 ## Build Process
  npm run nx run-many -- --target=build --projects='ms-account,ms-document,ms-project,ms-task' --with-deps --generatePackageJson=true --configuration=production
 
-  npm run nx run-many -- --target=build --projects='mf-account-app,mf-container-app,mf-task-app,mf-account-app' --with-deps --generatePackageJson=true 
+  npm run nx run-many -- --target=build --projects='mf-account-app,mf-container-app,mf-task-app,mf-project-app' --with-deps --generatePackageJson=true 
 
 ### Install Dependancy
 npm i apollo-server-express @nestjs/platform-express mssql
