@@ -234,7 +234,8 @@ export function CreateTask(props: CreateTaskProps) {
 
   return (
     <div >
-      <Modal className="modal_media" style={{ width: '800px', marginLeft: '155px' }}
+      <Modal className="modal_media right-side--fixed-modal add-new-task-modal"
+        closeIcon
         onClose={cancel}
         onOpen={() => setOpen(true)}
         open={open}
@@ -351,6 +352,7 @@ export function CreateTask(props: CreateTaskProps) {
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
+
               <Grid columns={3}>
                 <Grid.Row>
                   <Grid.Column>
@@ -403,9 +405,9 @@ export function CreateTask(props: CreateTaskProps) {
               content="Submit"
               onClick={handleSaveTask}
               positive
-              size='mini' className="grey-btn"
+              size='small' className="primary"
             />
-            <Button size='mini' className="icon-border" onClick={cancel}>
+            <Button size='small' className="icon-border" onClick={cancel}>
               X  Cancel
             </Button>
           </div>

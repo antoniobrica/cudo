@@ -132,13 +132,13 @@ export function PinFileStructure(props: FileStructureProps) {
                         </div>
 
                         <div className="symbol-group symbol-hover">
-                            <div style={{ marginTop: '-33px' }}>
+                            <div>
                                 {/* <a onClick={() => download(file.fileTitle)}>  <i className="ms-Icon ms-Icon--Download mr-10" aria-hidden="true"></i></a> */}
                                 {/* <a onClick={() => viewFile(file)}> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a> */}
                                 <a
                                     onClick={() => viewFile(data, i)}
                                     className="navi-link active"
-                                    style={{ marginLeft: '320px' }}
+                                    
                                 >
                                     <img src={img9} />
 

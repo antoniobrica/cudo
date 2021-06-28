@@ -113,9 +113,9 @@ export function AddFolder(props: AddFolderProps) {
           content="Submit" 
           onClick={handleSaveFile}
           positive
-          size='mini' className="grey-btn"
+          size='small' className="primary"
         />
-        <Button size='mini' className="icon-border" onClick={cancel}>
+        <Button size='small' className="icon-border" onClick={cancel}>
         X  Cancel
         </Button>
         
