@@ -251,6 +251,9 @@ div.add-files-modal button {
   box-shadow: none !important;
   padding: 0;
   margin: 0;
+  .accordion.ui {
+    box-shadow: none !important;
+  }
 }
 .files-tab-outer .ui.segment {
   padding: 0;
