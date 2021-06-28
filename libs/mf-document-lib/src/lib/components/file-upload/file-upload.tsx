@@ -417,7 +417,7 @@ export function FileUpload(props: FileProps) {
                   <Grid columns={1} >
                     <Grid.Row>
                       <Grid.Column>
-                        <AssigneeIndex parentAsigneeSelect={setAsignee} name="Select people" />
+                        <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Select people" />
                       </Grid.Column>
                     </Grid.Row>
                   </Grid>

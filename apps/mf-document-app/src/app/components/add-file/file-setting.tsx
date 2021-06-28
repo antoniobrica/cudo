@@ -328,7 +328,7 @@ export function FileSetting(props: FileProps) {
                     <Form.Field>
                       <div className="content">
                         <div className="description">Generate file number
-                  <p className="enable">Enable this option to generate file numbering</p>
+                          <p className="enable">Enable this option to generate file numbering</p>
                           <Checkbox toggle className="toggle_area" />
                         </div>
                       </div>
@@ -403,7 +403,7 @@ export function FileSetting(props: FileProps) {
                   <Grid columns={1} >
                     <Grid.Row>
                       <Grid.Column>
-                        <AssigneeIndex parentAsigneeSelect={setAsignee} name="Select people" />
+                        <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Select people" />
                       </Grid.Column>
                     </Grid.Row>
                   </Grid>
@@ -468,7 +468,7 @@ export function FileSetting(props: FileProps) {
           />
           <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
             X  Cancel
-        </Button>
+          </Button>
 
         </Modal.Actions>
       </Modal>

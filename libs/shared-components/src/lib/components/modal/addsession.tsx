@@ -204,7 +204,7 @@ export function ModalSession(props: SessionProps) {
                         placeholder="Select Country"
                       />
                     </Form.Field> */}
-                    <AssigneeIndex parentAsigneeSelect={setAsignee} name="Admin" />
+                    <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Admin" />
 
                   </Grid.Column>
                 </Grid.Row>
@@ -268,7 +268,7 @@ export function ModalSession(props: SessionProps) {
                         placeholder="Select Country"
                       />
                     </Form.Field> */}
-                    <AssigneeIndex parentAsigneeSelect={setAsignee} name="Members" />
+                    <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Members" />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
