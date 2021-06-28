@@ -28,7 +28,7 @@ export function LoginPassword(props: LoginPasswordProps) {
         setRequestResponse(request);
       })
       .catch((error) => {
-        console.log(error);
+        console.log("Error in initialiseRequest", error);
       })
   }, [setRequestResponse, history])
 

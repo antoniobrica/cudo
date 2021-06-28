@@ -9,15 +9,15 @@ import config from "../config/kratos"
 export const Error = () => {
   const [requestResponse, setRequestResponse] = useState<any>()
 
-  useEffect(() => {
-    const request = initialiseRequest({ type: "error" }, { filterid: "error" }) as Promise<any>
-    request
-      .then(request => {
-        setRequestResponse(request.data)
-        console.log(request.data)
-      })
-      .catch((error) => { console.log(error) })
-  }, [])
+  // useEffect(() => {
+  //   const request = initialiseRequest({ type: "error" }, { filterid: "error" }) as Promise<any>
+  //   request
+  //     .then(request => {
+  //       setRequestResponse(request.data)
+  //       console.log(request.data)
+  //     })
+  //     .catch((error) => { console.log(error) })
+  // }, [])
 
   return (
     <div className="auth">
