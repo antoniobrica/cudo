@@ -1,4 +1,3 @@
-
 interface IURL {
   url: string;
 }
@@ -45,6 +44,4 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
   "kratos_KRATOS_ADMIN_URL": {
     url: "http://192.168.0.31:4434"
   }
-
 }
-

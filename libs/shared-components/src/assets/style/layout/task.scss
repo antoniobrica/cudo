@@ -98,7 +98,7 @@
 }
 .check-grey {
   color: #9FB5C5;
-  font-size: 2.2rem;
+  font-size: 2.5rem;
 }
 .navi .navi-item .navi-link {
   font-size: 1.3rem;
@@ -183,9 +183,6 @@
 .mr-2 i.dropdown.icon {
   display: none;
 }
-.menu.transition.visible {
-  margin-left: -90px;
-}
 .menu.transition.visible.dropdowncomplete {
   margin-left: -140px;
 }
@@ -243,8 +240,9 @@
 
 .alltask {
   color: black;
-  margin-top: 2px !important;
+  margin-top: 0 !important;
   font-size: 18px;
+  margin-bottom: 25px;
 }
 .textt2 {
   background: #e6e6e6;
@@ -296,7 +294,8 @@
   display: flex;
   margin-right: 0;
   float: right;
-  margin-top: -25px;
+  margin-top: -8px;
+  @include align-items(center);
 }
 .button.icon i.dropdown.icon {
   display: none;
@@ -373,7 +372,124 @@ canvas.coveringCanvas{
       }
     }
     &:first-child {
-      margin-right: 15px;
+      margin-right: 5px;
     }
   }
+}
+.TaskApp-container .card-body {
+  padding: 0.55rem 1.5rem;
+}
+.task-upper-con .textt {
+  min-width: 48px;
+}
+span.completed-task-list-text.line-through {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #718898;
+  margin-right: 15px;
+}
+.tasks-action-area .symbol-group .symbol i {
+  font-size: 1.4em;
+  color: #718898;
+}
+span.navi-text.pin-action {
+  margin-right: 18px;
+}
+.card1.card-custom.gutter-b.checklist-main-con {
+  box-shadow: none;
+  margin-top: 10px;
+  border-top: 1px solid #0000000d;
+  padding-top: 0;
+}
+.card1.card-custom.gutter-b.task-main-con > .card-body {
+  padding: .55rem 0;
+}
+.task-upper-con {
+  padding: 2px 1.5rem;
+}
+.checklist-listing-main {
+  margin: 0 10px;
+  .anchor_complete {
+    padding: 0 15px 0 0;
+  }
+}
+.card1.card-custom.gutter-b.card-complete .task-upper-con {
+  padding: 2px 0;
+}
+span.anchor_complete.checklist-complete-box {
+  margin: 0 0 0 10px;
+}
+span.anchor_complete.checklist-complete-box span.material-icons.check-grey {
+  opacity: .3;
+}
+.checklist-complete-box + .classtop .field button {
+  border: medium none;
+  width: 39px;
+  height: 30px;
+}
+.checklist-complete-box + .classtop .field button i {
+  font-size: 12px;
+}
+.checklist-complete-box + .classtop .field button.greenbutton i {
+  font-size: 18px;
+}
+.sub-task-list-toggle {
+  opacity: 0;
+  @include transition(all .3s);
+  i {
+    color: #718898;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+  }
+}
+.task-main-con:hover {
+  .sub-task-list-toggle {
+    opacity: 1;
+  }
+}
+.add-new-task-field {
+  display: flex;
+  margin-top: -28px !important;
+  .field.fillarea {
+    flex: 2;
+    margin-right: 5px;
+  }
+}
+.d-flex.align-items-center.checklist-listing-main:last-child {
+  margin-bottom: 15px;
+}
+.add-new-task-con {
+  margin-top: 15px;
+}
+.add-new-link {
+  padding: 15px 15px 0;
+}
+.add-task-dropdown .ui.dropdown {
+  background: #2d62ed;
+  width: 120px;
+  height: 33px;
+  padding: 0 0 0 18px !important;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  > i.add.icon {
+    color: #fff;
+    background: #2d62ed !important;
+    left: 6px !important;
+  }
+  .menu {
+    min-width: 190px !important;
+    left: auto !important;
+    right: 0 !important;
+  }
+  .divider.text {
+    font-size: 13px;
+    min-width: 67px;
+    margin-right: 13px;
+  }
+}
+.add-task-dropdown .ui.active.visible.button.floating.labeled.dropdown:hover {
+  background: #2d62ed;
+  color: #fff;
 }

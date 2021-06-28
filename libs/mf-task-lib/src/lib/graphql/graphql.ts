@@ -166,6 +166,7 @@ query Tasks($referenceID: String!)
   }
   followers{
   userID
+  userName
   }
   subtasks{subtaskID, subtaskTitle, status}
   }
@@ -193,6 +194,8 @@ mutation CreateTask(
   $taskType: TASKTYPE!
   $files: [TaskFileParams!]!
   $subtasks: [SubTaskParams!]!
+  $assignees: [PeopleParams!]!
+  $followers: [PeopleParams!]!
   ){ 
     createTask(
       referenceFilter: {
@@ -218,8 +221,8 @@ mutation CreateTask(
      taskTypeID:$taskTypeID
      taskType: $taskType
         }
-      assignees:[{userID:"2",userName:"Ashutosh"},{userID:"3",userName:"Ashutosh"}]
-      followers:[{userID:"1",userName:"Ashutosh"}]
+      assignees: $assignees
+      followers: $followers
       files: $files,
       subtasks: $subtasks
    }){
@@ -230,3 +233,63 @@ mutation CreateTask(
 }`;
 
 
+export const UPDATE_TASK = gql`
+mutation UpdateTask(
+  $taskID: String!,    
+  $status: TASKSTATUS!,
+  $taskTitle: String!,
+  $startDate: DateTime!,
+  $endDate: DateTime!,
+  $estimatedDays: String!,
+  $sendNotification: Boolean!,
+  $BKPID: String!,
+  $BKPTitle: String!,
+  $saveTaskAsTemplate: String!,
+  $phaseID: String!
+  $phaseName: String!
+  $description: String!
+  $files: [TaskFileParams!]!
+  $subtasks: [SubTaskParams!]!
+  $assignees: [PeopleParams!]!
+  $followers: [PeopleParams!]!
+  ){ 
+    updateTask(
+        taskDetailsUpdate: {
+        taskBasics:{
+          taskID: $taskID,
+          status: $status,
+          taskTitle: $taskTitle,
+          startDate: $startDate, 
+          endDate: $endDate,
+          estimatedDays: $estimatedDays,
+          sendNotification: $sendNotification,
+          BKPID: $BKPID,
+          BKPTitle: $BKPTitle,
+          saveTaskAsTemplate: $saveTaskAsTemplate,
+          phaseID: $phaseID,
+          phaseName: $phaseName,
+          description: $description
+        }
+      assignees: $assignees
+      followers: $followers
+      files: $files
+      subtasks: $subtasks
+
+   }){
+    taskID
+    status    
+  }
+}`;
+
+export const DELETE_TASK = gql`
+mutation DeleteTask(
+  $taskID: String!,    
+  ){ 
+    deleteTask(taskDeleteInput:
+      {
+        taskID:$taskID
+      }
+  ){
+      taskID
+    }
+}`;

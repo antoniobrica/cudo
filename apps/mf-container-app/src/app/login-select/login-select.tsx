@@ -23,6 +23,9 @@ export function LoginSelect(props: LoginSelectProps) {
     }
   };
   useEffect(() => {
+    localStorage.setItem('selectedCompany', selectedCompany);
+  }, [selectedCompany])
+  useEffect(() => {
     if (!isAuthenticated()) {
       ToEmail()
     }

@@ -254,7 +254,7 @@ function TabMenu(props: TabMenuProps) {
 
     return (
       <Router>
-        <div className="app-content-body-dash navbar-collapse box-shadow bg-white-only">
+        <div className="app-content-body-dash navbar-collapse">
           <div className="main-page-heading">
             <span className="">{worktypeName ? worktypeName : 'WorktypeName'}</span> <span className="preliminary-font">Preliminary Studies</span>
           </div>
