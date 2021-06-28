@@ -23,7 +23,7 @@ export function FilterPopup() {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <div style={{ marginTop: 22 }}>
+    <div>
       <Modal style={{ width: '390px', marginLeft: '770px', height: '660px' }}
         className="modal_media"
         onClose={() => setOpen(false)}

@@ -13,7 +13,11 @@ import {
 // import SampleModal from './sample-modal';
 import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex } from "@cudo/mf-account-app-lib";
 import ReactQuill, { Quill } from 'react-quill';
+import axios from 'axios';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
+
 import 'react-quill/dist/quill.snow.css';
+import { useHistory } from 'react-router-dom';
 
 function exampleReducer(state, action) {
   switch (action.type) {
@@ -50,6 +54,22 @@ export const ModalTaskEdit = (props: AlertProps) => {
   const [BKPTitle, setBKPIDTitle] = React.useState("");
   const [files, setFileList] = React.useState<any>([]);
   const [description, setDescription] = React.useState("")
+  const [workType, setworkType] = React.useState(null)
+  const [workTypeD, setworkTypeD] = React.useState(null)
+  const [workTypeData, setworkTypeData] = React.useState('')
+  const [workTypes, setWorkTypes] = React.useState([]);
+
+  const [worktypeID, setworktypeID] = React.useState("")
+  const [worktypeName, setworktypeName] = React.useState("")
+  const history = useHistory();
+  const res = history.location.pathname.split("/");
+  const referenceID = res[3].toString();
+  React.useEffect(() => {
+    if (referenceID) {
+      getWorkType(referenceID)
+    }
+  }, [referenceID])
+
   React.useEffect(() => {
     if (props.openAlertF) {
       setOpen(props.openAlertF);
@@ -59,7 +79,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
   React.useEffect(() => {
     if (props.taskData) {
       const date = new Date(props.taskData.startDate).toLocaleString();
-      console.log('date', date);
+      console.log('date', props.taskData);
       setStartDate(date);
       setTaskTitle(props.taskData.taskTitle);
       setDescription(props.taskData.description);
@@ -71,6 +91,67 @@ export const ModalTaskEdit = (props: AlertProps) => {
     }
   }, [props.taskData]);
 
+  const query = `query Game($projectId: String!) {
+    projectById( projectId: $projectId)
+    {
+      projectId
+      projectName
+      projectNum
+      client
+      buildingType
+      printingCom
+      projectWorkTypes{
+        workTypeName
+        projectWorkTypeID
+         workTypeName
+        estimatedCost
+        }
+      description
+    }
+ }`;
+
+  const getWorkType = (referenceID) => {
+    console.log('sasstoken');
+    return axios.post(
+      MS_SERVICE_URL['ms_project'].url,
+      {
+        query,
+        variables: {
+          projectId: referenceID
+        }
+      }
+    ).then(res => {
+      const wt = res.data.data.projectById[0].projectWorkTypes;
+      setWorkTypes(wt);
+    })
+      .catch(err => console.log(err))
+  }
+
+
+  React.useEffect(() => {
+    if (workTypes) {
+      console.log('worktypes', workTypes);
+      setworkType(workTypes.map(({ workTypeName, projectWorkTypeID }) => ({ key: projectWorkTypeID, value: workTypeName, text: workTypeName, id: projectWorkTypeID })));
+    }
+  }, [workTypes]);
+  const onMworkType = (event, data) => {
+    const workT = {
+      worktypeID: '',
+      worktypeName: ''
+    };
+    for (let i = 0; i < workTypes.length; i++) {
+      if (workTypes[i]?.workTypeName === data.value) {
+        console.log('workTypes[i]', workTypes[i]);
+        workT.worktypeID = workTypes[i].projectWorkTypeID;
+        workT.worktypeName = data.value;
+        setworktypeName(workT.worktypeName);
+        setworktypeID(workT.worktypeID);
+        setworkTypeD(workT)
+      }
+    }
+    setworkTypeData(data.value);
+    console.log('worktypeName-', workTypeD);
+  }
   const openf = () => {
     setOpen(true)
   }
@@ -144,12 +225,6 @@ export const ModalTaskEdit = (props: AlertProps) => {
     setOpen(false)
     props.cancel()
   }
-  const workTypes = [
-    { key: 'w1', value: 'w1', text: 'Electrical Work' },
-    { key: 'w2', value: 'w2', text: 'HVAC work' },
-    { key: 'w3', value: 'w3', text: 'Pipelines work' },
-    { key: 'w4', value: 'w4', text: 'Plumbing Work' },
-  ]
 
   return (
     <div id="navbar">
@@ -229,7 +304,13 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         Associate with work type{' '}
                         <span className="danger">*</span>
                       </label>
-                      <Select placeholder='Select' className="small" options={workTypes} />
+                      <Select
+                        placeholder="Select"
+                        className="small"
+                        value={workTypeData}
+                        options={workType}
+                        onChange={onMworkType}
+                      />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -275,7 +356,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         type="text"
                       />
                     </Form.Field> */}
-                    <AssigneeIndex parentAsigneeSelect={setAsignee} name="Assignee" />
+                    <AssigneeIndex assignees={props.taskData.assignees} parentAsigneeSelect={setAsignee} name="Assignee" />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './../../../assets/style/index.scss'
-import { Segment, Dropdown, Input, Grid, Form } from 'semantic-ui-react';
+import { Segment, Dropdown, Input, Grid, Form, Icon } from 'semantic-ui-react';
 import img from 'libs/shared-components/src/user.png';
 import img2 from 'libs/shared-components/src/user2.png';
 import img3 from 'libs/shared-components/src/green_tick.png';
@@ -26,11 +26,11 @@ export function TaskArea(props: Tasks) {
   const [taskId, setTaskId] = React.useState(null);
   const [subtaskTitle, setSubtaskTitle] = React.useState('')
   const [subtaskData, setSubtaskData] = React.useState([])
+  const [vewSubTask, setViewSubtask] = React.useState(true);
 
 
   const description = [
     <Segment>Pellentesque habitant morbi tristique senectus.</Segment>
-
   ]
   const updateStatus = (task, id) => {
     props.updateTask(task, id)
@@ -46,7 +46,6 @@ export function TaskArea(props: Tasks) {
   }
   const openSubTask = (task, id) => {
     console.log(task.subtasks);
-
     setSubtaskData(task.subtasks)
     setTaskId(id)
     console.log('subtaskTitle', taskId, subtaskData);
@@ -59,14 +58,22 @@ export function TaskArea(props: Tasks) {
   const createSubTask = (task) => {
     const subTaskTitle = subtaskTitle;
     props.subTask(task, subTaskTitle)
+    setViewSubtask(false)
+    setSubtaskTitle('')
+  }
+
+  const cancelSubtask = (task) => {
+    setViewSubtask(false)
+  }
+  const addNew = () => {
+    setViewSubtask(true)
   }
   return (
     <div>
-
       {props?.task?.status === "COMPLETED" ?
         <div className="card1 card-custom gutter-b card-complete">
 
-          <div className="card-body py-3">
+          <div className="card-body">
 
             <div className="task-upper-con d-flex justify-content-between">
 
@@ -74,7 +81,7 @@ export function TaskArea(props: Tasks) {
                 <span> <img src={img4} className="  mr-10 " />  </span>
                 <span className="textt">T-0{props.id + 1}</span>
                 <span onClick={() => updateStatus(props.task, props.id)} className="anchor_complete">  <img src={img3} className=" mr-2 mr-10 " />   </span>
-                <span className="font-weight-bold mb-0 mr-10 line-through">{props?.task?.taskTitle}</span>
+                <span className="completed-task-list-text line-through">{props?.task?.taskTitle}</span>
                 <div className="d-flex mr-3">
 
                   <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row task-listing-desc">
@@ -85,14 +92,11 @@ export function TaskArea(props: Tasks) {
                         </a>
                       </div>
                     }
-
-
                     <div className="navi-item">
                       <a href="" className="navi-link">
                         <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> 5 days <span className="dash-seperator">-</span> </span>
                       </a>
                     </div>
-
                     <div className="navi-item">
                       <a className="navi-link">
                         <span className="navi-text">{props?.task?.phaseName}  <span className="dash-seperator">-</span>  </span>
@@ -124,14 +128,23 @@ export function TaskArea(props: Tasks) {
 
                 </div>
 
+                <div className="sub-task-list-toggle">
+                  <Icon name='tasks' />
+                </div>
+
               </div>
 
               <div className="tasks-action-area">
 
-                {props.task.taskType &&
-                  <div className="navi-item">
+                {props.task?.taskType &&
+                  <div className="navi-item  ">
                     <a className="navi-link">
-                      <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.taskType} </span>
+                      <span className="navi-text">
+                        {props.task.taskType == 'PIN' &&
+                          <img src={img6} />
+                        }
+
+                      </span>
                     </a>
                   </div>
                 }
@@ -148,22 +161,21 @@ export function TaskArea(props: Tasks) {
 
                   <div className="navi-item ">
                     <a className="navi-link">
-                      <span className="navi-text"> <img src={img} /> </span>
+                      <span className="navi-text pin-action"> <img src={img} /> </span>
                     </a>
                   </div> : null
                 }
 
 
                 <div className="symbol-group symbol-hover py-2" >
-                  <div className="symbol symbol-30">
+                  <div className="symbol symbol-30 d-flex">
 
 
-                    <img src={img2} />
+                    {/* <img src={img2} /> */}
                     <span  >
 
-                      <Dropdown text='...'>
+                      <Dropdown icon='ellipsis horizontal'>
                         <Dropdown.Menu>
-
                           <Dropdown.Item onClick={() => veiwTaskbyId(props.task, props.id)} icon='eye' text='View detail' />
                           <Dropdown.Item onClick={() => editTaskbyId(props.task, props.id)} icon='pencil' text='Edit' />
                           <Dropdown.Item onClick={() => updateStatus(props.task, props.id)} icon='check circle outline' text='Re-open' />
@@ -180,8 +192,8 @@ export function TaskArea(props: Tasks) {
         </div>
         :
 
-        <div className="card1 card-custom gutter-b" onClick={() => openSubTask(props.task, props.id)}>
-          <div className="card-body py-3">
+        <div className="card1 card-custom gutter-b task-main-con" onClick={() => openSubTask(props.task, props.id)}>
+          <div className="card-body">
             <div className="task-upper-con d-flex justify-content-between">
               <div className="d-flex align-items-center py-2">
                 <span> <img src={img4} className="  mr-10 " />  </span>
@@ -225,13 +237,17 @@ export function TaskArea(props: Tasks) {
 
                 </div>
 
+                <div className="sub-task-list-toggle">
+                  <Icon name='tasks' />
+                </div>
+
               </div>
 
               <div className="tasks-action-area">
                 {props.task?.taskType &&
                   <div className="navi-item  ">
                     <a className="navi-link">
-                      <span className="navi-text">
+                      <span className="navi-text pin-action">
                         {props.task.taskType == 'PIN' &&
                           <img src={img6} />
                         }
@@ -249,13 +265,13 @@ export function TaskArea(props: Tasks) {
                   </div> : null
                 }
                 <div className="symbol-group symbol-hover py-2">
-                  <div className="symbol symbol-30">
+                  <div className="symbol symbol-30 d-flex">
 
 
                     {/* <img src={img} /> */}
                     <span  >
 
-                      <Dropdown text='...'>
+                      <Dropdown icon='ellipsis horizontal'>
                         <Dropdown.Menu className="dropdowncomplete">
                           <Dropdown.Item onClick={() => veiwTaskbyId(props.task, props.id)} icon='eye' text='View detail' />
                           <Dropdown.Item onClick={() => editTaskbyId(props.task, props.id)} icon='pencil' text='Edit' />
@@ -271,48 +287,46 @@ export function TaskArea(props: Tasks) {
             </div>
             {
               subtaskData && (taskId === props.id) ?
-                <div className="card1 card-custom gutter-b">
+                <div className="card1 card-custom gutter-b checklist-main-con">
 
-                  <div className="card-body py-3">
+                  <div className="card-body">
 
                     <div>
                       {subtaskData.map((subt, i) => {
                         return (
                           <div className="d-flex align-items-center checklist-listing-main" key={i}>
-                            <span className="anchor_complete"><a title="Mark as complete"> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span>
+                            <span className="anchor_complete"><a title="Mark as complete"> <span className="material-icons check-grey">check_circle_outline</span> </a> </span>
                             <span className="task-checklisting-text">{i + 1}. {subt.subtaskTitle}</span>
                           </div>
                         )
                       })}
-                      <br />
 
-                      <span className="anchor_complete"><a title="Mark as complete"> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span>
+                      {
+                        vewSubTask ?
+                          <div className="add-new-task-con">
+                            <span className="anchor_complete checklist-complete-box"><a title="Mark as complete"> <span className="material-icons check-grey">check_circle_outline</span> </a> </span>
+                            <div className="classtop add-new-task-field">
+                              <Form.Field className="fillarea">
+                                <Input placeholder='Enter your text here....' size='small' className="full-width "
+                                  type="text"
+                                  value={subtaskTitle}
+                                  onChange={onSubtaskTitle}
+                                />
+                              </Form.Field>
+                              <Form.Field className="d-flex">
+                                <button className="greenbutton" onClick={() => createSubTask(props.task)}>
+                                  <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
+                                </button> &nbsp;  <button className="redbutton" onClick={cancelSubtask}>
+                                  <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> </button>
+                              </Form.Field>
+                            </div>
+                          </div>
+                          :
+                          <div onClick={addNew} className="add-new-link"> <span><Icon name="plus"></Icon> Add new</span></div>
 
-                      <Grid columns={2} className="classtop">
-                        <Grid.Row>
-                          <Grid.Column>
-                            <Form.Field className="fillarea">
+                      }
 
-                              <Input placeholder='Enter your text here....' size='small' className="full-width "
-                                type="text"
-                                value={subtaskTitle}
-                                onChange={onSubtaskTitle}
-                              />
-                            </Form.Field>
-                          </Grid.Column>
-
-                          <Grid.Column>
-                            <Form.Field style={{ marginleft: '145px' }}>
-                              <button className="greenbutton" onClick={() => createSubTask(props.task)}>
-                                <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
-                              </button> &nbsp;  <button className="redbutton">
-                                <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> </button>
-                            </Form.Field>
-                          </Grid.Column>
-                        </Grid.Row>
-                      </Grid>
                     </div>
-
 
                   </div>
                 </div>

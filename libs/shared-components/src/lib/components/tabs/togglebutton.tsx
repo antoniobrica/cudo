@@ -1,23 +1,26 @@
 import React from 'react';
-import { Button, Dropdown } from 'semantic-ui-react'
+import { Button, Icon, Dropdown } from 'semantic-ui-react'
 interface BtnProps {
   changeAdd?
 }
 
 export function ToggleButton(props: BtnProps) {
 
-  const options = [
-    { key: 'add', icon: 'add', text: 'Task', value: 'add' },
-    { key: 'file', icon: 'pin', text: 'Task from file', value: 'file' },
-  ]
+  // const options = [
+  //   { key: 'add', icon: 'add', text: 'Task', value: 'add' },
+  //   { key: 'file', icon: 'pin', text: 'Task from file', value: 'file' },
+  // ]
   const changeAdd = (e, data) => {
-    console.log('data.value', data.value);
-    props.changeAdd(data.value)
+    props.changeAdd("add")
+
+  }
+  const changePin = (e, data) => {
+    props.changeAdd("file")
 
   }
   return (
-    <div style={{ marginTop: '18px' }}>
-      <img src="assets/images/plus_white.png" style={{ position: 'relative', top: '4px', marginRight: '-22px' }} />
+    <div className="add-task-dropdown">
+      {/* <img src="assets/images/plus_white.png" style={{ position: 'relative', top: '4px', marginRight: '-22px' }} />
       <Button.Group>
 
         <Button className="grey-btn"> <span style={{ fontSize: '14px', marginLeft: '11px' }}> Add New</span>  </Button>
@@ -28,7 +31,28 @@ export function ToggleButton(props: BtnProps) {
           onChange={changeAdd}
           trigger={<></>}
         />
-      </Button.Group>
+      </Button.Group> */}
+
+
+      <Dropdown
+        text='Add New'
+        icon='add'
+        floating
+        labeled
+        button
+        className='icon'
+      >
+        <Dropdown.Menu>
+          <Dropdown.Item key="add" onClick={changeAdd}>
+            <Icon name='add' className='left floated' />
+            Task
+          </Dropdown.Item>
+          <Dropdown.Item key="pin" onClick={changePin}>
+            <Icon name='pin' className='left floated' />
+            Task From File
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
 
     </div>
 

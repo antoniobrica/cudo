@@ -14,10 +14,7 @@ export function CostList(props: CostListProps) {
     { key: 'panel-2', title: 'Freehold Two Solar LLC', content: { content: <a href=''>+ Add item</a> } },
   ]
   return (
-    <div className="app-content-body-dash navbar-collapse box-shadow" style={{
-      marginLeft: '-14px',
-      marginTop: '-30px'
-    }}>
+    <div className="app-content-body-dash navbar-collapse">
 
       <div className="ui-tabs">
         <h6 style={{ fontWeight: 'normal' }} className="h5heading">

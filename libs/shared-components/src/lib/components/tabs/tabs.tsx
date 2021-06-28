@@ -279,7 +279,7 @@ export function Tabsbar(props: TabsProps) {
           <span className="sessiontext" style={{ display: 'flex' }}>Please manage the cost for Electrical Work
 
                        <div className="symbol-group symbol-hover py-2 marginestimate">
-              <div className="symbol symbol-30">
+              <div className="symbol symbol-30 d-flex">
 
                 <span className="mr-2" style={{ background: '#fff', padding: '3px' }} >
 
@@ -375,7 +375,7 @@ export function Tabsbar(props: TabsProps) {
   ]
 
   return (
-    <div className="app-content-body-dash navbar-collapse box-shadow bg-white-only">
+    <div className="app-content-body-dash navbar-collapse">
       <div className="main-page-heading">
         <span className="">Electrical Work</span> |{' '}
         <span className="preliminary-font">Preliminary Studies</span>
