@@ -30,6 +30,7 @@ export function Home(props: HomeProps) {
     if (!isAuthenticated()) ToEmail()
   }, [])
   const callbackFunction = (childData) => {
+    console.log('--container ---callbackFunction--childData--', childData)
     switch (childData) {
       case 'logout':
         logout();

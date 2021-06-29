@@ -33,11 +33,16 @@ function TabMenu(props: TabMenuProps) {
   const [worktypes, setWorktypes] = React.useState();
 
 
-  const history = useHistory();
-  const params = useParams<params>();
-  console.log('urlparams', params.projectId)
-  const projectId = params.projectId
+  // const history = useHistory();
+  // const params = useParams<params>();
+  // console.log('urlparams', params.projectId)
+  // const projectId = params.projectId
 
+  const location = useLocation()
+  console.log('---location--mk--', location)
+  // @ts-ignore
+  const projectId = location.state.projectId
+  
   const { loading, error, data } = useQuery(GET_PROJECT_BY_ID, {
     variables: { projectId },
   });
@@ -131,7 +136,8 @@ function TabMenu(props: TabMenuProps) {
           exact
           render={() => (
             <Tab.Pane onClick={handleOpenProject('task')}>
-              <TaskApp id={params.projectId}></TaskApp>
+              {/* <TaskApp id={params.projectId}></TaskApp> */}
+              <TaskApp id={projectId}></TaskApp>
             </Tab.Pane>
           )}
         />,

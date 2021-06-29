@@ -30,7 +30,9 @@ export function ProjectInfo(props: ProjectInfoProps) {
 
   const openTask = (project) => {
     console.log('task open==>', history)
-    history.push(`/home/project/${project.projectId}`);
+    // history.push(`/home/project/${project.projectId}`);
+    history.push({pathname: `/home/project/project-detail`, state: {projectId: project.projectId}});
+    // TODO:dispatch call to store in redux
   }
   function openModal() {
     setIsOpen(true);

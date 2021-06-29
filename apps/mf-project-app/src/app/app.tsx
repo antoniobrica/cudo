@@ -89,7 +89,8 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path={`${history.location.pathname}/:projectId`} render={() => <TabMenu />} />
+        {/* <Route exact path={`${history.location.pathname}/:projectId`} render={() => <TabMenu />} /> */}
+        <Route exact path={`${history.location.pathname}/project-detail`} render={() => <TabMenu />} />
         <Route exact path={`${history.location.pathname}`}  render={() => <ProjectInfo />}/>
       </Switch>
       </Router>
