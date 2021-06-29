@@ -24,17 +24,16 @@ export function Followers(props: FollowersProps) {
     }
   });
 
-  React.useEffect(() => {
-
-    if (props.followers) {
-      const fl = [];
-      (props.followers || []).map(f => {
-        fl.push(f.userName)
-      })
-      setFollowers(fl)
-
-    }
-  }, [props.followers])
+  // React.useEffect(() => {
+  //   if (props.followers) {
+  //     const fl = null;
+  //     (props.followers).map(f => {
+  //       //fl.push(f.userName)
+  //       setFollowers(f.userName)
+  //     })
+  //     // setFollowers(fl)
+  //   }
+  // }, [props.followers])
   React.useEffect(() => {
     if (data) {
       setItems(data.references.users.map(({ userName, userID }, id) => ({ key: id, value: userName, text: userName, id: userID })));
