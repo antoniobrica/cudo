@@ -47,13 +47,13 @@ export const ModalViewTask = (props: AlertProps) => {
 
   return (
     <div id="navbar">
-      <Modal style={{ width: '670px', marginLeft: '345px' }}
-        className="modal_media"
+      <Modal
+        className="modal_media right-side--fixed-modal add-new-task-modal"
         onClose={cancel}
         onOpen={openf}
         open={open}
         trigger={
-          <Button size="mini" className="grey-btn">
+          <Button size="small" className="primary">
             Task Details
           </Button>
         }
@@ -233,8 +233,8 @@ export const ModalViewTask = (props: AlertProps) => {
                         content="Update"
                         onClick={cancel}
                         positive
-                        size="mini"
-                        className="grey-btn"
+                        size="small"
+                        className="primary"
                       />
                     </Form.Field>
                   </Grid.Column>

@@ -179,7 +179,7 @@ export function TaskArea(props: Tasks) {
                     {/* <img src={img2} /> */}
                     <span  >
 
-                      <Dropdown icon='ellipsis horizontal'>
+                      <Dropdown icon='ellipsis horizontal' pointing='right'>
                         <Dropdown.Menu>
                           <Dropdown.Item onClick={() => veiwTaskbyId(props.task, props.id)} icon='eye' text='View detail' />
                           <Dropdown.Item onClick={() => editTaskbyId(props.task, props.id)} icon='pencil' text='Edit' />
@@ -278,7 +278,7 @@ export function TaskArea(props: Tasks) {
                     {/* <img src={img} /> */}
                     <span  >
 
-                      <Dropdown icon='ellipsis horizontal'>
+                      <Dropdown icon='ellipsis horizontal' pointing='right'>
                         <Dropdown.Menu className="dropdowncomplete">
                           <Dropdown.Item onClick={() => veiwTaskbyId(props.task, props.id)} icon='eye' text='View detail' />
                           <Dropdown.Item onClick={() => editTaskbyId(props.task, props.id)} icon='pencil' text='Edit' />
@@ -302,7 +302,8 @@ export function TaskArea(props: Tasks) {
                       {subtaskData.map((subt, i) => {
                         return (
                           <div className="d-flex align-items-center checklist-listing-main" key={i}>
-                            <span className="anchor_complete"><a title="Mark as complete"> <span className="material-icons check-grey">check_circle_outline</span> </a> </span>
+                            <span className="anchor_complete"><a title="Mark as complete"> 
+                            <span className="material-icons check-grey">check_circle_outline</span> </a> </span>
                             <span className="task-checklisting-text">{i + 1}. {subt.subtaskTitle}</span>
                           </div>
                         )

@@ -112,7 +112,7 @@ export function FileStructure(props: FileStructureProps) {
 									<div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
 
 										<div className="navi-item mr-2">
-											<button className="ui mini button grey-btn">Ver {data.fileVersion}</button>
+											<button className="ui mini button primary">Ver {data.fileVersion}</button>
 										</div>
 
 									</div>
@@ -155,7 +155,7 @@ export function FileStructure(props: FileStructureProps) {
 	]
 	const panes = [
 		{
-			menuItem: { key: 'Overview', icon: 'images', content: 'All files' },
+			menuItem: { key: 'Overview', icon: 'images', content: 'All files', className: 'files-tab-inner' },
 			render: () => <Tab.Pane attached={false}>
 				<div className="ui-tabs">
 					{/* <div className="card1 card-custom gutter-b width_card">
@@ -321,7 +321,7 @@ export function FileStructure(props: FileStructureProps) {
 					})
 
 					: null} */}
-				<div className="ui card " style={{ width: '80%' }}>
+				<div className="ui card " style={{ width: '100%' }}>
 					<Accordion className="widtharea" defaultActiveIndex={0} panels={items} styled  >
 
 
@@ -340,7 +340,7 @@ export function FileStructure(props: FileStructureProps) {
 	]
 
 	return (
-		<div className=" navbar-collapse box-shadow " style={{ marginTop: '-63px' }}>
+		<div className=" navbar-collapse box-shadow files-tab-outer">
 			{view && imgUrl.length > 0 ?
 				<div>
 					{/* <ViewFileDetail open={view} fType={fType} filesData={filesData} dowloadFilesData={props.downloadedImg} ></ViewFileDetail> */}

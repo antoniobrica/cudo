@@ -79,24 +79,28 @@
 .ui.primary.button {
   background: color('blue', 'base');
   &:hover {
-    background-color: color('blue', 'dark');
+    background-color: color('blue', 'darken-2');
     color: color('shades', 'white');
   }
   &:focus {
-    background-color: color('blue', 'dark-1');
+    background-color: color('blue', 'darken-2');
     color: color('shades', 'white');
   }
 }
 
-.ui.basic.primary.button {
-  background: color('shades', 'white');
+.ui.basic.primary.button, .ui.primary.button {
+  background: color('blue', 'base');
   border: 1px solid color('blue', 'base');
-  color: color('blue', 'base');
+  color: #fff;
   box-shadow: none;
   &:hover,
   &:focus {
     background-color: color('blue', 'base');
     color: color('shades', 'white');
+  }
+  i {
+    color: #fff !important;
+    opacity: 1 !important;
   }
 }
 

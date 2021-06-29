@@ -337,14 +337,14 @@ export function CreateFileTask(props: CreateFileTaskProps) {
           <Grid columns={1}>
             <Grid.Row>
               <Grid.Column>
-                <AssigneeIndex parentAsigneeSelect={setAsignee} name="Assignee" />
+                <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Assignee" />
               </Grid.Column>
             </Grid.Row>
           </Grid>
           <Grid columns={2}>
             <Grid.Row>
               <Grid.Column>
-                <FollowersIndex parentFollowersSelect={onFollowers} />
+                <FollowersIndex followers={[]} parentFollowersSelect={onFollowers} />
               </Grid.Column>
               <Grid.Column>
                 <Form.Field>
