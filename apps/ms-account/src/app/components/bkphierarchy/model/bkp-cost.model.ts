@@ -1,5 +1,4 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { ReferenceModel } from '../../reference/model/reference.model';
 import { bkpCostFileModel } from './bkp-cost-file.model';
 
 @ObjectType()

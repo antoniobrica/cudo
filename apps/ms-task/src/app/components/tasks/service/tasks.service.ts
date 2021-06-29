@@ -69,7 +69,7 @@ export class TasksService {
             if (subtasks)
                 for (let index = 0; index < subtasks.length; index++) {
                     const subtaskEntity = new SubTaskEntity(subtasks[index])
-                    const newSubTask = await this.subTaskRepository.create({ ...subtaskEntity });
+                    const newSubTask = await this.subTaskRepository.create({ ...subtaskEntity,taskID:  taskeDetails.taskID});
                     const savedSubTask = await this.subTaskRepository.save(newSubTask);
                     taskeDetails.subtasks.push(savedSubTask)
                 }    
@@ -270,6 +270,12 @@ export class TasksService {
                 taskeDetail.subtasks.push(savedSubTask)
             }
 
+        if(taskBasics.status ? taskeDetail.status = taskBasics.status : null){
+            const subtask = await this.subTaskRepository.find({ where: { taskID: taskBasics.taskID  } });
+            const ids = subtask.map(t => t.Id)
+            await this.subTaskRepository.update( ids,{status:taskeDetail.status});
+        }
+
         taskBasics.BKPID ? taskeDetail.BKPID = taskBasics.BKPID : null;
         taskBasics.BKPTitle ? taskeDetail.BKPTitle = taskBasics.BKPTitle : null;
         taskBasics.endDate ? taskeDetail.endDate = taskBasics.endDate : null;
@@ -279,7 +285,6 @@ export class TasksService {
         taskBasics.saveTaskAsTemplate ? taskeDetail.saveTaskAsTemplate = taskBasics.saveTaskAsTemplate : null;
         taskBasics.sendNotification ? taskeDetail.sendNotification = taskBasics.sendNotification : null;
         taskBasics.startDate ? taskeDetail.startDate = taskBasics.startDate : null;
-        taskBasics.status ? taskeDetail.status = taskBasics.status : null;
         taskBasics.taskID ? taskeDetail.taskID = taskBasics.taskID : null;
         taskBasics.taskTitle ? taskeDetail.taskTitle = taskBasics.taskTitle : null;
         taskBasics.description ? taskeDetail.description = taskBasics.description : null;
@@ -290,6 +295,11 @@ export class TasksService {
         taskBasics.taskTypeName ? taskeDetail.taskTypeName = taskBasics.taskTypeName : null;
         taskBasics.workTypeID ? taskeDetail.workTypeID = taskBasics.workTypeID : null;
         taskBasics.workTypeName ? taskeDetail.workTypeName = taskBasics.workTypeName : null;
+        taskBasics.workTypeName ? taskeDetail.workTypeName = taskBasics.workTypeName : null;
+        taskBasics.projectWorktype ? taskeDetail.projectWorktype = taskBasics.projectWorktype : null;
+        taskBasics.projectWorktypeID ? taskeDetail.projectWorktypeID = taskBasics.projectWorktypeID : null;
+        taskBasics.projectWorktypeName ? taskeDetail.projectWorktypeName = taskBasics.projectWorktypeName : null;
+
 
         await this.projectTasksRepository.save(taskeDetail);
         const tasks = await this.projectTasksRepository.find({
