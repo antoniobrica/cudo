@@ -305,6 +305,10 @@ export function TaskArea(props: Tasks) {
                             <span className="anchor_complete"><a title="Mark as complete"> 
                             <span className="material-icons check-grey">check_circle_outline</span> </a> </span>
                             <span className="task-checklisting-text">{i + 1}. {subt.subtaskTitle}</span>
+                            <span className="checklist-actions">
+                              <Icon name="edit" />
+                              <Icon name="trash alternate" />
+                            </span>
                           </div>
                         )
                       })}

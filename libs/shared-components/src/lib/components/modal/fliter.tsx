@@ -24,8 +24,9 @@ export function FilterPopup() {
 
   return (
     <div>
-      <Modal style={{ width: '390px', marginLeft: '770px', height: '660px' }}
-        className="modal_media"
+      <Modal style={{ width: '450px' }}
+        className="modal_media right-side--fixed-modal filter-modal"
+        closeIcon
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
@@ -146,11 +147,11 @@ export function FilterPopup() {
             content="Apply"
             onClick={() => setOpen(false)}
             positive
-            size="mini"
-            className="grey-btn"
+            size="small"
+            className="primary"
           />
           <Button
-            size="mini"
+            size="small"
             className="icon-border"
             onClick={() => setOpen(false)}
           >
