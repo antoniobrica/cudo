@@ -26,7 +26,8 @@ export function TaskArea(props: Tasks) {
   const [taskId, setTaskId] = React.useState(null);
   const [subtaskTitle, setSubtaskTitle] = React.useState('')
   const [subtaskData, setSubtaskData] = React.useState([])
-  const [vewSubTask, setViewSubtask] = React.useState(true);
+  const [viewSubTask, setViewSubtask] = React.useState(false);
+  const [isExpended, setIsExpended] = React.useState(false)
 
 
   const description = [
@@ -51,6 +52,10 @@ export function TaskArea(props: Tasks) {
     console.log('subtaskTitle', taskId, subtaskData);
 
     //props.subTask(task, id)
+    setIsExpended(true)
+  }
+  const closeSubTask = () => {
+    setIsExpended(false)
   }
   const onSubtaskTitle = (e) => {
     setSubtaskTitle(e.target.value);
@@ -192,7 +197,9 @@ export function TaskArea(props: Tasks) {
         </div>
         :
 
-        <div className="card1 card-custom gutter-b task-main-con" onClick={() => openSubTask(props.task, props.id)}>
+        <div className="card1 card-custom gutter-b task-main-con" >        
+        {/* <div className="card1 card-custom gutter-b task-main-con" onClick={() => openSubTask(props.task, props.id) }> */}
+
           <div className="card-body">
             <div className="task-upper-con d-flex justify-content-between">
               <div className="d-flex align-items-center py-2">
@@ -237,7 +244,7 @@ export function TaskArea(props: Tasks) {
 
                 </div>
 
-                <div className="sub-task-list-toggle">
+                <div className="sub-task-list-toggle" onClick={() => !isExpended? openSubTask(props.task, props.id): closeSubTask()}>
                   <Icon name='tasks' />
                 </div>
 
@@ -286,7 +293,7 @@ export function TaskArea(props: Tasks) {
               </div>
             </div>
             {
-              subtaskData && (taskId === props.id) ?
+              isExpended && subtaskData && (taskId === props.id) ?
                 <div className="card1 card-custom gutter-b checklist-main-con">
 
                   <div className="card-body">
@@ -303,7 +310,7 @@ export function TaskArea(props: Tasks) {
                       })}
 
                       {
-                        vewSubTask ?
+                        viewSubTask ?
                           <div className="add-new-task-con">
                             <span className="anchor_complete checklist-complete-box"><a title="Mark as complete"> <span className="material-icons check-grey">check_circle_outline</span> </a> </span>
                             <div className="classtop add-new-task-field">
@@ -315,15 +322,15 @@ export function TaskArea(props: Tasks) {
                                 />
                               </Form.Field>
                               <Form.Field className="d-flex">
-                                <button className="greenbutton" onClick={() => createSubTask(props.task)}>
+                                <button className="greenbutton anchor_complete" onClick={() => createSubTask(props.task)}>
                                   <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
-                                </button> &nbsp;  <button className="redbutton" onClick={cancelSubtask}>
+                                </button> &nbsp;  <button className="redbutton anchor_complete" onClick={cancelSubtask}>
                                   <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> </button>
                               </Form.Field>
                             </div>
                           </div>
                           :
-                          <div onClick={addNew} className="add-new-link"> <span><Icon name="plus"></Icon> Add new</span></div>
+                          <div onClick={addNew} className="add-new-link"> <span className="anchor_complete"><Icon name="plus"></Icon> Add new</span></div>
 
                       }
 

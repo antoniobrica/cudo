@@ -60,6 +60,7 @@ export function SelectFilePopup(props: FileStructureProps) {
     setOpen(false)
     setIsPinFile(true)
     // cancel()
+    setView(true);
   }
   const tick = () => {
     setIsTick(isTick => !isTick)
@@ -86,7 +87,7 @@ export function SelectFilePopup(props: FileStructureProps) {
     console.log('data-view', data);
 
     setFtype(data.fileType);
-    setView(true);
+    // setView(true);
     setFilesData(data);
     props.viewFiles(data)
   }
