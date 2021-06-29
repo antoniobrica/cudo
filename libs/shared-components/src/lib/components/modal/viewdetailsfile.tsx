@@ -272,7 +272,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
 
         </Modal.Content>
         <Modal.Actions>
-          <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+          <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
             X  Cancel
         </Button>
 

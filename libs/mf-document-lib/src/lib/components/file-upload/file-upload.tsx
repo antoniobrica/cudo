@@ -478,9 +478,9 @@ export function FileUpload(props: FileProps) {
             content="Submit"
             onClick={handleSaveFile}
             positive
-            size='mini' className="grey-btn"
+            size='small' className="primary"
           />
-          <Button size='mini' className="icon-border" onClick={close}>
+          <Button size='small' className="icon-border" onClick={close}>
             X  Cancel
           </Button>
 

@@ -495,7 +495,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button size='mini' className="grey-btn">+ Add New</Button>}
+        trigger={<Button size='small' className="primary">+ Add New</Button>}
       >
         <Modal.Header><h3>Add New Project </h3></Modal.Header>
         <Modal.Content body>
@@ -690,9 +690,9 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                 content="Add Company"
                 onClick={() => setOpen(false)}
                 positive
-                size='mini' className="grey-btn"
+                size='small' className="primary"
               />
-              <Button size='mini' className="icon-border" onClick={() => setSecondOpen(false)}>
+              <Button size='small' className="icon-border" onClick={() => setSecondOpen(false)}>
                 X  Cancel
         </Button>
 
@@ -715,9 +715,9 @@ export function ModalExampleModal(props: ProjectInfoProps) {
             content="Click to continue"
             onClick={handleSaveProject}
             positive
-            size='mini' className="grey-btn"
+            size='small' className="primary"
           />
-          <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+          <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
             X  Cancel
         </Button>
 

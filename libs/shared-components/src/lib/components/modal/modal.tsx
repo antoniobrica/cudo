@@ -230,9 +230,9 @@ export function ModalExampleModal() {
             content="Click to continue"
             onClick={() => setOpen(false)}
             positive
-            size='mini' className="grey-btn"
+            size='small' className="primary"
           />
-          <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+          <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
             X  Cancel
           </Button>
         </Form>
@@ -309,18 +309,18 @@ export function ModalExampleModal() {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-          <Button size='mini' className="disabled" onClick={() => setOpen(false)}>
+          <Button size='small' className="disabled" onClick={() => setOpen(false)}>
             Skip
           </Button>
           <div className="float-area">
-            <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+            <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
               X  Cancel
             </Button>
             <Button
               content="Submit"
               onClick={() => setOpen(false)}
               positive
-              size='mini' className="grey-btn"
+              size='small' className="primary"
             />
           </div>
         </Form>
@@ -337,7 +337,7 @@ export function ModalExampleModal() {
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button size='mini' className="grey-btn">+ Add New</Button>}      >
+        trigger={<Button size='small' className="primary">+ Add New</Button>}      >
         <Modal.Header><h3>Add New Project </h3></Modal.Header>
         <Modal.Content body>
           <div>
@@ -488,9 +488,9 @@ export function ModalExampleModal() {
                 content="Add Company"
                 onClick={() => setOpen(false)}
                 positive
-                size='mini' className="grey-btn"
+                size='small' className="primary"
               />
-              <Button size='mini' className="icon-border" onClick={() => setSecondOpen(false)}>
+              <Button size='small' className="icon-border" onClick={() => setSecondOpen(false)}>
                 X  Cancel
               </Button>
             </div>

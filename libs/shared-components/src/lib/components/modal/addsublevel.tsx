@@ -82,9 +82,9 @@ function ModalAddSubLevel() {
           content="Add" 
           onClick={() => setOpen(false)}
           positive
-          size='mini' className="grey-btn"
+          size='small' className="primary"
         />
-        <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+        <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
         X  Cancel
         </Button>
   

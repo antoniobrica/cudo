@@ -32,12 +32,12 @@ export function ModalAddPrint(props: FileProps) {
     props.setting();
   }
   return (
-    <div id=" " >
+    <div id=" " className="add-files-modal" >
       <Modal className="modal_media modal_center modal_media_1"
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button size='mini' className="grey-btn">+ Add  File</Button>}
+        trigger={<Button size='small' className="primary">+ Add  File</Button>}
       >
         <Modal.Header><h3>Add File </h3></Modal.Header>
         <Modal.Content body>
@@ -91,9 +91,9 @@ export function ModalAddPrint(props: FileProps) {
             content="Submit"
             onClick={upload}
             positive
-            size='mini' className="grey-btn"
+            size='small' className="primary"
           />
-          <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+          <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
             X  Cancel
         </Button>
 
