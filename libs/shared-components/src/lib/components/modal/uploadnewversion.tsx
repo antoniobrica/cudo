@@ -355,9 +355,9 @@ export function UploadNewVersion(props: AlertProps) {
             content="Submit"
             onClick={submit}
             positive
-            size='mini' className="grey-btn"
+            size='small' className="primary"
           />
-          <Button size='mini' className="icon-border" onClick={cancel}>
+          <Button size='small' className="icon-border" onClick={cancel}>
             X  Cancel
         </Button>
 

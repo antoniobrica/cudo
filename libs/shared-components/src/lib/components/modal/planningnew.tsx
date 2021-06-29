@@ -117,7 +117,7 @@ export function ModalPlanningNew(props: PlanningProps) {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={
-          <Button size="mini" className="grey-btn">
+          <Button size="small" className="primary">
             + Add New
           </Button>
         }

@@ -322,6 +322,7 @@ export function Tasks(props: TasksProps) {
       followers.push({ userID: data.userID, userName: data.userName })
     })
     subtask.push(createSt);
+    console.log('subtask', subtask);
     editTaskApi({
       variables: {
         taskID: data.taskID,

@@ -140,7 +140,7 @@ export function ModalCost(props: ModalCostProps) {
               <Grid.Row>
                 <Grid.Column>
                   <Form.Field>
-                    <span onClick={() => uploadFile(index)} className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <button className="ui mini button grey-btn" >2</button> </span>
+                    <span onClick={() => uploadFile(index)} className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <button className="ui mini button primary" >2</button> </span>
                   </Form.Field>
                 </Grid.Column>
               </Grid.Row>
@@ -274,9 +274,9 @@ export function ModalCost(props: ModalCostProps) {
             content="Submit"
             onClick={createCost}
             positive
-            size='mini' className="grey-btn"
+            size='small' className="primary"
           />
-          <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+          <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
             X  Cancel
           </Button>
         </Modal.Actions>
