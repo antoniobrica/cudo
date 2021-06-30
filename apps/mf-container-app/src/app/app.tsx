@@ -33,6 +33,7 @@ const defaultLanguage = 'en-GB';
 const supportedLanguages = [defaultLanguage, 'en-GB'];
 initI18n('./assets/i18n/{{lng}}.json', defaultLanguage);
 function App() {
+
   const { url, path } = useRouteMatch();
   const history = useHistory();
   return (
