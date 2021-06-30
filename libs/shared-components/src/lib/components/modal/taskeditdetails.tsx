@@ -198,7 +198,11 @@ export const ModalTaskEdit = (props: AlertProps) => {
   }
   const onStartDateChange = e => {
     console.log('startdate>', e.target.value);
-
+    const date1 = new Date(e.target.value)
+    const date2 = new Date(endDate)
+    const Difference_In_Time = date2.getTime() - date1.getTime();
+    const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+    setEstimatedDays(Difference_In_Days.toString())
     // const date = moment.utc(moment(e.target.value).utc()).format();
     setStartDate(e.target.value)
   }
@@ -288,8 +292,9 @@ export const ModalTaskEdit = (props: AlertProps) => {
 
   return (
     <div id="navbar">
-      <Modal style={{ width: '670px', marginLeft: '345px' }}
-        className="modal_media"
+      <Modal
+        className="modal_media right-side--fixed-modal edit-task-modal"
+        closeIcon
         onClose={cancel}
         onOpen={openf}
         open={open}
@@ -421,7 +426,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
-              <Grid columns={2}>
+              <Grid>
                 <Grid.Row>
                   <Grid.Column>
                     {/* <Form.Field>
@@ -433,24 +438,26 @@ export const ModalTaskEdit = (props: AlertProps) => {
                       />
                     </Form.Field> */}
                     <FollowersIndex followers={followers} parentFollowersSelect={onFollowers} />
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Form.Field>
-                      <div className="event top-event">
-                        {followers.map((p, id) => {
-                          const name = p.userName.split(" ").map((n) => n[0]).join("");
-                          //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
-                          return (
-                            <div className="label-light-purple-circle label-spacer" key={id}>
-                              <span className="white-text">{name}</span>
-                            </div>
-                          )
-                        })
-                        }
-                      </div>
-                    </Form.Field>
+
+                    
                   </Grid.Column>
                 </Grid.Row>
+                <div className="followers-label-area">
+                  <Form.Field>
+                    <div className="event top-event follower-listing-labels">
+                      {followers.map((p, id) => {
+                        const name = p.userName.split(" ").map((n) => n[0]).join("");
+                        //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
+                        return (
+                          <div className="label-light-purple-circle label-spacer" key={id}>
+                            <span className="white-text">{name}</span>
+                          </div>
+                        )
+                      })
+                      }
+                    </div>
+                  </Form.Field>
+                </div>
               </Grid>
 
               <Grid columns={3}>
@@ -508,11 +515,11 @@ export const ModalTaskEdit = (props: AlertProps) => {
             content="Submit"
             onClick={editTask}
             positive
-            size="mini"
-            className="grey-btn"
+            size="small"
+            className="primary"
           />
           <Button
-            size="mini"
+            size="small"
             className="icon-border"
             onClick={cancel}
           >

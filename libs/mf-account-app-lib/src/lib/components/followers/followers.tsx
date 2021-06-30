@@ -79,7 +79,7 @@ export function Followers(props: FollowersProps) {
 
       <label>Followers</label>
 
-      <Dropdown className="small_drop"
+      <Dropdown className="small_drop follower-select"
         clearable
         fluid
         multiple

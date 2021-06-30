@@ -1,0 +1,31 @@
+.app-content-body-dash {
+  .files-tab-outer {
+    .ui-tabs {
+      .ui.secondary.menu {
+        background: none;
+        padding: 0;
+        border: none;
+        a.item {
+          padding-left: 0;
+          padding-right: 0;
+          margin-right: 20px;
+          font-size: 15px;
+        }
+      }
+      .ui.tab {
+        margin-top: 15px;
+        .ui.card {
+          background: none;
+          .accordion {
+            padding: 0;
+            background: none;
+            .title {
+              background: #fff;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
