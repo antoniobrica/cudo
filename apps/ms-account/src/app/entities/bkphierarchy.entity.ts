@@ -1,5 +1,5 @@
 import { Expose, plainToClass } from 'class-transformer';
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToMany, JoinTable, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToMany, JoinTable, ManyToOne, Tree, TreeChildren, TreeParent } from 'typeorm';
 import * as uuid from 'uuid';
 import BKPCostEntity from './bkp-costs.entity';
 import ReferanceTypeEntity from './references.entity';
@@ -8,6 +8,7 @@ import ReferanceTypeEntity from './references.entity';
  * 
  */
 @Entity({ name: 'bkphierarchy' })
+// @Tree("closure-table")
 export class BkpHierarchyEntity extends BaseEntity {
 
     @PrimaryGeneratedColumn()
@@ -15,20 +16,16 @@ export class BkpHierarchyEntity extends BaseEntity {
 
     @Expose()
     @Column({ unique: true })
-    costID: string;
+    bkpUID: string;
 
     @Expose()
-    @Column({ nullable: true })
-    bkpMain?: string;
+    @Column({ unique: true })
+    bkpID: string;
+
+    @Expose()
+    @Column()
+    bkpTitle?: string;
     
-
-    // @Expose()
-    // @Column({ nullable: true })
-    // structureID: string;
-
-    // @Expose()
-    // @Column({ nullable: true })
-    // structureName: string;
 
     @Expose()
     @CreateDateColumn()
@@ -50,11 +47,11 @@ export class BkpHierarchyEntity extends BaseEntity {
     @Column({ nullable: true, default: false })
     isDeleted?: Boolean;
 
-    @Expose()
-    // n:n relation with TaskFllowersEntity
-    @ManyToMany(type => BKPCostEntity, { cascade: true })
-    @JoinTable()
-    BKPCosts: BKPCostEntity[];
+    @TreeChildren()
+    children: BkpHierarchyEntity[];
+  
+    // @TreeParent()
+    // parent: BkpHierarchyEntity;
 
     @Expose()
     @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.bkphierarchy)
@@ -69,7 +66,7 @@ export class BkpHierarchyEntity extends BaseEntity {
                     excludeExtraneousValues: true
                 })
             )
-            this.costID = this.costID || uuid.v1();
+            this.bkpUID = this.bkpUID || uuid.v1();
         }
     }
 }

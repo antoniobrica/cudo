@@ -14,7 +14,7 @@ import { CreateBkpHierarchyInput } from '../dto/create-bkphierarchy.input';
 export class BkpHierarchyService {
   constructor(
     @InjectRepository(BkpHierarchyEntity)
-    private costRepository: Repository<BkpHierarchyEntity>,
+    private bkpHierarchyRepository: Repository<BkpHierarchyEntity>,
     @InjectRepository(BKPCostEntity)
     private BKPCostRepository: Repository<BKPCostEntity>,
     @InjectRepository(BKPCostFilesEntity)
@@ -25,29 +25,29 @@ export class BkpHierarchyService {
 
   public async createBkpHierarchy(createBkpHierarchyInput: CreateBkpHierarchyInput, referenceFilter: ReferenceFilterParams): Promise<BkpHierarchyEntity> {
     try {
-      const { BKPCosts,bkpMain } = createBkpHierarchyInput;
+      const { bkpID,bkpTitle,children } = createBkpHierarchyInput;
       const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
-      const costDetail = new BkpHierarchyEntity({bkpMain});
-      costDetail.BKPCosts = [];
-      for (let index = 0; index < BKPCosts.length; index++) {
-        const { bkpCostFiles, bkpCostBasic } = BKPCosts[index];
-        const costParamentity = new BKPCostEntity({ ...bkpCostBasic })
-        costParamentity.bkpCostFiles = [];
-        for (let index = 0; index < bkpCostFiles.length; index++) {
-          const followersentity = new BKPCostFilesEntity({ ...bkpCostFiles[index] })
-          const newPeople = await this.BKPCostFilesRepository.create({ ...followersentity });
-          const savedPeople = await this.BKPCostFilesRepository.save(newPeople);
-          costParamentity.bkpCostFiles.push(savedPeople)
+      const BkpHierarchyDetail = new BkpHierarchyEntity({bkpID,bkpTitle});
+      BkpHierarchyDetail.children = [];
+      for (let index = 0; index < children.length; index++) {
+        const { bkpID, bkpTitle, BKPChildren } = children[index];
+        const childrenLayerOne = new BkpHierarchyEntity({ bkpID,bkpTitle })
+        childrenLayerOne.children = [];
+        for (let index = 0; index < children.length; index++) {
+          const childrenLayerTwo = new BkpHierarchyEntity({ ...BKPChildren[index] })
+          const newChildren = await this.bkpHierarchyRepository.create({ ...childrenLayerTwo });
+          const savedPeople = await this.bkpHierarchyRepository.save(newChildren);
+          childrenLayerOne.children.push(savedPeople)
         }
-        const newCost = await this.BKPCostRepository.create({ ...costParamentity });
-        const savedCost = await this.BKPCostRepository.save(newCost);
-        costDetail.BKPCosts.push(savedCost)
+        const newBkpHierarchy = await this.bkpHierarchyRepository.create({ ...childrenLayerOne });
+        const savedCost = await this.bkpHierarchyRepository.save(newBkpHierarchy);
+        BkpHierarchyDetail.children.push(savedCost)
       }
-      const newPost = await this.costRepository.create({
-        ...costDetail,
+      const newPost = await this.bkpHierarchyRepository.create({
+        ...BkpHierarchyDetail,
         references: { id: selectedReference.id }
       });
-      await this.costRepository.save(newPost);
+      await this.bkpHierarchyRepository.save(newPost);
       return newPost;
     } catch (error) {
       return error;
@@ -75,7 +75,7 @@ export class BkpHierarchyService {
 // }
 
 public async searchBkp(bkp: BkpHierarchyFilterParam){
-  const myBkp = await this.costRepository.find({where:{bkpMain:Like(`%${bkp.bkpMain}%`)}, relations: ['BKPCosts' ]})
+  const myBkp = await this.bkpHierarchyRepository.find({where:{bkpMain:Like(`%${bkp.bkpMain}%`)}, relations: ['BKPCosts' ]})
   return myBkp
 } 
 
