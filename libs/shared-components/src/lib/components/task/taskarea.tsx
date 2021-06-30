@@ -110,9 +110,16 @@ export function TaskArea(props: Tasks) {
 
                     <div className="navi-item">
                       <a className="navi-link">
-                        <span className="navi-text">Paint Work  </span>
+                        <span className="navi-text">Paint Work   <span className="dash-seperator">-</span> </span>
                       </a>
                     </div>
+                    {props?.task?.subtasks?.length > 0 ?
+                      <div className="navi-item">
+                        <a className="navi-link">
+                          <span className="navi-text"> {props?.task?.subtasks?.length} Check points  </span>
+                        </a>
+                      </div> : null
+                    }
                     {/* {props.task.taskType &&
                       <div className="navi-item">
                         <a className="navi-link">
@@ -237,9 +244,17 @@ export function TaskArea(props: Tasks) {
                     </div>
                     <div className="navi-item">
                       <a className="navi-link">
-                        <span className="navi-text">HVAC Work  </span>
+                        <span className="navi-text">HVAC Work  <span className="dash-seperator">-</span> </span>
                       </a>
                     </div>
+                    {props?.task?.subtasks?.length > 0 ?
+                      <div className="navi-item">
+                        <a className="navi-link">
+                          <span className="navi-text"> {props?.task?.subtasks?.length} Check points  </span>
+                        </a>
+                      </div> : null
+                    }
+
                   </div>
 
                 </div>
