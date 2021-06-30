@@ -8,7 +8,7 @@ export class AppController {
     console.log()
   }
 
-  @Get()
+  @Get("health-check")
   getData() {
     return this.appService.getData();
   }

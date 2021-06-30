@@ -11,7 +11,7 @@ import { AppModule } from './app/app.module';
 import { environment } from './environments/environment'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const globalPrefix = 'api';
+  const globalPrefix = 'api/ms-document';
   app.setGlobalPrefix(globalPrefix);
   const port = process.env.PORT || 3333;
   await setEnv();
