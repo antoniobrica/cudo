@@ -15,9 +15,13 @@ export function UserRegistration(props: UserRegistrationProps) {
   const [requestResponse, setRequestResponse] = useState<any>()
   const [open, setOpen] = React.useState(false)
   useEffect(() => {
+    console.log("UserRegistration loading");
     const request = initialiseRequest({ type: "register" }, { filterid: "flow" }) as Promise<any>
     request
-      .then(request => setRequestResponse(request))
+      .then(request => {
+        console.log(request)
+        setRequestResponse(request)
+      })
       .catch((error) => { console.log(error) })
   }, [setRequestResponse])
 
@@ -29,6 +33,7 @@ export function UserRegistration(props: UserRegistrationProps) {
     <div className="auth">
       <div className="container">
         <div id="registration-password">
+          <div> RegitrationPageLoaded</div>
           {messages && <KratosMessages messages={messages} />}
           {
             form && <RegisterPage action={form?.action} fields={form?.fields as FormField[]} messages={messages} login={ToEmail} ></RegisterPage>

@@ -34,6 +34,7 @@ export function RegisterPage(props: RegisterProps) {
   const [state_pin, setState_pin] = useState({} as FormField);
   const [country, setCountry] = useState({} as FormField);
   useEffect(() => {
+    console.log("RegisterPage called");
     props?.fields?.map(field => {
       switch (field.name) {
         case "csrf_token":
