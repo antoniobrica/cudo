@@ -66,19 +66,18 @@ hashers:
   argon2:
     parallelism: 1
     #memory: 1048576
-    # memory: 131072
+    memory: 131072
     iterations: 2
     salt_length: 16
     key_length: 16
 
-
 identity:
-  default_schema_url: file:///home/ory/identity.schema.json
+  default_schema_url: file:///etc/config/kratos/identity.schema.json
+
 courier:
   smtp:
     # connection_uri: smtps://test:test@mailslurper:1025/?skip_ssl_verify=true
     connection_uri: smtp://test@softobiz.com:Xum83875@smtp.office365.com:587/?skip_ssl_verify=false
     from_address: test@softobiz.com
 
-    #dsn: mysql://'cudo@cudodevtestdb':Welcome!123@tcp(40.71.8.203:3306)/cudo?max_conns=20&max_idle_conns=4
-dsn: mysql://newuser:password@tcp(20.102.72.235:3306)/cudo?max_conns=20&max_idle_conns=4 
+dsn: mysql://cudo:Welcome@1@tcp(112.196.20.249:3306)/cudo?max_conns=20&max_idle_conns=4
