@@ -13,6 +13,10 @@ export class SubTaskEntity extends BaseEntity{
     Id: number;
 
     @Expose()
+    @Column({nullable: true})
+    taskID: string;
+
+    @Expose()
     @Column({ nullable: true })
     subtaskID?: string;
 
