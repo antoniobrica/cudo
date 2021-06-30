@@ -371,6 +371,7 @@ export function CreateTask(props: CreateTaskProps) {
                       <label>End Date </label>
                       {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
                       <Input placeholder='Default' size='small' className="full-width" type="date"
+                        defaultValue={startDate}
                         value={endDate}
                         onChange={onEndDateChange}
                       />

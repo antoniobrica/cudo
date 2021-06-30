@@ -98,7 +98,7 @@ export function TaskArea(props: Tasks) {
                       </div>
                     }
                     <div className="navi-item">
-                      <a href="" className="navi-link">
+                      <a className="navi-link">
                         <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> 5 days <span className="dash-seperator">-</span> </span>
                       </a>
                     </div>
@@ -109,7 +109,7 @@ export function TaskArea(props: Tasks) {
                     </div>
 
                     <div className="navi-item">
-                      <a href="" className="navi-link">
+                      <a className="navi-link">
                         <span className="navi-text">Paint Work  </span>
                       </a>
                     </div>
@@ -197,8 +197,8 @@ export function TaskArea(props: Tasks) {
         </div>
         :
 
-        <div className="card1 card-custom gutter-b task-main-con" >        
-        {/* <div className="card1 card-custom gutter-b task-main-con" onClick={() => openSubTask(props.task, props.id) }> */}
+        <div className="card1 card-custom gutter-b task-main-con" >
+          {/* <div className="card1 card-custom gutter-b task-main-con" onClick={() => openSubTask(props.task, props.id) }> */}
 
           <div className="card-body">
             <div className="task-upper-con d-flex justify-content-between">
@@ -212,7 +212,7 @@ export function TaskArea(props: Tasks) {
                   <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row task-listing-desc">
 
                     <div className="navi-item">
-                      <a href=" " className="navi-link active">
+                      <a className="navi-link active">
                         <span className="navi-text">( {new Date(props?.task?.startDate).toDateString()} ↦ Due {new Date(props?.task?.endDate).toDateString()})</span>
                       </a>
                     </div>
@@ -226,17 +226,17 @@ export function TaskArea(props: Tasks) {
                     }
 
                     <div className="navi-item">
-                      <a href="" className="navi-link">
+                      <a className="navi-link">
                         <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> {props?.task?.estimatedDays} Days <span className="dash-seperator">-</span> </span>
                       </a>
                     </div>
                     <div className="navi-item">
-                      <a href="" className="navi-link">
+                      <a className="navi-link">
                         <span className="navi-text">{props?.task?.phaseName}  <span className="dash-seperator">-</span> </span>
                       </a>
                     </div>
                     <div className="navi-item">
-                      <a href="" className="navi-link">
+                      <a className="navi-link">
                         <span className="navi-text">HVAC Work  </span>
                       </a>
                     </div>
@@ -244,7 +244,7 @@ export function TaskArea(props: Tasks) {
 
                 </div>
 
-                <div className="sub-task-list-toggle" onClick={() => !isExpended? openSubTask(props.task, props.id): closeSubTask()}>
+                <div className="sub-task-list-toggle" onClick={() => !isExpended ? openSubTask(props.task, props.id) : closeSubTask()}>
                   <Icon name='tasks' />
                 </div>
 
@@ -302,8 +302,8 @@ export function TaskArea(props: Tasks) {
                       {subtaskData.map((subt, i) => {
                         return (
                           <div className="d-flex align-items-center checklist-listing-main" key={i}>
-                            <span className="anchor_complete"><a title="Mark as complete"> 
-                            <span className="material-icons check-grey">check_circle_outline</span> </a> </span>
+                            <span className="anchor_complete"><a title="Mark as complete">
+                              <span className="material-icons check-grey">check_circle_outline</span> </a> </span>
                             <span className="task-checklisting-text">{i + 1}. {subt.subtaskTitle}</span>
                           </div>
                         )

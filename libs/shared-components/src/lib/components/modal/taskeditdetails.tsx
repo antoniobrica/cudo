@@ -198,7 +198,11 @@ export const ModalTaskEdit = (props: AlertProps) => {
   }
   const onStartDateChange = e => {
     console.log('startdate>', e.target.value);
-
+    const date1 = new Date(e.target.value)
+    const date2 = new Date(endDate)
+    const Difference_In_Time = date2.getTime() - date1.getTime();
+    const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+    setEstimatedDays(Difference_In_Days.toString())
     // const date = moment.utc(moment(e.target.value).utc()).format();
     setStartDate(e.target.value)
   }
