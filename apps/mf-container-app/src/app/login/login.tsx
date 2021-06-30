@@ -40,6 +40,8 @@ export function Email(props: LoginProps) {
       if (result.data?.data?.userByEmail?.length) {
         setIsEmailExist(true)
         localStorage.setItem('email', email);
+
+        // history.push(config.routes.testmodal.path, { email });
         history.push(config.routes.login.path, { email });
       }
       else {
