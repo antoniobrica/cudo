@@ -44,6 +44,7 @@ function App() {
           <Route path="/home">
             <Home />
           </Route>
+
           <Route exact path="/" component={LoginSelect} />
           <Route path="/callback" component={Callback} />
           <Route path={config.routes.loginEmail.path} component={Email} />
