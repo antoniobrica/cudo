@@ -422,7 +422,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
-              <Grid columns={2}>
+              <Grid>
                 <Grid.Row>
                   <Grid.Column>
                     {/* <Form.Field>

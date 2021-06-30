@@ -383,7 +383,7 @@ export function Tasks(props: TasksProps) {
   return (
     <div>
       <div className="pin_area">
-        <FilterPopup />
+        <FilterPopup className="filter-icon" />
         <ToggleButton changeAdd={changeAdd}></ToggleButton>
         {isNewTask ? (
           <CreateTask

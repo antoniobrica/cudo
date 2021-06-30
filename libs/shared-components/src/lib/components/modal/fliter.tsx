@@ -34,7 +34,7 @@ export function FilterPopup() {
           // <Button size="mini" className="grey-btn">
           //   Filter
           // </Button>
-          <img src={img1} className="  mr-10 " />
+          <img src={img1} className="filter-icon mr-10 " />
 
         }
       >
