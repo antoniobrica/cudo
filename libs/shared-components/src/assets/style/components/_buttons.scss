@@ -380,8 +380,12 @@ div.ui.toggle.checkbox label:after {
 
 div.ui.toggle.checkbox input:checked ~ .box:after,
 div.ui.toggle.checkbox input:checked ~ label:after {
-  left: 2.35rem;
+  left: 2.25rem;
   box-shadow: none;
+  // background: color('shades', 'white');
+}
+
+div.ui.toggle.checkbox input:checked ~ label:after {
   background: color('shades', 'white');
 }
 
@@ -411,8 +415,8 @@ div.ui.toggle.checkbox label:before {
 
 div.ui.toggle.checkbox input:focus ~ .box:before,
 div.ui.toggle.checkbox input:focus ~ label:before {
-  background-color: color('shades', 'white');
-  border: 1px solid color('grey', 'base');
+  // background-color: color('shades', 'white');
+  // border: 1px solid color('grey', 'base');
 }
 
 div.ui.toggle.checkbox {

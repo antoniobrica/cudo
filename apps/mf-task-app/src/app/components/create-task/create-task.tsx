@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
+import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea, Checkbox } from 'semantic-ui-react';
 import { radios } from '@storybook/addon-knobs';
 import { IPeople, IPeoples, ITask, ITasks, TaskMutation } from "../../interfaces/task";
 import { useTaskMutation } from '../../services/useRequest';
@@ -322,35 +322,35 @@ export function CreateTask(props: CreateTaskProps) {
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
-              <Grid columns={2}>
+              <Grid>
                 <Grid.Row>
                   <Grid.Column>
                     <FollowersIndex followers={[]} parentFollowersSelect={onFollowers} />
                   </Grid.Column>
-                  <Grid.Column>
-                    <Form.Field>
-                      <div className="event top-event">
-                        {followers.map((p, id) => {
-                          const name = p.userName.split(" ").map((n) => n[0]).join("");
-                          //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
-                          return (
-                            <div className="label-light-purple-circle label-spacer" key={id}>
-                              <span className="white-text">{name}</span>
-                            </div>
-                          )
-                        })
-                        }
-
-                        {/* <div className="label-light-black-circle label-spacer">
-                          <span className="white-text ">RJ</span>
-                        </div>
-                        <div className="label-light-blue-circle label-spacer">
-                          <span className="white-text">JB</span>
-                        </div> */}
-                      </div>
-                    </Form.Field>
-                  </Grid.Column>
                 </Grid.Row>
+                <div className="followers-label-area">
+                  <Form.Field>
+                    <div className="event top-event follower-listing-labels">
+                      {followers.map((p, id) => {
+                        const name = p.userName.split(" ").map((n) => n[0]).join("");
+                        //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
+                        return (
+                          <div className="label-light-purple-circle label-spacer" key={id}>
+                            <span className="white-text">{name}</span>
+                          </div>
+                        )
+                      })
+                      }
+
+                      {/* <div className="label-light-black-circle label-spacer">
+                        <span className="white-text ">RJ</span>
+                      </div>
+                      <div className="label-light-blue-circle label-spacer">
+                        <span className="white-text">JB</span>
+                      </div> */}
+                    </div>
+                  </Form.Field>
+                </div>
               </Grid>
 
               <Grid columns={3}>
@@ -396,7 +396,7 @@ export function CreateTask(props: CreateTaskProps) {
                     <Form.Field>
                       <label>Task Configuration  </label>
                       <div className="content">
-                        <p className="paragraph">Send notification to assignee/followers for the task</p></div>
+                        <p className="paragraph task-configuration">Send notification to assignee/followers for the task <Checkbox toggle className="task-toggle" /></p></div>
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
