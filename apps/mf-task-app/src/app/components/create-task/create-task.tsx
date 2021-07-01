@@ -394,7 +394,7 @@ export function CreateTask(props: CreateTaskProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>Task Configuration  </label>
-                      <div className="content">
+                      <div className="content configuration-toggle">
                         <p className="paragraph task-configuration">Send notification to assignee/followers for the task <Checkbox toggle className="task-toggle" /></p></div>
                     </Form.Field>
                   </Grid.Column>
