@@ -1,3 +1,3 @@
 #!/bin/sh
-kratos serve -c /etc/config/kratos.yaml --dev
+kratos serve -c /home/ory/.kratos.yml --dev
 
