@@ -3,6 +3,7 @@ import { CostEntity } from '../../../entities/cost.entity';
 import CostFilterParams from '../../../utils/types/costFilterParams';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { CreateCostInput } from '../dto/create-cost.input';
+import { BKPcostDeleteInput } from '../dto/delete-BKPCost.input';
 import { CostDeleteInput } from '../dto/delete-cost.input';
 import { CostModel } from '../model/cost.model';
 import { CostService } from '../service/cost.service';
@@ -37,6 +38,13 @@ export class CostResolver {
       @Args('costFilter') costDeleteInput: CostDeleteInput,
   ) {
       return this.costService.deleteCost(costDeleteInput);
+  }
+
+  @Mutation(() => CostModel)
+  async deleteBKPCost(
+      @Args('BKPcostFilter') BKPcostDeleteInput: BKPcostDeleteInput,
+  ) {
+      return this.costService.deleteBKPCost(BKPcostDeleteInput);
   }
 
 }
