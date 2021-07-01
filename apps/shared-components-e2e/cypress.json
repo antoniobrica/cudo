@@ -9,5 +9,5 @@
   "videosFolder": "../../dist/cypress/apps/shared-components-e2e/videos",
   "screenshotsFolder": "../../dist/cypress/apps/shared-components-e2e/screenshots",
   "chromeWebSecurity": false,
-  "baseUrl": "http://192.168.0.31:4400"
+  "baseUrl": "http://192.168.1.5:4400"
 }
