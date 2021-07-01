@@ -29,7 +29,6 @@ window.renderDocumentApp = (containerId, history) => {
       <ApolloProvider client={client}>
         <ApolloHooksProvider client={client as any}>
           <App />
-
         </ApolloHooksProvider>
       </ApolloProvider>
     </BrowserRouter>,
