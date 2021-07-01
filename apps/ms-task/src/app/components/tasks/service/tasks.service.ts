@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { error } from 'node:console';
+import { In, Repository } from 'typeorm';
 import { SubTaskEntity } from '../../../entities/subtask.entity';
 import TaskAssigneessEntity from '../../../entities/task-assignees.entity';
 import TaskFileEntity from '../../../entities/task-file.entity';
@@ -9,6 +10,7 @@ import { TasksEntity } from '../../../entities/tasks.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import SortFilterParam from '../../../utils/types/sortParam';
 import StatusFilterParam from '../../../utils/types/status.filter';
+import SubTaskParams from '../../../utils/types/subtask.param.';
 import TaskFilterParams from '../../../utils/types/taskFilterParams';
 import taskTypeFilterParam from '../../../utils/types/taskType.filter';
 import { Pagination, PaginationOptionsInterface } from '../../paginate';
@@ -47,21 +49,21 @@ export class TasksService {
             if (assignees)
                 for (let index = 0; index < assignees.length; index++) {
                     const assigneesentity = new TaskAssigneessEntity(assignees[index])
-                    const newAssignee = await this.tasksAssigneeRepository.create({ ...assigneesentity });
+                    const newAssignee = await this.tasksAssigneeRepository.create({ ...assigneesentity,taskID:taskeDetails.taskID });
                     const savedAssignee = await this.tasksAssigneeRepository.save(newAssignee);
                     taskeDetails.assignees.push(savedAssignee)
                 }
             if (followers)
                 for (let index = 0; index < followers.length; index++) {
                     const followersentity = new TaskFllowersEntity(followers[index])
-                    const newFollowers = await this.tasksFollowersRepository.create({ ...followersentity });
+                    const newFollowers = await this.tasksFollowersRepository.create({ ...followersentity, taskID:taskeDetails.taskID });
                     const savedFollower = await this.tasksFollowersRepository.save(newFollowers);
                     taskeDetails.followers.push(savedFollower)
                 }
             if (files)
                 for (let index = 0; index < files.length; index++) {
                     const taskfileEntity = new TaskFileEntity(files[index])
-                    const newTaskFile = await this.taskFileRepository.create({ ...taskfileEntity });
+                    const newTaskFile = await this.taskFileRepository.create({ ...taskfileEntity, taskID:taskeDetails.taskID });
                     const savedFiles = await this.taskFileRepository.save(newTaskFile);
                     taskeDetails.files.push(savedFiles)
                 }
@@ -244,30 +246,64 @@ export class TasksService {
         if (assignees)
             for (let index = 0; index < assignees.length; index++) {
                 const assigneesentity = new TaskAssigneessEntity(assignees[index])
-                const newAssignee = await this.tasksAssigneeRepository.create({ ...assigneesentity });
+                const newAssignee = this.tasksAssigneeRepository.create({ ...assigneesentity });
                 const savedAssignee = await this.tasksAssigneeRepository.save(newAssignee);
                 taskeDetail.assignees.push(savedAssignee)
             }
         if (followers)
-            for (let index = 0; index < followers.length; index++) {
-                const followersentity = new TaskFllowersEntity(followers[index])
-                const newFollowers = await this.tasksFollowersRepository.create({ ...followersentity });
-                const savedFollower = await this.tasksFollowersRepository.save(newFollowers);
-                taskeDetail.followers.push(savedFollower)
+        for (let index = 0; index < followers.length; index++) {
+            const followersentity = new TaskFllowersEntity(followers[index])
+            const newFollowers = await this.tasksFollowersRepository.create({ ...followersentity,taskID: taskBasics.taskID });
+            const users = await this.tasksFollowersRepository.find({where: {taskID: taskBasics.taskID} })
+            console.log('>>>>>>>>>>>>>>',users)
+            if(users){   
+                const user = await this.tasksFollowersRepository.find({
+                    where: {
+                      taskID: taskBasics.taskID,
+                      userID: In(followers.map((t) => t.userID)),
+                      userName: In(followers.map((t) => t.userName)),
+                    },
+                  });
+                  console.log('$$$$$$$$$$',user)
+                  if(user.length > 0){
+                    throw new HttpException('FollowerExists', HttpStatus.NOT_FOUND);
+                }
+              else {
+                    const savedFollower = await this.tasksFollowersRepository.save(newFollowers);
+                    taskeDetail.followers.push(savedFollower)
+                }
             }
+            else{
+                throw new HttpException('TaskID for Follower Does Not Exists', HttpStatus.NOT_FOUND);
+            }               
+        }
+
         if (files)
             for (let index = 0; index < files.length; index++) {
                 const taskfileEntity = new TaskFileEntity(files[index])
                 const newTaskFile = await this.taskFileRepository.create({ ...taskfileEntity });
-                const savedFiles = await this.taskFileRepository.save(newTaskFile);
-                taskeDetail.files.push(savedFiles)
+                const file = await this.taskFileRepository.findOne({where:{fileName: files.map(t=>t.fileName)}})
+                if(file){
+                    throw new HttpException('file Exists', HttpStatus.NOT_FOUND);
+                }
+                else {
+                    const savedFiles = await this.taskFileRepository.save(newTaskFile);
+                    taskeDetail.files.push(savedFiles)
+                }   
             }
         if (subtasks)
             for (let index = 0; index < subtasks.length; index++) {
                 const subtaskEntity = new SubTaskEntity(subtasks[index])
                 const newSubTask = await this.subTaskRepository.create({ ...subtaskEntity });
-                const savedSubTask = await this.subTaskRepository.save(newSubTask);
-                taskeDetail.subtasks.push(savedSubTask)
+                const subtask = await this.subTaskRepository.findOne({where:{subtaskTitle: subtasks.map(t=>t.subtaskTitle)}})
+                if(subtask){
+                    throw new HttpException('SubTask Exists', HttpStatus.NOT_FOUND);
+                }
+                else {
+                    const savedSubTask = await this.subTaskRepository.save(newSubTask);
+                        taskeDetail.subtasks.push(savedSubTask)
+                }
+
             }
 
         if(taskBasics.status ? taskeDetail.status = taskBasics.status : null){
