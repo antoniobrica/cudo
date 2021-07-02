@@ -27,9 +27,19 @@ export interface IMembers {
   memberName: string
   image: string
 }
+
+
 export interface ISessions {
   sessions: ISession[];
+  paginatedSession: IPaginatedSession
+  // results: ISession[]
 }
 
+export interface SessionMutation {
+  addSession: ISession;
+}
 
+export interface IPaginatedSession {
+  results: ISession[]
+}
 
