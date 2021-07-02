@@ -24,13 +24,13 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
     url: "http://192.168.0.31:6005"
   },
   "mf_project_app": {
-    url: "http://cudo-pa-mf-project-app-dev.cudo-f-dev.svc.cluster.local:8080"
+    url: "http://dev.cudo.ch/project"
   },
   "mf_task_app": {
-    url: "http://cudo-ta-mf-task-app-dev.cudo-f-dev.svc.cluster.local:8080"
+    url: "http://dev.cudo.ch/project/task"
   },
   "mf_document_app": {
-    url: "http://cudo-da-mf-document-app-dev.cudo-f-dev.svc.cluster.local:8080"
+    url: "http://dev.cudo.ch/project/document"
   },
   "kratos_BASE_URL": {
     url: "http://dev.cudo.ch"
