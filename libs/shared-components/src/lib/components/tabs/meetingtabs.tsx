@@ -122,7 +122,7 @@ if(categoryItems && categoryItems.length){
   meetingCategoryRender = categoryItems.map((item)=>{
     const {meetingCategoryID, meetingCategoryTitle} = item
     return (
-        <div key={meetingCategoryID} style={{ padding: '10px', width:'1050px' }}>
+        <div key={meetingCategoryID} style={{ padding: '10px' }}>
           <span className="preliminary-font">
             <img src={img5} className="  mr-10 " />
             <div
@@ -165,10 +165,9 @@ const deleteSessionDetail = (sessionID) =>{
 
   return (
     
-    // <div className="app-content-body ">
-    <div >
+    <div className="app-content-body ">    
 
-      {/* //=====Upcoming List for Invitations==============
+      {/* //=====Upcoming List for Invitations============== */}
       <div style={{ background: '#FFF9F1', padding: '10px' }}>
         <span className="preliminary-font">
           <img src={img6} className="  mr-10 " />
@@ -302,11 +301,11 @@ const deleteSessionDetail = (sessionID) =>{
           </div>
         </div>
       </div>
-      <br /> */}
+      <br /> 
 
 
       
-    {/* //=====Modified to meetingCategory and meetingCategoryWiseSessionListRender part ======//
+    {/* //===== Modified to meetingCategory and meetingCategoryWiseSessionListRender part ======//
     <div className="app-content-body ">
       <div style={{ background: '#FFF9F1', padding: '10px' }}>
         <span className="preliminary-font">

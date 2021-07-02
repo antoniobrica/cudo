@@ -14,11 +14,12 @@ export const GET_SESSIONS = gql`
       admins { 
         adminID 
         adminName 
+        image
       } 
       members { 
         memberID 
         memberName 
-        image 
+        image        
       } 
     } 
     total 
