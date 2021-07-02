@@ -246,16 +246,38 @@ export class TasksService {
         if (assignees)
             for (let index = 0; index < assignees.length; index++) {
                 const assigneesentity = new TaskAssigneessEntity(assignees[index])
-                const newAssignee = this.tasksAssigneeRepository.create({ ...assigneesentity });
-                const savedAssignee = await this.tasksAssigneeRepository.save(newAssignee);
-                taskeDetail.assignees.push(savedAssignee)
-            }
+                const newAssignee = this.tasksAssigneeRepository.create({ ...assigneesentity,taskID: taskBasics.taskID });
+                const users = await this.tasksAssigneeRepository.find({where: {taskID: taskBasics.taskID} })
+                console.log('>>>>>>>>>>>>>>',users)
+
+                if(users){   
+                    const user = await this.tasksAssigneeRepository.find({
+                        where: {
+                          taskID: taskBasics.taskID,
+                          userID: In(assignees.map((t) => t.userID)),
+                          userName: In(assignees.map((t) => t.userName)),
+                        },
+                      });
+                      console.log('$$$$$$$$$$',user)
+                      if(user.length > 0){
+                        throw new HttpException('AssigneeExists', HttpStatus.NOT_FOUND);
+                    }
+                  else {
+                        const savedFollower = await this.tasksAssigneeRepository.save(newAssignee);
+                        taskeDetail.assignees.push(savedFollower)
+                    }
+                }
+                else{
+                    throw new HttpException('TaskID for Assignee Does Not Exists', HttpStatus.NOT_FOUND);
+                }      
+                }
+                 
+
         if (followers)
         for (let index = 0; index < followers.length; index++) {
             const followersentity = new TaskFllowersEntity(followers[index])
             const newFollowers = await this.tasksFollowersRepository.create({ ...followersentity,taskID: taskBasics.taskID });
             const users = await this.tasksFollowersRepository.find({where: {taskID: taskBasics.taskID} })
-            console.log('>>>>>>>>>>>>>>',users)
             if(users){   
                 const user = await this.tasksFollowersRepository.find({
                     where: {
@@ -264,7 +286,6 @@ export class TasksService {
                       userName: In(followers.map((t) => t.userName)),
                     },
                   });
-                  console.log('$$$$$$$$$$',user)
                   if(user.length > 0){
                     throw new HttpException('FollowerExists', HttpStatus.NOT_FOUND);
                 }

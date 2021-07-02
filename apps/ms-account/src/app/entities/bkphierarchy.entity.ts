@@ -1,7 +1,6 @@
 import { Expose, plainToClass } from 'class-transformer';
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToMany, JoinTable, ManyToOne, Tree, TreeChildren, TreeParent } from 'typeorm';
 import * as uuid from 'uuid';
-import BKPCostEntity from './bkp-costs.entity';
 import ReferanceTypeEntity from './references.entity';
 
 /**

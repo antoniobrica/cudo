@@ -1,12 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
-import BKPCostFilesEntity from '../../../entities/bkp-cost-files.entity';
-import BKPCostEntity from '../../../entities/bkp-costs.entity';
 import { BkpHierarchyEntity } from '../../../entities/bkphierarchy.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
-import BkpHierarchyFilterParam from '../dto/args/bkp.filter';
 import { CreateBkpHierarchyInput } from '../dto/create-bkphierarchy.input';
 
 
@@ -15,10 +12,6 @@ export class BkpHierarchyService {
   constructor(
     @InjectRepository(BkpHierarchyEntity)
     private bkpHierarchyRepository: Repository<BkpHierarchyEntity>,
-    @InjectRepository(BKPCostEntity)
-    private BKPCostRepository: Repository<BKPCostEntity>,
-    @InjectRepository(BKPCostFilesEntity)
-    private BKPCostFilesRepository: Repository<BKPCostFilesEntity>,
     private referenceService: ReferenceService,
 
   ) { }
