@@ -23,9 +23,10 @@ export function FilterPopup() {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <div style={{ marginTop: 22 }}>
-      <Modal style={{ width: '390px', marginLeft: '770px', height: '660px' }}
-        className="modal_media"
+    <div>
+      <Modal style={{ width: '450px' }}
+        className="modal_media right-side--fixed-modal filter-modal"
+        closeIcon
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
@@ -33,7 +34,7 @@ export function FilterPopup() {
           // <Button size="mini" className="grey-btn">
           //   Filter
           // </Button>
-          <img src={img1} className="  mr-10 " />
+          <img src={img1} className="filter-icon mr-10 " />
 
         }
       >
@@ -146,11 +147,11 @@ export function FilterPopup() {
             content="Apply"
             onClick={() => setOpen(false)}
             positive
-            size="mini"
-            className="grey-btn"
+            size="small"
+            className="primary"
           />
           <Button
-            size="mini"
+            size="small"
             className="icon-border"
             onClick={() => setOpen(false)}
           >

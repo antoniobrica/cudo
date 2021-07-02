@@ -100,6 +100,18 @@ export class TasksEntity extends BaseEntity {
 
   @Expose()
   @Column({ nullable: true })
+  projectWorktypeID?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  projectWorktype?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  projectWorktypeName?: string;
+
+  @Expose()
+  @Column({ nullable: true })
   status?: string;
 
   @Expose()
@@ -153,7 +165,7 @@ export class TasksEntity extends BaseEntity {
 
   @Expose()
   // n:n relation with TaskAssigneessEntity
-  @ManyToMany(type => SubTaskEntity, { cascade: true })
+  @ManyToMany(type => SubTaskEntity, (subtasks: ReferanceTypeEntity) => subtasks.tasks,)
   @JoinTable()
   subtasks: SubTaskEntity[];
 

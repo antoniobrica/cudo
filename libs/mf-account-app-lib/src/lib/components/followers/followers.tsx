@@ -7,14 +7,15 @@ import { useQuery } from '@apollo/client';
 
 /* eslint-disable-next-line */
 export interface FollowersProps {
-  parentFollowersSelect
+  parentFollowersSelect,
+  followers?,
 }
 enum ReferenceType {
   COMPANY = "COMPANY"
 }
 export function Followers(props: FollowersProps) {
   const [items, setItems] = React.useState([])
-  const [followers, setFollowers] = React.useState("")
+  const [followers, setFollowers] = React.useState(null)
 
   const { loading, error, data } = useQuery(GET_REFERENCES, {
     variables: {
@@ -22,6 +23,17 @@ export function Followers(props: FollowersProps) {
       referenceID: "Sftobiz_1234"
     }
   });
+
+  // React.useEffect(() => {
+  //   if (props.followers) {
+  //     const fl = null;
+  //     (props.followers).map(f => {
+  //       //fl.push(f.userName)
+  //       setFollowers(f.userName)
+  //     })
+  //     // setFollowers(fl)
+  //   }
+  // }, [props.followers])
   React.useEffect(() => {
     if (data) {
       setItems(data.references.users.map(({ userName, userID }, id) => ({ key: id, value: userName, text: userName, id: userID })));
@@ -67,7 +79,7 @@ export function Followers(props: FollowersProps) {
 
       <label>Followers</label>
 
-      <Dropdown className="small_drop"
+      <Dropdown className="small_drop follower-select"
         clearable
         fluid
         multiple

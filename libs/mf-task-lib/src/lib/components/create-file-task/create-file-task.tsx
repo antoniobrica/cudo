@@ -147,9 +147,10 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   }
 
   const onFollowers = (data) => {
-    const ppl = []
-    ppl.push(data)
-    setAssignees(ppl)
+    console.log('====================================');
+    console.log('followers', data);
+    console.log('====================================');
+    setfollowers(data)
   }
   const setBKPIDChange = (data) => {
     setBKPIDTitle(data.BKPIDTitle)
@@ -157,8 +158,11 @@ export function CreateFileTask(props: CreateFileTaskProps) {
     console.log('bkp==>', data);
   }
   const setAsignee = (data) => {
-    setfollowers(data)
+    console.log('assignee', data)
 
+    const ppl = []
+    ppl.push(data)
+    setAssignees(ppl)
     // setAsignis(data)
   }
 
@@ -333,20 +337,21 @@ export function CreateFileTask(props: CreateFileTaskProps) {
           <Grid columns={1}>
             <Grid.Row>
               <Grid.Column>
-                <FollowersIndex parentFollowersSelect={onFollowers} />
+                <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Assignee" />
               </Grid.Column>
             </Grid.Row>
           </Grid>
           <Grid columns={2}>
             <Grid.Row>
               <Grid.Column>
-                <AssigneeIndex parentAsigneeSelect={setAsignee} name="Followers" />
+                <FollowersIndex followers={[]} parentFollowersSelect={onFollowers} />
               </Grid.Column>
               <Grid.Column>
                 <Form.Field>
                   <div className="event top-event">
                     {followers.map((p, id) => {
                       const name = p.userName.split(" ").map((n) => n[0]).join("");
+                      //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
                       return (
                         <div className="label-light-purple-circle label-spacer" key={id}>
                           <span className="white-text">{name}</span>
@@ -365,6 +370,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
                 </Form.Field>
               </Grid.Column>
             </Grid.Row>
+
           </Grid>
           <Grid columns={2}>
             <Grid.Row>

@@ -35,6 +35,7 @@ export function PinFileStructure(props: FileStructureProps) {
     const [tick, setTick] = React.useState([[]]);
     const [isTick, setIsTick] = React.useState('');
     const [fileId, setFileId] = React.useState('');
+    const [selectedFile, setSelectedFile]= React.useState(null)
 
     React.useEffect(() => {
         if (props.isPinFile) {
@@ -52,6 +53,7 @@ export function PinFileStructure(props: FileStructureProps) {
     // }
 
     const viewFile = (data, id) => {
+        setSelectedFile(data.uploadedFileID)
         console.log('tick', isTick);
 
         setIsTick(id)
@@ -59,7 +61,7 @@ export function PinFileStructure(props: FileStructureProps) {
 
         console.log('viewfile', data);
         setFtype(data.fileType);
-        setView(true);
+        // setView(true);
         setFilesData(data);
 
         props.viewFiles(data)
@@ -95,7 +97,7 @@ export function PinFileStructure(props: FileStructureProps) {
         if (props.files) {
             setItems(props.files.map((file, i) => ({ key: i, title: file.directory ? file.directory : file.BKPIDTitle, content: { content: (renderItems(file.children, i)) } })));
         }
-    }, [props.files]);
+    }, [props.files, selectedFile]);
 
 
     const renderItems = (data, i) => {
@@ -132,18 +134,21 @@ export function PinFileStructure(props: FileStructureProps) {
                         </div>
 
                         <div className="symbol-group symbol-hover">
-                            <div style={{ marginTop: '-33px' }}>
+                            <div>
                                 {/* <a onClick={() => download(file.fileTitle)}>  <i className="ms-Icon ms-Icon--Download mr-10" aria-hidden="true"></i></a> */}
                                 {/* <a onClick={() => viewFile(file)}> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a> */}
-                                <a
+                               {isTick === i && selectedFile === data.uploadedFileID? 
+                               <img src={img8} />
+                               : 
+                               <a
                                     onClick={() => viewFile(data, i)}
                                     className="navi-link active"
-                                    style={{ marginLeft: '320px' }}
+                                    
                                 >
                                     <img src={img9} />
 
                                 </a>
-
+                                }
                             </div>
 
                         </div>

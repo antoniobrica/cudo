@@ -70,9 +70,9 @@ export function AddNewFolder(props: IAddNewFolderProps) {
             content="Submit"
             onClick={onSubmit}
             positive
-            size='mini' className="grey-btn"
+            size='small' className="primary"
           />
-          <Button size='mini' className="icon-border" onClick={cancel}>
+          <Button size='small' className="icon-border" onClick={cancel}>
             X  Cancel
         </Button>
         </Modal.Actions>

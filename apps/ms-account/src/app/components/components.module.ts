@@ -14,6 +14,7 @@ import { ReferenceModule } from './reference/reference.module';
 import { UsersModule } from './users/users.module';
 import { WorkTypesModule } from './workTypes/workTypes.module';
 import { AllModule } from './all/all.module';
+import { BkpHierarchyModule } from './bkphierarchy/bkphierarchy.module';
 
 @Module({
   imports: [
@@ -31,7 +32,8 @@ import { AllModule } from './all/all.module';
     StructureModule,
     ProtocolTemplateModule,
     WorkTypesModule,
-    AllModule
+    AllModule,
+    BkpHierarchyModule
   ],
   providers: []
 })

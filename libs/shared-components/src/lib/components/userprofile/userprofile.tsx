@@ -255,9 +255,9 @@ export function UserProfile(props: UserProfileProps) {
                         <Form.Field>
                           <Button type="submit"
                             content="update"
-                            size='mini' className="grey-btn"
+                            size='small' className="primary"
                           />
-                          <Button onClick={props.cancel} size='mini' className="icon-border"  >
+                          <Button onClick={props.cancel} size='small' className="icon-border"  >
                             X  Cancel </Button>
                         </Form.Field>
                       </Grid.Column>

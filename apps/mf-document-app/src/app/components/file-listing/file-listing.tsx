@@ -6,7 +6,7 @@ import { DeletesViewStateContext, DownloadsViewStateContext, SharedViewStateCont
 import { BlobItemDownload, BlobItemUpload } from './../../../azure-storage/types/azure-storage';
 import { tap } from 'rxjs/operators';
 import { BlobItem, ContainerItem } from '@azure/storage-blob';
-import { LoaderPage, UploadNewVersion, AddPinFile } from "@cudo/shared-components"
+import { LoaderPage, UploadNewVersion } from "@cudo/shared-components"
 import { useFileQuery } from '../../services/useRequest';
 import { GET_FILES, UPLOAD_FILE_VERSION } from '../../graphql/graphql';
 import ItemsDownloaded from './../../../azure-storage/components/ItemsDownloaded';
