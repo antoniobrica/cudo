@@ -55,7 +55,7 @@ export function PinTaskList(props: PinTaskListProps) {
     BKPTitle
     phaseID
     phaseName
-    
+    assignees{userID, userName, imageUrl}
     } 
    }`;
   const getPins = async () => {

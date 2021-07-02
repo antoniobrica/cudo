@@ -29,6 +29,10 @@ export class SubTaskEntity extends BaseEntity{
     status?: string;
 
     @Expose()
+    @Column({ nullable: true, default: false })
+    isDeleted?: boolean;
+
+    @Expose()
     @ManyToMany(() => TasksEntity, tasksEntity => tasksEntity.subtasks)
     tasks?: TasksEntity[];
 
