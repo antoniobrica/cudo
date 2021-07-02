@@ -17,6 +17,7 @@ export interface IPeoples {
 }
 export interface ITask {
   taskID: string
+  sequenceNumber: number
   taskTitle: string
   startDate: string
   endDate: string
@@ -37,6 +38,8 @@ export interface ITask {
   fileName: string
   taskTypeID: string
   taskType: string
+  workTypeID: string
+  workTypeName: string
 }
 export interface ITodos {
   getTodos: ITodo[];

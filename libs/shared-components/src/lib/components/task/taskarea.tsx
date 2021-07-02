@@ -84,7 +84,7 @@ export function TaskArea(props: Tasks) {
 
               <div className="d-flex align-items-center py-2">
                 <span> <img src={img4} className="  mr-10 " />  </span>
-                <span className="textt">T-0{props.id + 1}</span>
+                <span className="textt">T-{props?.task?.sequenceNumber}</span>
                 <span onClick={() => updateStatus(props.task, props.id)} className="anchor_complete">  <img src={img3} className=" mr-2 mr-10 " />   </span>
                 <span className="completed-task-list-text line-through">{props?.task?.taskTitle}</span>
                 <div className="d-flex mr-3">
@@ -107,12 +107,14 @@ export function TaskArea(props: Tasks) {
                         <span className="navi-text">{props?.task?.phaseName}  <span className="dash-seperator">-</span>  </span>
                       </a>
                     </div>
+                    {props?.task?.workTypeName &&
+                      <div className="navi-item">
+                        <a className="navi-link">
+                          <span className="navi-text">{props?.task?.workTypeName}   <span className="dash-seperator">-</span> </span>
+                        </a>
+                      </div>
+                    }
 
-                    <div className="navi-item">
-                      <a className="navi-link">
-                        <span className="navi-text">Paint Work   <span className="dash-seperator">-</span> </span>
-                      </a>
-                    </div>
                     {props?.task?.subtasks?.length > 0 ?
                       <div className="navi-item">
                         <a className="navi-link">
@@ -211,7 +213,7 @@ export function TaskArea(props: Tasks) {
             <div className="task-upper-con d-flex justify-content-between">
               <div className="d-flex align-items-center py-2">
                 <span> <img src={img4} className="  mr-10 " />  </span>
-                <span className="textt">T-0{props.id + 1}</span>
+                <span className="textt">T-{props?.task?.sequenceNumber}</span>
                 <span onClick={() => updateStatus(props.task, props.id)}><span className="anchor_complete"><a title="Mark as complete"> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span></span>
                 <span className="task-heading">{props?.task?.taskTitle}</span>
                 <div className="d-flex mr-3">
@@ -239,18 +241,21 @@ export function TaskArea(props: Tasks) {
                     </div>
                     <div className="navi-item">
                       <a className="navi-link">
-                        <span className="navi-text">{props?.task?.phaseName}  <span className="dash-seperator">-</span> </span>
+                        <span className="navi-text">{props?.task?.phaseName} <span className="dash-seperator"> - </span> </span>
                       </a>
                     </div>
-                    <div className="navi-item">
-                      <a className="navi-link">
-                        <span className="navi-text">HVAC Work  <span className="dash-seperator">-</span> </span>
-                      </a>
-                    </div>
+                    {props?.task?.workTypeName &&
+                      <div className="navi-item">
+                        <a className="navi-link">
+                          <span className="navi-text"> {props?.task?.workTypeName} <span className="dash-seperator"> - </span>   </span>
+                        </a>
+                      </div>
+                    }
+
                     {props?.task?.subtasks?.length > 0 ?
                       <div className="navi-item">
                         <a className="navi-link">
-                          <span className="navi-text"> {props?.task?.subtasks?.length} Check points  </span>
+                          <span className="navi-text">  {props?.task?.subtasks?.length} Check points  </span>
                         </a>
                       </div> : null
                     }

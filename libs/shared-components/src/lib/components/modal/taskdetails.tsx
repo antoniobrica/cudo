@@ -1,5 +1,7 @@
 import React from 'react';
 import { Button, Modal, Form, Grid, TextArea } from 'semantic-ui-react';
+import ReactQuill, { Quill } from 'react-quill';
+
 // import SampleModal from './sample-modal';
 import img8 from 'libs/shared-components/src/default_area.png';
 import Moment from 'moment';
@@ -85,7 +87,7 @@ export const ModalViewTask = (props: AlertProps) => {
                   <Grid.Column>
                     <Form.Field>
                       <label>Project/Work Type</label>
-                      <span>{props?.taskData?.taskTitle}</span>
+                      <span>{props?.taskData?.workTypeName}</span>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
@@ -102,9 +104,28 @@ export const ModalViewTask = (props: AlertProps) => {
                   <Grid.Column>
                     <Form.Field>
                       <label>Description </label>
-                      <span>
+                      {/* <span>
                         {props?.taskData?.description}
-                      </span>
+                      </span> */}
+                      <ReactQuill
+                        value={props?.taskData?.description}
+                        readOnly={true}
+                        modules={{
+                          toolbar: {
+                            container: [
+                              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                              ['bold', 'italic', 'underline'],
+                              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                              [{ 'align': [] }],
+                              ['link', 'image'],
+                              ['clean'],
+                              [{ 'color': [] }]
+                            ],
+                          }
+                        }}
+                        placeholder="Add a description"
+                        id="txtDescription"
+                      />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>

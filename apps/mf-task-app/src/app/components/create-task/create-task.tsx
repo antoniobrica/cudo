@@ -59,8 +59,8 @@ export function CreateTask(props: CreateTaskProps) {
   const [workType, setworkType] = React.useState(null)
   const [workTypeD, setworkTypeD] = React.useState(null)
   const [workTypeData, setworkTypeData] = React.useState('')
-  const [worktypeID, setworktypeID] = React.useState("")
-  const [worktypeName, setworktypeName] = React.useState("")
+  const [workTypeID, setworktypeID] = React.useState("")
+  const [workTypeName, setworktypeName] = React.useState("")
   const [assignees, setAssignees] = React.useState<any>([]);
   const [followers, setfollowers] = React.useState<any>([]);
   const [date, setDate] = React.useState(null)
@@ -205,7 +205,9 @@ export function CreateTask(props: CreateTaskProps) {
         followers,
         description,
         subtasks: [],
-        referenceID
+        referenceID,
+        workTypeID,
+        workTypeName
       },
       update: (
         cache,

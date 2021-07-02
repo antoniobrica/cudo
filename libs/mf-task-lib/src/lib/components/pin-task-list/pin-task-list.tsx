@@ -55,7 +55,14 @@ export function PinTaskList(props: PinTaskListProps) {
     BKPTitle
     phaseID
     phaseName
-    
+    assignees{
+      userID
+      userName
+      }
+      followers{
+      userID
+      userName
+      }
     } 
    }`;
   const getPins = async () => {
@@ -153,7 +160,7 @@ export function PinTaskList(props: PinTaskListProps) {
         sendNotification: false,
         BKPID: task.BKPID,
         BKPTitle: task.BKPTitle,
-        saveTaskAsTemplate: task.saveTaskAsTemplate,
+        saveTaskAsTemplate: task.saveTaskAsTemplate || ' ',
         phaseID: task.phaseID,
         phaseName: task.phaseName,
         referenceID: task.referenceID,
@@ -212,7 +219,7 @@ export function PinTaskList(props: PinTaskListProps) {
         sendNotification: false,
         BKPID: data.BKPID,
         BKPTitle: data.BKPTitle,
-        saveTaskAsTemplate: data.saveTaskAsTemplate,
+        saveTaskAsTemplate: data.saveTaskAsTemplate || ' ',
         phaseID: data.phaseID,
         phaseName: data.phaseName,
         referenceID: data.referenceID,

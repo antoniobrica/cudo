@@ -9,13 +9,13 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
     url: "http://cudo-ms-document.softobiz.net/graphql"
   },
   "ms_project": {
-    url: "http://cudo-ms-project.softobiz.net/graphql"
+    url: "http://192.168.1.5:5005/graphql"
   },
   "ms_task": {
-    url: "http://cudo-ms-task.softobiz.net/graphql"
+    url: "http://192.168.1.5:5007/graphql"
   },
   "ms_cost": {
-    url: "http://cudo-ms-cost.softobiz.net/graphql"
+    url: "http://192.168.1.5:5002/graphql"
   },
   "mf_cost_app": {
     url: "http://192.168.1.5:6004"
