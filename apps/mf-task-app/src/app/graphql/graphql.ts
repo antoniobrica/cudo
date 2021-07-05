@@ -28,6 +28,9 @@ query Tasks($referenceID: String!)
       taskTypeID
       fileID
       taskType
+      workTypeID
+      workTypeName
+      sequenceNumber
       reference{
         referenceID
       }
@@ -62,7 +65,9 @@ mutation CreateTask(
   $description: String!,
   $fileID: String! 
   $fileName: String!
-  $taskTypeID: String!
+  $taskTypeID: String!,
+  $workTypeID: String!
+  $workTypeName: String!
   $files: [TaskFileParams!]!
   $subtasks: [SubTaskParams!]!
   $assignees: [PeopleParams!]!
@@ -91,6 +96,8 @@ mutation CreateTask(
      fileName:$fileName
      taskTypeID:$taskTypeID
      taskType:PROTOCOL
+     workTypeID: $workTypeID
+     workTypeName:$workTypeName
         }
       assignees: $assignees
       followers: $followers
@@ -100,6 +107,8 @@ mutation CreateTask(
     taskTitle
     startDate
     endDate
+    workTypeID
+workTypeName
   }
 }`;
 
@@ -118,6 +127,8 @@ mutation UpdateTask(
   $phaseID: String!
   $phaseName: String!
   $description: String!
+  $workTypeID: String!
+  $workTypeName: String!
   $files: [TaskFileParams!]!
   $subtasks: [SubTaskParams!]!
   $assignees: [PeopleParams!]!
@@ -138,7 +149,9 @@ mutation UpdateTask(
           saveTaskAsTemplate: $saveTaskAsTemplate,
           phaseID: $phaseID,
           phaseName: $phaseName,
-          description: $description
+          description: $description,
+          workTypeID: $workTypeID
+          workTypeName:$workTypeName
         }
       assignees: $assignees
       followers: $followers
