@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Dropdown, Form } from 'semantic-ui-react';
+import { Dropdown, Form, Label } from 'semantic-ui-react';
 import img4 from 'libs/shared-components/src/dots.png';
 import img3 from 'libs/shared-components/src/check_grey.png';
 import img2 from 'libs/shared-components/src/people_1.png';
@@ -48,11 +48,25 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
                             <div style={{ color: props.cord.pinsID === task?.taskTypeID ? "red" : "black" }}>{task.taskTitle}</div>
                           </span>
                         </div>
-                        <div className="symbol-group symbol-hover py-2 text-right">
-                          <div className="symbol symbol-30">
-                            <img src={img2} />
+                        {task?.assignees.length > 0 ?
+                          <div className="symbol-group symbol-hover py-2 text-right">
+                            <div className="symbol symbol-30">
+                              {task.assignees.map(({userID, userName, imageUrl}, id)=>{
+                                  const name = userName.split(" ").map((n) => n[0]).join("");
+                                  //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");                                    
+                                  if(imageUrl){
+                                    return (<img src={img2} title={userName} />)
+                                  } else {                                  
+                                    return (
+                                      <Label circular color="green" key={`${id}${userID}`}>{name}</Label>
+                                    )
+                                  }
+                                })                            
+                              }
+                            </div>
                           </div>
-                        </div>
+                          :null
+                        }
                       </div>
                       <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
                         <div className="d-flex align-items-center  py-2">
@@ -117,11 +131,28 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
                             <div style={{ color: props.cord.pinsID === task?.taskTypeID ? "red" : "black" }}>{task.taskTitle}</div>
                           </span>
                         </div>
-                        <div className="symbol-group symbol-hover py-2 text-right">
-                          <div className="symbol symbol-30">
-                            <img src={img2} />
+                        
+                        {task?.assignees.length > 0 ?
+                          <div className="symbol-group symbol-hover py-2 text-right">
+                            <div className="symbol symbol-30">
+                             
+                                {task.assignees.map(({userID, userName, imageUrl}, id)=>{
+                                    const name = userName.split(" ").map((n) => n[0]).join("");
+                                    //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");                                    
+                                    if(imageUrl){
+                                      return (<img src={img2} title={userName} />)
+                                    } else {                                  
+                                      return (
+                                        <Label circular color="green" key={`${id}${userID}`}>{name}</Label>
+                                      )
+                                    }
+                                  })                            
+                                }
+                              
+                            </div>
                           </div>
-                        </div>
+                          :null
+                        }
                       </div>
                       <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
                         <div className="d-flex align-items-center  py-2">

@@ -2,49 +2,29 @@ import gql from "graphql-tag";
 export const GET_SESSIONS = gql`
 {
   paginatedSession( 
-
-    referenceFilter: { referenceID: "dapr", referenceType: PROJECTTYPE } 
-
-    options: { limit: 3, page: 0 } 
-
+    referenceFilter: { referenceID: "Sftobiz_1234", referenceType: PROJECTTYPE } 
+    options: { limit: 10, page: 0 } 
   ) { 
-
     results { 
-
       sessionID 
-
       sessionTitle 
-
       worktypeTitle 
-
+      meetingCategoryID
       meetingCategoryTitle 
-
       admins { 
-
         adminID 
-
         adminName 
-
+        image
       } 
-
       members { 
-
         memberID 
-
         memberName 
-
-        image 
-
+        image        
       } 
-
     } 
-
     total 
-
     page_total 
-
   } 
-
   }
 `;
 
@@ -64,7 +44,7 @@ mutation CreateSession(
   $members: [MemberParams!]!
   ){ 
     createSession( 
-      referenceFilter: { referenceID: "dapr", referenceType: PROJECTTYPE } 
+      referenceFilter: { referenceID: "Sftobiz_1234", referenceType: PROJECTTYPE } 
       sessionDetails: { 
         sessionBasics: { 
           sessionTitle: $sessionTitle 

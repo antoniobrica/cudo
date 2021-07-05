@@ -128,7 +128,7 @@ export function ModalSession(props: SessionProps) {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={
-          <Button size="mini" className="grey-btn">
+          <Button size="small" className="primary">
             + Add New Session{' '}
           </Button>
         }
@@ -204,7 +204,7 @@ export function ModalSession(props: SessionProps) {
                         placeholder="Select Country"
                       />
                     </Form.Field> */}
-                    <AssigneeIndex parentAsigneeSelect={setAsignee} name="Admin" />
+                    <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Admin" />
 
                   </Grid.Column>
                 </Grid.Row>
@@ -268,7 +268,7 @@ export function ModalSession(props: SessionProps) {
                         placeholder="Select Country"
                       />
                     </Form.Field> */}
-                    <AssigneeIndex parentAsigneeSelect={setAsignee} name="Members" />
+                    <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Members" />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>

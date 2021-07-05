@@ -35,7 +35,7 @@ export function PeopleList(props: PeopleTasks) {
             </Table.Cell>
             <Table.Cell>zhenya.rynzhuk@gmail.com</Table.Cell>
             <Table.Cell>+1-253-652-2514</Table.Cell>
-            <Table.Cell><button className="ui mini button grey-btn btn_radius"> Project Leader</button> </Table.Cell>
+            <Table.Cell><button className="ui mini button primary btn_radius"> Project Leader</button> </Table.Cell>
             <Table.Cell><span className="mr-2"  >...</span></Table.Cell>
           </Table.Row>
           <Table.Row>
@@ -43,7 +43,7 @@ export function PeopleList(props: PeopleTasks) {
             </Table.Cell>
             <Table.Cell>zhenya.rynzhuk@gmail.com</Table.Cell>
             <Table.Cell>+1-253-652-2514</Table.Cell>
-            <Table.Cell><button className="ui mini button grey-btn btn_radius"> Disciplene leader</button> </Table.Cell>
+            <Table.Cell><button className="ui mini button primary btn_radius"> Disciplene leader</button> </Table.Cell>
             <Table.Cell><span className="mr-2"  >...</span></Table.Cell>
           </Table.Row>
           <Table.Row>
@@ -51,7 +51,7 @@ export function PeopleList(props: PeopleTasks) {
             </Table.Cell>
             <Table.Cell>zhenya.rynzhuk@gmail.com</Table.Cell>
             <Table.Cell>+1-253-652-2514</Table.Cell>
-            <Table.Cell><button className="ui mini button grey-btn btn_radius"> Standard user </button> </Table.Cell>
+            <Table.Cell><button className="ui mini button primary btn_radius"> Standard user </button> </Table.Cell>
             <Table.Cell><span className="mr-2"  >...</span></Table.Cell>
           </Table.Row>
         </Table.Body>

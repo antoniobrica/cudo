@@ -59,6 +59,15 @@ export class TasksModel {
   @Field({ nullable: true, description: ` file Name`  })
   fileName?: string;
 
+  @Field({ nullable: true, description: ` Project workType ID`  })
+  projectWorktypeID?: string;
+
+  @Field({ nullable: true, description: ` Project workType `  })
+  projectWorktype?: string;
+
+  @Field({ nullable: true, description: ` Project workType Name`  })
+  projectWorktypeName?: string;
+
   @Field({ nullable: true, description: ` Task ParentID`  })
   taskTypeID?: string;
 

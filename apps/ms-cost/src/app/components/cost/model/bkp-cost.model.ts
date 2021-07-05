@@ -41,6 +41,9 @@ export class BKPCostModel {
   @Field({ nullable: true, description: `updated by` })
   updatedBy?: string;
 
+  @Field({ nullable: true, description: `if BKP-Cost is Deleted` })
+  isDeleted?: Boolean;
+
   @Field(type => [bkpCostFileModel], { nullable: true, description: `Files for each BKP` })
   bkpCostFiles: bkpCostFileModel[];
 
