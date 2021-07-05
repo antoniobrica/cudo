@@ -134,90 +134,79 @@ export function CostList(props: CostListProps) {
               <div className="add-new-link" onClick={addNew}>
                 <span><Icon name="plus"></Icon> Add new</span>
               </div>
-            </div>
-          </h4>
-          <div className="treeview-inner-con">
-            <ul>
-              <li>
-                <div className="treeview__level show" data-level="A">
-                  <Icon name="add" className="show-view" style={{ display: 'none' }} />
-                  <Icon name="minus" className="hide-view" />
-                  <span className="level-title cost-item-parent"><Icon name="list" /> Jack W. Elementary School <span className="item-total-price">Total price: $1500.00</span></span>
-                </div>
-                <ul>
-                  <li>
-                    <div className="treeview__level show" data-level="B">
-                      <Icon name="add" className="show-view" style={{ display: 'none' }} />
-                      <Icon name="minus" className="hide-view" />
-                      <span className="level-title"><Icon name="level up alternate" className="rotate-level-icon" /> 0 - Grundstück</span>
-                    </div>
-                    <ul>
-                      <li>
-                        <div className="treeview__level show" data-level="B">
-                          <Icon name="add" className="show-view" style={{ display: 'none' }} />
-                          <Icon name="minus" className="hide-view" />
-                          <span className="level-title"><Icon name="level up alternate" className="rotate-level-icon" /> 00 - VerzeichnisGrundstückVorstudien <span className="tv-bkp-total">( 2 BKP )</span></span>
-                          <div className="treeview-cost-table">
-                            <Table>
-                              <Table.Header>
-                                <Table.Row>
-                                  <Table.HeaderCell >&nbsp;</Table.HeaderCell>
-                                  <Table.HeaderCell >#</Table.HeaderCell>
-                                  <Table.HeaderCell width='five'>BKP</Table.HeaderCell>
-                                  <Table.HeaderCell width='six'>Description</Table.HeaderCell>
-                                  <Table.HeaderCell >Files</Table.HeaderCell>
-                                  <Table.HeaderCell>Item Quantity</Table.HeaderCell>
-                                  <Table.HeaderCell>Item Price</Table.HeaderCell>
-                                  <Table.HeaderCell>&nbsp;</Table.HeaderCell>
-                                </Table.Row>
-                              </Table.Header>
+              <ul>
+                <li>
+                  <div className="treeview__level show" data-level="B">
+                    <Icon name="add" className="show-view" style={{display: 'none'}} />
+                    <Icon name="minus" className="hide-view" />
+                    <span className="level-title"><Icon name="level up alternate" className="rotate-level-icon" /> 0 - Grundstück</span>
+                  </div>
+                  <ul>
+                    <li>
+                      <div className="treeview__level show" data-level="B">
+                        <Icon name="add" className="show-view" style={{display: 'none'}} />
+                        <Icon name="minus" className="hide-view" />
+                        <span className="level-title"><Icon name="level up alternate" className="rotate-level-icon" /> 00 - VerzeichnisGrundstückVorstudien <span className="tv-bkp-total">( 2 BKP )</span></span>
+                        <div className="treeview-cost-table">
+                          <Table>
+                            <Table.Header>
+                              <Table.Row>
+                                <Table.HeaderCell >&nbsp;</Table.HeaderCell>
+                                <Table.HeaderCell >#</Table.HeaderCell>
+                                <Table.HeaderCell  width='five'>BKP</Table.HeaderCell>
+                                <Table.HeaderCell  width='seven'>Description</Table.HeaderCell>
+                                <Table.HeaderCell >Files</Table.HeaderCell>
+                                <Table.HeaderCell>Item Quantity</Table.HeaderCell>
+                                <Table.HeaderCell>Item Price</Table.HeaderCell>
+                                <Table.HeaderCell>&nbsp;</Table.HeaderCell>
+                              </Table.Row>
+                            </Table.Header>
 
-                              <Table.Body>
-                                <Table.Row>
-                                  <Table.Cell><img src='/assets/images/dots.png' alt='' /></Table.Cell>
-                                  <Table.Cell>1</Table.Cell>
-                                  <Table.Cell>001 - VerzeichnisGrundstückVorstudien</Table.Cell>
-                                  <Table.Cell>This is the description here</Table.Cell>
-                                  <Table.Cell className="file-attached"><i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <Label horizontal>2</Label></Table.Cell>
-                                  <Table.Cell>5</Table.Cell>
-                                  <Table.Cell>$5000.00</Table.Cell>
-                                  <Table.Cell>
-                                    <Dropdown icon='ellipsis horizontal' pointing='right'>
-                                      <Dropdown.Menu className="dropdowncomplete">
-                                        <Dropdown.Item icon='pencil' text='Edit' />
-                                        <Dropdown.Item icon='trash alternate outline' text='Delete' />
-                                      </Dropdown.Menu>
-                                    </Dropdown>
-                                  </Table.Cell>
-                                </Table.Row>
-                                <Table.Row>
-                                  <Table.Cell><img src='/assets/images/dots.png' alt='' /></Table.Cell>
-                                  <Table.Cell>1</Table.Cell>
-                                  <Table.Cell>001 - VerzeichnisGrundstückVorstudien</Table.Cell>
-                                  <Table.Cell>This is the description here</Table.Cell>
-                                  <Table.Cell className="file-attached"><i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <Label horizontal>2</Label></Table.Cell>
-                                  <Table.Cell>5</Table.Cell>
-                                  <Table.Cell>$5000.00</Table.Cell>
-                                  <Table.Cell>
-                                    <Dropdown icon='ellipsis horizontal' pointing='right'>
-                                      <Dropdown.Menu className="dropdowncomplete">
-                                        <Dropdown.Item icon='pencil' text='Edit' />
-                                        <Dropdown.Item icon='trash alternate outline' text='Delete' />
-                                      </Dropdown.Menu>
-                                    </Dropdown>
-                                  </Table.Cell>
-                                </Table.Row>
-                              </Table.Body>
+                            <Table.Body>
+                              <Table.Row>
+                                <Table.Cell><img src='/assets/images/dots.png' alt='' /></Table.Cell>
+                                <Table.Cell>1</Table.Cell>
+                                <Table.Cell>001 - VerzeichnisGrundstückVorstudien</Table.Cell>
+                                <Table.Cell>This is the description here</Table.Cell>
+                                <Table.Cell className="file-attached"><i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <Label horizontal>2</Label></Table.Cell>
+                                <Table.Cell>5</Table.Cell>
+                                <Table.Cell>$5000.00</Table.Cell>
+                                <Table.Cell>
+                                <Dropdown icon='ellipsis horizontal' pointing='right'>
+                                  <Dropdown.Menu className="dropdowncomplete">
+                                    <Dropdown.Item icon='pencil' text='Edit' />
+                                    <Dropdown.Item icon='trash alternate outline' text='Delete' />
+                                  </Dropdown.Menu>
+                                </Dropdown>
+                                </Table.Cell>
+                              </Table.Row>
+                              <Table.Row>
+                                <Table.Cell><img src='/assets/images/dots.png' alt='' /></Table.Cell>
+                                <Table.Cell>1</Table.Cell>
+                                <Table.Cell>001 - VerzeichnisGrundstückVorstudien</Table.Cell>
+                                <Table.Cell>This is the description here</Table.Cell>
+                                <Table.Cell className="file-attached"><i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <Label horizontal>2</Label></Table.Cell>
+                                <Table.Cell>5</Table.Cell>
+                                <Table.Cell>$5000.00</Table.Cell>
+                                <Table.Cell>
+                                <Dropdown icon='ellipsis horizontal' pointing='right'>
+                                  <Dropdown.Menu className="dropdowncomplete">
+                                    <Dropdown.Item icon='pencil' text='Edit' />
+                                    <Dropdown.Item icon='trash alternate outline' text='Delete' />
+                                  </Dropdown.Menu>
+                                </Dropdown>
+                                </Table.Cell>
+                              </Table.Row>
+                            </Table.Body>
 
-                              <Table.Footer>
-                                <Table.Row>
-                                  <Table.HeaderCell colspan="5">Total</Table.HeaderCell>
-                                  <Table.HeaderCell>5</Table.HeaderCell>
-                                  <Table.HeaderCell colspan="2">$5000.00</Table.HeaderCell>
-                                </Table.Row>
-                              </Table.Footer>
-                            </Table>
-                          </div>
+                            <Table.Footer>
+                              <Table.Row>
+                                <Table.HeaderCell colspan="5">Total</Table.HeaderCell>
+                                <Table.HeaderCell>5</Table.HeaderCell>
+                                <Table.HeaderCell colspan="2">$5000.00</Table.HeaderCell>
+                              </Table.Row>
+                            </Table.Footer>
+                          </Table>
                         </div>
                         <div className="add-new-block">
                           <div className="add-new-link">
