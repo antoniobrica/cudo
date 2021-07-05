@@ -68,7 +68,7 @@ export class TasksResolver {
     }
 
 
-    @Mutation(() => [SubTaskModel])
+    @Mutation(() => SubTaskModel)
     async deleteSubTask(
         @Args('subtaskDeleteInput') taskDeleteInput: SubTaskFilterInput
     ) {
