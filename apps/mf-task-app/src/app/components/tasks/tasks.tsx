@@ -421,7 +421,7 @@ export function Tasks(props: TasksProps) {
         status: subtaskStatus === 'Mark as Complete' ? Status.COMPLETED : Status.INPROGRESS
       },
       update: (cache, data) => {
-        console.log('----completed subtask  catch--data--', data)
+        
         const cacheData = cache.readQuery({
           query: GET_TASKS,
           variables: { referenceID },
@@ -429,11 +429,11 @@ export function Tasks(props: TasksProps) {
        
         const newTaskList = cacheData?.tasks?.results?.map((task) => {
           if (task.taskID === taskId) {
-            // console.log('---be4--subTaskList--task.subtasks---', task.subtasks )
+            
            const subTaskList= task.subtasks.map((subTask) => {
               if (subTask.subtaskID === subtaskId) {               
                 // return data;   
-                // console.log('---subTask.status ---', subTask.status )
+                
                 if (subTask.status === 'INPROGRESS') {
                   return { ...subTask, status: Status.COMPLETED };
                 } else {
@@ -443,13 +443,13 @@ export function Tasks(props: TasksProps) {
                 return subTask
               }
             })
-            console.log('----after completed--subTaskList----', subTaskList)
+            
             return {...task, subtasks:subTaskList}
           } else {
             return task;
           }
         });
-        console.log('--completed--newTaskList--', newTaskList)
+        
         cache.writeQuery({
           query: GET_TASKS,
           data: {
@@ -485,7 +485,7 @@ export function Tasks(props: TasksProps) {
         subtaskID: subtaskId        
       },
       update: (cache, data) => {
-        console.log('----deleted subtask  catch--data--', data)
+        
         const cacheData = cache.readQuery({
           query: GET_TASKS,
           variables: { referenceID },
@@ -495,13 +495,13 @@ export function Tasks(props: TasksProps) {
           if (task.taskID === taskId) {
             
            const subTaskList= task.subtasks.filter((subTask) => subTask.subtaskID!==subtaskId)
-            console.log('----after deleted--subTaskList----', subTaskList)
+            
             return {...task, subtasks:subTaskList}
           } else {
             return task;
           }
         });
-        console.log('--deleted--subtask-newTaskList--', newTaskList)
+        
         cache.writeQuery({
           query: GET_TASKS,
           data: {
