@@ -27,11 +27,11 @@ export function Assignee(props: AssigneeProps) {
   });
 
   React.useEffect(() => {
-    if (props?.assignees[0]?.userName) {
+    if (props?.assignees?.length) {
       console.log('props.assignees[0].userName', props?.assignees[0]?.userName);
       setAssignee(props?.assignees[0]?.userName)
     }
-  }, [props?.assignees[0]?.userName])
+  }, [props?.assignees])
 
   React.useEffect(() => {
     if (data) {

@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  mf-project:
+    container_name: mf-project
+    build:
+      context: .
+      dockerfile: Dockerfile-mfproject
+    ports:
+      - '80:80'
+    networks:
+      - intranet
+  mf-container:
+    container_name: mf-container
+    build:
+      context: .
+      dockerfile: Dockerfile-mfcontainer
+    ports:
+      - '81:80'
+    networks:
+      - intranet
+  mf-tender:
+    container_name: mf-tender
+    build:
+      context: .
+      dockerfile: Dockerfile-mftender
+    ports:
+      - '82:80'
+    networks:
+      - intranet
+
+networks:
+  intranet:

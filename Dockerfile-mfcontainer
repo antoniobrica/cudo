@@ -1,14 +1,5 @@
-FROM node:14.15-alpine
-
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-COPY workspace*.json ./
-COPY cypress*.json ./
-RUN npm install
-COPY . .
-#RUN npm run build ms-task
-#CMD ["node", "dist/main"]
-#RUN nohup npm start ms-task > stdout.txt 2> stderr.txt &
-EXPOSE 5007
-CMD ["npm", "run","nx","serve","mf-container-app","--host0.0.0.0"]
+FROM nginx:1.15.2-alpine
+COPY ./dist/apps/mf-container-app/ /usr/share/nginx/html
+COPY ./deploy/docker-compose-frontend/nginx_mf-container.conf  /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

@@ -80,7 +80,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
 
 
   function formatDate(date) {
-    var d = new Date(date),
+    let d = new Date(date),
       month = '' + (d.getMonth() + 1),
       day = '' + d.getDate(),
       year = d.getFullYear();
@@ -94,18 +94,18 @@ export const ModalTaskEdit = (props: AlertProps) => {
   }
   React.useEffect(() => {
     if (props.taskData) {
-      var d = props.taskData.startDate;
-      var de = props.taskData.endDate
+      const d = props.taskData.startDate;
+      const de = props.taskData.endDate
       // console.log('dateE', d);
 
       // var d2 = d.substring(5, 7) + '/' + d.substring(8, 10) + '/' + d.substring(0, 4);
 
       const assignees = [];
-      props.taskData.assignees.map((data, i) => {
+      props?.taskData?.assignees?.map((data, i) => {
         assignees.push({ userID: data.userID, userName: data.userName })
       })
       const followers = [];
-      props.taskData.followers.map((data, i) => {
+      props?.taskData?.followers?.map((data, i) => {
         followers.push({ userID: data.userID, userName: data.userName })
       })
       setAssignees(assignees)

@@ -23,7 +23,6 @@ import { UserRegistration } from "./user-registration/user-registration";
 import PropTypes from 'prop-types';
 import { renderRoutes } from 'react-router-config';
 import { Home } from "./home/home";
-import MfProjectAppMount from "./mf-project-app-mount/mf-project-app-mount";
 
 import { useTranslation } from 'react-i18next';
 import { initI18n } from "@cudo/mf-core";

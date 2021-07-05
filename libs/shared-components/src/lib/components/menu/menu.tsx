@@ -34,7 +34,7 @@ export function Menubar(props: MenuProps) {
 
           </Menu.Item>
 
-          <Menu.Item as={NavLink} to={`${url}"/add"`}
+          <Menu.Item as={NavLink} to={`${url}/add`}
             name='add'
             active={visible === 'add'} onClick={() => handleOpenProject('add')}>
 
