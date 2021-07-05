@@ -117,17 +117,17 @@ export function Tasks(props: TasksProps) {
   };
 
   const [subTaskStatusUpdateApi, { data: editSubTaskStatusData }] = useMutation(UPDATE_SUBTASK_STATUS, {
-    refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],    
+    refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
   });
 
   const [subTaskDeleteApi] = useMutation(DELETE_SUBTASK, {
-    variables: { subtaskID: subTaskId },    
+    variables: { subtaskID: subTaskId },
   });
 
   const [subTaskUpdateApi, { data: editSubTaskData }] = useMutation(UPDATE_SUBTASK, {
-    refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],    
+    refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
   });
-  
+
   enum Status {
     INPROGRESS = 'INPROGRESS',
     COMPLETED = 'COMPLETED',
@@ -408,7 +408,7 @@ export function Tasks(props: TasksProps) {
     if (subtaskStatus === 'COMPLETED') {
       setSubTaskStatus('Mark as Complete');
     } else {
-      setSubTaskStatus('Re-open');      
+      setSubTaskStatus('Re-open');
     }
   }
   const confirmSubTaskStatusUpdate = (taskId, subtaskId, subtaskStatus) => {
@@ -416,40 +416,40 @@ export function Tasks(props: TasksProps) {
     setOpenSubTaskStatusConfirm(false)
 
     subTaskStatusUpdateApi({
-      variables:{
+      variables: {
         subtaskID: subtaskId,
         status: subtaskStatus === 'Mark as Complete' ? Status.COMPLETED : Status.INPROGRESS
       },
       update: (cache, data) => {
-        
+
         const cacheData = cache.readQuery({
           query: GET_TASKS,
           variables: { referenceID },
         }) as ITasks;
-       
+
         const newTaskList = cacheData?.tasks?.results?.map((task) => {
           if (task.taskID === taskId) {
-            
-           const subTaskList= task.subtasks.map((subTask) => {
-              if (subTask.subtaskID === subtaskId) {               
+
+            const subTaskList = task.subtasks.map((subTask) => {
+              if (subTask.subtaskID === subtaskId) {
                 // return data;   
-                
+
                 if (subTask.status === 'INPROGRESS') {
                   return { ...subTask, status: Status.COMPLETED };
                 } else {
                   return { ...subTask, status: Status.INPROGRESS };
-                }             
+                }
               } else {
                 return subTask
               }
             })
-            
-            return {...task, subtasks:subTaskList}
+
+            return { ...task, subtasks: subTaskList }
           } else {
             return task;
           }
         });
-        
+
         cache.writeQuery({
           query: GET_TASKS,
           data: {
@@ -460,7 +460,7 @@ export function Tasks(props: TasksProps) {
       },
     })
 
-    
+
   };
   const cancelSubTaskStatusUpdate = () => {
     setOpenSubTaskStatusConfirm(false);
@@ -469,39 +469,39 @@ export function Tasks(props: TasksProps) {
     setViewTaskOpen(false);
     setEditTaskOpen(false);
   };
-  
+
   const deleteSubTask = (taskId, subtaskId) => {
 
     setTaskId(taskId);
     setSubTaskId(subtaskId);
-    setOpenSubTaskDeleteConfirm(true);    
+    setOpenSubTaskDeleteConfirm(true);
   }
   const confirmSubTaskDelete = (taskId, subtaskId) => {
-  
+
     setOpenSubTaskDeleteConfirm(false)
 
     subTaskDeleteApi({
-      variables:{
-        subtaskID: subtaskId        
+      variables: {
+        subtaskID: subtaskId
       },
       update: (cache, data) => {
-        
+
         const cacheData = cache.readQuery({
           query: GET_TASKS,
           variables: { referenceID },
         }) as ITasks;
-       
+
         const newTaskList = cacheData?.tasks?.results?.map((task) => {
           if (task.taskID === taskId) {
-            
-           const subTaskList= task.subtasks.filter((subTask) => subTask.subtaskID!==subtaskId)
-            
-            return {...task, subtasks:subTaskList}
+
+            const subTaskList = task.subtasks.filter((subTask) => subTask.subtaskID !== subtaskId)
+
+            return { ...task, subtasks: subTaskList }
           } else {
             return task;
           }
         });
-        
+
         cache.writeQuery({
           query: GET_TASKS,
           data: {
@@ -525,11 +525,11 @@ export function Tasks(props: TasksProps) {
 
     setTaskId(taskId);
     setSubTaskId(subtaskId);
-    
+
     console.log('--Tasks-updateSubTask--subtaskId, subtaskTitle-', subtaskId, title)
 
     subTaskUpdateApi({
-      variables:{
+      variables: {
         subtaskID: subtaskId,
         subtaskTitle: title
       },
@@ -539,20 +539,20 @@ export function Tasks(props: TasksProps) {
           query: GET_TASKS,
           variables: { referenceID },
         }) as ITasks;
-       
+
         const newTaskList = cacheData?.tasks?.results?.map((task) => {
           if (task.taskID === taskId) {
-           
-           const subTaskList= task.subtasks.map((subTask) => {
-              if (subTask.subtaskID === subtaskId) {               
+
+            const subTaskList = task.subtasks.map((subTask) => {
+              if (subTask.subtaskID === subtaskId) {
                 // return data;               
-                return { ...subTask, subtaskTitle: title };                            
+                return { ...subTask, subtaskTitle: title };
               } else {
                 return subTask
               }
             })
             console.log('----after updated--subTaskList----', subTaskList)
-            return {...task, subtasks:subTaskList}
+            return { ...task, subtasks: subTaskList }
           } else {
             return task;
           }
@@ -568,11 +568,11 @@ export function Tasks(props: TasksProps) {
       },
     })
   }
-  
+
   return (
     <div>
       <div className="pin_area">
-        <FilterPopup className="filter-icon" />
+        <FilterPopup />
         <ToggleButton changeAdd={changeAdd}></ToggleButton>
         {isNewTask ? (
           <CreateTask
@@ -634,18 +634,18 @@ export function Tasks(props: TasksProps) {
         </div>
       ) : null}
 
-      {openSubTaskStatusConfirm ? 
-        ( <div className="pin_area">
-            <ConfirmSubTaskStatus
-              name='subtask'
-              openAlertSTF={openSubTaskStatusConfirm}
-              confirmSubTaskStatus={confirmSubTaskStatusUpdate}
-              cancelSubTaskStatus={cancelSubTaskStatusUpdate}
-              taskId={taskId}
-              subTaskId={subTaskId}
-              subTaskStatus={subTaskStatus}
-            ></ConfirmSubTaskStatus>
-          </div> ) : null
+      {openSubTaskStatusConfirm ?
+        (<div className="pin_area">
+          <ConfirmSubTaskStatus
+            name='subtask'
+            openAlertSTF={openSubTaskStatusConfirm}
+            confirmSubTaskStatus={confirmSubTaskStatusUpdate}
+            cancelSubTaskStatus={cancelSubTaskStatusUpdate}
+            taskId={taskId}
+            subTaskId={subTaskId}
+            subTaskStatus={subTaskStatus}
+          ></ConfirmSubTaskStatus>
+        </div>) : null
       }
 
       {openSubTaskDeleteConfirm ? (
