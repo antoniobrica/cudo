@@ -115,7 +115,7 @@ export function ModalCost(props: ModalCostProps) {
           <Input type='number' name='itemPrice' size='small' className="full-width" onChange={e => handleChange(e, index)} value={item.itemPrice || 0} />
         </Table.Cell>
         <Table.Cell collapsing>
-          <a href="#" onClick={() => removeItem(index)} >X</a>
+          <a onClick={() => removeItem(index)} >X</a>
         </Table.Cell>
       </Table.Row>
     )
