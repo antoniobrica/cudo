@@ -59,8 +59,9 @@ export const ModalTaskEdit = (props: AlertProps) => {
   const [workTypes, setWorkTypes] = React.useState([]);
   const [date, setDate] = React.useState(null)
 
-  const [worktypeID, setworktypeID] = React.useState("")
-  const [worktypeName, setworktypeName] = React.useState("")
+
+  const [workTypeID, setworktypeID] = React.useState("")
+  const [workTypeName, setworktypeName] = React.useState("")
   const [assignees, setAssignees] = React.useState<any>([]);
   const [followers, setfollowers] = React.useState<any>([]);
   const history = useHistory();
@@ -101,11 +102,11 @@ export const ModalTaskEdit = (props: AlertProps) => {
       // var d2 = d.substring(5, 7) + '/' + d.substring(8, 10) + '/' + d.substring(0, 4);
 
       const assignees = [];
-      props.taskData.assignees.map((data, i) => {
+      props?.taskData?.assignees?.map((data, i) => {
         assignees.push({ userID: data.userID, userName: data.userName })
       })
       const followers = [];
-      props.taskData.followers.map((data, i) => {
+      props?.taskData?.followers?.map((data, i) => {
         followers.push({ userID: data.userID, userName: data.userName })
       })
       setAssignees(assignees)
@@ -120,7 +121,10 @@ export const ModalTaskEdit = (props: AlertProps) => {
       setBKPIDTitle(props.taskData.BKPTitle)
       setBKPID(props.taskData.BKPID)
       setPhasesID((props.taskData.phaseID).toString());
-      setPhasesName(props.taskData.phaseName)
+      setPhasesName(props.taskData.phaseName);
+      setworktypeName(props?.taskData?.workTypeName);
+      setworkTypeData(props?.taskData?.workTypeName)
+
     }
   }, [props.taskData]);
 
@@ -282,6 +286,8 @@ export const ModalTaskEdit = (props: AlertProps) => {
       files: [],
       assignees: assignees,
       followers: followers,
+      workTypeName: workTypeName,
+      workTypeID: workTypeID,
       saveTaskAsTemplate: props.taskData.saveTaskAsTemplate,
     }
     props.editTaskData(editTaskData);
@@ -439,7 +445,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                     </Form.Field> */}
                     <FollowersIndex followers={followers} parentFollowersSelect={onFollowers} />
 
-                    
+
                   </Grid.Column>
                 </Grid.Row>
                 <div className="followers-label-area">
