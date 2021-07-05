@@ -242,7 +242,7 @@
 }
 
 .alltask {
-  color: black;
+  color: #262B43;
   margin-top: 0 !important;
   font-size: 18px;
   margin-bottom: 25px;
@@ -583,4 +583,7 @@ button.anchor_complete i {
 .filter-modal i.close.icon {
   color: #fff !important;
   opacity: 1;
+}
+h3.alltask {
+  margin-bottom: 15px;
 }

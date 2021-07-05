@@ -210,6 +210,7 @@ div.ui.toggle.checkbox label:before {
   transform: translate(0);
   overflow: auto;
   height: 100%;
+  max-width: 100%;
   > i.close {
     top: 15px;
     right: 30px;
