@@ -36,6 +36,7 @@ export class TasksService {
         private subTaskRepository: Repository<SubTaskEntity>,
         private referenceService: ReferenceService
     ) { }
+    
     public async create(createProjectTaskInput: TaskDetailsInput, referenceFilter: ReferenceFilterParams): Promise<TasksEntity> {
         try {
             const { assignees, followers, files, taskBasics, subtasks } = createProjectTaskInput;
@@ -345,24 +346,20 @@ console.log('----update task for status-------', taskBasics)
         return tasks;
     }
 
-
-      public async updateSubTask(updateSubTask: SubTaskFilterInput, createinput: SubTaskInput): Promise<SubTaskEntity> {
+    public async updateSubTask(updateSubTask: SubTaskFilterInput, createinput: SubTaskInput): Promise<SubTaskEntity> {
         const subtask = await this.subTaskRepository.findOne({ where: { subtaskID: updateSubTask.subtaskID } });
         if (subtask) {
-          await this.subTaskRepository.update(subtask.Id, { ...createinput });
-          const updatedPost = await this.subTaskRepository.findOne(subtask.Id);
-
+            await this.subTaskRepository.update(subtask.Id, { ...createinput });
+            const updatedPost = await this.subTaskRepository.findOne(subtask.Id);
             // #region Check all subtask status are completed then task also be completed
-            if(subtask.status === 'COMPLETED'){
+            if(updatedPost.status === 'COMPLETED'){
                 const subtasks = await this.subTaskRepository.find({ where: { taskID: subtask.taskID, isDeleted:false}})  
-                
-                let completedSubTaskCount = 1
+                let completedSubTaskCount = 0
                 for (let index = 0; index < subtasks.length; index++) {
                     if(subtasks[index].status==='COMPLETED'){
                         completedSubTaskCount = completedSubTaskCount + 1
                     }
                 }
-                
                 if(subtasks.length===completedSubTaskCount){
                     const taskeDetail = await this.projectTasksRepository.findOne({ where: { taskID:subtask.taskID } })
                     await this.projectTasksRepository.update( taskeDetail.id, {status:'COMPLETED'});
@@ -370,10 +367,10 @@ console.log('----update task for status-------', taskBasics)
             } 
             // #endregion
 
-          return updatedPost;
+            return updatedPost;
         }
         throw new SubTaskNotFoundException(subtask.subtaskID);
-      }
+    }
 
     public async deletesubTaskByID(subtaskDeleteInput: SubTaskFilterInput): Promise<SubTaskEntity> {
         const subtask = await this.subTaskRepository.findOne({ where:{subtaskID:subtaskDeleteInput.subtaskID} });
@@ -381,12 +378,10 @@ console.log('----update task for status-------', taskBasics)
             subtask.isDeleted=!(subtask.isDeleted)
             const updatedPost = await subtask.save()            
             return updatedPost
-          }
-          throw new HttpException('Task Not Found', HttpStatus.NOT_FOUND);
         }
+        throw new HttpException('Task Not Found', HttpStatus.NOT_FOUND);
+    }
        
-
-
     public async findAlltasksBYTaskTypes(refFilter: ReferenceFilterParams, taskTypeFilter: taskTypeFilterParam): Promise<TasksEntity[]> {
         const selectedReference = await this.referenceService.getReferenceById(refFilter)
         const query: any = {
@@ -419,8 +414,7 @@ console.log('----update task for status-------', taskBasics)
             task.isDeleted=!(task.isDeleted)
             const updatedPost = await task.save()
             return updatedPost
-          }
-          throw new HttpException('Task Not Found', HttpStatus.NOT_FOUND);
         }
-
+        throw new HttpException('Task Not Found', HttpStatus.NOT_FOUND);
+    }
 }
