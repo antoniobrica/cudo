@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button, Modal, Form, Grid, TextArea } from 'semantic-ui-react';
 import ReactQuill, { Quill } from 'react-quill';
 
+import { Button, Modal, Form, Grid, TextArea, Icon, Divider } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 import img8 from 'libs/shared-components/src/default_area.png';
 import Moment from 'moment';
@@ -50,7 +50,8 @@ export const ModalViewTask = (props: AlertProps) => {
   return (
     <div id="navbar">
       <Modal
-        className="modal_media right-side--fixed-modal add-new-task-modal"
+        className="modal_media right-side--fixed-modal task-details-modal"
+        closeIcon
         onClose={cancel}
         onOpen={openf}
         open={open}
@@ -61,15 +62,15 @@ export const ModalViewTask = (props: AlertProps) => {
         }
       >
         <Modal.Header>
-          <h3>
+          <h3 className="d-flex align-items-center">
             {' '}
-            <span className="material-icons mr-2 mr-10 check-grey">
+            <span className="material-icons check-grey">
               check_circle_outline
             </span>
-            Task Details <span className="textt">T-00{props.id} </span>
-            <span className="taskdetails">Edit</span>
+            Task Details <span className="textt task-s-number">T-00{props.id} </span>
+            <span className="edit-task-link"><Icon name="edit" /> Edit</span>
           </h3>
-          <span style={{ color: '#718898', fontSize: '12px' }}>
+          <span className="task-created-date">
             Created on:{Moment(props?.taskData?.createdAt).format('DD-MM-YYYY')} - Created by: {props?.taskData?.createdBy}
           </span>
         </Modal.Header>
@@ -79,19 +80,19 @@ export const ModalViewTask = (props: AlertProps) => {
               <Grid columns={3}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
+                    <Form.Field className="filled-fields">
                       <label>Task Title</label>
                       <span>{props?.taskData?.taskTitle}</span>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
-                    <Form.Field>
+                    <Form.Field className="filled-fields">
                       <label>Project/Work Type</label>
                       <span>{props?.taskData?.workTypeName}</span>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
-                    <Form.Field>
+                    <Form.Field className="filled-fields">
                       <label>Phase</label>
                       <span>{props?.taskData?.phaseName}</span>
                     </Form.Field>
@@ -102,7 +103,7 @@ export const ModalViewTask = (props: AlertProps) => {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
+                    <Form.Field className="filled-fields">
                       <label>Description </label>
                       {/* <span>
                         {props?.taskData?.description}
@@ -133,13 +134,13 @@ export const ModalViewTask = (props: AlertProps) => {
               <Grid columns={3}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
+                    <Form.Field className="filled-fields">
                       <label>BKP</label>
                       <span>{props?.taskData?.BKPTitle} </span>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
-                    <Form.Field>
+                    <Form.Field className="filled-fields">
                       <label>Assignee</label>
                       <div className="event">
                         {(props?.taskData?.assignees || []).map((as, i) => {
@@ -155,7 +156,7 @@ export const ModalViewTask = (props: AlertProps) => {
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
-                    <Form.Field>
+                    <Form.Field className="filled-fields">
                       <label>Followers</label>
                       <div className="event">
                         {(props?.taskData?.followers || []).map((p, id) => {
@@ -182,30 +183,31 @@ export const ModalViewTask = (props: AlertProps) => {
               <Grid columns={3}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
+                    <Form.Field className="filled-fields">
                       <label>Start date</label>
                       <span>{new Date(props?.taskData?.startDate).toDateString()}</span>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
-                    <Form.Field>
+                    <Form.Field className="filled-fields">
                       <label>End date</label>
                       <span>{new Date(props?.taskData?.endDate).toDateString()}</span>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
-                    <Form.Field>
+                    <Form.Field className="filled-fields">
                       <label>Estimated days</label>
                       <span>{props?.taskData?.estimatedDays}</span>
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
-              <hr></hr>
+              <br />
+              <Divider />
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
+                    <Form.Field className="filled-fields">
                       <label>Write an update </label>
                       <TextArea placeholder="Tell us more" />
                     </Form.Field>
@@ -215,9 +217,9 @@ export const ModalViewTask = (props: AlertProps) => {
               <Grid columns={2}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
+                    <Form.Field className="filled-fields">
                       <label>
-                        <a href="" style={{ color: '#2D62ED' }}>
+                        <a href="">
                           {' '}
                           <i
                             className="ms-Icon ms-Icon--Attach"
@@ -225,23 +227,23 @@ export const ModalViewTask = (props: AlertProps) => {
                           ></i>{' '}
                           Add file
                         </a>
-                        &nbsp;{' '}
-                        <a href="" style={{ color: '#2D62ED' }}>
+                        {' '}
+                        <a href="">
                           {' '}
                           <i
                             className="ms-Icon ms-Icon--Emoji"
                             aria-hidden="true"
                           ></i>{' '}
-                          &nbsp; Emoji
+                          Emoji
                         </a>
-                        &nbsp;{' '}
-                        <a href="" style={{ color: '#2D62ED' }}>
+                        {' '}
+                        <a href="">
                           {' '}
                           <i
                             className="ms-Icon ms-Icon--Accounts"
                             aria-hidden="true"
                           ></i>{' '}
-                          &nbsp; Mention
+                          Mention
                         </a>
                       </label>
                     </Form.Field>
@@ -269,11 +271,9 @@ export const ModalViewTask = (props: AlertProps) => {
                       <div>
                         <img src={img8} className="image_center"></img>
                       </div>
-                      <div className="text-center margin-top">
-                        <span className="found">No update yet</span>
-                        <p className="project-sub" style={{ color: '#9A9EA1' }}>
-                          We are not able to see any update here.
-                        </p>
+                      <div className="text-center margin-top no-update-message">
+                        <span>No update yet</span>
+                        <p>We are not able to see any update here.</p>
                       </div>
                     </Form.Field>
                   </Grid.Column>

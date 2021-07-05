@@ -144,6 +144,7 @@ npm run nx run mf-project-app:serve -- --host 0.0.0.0
 npm run nx run mf-task-app:serve -- --host 0.0.0.0
 npm run nx run mf-document-app:serve -- --host 0.0.0.0
 npm run nx run mf-account-app:serve -- --host 0.0.0.0
+npm run nx run mf-cost-app:serve -- --host 0.0.0.0
 
 ## Build Process
  npm run nx run-many -- --target=build --projects='ms-account,ms-document,ms-project,ms-task' --with-deps --generatePackageJson=true --configuration=production
