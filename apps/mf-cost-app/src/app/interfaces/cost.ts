@@ -6,6 +6,8 @@ export interface ICost {
   BKPTitle: string,
   description: string,
   itemQuantity: number,
+  structureID: string,
+  structureName: string,
   itemPrice: number,
   files: [files]
 

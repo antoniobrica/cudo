@@ -10,6 +10,8 @@ export const GET_COST = gql`
   costs(referenceFilter: { referenceID: "dapr", referenceType: PROJECTTYPE }) { 
     id 
     costID 
+    structureID
+    structureName
     BKPCosts { 
       BKPID 
       description

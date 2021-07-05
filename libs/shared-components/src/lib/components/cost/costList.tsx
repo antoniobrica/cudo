@@ -8,15 +8,24 @@ import { NONAME } from 'dns';
 
 /* eslint-disable-next-line */
 export interface CostListProps {
-  addNew
+  addNew?,
+  costs?,
 }
 
 
 export function CostList(props: CostListProps) {
+  const [editC, setEditC] = React.useState(false)
+  const [estimateCost, setEstimateCost] = React.useState('5,000.00')
   const addNew = () => {
     console.log('add new');
     props.addNew()
 
+  }
+  const onEstimateCost = (e) => {
+    setEstimateCost(e.target.value)
+  }
+  const editCost = () => {
+    setEditC(!editC);
   }
   const rootPanels = [
     { key: 'panel-1', title: 'Jack W. Elementary School', content: { content: <a href=''>+ Add item</a> }, },
@@ -103,27 +112,34 @@ export function CostList(props: CostListProps) {
         <div className="eastimated-cost-con">
           <h3><Icon name="currency" /> Estimated Cost</h3>
           <div className="estimated-price-box">
-            <div className="estimated-price-total">
-              $5,0000.00
-              <Icon className="edit" />
-            </div>
+            {editC == false ?
+              <div className="estimated-price-total">
+                ${estimateCost}
 
-            <div className="edit-estimated-price" style={{ display: 'none' }}>
-              <Form.Field className="fillarea">
-                <Input placeholder='Enter your text here....' size='small' className="full-width "
-                  type="text"
-                // value={subtaskTitle}
-                // onChange={onSubtaskTitle}
-                />
-              </Form.Field>
-              <Form.Field className="d-flex">
-                <button className="greenbutton anchor_complete">
-                  <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
-                </button> &nbsp;  <button className="redbutton anchor_complete">
-                  <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i>
-                </button>
-              </Form.Field>
-            </div>
+                <Icon onClick={editCost} className="edit" />
+              </div>
+              :
+              <div className="edit-estimated-price" >
+                <Form.Field className="fillarea">
+                  <Input placeholder='Enter your text here....' size='small' className="full-width "
+                    type="text"
+                    value={estimateCost}
+                    onChange={onEstimateCost}
+                  />
+                </Form.Field>
+                <Form.Field className="d-flex">
+                  <button className="greenbutton anchor_complete" onClick={editCost}>
+                    <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
+                  </button> &nbsp;  <button className="redbutton anchor_complete" onClick={editCost}>
+                    <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i>
+                  </button>
+                </Form.Field>
+              </div>
+
+            }
+
+
+
 
           </div>
         </div>
@@ -156,7 +172,7 @@ export function CostList(props: CostListProps) {
                         <div className="treeview__level show" data-level="B">
                           <Icon name="add" className="show-view" style={{ display: 'none' }} />
                           <Icon name="minus" className="hide-view" />
-                          <span className="level-title"><Icon name="level up alternate" className="rotate-level-icon" /> 00 - VerzeichnisGrundstückVorstudien <span className="tv-bkp-total">( 2 BKP )</span></span>
+                          <span className="level-title"><Icon name="level up alternate" className="rotate-level-icon" /> 00 - VerzeichnisGrundstückVorstudien <span className="tv-bkp-total">( { } BKP )</span></span>
                           <div className="treeview-cost-table">
                             <Table>
                               <Table.Header>
@@ -173,57 +189,64 @@ export function CostList(props: CostListProps) {
                               </Table.Header>
 
                               <Table.Body>
-                                <Table.Row>
-                                  <Table.Cell><img src='/assets/images/dots.png' alt='' /></Table.Cell>
-                                  <Table.Cell>1</Table.Cell>
-                                  <Table.Cell>001 - VerzeichnisGrundstückVorstudien</Table.Cell>
-                                  <Table.Cell>This is the description here</Table.Cell>
-                                  <Table.Cell className="file-attached"><i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <Label horizontal>2</Label></Table.Cell>
-                                  <Table.Cell>5</Table.Cell>
-                                  <Table.Cell>$5000.00</Table.Cell>
-                                  <Table.Cell>
-                                    <Dropdown icon='ellipsis horizontal' pointing='right'>
-                                      <Dropdown.Menu className="dropdowncomplete">
-                                        <Dropdown.Item icon='pencil' text='Edit' />
-                                        <Dropdown.Item icon='trash alternate outline' text='Delete' />
-                                      </Dropdown.Menu>
-                                    </Dropdown>
-                                  </Table.Cell>
-                                </Table.Row>
-                                <Table.Row>
-                                  <Table.Cell><img src='/assets/images/dots.png' alt='' /></Table.Cell>
-                                  <Table.Cell>1</Table.Cell>
-                                  <Table.Cell>001 - VerzeichnisGrundstückVorstudien</Table.Cell>
-                                  <Table.Cell>This is the description here</Table.Cell>
-                                  <Table.Cell className="file-attached"><i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <Label horizontal>2</Label></Table.Cell>
-                                  <Table.Cell>5</Table.Cell>
-                                  <Table.Cell>$5000.00</Table.Cell>
-                                  <Table.Cell>
-                                    <Dropdown icon='ellipsis horizontal' pointing='right'>
-                                      <Dropdown.Menu className="dropdowncomplete">
-                                        <Dropdown.Item icon='pencil' text='Edit' />
-                                        <Dropdown.Item icon='trash alternate outline' text='Delete' />
-                                      </Dropdown.Menu>
-                                    </Dropdown>
-                                  </Table.Cell>
-                                </Table.Row>
+                                {props.costs.map((cost, id) => {
+                                  return (
+                                    <Table.Row>
+                                      <Table.Cell><img src='/assets/images/dots.png' alt='' /></Table.Cell>
+                                      <Table.Cell>00{id + 1}</Table.Cell>
+                                      <Table.Cell>{cost?.BKPCosts[0]?.BKPID} - {cost?.BKPCosts[0]?.BKPTitle}</Table.Cell>
+                                      <Table.Cell>{cost?.BKPCosts[0]?.description}</Table.Cell>
+                                      <Table.Cell className="file-attached"><i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <Label horizontal>{cost?.BKPCosts[0]?.bkpCostFiles?.length}</Label></Table.Cell>
+                                      <Table.Cell>{cost.BKPCosts[0].itemQuantity}</Table.Cell>
+                                      <Table.Cell>${cost.BKPCosts[0].itemPrice}</Table.Cell>
+                                      <Table.Cell>
+                                        <Dropdown icon='ellipsis horizontal' pointing='right'>
+                                          <Dropdown.Menu className="dropdowncomplete">
+                                            <Dropdown.Item icon='pencil' text='Edit' />
+                                            <Dropdown.Item icon='trash alternate outline' text='Delete' />
+                                          </Dropdown.Menu>
+                                        </Dropdown>
+                                      </Table.Cell>
+                                    </Table.Row>
+                                  )
+                                })}
+                                {/* <Table.Row>
+                                      <Table.Cell><img src='/assets/images/dots.png' alt='' /></Table.Cell>
+                                      <Table.Cell>1</Table.Cell>
+                                      <Table.Cell>001 - VerzeichnisGrundstückVorstudien</Table.Cell>
+                                      <Table.Cell>This is the description here</Table.Cell>
+                                      <Table.Cell className="file-attached"><i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <Label horizontal>2</Label></Table.Cell>
+                                      <Table.Cell>5</Table.Cell>
+                                      <Table.Cell>$5000.00</Table.Cell>
+                                      <Table.Cell>
+                                        <Dropdown icon='ellipsis horizontal' pointing='right'>
+                                          <Dropdown.Menu className="dropdowncomplete">
+                                            <Dropdown.Item icon='pencil' text='Edit' />
+                                            <Dropdown.Item icon='trash alternate outline' text='Delete' />
+                                          </Dropdown.Menu>
+                                        </Dropdown>
+                                      </Table.Cell>
+                                    </Table.Row> */}
                               </Table.Body>
 
                               <Table.Footer>
                                 <Table.Row>
                                   <Table.HeaderCell colspan="5">Total</Table.HeaderCell>
                                   <Table.HeaderCell>5</Table.HeaderCell>
-                                  <Table.HeaderCell colspan="2">$5000.00</Table.HeaderCell>
+                                  <Table.HeaderCell colspan="2">$5,000.00</Table.HeaderCell>
                                 </Table.Row>
                               </Table.Footer>
                             </Table>
                           </div>
                         </div>
+
                         <div className="add-new-block">
-                          <div className="add-new-link">
+                          <div className="add-new-link" onClick={addNew}>
                             <span><Icon name="plus"></Icon> Add new</span>
                           </div>
                         </div>
+
+
                       </li>
 
                       <li>
@@ -261,7 +284,7 @@ export function CostList(props: CostListProps) {
 
         <div className="total-price-gst">
           <div className="add-new-item-btn">
-            <button className="ui small button"><i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> Add new</button>
+            {/* <button className="ui small button"><i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> Add new</button> */}
           </div>
 
           <div className="sub-total-item">

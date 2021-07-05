@@ -5,6 +5,8 @@ import { Button } from 'semantic-ui-react';
 import AddNewItem from './add-new-item/add-new-item';
 import { GET_COST } from './graphql/graphql';
 import { useCostQuery } from './services/useRequest';
+import { LoaderPage } from "@cudo/shared-components"
+
 const defaultLanguage = 'de-DE';
 const supportedLanguages = [defaultLanguage, 'en-GB'];
 initI18n('/assets/i18n/{{lng}}.json', defaultLanguage);
@@ -12,9 +14,12 @@ initI18n('/assets/i18n/{{lng}}.json', defaultLanguage);
 export function App() {
   const [openCost, setOpenCost] = React.useState(false)
   const { loading, error, data } = useCostQuery(GET_COST);
+  if (loading) {
+    return <LoaderPage />
+  }
   if (data) {
     console.log('====================================');
-    console.log('data-cost', data);
+    console.log('data-cost', data.costs);
     console.log('====================================');
   }
   const addNew = () => {
@@ -31,7 +36,7 @@ export function App() {
         <div>
           <AddNewItem openCost={openCost} cancel={cancel}></AddNewItem>
         </div>
-        <CostList addNew={addNew}></CostList>
+        <CostList addNew={addNew} costs={data.costs}></CostList>
         {/* <Button onClick={() => changeLanguage('en-GB')}>EN</Button>
         <Button onClick={() => changeLanguage('de-DE')}>DE</Button> */}
       </div>
