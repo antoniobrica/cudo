@@ -24,6 +24,7 @@ export interface SessionProps {
   workTypes?
   createSession?
 }
+
 export function ModalSession(props: SessionProps) {
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
@@ -49,8 +50,8 @@ export function ModalSession(props: SessionProps) {
   const [catagory, setCatagory] = React.useState(null);
   const [protocol, setProtocol] = React.useState(null);
   const [invitation, setInvitation] = React.useState(null);
-  const [admins, setAdmins] = React.useState<any>([]);
-  const [members, setMembers] = React.useState<any>([]);
+  const [admins, setAdmins] = React.useState<any>();
+  const [members, setMembers] = React.useState<any>();
 
 
   const onSessionTitleChange = (e) => {
@@ -97,6 +98,7 @@ export function ModalSession(props: SessionProps) {
     setInvitation(data)
   }
   const onAdmins = (data) => {
+    console.log('--admin-data---', data)
     setAdmins(data);
   }
   const onMembers = (data) => {
@@ -104,6 +106,14 @@ export function ModalSession(props: SessionProps) {
   }
   const createSession = () => {
     setOpen(false);
+    const adminList = admins?.map((item,index) => {
+      return {adminID: item.userID, adminName: item.userName, image: ""}
+    })
+    // console.log('----add session adminList---', adminList)
+    const memberList = members?.map((item,index) => {
+      return {memberID: item.userID, memberName: item.userName, image: ""}
+    })
+    // console.log('----add session memberList---', memberList)
     const data = {
       sessionTitle: sessionTitle,
       meetingCategoryID: catagory.meetingCatagoryID,
@@ -114,10 +124,11 @@ export function ModalSession(props: SessionProps) {
       invitationTitle: invitation.invitationTemplateTitle,
       worktypeID: workTypeD.worktypeID,
       worktypeTitle: workTypeD.worktypeName,
-      admins, // : [{ adminID: "1", adminName: "ram", image: "image.com" }],
-      members, // : [{ memberID: "1", memberName: "lakhan", image: "image.com" }]
+      admins: adminList, // : [{ adminID: "1", adminName: "ram", image: "image.com" }],
+      members: memberList // : [{ memberID: "1", memberName: "lakhan", image: "image.com" }]
     }
-    props.createSession(data);
+    // console.log('----add session data---', data)
+     props.createSession(data);
   }
 
   return (
@@ -212,7 +223,7 @@ export function ModalSession(props: SessionProps) {
                 <div className="followers-label-area">
                   <Form.Field>
                     <div className="event top-event follower-listing-labels">
-                      {admins.map((p, id) => {
+                      {admins?.map((p, id) => {
                         const name = p.userName.split(" ").map((n) => n[0]).join("");
                         //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
                         return (
@@ -291,7 +302,7 @@ export function ModalSession(props: SessionProps) {
                 <div className="followers-label-area">
                   <Form.Field>
                     <div className="event top-event follower-listing-labels">
-                      {members.map((p, id) => {
+                      {members?.map((p, id) => {
                         const name = p.userName.split(" ").map((n) => n[0]).join("");
                         //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
                         return (

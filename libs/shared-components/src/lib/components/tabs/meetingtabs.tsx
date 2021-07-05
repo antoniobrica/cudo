@@ -9,9 +9,14 @@ import img3 from 'libs/shared-components/src/pink.png';
 import img2 from 'libs/shared-components/src/star_img.png';
 import img5 from 'libs/shared-components/src/green.png';
 
+// import ModalSession from 'libs/shared-components/src/lib/components/modal/addsession'
+//  /add-session/add-session';
 
 /* eslint-disable-next-line */
-export interface MeetingTab { sessionListData? }
+export interface MeetingTab { 
+  sessionListData? 
+  addSession?
+}
 
 export function MeetingTab(props: MeetingTab) {
 
@@ -155,6 +160,9 @@ const deleteSessionDetail = (sessionID) =>{
   console.log('---Delete session')
 }
 
+const clickAddSession = ()=> {
+  props.addSession(true)
+}
 
 
   const description = [
@@ -166,9 +174,12 @@ const deleteSessionDetail = (sessionID) =>{
     <div className="meetings-outer-con">
 
       <h3>Meetings 
-        <Button size="small" className="primary">
+        <Button onClick={clickAddSession} size="small" className="primary">
             + Add New Session{' '}
         </Button>
+        
+        {/* <ModalSession workTypes={workTypes} createSession={createSession} /> */}
+    
       </h3>  
 
       {/* //=====Upcoming List for Invitations============== */}

@@ -213,6 +213,7 @@ export function CostList(props: CostListProps) {
                             <span><Icon name="plus"></Icon> Add new</span>
                           </div>
                         </div>
+                        </div>
                       </li>
 
                       <li>
@@ -243,9 +244,10 @@ export function CostList(props: CostListProps) {
                   </li>
 
                 </ul>
-              </li>
-            </ul>
+              {/* </li>
+            </ul> */}
           </div>
+          </h4>
         </div>
 
         <div className="total-price-gst">
