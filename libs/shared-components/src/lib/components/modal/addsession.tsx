@@ -123,7 +123,8 @@ export function ModalSession(props: SessionProps) {
   return (
     <div style={{ marginLeft: 900 }} >
       <Modal
-        className="modal_media"
+        className="modal_media right-side--fixed-modal add-session-modal"
+        closeIcon
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
@@ -349,11 +350,11 @@ export function ModalSession(props: SessionProps) {
             content="Submit"
             onClick={createSession}
             positive
-            size="mini"
-            className="grey-btn"
+            size="small"
+            className="primary"
           />
           <Button
-            size="mini"
+            size="small"
             className="icon-border"
             onClick={() => setOpen(false)}
           >

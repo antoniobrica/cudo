@@ -157,7 +157,7 @@ export function CostList(props: CostListProps) {
                                 <Table.HeaderCell >&nbsp;</Table.HeaderCell>
                                 <Table.HeaderCell >#</Table.HeaderCell>
                                 <Table.HeaderCell  width='five'>BKP</Table.HeaderCell>
-                                <Table.HeaderCell  width='six'>Description</Table.HeaderCell>
+                                <Table.HeaderCell  width='seven'>Description</Table.HeaderCell>
                                 <Table.HeaderCell >Files</Table.HeaderCell>
                                 <Table.HeaderCell>Item Quantity</Table.HeaderCell>
                                 <Table.HeaderCell>Item Price</Table.HeaderCell>
