@@ -18,7 +18,7 @@ import { Dropdown } from 'semantic-ui-react';
 import img2 from 'libs/shared-components/src/avatar_1.png';
 import img3 from 'libs/shared-components/src/avatar_2.png';
 import img4 from 'libs/shared-components/src/avatar_3.png';
-import { MeetingCategoryIndex, SessionInvitationIndex, SessionProtocolIndex, FollowersIndex, AssigneeIndex, } from '@cudo/mf-account-app-lib';
+import { MeetingCategoryIndex, SessionInvitationIndex, SessionProtocolIndex, FollowersIndex, AssigneeIndex, AdminsIndex, MembersIndex } from '@cudo/mf-account-app-lib';
 
 export interface SessionProps {
   workTypes?
@@ -49,8 +49,8 @@ export function ModalSession(props: SessionProps) {
   const [catagory, setCatagory] = React.useState(null);
   const [protocol, setProtocol] = React.useState(null);
   const [invitation, setInvitation] = React.useState(null);
-  const [followers, setfollowers] = React.useState("")
-
+  const [admins, setAdmins] = React.useState<any>([]);
+  const [members, setMembers] = React.useState<any>([]);
 
 
   const onSessionTitleChange = (e) => {
@@ -96,11 +96,11 @@ export function ModalSession(props: SessionProps) {
     console.log('parentInvitationSelect', data);
     setInvitation(data)
   }
-  const onFollowers = (data) => {
-    setfollowers(data.value);
+  const onAdmins = (data) => {
+    setAdmins(data);
   }
-  const setAsignee = (data) => {
-    // setAsignis(data)
+  const onMembers = (data) => {
+    setMembers(data)
   }
   const createSession = () => {
     setOpen(false);
@@ -114,8 +114,8 @@ export function ModalSession(props: SessionProps) {
       invitationTitle: invitation.invitationTemplateTitle,
       worktypeID: workTypeD.worktypeID,
       worktypeTitle: workTypeD.worktypeName,
-      admins: [{ adminID: "1", adminName: "ram", image: "image.com" }],
-      members: [{ memberID: "1", memberName: "lakhan", image: "image.com" }]
+      admins, // : [{ adminID: "1", adminName: "ram", image: "image.com" }],
+      members, // : [{ memberID: "1", memberName: "lakhan", image: "image.com" }]
     }
     props.createSession(data);
   }
@@ -204,10 +204,26 @@ export function ModalSession(props: SessionProps) {
                         placeholder="Select Country"
                       />
                     </Form.Field> */}
-                    <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Admin" />
+                    <AdminsIndex admins={[]} parentAdminsSelect={onAdmins} />
 
                   </Grid.Column>
                 </Grid.Row>
+                <div className="followers-label-area">
+                  <Form.Field>
+                    <div className="event top-event follower-listing-labels">
+                      {admins.map((p, id) => {
+                        const name = p.userName.split(" ").map((n) => n[0]).join("");
+                        //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
+                        return (
+                          <div className="label-light-purple-circle label-spacer" key={id}>
+                            <span className="white-text">{name}</span>
+                          </div>
+                        )
+                      })
+                      }
+                    </div>
+                  </Form.Field>
+                </div>
               </Grid>
 
               {/* <Grid columns={5}>
@@ -268,9 +284,25 @@ export function ModalSession(props: SessionProps) {
                         placeholder="Select Country"
                       />
                     </Form.Field> */}
-                    <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Members" />
+                    <MembersIndex members={[]} parentMembersSelect={onMembers} />
                   </Grid.Column>
                 </Grid.Row>
+                <div className="followers-label-area">
+                  <Form.Field>
+                    <div className="event top-event follower-listing-labels">
+                      {members.map((p, id) => {
+                        const name = p.userName.split(" ").map((n) => n[0]).join("");
+                        //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
+                        return (
+                          <div className="label-light-purple-circle label-spacer" key={id}>
+                            <span className="white-text">{name}</span>
+                          </div>
+                        )
+                      })
+                      }
+                    </div>
+                  </Form.Field>
+                </div>
               </Grid>
 
               {/* <Grid columns={5}>

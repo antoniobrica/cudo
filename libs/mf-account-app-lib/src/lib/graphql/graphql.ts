@@ -83,7 +83,7 @@ export const GET_CATAGORIES = gql`{
 
 export const GET_PROTOCOL = gql`{
   ProtocoleTemplates( 
-    referenceFilter: { referenceID: "dapr", referenceType: COMPANY } 
+    referenceFilter: { referenceID: "Sftobiz_1234", referenceType: COMPANY } 
   ) { 
     protocolTemplateID 
     protocolTemplateTitle 
