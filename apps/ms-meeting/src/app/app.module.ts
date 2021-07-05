@@ -19,9 +19,11 @@ import { ComponentsModule } from './components/components.module';
     //     watch: true,
     //   },
     // }),
-    GraphQLModule.forRoot({
-      context: ({ req, connection }) => connection ? { req: connection.context } : { req },
-      autoSchemaFile: true,
+    GraphQLModule.forRootAsync({
+      useFactory: () => ({
+        autoSchemaFile: true,
+        path: "/api/ms-meeting/graphql"
+      }),
     }),
     ComponentsModule,
     TypeOrmModule.forRootAsync({
