@@ -17,6 +17,9 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
   "ms_cost": {
     url: "http://192.168.1.5:5002/graphql"
   },
+  "ms_meeting": {
+    url: "http://cudo-ms-meeting.softobiz.net/graphql"
+  },  
   "mf_cost_app": {
     url: "http://192.168.1.5:6004"
   },

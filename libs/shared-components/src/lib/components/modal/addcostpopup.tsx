@@ -4,7 +4,7 @@ import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, Te
 import { useTranslation } from 'react-i18next';
 import './../../../assets/style/index.scss'
 import { options, types } from '@hapi/joi';
-import { BkpIndex, HouseStructureIndex } from '@cudo/mf-account-app-lib';
+import { BkpsIndex, HouseStructureIndex } from '@cudo/mf-account-app-lib';
 import { FileUpload } from '@cudo/mf-document-lib';
 export interface IHouse {
   option
@@ -14,6 +14,8 @@ export interface IHouse {
 export interface ModalCostProps {
   house?: IHouse,
   createCost?
+  openCost?
+  cancel
 }
 type Iitem = {
   index?: number
@@ -34,6 +36,15 @@ export function ModalCost(props: ModalCostProps) {
   const [openFile, setOpenFile] = React.useState(false)
   const [files, setFileList] = React.useState<any>([]);
   const [items, setItems] = React.useState<Iitem[]>([])
+  React.useEffect(() => {
+    if (props.openCost) {
+      setOpen(true);
+    }
+  }, [props.openCost])
+  const cancel = () => {
+    setOpen(false)
+    props.cancel(false)
+  }
   const handleChange = (event, index) => {
     if (event.target == undefined) {
       console.log('e', event)
@@ -76,7 +87,8 @@ export function ModalCost(props: ModalCostProps) {
   const createCost = () => {
     console.log('cost-items==>', items);
     props.createCost(items)
-    setOpen(false);
+    // setOpen(false);
+    props.cancel();
   }
   function CostItem() {
     return items.map((item, index) =>
@@ -88,7 +100,7 @@ export function ModalCost(props: ModalCostProps) {
           {index + 1 || 0}
         </Table.Cell>
         <Table.Cell className="cost-bkp-field">
-          <BkpIndex bkp={item.BKPID || ''} parentBKPSelect={e => handleChange(e, index)} ></BkpIndex>
+          <BkpsIndex bkp={''} parentBKPSelect={e => handleChange(e, index)} ></BkpsIndex>
         </Table.Cell>
         <Table.Cell>
           <Input name='description' size='small' className="full-width" onChange={e => handleChange(e, index)} value={item.description || ''} />
@@ -127,7 +139,7 @@ export function ModalCost(props: ModalCostProps) {
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button size='mini' className="grey-btn">+ {t('add_cost.add_new')} </Button>}
+      // trigger={<Button size='mini' className="grey-btn">+ {t('add_cost.add_new')} </Button>}
       >
         <Modal.Header><h3>{t('add_cost.add_new_item')} </h3></Modal.Header>
         <Modal.Content body>
@@ -154,27 +166,27 @@ export function ModalCost(props: ModalCostProps) {
             </Form> */}
             <div className="cost-modal-content">
               <Header className="header" >Items</Header>
-            
-              <Table>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell></Table.HeaderCell>
-                  <Table.HeaderCell># </Table.HeaderCell>
-                  <Table.HeaderCell width={4}>BKP</Table.HeaderCell>
-                  <Table.HeaderCell width={6}>Description</Table.HeaderCell>
-                  <Table.HeaderCell>Files</Table.HeaderCell>
-                  <Table.HeaderCell width={1}>Item quality</Table.HeaderCell>
-                  <Table.HeaderCell width={1}>Item price</Table.HeaderCell>
-                  <Table.HeaderCell></Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-              
-              <Table.Body>
-                {CostItem()}
-              </Table.Body>
-            </Table>
 
-            <div className="add-more-cost"><a onClick={() => addItem()}><Icon name='add' /> Add more </a></div>
+              <Table>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell></Table.HeaderCell>
+                    <Table.HeaderCell># </Table.HeaderCell>
+                    <Table.HeaderCell width={4}>BKP</Table.HeaderCell>
+                    <Table.HeaderCell width={6}>Description</Table.HeaderCell>
+                    <Table.HeaderCell>Files</Table.HeaderCell>
+                    <Table.HeaderCell width={1}>Item quality</Table.HeaderCell>
+                    <Table.HeaderCell width={1}>Item price</Table.HeaderCell>
+                    <Table.HeaderCell></Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+
+                <Table.Body>
+                  {CostItem()}
+                </Table.Body>
+              </Table>
+
+              <div className="add-more-cost"><a onClick={() => addItem()}><Icon name='add' /> Add more </a></div>
             </div>
           </div>
         </Modal.Content>
@@ -185,7 +197,7 @@ export function ModalCost(props: ModalCostProps) {
             positive
             size='small' className="primary"
           />
-          <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
+          <Button size='small' className="icon-border" onClick={cancel}>
             X  Cancel
           </Button>
         </Modal.Actions>

@@ -7,10 +7,17 @@ import { NONAME } from 'dns';
 
 
 /* eslint-disable-next-line */
-export interface CostListProps { }
+export interface CostListProps {
+  addNew
+}
 
 
 export function CostList(props: CostListProps) {
+  const addNew = () => {
+    console.log('add new');
+    props.addNew()
+
+  }
   const rootPanels = [
     { key: 'panel-1', title: 'Jack W. Elementary School', content: { content: <a href=''>+ Add item</a> }, },
     { key: 'panel-2', title: 'Freehold Two Solar LLC', content: { content: <a href=''>+ Add item</a> } },
@@ -18,7 +25,7 @@ export function CostList(props: CostListProps) {
   return (
     <div>
 
-{/* 
+      {/* 
       <div className="cost-management-con">
         <h6 style={{ fontWeight: 'normal' }} className="h5heading">
           Cost managment
@@ -80,205 +87,205 @@ export function CostList(props: CostListProps) {
 
 
 
-    <div className="main-content-con cost-management-con">
-      <div className="heading-con">
-        <h3 className="alltask">Cost Management <span>Please manage the cost for Electrical Work</span></h3>
-        <span className="action-dropdown">
-          <Dropdown text='...' pointing="right">
-            <Dropdown.Menu>
-              <Dropdown.Item icon='print' text='Print' />
-              <Dropdown.Item icon='download' text='Download' />
-            </Dropdown.Menu>
-          </Dropdown>
-        </span>
-      </div>
+      <div className="main-content-con cost-management-con">
+        <div className="heading-con">
+          <h3 className="alltask">Cost Management <span>Please manage the cost for Electrical Work</span></h3>
+          <span className="action-dropdown">
+            <Dropdown text='...' pointing="right">
+              <Dropdown.Menu>
+                <Dropdown.Item icon='print' text='Print' />
+                <Dropdown.Item icon='download' text='Download' />
+              </Dropdown.Menu>
+            </Dropdown>
+          </span>
+        </div>
 
-      <div className="eastimated-cost-con">
-        <h3><Icon name="currency" /> Estimated Cost</h3>
-        <div className="estimated-price-box">
-          <div className="estimated-price-total">
-            $5,0000.00
-            <Icon className="edit" />
-          </div>
+        <div className="eastimated-cost-con">
+          <h3><Icon name="currency" /> Estimated Cost</h3>
+          <div className="estimated-price-box">
+            <div className="estimated-price-total">
+              $5,0000.00
+              <Icon className="edit" />
+            </div>
 
-          <div className="edit-estimated-price" style={{ display: 'none' }}>
-            <Form.Field className="fillarea">
-              <Input placeholder='Enter your text here....' size='small' className="full-width "
-                type="text"
+            <div className="edit-estimated-price" style={{ display: 'none' }}>
+              <Form.Field className="fillarea">
+                <Input placeholder='Enter your text here....' size='small' className="full-width "
+                  type="text"
                 // value={subtaskTitle}
                 // onChange={onSubtaskTitle}
-              />
-            </Form.Field>
-            <Form.Field className="d-flex">
-              <button className="greenbutton anchor_complete">
-                <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
-              </button> &nbsp;  <button className="redbutton anchor_complete">
-                <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> 
-              </button>
-            </Form.Field>
-          </div>
-          
-        </div>
-      </div>
-
-      <div className="treeview-main-con">
-        <h4 className="d-flex justify-space-between">Items
-          <div className="add-new-block">
-            <div className="add-new-link"> 
-              <span><Icon name="plus"></Icon> Add new</span>
+                />
+              </Form.Field>
+              <Form.Field className="d-flex">
+                <button className="greenbutton anchor_complete">
+                  <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
+                </button> &nbsp;  <button className="redbutton anchor_complete">
+                  <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i>
+                </button>
+              </Form.Field>
             </div>
+
           </div>
-        </h4>
-        <div className="treeview-inner-con">
-          <ul>
-            <li>
-              <div className="treeview__level show" data-level="A">
-                <Icon name="add" className="show-view" style={{display: 'none'}} />
-                <Icon name="minus" className="hide-view" />
-                <span className="level-title cost-item-parent"><Icon name="list" /> Jack W. Elementary School <span className="item-total-price">Total price: $1500.00</span></span>
+        </div>
+
+        <div className="treeview-main-con">
+          <h4 className="d-flex justify-space-between">Items
+            <div className="add-new-block">
+              <div className="add-new-link" onClick={addNew}>
+                <span><Icon name="plus"></Icon> Add new</span>
               </div>
-              <ul>
-                <li>
-                  <div className="treeview__level show" data-level="B">
-                    <Icon name="add" className="show-view" style={{display: 'none'}} />
-                    <Icon name="minus" className="hide-view" />
-                    <span className="level-title"><Icon name="level up alternate" className="rotate-level-icon" /> 0 - Grundstück</span>
-                  </div>
-                  <ul>
-                    <li>
-                      <div className="treeview__level show" data-level="B">
-                        <Icon name="add" className="show-view" style={{display: 'none'}} />
-                        <Icon name="minus" className="hide-view" />
-                        <span className="level-title"><Icon name="level up alternate" className="rotate-level-icon" /> 00 - VerzeichnisGrundstückVorstudien <span className="tv-bkp-total">( 2 BKP )</span></span>
-                        <div className="treeview-cost-table">
-                          <Table>
-                            <Table.Header>
-                              <Table.Row>
-                                <Table.HeaderCell >&nbsp;</Table.HeaderCell>
-                                <Table.HeaderCell >#</Table.HeaderCell>
-                                <Table.HeaderCell  width='five'>BKP</Table.HeaderCell>
-                                <Table.HeaderCell  width='six'>Description</Table.HeaderCell>
-                                <Table.HeaderCell >Files</Table.HeaderCell>
-                                <Table.HeaderCell>Item Quantity</Table.HeaderCell>
-                                <Table.HeaderCell>Item Price</Table.HeaderCell>
-                                <Table.HeaderCell>&nbsp;</Table.HeaderCell>
-                              </Table.Row>
-                            </Table.Header>
-
-                            <Table.Body>
-                              <Table.Row>
-                                <Table.Cell><img src='/assets/images/dots.png' alt='' /></Table.Cell>
-                                <Table.Cell>1</Table.Cell>
-                                <Table.Cell>001 - VerzeichnisGrundstückVorstudien</Table.Cell>
-                                <Table.Cell>This is the description here</Table.Cell>
-                                <Table.Cell className="file-attached"><i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <Label horizontal>2</Label></Table.Cell>
-                                <Table.Cell>5</Table.Cell>
-                                <Table.Cell>$5000.00</Table.Cell>
-                                <Table.Cell>
-                                <Dropdown icon='ellipsis horizontal' pointing='right'>
-                                  <Dropdown.Menu className="dropdowncomplete">
-                                    <Dropdown.Item icon='pencil' text='Edit' />
-                                    <Dropdown.Item icon='trash alternate outline' text='Delete' />
-                                  </Dropdown.Menu>
-                                </Dropdown>
-                                </Table.Cell>
-                              </Table.Row>
-                              <Table.Row>
-                                <Table.Cell><img src='/assets/images/dots.png' alt='' /></Table.Cell>
-                                <Table.Cell>1</Table.Cell>
-                                <Table.Cell>001 - VerzeichnisGrundstückVorstudien</Table.Cell>
-                                <Table.Cell>This is the description here</Table.Cell>
-                                <Table.Cell className="file-attached"><i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <Label horizontal>2</Label></Table.Cell>
-                                <Table.Cell>5</Table.Cell>
-                                <Table.Cell>$5000.00</Table.Cell>
-                                <Table.Cell>
-                                <Dropdown icon='ellipsis horizontal' pointing='right'>
-                                  <Dropdown.Menu className="dropdowncomplete">
-                                    <Dropdown.Item icon='pencil' text='Edit' />
-                                    <Dropdown.Item icon='trash alternate outline' text='Delete' />
-                                  </Dropdown.Menu>
-                                </Dropdown>
-                                </Table.Cell>
-                              </Table.Row>
-                            </Table.Body>
-
-                            <Table.Footer>
-                              <Table.Row>
-                                <Table.HeaderCell colspan="5">Total</Table.HeaderCell>
-                                <Table.HeaderCell>5</Table.HeaderCell>
-                                <Table.HeaderCell colspan="2">$5000.00</Table.HeaderCell>
-                              </Table.Row>
-                            </Table.Footer>
-                          </Table>
-                        </div>
-                      </div>
-                      <div className="add-new-block">
-                        <div className="add-new-link"> 
-                          <span><Icon name="plus"></Icon> Add new</span>
-                        </div>
-                      </div>
-                    </li>
-
-                    <li>
-                      <div className="treeview__level show" data-level="B">
-                        <Icon name="add" className="show-view" style={{display: 'none'}} />
-                        <Icon name="minus" className="hide-view" />
-                        <span className="level-title"><Icon name="level up alternate" className="rotate-level-icon" /> 00 - VerzeichnisGrundstückVorstudien <span className="tv-bkp-total">( 2 BKP )</span></span>
-                      </div>
-                    </li>
-                  </ul>
-                </li>
-
-                <li>
-                  <div className="treeview__level" data-level="B">
-                      <Icon name="add" className="show-view" style={{display: 'none'}} />
-                      <Icon name="minus" className="hide-view" />
-                    <span className="level-title"><Icon name="level up alternate" className="rotate-level-icon" /> 1 - Grundstück</span>
-                  </div>
-                  <ul>
-                    <li>
-                      <div className="treeview__level" data-level="B">
-                        <Icon name="add" className="show-view" style={{display: 'none'}} />
-                        <Icon name="minus" className="hide-view" />
-                        <span className="level-title"><Icon name="level up alternate" className="rotate-level-icon" /> 01 - VerzeichnisGrundstückVorstudien <span className="tv-bkp-total">( 2 BKP )</span></span>
-                      </div>
-                    </li>
-                  </ul>
-                </li>
-
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div className="total-price-gst">
-        <div className="add-new-item-btn">
-          <button className="ui small button"><i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> Add new</button>
-        </div>
-
-        <div className="sub-total-item">
-          <p>Sub Total <span>$3500.00</span></p>
-          <p>GST 10% <span>$300.00</span></p>
-          <p>Total <span>$3800.00</span></p>
-        </div>
-      </div>
-
-      <div className="add-files-area">
-        <h3>Add files for complete cost</h3>
-        <Form.Field>
-          <div className="dashed_area">
-            <div className="file-upload-message">
-              {/* <Image src={img} className="mr-10 " /> */}
-              <p className="file-upload-default-message">Drag & drop or click here to upload file</p>
-
             </div>
-            <Input type="file" className="file-upload-input"   />
+          </h4>
+          <div className="treeview-inner-con">
+            <ul>
+              <li>
+                <div className="treeview__level show" data-level="A">
+                  <Icon name="add" className="show-view" style={{ display: 'none' }} />
+                  <Icon name="minus" className="hide-view" />
+                  <span className="level-title cost-item-parent"><Icon name="list" /> Jack W. Elementary School <span className="item-total-price">Total price: $1500.00</span></span>
+                </div>
+                <ul>
+                  <li>
+                    <div className="treeview__level show" data-level="B">
+                      <Icon name="add" className="show-view" style={{ display: 'none' }} />
+                      <Icon name="minus" className="hide-view" />
+                      <span className="level-title"><Icon name="level up alternate" className="rotate-level-icon" /> 0 - Grundstück</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div className="treeview__level show" data-level="B">
+                          <Icon name="add" className="show-view" style={{ display: 'none' }} />
+                          <Icon name="minus" className="hide-view" />
+                          <span className="level-title"><Icon name="level up alternate" className="rotate-level-icon" /> 00 - VerzeichnisGrundstückVorstudien <span className="tv-bkp-total">( 2 BKP )</span></span>
+                          <div className="treeview-cost-table">
+                            <Table>
+                              <Table.Header>
+                                <Table.Row>
+                                  <Table.HeaderCell >&nbsp;</Table.HeaderCell>
+                                  <Table.HeaderCell >#</Table.HeaderCell>
+                                  <Table.HeaderCell width='five'>BKP</Table.HeaderCell>
+                                  <Table.HeaderCell width='six'>Description</Table.HeaderCell>
+                                  <Table.HeaderCell >Files</Table.HeaderCell>
+                                  <Table.HeaderCell>Item Quantity</Table.HeaderCell>
+                                  <Table.HeaderCell>Item Price</Table.HeaderCell>
+                                  <Table.HeaderCell>&nbsp;</Table.HeaderCell>
+                                </Table.Row>
+                              </Table.Header>
+
+                              <Table.Body>
+                                <Table.Row>
+                                  <Table.Cell><img src='/assets/images/dots.png' alt='' /></Table.Cell>
+                                  <Table.Cell>1</Table.Cell>
+                                  <Table.Cell>001 - VerzeichnisGrundstückVorstudien</Table.Cell>
+                                  <Table.Cell>This is the description here</Table.Cell>
+                                  <Table.Cell className="file-attached"><i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <Label horizontal>2</Label></Table.Cell>
+                                  <Table.Cell>5</Table.Cell>
+                                  <Table.Cell>$5000.00</Table.Cell>
+                                  <Table.Cell>
+                                    <Dropdown icon='ellipsis horizontal' pointing='right'>
+                                      <Dropdown.Menu className="dropdowncomplete">
+                                        <Dropdown.Item icon='pencil' text='Edit' />
+                                        <Dropdown.Item icon='trash alternate outline' text='Delete' />
+                                      </Dropdown.Menu>
+                                    </Dropdown>
+                                  </Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                  <Table.Cell><img src='/assets/images/dots.png' alt='' /></Table.Cell>
+                                  <Table.Cell>1</Table.Cell>
+                                  <Table.Cell>001 - VerzeichnisGrundstückVorstudien</Table.Cell>
+                                  <Table.Cell>This is the description here</Table.Cell>
+                                  <Table.Cell className="file-attached"><i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <Label horizontal>2</Label></Table.Cell>
+                                  <Table.Cell>5</Table.Cell>
+                                  <Table.Cell>$5000.00</Table.Cell>
+                                  <Table.Cell>
+                                    <Dropdown icon='ellipsis horizontal' pointing='right'>
+                                      <Dropdown.Menu className="dropdowncomplete">
+                                        <Dropdown.Item icon='pencil' text='Edit' />
+                                        <Dropdown.Item icon='trash alternate outline' text='Delete' />
+                                      </Dropdown.Menu>
+                                    </Dropdown>
+                                  </Table.Cell>
+                                </Table.Row>
+                              </Table.Body>
+
+                              <Table.Footer>
+                                <Table.Row>
+                                  <Table.HeaderCell colspan="5">Total</Table.HeaderCell>
+                                  <Table.HeaderCell>5</Table.HeaderCell>
+                                  <Table.HeaderCell colspan="2">$5000.00</Table.HeaderCell>
+                                </Table.Row>
+                              </Table.Footer>
+                            </Table>
+                          </div>
+                        </div>
+                        <div className="add-new-block">
+                          <div className="add-new-link">
+                            <span><Icon name="plus"></Icon> Add new</span>
+                          </div>
+                        </div>
+                      </li>
+
+                      <li>
+                        <div className="treeview__level show" data-level="B">
+                          <Icon name="add" className="show-view" style={{ display: 'none' }} />
+                          <Icon name="minus" className="hide-view" />
+                          <span className="level-title"><Icon name="level up alternate" className="rotate-level-icon" /> 00 - VerzeichnisGrundstückVorstudien <span className="tv-bkp-total">( 2 BKP )</span></span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li>
+                    <div className="treeview__level" data-level="B">
+                      <Icon name="add" className="show-view" style={{ display: 'none' }} />
+                      <Icon name="minus" className="hide-view" />
+                      <span className="level-title"><Icon name="level up alternate" className="rotate-level-icon" /> 1 - Grundstück</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div className="treeview__level" data-level="B">
+                          <Icon name="add" className="show-view" style={{ display: 'none' }} />
+                          <Icon name="minus" className="hide-view" />
+                          <span className="level-title"><Icon name="level up alternate" className="rotate-level-icon" /> 01 - VerzeichnisGrundstückVorstudien <span className="tv-bkp-total">( 2 BKP )</span></span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="total-price-gst">
+          <div className="add-new-item-btn">
+            <button className="ui small button"><i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> Add new</button>
           </div>
 
-        </Form.Field>
+          <div className="sub-total-item">
+            <p>Sub Total <span>$3500.00</span></p>
+            <p>GST 10% <span>$300.00</span></p>
+            <p>Total <span>$3800.00</span></p>
+          </div>
+        </div>
+
+        <div className="add-files-area">
+          <h3>Add files for complete cost</h3>
+          <Form.Field>
+            <div className="dashed_area">
+              <div className="file-upload-message">
+                {/* <Image src={img} className="mr-10 " /> */}
+                <p className="file-upload-default-message">Drag & drop or click here to upload file</p>
+
+              </div>
+              <Input type="file" className="file-upload-input" />
+            </div>
+
+          </Form.Field>
+        </div>
       </div>
-    </div>
 
 
     </div>

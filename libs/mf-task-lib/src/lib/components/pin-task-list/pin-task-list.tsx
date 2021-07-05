@@ -58,10 +58,12 @@ export function PinTaskList(props: PinTaskListProps) {
     assignees{
       userID
       userName
+      imageUrl
       }
       followers{
       userID
       userName
+      imageUrl
       }
     } 
    }`;

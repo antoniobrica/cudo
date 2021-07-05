@@ -19,15 +19,20 @@ export interface Tasks {
   deleteTask?,
   editTask?
   subTask?
+  updateSubTaskStatus?
+  updateSubTask?
+  deleteSubTask?
 }
 
 export function TaskArea(props: Tasks) {
   const { t, i18n } = useTranslation();
   const [taskId, setTaskId] = React.useState(null);
+  const [subTaskId, setSubTaskId] = React.useState(null);
   const [subtaskTitle, setSubtaskTitle] = React.useState('')
   const [subtaskData, setSubtaskData] = React.useState([])
   const [viewSubTask, setViewSubtask] = React.useState(false);
   const [isExpended, setIsExpended] = React.useState(false)
+  const [openSubTaskEdit, setOpenSubTaskEdit] = React.useState(false)
 
 
   const description = [
@@ -46,12 +51,10 @@ export function TaskArea(props: Tasks) {
     props.editTask(task, id)
   }
   const openSubTask = (task, id) => {
-    console.log(task.subtasks);
-    setSubtaskData(task.subtasks)
+    
+    const filteredSubTasks = task.subtasks.filter((item)=>item.isDeleted!==true)    
+    setSubtaskData(filteredSubTasks)
     setTaskId(id)
-    console.log('subtaskTitle', taskId, subtaskData);
-
-    //props.subTask(task, id)
     setIsExpended(true)
   }
   const closeSubTask = () => {
@@ -62,7 +65,7 @@ export function TaskArea(props: Tasks) {
   }
   const createSubTask = (task) => {
     const subTaskTitle = subtaskTitle;
-    props.subTask(task, subTaskTitle)
+    props.subTask(task, subTaskTitle)    
     setViewSubtask(false)
     setSubtaskTitle('')
   }
@@ -73,6 +76,35 @@ export function TaskArea(props: Tasks) {
   const addNew = () => {
     setViewSubtask(true)
   }
+
+  const onClickSubTaskStatusUpdate = (taskId, subTaskId, status) => {    
+    props.updateSubTaskStatus(taskId, subTaskId, status)    
+  }
+
+  const onClickEditSubTask = (taskId, subTaskId, subTaskTitle) => { 
+    console.log('--onClickEditSubTask---isExpended---',isExpended, '---openSubTaskEdit--', openSubTaskEdit)
+    setOpenSubTaskEdit(true)
+    setTaskId(taskId)
+    setSubTaskId(subTaskId)   
+    setSubtaskTitle(subTaskTitle)
+    console.log('--onClickEditSubTask-isExpended---',isExpended, '---openSubTaskEdit--', openSubTaskEdit)
+  }
+  const onClickSubTaskUpdate = (taskId, subTaskId, subTaskTitle) => {    
+    console.log('---onClickSubTaskUpdate--taskId, subTaskId, subTaskTitle--', taskId, subTaskId, subTaskTitle)
+    props.updateSubTask(taskId, subTaskId, subTaskTitle)
+  }
+  const onClickCancelEditSubTask = () => { 
+    console.log('--onClickCancelEditSubTask')
+    setTaskId(null)
+    setSubTaskId(null)   
+    setSubtaskTitle('')
+    setOpenSubTaskEdit(false)
+  }
+
+  const onClickDeleteSubTask = (taskId, subTaskId) => {    
+    props.deleteSubTask(taskId, subTaskId)
+  }
+
   return (
     <div>
       {props?.task?.status === "COMPLETED" ?
@@ -314,23 +346,53 @@ export function TaskArea(props: Tasks) {
             </div>
             {
               isExpended && subtaskData && (taskId === props.id) ?
+              
                 <div className="card1 card-custom gutter-b checklist-main-con">
 
                   <div className="card-body">
 
                     <div>
                       {subtaskData.map((subt, i) => {
-                        return (
-                          <div className="d-flex align-items-center checklist-listing-main" key={i}>
-                            <span className="anchor_complete"><a title="Mark as complete">
-                              <span className="material-icons check-grey">check_circle_outline</span> </a> </span>
-                            <span className="task-checklisting-text">{i + 1}. {subt.subtaskTitle}</span>
-                            <span className="checklist-actions">
-                              <Icon name="edit" />
-                              <Icon name="trash alternate" />
-                            </span>
-                          </div>
-                        )
+                        console.log('---In openSubTaskEdit---', openSubTaskEdit)
+                          return (
+                            <>
+                            { openSubTaskEdit === true && subt.subtakID===subTaskId ?
+                          
+                            <div key={`edit-form-${subTaskId}`} className="add-new-task-con">
+                              <span className="anchor_complete checklist-complete-box"><a title="Mark as complete"> <span className="material-icons check-grey">check_circle_outline</span> </a> </span>
+                              <div className="classtop add-new-task-field">
+                                <Form.Field className="fillarea">
+                                  <Input placeholder='Enter your text here....' size='small' className="full-width "
+                                    type="text"
+                                    value={subtaskTitle}
+                                    onChange={onSubtaskTitle}
+                                  />
+                                </Form.Field>
+                                <Form.Field className="d-flex">
+                                  <button className="greenbutton anchor_complete" onClick={()=> onClickSubTaskUpdate(taskId, subTaskId, subtaskTitle)}>
+                                    <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
+                                  </button> &nbsp;  <button className="redbutton anchor_complete" onClick={onClickCancelEditSubTask}>
+                                    <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> </button>
+                                </Form.Field>
+                              </div>
+                            </div>
+                            :
+                            
+                            <div className="d-flex align-items-center checklist-listing-main" key={subTaskId}>
+                                <span className="anchor_complete" onClick={() => onClickSubTaskStatusUpdate(props.task.taskID, subt.subtaskID,subt.status==='INPROGRESS'?'COMPLETED':'INPROGRESS')}>
+                                  { subt.status==='INPROGRESS'?
+                                    <a title="Mark as complete"><span className="material-icons check-grey">check_circle_outline</span> </a> 
+                                    :
+                                    <img src={img3} className=" mr-2 mr-10 " />
+                                  }
+                                  </span>
+                                <span className="task-checklisting-text">{i + 1}. {subt.subtaskTitle}</span>
+
+                                <span className="anchor_complete" onClick={()=> onClickEditSubTask(props.task.taskID, subt.subtaskID, subt.subtaskTitle)}>Edit</span>
+                                <span className="anchor_complete" onClick={()=> onClickDeleteSubTask(props.task.taskID, subt.subtaskID)}>Delete</span>
+                            </div>
+                          }
+                          </>)
                       })}
 
                       {

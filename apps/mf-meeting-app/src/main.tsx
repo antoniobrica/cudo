@@ -8,6 +8,7 @@ import App from './app/app';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
 import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 declare global {
   interface Window {
@@ -16,7 +17,7 @@ declare global {
   }
 }
 const client = new ApolloClient({
-  uri: 'http://192.168.1.5:5004/graphql',
+  uri: MS_SERVICE_URL['ms_meeting'].url,
   cache: new InMemoryCache()
 });
 
