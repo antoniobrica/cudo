@@ -285,7 +285,7 @@ jobs:
               dockerfile: dist/apps/mf-cost-app/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
-          - bash : helm upgrade  --namespace cudo-f-dev --install --wait cudo-costa /home/softobiz/charts/cudo-helm/dev/ms-cost-dev/mf-cost-app-dev-0.1.0.tgz
+          - bash : helm upgrade  --namespace cudo-f-dev --install --wait cudo-costa /home/softobiz/charts/cudo-helm/dev/mf-cost-app-dev/mf-cost-app-dev-0.1.0.tgz
 - job: mfmeetingapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
