@@ -54,7 +54,7 @@ export function Logindrop(props: LoginDropProps) {
                         />
                         {/* <Select placeholder='Select Company' options={props?.companies} defaultValue={props?.companies[0]?.value} className="full-width" /> */}
                       </Form.Field>
-                      <Button onClick={handleLogin} size='large' className="grey-btn btn-large">Continue <Icon name='arrow right' />   </Button>
+                      <Button onClick={handleLogin} size='large' className="primary btn-large">Continue <Icon name='arrow right' />   </Button>
                       <span> <br /> <a href="/auth/registration" className="blue_color"> Register with us</a>  </span>
                       <span className="float_right ">   <a href="/recovery" className="blue_color"> Forgot Password ?</a>  </span>
                     </Form>

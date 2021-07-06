@@ -11,7 +11,7 @@ import {
   TextArea,
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
-import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex } from "@cudo/mf-account-app-lib";
+import { FollowersIndex, AssigneeIndex, BkpIndex, BkpsIndex, PhaseIndex } from "@cudo/mf-account-app-lib";
 import ReactQuill, { Quill } from 'react-quill';
 import axios from 'axios';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
@@ -41,15 +41,14 @@ export const ModalTaskEdit = (props: AlertProps) => {
 
   const [open, setOpen] = React.useState(false);
   const [taskTitle, setTaskTitle] = React.useState("")
-  const [startDate, setStartDate] = React.useState('')
-  const [endDate, setEndDate] = React.useState("")
+  const [startDate, setStartDate] = React.useState(null)
+  const [endDate, setEndDate] = React.useState(null)
   const [estimatedDays, setEstimatedDays] = React.useState("")
   const [sendNotification, setEendNotification] = React.useState(false)
   const [BKPID, setBKPID] = React.useState("")
   const [saveTaskAsTemplate, setSaveTaskAsTemplate] = React.useState("")
   const [phaseID, setPhasesID] = React.useState("")
   const [status, setStatus] = React.useState("")
-  const [followers, setfollowers] = React.useState("")
   const [phaseName, setPhasesName] = React.useState("");
   const [BKPTitle, setBKPIDTitle] = React.useState("");
   const [files, setFileList] = React.useState<any>([]);
@@ -58,9 +57,12 @@ export const ModalTaskEdit = (props: AlertProps) => {
   const [workTypeD, setworkTypeD] = React.useState(null)
   const [workTypeData, setworkTypeData] = React.useState('')
   const [workTypes, setWorkTypes] = React.useState([]);
+  const [date, setDate] = React.useState(null)
 
   const [worktypeID, setworktypeID] = React.useState("")
   const [worktypeName, setworktypeName] = React.useState("")
+  const [assignees, setAssignees] = React.useState<any>([]);
+  const [followers, setfollowers] = React.useState<any>([]);
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
@@ -76,11 +78,42 @@ export const ModalTaskEdit = (props: AlertProps) => {
     }
   }, [props.openAlertF]);
 
+
+  function formatDate(date) {
+    var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2)
+      month = '0' + month;
+    if (day.length < 2)
+      day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
   React.useEffect(() => {
     if (props.taskData) {
-      const date = new Date(props.taskData.startDate).toLocaleString();
-      console.log('date', props.taskData);
-      setStartDate(date);
+      var d = props.taskData.startDate;
+      var de = props.taskData.endDate
+      // console.log('dateE', d);
+
+      // var d2 = d.substring(5, 7) + '/' + d.substring(8, 10) + '/' + d.substring(0, 4);
+
+      const assignees = [];
+      props.taskData.assignees.map((data, i) => {
+        assignees.push({ userID: data.userID, userName: data.userName })
+      })
+      const followers = [];
+      props.taskData.followers.map((data, i) => {
+        followers.push({ userID: data.userID, userName: data.userName })
+      })
+      setAssignees(assignees)
+      setfollowers(followers)
+      setStartDate(formatDate(d));
+      setDate(formatDate(d))
+
+      setEndDate(formatDate(de));
       setTaskTitle(props.taskData.taskTitle);
       setDescription(props.taskData.description);
       setEstimatedDays(props.taskData.estimatedDays);
@@ -164,10 +197,22 @@ export const ModalTaskEdit = (props: AlertProps) => {
     setTaskTitle(e.target.value)
   }
   const onStartDateChange = e => {
+    console.log('startdate>', e.target.value);
+    const date1 = new Date(e.target.value)
+    const date2 = new Date(endDate)
+    const Difference_In_Time = date2.getTime() - date1.getTime();
+    const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+    setEstimatedDays(Difference_In_Days.toString())
     // const date = moment.utc(moment(e.target.value).utc()).format();
     setStartDate(e.target.value)
   }
   const onEndDateChange = e => {
+    const date1 = new Date(e.target.value)
+    const date2 = new Date(date)
+    const Difference_In_Time = date1.getTime() - date2.getTime();
+    const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+    setEndDate(e.target.value);
+    setEstimatedDays(Difference_In_Days.toString())
     setEndDate(e.target.value);
   }
   const onsetEstimatedDays = (event, data) => {
@@ -178,18 +223,26 @@ export const ModalTaskEdit = (props: AlertProps) => {
     setEendNotification(event.target.value)
   }
 
-  const onFollowers = (data) => {
-    setfollowers(data.value);
-  }
+
   const setBKPIDChange = (data) => {
     setBKPIDTitle(data.BKPIDTitle)
     setBKPID(data.BKPID)
     console.log('bkp==>', data);
   }
   const setAsignee = (data) => {
+    console.log('assignee', data)
+
+    const ppl = []
+    ppl.push(data)
+    setAssignees(ppl)
     // setAsignis(data)
   }
-
+  const onFollowers = (data) => {
+    console.log('====================================');
+    console.log('followers', data);
+    console.log('====================================');
+    setfollowers(data)
+  }
 
   const setSaveTaskAsTemplateChange = (event, data) => {
     setSaveTaskAsTemplate(data.value)
@@ -205,6 +258,14 @@ export const ModalTaskEdit = (props: AlertProps) => {
   }
 
   const editTask = () => {
+    // const assignees = [];
+    // props.taskData.assignees.map((data, i) => {
+    //   assignees.push({ userID: data.userID, userName: data.userName })
+    // })
+    // const followers = [];
+    // props.taskData.followers.map((data, i) => {
+    //   followers.push({ userID: data.userID, userName: data.userName })
+    // })
     const editTaskData = {
       taskID: props.taskData.taskID,
       taskTitle: taskTitle,
@@ -219,6 +280,8 @@ export const ModalTaskEdit = (props: AlertProps) => {
       sendNotification: false,
       status: props.taskData.status,
       files: [],
+      assignees: assignees,
+      followers: followers,
       saveTaskAsTemplate: props.taskData.saveTaskAsTemplate,
     }
     props.editTaskData(editTaskData);
@@ -226,10 +289,12 @@ export const ModalTaskEdit = (props: AlertProps) => {
     props.cancel()
   }
 
+
   return (
     <div id="navbar">
-      <Modal style={{ width: '670px', marginLeft: '345px' }}
-        className="modal_media"
+      <Modal
+        className="modal_media right-side--fixed-modal edit-task-modal"
+        closeIcon
         onClose={cancel}
         onOpen={openf}
         open={open}
@@ -338,7 +403,8 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         options={countryOptions}
                       />
                     </Form.Field> */}
-                    <BkpIndex bkp={BKPTitle} parentBKPSelect={setBKPIDChange} />
+                    <BkpsIndex bkp={BKPTitle} parentBKPSelect={setBKPIDChange} />
+                    {/* <BkpIndex bkp={BKPTitle} parentBKPSelect={setBKPIDChange} /> */}
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
@@ -360,7 +426,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
-              <Grid columns={2}>
+              <Grid>
                 <Grid.Row>
                   <Grid.Column>
                     {/* <Form.Field>
@@ -371,24 +437,27 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         options={countryOptions}
                       />
                     </Form.Field> */}
-                    <FollowersIndex parentFollowersSelect={onFollowers} />
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Form.Field>
-                      <div className="event top-event">
-                        <div className="label-light-purple-circle label-spacer">
-                          <span className="white-text">AB</span>
-                        </div>
-                        <div className="label-light-black-circle label-spacer">
-                          <span className="white-text ">RJ</span>
-                        </div>
-                        <div className="label-light-blue-circle label-spacer">
-                          <span className="white-text">JB</span>
-                        </div>
-                      </div>
-                    </Form.Field>
+                    <FollowersIndex followers={followers} parentFollowersSelect={onFollowers} />
+
+                    
                   </Grid.Column>
                 </Grid.Row>
+                <div className="followers-label-area">
+                  <Form.Field>
+                    <div className="event top-event follower-listing-labels">
+                      {followers.map((p, id) => {
+                        const name = p.userName.split(" ").map((n) => n[0]).join("");
+                        //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
+                        return (
+                          <div className="label-light-purple-circle label-spacer" key={id}>
+                            <span className="white-text">{name}</span>
+                          </div>
+                        )
+                      })
+                      }
+                    </div>
+                  </Form.Field>
+                </div>
               </Grid>
 
               <Grid columns={3}>
@@ -397,7 +466,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                     <Form.Field>
                       <label>Start Date </label>
                       <Input
-                        placeholder='Default'
+
                         size='small'
                         className="full-width"
                         type="date"
@@ -446,11 +515,11 @@ export const ModalTaskEdit = (props: AlertProps) => {
             content="Submit"
             onClick={editTask}
             positive
-            size="mini"
-            className="grey-btn"
+            size="small"
+            className="primary"
           />
           <Button
-            size="mini"
+            size="small"
             className="icon-border"
             onClick={cancel}
           >

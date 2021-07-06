@@ -19,9 +19,11 @@ import { TypeOrmService } from '../config/typeorm/type-orm.service';
     //     watch: true,
     //   },
     // }),
-    GraphQLModule.forRoot({
-      context: ({ req, connection }) => connection ? { req: connection.context } : { req },
-      autoSchemaFile: true,
+    GraphQLModule.forRootAsync({
+      useFactory: () => ({
+        autoSchemaFile: true,
+        path: "/api/ms-cost/graphql"
+      }),
     }),
     ComponentsModule,
     TypeOrmModule.forRootAsync({

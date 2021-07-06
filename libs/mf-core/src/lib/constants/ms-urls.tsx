@@ -17,11 +17,14 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
   "ms_cost": {
     url: "http://dev.cudo.ch/api/ms-cost/graphql"
   },
+  "ms_meeting": {
+    url: "http://dev.cudo.ch/api/ms-meeting/graphql"
+  },
   "mf_cost_app": {
-    url: "http://192.168.0.31:6004"
+    url: "http://dev.cudo.ch/project/cost"
   },
   "mf_meeting_app": {
-    url: "http://192.168.0.31:6005"
+    url: "http://dev.cudo.ch/project/meeting"
   },
   "mf_project_app": {
     url: "http://dev.cudo.ch/project"
@@ -44,4 +47,5 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
   "kratos_KRATOS_ADMIN_URL": {
     url: "http://192.168.0.31:4434"
   }
+
 }

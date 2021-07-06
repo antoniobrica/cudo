@@ -252,9 +252,9 @@ function EditProject() {
           content="Update" 
           onClick={() => setOpen(false)}
           positive
-          size='mini' className="grey-btn"
+          size='small' className="primary"
         />
-        <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+        <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
         X  Cancel
         </Button>
 </Form>
@@ -365,14 +365,14 @@ function EditProject() {
           Skip
         </Button>
         <div className="float-area">
-        <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+        <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
         X  Cancel
         </Button>
       <Button
           content="Submit" 
           onClick={() => setOpen(false)}
           positive
-          size='mini' className="grey-btn"
+          size='small' className="primary"
         />
 
         </div>

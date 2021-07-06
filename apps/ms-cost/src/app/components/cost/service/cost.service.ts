@@ -8,6 +8,7 @@ import CostFilterParams from '../../../utils/types/costFilterParams';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
 import { CreateCostInput } from '../dto/create-cost.input';
+import { BKPcostDeleteInput } from '../dto/delete-BKPCost.input';
 import { CostDeleteInput } from '../dto/delete-cost.input';
 
 
@@ -92,5 +93,14 @@ export class CostService {
       throw new HttpException('cost with costId Not Found', HttpStatus.NOT_FOUND);
     }
 
+    public async deleteBKPCost(bkpCostDeleteInput: BKPcostDeleteInput): Promise<BKPCostEntity> {
+      const bkpCost = await this.BKPCostRepository.findOne({ where:{bkpCostID:bkpCostDeleteInput.bkpCostID} });
+      if (bkpCost) {
+        bkpCost.isDeleted=!(bkpCost.isDeleted)
+        const updatedPost = await bkpCost.save()
+        return updatedPost
+        }
+        throw new HttpException('cost with costId Not Found', HttpStatus.NOT_FOUND);
+      }
   
 }
