@@ -19,6 +19,7 @@ import img2 from 'libs/shared-components/src/avatar_1.png';
 import img3 from 'libs/shared-components/src/avatar_2.png';
 import img4 from 'libs/shared-components/src/avatar_3.png';
 import { MeetingCategoryIndex, SessionInvitationIndex, SessionProtocolIndex, FollowersIndex, AssigneeIndex, AdminsIndex, MembersIndex } from '@cudo/mf-account-app-lib';
+import { ValidationError } from '@hapi/joi';
 
 export interface SessionProps {
   workTypes?
@@ -39,8 +40,10 @@ export function ModalSession(props: SessionProps) {
   const [catagory, setCatagory] = React.useState(null);
   const [protocol, setProtocol] = React.useState(null);
   const [invitation, setInvitation] = React.useState(null);
-  const [admins, setAdmins] = React.useState<any>();
-  const [members, setMembers] = React.useState<any>();
+  const [admins, setAdmins] = React.useState<any>([]);
+  const [members, setMembers] = React.useState<any>([]);
+
+  const [validationErrors, setValidationErrors] = React.useState(null)
 
 
   const onSessionTitleChange = (e) => {
@@ -48,7 +51,7 @@ export function ModalSession(props: SessionProps) {
   }
   React.useEffect(() => {
     if (props.workTypes) {
-      console.log('worktypes', props.workTypes);
+      // console.log('worktypes', props.workTypes);
       setworkType(props.workTypes.map(({ workTypeName, projectWorkTypeID }) => ({ key: projectWorkTypeID, value: workTypeName, text: workTypeName, id: projectWorkTypeID })));
 
     }
@@ -61,7 +64,7 @@ export function ModalSession(props: SessionProps) {
     };
     for (let i = 0; i < props.workTypes.length; i++) {
       if (props.workTypes[i]?.workTypeName === data.value) {
-        console.log('props.worktypes[i]', props.workTypes[i]);
+        // console.log('props.worktypes[i]', props.workTypes[i]);
         workT.worktypeID = props.workTypes[i].projectWorkTypeID;
         workT.worktypeName = data.value;
         setworktypeName(workT.worktypeName);
@@ -71,15 +74,15 @@ export function ModalSession(props: SessionProps) {
     }
     setworkTypeData(data.value)
 
-    console.log('worktypeName-', workTypeD);
+    // console.log('worktypeName-', workTypeD);
   }
 
   const parentCatagorySelect = (data) => {
-    console.log('parentCatagorySelect', data);
+    // console.log('parentCatagorySelect', data);
     setCatagory(data)
   }
   const parentSessionSelect = (data) => {
-    console.log('parentSessionSelect', data);
+    // console.log('parentSessionSelect', data);
     setProtocol(data)
   }
   const parentInvitationSelect = (data) => {
@@ -87,14 +90,45 @@ export function ModalSession(props: SessionProps) {
     setInvitation(data)
   }
   const onAdmins = (data) => {
-    console.log('--admin-data---', data)
+    // console.log('--admin-data---', data)
     setAdmins(data);
   }
   const onMembers = (data) => {
     setMembers(data)
   }
+  const validation = () => {
+    let response = true
+    let errorMessages = []
+    if(!sessionTitle){
+      response = false
+      errorMessages.push("Please provide session title")
+    }
+    if(!catagory){
+      response = false
+      errorMessages.push("Please provide meeting category")
+    }
+    if(!protocol){
+      response = false
+      errorMessages.push("Please provide protocol")
+    }
+    if(!invitation){
+      errorMessages.push("Please provide invitation")
+    }
+    if(!workTypeD){
+      response = false
+      errorMessages.push("Please provide workType")
+    }
+    if(!response){
+      return errorMessages
+    }
+    return []
+  }
   const createSession = () => {
-    setOpen(false);
+    const validationResponse = validation()
+    if(validationResponse?.length>0){
+      setValidationErrors(validationResponse)
+      return false
+    }
     const adminList = admins?.map((item, index) => {
       return { adminID: item.userID, adminName: item.userName, image: "" }
     })
@@ -102,7 +136,7 @@ export function ModalSession(props: SessionProps) {
     const memberList = members?.map((item, index) => {
       return { memberID: item.userID, memberName: item.userName, image: "" }
     })
-    // console.log('----add session memberList---', memberList)
+    
     const data = {
       sessionTitle: sessionTitle,
       meetingCategoryID: catagory.meetingCatagoryID,
@@ -116,25 +150,55 @@ export function ModalSession(props: SessionProps) {
       admins: adminList, // : [{ adminID: "1", adminName: "ram", image: "image.com" }],
       members: memberList // : [{ memberID: "1", memberName: "lakhan", image: "image.com" }]
     }
-    // console.log('----add session data---', data)
+    
     props.createSession(data);
+
+    setOpen(false);
+    resetAddData();
   }
+  
   React.useEffect(() => {
     if (props.openAddSession) {
-      setOpen(true);
+      console.log('---add session - useEffect props.openAddSession')
+      setOpen(true);        
+    } 
+
+    if(validationErrors?.length>0){
+      console.log('----validation errors----', validationErrors)
     }
-  }, [props.openAddSession])
-  const cancel = () => {
-    setOpen(false)
-    props.cancel(false)
+  }, [props.openAddSession, validationErrors])
+  
+  const openSessionAddPopup = () => {
+    console.log('---add session - openSessionAddPopup function')
+    setOpen(true)
+    props.openAddSession(true) 
   }
+  const cancel = () => {
+    console.log('---add session - cancel function')
+    setOpen(false)
+    props.cancel(true) 
+    resetAddData()  
+ }
+
+ const resetAddData = () => {
+  setSessionTitle("")
+  setworkTypeD(null)
+  setCatagory(null)
+  setInvitation(null)
+  setProtocol(null)
+  setAdmins([])
+  setMembers([])
+ }
+
   return (
     <div style={{ marginLeft: 900 }} >
       <Modal
         className="modal_media right-side--fixed-modal add-session-modal"
         closeIcon
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
+        // onClose={() => setOpen(false)}
+        // onOpen={() => setOpen(true)}
+        onClose={cancel}
+        onOpen={openSessionAddPopup}
         open={open}
       // trigger={
       //   <Button size="small" className="primary">
@@ -396,7 +460,8 @@ export function ModalSession(props: SessionProps) {
           <Button
             size="small"
             className="icon-border"
-            onClick={() => setOpen(false)}
+            // onClick={() => setOpen(false)}
+            onClick={cancel}
           >
             X Cancel
           </Button>

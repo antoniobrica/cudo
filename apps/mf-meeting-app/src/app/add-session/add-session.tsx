@@ -20,7 +20,7 @@ export function AddSession(props: AddSessionProps) {
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
-  console.log('referenceID', referenceID);
+  
   React.useEffect(() => {
     if (referenceID) {
       getWorkType(referenceID)
@@ -55,7 +55,7 @@ export function AddSession(props: AddSessionProps) {
  }`;
 
   const getWorkType = (referenceID) => {
-    console.log('sasstoken');
+    
     return axios.post(
       MS_SERVICE_URL['ms_project'].url,
       {
@@ -92,8 +92,7 @@ export function AddSession(props: AddSessionProps) {
         data
       ) => {
         const cacheData = cache.readQuery({ query: GET_SESSIONS }) as ISessions;
-        console.log('----cacheData--', cacheData)
-        console.log('----created Data--', data)
+        
         cache.writeQuery({
           query: GET_SESSIONS,
           data: {
@@ -101,7 +100,7 @@ export function AddSession(props: AddSessionProps) {
             getSessions: [...cacheData.paginatedSession.results, data]
           }
         });
-        console.log('----data==', data);
+        
       }
     });
 

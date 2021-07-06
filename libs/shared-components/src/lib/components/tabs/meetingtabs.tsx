@@ -131,12 +131,17 @@ if(categoryItems && categoryItems.length){
 
   meetingCategoryRender = categoryItems.map((item)=>{
     const {meetingCategoryID, meetingCategoryTitle} = item
+
+    const categoryWiseSessionCount  = sessionList?.filter((sessionItem)=> {
+      return sessionItem.meetingCategoryID === meetingCategoryID
+    }).length
+
     return (
         <div className="meetings-listing" key={meetingCategoryID}>
           <span className="preliminary-font">
             <img src={img5} className="  mr-10 " />
             <h3>
-              {meetingCategoryTitle} <span className="sessiontext">(1 sessions)</span>
+              {meetingCategoryTitle} <span className="sessiontext">({categoryWiseSessionCount} sessions)</span>
             </h3>
           </span>
           {meetingCategoryWiseSessionListRender(meetingCategoryID)}
@@ -161,6 +166,7 @@ const deleteSessionDetail = (sessionID) =>{
 }
 
 const clickAddSession = ()=> {
+  console.log('---meeting tab---clickAddSession -function')
   props.addSession(true)
 }
 
@@ -175,11 +181,9 @@ const clickAddSession = ()=> {
 
       <h3>Meetings 
         <Button onClick={clickAddSession} size="small" className="primary">
-            + Add New Session{' '}
+            + Add New Session
         </Button>
-        
-        {/* <ModalSession workTypes={workTypes} createSession={createSession} /> */}
-    
+            
       </h3>  
 
       {/* //=====Upcoming List for Invitations============== */}
@@ -321,7 +325,6 @@ const clickAddSession = ()=> {
         
       </div>
       <br /> 
-
 
       
     {/* //===== Modified to meetingCategory and meetingCategoryWiseSessionListRender part ======//
