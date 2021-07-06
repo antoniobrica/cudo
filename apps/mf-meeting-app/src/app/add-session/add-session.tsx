@@ -72,7 +72,7 @@ export function AddSession(props: AddSessionProps) {
   }
 
   const createSession = (data) => {
-    console.log('createSession', data)
+    console.log('---createSession', data)
     addSession({
       variables: {
         sessionTitle: data.sessionTitle,
@@ -92,14 +92,16 @@ export function AddSession(props: AddSessionProps) {
         data
       ) => {
         const cacheData = cache.readQuery({ query: GET_SESSIONS }) as ISessions;
-        console.log('data--', data)
+        console.log('----cacheData--', cacheData)
+        console.log('----created Data--', data)
         cache.writeQuery({
           query: GET_SESSIONS,
           data: {
-            getSessions: [...cacheData.sessions, data]
+            // getSessions: [...cacheData.sessions, data]
+            getSessions: [...cacheData.paginatedSession.results, data]
           }
         });
-        console.log('data==', data);
+        console.log('----data==', data);
       }
     });
 

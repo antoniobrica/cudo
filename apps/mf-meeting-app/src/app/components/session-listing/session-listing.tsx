@@ -150,10 +150,11 @@ export function SessionListing() {
 
   return (
     <div>
+      <AddSession cancel={cancel} openAddSession={openAddSession} />
       {/* {openAddSession ? <ModalSession cancel={cancel} openAddSession={openAddSession} workTypes={workTypes} createSession={createSession} /> : null} */}
-      {sessionAdd === false && data?.paginatedSession?.results?.length > 0 ?
+      {data?.paginatedSession?.results?.length > 0 ?
 
-        <MeetingTab sessionListData={data} addSession={setSessionAdd} ></MeetingTab>
+        <MeetingTab sessionListData={data} addSession={setOpenAddSession} ></MeetingTab>
         :
         <div className="no-data-found-info">
           {/* <img src={img8} className="image_center"></img> */}
