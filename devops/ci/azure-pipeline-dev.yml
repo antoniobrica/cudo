@@ -243,7 +243,7 @@ jobs:
               dockerfile: dist/apps/mf-document-app/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
-          - bash : helm upgrade  --namespace cudo-f-dev --install --wait cudo-da /home/softobiz/charts/cudo-helm/dev/ms-document-dev/mf-document-app-dev-0.1.0.tgz
+          - bash : helm upgrade  --namespace cudo-f-dev --install --wait cudo-da /home/softobiz/charts/cudo-helm/dev/mf-document-app-dev/mf-document-app-dev-0.1.0.tgz
 - job: mfprojectapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
