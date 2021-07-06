@@ -25,3 +25,7 @@ export * from './lib/components/followers-index/followers-index';
 export * from './lib/components/followers/followers';
 export * from './lib/components/country/country';
 export * from './lib/mf-account-app-lib';
+export * from './lib/components/admins/admins';
+export * from './lib/components/admins-index/admins-index';
+export * from './lib/components/members/members';
+export * from './lib/components/members-index/members-index';
