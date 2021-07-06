@@ -10,7 +10,10 @@ import { ProjectWorktypes } from '@cudo/mf-project-lib';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 /* eslint-disable-next-line */
-export interface AddSessionProps { }
+export interface AddSessionProps {
+  openAddSession
+  cancel
+}
 
 export function AddSession(props: AddSessionProps) {
   const [workTypes, setWorkTypes] = React.useState([]);
@@ -103,7 +106,7 @@ export function AddSession(props: AddSessionProps) {
   }
   return (
     <div>
-      <ModalSession workTypes={workTypes} createSession={createSession} />
+      <ModalSession openAddSession={props.openAddSession} cancel={props.cancel} workTypes={workTypes} createSession={createSession} />
     </div>
   );
 }

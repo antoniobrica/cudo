@@ -16,27 +16,27 @@ import {
 } from 'semantic-ui-react';
 import { useMutation } from "@apollo/client";
 
-export function SessionListing(){
+export function SessionListing() {
   const [sessionList, setSessionList] = useState([]);
   const [sessionAdd, setSessionAdd] = useState(false)
   const [workTypes, setWorkTypes] = React.useState([]);
-
+  const [openAddSession, setOpenAddSession] = React.useState(false)
   const history = useHistory();
   const pathNames = history.location.pathname.split("/");
   const projectId = pathNames[3].toString();
   console.log('session--projectId', projectId);
 
-  
+
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
-  
+
   React.useEffect(() => {
     if (referenceID) {
       getWorkType(referenceID)
     }
   }, [referenceID])
 
-const { loading, error, data } = useSessionQuery(GET_SESSIONS, {
+  const { loading, error, data } = useSessionQuery(GET_SESSIONS, {
     variables: { projectId },
   });
 
@@ -117,7 +117,13 @@ const { loading, error, data } = useSessionQuery(GET_SESSIONS, {
     });
 
   }
-
+  const cancel = () => {
+    setOpenAddSession(false)
+  }
+  const addNew = () => {
+    console.log('add new')
+    setOpenAddSession(true);
+  }
   if (loading)
     return (
       <h1>
@@ -126,43 +132,43 @@ const { loading, error, data } = useSessionQuery(GET_SESSIONS, {
       </h1>
     );
 
-    if (error){
-       return (<div className="no-data-found-info">
-         {/* <img src={img8} className="image_center"></img> */}
-         <img src="/assets/images/default_area.png" />
+  if (error) {
+    return (<div className="no-data-found-info">
+      {/* <img src={img8} className="image_center"></img> */}
+      <img src="/assets/images/default_area.png" />
 
-         <h3>No Data Found</h3>
-         <p>Hey User, you don't have any active session on this project. Click the button below to create a session list.</p>
-         {/* <Button size="small" className="primary">
+      <h3>No Data Found</h3>
+      <p>Hey User, you don't have any active session on this project. Click the button below to create a session list.</p>
+      <Button size="small" className="primary" onClick={addNew}>
+        + Add New Session
+      </Button>
+      <AddSession cancel={cancel} openAddSession={openAddSession} />
+    </div>)
+  }
+
+  //  const emptyData = {paginatedSession:{results:[]}}
+
+  return (
+    <div>
+      {/* {openAddSession ? <ModalSession cancel={cancel} openAddSession={openAddSession} workTypes={workTypes} createSession={createSession} /> : null} */}
+      {sessionAdd === false && data?.paginatedSession?.results?.length > 0 ?
+
+        <MeetingTab sessionListData={data} addSession={setSessionAdd} ></MeetingTab>
+        :
+        <div className="no-data-found-info">
+          {/* <img src={img8} className="image_center"></img> */}
+          <img src="/assets/images/default_area.png" />
+
+          <h3>No Data Found</h3>
+          <p>Hey User, you don't have any active session on this project. Click the button below to create a session list.</p>
+          <Button size="small" className="primary" onClick={addNew}>
             + Add New Session
-          </Button> */}
-          <AddSession />
-       </div>)
-      }
-   
-    //  const emptyData = {paginatedSession:{results:[]}}
-
-    return (
-        <div>
-          {sessionAdd? <ModalSession workTypes={workTypes} createSession={createSession} />: null}
-          { sessionAdd === false && data?.paginatedSession?.results?.length>0?
-
-            <MeetingTab sessionListData={data} addSession={setSessionAdd} ></MeetingTab>  
-            :          
-            <div className="no-data-found-info">
-              {/* <img src={img8} className="image_center"></img> */}
-              <img src="/assets/images/default_area.png" />
-
-              <h3>No Data Found</h3>
-              <p>Hey User, you don't have any active session on this project. Click the button below to create a session list.</p>
-              {/* <Button size="small" className="primary">
-                  + Add New Session
-                </Button> */}
-                <AddSession />
-            </div>
-          }
+          </Button>
+          <AddSession cancel={cancel} openAddSession={openAddSession} />
         </div>
-    )    
+      }
+    </div>
+  )
 }
 
 export default SessionListing

@@ -23,22 +23,11 @@ import { MeetingCategoryIndex, SessionInvitationIndex, SessionProtocolIndex, Fol
 export interface SessionProps {
   workTypes?
   createSession?
+  openAddSession
+  cancel
 }
 
 export function ModalSession(props: SessionProps) {
-  const countryOptions = [
-    { key: 'af', value: 'af', text: 'Afghanistan' },
-    { key: 'ax', value: 'ax', text: 'Aland Islands' },
-    { key: 'az', value: 'az', flag: 'az', text: 'Azerbaijan' },
-    { key: 'bs', value: 'bs', flag: 'bs', text: 'Bahamas' },
-    { key: 'bh', value: 'bh', flag: 'bh', text: 'Bahrain' },
-    { key: 'bd', value: 'bd', flag: 'bd', text: 'Bangladesh' },
-    { key: 'bb', value: 'bb', flag: 'bb', text: 'Barbados' },
-    { key: 'by', value: 'by', flag: 'by', text: 'Belarus' },
-    { key: 'be', value: 'be', flag: 'be', text: 'Belgium' },
-    { key: 'bz', value: 'bz', flag: 'bz', text: 'Belize' },
-    { key: 'bj', value: 'bj', flag: 'bj', text: 'Benin' },
-  ];
 
   const [open, setOpen] = React.useState(false);
   const [sessionTitle, setSessionTitle] = React.useState("");
@@ -106,12 +95,12 @@ export function ModalSession(props: SessionProps) {
   }
   const createSession = () => {
     setOpen(false);
-    const adminList = admins?.map((item,index) => {
-      return {adminID: item.userID, adminName: item.userName, image: ""}
+    const adminList = admins?.map((item, index) => {
+      return { adminID: item.userID, adminName: item.userName, image: "" }
     })
     // console.log('----add session adminList---', adminList)
-    const memberList = members?.map((item,index) => {
-      return {memberID: item.userID, memberName: item.userName, image: ""}
+    const memberList = members?.map((item, index) => {
+      return { memberID: item.userID, memberName: item.userName, image: "" }
     })
     // console.log('----add session memberList---', memberList)
     const data = {
@@ -128,9 +117,17 @@ export function ModalSession(props: SessionProps) {
       members: memberList // : [{ memberID: "1", memberName: "lakhan", image: "image.com" }]
     }
     // console.log('----add session data---', data)
-     props.createSession(data);
+    props.createSession(data);
   }
-
+  React.useEffect(() => {
+    if (props.openAddSession) {
+      setOpen(true);
+    }
+  }, [props.openAddSession])
+  const cancel = () => {
+    setOpen(false)
+    props.cancel(false)
+  }
   return (
     <div style={{ marginLeft: 900 }} >
       <Modal
@@ -139,11 +136,11 @@ export function ModalSession(props: SessionProps) {
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={
-          <Button size="small" className="primary">
-            + Add New Session{' '}
-          </Button>
-        }
+      // trigger={
+      //   <Button size="small" className="primary">
+      //     + Add New Session{' '}
+      //   </Button>
+      // }
       >
         <Modal.Header>
           <h3>Add sessions </h3>
