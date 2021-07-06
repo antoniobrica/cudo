@@ -180,6 +180,7 @@ jobs:
               dockerfile: dist/apps/mf-account-app/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
+          - bash : helm upgrade  --namespace cudo-f-dev --install --wait cudo-aa /home/softobiz/charts/cudo-helm/dev/ms-cost-dev/mf-account-app-dev-0.1.0.tgz
 - job: mfcontainerapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
