@@ -201,6 +201,7 @@ jobs:
               dockerfile: dist/apps/mf-container-app/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
+          - bash : helm upgrade  --namespace cudo-f-dev --install --wait env-ca /home/softobiz/charts/cudo-helm/dev/mf-container-app-dev/mf-container-app-dev-0.1.0.tgz
 - job: mftaskapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -221,6 +222,7 @@ jobs:
               dockerfile: dist/apps/mf-task-app/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
+          - bash : helm upgrade  --namespace cudo-f-dev --install --wait cudo-ta /home/softobiz/charts/cudo-helm/dev/mf-task-app-dev/mf-task-app-dev-0.1.0.tgz
 - job: mfdocumentapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -241,6 +243,7 @@ jobs:
               dockerfile: dist/apps/mf-document-app/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
+          - bash : helm upgrade  --namespace cudo-f-dev --install --wait cudo-da /home/softobiz/charts/cudo-helm/dev/ms-document-dev/mf-document-app-dev-0.1.0.tgz
 - job: mfprojectapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -261,6 +264,7 @@ jobs:
               dockerfile: dist/apps/mf-project-app/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
+          - bash : helm upgrade  --namespace cudo-f-dev --install --wait cudo-pa /home/softobiz/charts/cudo-helm/dev/mf-project-app-dev/mf-project-app-dev-0.1.0.tgz
 - job: mfcostapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -281,6 +285,7 @@ jobs:
               dockerfile: dist/apps/mf-cost-app/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
+          - bash : helm upgrade  --namespace cudo-f-dev --install --wait cudo-costa /home/softobiz/charts/cudo-helm/dev/ms-cost-dev/mf-cost-app-dev-0.1.0.tgz
 - job: mfmeetingapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -301,6 +306,7 @@ jobs:
               dockerfile: dist/apps/mf-meeting-app/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
+          - bash : helm upgrade  --namespace cudo-f-dev --install --wait cudo-meeta /home/softobiz/charts/cudo-helm/dev/mf-meeting-app-dev/mf-meeting-app-dev-0.1.0.tgz
 ###################################################Backend####################################################################################
 - job: msaccount
   pool: cudo-selfhosted-agent
@@ -321,7 +327,7 @@ jobs:
               dockerfile: dist/apps/ms-account/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
-  
+          - bash : helm upgrade  --namespace cudo-b-dev --install --wait cudo-acc-ms /home/softobiz/charts/cudo-helm/dev/ms-account-dev/ms-account-dev-0.1.0.tgz
 - job: msdocument
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -341,6 +347,7 @@ jobs:
               dockerfile: dist/apps/ms-document/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
+          - bash : helm upgrade  --namespace cudo-b-dev --install --wait cudo-ms-docu /home/softobiz/charts/cudo-helm/dev/ms-document-dev/ms-document-dev-0.1.0.tgz
 - job: msproject
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -360,7 +367,7 @@ jobs:
               dockerfile: dist/apps/ms-project/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
-
+          - bash : helm upgrade  --namespace cudo-b-dev --install --wait cudo-ms-project /home/softobiz/charts/cudo-helm/dev/ms-project-dev/ms-project-dev-0.1.0.tgz
 - job: mstask
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -380,6 +387,7 @@ jobs:
               dockerfile: dist/apps/ms-task/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
+          - bash : helm upgrade  --namespace cudo-b-dev --install --wait cudo-ms-tas /home/softobiz/charts/cudo-helm/dev/ms-task-dev/ms-task-dev-0.1.0.tgz
 - job: mscost
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -399,6 +407,7 @@ jobs:
               dockerfile: dist/apps/ms-cost/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
+          - bash : helm upgrade  --namespace cudo-b-dev --install --wait cudo-ms-cos /home/softobiz/charts/cudo-helm/dev/ms-cost-dev/ms-cost-dev-0.1.0.tgz
 - job: msmeeting
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -418,3 +427,4 @@ jobs:
               dockerfile: dist/apps/ms-meeting/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
+          - bash : helm upgrade  --namespace cudo-b-dev --install --wait cudo-ms-meet /home/softobiz/charts/cudo-helm/dev/ms-meeting-dev/ms-meeting-dev-0.1.0.tgz
