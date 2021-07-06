@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import MeetingTab from "libs/shared-components/src/lib/components/tabs/meetingtabs"
-import { LoaderPage } from '@cudo/shared-components';
+import { LoaderPage, MeetingTab } from '@cudo/shared-components';
 import { useHistory } from 'react-router';
 import axios from 'axios';
 import { GET_SESSIONS } from '../../graphql/graphql'
@@ -15,7 +14,7 @@ import {
 
 
 export function SessionListing() {
-   
+
   const [workTypes, setWorkTypes] = React.useState([]);
   const [openAddSession, setOpenAddSession] = React.useState(false)
 
@@ -37,7 +36,7 @@ export function SessionListing() {
   const { loading, error, data } = useSessionQuery(GET_SESSIONS, {
     variables: { projectId },
   });
- 
+
   const query = `query Game($projectId: String!) {
     projectById( projectId: $projectId)
     {
@@ -73,7 +72,7 @@ export function SessionListing() {
     })
       .catch(err => console.log(err))
   }
- 
+
   const cancel = () => {
     console.log('---list--cancel function')
     setOpenAddSession(false)
@@ -88,7 +87,7 @@ export function SessionListing() {
     setOpenAddSession(true)
   }
 
-  
+
   if (loading)
     return (
       <h1>

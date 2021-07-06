@@ -21,7 +21,7 @@ export interface ConfirmSubTaskStatusProps {
   subTaskStatus?,
   name?
 }
-export const ConfirmSubTaskStatus = (props: ConfirmSubTaskStatusProps) => {
+export function ConfirmSubTaskStatus(props: ConfirmSubTaskStatusProps) {
   // const [state, dispatch] = React.useReducer(exampleReducer, {
   //   open: false,
   //   size: undefined,
@@ -70,4 +70,4 @@ export const ConfirmSubTaskStatus = (props: ConfirmSubTaskStatusProps) => {
   )
 }
 
-export default ConfirmSubTaskStatus
+export default ConfirmSubTaskStatus;
