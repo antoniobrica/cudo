@@ -10,19 +10,28 @@ const supportedLanguages = [defaultLanguage, 'en-GB'];
 initI18n('/assets/i18n/{{lng}}.json', defaultLanguage);
 
 export function App() {
+  const [openCost, setOpenCost] = React.useState(false)
   const { loading, error, data } = useCostQuery(GET_COST);
   if (data) {
     console.log('====================================');
     console.log('data-cost', data);
     console.log('====================================');
   }
+  const addNew = () => {
+    console.log('add new')
+    setOpenCost(true);
+  }
+
+  const cancel = () => {
+    setOpenCost(false)
+  }
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div>
         <div>
-          <AddNewItem ></AddNewItem>
+          <AddNewItem openCost={openCost} cancel={cancel}></AddNewItem>
         </div>
-        <CostList></CostList>
+        <CostList addNew={addNew}></CostList>
         {/* <Button onClick={() => changeLanguage('en-GB')}>EN</Button>
         <Button onClick={() => changeLanguage('de-DE')}>DE</Button> */}
       </div>

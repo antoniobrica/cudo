@@ -1,10 +1,10 @@
 import { radios } from '@storybook/addon-knobs';
 import React, { useState } from 'react';
-import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea, Dropdown, Segment } from 'semantic-ui-react';
+import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea, Dropdown, Segment, Label, Icon } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import './../../../assets/style/index.scss'
 import { options, types } from '@hapi/joi';
-import { BkpIndex, HouseStructureIndex } from '@cudo/mf-account-app-lib';
+import { BkpsIndex, HouseStructureIndex } from '@cudo/mf-account-app-lib';
 import { FileUpload } from '@cudo/mf-document-lib';
 export interface IHouse {
   option
@@ -14,6 +14,8 @@ export interface IHouse {
 export interface ModalCostProps {
   house?: IHouse,
   createCost?
+  openCost?
+  cancel
 }
 type Iitem = {
   index?: number
@@ -34,6 +36,15 @@ export function ModalCost(props: ModalCostProps) {
   const [openFile, setOpenFile] = React.useState(false)
   const [files, setFileList] = React.useState<any>([]);
   const [items, setItems] = React.useState<Iitem[]>([])
+  React.useEffect(() => {
+    if (props.openCost) {
+      setOpen(true);
+    }
+  }, [props.openCost])
+  const cancel = () => {
+    setOpen(false)
+    props.cancel(false)
+  }
   const handleChange = (event, index) => {
     if (event.target == undefined) {
       console.log('e', event)
@@ -76,115 +87,35 @@ export function ModalCost(props: ModalCostProps) {
   const createCost = () => {
     console.log('cost-items==>', items);
     props.createCost(items)
-    setOpen(false);
+    // setOpen(false);
+    props.cancel();
   }
   function CostItem() {
     return items.map((item, index) =>
       <Table.Row>
-        <Table.Cell>
-          <Form>
-            <Grid columns={1}>
-              <Grid.Row>
-                <Grid.Column>
-                  <Form.Field>
-                    <span> <img src='/assets/images/dots.png' alt='' />  </span>
-                  </Form.Field>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Form>
+        <Table.Cell className="row-icon">
+          <span> <img src='/assets/images/dots.png' alt='' />  </span>
+        </Table.Cell>
+        <Table.Cell collapsing className="row-number">
+          {index + 1 || 0}
+        </Table.Cell>
+        <Table.Cell className="cost-bkp-field">
+          <BkpsIndex bkp={''} parentBKPSelect={e => handleChange(e, index)} ></BkpsIndex>
         </Table.Cell>
         <Table.Cell>
-          <Form>
-            <Grid columns={1}>
-              <Grid.Row>
-                <Grid.Column>
-                  <Form.Field>
-                    {index + 1 || 0}
-                  </Form.Field>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Form>
+          <Input name='description' size='small' className="full-width" onChange={e => handleChange(e, index)} value={item.description || ''} />
         </Table.Cell>
-        <Table.Cell>
-          <Form>
-            <Grid columns={1}>
-              <Grid.Row>
-                <Grid.Column>
-                  <Form.Field>
-                    <BkpIndex bkp={item.BKPID || ''} parentBKPSelect={e => handleChange(e, index)} ></BkpIndex>
-                    {/* <Input name="bkp" size='small' className="full-width" style={{ width: '130px' }} onChange={e => handleChange(e, index)} value={item.bkp || ''} /> */}
-                  </Form.Field>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Form>
+        <Table.Cell collapsing className="cost-files">
+          <span onClick={() => uploadFile(index)} className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <Label horizontal>2</Label>  </span>
         </Table.Cell>
-        <Table.Cell>
-          <Form>
-            <Grid columns={1}>
-              <Grid.Row>
-                <Grid.Column>
-                  <Form.Field>
-                    <Input name='description' size='small' className="full-width" style={{ width: '130px' }} onChange={e => handleChange(e, index)} value={item.description || ''} />
-                  </Form.Field>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Form>
+        <Table.Cell className="width100">
+          <Input name='itemQuantity' type='number' size='small' className="full-width" onChange={e => handleChange(e, index)} value={item.itemQuantity || 0} />
         </Table.Cell>
-        <Table.Cell>
-          <Form>
-            <Grid columns={1}>
-              <Grid.Row>
-                <Grid.Column>
-                  <Form.Field>
-                    <span onClick={() => uploadFile(index)} className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <button className="ui mini button primary" >2</button> </span>
-                  </Form.Field>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Form>
+        <Table.Cell className="width100">
+          <Input type='number' name='itemPrice' size='small' className="full-width" onChange={e => handleChange(e, index)} value={item.itemPrice || 0} />
         </Table.Cell>
-        <Table.Cell>
-          <Form>
-            <Grid columns={1}>
-              <Grid.Row>
-                <Grid.Column>
-                  <Form.Field>
-                    <Input name='itemQuantity' type='number' size='small' className="full-width" style={{ width: '130px' }} onChange={e => handleChange(e, index)} value={item.itemQuantity || 0} />
-                  </Form.Field>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Form>
-        </Table.Cell>
-        <Table.Cell>
-          <Form>
-            <Grid columns={1}>
-              <Grid.Row>
-                <Grid.Column>
-                  <Form.Field>
-                    <Input type='number' name='itemPrice' size='small' className="full-width" style={{ width: '130px' }} onChange={e => handleChange(e, index)} value={item.itemPrice || 0} />
-                  </Form.Field>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Form>
-        </Table.Cell>
-        <Table.Cell>
-          <Form>
-            <Grid columns={1}>
-              <Grid.Row>
-                <Grid.Column>
-                  <Form.Field>
-                    <a href="#" onClick={() => removeItem(index)} >X</a>
-                  </Form.Field>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Form>
+        <Table.Cell collapsing>
+          <a onClick={() => removeItem(index)} >X</a>
         </Table.Cell>
       </Table.Row>
     )
@@ -203,16 +134,21 @@ export function ModalCost(props: ModalCostProps) {
       {openFile ?
         <FileUpload openSettingF={openFile} close={close} confirm={confirm} /> : null
       }
-      <Modal className="modal_media" style={{ height: '660px' }}
+      <Modal className="modal_media add-new-work  right-side--fixed-modal add-new-cost-modal"
+        closeIcon
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button size='mini' className="grey-btn">+ {t('add_cost.add_new')} </Button>}
+      // trigger={<Button size='mini' className="grey-btn">+ {t('add_cost.add_new')} </Button>}
       >
         <Modal.Header><h3>{t('add_cost.add_new_item')} </h3></Modal.Header>
         <Modal.Content body>
           <div>
-            <Form>
+            <Modal.Header className="cost-modal-header">
+              <h3 className="">{t('add_cost.select_house')} <span>(This house will contain all the BKP)</span></h3>
+              <HouseStructureIndex></HouseStructureIndex>
+            </Modal.Header>
+            {/* <Form>
               <Grid columns={2}>
                 <Grid.Row className="content">
                   <Grid.Column >
@@ -227,46 +163,31 @@ export function ModalCost(props: ModalCostProps) {
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
-            </Form>
-            <div>
+            </Form> */}
+            <div className="cost-modal-content">
               <Header className="header" >Items</Header>
+
+              <Table>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell></Table.HeaderCell>
+                    <Table.HeaderCell># </Table.HeaderCell>
+                    <Table.HeaderCell width={4}>BKP</Table.HeaderCell>
+                    <Table.HeaderCell width={6}>Description</Table.HeaderCell>
+                    <Table.HeaderCell>Files</Table.HeaderCell>
+                    <Table.HeaderCell width={1}>Item quality</Table.HeaderCell>
+                    <Table.HeaderCell width={1}>Item price</Table.HeaderCell>
+                    <Table.HeaderCell></Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+
+                <Table.Body>
+                  {CostItem()}
+                </Table.Body>
+              </Table>
+
+              <div className="add-more-cost"><a onClick={() => addItem()}><Icon name='add' /> Add more </a></div>
             </div>
-            <Table>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell></Table.HeaderCell>
-                  <Table.HeaderCell># </Table.HeaderCell>
-                  <Table.HeaderCell>BKP</Table.HeaderCell>
-                  <Table.HeaderCell>Description</Table.HeaderCell>
-                  <Table.HeaderCell>Files</Table.HeaderCell>
-                  <Table.HeaderCell>Item quality</Table.HeaderCell>
-                  <Table.HeaderCell>Item price</Table.HeaderCell>
-                  <Table.HeaderCell></Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                {CostItem()}
-                <Table.Row>
-                  <Table.Cell>
-                    <a onClick={() => addItem()}>+ Add more </a>
-                  </Table.Cell>
-                  <Table.Cell></Table.Cell>
-                  <Table.Cell>
-
-                  </Table.Cell>
-
-                  <Table.Cell></Table.Cell>
-
-                  <Table.Cell></Table.Cell>
-
-                  <Table.Cell></Table.Cell>
-
-                  <Table.Cell></Table.Cell>
-
-                  <Table.Cell></Table.Cell>
-                </Table.Row>
-              </Table.Body>
-            </Table>
           </div>
         </Modal.Content>
         <Modal.Actions>
@@ -276,7 +197,7 @@ export function ModalCost(props: ModalCostProps) {
             positive
             size='small' className="primary"
           />
-          <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
+          <Button size='small' className="icon-border" onClick={cancel}>
             X  Cancel
           </Button>
         </Modal.Actions>

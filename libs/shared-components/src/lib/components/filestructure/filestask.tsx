@@ -105,7 +105,7 @@ export function FileStructure(props: FileStructureProps) {
 
 							</span>
 
-							<span className="font-weight-bold mb-0 mr-10">{data.fileTitle}</span>
+							<span className="mb-0 mr-10 file-name-extension">{data.fileTitle}</span>
 							{data.fileVersion > 0 ?
 								<div className="d-flex mr-3">
 
@@ -129,7 +129,7 @@ export function FileStructure(props: FileStructureProps) {
 								<a onClick={() => viewFile(data)}> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a>
 
 								<span className="mr-2"  >
-									<Dropdown text='...'>
+									<Dropdown text='...' pointing='right'>
 										<Dropdown.Menu>
 											<Dropdown.Item icon='pencil' text='Edit file detail' />
 											<Dropdown.Item onClick={() => uploadNewVersion(data)} icon='eye' text='Upload new version' />
@@ -340,7 +340,7 @@ export function FileStructure(props: FileStructureProps) {
 	]
 
 	return (
-		<div className=" navbar-collapse box-shadow files-tab-outer">
+		<div className=" navbar-collapse files-tab-outer">
 			{view && imgUrl.length > 0 ?
 				<div>
 					{/* <ViewFileDetail open={view} fType={fType} filesData={filesData} dowloadFilesData={props.downloadedImg} ></ViewFileDetail> */}
