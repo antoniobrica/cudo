@@ -74,7 +74,7 @@ phaseTitle
 
 export const GET_CATAGORIES = gql`{
   MeetingCatagories( 
-    referenceFilter: { referenceID: "dapr", referenceType: COMPANY } 
+    referenceFilter: { referenceID: "Sftobiz_1234", referenceType: COMPANY } 
   ) { 
     meetingCatagoryID 
     meetingCatagoryTitle 
