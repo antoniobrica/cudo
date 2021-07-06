@@ -11,11 +11,15 @@ trigger:
       - apps/ms-document/*
       - apps/ms-project/*
       - apps/ms-task/*
+      - apps/ms-cost/*
+      - apps/ms-meeting/*
       - apps/mf-account-app/*
       - apps/mf-container-app/*
       - apps/mf-task-app/*
       - apps/mf-document-app/*
       - apps/mf-project-app/*
+      - apps/mf-cost-app/*
+      - apps/mf-meeting-app/*
       - deploy/docker-compose-ory/*
       - libs/*
 jobs:
@@ -74,6 +78,18 @@ jobs:
             break
             }
             }
+            foreach($path in $changesFolder){
+              if($path -match '/mf-cost-app'){
+             echo "##vso[task.setvariable variable=mfcostapp;isOutput=true]$True"
+            break
+            }
+            }
+            foreach($path in $changesFolder){
+              if($path -match '/mf-meeting-app'){
+             echo "##vso[task.setvariable variable=mfmeetingapp;isOutput=true]$True"
+            break
+            }
+            }
             ######################################################Backend####################################################################            
             foreach($path in $changesFolder){
               if($path -match '/apps/ms-account'){
@@ -96,6 +112,18 @@ jobs:
             foreach($path in $changesFolder){
               if($path -match '/apps/ms-task'){
              echo "##vso[task.setvariable variable=mstask;isOutput=true]$True"
+            break
+            }
+            }
+            foreach($path in $changesFolder){
+              if($path -match '/apps/ms-cost'){
+             echo "##vso[task.setvariable variable=mscost;isOutput=true]$True"
+            break
+            }
+            }
+            foreach($path in $changesFolder){
+              if($path -match '/apps/ms-meeting'){
+             echo "##vso[task.setvariable variable=msmeeting;isOutput=true]$True"
             break
             }
             }
@@ -232,6 +260,46 @@ jobs:
               dockerfile: dist/apps/mf-project-app/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
+- job: mfcostapp
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.mfcostapp'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='mf-cost-app' --with-deps --generatePackageJson=true
+                  cp devops/docker/mf-dockerfile dist/apps/mf-cost-app/Dockerfile
+                  cp devops/docker/nginx.conf dist/apps/mf-cost-app/
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: mf-cost-app-dev
+              dockerfile: dist/apps/mf-cost-app/Dockerfile
+              containerRegistry: dev-docker-registry
+              tags: latest
+- job: mfmeetingapp
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.mfmeetingapp'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='mf-meeting-app' --with-deps --generatePackageJson=true
+                  cp devops/docker/mf-dockerfile dist/apps/mf-meeting-app/Dockerfile
+                  cp devops/docker/nginx.conf dist/apps/mf-meeting-app/
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: mf-meeting-app-dev
+              dockerfile: dist/apps/mf-meeting-app/Dockerfile
+              containerRegistry: dev-docker-registry
+              tags: latest
 ###################################################Backend####################################################################################
 - job: msaccount
   pool: cudo-selfhosted-agent
@@ -309,5 +377,43 @@ jobs:
               command: buildAndPush
               repository: ms-task-dev
               dockerfile: dist/apps/ms-task/Dockerfile
+              containerRegistry: dev-docker-registry
+              tags: latest
+- job: mscost
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.mscost'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='ms-cost' --with-deps --generatePackageJson=true
+                  cp devops/docker/ms-dockerfile dist/apps/ms-cost/Dockerfile
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: ms-cost-dev
+              dockerfile: dist/apps/ms-cost/Dockerfile
+              containerRegistry: dev-docker-registry
+              tags: latest
+- job: msmeeting
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.msmeeting'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='ms-meeting' --with-deps --generatePackageJson=true
+                  cp devops/docker/ms-dockerfile dist/apps/ms-meeting/Dockerfile
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: ms-meeting-dev
+              dockerfile: dist/apps/ms-meeting/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
