@@ -1,11 +1,14 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { BKPChildrenModel } from './bkp-children.model';
+import { BkpLayerOneModel } from './bkp-layerOne.model';
 
 @ObjectType()
 export class BkpHierarchyModel {
 
   @Field({ nullable: true, description: `` })
   id: number;
+
+  @Field({ description: `BKP Unique ID` })
+  bkpUID: string;
 
   @Field({ description: `BKP ID` })
   bkpID: string;
@@ -28,10 +31,8 @@ export class BkpHierarchyModel {
   @Field({ description: `Updated by` })
   updatedBy?: string;
 
-  @Field(type => [BKPChildrenModel], { nullable: true, description: `BKP Children` })
-  children: BKPChildrenModel[];
-
-
+  @Field(type => [BkpLayerOneModel], { nullable: true, description: `BKP Children` })
+  children: BkpLayerOneModel[];
 
 }
 
