@@ -313,7 +313,7 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
           <Grid columns={2}>
             <Grid.Row>
               <Grid.Column>
-                <Form.Field>
+                <Form.Field error>
                   <label>What's the Project Name? <span className="danger">*</span></label>
                   <Input
                     placeholder='Default'
@@ -322,6 +322,7 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
                     value={projectName}
                     onChange={onprojectNameChange}
                   />
+                  <span className="error-message">There is some error</span>
                 </Form.Field>
               </Grid.Column>
 
