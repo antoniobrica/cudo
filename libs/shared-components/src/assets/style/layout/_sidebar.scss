@@ -22,14 +22,14 @@
 	min-width: 0em;
 }
 .ui.thin.left.sidebar{
-	width: 6em;
+	width: 100%;
 }
 i.add.icon{
 	font-size: 12px !important;
 }
 #sidebar {
-	min-width: 100px;
-	max-width: 100px;
+	min-width: 75px;
+    max-width: 75px;
 	position: fixed;
 	 
 	color: #fff;

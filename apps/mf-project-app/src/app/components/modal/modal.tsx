@@ -276,15 +276,12 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
       menuItem: 'Information',
       render: () => <Tab.Pane attached={false}>
         {/* <SampleModal/> */}
-        <div className="content">
-          <div className="description">Upload Client logo</div>
-          <Button className="secondary_btn" size='mini' primary>Click to upload</Button>
-          <p className="paragraph">Click the upload button to upload the client logo</p>
+        <div className="content upload-client-logo">
+          <div className="description">Upload Client logo <span>Click the upload button to upload the client logo</span></div>
+          <Button className="secondary_btn" size='small' primary>Click to upload</Button>
         </div>
-        <div>
 
-          <Header className="header" >Project Information</Header>
-        </div>
+        <Header className="header">Project Information</Header>
         <Form >
           <Grid columns={2}>
             <Grid.Row>
@@ -358,11 +355,9 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
               </Grid.Column>
             </Grid.Row>
           </Grid>
-
         </Form>
-        <div>
-          <Header className="header" >Manage work type and estimated cost</Header>
-        </div>
+        
+        <Header className="header" >Manage work type and estimated cost</Header>
         <WorkType worktypes={items} workTypeData={moreWorkTypes} />
         {/*  <Table>
           <Table.Header>
@@ -564,7 +559,8 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
 
   return (
     <div id="navbar">
-      <Modal className="modal_media"
+      <Modal className="modal_media right-side--fixed-modal add-new-project-modal"
+        closeIcon
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
@@ -597,7 +593,8 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
         </Button>
 
         </Modal.Actions> */}
-        <Modal
+        <Modal className="right-side--fixed-modal add-new-project-modal"
+          closeIcon
           onClose={() => setSecondOpen(false)}
           open={secondOpen}
           size='small'
@@ -770,8 +767,8 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
                 size='small' className="primary"
               />
               <Button size='small' className="icon-border" onClick={() => setSecondOpen(false)}>
-                X  Cancel
-              </Button>
+                <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply ms-fontColor-themePrimary"></i> Cancel
+        </Button>
 
 
 
@@ -795,7 +792,7 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
             size='small' className="primary"
           />
           <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
-            X  Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply ms-fontColor-themePrimary"></i>  Cancel
           </Button>
 
         </Modal.Actions>
