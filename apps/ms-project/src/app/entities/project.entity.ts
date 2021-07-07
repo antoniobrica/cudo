@@ -57,7 +57,7 @@ export class ProjectEntity extends BaseEntity {
   updatedBy?: string;
 
   @Expose()
-  @Column({ nullable: true })
+  @Column({ nullable: true, default:false })
   isDeleted?: boolean;
 
   @Expose()

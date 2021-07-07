@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { BKPCostModel } from './bkp-cost.model';
+import { BkpLayerOneModel } from './bkp-layerOne.model';
 
 @ObjectType()
 export class BkpHierarchyModel {
@@ -7,19 +7,16 @@ export class BkpHierarchyModel {
   @Field({ nullable: true, description: `` })
   id: number;
 
-  @Field({ nullable: true, description: `CostID UUID` })
-  costID: string;
+  @Field({ description: `BKP Unique ID` })
+  bkpUID: string;
 
-  @Field({ nullable: true, description: `CostID UUID` })
-  bkpMain?: string;
+  @Field({ description: `BKP ID` })
+  bkpID: string;
 
-  // @Field({ nullable: true, description: `Project Structure ID (House)` })
-  // structureID: string;
+  @Field({ description: `BKP Title` })
+  bkpTitle: string;
 
-  // @Field({ nullable: true, description: `Project Structure name (House)` })
-  // structureName: string;
-
-  @Field({ nullable: true, description: `Is cost for the project deleted ?` })
+  @Field({ nullable: true, description: `Is BKP for the project deleted ?` })
   isDeleted: Boolean;
 
   @Field({ nullable: true, description: `Created At` })
@@ -34,8 +31,8 @@ export class BkpHierarchyModel {
   @Field({ description: `Updated by` })
   updatedBy?: string;
 
-  @Field(type => [BKPCostModel], { nullable: true, description: `BKP list with cost and quantity` })
-  BKPCosts: BKPCostModel[];
+  @Field(type => [BkpLayerOneModel], { nullable: true, description: `BKP Children` })
+  children: BkpLayerOneModel[];
 
 }
 
