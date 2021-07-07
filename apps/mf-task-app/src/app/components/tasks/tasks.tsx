@@ -186,7 +186,9 @@ export function Tasks(props: TasksProps) {
         description: task.description,
         subtasks: [],
         assignees: assignees,
-        followers: followers
+        followers: followers,
+        workTypeName: task.workTypeName,
+        workTypeID: task.workTypeID,
       },
       update: (cache) => {
         const cacheData = cache.readQuery({
@@ -309,7 +311,9 @@ export function Tasks(props: TasksProps) {
         description: data.description,
         subtasks: [],
         assignees: assignees,
-        followers: followers
+        followers: followers,
+        workTypeName: data.workTypeName,
+        workTypeID: data.workTypeID,
       },
       update: (cache, data) => {
         const cacheData = cache.readQuery({
@@ -362,7 +366,9 @@ export function Tasks(props: TasksProps) {
         description: data.description,
         subtasks: subtask,
         assignees: assignees,
-        followers: followers
+        followers: followers,
+        workTypeName: data.workTypeName,
+        workTypeID: data.workTypeID,
       },
       update: (cache, data) => {
         const cacheData = cache.readQuery({
