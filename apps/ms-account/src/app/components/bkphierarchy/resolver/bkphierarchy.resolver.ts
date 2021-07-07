@@ -4,6 +4,7 @@ import { BkpHierarchyFilterTitle } from '../dto/args/bkpHierarchy.param';
 import { BkpHierarchyFilterID } from '../dto/args/bkpId.fiolter';
 import { BKPFilterParam } from '../dto/bkp.filter';
 import { CreateBkpHierarchyInput } from '../dto/create-bkphierarchy.input';
+import { BkpDeleteInput } from '../dto/delete.bkp';
 import { SearchModel } from '../model/bkp-serch.model';
 import { BkpHierarchyModel } from '../model/bkphierarchy.model';
 import { BkpHierarchyService } from '../service/bkphierarchy.service';
@@ -23,17 +24,10 @@ export class BkpHierarchyResolver {
   }
 
   @Query(() => SearchModel)
-  async BkpHierarchySearchObjects(
+  async SearchBkpHierarchyObjects(
     @Args('bkptitle',{nullable: true}) bkptitle: BkpHierarchyFilterTitle,
     @Args('bkpid',{nullable: true}) bkpid: BkpHierarchyFilterID ){
       return await this.bkpHierarchyService.searchBkpObjects(bkptitle,bkpid)
-  }
-
-  @Query(() => [BkpHierarchyModel])
-  async BkpHierarchySearch(
-    @Args('bkptitle',{nullable: true}) bkptitle: BkpHierarchyFilterTitle,
-    @Args('bkpid',{nullable: true}) bkpid: BkpHierarchyFilterID ){
-      return await this.bkpHierarchyService.searchBkp(bkptitle,bkpid)
   }
 
   @Query(() => BkpHierarchyModel)
@@ -41,6 +35,13 @@ export class BkpHierarchyResolver {
   ) {
       const bkp = await this.bkpHierarchyService.getBKPByID(bkpFilter);
       return bkp;
+  }
+
+  @Mutation(() => BkpHierarchyModel)
+  async deleteBkp(
+      @Args('bkpDeleteInput') bkpDeleteInput: BkpDeleteInput,
+  ) {
+      return this.bkpHierarchyService.deleteBkp(bkpDeleteInput);
   }
 
 }

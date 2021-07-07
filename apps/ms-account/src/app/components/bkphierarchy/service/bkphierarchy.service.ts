@@ -10,6 +10,7 @@ import { BkpHierarchyFilterTitle } from '../dto/args/bkpHierarchy.param';
 import { BkpHierarchyFilterID } from '../dto/args/bkpId.fiolter';
 import { BKPFilterParam } from '../dto/bkp.filter';
 import { CreateBkpHierarchyInput } from '../dto/create-bkphierarchy.input';
+import { BkpDeleteInput } from '../dto/delete.bkp';
 
 
 @Injectable()
@@ -50,7 +51,6 @@ export class BkpHierarchyService {
         references: { id: selectedReference.id }
       });
       await this.bkpHierarchyRepository.save(newPost);
-      console.log(">>>>>>>>>>",newPost)
       return newPost;
     } catch (error) {
       return error;
@@ -77,28 +77,17 @@ export class BkpHierarchyService {
 //     .getMany();
 // }
 
-public async searchBkp(bkptitle?: BkpHierarchyFilterTitle, bkpid?: BkpHierarchyFilterID){
-  if(bkptitle){
-  const myBkp = await this.bkpHierarchyRepository.find(
-    {where:{bkpTitle:Like(`%${bkptitle.bkpTitle}%`)}, relations: ['children','children.bkpChildrenLayerTwo']})
-  return myBkp}
-  if(bkpid){
-    const myBkp = await this.bkpHierarchyRepository.find(
-    {where:{bkpTitle:Like(`%${bkptitle.bkpTitle}%`)}, relations: ['children']})
-  return myBkp
-  }
-} 
 
 public async searchBkpObjects(bkptitle?: BkpHierarchyFilterTitle, bkpid?: BkpHierarchyFilterID){
   if(bkptitle){
   const mainBkp = await this.bkpHierarchyRepository.find(
-    {where:{bkpTitle:Like(`%${bkptitle.bkpTitle}%`)}, relations: ['children','children.bkpChildrenLayerTwo']});
+    {where:{"isDeleted":false, bkpTitle:Like(`%${bkptitle.bkpTitle}%`)}, relations: ['children','children.bkpChildrenLayerTwo']});
 
   const BkpLayerOne = await this.BkpLayerOneRepository.find(
-      {where:{bkpTitle:Like(`%${bkptitle.bkpTitle}%`)}, relations: ['bkpChildrenLayerTwo']});
+      {where:{"isDeleted":false, bkpTitle:Like(`%${bkptitle.bkpTitle}%`)}, relations: ['bkpChildrenLayerTwo']});
 
   const BkpLayerTwo = await this.BkpLayerTwoRepository.find(
-        {where:{bkpTitle:Like(`%${bkptitle.bkpTitle}%`)}});
+        {where:{"isDeleted":false, bkpTitle:Like(`%${bkptitle.bkpTitle}%`)}});
 
         return{
           mainBkp,
@@ -110,13 +99,13 @@ public async searchBkpObjects(bkptitle?: BkpHierarchyFilterTitle, bkpid?: BkpHie
 
   if(bkpid){
     const mainBkp = await this.bkpHierarchyRepository.find(
-      {where:{bkpID:Like(`%${bkpid.bkpID}%`)}, relations: ['children']});
+      {where:{"isDeleted":false, bkpID:Like(`%${bkpid.bkpID}%`)}, relations: ['children']});
   
     const BkpLayerOne = await this.BkpLayerOneRepository.find(
-      {where:{bkpID:Like(`%${bkpid.bkpID}%`)}, relations: ['bkpChildrenLayerTwo']});
+      {where:{"isDeleted":false, bkpID:Like(`%${bkpid.bkpID}%`)}, relations: ['bkpChildrenLayerTwo']});
   
     const BkpLayerTwo = await this.BkpLayerTwoRepository.find(
-      {where:{bkpID:Like(`%${bkpid.bkpID}%`)}});
+      {where:{"isDeleted":false,bkpID:Like(`%${bkpid.bkpID}%`)}});
   
           return{
             mainBkp,
@@ -127,7 +116,7 @@ public async searchBkpObjects(bkptitle?: BkpHierarchyFilterTitle, bkpid?: BkpHie
 } 
 
 async getBKPByID(bkpFilter: BKPFilterParam) {
-  const bkp = await this.bkpHierarchyRepository.findOne({ where: { ...bkpFilter }, relations: ['children'] });
+  const bkp = await this.bkpHierarchyRepository.findOne({ where: {"isDeleted":false, ...bkpFilter }, relations: ['children','children.bkpChildrenLayerTwo'] });
   if (bkp) {
       return bkp;
   }
@@ -135,5 +124,39 @@ async getBKPByID(bkpFilter: BKPFilterParam) {
 }
 
 
-}
+public async deleteBkp(bkpDeleteInput: BkpDeleteInput) {
+ 
+    const mainBkp = await this.bkpHierarchyRepository.findOne(
+      {where:{bkpUID:bkpDeleteInput.bkpUID}});
 
+      if (mainBkp) {
+        mainBkp.isDeleted=!(mainBkp.isDeleted)
+        const updatedPost = await mainBkp.save()
+        return updatedPost
+
+      }
+  
+    const BkpLayerOne = await this.BkpLayerOneRepository.findOne(
+      {where:{bkpUID:bkpDeleteInput.bkpUID}});
+      if (BkpLayerOne) {
+        BkpLayerOne.isDeleted=!(BkpLayerOne.isDeleted)
+        const updatedPost = await BkpLayerOne.save()
+        return updatedPost
+      }
+
+      
+  
+    const BkpLayerTwo = await this.BkpLayerTwoRepository.findOne(
+      {where:{bkpUID:bkpDeleteInput.bkpUID}});
+
+      if (BkpLayerTwo) {
+        BkpLayerTwo.isDeleted=!(BkpLayerTwo.isDeleted)
+        const updatedPost = await BkpLayerTwo.save()
+        return updatedPost
+      }
+   
+
+
+  }
+
+}
