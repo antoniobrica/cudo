@@ -86,7 +86,7 @@ input,
             display: none;
         }
         &.small {
-            min-height: 4.6rem;
+            min-height: 4rem;
             @media (max-width:#{$large-desktop-up}) {
                 min-height: 4rem;
             }
@@ -420,7 +420,7 @@ select:-webkit-autofill:focus {
             &[type=text],
             &[type=time],
             &[type=url] {
-                height: 4.6rem;
+                height: 4rem;
                 @media (max-width:#{$large-desktop-up}) {
                     height: 4rem;
                 }

@@ -558,8 +558,8 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
 
 
   return (
-    <div  className="add-project-area">
-      {/* <div id="navbar"> */}
+    <div className="add-project-area">
+    {/* <div id="navbar"> */}
       <Modal className="modal_media right-side--fixed-modal add-new-project-modal"
         closeIcon
         onClose={() => setOpen(false)}

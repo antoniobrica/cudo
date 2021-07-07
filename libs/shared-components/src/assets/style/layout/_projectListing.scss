@@ -152,6 +152,7 @@
           font-size: 14px;
           color: #718898;
           font-weight: 400;
+          margin-top: 3px;
         }
       }
       button.ui.button {
@@ -163,14 +164,46 @@
     }
   }
   .header {
-    padding: 15px 30px 0 30px;
+    padding: 25px ​30px 0 30px !important;
   }
   .ui.header {
-    padding: 0;
+    padding: 0 !important;
     font-size: 16px;
     margin-top: 35px;
     color: #1B1B40;
     font-weight: 600;
     margin-bottom: 10px;
+  }
+  .ui.table.manage-work-table {
+    border: 1px solid #E0E6EB;
+    thead {
+      tr {
+        th {
+          background: #F1F5F8;
+          border-bottom: 1px solid #F1F5F8;
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          border-top: 1px solid #F1F5F8;
+          a {
+            color: #718898;
+            font-size: 14px;
+            font-weight: 500;
+          }
+          .ui.selection.dropdown {
+            min-height: 3rem !important;
+            > .text {
+              margin: 0 0 0.45rem 0;
+              font-size: 13px;
+              font-weight: 500 !important;
+              color: #1B1B40;
+            }
+          }
+        }
+      }
+    }
   }
 }
