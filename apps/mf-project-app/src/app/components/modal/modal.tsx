@@ -9,6 +9,7 @@ import { ADD_PROJECT, GET_BUILDINGTYPES, GET_CLIENT_COMPANY, GET_PRINTING_COMPAN
 import { ModalExamplePrinting, ModalExampleCompany } from '@cudo/shared-components'
 import WorkType from '../../work-type/work-type';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
+import ReactQuill, { Quill } from 'react-quill';
 
 export interface ProjectInfoProps {
   onSuccess
@@ -50,6 +51,11 @@ export function ModalExampleModal(props: ProjectInfoProps) {
 
   ]
 
+  const companyTypeOptions = [
+    { key: 'clientCompany', value: 'client', text: 'Client' },
+    { key: 'printingCompany', value: 'printing', text: 'Printing' },
+  ]
+
   const [open, setOpen] = React.useState(false)
   const [projectName, setProjectName] = React.useState("")
   const [projectNum, setProjectNum] = React.useState(0)
@@ -72,7 +78,13 @@ export function ModalExampleModal(props: ProjectInfoProps) {
   const [addWorkTypes, setAddWorkTypes] = React.useState(1)
   const [secondOpen, setSecondOpen] = React.useState(false)
   const [projectWorkEstimates, setProjectWorkEstimates] = React.useState(null)
+
+const [companyCountry, setCompanyCountry] = React.useState(null)
+
   // const [addProject] = useProjectMutation(ADD_PROJECT);
+
+  const [validationErrors, setValidationErrors] = React.useState(null)
+
   const [addProject, { data }] = useMutation(ADD_PROJECT,
     {
       refetchQueries: [
@@ -109,6 +121,13 @@ export function ModalExampleModal(props: ProjectInfoProps) {
       setClientCompany(clientCompany.company.map(({ companyName }) => ({ key: companyName, value: companyName, text: companyName })));
     }
   }, [clientCompany]);
+
+  React.useEffect(() => {
+    if (validationErrors?.length > 0) {
+      console.log('----validation errors----', validationErrors)
+      alert(validationErrors)
+    }
+  }, [validationErrors])
 
   const onprojectNameChange = e => {
     setProjectName(e.target.value)
@@ -171,7 +190,8 @@ export function ModalExampleModal(props: ProjectInfoProps) {
     setCountry(data.value)
   }
   const onDescription = e => {
-    setDescription(e.target.value)
+    // setDescription(e.target.value)
+    setDescription(e)
   }
 
   const addWorkType = () => {
@@ -193,7 +213,38 @@ export function ModalExampleModal(props: ProjectInfoProps) {
     setProjectWorkEstimates(data);
 
   }
+
+  const validation = () => {
+    let response = true
+    let errorMessages = []
+    if (!projectName) {
+      response = false
+      errorMessages.push("Please provide project name")
+    }
+    if (!projectNum) {
+      response = false
+      errorMessages.push("Please provide project number")
+    }
+    if (!client) {
+      errorMessages.push("Please provide client company")
+    }
+    if (!buildingType) {
+      response = false
+      errorMessages.push("Please provide building type")
+    }
+
+    if (!response) {
+      return errorMessages
+    }
+    return []
+  }
   const handleSaveProject = () => {
+    const validationResponse = validation()
+    if (validationResponse?.length > 0) {
+      setValidationErrors(validationResponse)
+      return false
+    }
+
     setOpen(false);
     addProject({
       variables: {
@@ -225,15 +276,12 @@ export function ModalExampleModal(props: ProjectInfoProps) {
       menuItem: 'Information',
       render: () => <Tab.Pane attached={false}>
         {/* <SampleModal/> */}
-        <div className="content">
-          <div className="description">Upload Client logo</div>
-          <Button className="secondary_btn" size='mini' primary>Click to upload</Button>
-          <p className="paragraph">Click the upload button to upload the client logo</p>
+        <div className="content upload-client-logo">
+          <div className="description">Upload Client logo <span>Click the upload button to upload the client logo</span></div>
+          <Button className="secondary_btn" size='small' primary>Click to upload</Button>
         </div>
-        <div>
 
-          <Header className="header" >Project Information</Header>
-        </div>
+        <Header className="header">Project Information</Header>
         <Form >
           <Grid columns={2}>
             <Grid.Row>
@@ -307,13 +355,11 @@ export function ModalExampleModal(props: ProjectInfoProps) {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-
         </Form>
-        <div>
-          <Header className="header" >Manage work type and estimated cost</Header>
-        </div>
+        
+        <Header className="header" >Manage work type and estimated cost</Header>
         <WorkType worktypes={items} workTypeData={moreWorkTypes} />
-        <Table>
+        {/*  <Table>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Work Type</Table.HeaderCell>
@@ -322,7 +368,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {/* {
+            {
           [...Array(addWorkTypes)].map((k,i)=>  
 <Table.Row key={i}>
               <Table.Cell>
@@ -370,7 +416,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
         
         )
         }          */}
-            {/* <Table.Row>
+        {/* <Table.Row>
               <Table.Cell>
                 <a onClick={addWorkType}>+ Add more </a>
 
@@ -379,9 +425,9 @@ export function ModalExampleModal(props: ProjectInfoProps) {
               <Table.Cell>
 
               </Table.Cell>
-            </Table.Row> */}
+            </Table.Row>
           </Table.Body>
-        </Table>
+        </Table> */}
 
         <div>
           <Header className="header" >Address Information</Header>
@@ -462,9 +508,28 @@ export function ModalExampleModal(props: ProjectInfoProps) {
               <Grid.Column>
                 <Form.Field>
                   <label>Description </label>
-                  <TextArea placeholder='Tell us more'
+                  {/* <TextArea placeholder='Tell us more'
                     value={description}
                     onChange={onDescription}
+                  /> */}
+                  <ReactQuill
+                    value={description}
+                    modules={{
+                      toolbar: {
+                        container: [
+                          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                          ['bold', 'italic', 'underline'],
+                          [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                          [{ 'align': [] }],
+                          ['link', 'image'],
+                          ['clean'],
+                          [{ 'color': [] }]
+                        ]
+                      }
+                    }}
+                    placeholder="Tell us more"
+                    onChange={(content, delta, source, editor) => onDescription(content)}
+                    id="txtDescription"
                   />
                 </Form.Field>
               </Grid.Column>
@@ -487,11 +552,15 @@ export function ModalExampleModal(props: ProjectInfoProps) {
 
   ]
 
+  const onChangeCompanyCountry = (data) => {
+    setCompanyCountry(data.value)
+  }
 
 
   return (
     <div id="navbar">
-      <Modal className="modal_media"
+      <Modal className="modal_media right-side--fixed-modal add-new-project-modal"
+        closeIcon
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
@@ -524,7 +593,8 @@ export function ModalExampleModal(props: ProjectInfoProps) {
         </Button>
 
         </Modal.Actions> */}
-        <Modal
+        <Modal className="right-side--fixed-modal add-new-project-modal"
+          closeIcon
           onClose={() => setSecondOpen(false)}
           open={secondOpen}
           size='small'
@@ -557,8 +627,8 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <label>Company Name </label>
-                        <Select placeholder='Select' className="small" options={countryOptions} />
+                        <label>Company Type </label>
+                        <Select placeholder='Select' className="small" options={companyTypeOptions} />
 
                       </Form.Field>
                     </Grid.Column>
@@ -675,8 +745,12 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     </Grid.Column>
                     <Grid.Column>
                       <Form.Field>
-                        <label>Country  </label>
-                        <Select placeholder='Select' className="small" options={countryOptions} />
+                        {/*<label>Country  </label>
+                         <Select placeholder='Select' className="small" 
+                            options={countryOptions}  
+                            value={client}
+                            onChange={onprojectClient}/> */}
+                        <MfAccountAppLib parentCallback={onChangeCompanyCountry} />
 
                       </Form.Field>
                     </Grid.Column>
@@ -687,13 +761,13 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                 </Grid>
               </Form>
               <Button
-                content="Add Company"
+                content="Add Company mk"
                 onClick={() => setOpen(false)}
                 positive
                 size='small' className="primary"
               />
               <Button size='small' className="icon-border" onClick={() => setSecondOpen(false)}>
-                X  Cancel
+                <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply ms-fontColor-themePrimary"></i> Cancel
         </Button>
 
 
@@ -718,8 +792,8 @@ export function ModalExampleModal(props: ProjectInfoProps) {
             size='small' className="primary"
           />
           <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
-            X  Cancel
-        </Button>
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply ms-fontColor-themePrimary"></i>  Cancel
+          </Button>
 
         </Modal.Actions>
       </Modal>
