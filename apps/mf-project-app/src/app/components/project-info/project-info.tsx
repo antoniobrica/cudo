@@ -49,15 +49,16 @@ export function ProjectInfo(props: ProjectInfoProps) {
   return (
     <div>
       {/* <h1>Projects</h1> */}
-      <div>
+      {/* <div>
         <ModalExampleModal onSuccess={refresh}></ModalExampleModal>
-      </div>
+      </div> */}
 
       <div className="app-content-body body_cards_area project-listing-page">
         <div className="dashboard-header">
           <h3>All Projects <span className="total">Total {data.projects.length} project added</span></h3>
           <div className="add-project-area">
-            <Button size='small' className="primary"><i className="ms-Icon ms-font-xl ms-Icon--Add ms-fontColor-themePrimary"></i> Add New</Button>
+            {/* <Button size='small' className="primary"><i className="ms-Icon ms-font-xl ms-Icon--Add ms-fontColor-themePrimary"></i> Add New</Button> */}
+            <ModalExampleModal onSuccess={refresh}></ModalExampleModal>
           </div>
         </div>
 

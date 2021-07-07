@@ -1,4 +1,3 @@
-
 interface IURL {
   url: string;
 }
@@ -22,30 +21,30 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
     url: "http://cudo-ms-meeting.softobiz.net/graphql"
   },
   "mf_cost_app": {
-    url: "http://cudo-mf_cost.softobiz.net"
+    url: "http://192.168.1.5:6004"
   },
   "mf_meeting_app": {
-    url: "http://cudo-mf_meeting.softobiz.net"
+    url: "http://192.168.1.5:6005"
   },
   "mf_project_app": {
-    url: "http://cudo-mf-project.softobiz.net"
+    url: "http://192.168.1.5:6006"
   },
   "mf_task_app": {
-    url: "http://cudo-mf-task.softobiz.net"
+    url: "http://192.168.1.5:6009"
   },
   "mf_document_app": {
-    url: "http://cudo-mf-document.softobiz.net"
+    url: "http://192.168.1.5:6010"
   },
   "kratos_BASE_URL": {
-    url: "http://cudoapp.softobiz.net"
+    url: "http://192.168.1.5:4455"
   },
   "kratos_KRATOS_BROWSER_URL": {
-    url: "http://cudoapp.softobiz.net/.ory/kratos/public"
+    url: "http://192.168.1.5:4455/.ory/kratos/public"
   },
   "kratos_KRATOS_PUBLIC_URL": {
-    url: "http://cudoapp.softobiz.net/.ory/kratos/public"
+    url: "http://192.168.1.5:4455/.ory/kratos/public"
   },
   "kratos_KRATOS_ADMIN_URL": {
-    url: "http://192.168.0.31:4434"
+    url: "http://192.168.1.5:4434"
   }
 }
