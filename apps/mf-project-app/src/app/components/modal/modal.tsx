@@ -558,13 +558,14 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
 
 
   return (
-    <div id="navbar">
+    <div className="add-project-area">
+    {/* <div id="navbar"> */}
       <Modal className="modal_media right-side--fixed-modal add-new-project-modal"
         closeIcon
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button size='small' className="primary">+ Add New</Button>}
+        trigger={<Button size='small' className="primary"><i className="ms-Icon ms-font-xl ms-Icon--Add ms-fontColor-themePrimary"></i> Add New</Button>}
       >
         <Modal.Header><h3>Add New Project </h3></Modal.Header>
         <Modal.Content body>
