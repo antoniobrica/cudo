@@ -56,6 +56,19 @@ export function ModalExampleModal(props: ProjectInfoProps) {
     { key: 'printingCompany', value: 'printing', text: 'Printing' },
   ]
 
+  const emailTypeOptions = [
+    { key: 'officeEmail', value: 'office', text: 'Office' },
+    { key: 'homeEmail', value: 'home', text: 'Home' },
+    { key: 'otherEmail', value: 'other', text: 'Other' },
+  ]
+
+  const phoneTypeOptions = [
+    { key: 'officePhone', value: 'office', text: 'Office' },
+    { key: 'homePhone', value: 'home', text: 'Home' },
+    { key: 'otherPhone', value: 'other', text: 'Other' },
+  ]
+
+
   const [open, setOpen] = React.useState(false)
   const [projectName, setProjectName] = React.useState("")
   const [projectNum, setProjectNum] = React.useState(0)
@@ -138,12 +151,12 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
   }
   const onprojectClient = (event, data) => {
     setClient(data.value)
-    if (data.value == 'click') {
-      return (
-        <div>
-          <ModalExampleCompany></ModalExampleCompany><br />
-        </div>)
-    }
+    // if (data.value == 'click') {
+    //   return (
+    //     <div>
+    //       <ModalExampleCompany></ModalExampleCompany><br />
+    //     </div>)
+    // }
   }
   const onBuildingType = (event, data) => {
     setBuildingType(data.value)
@@ -174,7 +187,7 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
     setAdressLine1(e.target.value);
   }
   const onAdressLine2 = e => {
-    setProjectName(e.target.value)
+    setAdressLine2(e.target.value)
   }
   const onCity = e => {
     setCity(e.target.value)
@@ -182,7 +195,6 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
   const onState = e => {
     setState(e.target.value)
   }
-
   const onZip = e => {
     setZip(e.target.vale)
   }
@@ -190,7 +202,6 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
     setCountry(data.value)
   }
   const onDescription = e => {
-    // setDescription(e.target.value)
     setDescription(e)
   }
 
@@ -198,6 +209,7 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
     setAddWorkTypes(prevCount => prevCount + 1);
   }
   const moreWorkTypes = (data) => {
+    console.log('----moreWorkTypes---', data)
     const worktypesArr = [];
     for (let i = 0; i < data.length; i++) {
       console.log('data', data[i])
@@ -248,8 +260,23 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
     setOpen(false);
     addProject({
       variables: {
-        projectName, projectNum, client, buildingType,
-        printingCom, description, projectWorkEstimates
+        // projectName, projectNum, client, buildingType,
+        // printingCom, description, projectWorkEstimates
+
+        projectName, 
+        projectNum,
+        client,
+        buildingType,
+        printingCompany,
+        description,
+        projectWorkEstimates,
+        addressLineOne: adressLine1,
+        addressLineTwo: adressLine2,
+        city,
+        state,
+        zip,
+        country,
+        createdBy: 'dev'
       },
       update: (
         cache,
@@ -649,7 +676,7 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
                     <Grid.Column>
                       <Form.Field>
                         <label>Type  </label>
-                        <Select placeholder='Select' className="small" options={countryOptions} />
+                        <Select placeholder='Select' className="small" options={emailTypeOptions} />
 
                       </Form.Field>
                     </Grid.Column>
@@ -698,7 +725,7 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
                     <Grid.Column  >
                       <Form.Field>
                         <label>Type  </label>
-                        <Select placeholder='Select' className="small" options={countryOptions} />
+                        <Select placeholder='Select' className="small" options={phoneTypeOptions} />
                       </Form.Field>
                     </Grid.Column>
                   </Grid.Row>
