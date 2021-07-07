@@ -49,17 +49,7 @@ const { loading, error, data } = useSessionQuery(GET_SESSIONS, {
 
     return (
         <div>
-            {/* <MeetingTab sessionListData={data} ></MeetingTab>             */}
-            <div className="no-data-found-info">
-         {/* <img src={img8} className="image_center"></img> */}
-              <img src="/assets/images/default_area.png" />
-
-              <h3>No Data Found</h3>
-              <p>Hey User, you don't have any active session on this project. Click the button below to create a session list.</p>
-              <Button size="small" className="primary">
-                  + Add New Session
-                </Button>
-            </div>
+            <MeetingTab sessionListData={data} ></MeetingTab>            
         </div>
     )    
 }
