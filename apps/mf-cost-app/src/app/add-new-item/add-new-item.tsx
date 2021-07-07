@@ -6,7 +6,10 @@ import { CREATE_COST, GET_COST } from '../graphql/graphql';
 import { ICosts } from '../interfaces/cost';
 
 /* eslint-disable-next-line */
-export interface AddNewItemProps { }
+export interface AddNewItemProps {
+  openCost
+  cancel
+}
 type User = {
   /** The user's email address */
   email: string;
@@ -54,7 +57,7 @@ export function AddNewItem(props: AddNewItemProps) {
 
   }
   return (
-    <ModalCost house={null} createCost={createCost}></ModalCost>
+    <ModalCost house={null} createCost={createCost} openCost={props.openCost} cancel={props.cancel}></ModalCost>
   );
 }
 

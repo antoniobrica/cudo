@@ -1,3 +1,4 @@
+
 interface IURL {
   url: string;
 }
@@ -19,12 +20,12 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
   },
   "ms_meeting": {
     url: "http://cudo-ms-meeting.softobiz.net/graphql"
-  },  
+  },
   "mf_cost_app": {
-    url: "http://192.168.29.131:6004"
+    url: "http://cudo-mf_cost.softobiz.net"
   },
   "mf_meeting_app": {
-    url: "http://192.168.29.131:6005"
+    url: "http://cudo-mf_meeting.softobiz.net"
   },
   "mf_project_app": {
     url: "http://192.168.29.131:6006"
@@ -47,5 +48,4 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
   "kratos_KRATOS_ADMIN_URL": {
     url: "http://192.168.29.131:4434"
   }
-
 }
