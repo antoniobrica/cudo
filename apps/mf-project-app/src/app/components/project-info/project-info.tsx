@@ -49,20 +49,21 @@ export function ProjectInfo(props: ProjectInfoProps) {
   return (
     <div>
       {/* <h1>Projects</h1> */}
-      <div>
+      {/* <div>
         <ModalExampleModal onSuccess={refresh}></ModalExampleModal>
-      </div>
+      </div> */}
 
       <div className="app-content-body body_cards_area project-listing-page">
         <div className="dashboard-header">
           <h3>All Projects <span className="total">Total {data.projects.length} project added</span></h3>
-          <div className="add-project-area">
-            <Button size='small' className="primary"><i className="ms-Icon ms-font-xl ms-Icon--Add ms-fontColor-themePrimary"></i> Add New</Button>
-          </div>
+          {/* <div className="add-project-area"> */}
+            {/* <Button size='small' className="primary"><i className="ms-Icon ms-font-xl ms-Icon--Add ms-fontColor-themePrimary"></i> Add New</Button> */}
+            <ModalExampleModal onSuccess={refresh}></ModalExampleModal>
+          {/* </div> */}
         </div>
 
         <Form>
-          <Grid>
+          {/* <Grid>
 
             <Grid.Row>
               {data.projects.map((project: IProject, i) => (
@@ -87,11 +88,11 @@ export function ProjectInfo(props: ProjectInfoProps) {
                           </span>
                         </div>
 
-                        {/* <div className="data-built">Level of building
+                         <div className="data-built">Level of building
             <span className="summary">3rd
                 
                 </span>
-            </div> */}
+            </div> 
 
                       </div>
                       <div className="content">
@@ -122,12 +123,55 @@ export function ProjectInfo(props: ProjectInfoProps) {
               ))}
             </Grid.Row>
 
-          </Grid>
+          </Grid> */}
 
 
           <div className="project-listing-cards">
             <ul>
-              <li>
+              {data?.projects?.map((project: IProject, i) => {
+                const { projectName, client, buildingType, description } = project
+                const shortDescription = description.length > 94 ? description.substring(0, 94) + '...' : description
+                return (
+                  <li key={i} onClick={() => openTask(project)}>
+                    <div className="project-logo-action">
+                      <div className="project-logo">
+                        <img src="/assets/images/default-logo.png" alt="Logo" />
+                      </div>
+
+                      <div className="project-action">
+                        <Dropdown icon='ellipsis horizontal' pointing='right'>
+                          <Dropdown.Menu className="dropdowncomplete">
+                            <Dropdown.Item icon='setting' text='Manage project' />
+                            <Dropdown.Item icon='tasks' text='View activity' />
+                            <Dropdown.Item icon='archive' text='Archive' />
+                            <Dropdown.Item icon='trash alternate outline' text='Delete' />
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </div>
+                    </div>
+
+                    <div className="project-name">
+                      <h4>{projectName ? projectName : 'NA'} <span>{client ? client : 'NA'}</span></h4>
+                    </div>
+
+                    <div className="project-info">
+                      <p>Type of building <span>{buildingType}</span></p>
+                      {/* <p>Level of building <span>3rd</span></p> */}
+                    </div>
+
+                    <div className="project-description">
+                      <p>{shortDescription ? shortDescription : 'NA'}</p>
+                      <div className="project-members">
+                        {/* <Label circular color="orange">AK</Label>
+                        <Label circular color="violet">AM</Label>
+                        <Label circular color="brown">VN</Label> */}
+                      </div>
+                    </div>
+                  </li>
+                )
+              }
+            )}
+              {/* <li>
                 <div className="project-logo-action">
                   <div className="project-logo">
                     <img src="/assets/images/default-logo.png" alt="Logo" />
@@ -199,44 +243,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
                     <Label circular color="brown">VN</Label>
                   </div>
                 </div>
-              </li>
-
-              <li>
-                <div className="project-logo-action">
-                  <div className="project-logo">
-                    <img src="/assets/images/default-logo.png" alt="Logo" />
-                  </div>
-
-                  <div className="project-action">
-                    <Dropdown icon='ellipsis horizontal' pointing='right'>
-                      <Dropdown.Menu className="dropdowncomplete">
-                        <Dropdown.Item icon='setting' text='Manage project' />
-                        <Dropdown.Item icon='tasks' text='View activity' />
-                        <Dropdown.Item icon='archive' text='Archive' />
-                        <Dropdown.Item icon='trash alternate outline' text='Delete' />
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </div>
-                </div>
-
-                <div className="project-name">
-                  <h4>Burj Khalifa <span>John & co.</span></h4>
-                </div>
-
-                <div className="project-info">
-                  <p>Type of building <span>Residential Buildings</span></p>
-                  <p>Level of building <span>3rd</span></p>
-                </div>
-
-                <div className="project-description">
-                  <p>This is description will be show sunt in culpa qui officia deserunt mollit anim id est laborum...</p>
-                  <div className="project-members">
-                    <Label circular color="orange">AK</Label>
-                    <Label circular color="violet">AM</Label>
-                    <Label circular color="brown">VN</Label>
-                  </div>
-                </div>
-              </li>
+              </li> */}
             </ul>
           </div>
 
