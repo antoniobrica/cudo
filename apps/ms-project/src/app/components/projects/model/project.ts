@@ -23,7 +23,7 @@ export class ProjectModel {
   buildingType?: string;
 
   @Field({ nullable: true })
-  printingCom?: string;
+  printingCompany?: string;
 
   @Field({ nullable: true })
   description?: string;
