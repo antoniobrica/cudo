@@ -1,3 +1,6 @@
+a {
+  cursor: pointer;
+}
 .project-listing-page {
   padding: 2.5rem 4.5rem;
   top: 0 !important;
@@ -188,18 +191,55 @@
       tr {
         td {
           border-top: 1px solid #F1F5F8;
-          a {
-            color: #718898;
-            font-size: 14px;
-            font-weight: 500;
+          form {
+            margin: 0;
+          }
+          &.add-more-work {
+            padding: 12px 10px;
+            a {
+              color: #718898;
+              font-size: 14px;
+              font-weight: 500;
+              cursor: pointer;
+              @include flex(flex);
+              i {
+                font-size: 16px;
+                color: #718898;
+                margin-right: 8px;
+              }
+            }
+          }
+          
+          .estimated-cost-field {
+            .ui.label {
+              max-height: 3rem;
+              padding: 0 10px;
+              background: none;
+              border: 1px solid #D0D8DF;
+              line-height: 100%;
+              font-size: 13px;
+              font-weight: 400;
+              color: #718898;
+              @include flex(flex);
+              @include align-items(center);
+            }
+            input {
+              height: 3rem;
+            }
           }
           .ui.selection.dropdown {
             min-height: 3rem !important;
+            max-width: 300px;
             > .text {
               margin: 0 0 0.45rem 0;
               font-size: 13px;
               font-weight: 500 !important;
               color: #1B1B40;
+            }
+            > .dropdown.icon {
+              margin: 0;
+              color: #718898;
+              opacity: 1;
             }
           }
         }

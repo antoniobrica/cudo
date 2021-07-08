@@ -23,13 +23,13 @@ export const GET_PROJECTS = gql`
       projectNum
       client
       buildingType
-      printingCom
+      printingCompany
       projectWorkTypes{
         workTypeName
         projectWorkTypeID
-              workTypeName
+        workTypeName
         estimatedCost
-        }
+      }
       description
     }
   }
@@ -44,13 +44,13 @@ query ProjectById($projectId: String!)
       projectNum
       client
       buildingType
-      printingCom
+      printingCompany
       projectWorkTypes{
         workTypeName
         projectWorkTypeID
-         workTypeName
+        workTypeName
         estimatedCost
-        }
+      }
       description
     }
   }
@@ -147,31 +147,51 @@ mutation CreateProject(
   $projectNum: Float!,
   $client: String!,
   $buildingType: String!,
-  $printingCom: String!,
+  $printingCompany: String!,
   $description: String!,
-  $projectWorkEstimates: [ProjectWorkParams!]!
-  ){ 
+  $projectWorkEstimates: [ProjectWorkParams!]!,
+  $addressLineOne: String!,
+  $addressLineTwo: String!,
+  $city: String!,
+  $state: String!,
+  $zip: String!,
+  $country: String!
+  $createdBy: String!
+){ 
     createProject(
     projectDetails: {
-    projectBasics:{
-    projectName: $projectName,
-    projectNum: $projectNum, 
-    client: $client,
-    buildingType: $buildingType,
-    printingCom: $printingCom,
-    description: $description
-   }
-   projectWorkEstimates: $projectWorkEstimates
+      projectBasics:{
+        projectName: $projectName,
+        projectNum: $projectNum, 
+        client: $client,
+        buildingType: $buildingType,
+        printingCompany: $printingCompany,
+        description: $description
+        addressLineOne: $addressLineOne
+        addressLineTwo: $addressLineTwo
+        city: $city
+        state: $state
+        zip: $zip
+        country: $country
+        createdBy: $createdBy
+      }
+      projectWorkEstimates: $projectWorkEstimates
    }
    referenceFilter: { referenceType: COMPANY, referenceID: "Sftobiz_1234" }
    ){
-    projectId
-    projectName
-    projectNum
-    client
-    buildingType
-    printingCom
-    description
+      projectId
+      projectName
+      projectNum
+      client
+      buildingType
+      printingCompany
+      projectWorkTypes{
+        workTypeName
+        projectWorkTypeID
+        workTypeName
+        estimatedCost
+      }
+      description
   }
 }`;
 

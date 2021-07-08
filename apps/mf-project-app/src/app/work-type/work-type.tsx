@@ -46,11 +46,11 @@ export function WorkType(props: WorkTypeProps) {
   }
 
   return (
-    <Table className="manage-work-table">
+    <Table className="manage-work-table" celled>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell width={12}>Work Type</Table.HeaderCell>
-          <Table.HeaderCell width='four'>Estimate Cost</Table.HeaderCell>
+          <Table.HeaderCell width={4}>Estimate Cost</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
 
@@ -73,7 +73,7 @@ export function WorkType(props: WorkTypeProps) {
                   </Table.Cell>
                   <Table.Cell>
                     <Form>
-                      <Form.Field>
+                      <Form.Field className="estimated-cost-field">
                         <Input label='$' size='small' className="full-width"
                           type="text"
                           value={field.estimatedCost}
@@ -88,13 +88,8 @@ export function WorkType(props: WorkTypeProps) {
             )
           }
           <Table.Row>
-            <Table.Cell>
-              <a onClick={() => handleAddInput()}>+ Add more </a>
-
-            </Table.Cell>
-            <Table.Cell></Table.Cell>
-            <Table.Cell>
-
+            <Table.Cell colspan="2" className="add-more-work">
+              <a onClick={() => handleAddInput()}><i className="ms-Icon ms-font-xl ms-Icon--Add ms-fontColor-themePrimary"></i> Add more </a>
             </Table.Cell>
           </Table.Row>
         </Table.Body>

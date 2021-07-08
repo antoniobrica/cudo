@@ -56,12 +56,25 @@ export function ModalExampleModal(props: ProjectInfoProps) {
     { key: 'printingCompany', value: 'printing', text: 'Printing' },
   ]
 
+  const emailTypeOptions = [
+    { key: 'officeEmail', value: 'office', text: 'Office' },
+    { key: 'homeEmail', value: 'home', text: 'Home' },
+    { key: 'otherEmail', value: 'other', text: 'Other' },
+  ]
+
+  const phoneTypeOptions = [
+    { key: 'officePhone', value: 'office', text: 'Office' },
+    { key: 'homePhone', value: 'home', text: 'Home' },
+    { key: 'otherPhone', value: 'other', text: 'Other' },
+  ]
+
+
   const [open, setOpen] = React.useState(false)
   const [projectName, setProjectName] = React.useState("")
   const [projectNum, setProjectNum] = React.useState(0)
   const [client, setClient] = React.useState("")
   const [buildingType, setBuildingType] = React.useState("")
-  const [printingCom, setPrintingCom] = React.useState("")
+  const [printing, setPrinting] = React.useState("")
   const [workType, setWorkType] = React.useState("")
   const [estCost, setEstCost] = React.useState(null)
   const [adressLine1, setAdressLine1] = React.useState("")
@@ -72,14 +85,14 @@ export function ModalExampleModal(props: ProjectInfoProps) {
   const [country, setCountry] = React.useState("")
   const [description, setDescription] = React.useState("")
   const [items, setItems] = React.useState([{ key: 'add_new', value: 'add_new', text: '+ add new' }]);
-  const [printingCompany, setPrintingCompany] = React.useState([]);
+  const [printingCompanies, setPrintingCompany] = React.useState([]);
   const [clientCompanies, setClientCompany] = React.useState([])
   const [buildingTypes, setBuildingTypes] = React.useState([])
   const [addWorkTypes, setAddWorkTypes] = React.useState(1)
   const [secondOpen, setSecondOpen] = React.useState(false)
   const [projectWorkEstimates, setProjectWorkEstimates] = React.useState(null)
 
-const [companyCountry, setCompanyCountry] = React.useState(null)
+  const [companyCountry, setCompanyCountry] = React.useState(null)
 
   // const [addProject] = useProjectMutation(ADD_PROJECT);
 
@@ -94,15 +107,28 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
   )
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
   const { loading: worktypeLoading, error, data: worktypeData } = useWorkTypesQuery(GET_WORKTYPES);
-  const { loading: companyLoading, data: printingCompanyData } = useCompanyQuery(GET_PRINTING_COMPANY);
+  const { loading: companyLoading, data: printingCompany } = useCompanyQuery(GET_PRINTING_COMPANY);
   const { loading: clientLoading, data: clientCompany } = useCompanyQuery(GET_CLIENT_COMPANY);
   const { loading: buildingTypesloading, data: buildingTypesData } = useBuildingTypesQuery(GET_BUILDINGTYPES);
 
+  
   React.useEffect(() => {
-    if (worktypeData) {
+     if (worktypeData) {
       setItems(worktypeData.workTypes.map(({ name, workTypeID }) => ({ key: name, value: name, text: name, id: workTypeID })));
     }
   }, [worktypeData]);
+
+  // React.useEffect(() => {
+  //   console.log('---worktypeData?.workTypes---', worktypeData?.workTypes)
+  //   console.log('---projectWorkEstimates---', projectWorkEstimates)
+  //   if (worktypeData?.workTypes?.length >= projectWorkEstimates?.length) {
+  //     const usedWorkTypeIDs = projectWorkEstimates.map((item) => item.workTypeID)
+  //     // console.log('---usedWorkTypeIDs---', usedWorkTypeIDs)
+  //     const availableWorkTypes = worktypeData.workTypes.filter((item) => !usedWorkTypeIDs.includes(item.workTypeID))
+  //     console.log('---availableWorkTypes---', availableWorkTypes)
+  //     setItems(availableWorkTypes.map(({ name, workTypeID }) => ({ key: name, value: name, text: name, id: workTypeID })));
+  //   }
+  // }, [worktypeData, projectWorkEstimates]);
 
   React.useEffect(() => {
     if (buildingTypesData) {
@@ -111,10 +137,10 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
   }, [buildingTypesData]);
 
   React.useEffect(() => {
-    if (printingCompanyData) {
-      setPrintingCompany(printingCompanyData.company.map(({ companyName }) => ({ key: companyName, value: companyName, text: companyName })));
+    if (printingCompany) {
+      setPrintingCompany(printingCompany.company.map(({ companyName }) => ({ key: companyName, value: companyName, text: companyName })));
     }
-  }, [printingCompanyData]);
+  }, [printingCompany]);
 
   React.useEffect(() => {
     if (clientCompany) {
@@ -138,26 +164,27 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
   }
   const onprojectClient = (event, data) => {
     setClient(data.value)
-    if (data.value == 'click') {
-      return (
-        <div>
-          <ModalExampleCompany></ModalExampleCompany><br />
-        </div>)
-    }
+    // if (data.value == 'click') {
+    //   return (
+    //     <div>
+    //       <ModalExampleCompany></ModalExampleCompany><br />
+    //     </div>)
+    // }
   }
   const onBuildingType = (event, data) => {
     setBuildingType(data.value)
   }
 
-  const onPrintingCom = (event, data) => {
-    if (data.value == 'add') {
-      return (
-        <ModalExamplePrinting />
-      )
-    }
-    else {
-      setPrintingCom(data.value)
-    }
+  const onProjectPrinting = (event, data) => {
+    setPrinting(data.value)
+    // if (data.value == 'add') {
+    //   return (
+    //     <ModalExamplePrinting />
+    //   )
+    // }
+    // else {
+    //   setPrintingCom(data.value)
+    // }
 
   }
 
@@ -174,7 +201,7 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
     setAdressLine1(e.target.value);
   }
   const onAdressLine2 = e => {
-    setProjectName(e.target.value)
+    setAdressLine2(e.target.value)
   }
   const onCity = e => {
     setCity(e.target.value)
@@ -182,15 +209,13 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
   const onState = e => {
     setState(e.target.value)
   }
-
   const onZip = e => {
-    setZip(e.target.vale)
+    setZip(e.target.value)
   }
   const onCountry = (data) => {
-    setCountry(data.value)
+    setCountry(data)
   }
   const onDescription = e => {
-    // setDescription(e.target.value)
     setDescription(e)
   }
 
@@ -198,20 +223,22 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
     setAddWorkTypes(prevCount => prevCount + 1);
   }
   const moreWorkTypes = (data) => {
-    const worktypesArr = [];
-    for (let i = 0; i < data.length; i++) {
-      console.log('data', data[i])
-      worktypeData.workTypes.map(d => {
-        if (d.name == data[i].workTypeName) {
-          console.log('workTypeName----', d.workTypeID);
-          data[i].workTypeID = d.workTypeID;
-        }
-      })
-    }
-    console.log('worktypes==>', data)
+    
+      console.log('----moreWorkTypes---', data)
+      const worktypesArr = [];
+      for (let i = 0; i < data.length; i++) {
+        // console.log('data', data[i])
+        worktypeData.workTypes.map(d => {
+          if (d.name == data[i].workTypeName) {
+            // console.log('workTypeName----', d.workTypeID);
+            data[i].workTypeID = d.workTypeID;
+          }
+        })
+      }
+      console.log('worktypes==>', data)
 
-    setProjectWorkEstimates(data);
-
+      setProjectWorkEstimates(data);
+    
   }
 
   const validation = () => {
@@ -244,19 +271,35 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
       setValidationErrors(validationResponse)
       return false
     }
-
+    console.log('-----country----', country)
+    // console.log('-----printing----', printing)
     setOpen(false);
     addProject({
       variables: {
-        projectName, projectNum, client, buildingType,
-        printingCom, description, projectWorkEstimates
+        // projectName, projectNum, client, buildingType,
+        // printingCom, description, projectWorkEstimates
+
+        projectName,
+        projectNum,
+        client,
+        buildingType,
+        printingCompany:printing,
+        description,
+        projectWorkEstimates,
+        addressLineOne: adressLine1,
+        addressLineTwo: adressLine2,
+        city,
+        state,
+        zip,
+        country,
+        createdBy: 'dev'
       },
       update: (
         cache,
         data
       ) => {
         const cacheData = cache.readQuery({ query: GET_PROJECTS }) as IProjects;
-        console.log('data--', data)
+        console.log('---after add project data--', data)
         cache.writeQuery({
           query: GET_PROJECTS,
           data: {
@@ -286,6 +329,7 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
           <Grid columns={2}>
             <Grid.Row>
               <Grid.Column>
+                {/* <Form.Field error> */}
                 <Form.Field>
                   <label>What's the Project Name? <span className="danger">*</span></label>
                   <Input
@@ -295,6 +339,7 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
                     value={projectName}
                     onChange={onprojectNameChange}
                   />
+                  {/* <span className="error-message">There is some error</span> */}
                 </Form.Field>
               </Grid.Column>
 
@@ -344,9 +389,9 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
               <Grid.Column>
                 <Form.Field>
                   <label>Printing Company </label>
-                  <Select placeholder='Select' className="small" options={printingCompany}
-                    value={printingCom}
-                    onChange={onPrintingCom}
+                  <Select placeholder='Select' className="small" options={printingCompanies}
+                    value={printing}
+                    onChange={onProjectPrinting}
                   />
                 </Form.Field>
                 <Form.Field>
@@ -356,7 +401,7 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
             </Grid.Row>
           </Grid>
         </Form>
-        
+
         <Header className="header" >Manage work type and estimated cost</Header>
         <WorkType worktypes={items} workTypeData={moreWorkTypes} />
         {/*  <Table>
@@ -559,7 +604,7 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
 
   return (
     <div className="add-project-area">
-    {/* <div id="navbar"> */}
+      {/* <div id="navbar"> */}
       <Modal className="modal_media right-side--fixed-modal add-new-project-modal"
         closeIcon
         onClose={() => setOpen(false)}
@@ -649,7 +694,7 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
                     <Grid.Column>
                       <Form.Field>
                         <label>Type  </label>
-                        <Select placeholder='Select' className="small" options={countryOptions} />
+                        <Select placeholder='Select' className="small" options={emailTypeOptions} />
 
                       </Form.Field>
                     </Grid.Column>
@@ -698,7 +743,7 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
                     <Grid.Column  >
                       <Form.Field>
                         <label>Type  </label>
-                        <Select placeholder='Select' className="small" options={countryOptions} />
+                        <Select placeholder='Select' className="small" options={phoneTypeOptions} />
                       </Form.Field>
                     </Grid.Column>
                   </Grid.Row>
@@ -769,7 +814,7 @@ const [companyCountry, setCompanyCountry] = React.useState(null)
               />
               <Button size='small' className="icon-border" onClick={() => setSecondOpen(false)}>
                 <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply ms-fontColor-themePrimary"></i> Cancel
-        </Button>
+              </Button>
 
 
 
