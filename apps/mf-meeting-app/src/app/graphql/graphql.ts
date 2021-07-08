@@ -61,15 +61,23 @@ mutation CreateSession(
         members:$members 
       } 
   
-    ){ 
+    ){      
       sessionID 
       sessionTitle 
-      admins{adminID,adminName,image} 
-      members{memberID,memberName,image} 
-  
-    } 
-  
-  
+      worktypeTitle 
+      meetingCategoryID
+      meetingCategoryTitle 
+      admins { 
+        adminID 
+        adminName 
+        image
+      } 
+      members { 
+        memberID 
+        memberName 
+        image        
+      }   
+    }
 }`;
 
 

@@ -11,11 +11,15 @@ trigger:
       - apps/ms-document/*
       - apps/ms-project/*
       - apps/ms-task/*
+      - apps/ms-cost/*
+      - apps/ms-meeting/*
       - apps/mf-account-app/*
       - apps/mf-container-app/*
       - apps/mf-task-app/*
       - apps/mf-document-app/*
       - apps/mf-project-app/*
+      - apps/mf-cost-app/*
+      - apps/mf-meeting-app/*
       - deploy/docker-compose-ory/*
       - libs/*
 jobs:
@@ -74,6 +78,18 @@ jobs:
             break
             }
             }
+            foreach($path in $changesFolder){
+              if($path -match '/mf-cost-app'){
+             echo "##vso[task.setvariable variable=mfcostapp;isOutput=true]$True"
+            break
+            }
+            }
+            foreach($path in $changesFolder){
+              if($path -match '/mf-meeting-app'){
+             echo "##vso[task.setvariable variable=mfmeetingapp;isOutput=true]$True"
+            break
+            }
+            }
             ######################################################Backend####################################################################            
             foreach($path in $changesFolder){
               if($path -match '/apps/ms-account'){
@@ -96,6 +112,18 @@ jobs:
             foreach($path in $changesFolder){
               if($path -match '/apps/ms-task'){
              echo "##vso[task.setvariable variable=mstask;isOutput=true]$True"
+            break
+            }
+            }
+            foreach($path in $changesFolder){
+              if($path -match '/apps/ms-cost'){
+             echo "##vso[task.setvariable variable=mscost;isOutput=true]$True"
+            break
+            }
+            }
+            foreach($path in $changesFolder){
+              if($path -match '/apps/ms-meeting'){
+             echo "##vso[task.setvariable variable=msmeeting;isOutput=true]$True"
             break
             }
             }
@@ -152,6 +180,7 @@ jobs:
               dockerfile: dist/apps/mf-account-app/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
+          - bash : helm upgrade  --namespace cudo-f-dev --install --wait cudo-aa /home/softobiz/charts/cudo-helm/dev/mf-account-app-dev/mf-account-app-dev-0.1.0.tgz
 - job: mfcontainerapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -172,6 +201,7 @@ jobs:
               dockerfile: dist/apps/mf-container-app/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
+          - bash : helm upgrade  --namespace cudo-f-dev --install --wait env-ca /home/softobiz/charts/cudo-helm/dev/mf-container-app-dev/mf-container-app-dev-0.1.0.tgz
 - job: mftaskapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -192,6 +222,7 @@ jobs:
               dockerfile: dist/apps/mf-task-app/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
+          - bash : helm upgrade  --namespace cudo-f-dev --install --wait cudo-ta /home/softobiz/charts/cudo-helm/dev/mf-task-app-dev/mf-task-app-dev-0.1.0.tgz
 - job: mfdocumentapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -212,6 +243,7 @@ jobs:
               dockerfile: dist/apps/mf-document-app/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
+          - bash : helm upgrade  --namespace cudo-f-dev --install --wait cudo-da /home/softobiz/charts/cudo-helm/dev/mf-document-app-dev/mf-document-app-dev-0.1.0.tgz
 - job: mfprojectapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -232,6 +264,49 @@ jobs:
               dockerfile: dist/apps/mf-project-app/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
+          - bash : helm upgrade  --namespace cudo-f-dev --install --wait cudo-pa /home/softobiz/charts/cudo-helm/dev/mf-project-app-dev/mf-project-app-dev-0.1.0.tgz
+- job: mfcostapp
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.mfcostapp'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='mf-cost-app' --with-deps --generatePackageJson=true
+                  cp devops/docker/mf-dockerfile dist/apps/mf-cost-app/Dockerfile
+                  cp devops/docker/nginx.conf dist/apps/mf-cost-app/
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: mf-cost-app-dev
+              dockerfile: dist/apps/mf-cost-app/Dockerfile
+              containerRegistry: dev-docker-registry
+              tags: latest
+          - bash : helm upgrade  --namespace cudo-f-dev --install --wait cudo-costa /home/softobiz/charts/cudo-helm/dev/mf-cost-app-dev/mf-cost-app-dev-0.1.0.tgz
+- job: mfmeetingapp
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.mfmeetingapp'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='mf-meeting-app' --with-deps --generatePackageJson=true
+                  cp devops/docker/mf-dockerfile dist/apps/mf-meeting-app/Dockerfile
+                  cp devops/docker/nginx.conf dist/apps/mf-meeting-app/
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: mf-meeting-app-dev
+              dockerfile: dist/apps/mf-meeting-app/Dockerfile
+              containerRegistry: dev-docker-registry
+              tags: latest
+          - bash : helm upgrade  --namespace cudo-f-dev --install --wait cudo-meeta /home/softobiz/charts/cudo-helm/dev/mf-meeting-app-dev/mf-meeting-app-dev-0.1.0.tgz
 ###################################################Backend####################################################################################
 - job: msaccount
   pool: cudo-selfhosted-agent
@@ -252,7 +327,7 @@ jobs:
               dockerfile: dist/apps/ms-account/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
-  
+          - bash : helm upgrade  --namespace cudo-b-dev --install --wait cudo-acc-ms /home/softobiz/charts/cudo-helm/dev/ms-account-dev/ms-account-dev-0.1.0.tgz
 - job: msdocument
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -272,6 +347,7 @@ jobs:
               dockerfile: dist/apps/ms-document/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
+          - bash : helm upgrade  --namespace cudo-b-dev --install --wait cudo-ms-docu /home/softobiz/charts/cudo-helm/dev/ms-document-dev/ms-document-dev-0.1.0.tgz
 - job: msproject
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -291,7 +367,7 @@ jobs:
               dockerfile: dist/apps/ms-project/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
-
+          - bash : helm upgrade  --namespace cudo-b-dev --install --wait cudo-ms-project /home/softobiz/charts/cudo-helm/dev/ms-project-dev/ms-project-dev-0.1.0.tgz
 - job: mstask
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -311,3 +387,44 @@ jobs:
               dockerfile: dist/apps/ms-task/Dockerfile
               containerRegistry: dev-docker-registry
               tags: latest
+          - bash : helm upgrade  --namespace cudo-b-dev --install --wait cudo-ms-tas /home/softobiz/charts/cudo-helm/dev/ms-task-dev/ms-task-dev-0.1.0.tgz
+- job: mscost
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.mscost'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='ms-cost' --with-deps --generatePackageJson=true
+                  cp devops/docker/ms-dockerfile dist/apps/ms-cost/Dockerfile
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: ms-cost-dev
+              dockerfile: dist/apps/ms-cost/Dockerfile
+              containerRegistry: dev-docker-registry
+              tags: latest
+          - bash : helm upgrade  --namespace cudo-b-dev --install --wait cudo-ms-cos /home/softobiz/charts/cudo-helm/dev/ms-cost-dev/ms-cost-dev-0.1.0.tgz
+- job: msmeeting
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.msmeeting'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='ms-meeting' --with-deps --generatePackageJson=true
+                  cp devops/docker/ms-dockerfile dist/apps/ms-meeting/Dockerfile
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: ms-meeting-dev
+              dockerfile: dist/apps/ms-meeting/Dockerfile
+              containerRegistry: dev-docker-registry
+              tags: latest
+          - bash : helm upgrade  --namespace cudo-b-dev --install --wait cudo-ms-meet /home/softobiz/charts/cudo-helm/dev/ms-meeting-dev/ms-meeting-dev-0.1.0.tgz

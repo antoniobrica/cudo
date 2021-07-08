@@ -31,12 +31,12 @@ export interface IMembers {
 
 export interface ISessions {
   sessions: ISession[];
-  paginatedSession: IPaginatedSession
+  paginatedSession: IPaginatedSession;  
   // results: ISession[]
 }
 
 export interface SessionMutation {
-  addSession: ISession;
+  addSession: ISession; 
 }
 
 export interface IPaginatedSession {
