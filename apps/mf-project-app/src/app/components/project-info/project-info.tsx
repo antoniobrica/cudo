@@ -8,6 +8,7 @@ import Modal from 'react-modal';
 import { Card, Icon, Form, Grid, Button, Dropdown, Label } from 'semantic-ui-react'
 import { useHistory } from "react-router";
 import { LoaderPage } from "@cudo/shared-components"
+import ReactQuill, { Quill } from 'react-quill';
 
 //import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
 
@@ -57,8 +58,8 @@ export function ProjectInfo(props: ProjectInfoProps) {
         <div className="dashboard-header">
           <h3>All Projects <span className="total">Total {data.projects.length} project added</span></h3>
           {/* <div className="add-project-area"> */}
-            {/* <Button size='small' className="primary"><i className="ms-Icon ms-font-xl ms-Icon--Add ms-fontColor-themePrimary"></i> Add New</Button> */}
-            <ModalExampleModal onSuccess={refresh}></ModalExampleModal>
+          {/* <Button size='small' className="primary"><i className="ms-Icon ms-font-xl ms-Icon--Add ms-fontColor-themePrimary"></i> Add New</Button> */}
+          <ModalExampleModal onSuccess={refresh}></ModalExampleModal>
           {/* </div> */}
         </div>
 
@@ -130,9 +131,9 @@ export function ProjectInfo(props: ProjectInfoProps) {
             <ul>
               {data?.projects?.map((project: IProject, i) => {
                 const { projectName, client, buildingType, description } = project
-                const shortDescription = description.length > 94 ? description.substring(0, 94) + '...' : description
+                // const shortDescription = description.length > 94 ? description.substring(0, 94) + '...' : description
                 return (
-                  <li key={i} onClick={() => openTask(project)}>
+                  <li key={i} >
                     <div className="project-logo-action">
                       <div className="project-logo">
                         <img src="/assets/images/default-logo.png" alt="Logo" />
@@ -141,6 +142,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
                       <div className="project-action">
                         <Dropdown icon='ellipsis horizontal' pointing='right'>
                           <Dropdown.Menu className="dropdowncomplete">
+                            <Dropdown.Item icon='eye' text='View detail' onClick={() => openTask(project)} />
                             <Dropdown.Item icon='setting' text='Manage project' />
                             <Dropdown.Item icon='tasks' text='View activity' />
                             <Dropdown.Item icon='archive' text='Archive' />
@@ -160,7 +162,8 @@ export function ProjectInfo(props: ProjectInfoProps) {
                     </div>
 
                     <div className="project-description">
-                      <p>{shortDescription ? shortDescription : 'NA'}</p>
+                      {/* <p>{shortDescription ? shortDescription : 'NA'}</p> */}
+                      <p><ReactQuill id="txtDescription" readOnly={true} value={description} modules={{ toolbar: null }} /></p>
                       <div className="project-members">
                         {/* <Label circular color="orange">AK</Label>
                         <Label circular color="violet">AM</Label>
@@ -170,7 +173,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
                   </li>
                 )
               }
-            )}
+              )}
               {/* <li>
                 <div className="project-logo-action">
                   <div className="project-logo">
