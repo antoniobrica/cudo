@@ -66,7 +66,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
   const [followers, setfollowers] = React.useState<any>([]);
   const history = useHistory();
   const res = history.location.pathname.split("/");
-  const referenceID = res[3].toString();
+  const referenceID = res[3]?.toString();
   React.useEffect(() => {
     if (referenceID) {
       getWorkType(referenceID)
@@ -428,7 +428,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         type="text"
                       />
                     </Form.Field> */}
-                    <AssigneeIndex assignees={props.taskData.assignees} parentAsigneeSelect={setAsignee} name="Assignee" />
+                    <AssigneeIndex assignees={props?.taskData?.assignees} parentAsigneeSelect={setAsignee} name="Assignee" />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>

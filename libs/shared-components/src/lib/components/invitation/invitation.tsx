@@ -1,14 +1,19 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 import './../../../assets/style/index.scss'
-import { Tab, Dropdown } from 'semantic-ui-react';
+import { Tab, Dropdown, Button } from 'semantic-ui-react';
 import img from 'libs/shared-components/src/user.png';
 import img3 from 'libs/shared-components/src/calendar.png';
 
 /* eslint-disable-next-line */
-export interface TabsProps { }
+export interface ViewInvitationProps { 
+  sessionId?
+}
 
-export function InvitationTab(props: TabsProps) {
+export function InvitationTab(props: ViewInvitationProps) {
+
+  
+
   const panes = [
     {
       menuItem: {
@@ -276,7 +281,7 @@ export function InvitationTab(props: TabsProps) {
     },
   ];
 
-  return (
+  return (    
     <div className="app-content-body-dash navbar-collapse">
       <div>
         <i className="ms-Icon ms-Icon--Back" aria-hidden="true"></i>{' '}
