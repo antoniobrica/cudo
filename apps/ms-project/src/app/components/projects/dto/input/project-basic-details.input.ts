@@ -16,7 +16,7 @@ export class ProjectBasicDetailsInput {
     buildingType?: string;
 
     @Field({ description: `printing Company` })
-    printingCom?: string;
+    printingCompany?: string;
 
     @Field({ description: `Tell more about the project` })
     description?: string;
@@ -38,5 +38,11 @@ export class ProjectBasicDetailsInput {
 
     @Field({ description: `country`, nullable: true  })
     country?: string;
+
+    @Field({ description: `project created by`, nullable: true })
+    createdBy?: string;
+
+    @Field({ description: ` project updated by`, nullable: true })
+    updatedBy?: string;
 
 }
