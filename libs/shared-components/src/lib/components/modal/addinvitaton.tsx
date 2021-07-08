@@ -18,7 +18,11 @@ import img4 from 'libs/shared-components/src/avatar_3.png';
 import img5 from 'libs/shared-components/src/user.png';
 import img6 from 'libs/shared-components/src/calendar.png';
 
-function ModalAddInvitation() {
+export interface AddInvitationProps { 
+  sessionId?
+}
+
+export function ModalAddInvitation(props: AddInvitationProps) {
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },

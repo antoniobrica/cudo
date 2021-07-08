@@ -24,8 +24,8 @@ import { ValidationError } from '@hapi/joi';
 export interface SessionProps {
   workTypes?
   createSession?
-  openAddSession
-  cancel
+  openAddSession?
+  cancel?
 }
 
 export function ModalSession(props: SessionProps) {
