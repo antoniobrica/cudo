@@ -23,7 +23,7 @@ trigger:
       - deploy/docker-compose-ory/*
       - libs/*
 variables:
-  tag: '$(Build.BuildId)'
+  - group: dev
 
 jobs:
 - job: cudogetchp
