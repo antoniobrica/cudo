@@ -32,8 +32,8 @@ export function ModalAddInvitation(props: AddInvitationProps) {
 
   return (
     <div id="navbar">
-      <Modal
-        className="modal_media"
+      <Modal className="modal_media right-side--fixed-modal add-new-invitation-modal"
+        closeIcon
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
@@ -108,23 +108,13 @@ export function ModalAddInvitation(props: AddInvitationProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>Members</label>
-
-                      <Dropdown
-                        className="small_drop"
-                        clearable
-                        fluid
-                        multiple
-                        search
-                        selection
-                        options={countryOptions}
-                        placeholder="Select Country"
-                      />
+                      <Select options={countryOptions} placeholder='Select Company' className="small" />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
 
-              <Grid columns={5}>
+              {/* <Grid columns={5}>
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
@@ -164,24 +154,14 @@ export function ModalAddInvitation(props: AddInvitationProps) {
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
-              </Grid>
+              </Grid> */}
 
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
                       <label>Invite Guests</label>
-
-                      <Dropdown
-                        className="small_drop"
-                        clearable
-                        fluid
-                        multiple
-                        search
-                        selection
-                        options={countryOptions}
-                        placeholder="Select Country"
-                      />
+                      <Select options={countryOptions} placeholder='Select Company' className="small" />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -200,7 +180,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
+                    <Form.Field className="add-files-dropdown-area">
                       <label>Add Files</label>
 
                       <div className="dashed_area md_upload">
@@ -221,7 +201,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>Select protocols</label>
-                      <Select options={countryOptions} placeholder='Select Company' className="full-width" />
+                      <Select options={countryOptions} placeholder='Select Company' className="small" />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -234,15 +214,15 @@ export function ModalAddInvitation(props: AddInvitationProps) {
             content="Submit"
             onClick={() => setOpen(false)}
             positive
-            size="mini"
-            className="grey-btn"
+            size="small"
+            className="primary"
           />
           <Button
-            size="mini"
+            size="small"
             className="icon-border"
             onClick={() => setOpen(false)}
           >
-            X Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply ms-fontColor-themePrimary"></i> Cancel
           </Button>
         </Modal.Actions>
       </Modal>
