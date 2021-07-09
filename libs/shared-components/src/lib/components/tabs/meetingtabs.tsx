@@ -9,22 +9,26 @@ import img3 from 'libs/shared-components/src/pink.png';
 import img2 from 'libs/shared-components/src/star_img.png';
 import img5 from 'libs/shared-components/src/green.png';
 
+import { InvitationTab, ModalAddInvitation } from '@cudo/shared-components'
+
 // import ModalSession from 'libs/shared-components/src/lib/components/modal/addsession'
 //  /add-session/add-session';
 
 /* eslint-disable-next-line */
-export interface IMeetingTab {
+export interface MeetingTab {
   sessionListData?
   addSession?
 }
 
-export function MeetingTab(props: IMeetingTab) {
+export function MeetingTab(props: MeetingTab) {
 
   const [categoryItems, setCategoryItems] = useState([])
   const [sessionList, setSessionList] = useState([])
+  const [openSessionDetail, setOpenSessionDetail] = useState(false)
+  const [sessionId, setSessionId] = useState(null)
 
   useEffect(() => {
-    if (props.sessionListData.paginatedSession.results) {
+    if (props?.sessionListData?.paginatedSession?.results) {
       const resultList = props.sessionListData.paginatedSession.results
 
       setSessionList(resultList)
@@ -155,6 +159,8 @@ export function MeetingTab(props: IMeetingTab) {
 
   const viewSessionDetail = (sessionID) => {
     console.log('---View invitation list and show add invitation option')
+    setSessionId(sessionID)
+    setOpenSessionDetail(true)
   }
 
   const editSessionDetail = (sessionID) => {
@@ -175,159 +181,167 @@ export function MeetingTab(props: IMeetingTab) {
     <Segment>Pellentesque habitant morbi tristique senectus.</Segment>,
   ];
 
+
   return (
+    <div>
+      {openSessionDetail ?
+        <div>
+          <ModalAddInvitation sessionId={sessionId} />
+          <InvitationTab sessionId={sessionId} />
+        </div> : null
+      }
 
-    <div className="meetings-outer-con">
+      <div className="meetings-outer-con">
 
-      <h3>Meetings
-        <Button onClick={clickAddSession} size="small" className="primary">
-          + Add New Session
-        </Button>
+        <h3>Meetings
+          <Button onClick={clickAddSession} size="small" className="primary">
+            + Add New Session
+          </Button>
 
-      </h3>
+        </h3>
 
-      {/* //=====Upcoming List for Invitations============== */}
-      <div className="meetings-listing upcoming-meeting-con">
-        <span className="preliminary-font">
-          <img src={img6} />
-          <h3>
-            {' '}
-            Upcoming meetings{' '}
-          </h3>{' '}
-        </span>
+        {/* //=====Upcoming List for Invitations============== */}
+        <div className="meetings-listing upcoming-meeting-con">
+          <span className="preliminary-font">
+            <img src={img6} />
+            <h3>
+              {' '}
+              Upcoming meetings{' '}
+            </h3>{' '}
+          </span>
 
-        <div className="card1 card-custom">
-          <div className="card-body d-flex align-items-center justify-content-between flex-wrap">
-            <div className="d-flex align-items-center meetings-session-info">
-              <span className="textt">Today</span>
-              <span className="session-date">10 Sep,2020</span>
-              <div className="d-flex session-time">
-                <div className="d-flex">
-                  <div className="navi-item mr-2">
-                    <a href=" " className="navi-link active">
-                      <span className="navi-text">
-                        {' '}
-                        <i
-                          className="ms-Icon ms-Icon--Clock"
-                          aria-hidden="true"
-                        ></i>{' '}
-                        11:00 AM-11:45 AM
-                      </span>
-                    </a>
-                  </div>
+          <div className="card1 card-custom">
+            <div className="card-body d-flex align-items-center justify-content-between flex-wrap">
+              <div className="d-flex align-items-center meetings-session-info">
+                <span className="textt">Today</span>
+                <span className="session-date">10 Sep,2020</span>
+                <div className="d-flex session-time">
+                  <div className="d-flex">
+                    <div className="navi-item mr-2">
+                      <a href=" " className="navi-link active">
+                        <span className="navi-text">
+                          {' '}
+                          <i
+                            className="ms-Icon ms-Icon--Clock"
+                            aria-hidden="true"
+                          ></i>{' '}
+                          11:00 AM-11:45 AM
+                        </span>
+                      </a>
+                    </div>
 
-                  <div className="navi-item mr-2">
-                    <a className="navi-link">
-                      <span className="session-time-left">45 min </span>
-                    </a>
-                  </div>
+                    <div className="navi-item mr-2">
+                      <a className="navi-link">
+                        <span className="session-time-left">45 min </span>
+                      </a>
+                    </div>
 
-                  <div className="navi-item ">
-                    <a href="" className="navi-link">
-                      <span className="session-job-title">(Electrical Work) </span>
-                    </a>
+                    <div className="navi-item ">
+                      <a href="" className="navi-link">
+                        <span className="session-job-title">(Electrical Work) </span>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div className="session-actions-con">
-              <div className="session-attach-dropdown tasks-action-area">
-                <img src={img} />
-                <span className="session-attachements">
-                  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>
-                  3
-                </span>
-                <div className="symbol-group symbol-hover py-2" >
-                  <div className="symbol symbol-30 d-flex">
-                    <span className="dropdown-action">
-                      <Dropdown icon='ellipsis horizontal' pointing='right'>
-                        <Dropdown.Menu>
-                          <Dropdown.Item icon="eye" text="View detail" />
-                          <Dropdown.Item icon="pencil" text="Edit" />
-                          <Dropdown.Item
-                            icon="trash alternate outline"
-                            text="Delete"
-                          />
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </span>
+              <div className="session-actions-con">
+                <div className="session-attach-dropdown tasks-action-area">
+                  <img src={img} />
+                  <span className="session-attachements">
+                    <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>
+                    3
+                  </span>
+                  <div className="symbol-group symbol-hover py-2" >
+                    <div className="symbol symbol-30 d-flex">
+                      <span className="dropdown-action">
+                        <Dropdown icon='ellipsis horizontal' pointing='right'>
+                          <Dropdown.Menu>
+                            <Dropdown.Item icon="eye" text="View detail" />
+                            <Dropdown.Item icon="pencil" text="Edit" />
+                            <Dropdown.Item
+                              icon="trash alternate outline"
+                              text="Delete"
+                            />
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="card1 card-custom">
-          <div className="card-body d-flex align-items-center justify-content-between flex-wrap">
-            <div className="d-flex align-items-center meetings-session-info">
-              <span className="textt">Today</span>
-              <span className="session-date">10 Sep,2020</span>
-              <div className="d-flex session-time">
-                <div className="d-flex">
-                  <div className="navi-item mr-2">
-                    <a href=" " className="navi-link active">
-                      <span className="navi-text">
-                        {' '}
-                        <i
-                          className="ms-Icon ms-Icon--Clock"
-                          aria-hidden="true"
-                        ></i>{' '}
-                        11:00 AM-11:45 AM
-                      </span>
-                    </a>
-                  </div>
+          <div className="card1 card-custom">
+            <div className="card-body d-flex align-items-center justify-content-between flex-wrap">
+              <div className="d-flex align-items-center meetings-session-info">
+                <span className="textt">Today</span>
+                <span className="session-date">10 Sep,2020</span>
+                <div className="d-flex session-time">
+                  <div className="d-flex">
+                    <div className="navi-item mr-2">
+                      <a href=" " className="navi-link active">
+                        <span className="navi-text">
+                          {' '}
+                          <i
+                            className="ms-Icon ms-Icon--Clock"
+                            aria-hidden="true"
+                          ></i>{' '}
+                          11:00 AM-11:45 AM
+                        </span>
+                      </a>
+                    </div>
 
-                  <div className="navi-item mr-2">
-                    <a className="navi-link">
-                      <span className="session-time-left">45 min </span>
-                    </a>
-                  </div>
+                    <div className="navi-item mr-2">
+                      <a className="navi-link">
+                        <span className="session-time-left">45 min </span>
+                      </a>
+                    </div>
 
-                  <div className="navi-item ">
-                    <a href="" className="navi-link">
-                      <span className="session-job-title">(Electrical Work) </span>
-                    </a>
+                    <div className="navi-item ">
+                      <a href="" className="navi-link">
+                        <span className="session-job-title">(Electrical Work) </span>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div className="session-actions-con">
-              <div className="session-attach-dropdown tasks-action-area">
-                <img src={img} />
-                <span className="session-attachements">
-                  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>
-                  3
-                </span>
-                <div className="symbol-group symbol-hover py-2" >
-                  <div className="symbol symbol-30 d-flex">
-                    <span className="dropdown-action">
-                      <Dropdown icon='ellipsis horizontal' pointing='right'>
-                        <Dropdown.Menu>
-                          <Dropdown.Item icon="eye" text="View detail" />
-                          <Dropdown.Item icon="pencil" text="Edit" />
-                          <Dropdown.Item
-                            icon="trash alternate outline"
-                            text="Delete"
-                          />
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </span>
+              <div className="session-actions-con">
+                <div className="session-attach-dropdown tasks-action-area">
+                  <img src={img} />
+                  <span className="session-attachements">
+                    <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>
+                    3
+                  </span>
+                  <div className="symbol-group symbol-hover py-2" >
+                    <div className="symbol symbol-30 d-flex">
+                      <span className="dropdown-action">
+                        <Dropdown icon='ellipsis horizontal' pointing='right'>
+                          <Dropdown.Menu>
+                            <Dropdown.Item icon="eye" text="View detail" />
+                            <Dropdown.Item icon="pencil" text="Edit" />
+                            <Dropdown.Item
+                              icon="trash alternate outline"
+                              text="Delete"
+                            />
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
+
         </div>
+        <br />
 
 
-      </div>
-      <br />
-
-
-      {/* //===== Modified to meetingCategory and meetingCategoryWiseSessionListRender part ======//
+        {/* //===== Modified to meetingCategory and meetingCategoryWiseSessionListRender part ======//
     <div className="app-content-body ">
       <div style={{ background: '#FFF9F1', padding: '10px' }}>
         <span className="preliminary-font">
@@ -654,7 +668,9 @@ export function MeetingTab(props: IMeetingTab) {
 
 
 
-      {meetingCategoryRender}
+        {meetingCategoryRender}
+
+      </div>
 
     </div>
   );

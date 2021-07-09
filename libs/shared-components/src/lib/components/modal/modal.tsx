@@ -233,7 +233,7 @@ export function ModalExampleModal() {
             size='small' className="primary"
           />
           <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
-            X  Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply ms-fontColor-themePrimary"></i>  Cancel
           </Button>
         </Form>
       </Tab.Pane>,
@@ -314,7 +314,7 @@ export function ModalExampleModal() {
           </Button>
           <div className="float-area">
             <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
-              X  Cancel
+              <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply ms-fontColor-themePrimary"></i>  Cancel
             </Button>
             <Button
               content="Submit"
@@ -333,7 +333,8 @@ export function ModalExampleModal() {
 
   return (
     <div id="navbar">
-      <Modal className="modal_media"
+      <Modal className="modal_media right-side--fixed-modal add-new-project-modal"
+        closeIcon
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
@@ -463,19 +464,19 @@ export function ModalExampleModal() {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <label>City  </label>
+                        <label>City</label>
                         <Input placeholder='City' size='small' className="full-width" type="text" />
                       </Form.Field>
                     </Grid.Column>
                     <Grid.Column>
                       <Form.Field>
-                        <label>State Pin </label>
+                        <label>State Pin</label>
                         <Input placeholder='State Pin' size='small' className="full-width" type="text" />
                       </Form.Field>
                     </Grid.Column>
                     <Grid.Column>
                       <Form.Field>
-                        <label>Country  </label>
+                        <label>Country</label>
                         <Select placeholder='Select' className="small" options={countryOptions} />
                       </Form.Field>
                     </Grid.Column>
@@ -491,7 +492,7 @@ export function ModalExampleModal() {
                 size='small' className="primary"
               />
               <Button size='small' className="icon-border" onClick={() => setSecondOpen(false)}>
-                X  Cancel
+              <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply ms-fontColor-themePrimary"></i>  Cancel
               </Button>
             </div>
           </Modal.Content>
