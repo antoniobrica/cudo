@@ -3,7 +3,6 @@ import React from 'react';
 import './../../../assets/style/index.scss'
 import { Tab, Image, Input, Accordion, Form, Grid, Card, Dropdown, Icon, Table, Label } from 'semantic-ui-react';
 import { NONAME } from 'dns';
-// import img from '../../../assets/images/upload.png';
 
 
 /* eslint-disable-next-line */

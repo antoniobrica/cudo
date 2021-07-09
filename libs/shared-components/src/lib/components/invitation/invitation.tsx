@@ -1,18 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './../../../assets/style/index.scss'
 import { Tab, Dropdown, Button } from 'semantic-ui-react';
-import img from 'libs/shared-components/src/user.png';
-import img3 from 'libs/shared-components/src/calendar.png';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 /* eslint-disable-next-line */
-export interface ViewInvitationProps { 
+export interface ViewInvitationProps {
   sessionId?
 }
 
 export function InvitationTab(props: ViewInvitationProps) {
 
-  
+
 
   const panes = [
     {
@@ -28,7 +27,7 @@ export function InvitationTab(props: ViewInvitationProps) {
               <div
                 className="card-body d-flex align-items-center justify-content-between flex-wrap invitation-list-card">
                 <div className="d-flex align-items-center invitaiton-info-left">
-                  <img src={img3} />
+                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/calendar.png`} />
                   <div className="invitation-date-time">
                     <div className="timing-details">
                       <span className="invitation-date-time">
@@ -43,8 +42,8 @@ export function InvitationTab(props: ViewInvitationProps) {
                       </span>
                       <a href="" className="protocol-text">
                         {' '}
-                          <i className="ms-Icon ms-Icon--Link" aria-hidden="true"></i>
-                          Protocol here{' '}
+                        <i className="ms-Icon ms-Icon--Link" aria-hidden="true"></i>
+                        Protocol here{' '}
                       </a>
                     </div>
                     <div className="invitation-title">
@@ -55,7 +54,7 @@ export function InvitationTab(props: ViewInvitationProps) {
 
                 <div className="symbol-group symbol-hover">
                   <div className="symbol symbol-30">
-                    <img src={img} />
+                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />
                     <span className="font-weight-bold">
                       {' '}
                       <i
@@ -88,7 +87,7 @@ export function InvitationTab(props: ViewInvitationProps) {
                 style={{ width: '80%' }}
               >
                 <div className="d-flex align-items-center  py-2">
-                  <img src={img3} style={{ width: '30px' }} />
+                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/calendar.png`} style={{ width: '30px' }} />
                   <span className="font-weight-bold mb-0 mr-10">
                     &nbsp; 10 Aug, 2020
                     <br />
@@ -129,7 +128,7 @@ export function InvitationTab(props: ViewInvitationProps) {
 
                 <div className="symbol-group symbol-hover py-2">
                   <div className="symbol symbol-30">
-                    <img src={img} />
+                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />
                     <span className="mr-2">
                       <Dropdown text="...">
                         <Dropdown.Menu className="dropdowncomplete">
@@ -157,7 +156,7 @@ export function InvitationTab(props: ViewInvitationProps) {
                 style={{ width: '80%' }}
               >
                 <div className="d-flex align-items-center  py-2">
-                  <img src={img3} style={{ width: '30px' }} />
+                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/calendar.png`} style={{ width: '30px' }} />
                   <span className="font-weight-bold mb-0 mr-10">
                     &nbsp; 10 Aug, 2020
                     <br />
@@ -180,7 +179,7 @@ export function InvitationTab(props: ViewInvitationProps) {
 
                 <div className="symbol-group symbol-hover py-2">
                   <div className="symbol symbol-30">
-                    <img src={img} />
+                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />
                     <span className="mr-2">
                       <Dropdown text="...">
                         <Dropdown.Menu className="dropdowncomplete">
@@ -208,7 +207,7 @@ export function InvitationTab(props: ViewInvitationProps) {
     },
   ];
 
-  return (    
+  return (
     <div className="tabs-main-info-container invitation-tab">
       <div className="invitation-header">
         <i className="ms-Icon ms-Icon--Back" aria-hidden="true"></i>{' '}

@@ -2,16 +2,9 @@ import React from 'react';
 
 import './../../../assets/style/index.scss'
 import { Tab, Accordion, Dropdown } from 'semantic-ui-react'
-
-import img4 from 'libs/shared-components/src/folder.png';
-import img5 from 'libs/shared-components/src/image2.png';
-import img6 from 'libs/shared-components/src/eyeview.png';
-import img1 from 'libs/shared-components/src/powerpoint.png';
-import img2 from 'libs/shared-components/src/pdf.png';
-import img from 'libs/shared-components/src/user2.png';
-
 import ViewFileDetail from '../modal/viewdetailsfile';
 import AddPinFile from '../modal/pinaddfile';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 /* eslint-disable-next-line */
 export interface FileStructureProps {
 	files?,
@@ -99,8 +92,8 @@ export function FileStructure(props: FileStructureProps) {
 							<span>
 								{data.fileType == ("image/jpeg" || "image/png")
 									?
-									<img src={img5} className="  mr-10 " /> :
-									<img src={img2} className="  mr-10 " />
+									<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} className="  mr-10 " /> :
+									<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} className="  mr-10 " />
 								}
 
 							</span>
@@ -163,7 +156,7 @@ export function FileStructure(props: FileStructureProps) {
 						<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
 
 							<div className="d-flex align-items-center py-2">
-								<span> <img src={img4} className="  mr-10 " />  </span>
+								<span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/folder.png`} className="  mr-10 " />  </span>
 
 								<span className="font-weight-bold mb-0 mr-10">Information Data</span>
 								<div className="d-flex mr-3">
@@ -199,7 +192,7 @@ export function FileStructure(props: FileStructureProps) {
 						<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
 
 							<div className="d-flex align-items-center py-2">
-								<span> <img src={img5} className="  mr-10 " />  </span>
+								<span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} className="  mr-10 " />  </span>
 
 								<span className="font-weight-bold mb-0 mr-10">1542.313.3231_project_plan_0358.cad</span>
 								<div className="d-flex mr-3">
@@ -220,7 +213,7 @@ export function FileStructure(props: FileStructureProps) {
 
 							<div className="symbol-group symbol-hover py-2">
 								<div className="symbol symbol-30">
-									<a href=""><img src={img6} className="  mr-10 " /> </a>
+									<a href=""><img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/eyeview.png`} className="  mr-10 " /> </a>
 									<a href="">  <i className="ms-Icon ms-Icon--Download mr-10" aria-hidden="true"></i></a>
 									<a href=""> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a>
 
@@ -242,7 +235,7 @@ export function FileStructure(props: FileStructureProps) {
 							<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
 
 								<div className="d-flex align-items-center py-2">
-									<span> <img src={img4} className="  mr-10 " />  </span>
+									<span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/folder.png`} className="  mr-10 " />  </span>
 
 									<span className="font-weight-bold mb-0 mr-10">{file.isFolder ? file.folderName : file.BKPIDTitle}</span>
 									<div className="d-flex mr-3">
@@ -284,8 +277,8 @@ export function FileStructure(props: FileStructureProps) {
 										<span> 
 											{file.fileType == ("image/jpeg" || "image/png")
 											?
-											<img src={img5} className="  mr-10 " /> :
-											<img src={img2} className="  mr-10 " /> 
+											<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} className="  mr-10 " /> :
+											<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} className="  mr-10 " /> 
 										}
 										
 										 </span>

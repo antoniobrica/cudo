@@ -13,6 +13,7 @@ import {
 
 
 import { useTranslation } from 'react-i18next';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 function exampleReducer(state, action) {
 
@@ -56,7 +57,7 @@ export const PinMaskTask = () => {
           style={{ marginLeft: '35px' }}
         >
           <Modal.Header>File_name.cad
-       <div style={{ textAlign: 'center', marginBottom: '-30px' }}>
+            <div style={{ textAlign: 'center', marginBottom: '-30px' }}>
               <img src="assets/images/icons_top.png" style={{ position: 'relative', top: '-17px' }} />
 
             </div>
@@ -89,7 +90,7 @@ export const PinMaskTask = () => {
 
                           <span>
 
-                            <img src="assets/images/check_grey.png" className="  mr-10 " />
+                            <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/grey_pin.png`} className="  mr-10 " />
                           </span>
                           <span className="font-weight-bold mb-0 mr-10  ">
                             {t('pin_mask.this_task')}
@@ -169,12 +170,12 @@ export const PinMaskTask = () => {
                           <div className="d-flex align-items-center  py-2">
                             <span>
 
-                              <img src="assets/images/dots.png" className="  mr-10 " style={{ marginRight: '6px !important;' }} />
+                              <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} className="  mr-10 " style={{ marginRight: '6px !important;' }} />
                             </span>
 
                             <span>
 
-                              <img src="assets/images/check_grey.png" className="  mr-10 " />
+                              <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/check_grey.png`} className="  mr-10 " />
                             </span>
                             <span className="font-weight-bold mb-0 mr-10  ">
 
@@ -198,7 +199,7 @@ export const PinMaskTask = () => {
                               className="font-weight-bold mb-0 mr-10  fontcad"
                             >
                               Starts Tomorrow ↦ Due Fri Aug 28th
-                          </span>
+                            </span>
                           </div>
                         </div>
 
