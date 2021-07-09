@@ -46,5 +46,8 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
   },
   "kratos_KRATOS_ADMIN_URL": {
     url: "http://192.168.1.5:4434"
+  },
+  "CDN_ASSETS_URL": {
+    url: "https://cudodevcdn.azureedge.net"
   }
 }
