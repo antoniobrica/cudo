@@ -20,7 +20,7 @@ export interface MeetingTab {
   addSession?
 }
 
-export function MeetingTab(props: IMeetingTab) {
+export function MeetingTab(props: MeetingTab) {
 
   const [categoryItems, setCategoryItems] = useState([])
   const [sessionList, setSessionList] = useState([])
@@ -32,7 +32,7 @@ export function MeetingTab(props: IMeetingTab) {
       const resultList = props.sessionListData.paginatedSession.results
 
       setSessionList(resultList)
-      let categories = []
+      const categories = []
       resultList.forEach(({ meetingCategoryID, meetingCategoryTitle }) => {
         categories.push({ meetingCategoryID, meetingCategoryTitle })
       })
