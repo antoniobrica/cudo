@@ -71,18 +71,18 @@ export function MeetingTab(props: MeetingTab) {
               <div className="d-flex session-time">
                 <div className="d-flex">
                   <div className="navi-item mr-2">
-                    <a href=" " className="navi-link active">
+                    <div className="navi-link active">
                       <span className="navi-text">
 
                         {meetingOnSessionCount} invitation - {protocolOnSessionCount} protocol
                       </span>
-                    </a>
+                    </div>
                   </div>
 
                   <div className="navi-item mr-2">
-                    <a className="navi-link">
+                    <div className="navi-link">
                       <span className="navi-text"> - {worktypeTitle} </span>
-                    </a>
+                    </div>
                   </div>
 
                 </div>
@@ -218,7 +218,7 @@ export function MeetingTab(props: MeetingTab) {
                 <div className="d-flex session-time">
                   <div className="d-flex">
                     <div className="navi-item mr-2">
-                      <a href=" " className="navi-link active">
+                      <div className="navi-link active">
                         <span className="navi-text">
                           {' '}
                           <i
@@ -227,19 +227,19 @@ export function MeetingTab(props: MeetingTab) {
                           ></i>{' '}
                           11:00 AM-11:45 AM
                         </span>
-                      </a>
+                      </div>
                     </div>
 
                     <div className="navi-item mr-2">
-                      <a className="navi-link">
+                      <div className="navi-link">
                         <span className="session-time-left">45 min </span>
-                      </a>
+                      </div>
                     </div>
 
                     <div className="navi-item ">
-                      <a href="" className="navi-link">
+                      <div className="navi-link">
                         <span className="session-job-title">(Electrical Work) </span>
-                      </a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -281,7 +281,7 @@ export function MeetingTab(props: MeetingTab) {
                 <div className="d-flex session-time">
                   <div className="d-flex">
                     <div className="navi-item mr-2">
-                      <a href=" " className="navi-link active">
+                      <div className="navi-link active">
                         <span className="navi-text">
                           {' '}
                           <i
@@ -290,19 +290,19 @@ export function MeetingTab(props: MeetingTab) {
                           ></i>{' '}
                           11:00 AM-11:45 AM
                         </span>
-                      </a>
+                      </div>
                     </div>
 
                     <div className="navi-item mr-2">
-                      <a className="navi-link">
+                      <div className="navi-link">
                         <span className="session-time-left">45 min </span>
-                      </a>
+                      </div>
                     </div>
 
                     <div className="navi-item ">
-                      <a href="" className="navi-link">
+                      <div className="navi-link">
                         <span className="session-job-title">(Electrical Work) </span>
-                      </a>
+                      </div>
                     </div>
                   </div>
                 </div>
