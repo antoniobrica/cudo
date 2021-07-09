@@ -16,6 +16,7 @@ import PinFileStructure from '../filestructure/pinfilestructure';
 import AddPinFile from './pinaddfile';
 import FilterPopup from './fliter';
 import { relative } from 'path';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 export interface FileStructureProps {
   // files?,
   downloadFiles?,
@@ -121,7 +122,7 @@ export function SelectFilePopup(props: FileStructureProps) {
             <Form>
               <div className="slect-file-search-box">
                 <Form.Field>
-                  <img src="assets/images/search_white.png" style={{ position: 'relative', top: '11px' }}></img>
+                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/search_white.png`} style={{ position: 'relative', top: '11px' }}></img>
 
                   <Input
                     placeholder="search.."
@@ -132,7 +133,7 @@ export function SelectFilePopup(props: FileStructureProps) {
                 </Form.Field>
                 <Form.Field>
 
-                  <img src="assets/images/filter.png" style={{ position: 'relative', left: '30px', top: '6px' }}></img>
+                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/filter.png`} style={{ position: 'relative', left: '30px', top: '6px' }}></img>
                   {/* <FilterPopup /> */}
                   <Button size="small" className="primary" style={{ marginLeft: '50', }}>
                     <Icon name='add' /> Add New

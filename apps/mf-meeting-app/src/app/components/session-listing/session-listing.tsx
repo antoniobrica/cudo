@@ -6,7 +6,6 @@ import axios from 'axios';
 import { GET_SESSIONS } from '../../graphql/graphql'
 import { useSessionQuery } from '../../services/useRequest';
 import AddSession from '../../add-session/add-session';
-// import img8 from '../../../../../libs/shared-components/src/assets/images/default_area.png';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 import {
@@ -15,7 +14,7 @@ import {
 
 
 export function SessionListing() {
-   
+
   const [workTypes, setWorkTypes] = React.useState([]);
   const [openAddSession, setOpenAddSession] = React.useState(false)
 
@@ -37,7 +36,7 @@ export function SessionListing() {
   const { loading, error, data } = useSessionQuery(GET_SESSIONS, {
     variables: { projectId },
   });
- 
+
   const query = `query Game($projectId: String!) {
     projectById( projectId: $projectId)
     {
@@ -73,7 +72,7 @@ export function SessionListing() {
     })
       .catch(err => console.log(err))
   }
- 
+
   const cancel = () => {
     console.log('---list--cancel function')
     setOpenAddSession(false)
@@ -88,7 +87,7 @@ export function SessionListing() {
     setOpenAddSession(true)
   }
 
-  
+
   if (loading)
     return (
       <h1>
@@ -101,7 +100,7 @@ export function SessionListing() {
     return (
       <div className="no-data-found-info">
         {/* <img src={img8} className="image_center"></img> */}
-        <img src="/assets/images/default_area.png" />
+        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/default_area.png`} />
 
         <h3>No Data Found</h3>
         <p>Hey User, you don't have any active session on this project. Click the button below to create a session list.</p>
@@ -124,7 +123,7 @@ export function SessionListing() {
         :
         <div className="no-data-found-info">
           {/* <img src={img8} className="image_center"></img> */}
-          <img src="/assets/images/default_area.png" />
+          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/default_area.png`} />
 
           <h3>No Data Found</h3>
           <p>Hey User, you don't have any active session on this project. Click the button below to create a session list.</p>

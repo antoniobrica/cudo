@@ -2,12 +2,6 @@ import React, { useContext, useRef } from 'react';
 import { Button, Checkbox, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 
-import img from 'libs/shared-components/src/upload.png';
-import img2 from 'libs/shared-components/src/avatar_1.png';
-import img3 from 'libs/shared-components/src/avatar_2.png';
-import img4 from 'libs/shared-components/src/avatar_3.png';
-import img5 from 'libs/shared-components/src/file_1.png';
-import img6 from 'libs/shared-components/src/file_2.png';
 import ProgressBar from 'libs/shared-components/src/lib/components/progress_bar/progressbar';
 import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex, FileTypeIndex, FileStructureIndex, AddFolderIndex } from "@cudo/mf-account-app-lib"
 import { UploadsViewStateContext, SharedViewStateContext, DownloadsViewStateContext } from './../../../azure-storage/contexts/viewStateContext';
@@ -21,6 +15,7 @@ import { GET_FILES, UPLOAD_FILE } from '../../graphql/graphql';
 import { FileMutation, IFiles } from '../../interfaces/document';
 import { FetchResult, useMutation } from '@apollo/client';
 import { AddNewFolder } from '@cudo/shared-components';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 export interface FileProps {
   openSettingF?,
   close?,
@@ -241,7 +236,7 @@ export function FileUpload(props: FileProps) {
                     <Form.Field>
                       <div className="dashed_area" style={{ paddingTop: 15 }}>
                         <div className="file-upload-message">
-                          <img src={img} className="mr-10 " />
+                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/upload.png`} className="mr-10 " />
                           <p className="file-upload-default-message">Drag & drop or click here to upload file</p>
 
                         </div>
@@ -275,7 +270,7 @@ export function FileUpload(props: FileProps) {
                           <Grid.Column>
                             <Form.Field>
 
-                              <img src={img6} />
+                              <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/file_2.png`} />
 
                             </Form.Field>
                           </Grid.Column>
@@ -421,7 +416,7 @@ export function FileUpload(props: FileProps) {
                           <Grid.Column key={i}>
                             <Form.Field>
                               <div className="below_area">
-                                <img src={img3} className="avatar" />
+                                <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_2.png`} className="avatar" />
                                 <span className="span_name">{asign.userName}</span>
                                 <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
                               </div>

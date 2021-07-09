@@ -1,3 +1,4 @@
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 import React from 'react';
 import {
   Button,
@@ -10,15 +11,8 @@ import {
   TextArea,
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
-import img from 'libs/shared-components/src/upload.png';
 
-import img2 from 'libs/shared-components/src/avatar_1.png';
-import img3 from 'libs/shared-components/src/avatar_2.png';
-import img4 from 'libs/shared-components/src/avatar_3.png';
-import img5 from 'libs/shared-components/src/user.png';
-import img6 from 'libs/shared-components/src/calendar.png';
-
-export interface AddInvitationProps { 
+export interface AddInvitationProps {
   sessionId?
 }
 
@@ -129,7 +123,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
                   <Grid.Column>
                     <Form.Field>
                       <div className="below_area">
-                        <img src={img2} className="avatar" />
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_1.png`} className="avatar" />
                         <span className="span_name">Barthelemy Chalvet</span>
                         <i
                           className="ms-Icon ms-Icon--CalculatorMultiply right_float"
@@ -142,7 +136,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
                   <Grid.Column>
                     <Form.Field>
                       <div className="below_area">
-                        <img src={img3} className="avatar" />
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_2.png`} className="avatar" />
                         <span className="span_name">Barthelemy Chalvet</span>
                         <i
                           className="ms-Icon ms-Icon--CalculatorMultiply right_float"
@@ -154,7 +148,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
                   <Grid.Column>
                     <Form.Field>
                       <div className="below_area">
-                        <img src={img4} className="avatar" />
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_3.png`} className="avatar" />
                         <span className="span_name">Barthelemy Chalvet</span>
                         <i
                           className="ms-Icon ms-Icon--CalculatorMultiply right_float"
@@ -205,7 +199,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
 
                       <div className="dashed_area md_upload">
                         <div className="file-upload-message">
-                          <img src={img} className="mr-10 " />
+                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/upload.png`} className="mr-10 " />
                           <p className="file-upload-default-message">
                             Drag & drop or click here to upload file
                           </p>

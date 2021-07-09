@@ -3,8 +3,7 @@ import { FormField, Message } from "@oryd/kratos-client"
 import { FORM_LABELS } from "@cudo/mf-core"
 import { KratosMessages } from "../components/KratosMessages"
 import { Button, Form, Grid, Segment } from "semantic-ui-react"
-import logo from '../../assets/images/slider.png';
-import img from '../../assets/images/Shape 2.png';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { ToEmail } from "../services/auth"
 
 export const KratosForm = ({ action, messages = [], fields, submitLabel = "Submit" }: { action: string, messages?: Message[], fields: FormField[], submitLabel: string }) => {
@@ -20,7 +19,7 @@ export const KratosForm = ({ action, messages = [], fields, submitLabel = "Submi
             <Grid.Column>
               <Segment>
                 <div className="ln-form-outer">
-                  <img src={img} />
+                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/Shape 2.png`} />
                   <div className="form-header">
                     <span className="welcome">Welcome Back</span>
                     <h2 className="login">{submitLabel}</h2>
@@ -37,7 +36,7 @@ export const KratosForm = ({ action, messages = [], fields, submitLabel = "Submi
               </Segment>
             </Grid.Column>
             <Grid.Column>
-              <img src={logo} className="massive" />
+              <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/slider.png`} className="massive" />
             </Grid.Column>
           </Grid.Row>
           <Grid.Row columns={2}>
