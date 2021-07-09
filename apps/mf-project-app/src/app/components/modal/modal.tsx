@@ -10,6 +10,7 @@ import { ModalExamplePrinting, ModalExampleCompany } from '@cudo/shared-componen
 import WorkType from '../../work-type/work-type';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
 import ReactQuill, { Quill } from 'react-quill';
+import { TEXT_MAXLENGTHS } from '@cudo/mf-core'
 
 export interface ProjectInfoProps {
   onSuccess
@@ -111,9 +112,8 @@ export function ModalExampleModal(props: ProjectInfoProps) {
   const { loading: clientLoading, data: clientCompany } = useCompanyQuery(GET_CLIENT_COMPANY);
   const { loading: buildingTypesloading, data: buildingTypesData } = useBuildingTypesQuery(GET_BUILDINGTYPES);
 
-  
   React.useEffect(() => {
-     if (worktypeData) {
+    if (worktypeData) {
       setItems(worktypeData.workTypes.map(({ name, workTypeID }) => ({ key: name, value: name, text: name, id: workTypeID })));
     }
   }, [worktypeData]);
@@ -215,9 +215,19 @@ export function ModalExampleModal(props: ProjectInfoProps) {
   const onCountry = (data) => {
     setCountry(data)
   }
-  const onDescription = e => {
-    setDescription(e)
+  const onDescription = (html) => {
+    // console.log('---onDescription---e---', event, html)
+    // if(html.length > 10){
+      // event.preventDefault()
+      setDescription(html)
+    // }
   }
+  // const onKeyPresDescription = (e) => {
+  //   console.log('--onKeyPresDescription--', e)
+  //   if (e.getLength().length > 10 && e.key !== 'Backspace') {
+  //     e.preventDefault();
+  //   }
+  // }
 
   const addWorkType = () => {
     setAddWorkTypes(prevCount => prevCount + 1);
@@ -338,6 +348,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     type="text" id="projectName"
                     value={projectName}
                     onChange={onprojectNameChange}
+                    maxLength={TEXT_MAXLENGTHS["project_name"]?.maxLength}
                   />
                   {/* <span className="error-message">There is some error</span> */}
                 </Form.Field>
@@ -487,6 +498,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     placeholder='Default' size='small' className="full-width" type="text"
                     value={adressLine1}
                     onChange={onAdressLine1}
+                    maxLength={TEXT_MAXLENGTHS["address_line_1"]?.maxLength}
                   />
                 </Form.Field>
               </Grid.Column>
@@ -497,6 +509,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     placeholder='Default' size='small' className="full-width" type="text"
                     value={adressLine2}
                     onChange={onAdressLine2}
+                    maxLength={TEXT_MAXLENGTHS["address_line_2"]?.maxLength}
                   />
                 </Form.Field>
               </Grid.Column>
@@ -511,6 +524,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     placeholder='Default' size='small' className="full-width" type="text"
                     value={city}
                     onChange={onCity}
+                    maxLength={TEXT_MAXLENGTHS["city"]?.maxLength}
                   />
                 </Form.Field>
               </Grid.Column>
@@ -522,6 +536,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     placeholder='Default' size='small' className="full-width" type="text"
                     value={state}
                     onChange={onState}
+                    maxLength={TEXT_MAXLENGTHS["state"]?.maxLength}
                   />
                 </Form.Field>
               </Grid.Column>
@@ -532,6 +547,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     placeholder='Default' size='small' className="full-width" type="text"
                     value={zip}
                     onChange={onZip}
+                    maxLength={TEXT_MAXLENGTHS["zip"]?.maxLength}
                   />
                 </Form.Field>
               </Grid.Column>
@@ -564,9 +580,9 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                         container: [
                           [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
                           ['bold', 'italic', 'underline'],
-                          [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                          // [{ 'list': 'ordered' }, { 'list': 'bullet' }],
                           [{ 'align': [] }],
-                          ['link', 'image'],
+                          // ['link', 'image'],
                           ['clean'],
                           [{ 'color': [] }]
                         ]
@@ -574,6 +590,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     }}
                     placeholder="Tell us more"
                     onChange={(content, delta, source, editor) => onDescription(content)}
+                    // onKeyDown={onKeyPresDescription}
                     id="txtDescription"
                   />
                 </Form.Field>

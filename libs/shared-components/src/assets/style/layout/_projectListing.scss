@@ -76,6 +76,7 @@ a {
           font-weight: 600;
           @include flex(flex);
           @include flex-direction(column);
+          cursor: pointer;
           span {
             font-size: 13px;
             color: #718898;
@@ -93,6 +94,7 @@ a {
           font-weight: 500;
           span {
             color: #1B1B40;
+            font-weight: 600;
           }
         }
       }
@@ -119,6 +121,16 @@ a {
             max-width: 33px;
             max-height: 33px;
             margin-right: 3px;
+          }
+        }
+        .ql-container.ql-snow.ql-disabled {
+          border: none;
+          padding: 0;
+          margin: 0;
+          height: auto;
+          .ql-editor {
+            padding: 0;
+            height: auto;
           }
         }
       }
