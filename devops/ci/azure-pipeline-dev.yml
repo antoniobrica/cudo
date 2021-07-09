@@ -22,9 +22,6 @@ trigger:
       - apps/mf-meeting-app/*
       - deploy/docker-compose-ory/*
       - libs/*
-  variables:
-      - group: 'dev'
-
 jobs:
 - job: cudogetchp
   pool: cudo-selfhosted-agent
@@ -188,6 +185,8 @@ jobs:
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
   condition: eq(dependencies.cudogetchp.outputs['cudovars.mfcontainerapp'], 'true')
+  variables: |
+     tag: '$(Build.BuildId)'
   steps:
           - checkout: self
             clean: false
