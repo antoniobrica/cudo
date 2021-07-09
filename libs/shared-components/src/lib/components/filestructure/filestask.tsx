@@ -351,7 +351,7 @@ export function FileStructure(props: FileStructureProps) {
 					<AddPinFile isOpen={openPinFile} filesData={filesData} dowloadFilesData={props.downloadedImg} savePin={savePins} onSuccess={""} />
 				</div> : null}
 
-			<Tab className="ui-tabs" menu={{ secondary: true, pointing: true }} panes={panes} />
+			<Tab className="ui-tabs work-tabs" menu={{ secondary: true, pointing: true }} panes={panes} />
 		</div>
 
 

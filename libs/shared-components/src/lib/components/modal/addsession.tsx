@@ -463,7 +463,7 @@ export function ModalSession(props: SessionProps) {
             // onClick={() => setOpen(false)}
             onClick={cancel}
           >
-            X Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> Cancel
           </Button>
         </Modal.Actions>
       </Modal>

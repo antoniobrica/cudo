@@ -336,7 +336,7 @@ export function FileUpload(props: FileProps) {
                     </div>
                   )
                 })}
-              <Grid columns={1}>
+              {/* <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
@@ -349,8 +349,8 @@ export function FileUpload(props: FileProps) {
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
-              </Grid>
-              <Grid columns={2}>
+              </Grid> */}
+              {/* <Grid columns={2}>
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
@@ -363,8 +363,8 @@ export function FileUpload(props: FileProps) {
                     <PhaseIndex parentPhaseSelect={onsetPhasesID} />
                   </Grid.Column>
                 </Grid.Row>
-              </Grid>
-              <Grid columns={3}>
+              </Grid> */}
+              {/* <Grid columns={3}>
                 <Grid.Row>
                   <Grid.Column>
                     <BkpIndex bkp={BKPID} parentBKPSelect={setBKPIDChange}></BkpIndex>
@@ -373,23 +373,16 @@ export function FileUpload(props: FileProps) {
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
-                    {/* <Form.Field>
-                      <label>File type</label>
-                      <Select placeholder='Select' className="small" options={fileTypeOptions} />
-                    </Form.Field> */}
+                   
                     <FileTypeIndex parentFileTypeSelect={setFileTypeChange} />
                   </Grid.Column>
                   <Grid.Column>
                     <FileStructureIndex structureTitle={structureTitle} parentFileStructureSelect={setFileStructureChange} />
-                    {/* <Form.Field>
-                      <label>File structure</label>
-                      <Select placeholder='Select' className="small" options={fileOptions} />
-
-                    </Form.Field> */}
+                 
                   </Grid.Column>
                 </Grid.Row>
-              </Grid>
-              <Grid  >
+              </Grid> */}
+              {/* <Grid  >
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
@@ -397,8 +390,8 @@ export function FileUpload(props: FileProps) {
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
-              </Grid>
-              <Grid columns={2} >
+              </Grid> */}
+              {/* <Grid columns={2} >
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
@@ -411,8 +404,8 @@ export function FileUpload(props: FileProps) {
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
-              </Grid>
-              {showPeople ?
+              </Grid> */}
+              {/* {showPeople ?
                 <div>
                   <Grid columns={1} >
                     <Grid.Row>
@@ -438,34 +431,11 @@ export function FileUpload(props: FileProps) {
                         )
                       })}
 
-                      {/* <Grid.Column>
-                        <Form.Field>
-
-                          <div className="below_area">
-                            <img src={img3} className="avatar" />
-                            <span className="span_name">Barthelemy Chalvet</span>
-                            <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
-
-                          </div>
-                        </Form.Field>
-
-                      </Grid.Column>
-                      <Grid.Column>
-                        <Form.Field>
-
-                          <div className="below_area">
-                            <img src={img4} className="avatar" />
-                            <span className="span_name">Barthelemy Chalvet</span>
-                            <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
-
-                          </div>
-                        </Form.Field>
-
-                      </Grid.Column> */}
+                    
                     </Grid.Row>
                   </Grid> </div> :
                 null
-              }
+              } */}
             </Form>
 
           </div>
