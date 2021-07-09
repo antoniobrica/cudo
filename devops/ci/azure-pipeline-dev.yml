@@ -200,7 +200,8 @@ jobs:
               repository: mf-container-app-dev
               dockerfile: dist/apps/mf-container-app/Dockerfile
               containerRegistry: dev-docker-registry
-              tags: latest
+              tags: $(tag)
+          - bash: echo $(tag)
           - bash : helm upgrade  --namespace cudo-f-dev --install --wait env-ca /home/softobiz/charts/cudo-helm/dev/mf-container-app-dev/mf-container-app-dev-0.1.0.tgz
 - job: mftaskapp
   pool: cudo-selfhosted-agent
