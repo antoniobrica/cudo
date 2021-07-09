@@ -49,6 +49,10 @@ export default class MeetingEntity extends BaseEntity {
 
     @Expose()
     @Column({ nullable: true })
+    meetingDuration: String;
+
+    @Expose()
+    @Column({ nullable: true })
     inviteGuests?: string;
     
     @Expose()
@@ -97,6 +101,10 @@ export default class MeetingEntity extends BaseEntity {
     @ManyToMany(type => MeetingFilesEntity, { cascade: true })
     @JoinTable()
     meetingFiles?: MeetingFilesEntity[];
+
+    @Expose()
+    @Column({ nullable: true })
+    status?: string;
 
 
     constructor(meetingEntity: Partial<MeetingEntity>) {
