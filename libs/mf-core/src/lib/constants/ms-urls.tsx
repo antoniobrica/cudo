@@ -9,7 +9,7 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
     url: "http://cudo-ms-document.softobiz.net/graphql"
   },
   "ms_project": {
-    url: "http://cudo-ms-project.softobiz.net/graphql"
+    url: "http://localhost:5005/graphql"
   },
   "ms_task": {
     url: "http://cudo-ms-task.softobiz.net/graphql"

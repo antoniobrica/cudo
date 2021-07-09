@@ -78,4 +78,14 @@ mutation CreateCost(
     } 
 }`;
 
-
+export const DELETE_COST = gql`
+mutation 
+DeleteCost(
+  $costID: String!,
+  )
+{
+  deleteCost( costFilter: {  costID: $costID} )
+{
+  id
+}
+}`
