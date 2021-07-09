@@ -17,11 +17,14 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
   "ms_cost": {
     url: "http://cudo-ms-cost.softobiz.net/graphql"
   },
-  "mf_cost_app": {
-    url: "http://192.168.0.31:6004"
-  },
   "ms_meeting": {
     url: "http://cudo-ms-meeting.softobiz.net/graphql"
+  },
+  "mf_cost_app": {
+    url: "http://cudo-mf_cost.softobiz.net"
+  },
+  "mf_meeting_app": {
+    url: "http://cudo-mf_meeting.softobiz.net"
   },
   "mf_project_app": {
     url: "http://cudo-mf-project.softobiz.net"
@@ -44,5 +47,4 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
   "kratos_KRATOS_ADMIN_URL": {
     url: "http://192.168.0.31:4434"
   }
-
 }
