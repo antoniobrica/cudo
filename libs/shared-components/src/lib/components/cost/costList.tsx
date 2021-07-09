@@ -351,40 +351,42 @@ export function CostList(props: CostListProps) {
                   </li>
 
                 </ul>
+                {/* </li>
+            </ul> */}
+
+
+                <div className="total-price-gst">
+                  <div className="add-new-item-btn">
+                    {/* <button className="ui small button"><i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> Add new</button> */}
+                  </div>
+
+                  <div className="sub-total-item">
+                    <p>Sub Total <span>$00.00</span></p>
+                    <p>GST 10% <span>$00.00</span></p>
+                    <p>Total <span>$00.00</span></p>
+                  </div>
+                </div>
+
+                <div className="add-files-area">
+                  <h3>Add files for complete cost</h3>
+                  <Form.Field>
+                    <div className="dashed_area">
+                      <div className="file-upload-message">
+                        {/* <Image src={img} className="mr-10 " /> */}
+                        <p className="file-upload-default-message">Drag & drop or click here to upload file</p>
+
+                      </div>
+                      <Input type="file" className="file-upload-input" />
+                    </div>
+
+                  </Form.Field>
+                </div>
               </li>
             </ul>
           </div>
-        </div>
 
-        <div className="total-price-gst">
-          <div className="add-new-item-btn">
-            {/* <button className="ui small button"><i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> Add new</button> */}
-          </div>
-
-          <div className="sub-total-item">
-            <p>Sub Total <span>$00.00</span></p>
-            <p>GST 10% <span>$00.00</span></p>
-            <p>Total <span>$00.00</span></p>
-          </div>
-        </div>
-
-        <div className="add-files-area">
-          <h3>Add files for complete cost</h3>
-          <Form.Field>
-            <div className="dashed_area">
-              <div className="file-upload-message">
-                {/* <Image src={img} className="mr-10 " /> */}
-                <p className="file-upload-default-message">Drag & drop or click here to upload file</p>
-
-              </div>
-              <Input type="file" className="file-upload-input" />
-            </div>
-
-          </Form.Field>
         </div>
       </div>
-
-
     </div>
   );
 }

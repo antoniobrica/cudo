@@ -9,7 +9,7 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
     url: "http://cudo-ms-document.softobiz.net/graphql"
   },
   "ms_project": {
-    url: "http://localhost:5005/graphql"
+    url: "http://cudo-ms-project.softobiz.net/graphql"
   },
   "ms_task": {
     url: "http://cudo-ms-task.softobiz.net/graphql"
@@ -18,7 +18,7 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
     url: "http://localhost:5002/graphql"
   },
   "ms_meeting": {
-    url: "http://cudo-ms-meeting.softobiz.net/graphql"
+    url: "http://dev.cudo.ch/api/ms-meeting/graphql"
   },
   "mf_cost_app": {
     url: "http://192.168.1.5:6004"
@@ -47,5 +47,4 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
   "kratos_KRATOS_ADMIN_URL": {
     url: "http://192.168.1.5:4434"
   }
-
 }

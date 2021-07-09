@@ -15,7 +15,7 @@ export interface ModalCostProps {
   house?: IHouse,
   createCost?
   openCost?
-  cancel
+  cancel?
 }
 type Iitem = {
   index?: number

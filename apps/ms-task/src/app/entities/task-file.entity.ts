@@ -13,6 +13,10 @@ export default class TaskFileEntity extends BaseEntity {
     id: number;
 
     @Expose()
+    @Column({nullable: true})
+    taskID: string;
+
+    @Expose()
     @Column({ nullable: true })
     fileID: string;
 
