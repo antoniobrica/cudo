@@ -45,7 +45,7 @@ export function Loginbar(props: LoginProps) {
                   {!props.isEmailExist ? <Message error content="Email does not exists"></Message> : null}
                   <div className="form-inner">
                     <Form>
-                      <Form.Field>
+                      <Form.Field className="login-password">
                         <Input placeholder='example@domain.com' className="full-width paratext1" icon='at' name="salary"
                           onChange={handleChange}
                           type="email"

@@ -26,7 +26,6 @@
 }
 
 .meetings-outer-con {
-  padding: 3rem;
   > h3 {
     font-size: 18px;
     font-weight: 600;
@@ -127,6 +126,96 @@
               .symbol-group {
                 margin-left: 10px;
               }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.invitation-tab {
+  .invitation-header {
+    color: #000;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    i {
+      color: #000;
+      font-size: 18px;
+      position: relative;
+      top: 2px;
+      margin-right: 3px;
+    }
+    span {
+      color: #000;
+      font-size: 18px;
+      font-weight: 600;
+      &.invitation-sub-heading {
+        font-size: 14px;
+        font-weight: 500;
+        color: #9FB5C5;
+        margin-left: 27px;
+        position: relative;
+        top: 3px;
+        strong {
+          color: #000;
+        }
+      }
+    }
+  }
+  .invitation-listing {
+    .ui.segment {
+      padding: 0;
+      margin-top: 25px;
+      .invitation-list-card {
+        .invitaiton-info-left {
+          > img {
+            width: 24px;
+            margin-right: 20px;
+            color: #1B1B40;
+          }
+          .invitation-date-time {
+            @include flex(flex);
+            @include flex-direction(column);
+            @include align-items(center);
+            @include flex-wrap(wrap);
+            .timing-details {
+              font-size: 15px;
+              font-weight: 600;
+              color: #000;
+              @include flex(flex);
+              @include flex-direction(row);
+              margin-right: 15px;
+              .invitation-date-time {
+                margin-right: 15px;
+              }
+              .invitaiton-time-left {
+                color: #718898;
+                font-size: 1.3rem;
+                font-weight: 500;
+                @include flex(flex);
+                @include align-items(center);
+                margin: 0 10px 0 15px;
+              }
+              .invitation-minutes {
+                background: #FCFAF1;
+                font-size: 12px;
+                padding: 2px 3px;
+                color: #718898;
+                margin-left: 8px;
+                margin-right: 5px;
+              }
+              a.protocol-text {
+                font-size: 13px;
+                color: #718898;
+                margin-left: 20px;
+              }
+            }
+            .invitation-title {
+              font-size: 14px;
+              font-weight: 600;
+              color: #1B1B40;
             }
           }
         }

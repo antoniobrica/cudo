@@ -56,16 +56,14 @@ export function Loginpassword(props: LoginPasswordProps) {
                   </div>
                   <div className="form-inner">
                     <Form action={props.action} method="POST">
-                      <Form.Field className="login-user" key={email?.name}>
-                        <label>Email Address</label>
-                        <label><img src={img4} className="img-src" /> </label>  <label>
-                          <span><img src={img3} className="img-src" /> </span>
-                          <span className="float-area">
-                            <i className="ms-Icon ms-Icon--Accounts" aria-hidden="true"></i> </span> </label>
+                      <Form.Field className="login-user email-filled" key={email?.name}>
+                        <img src={img4} className="img-src" />
+                        <img src={img3} className="img-src" />
                         <Input placeholder='Email Address' size='small' className="full-width  " name={email?.name} defaultValue={email?.value as any} readOnly />
+                        <i className="ms-Icon ms-Icon--Accounts" aria-hidden="true"></i>
                       </Form.Field>
-                      <Form.Field key={password?.name}>
-                        <Input placeholder='password' className="full-width" icon='lock' type={password?.type}
+                      <Form.Field key={password?.name} className="login-password">
+                        <Input placeholder='Enter Password' className="full-width" icon='lock' type={password?.type}
                           name={password?.name}
                           defaultValue={password?.value as any}
                           {...password?.required} />
@@ -76,7 +74,7 @@ export function Loginpassword(props: LoginPasswordProps) {
                           defaultValue={csrf_token?.value as any}
                           {...csrf_token?.required} />
                       </Form.Field>
-                      <Button size='large' className="grey-btn btn-large" type="submit">Login <Icon name='arrow right' />   </Button>
+                      <Button size='large' className="primary btn-large" type="submit">Login <Icon name='arrow right' /></Button>
 
                       <span> <br /> <a href="/auth/registration" className="blue_color"> Register with us</a>  </span>
                       <span className="float_right ">   <a href="/recovery" className="blue_color"> Forgot Password ?</a>  </span>
