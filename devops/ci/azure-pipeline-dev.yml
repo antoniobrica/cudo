@@ -22,8 +22,8 @@ trigger:
       - apps/mf-meeting-app/*
       - deploy/docker-compose-ory/*
       - libs/*
-variables:
-  - group: 'dev'
+  variables:
+      - group: 'dev'
 
 jobs:
 - job: cudogetchp
