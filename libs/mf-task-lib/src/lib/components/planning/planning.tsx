@@ -19,7 +19,7 @@ import { ApolloCache, FetchResult, from, useMutation } from '@apollo/client';
 import { MilestoneMutation, IMileStones } from '../../interfaces/task'
 import PlanDelete from './delete-task';
 import moment, { calendarFormat } from 'moment';
-import img3 from 'libs/shared-components/src/green_tick.png';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 
 export interface PlanningProps {
@@ -299,7 +299,7 @@ export function Planning(props: PlanningProps) {
                                   <i
                                     className="ms-Icon ms-Icon--Completed mr-10"
                                     aria-hidden="true"
-                                  ></i> : <img src={img3} className=" mr-2 mr-10 " />
+                                  ></i> : <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/green_tick.png`} className=" mr-2 mr-10 " />
                                 }
 
                               </a>

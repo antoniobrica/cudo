@@ -2,17 +2,11 @@
 import React from 'react';
 import { Button, Modal, Grid, Image, Segment, Form, Input, TextArea, Select, Checkbox, Dropdown } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
-import img2 from 'libs/shared-components/src/people_1.png';
-
-import img3 from 'libs/shared-components/src/check_grey.png';
-import img4 from 'libs/shared-components/src/dots.png';
-import img6 from 'libs/shared-components/src/dotss.png';
-import img7 from 'libs/shared-components/src/Image 3.png';
-import img from 'libs/shared-components/src/assets/images/grey_pin.png'
 import Canvas from './canvas';
 import { useHistory } from 'react-router';
 import axios from 'axios';
 import { CreateFileTaskIndex, PinTaskListIndex } from '@cudo/mf-task-lib';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 function exampleReducer(state, action) {
   switch (action.type) {
@@ -112,9 +106,9 @@ export const AddPinFile = (props: AddPinProps) => {
       >
         <Modal.Header>{props.filesData?.fileTitle}
           <div style={{ textAlign: 'center', marginBottom: '-30px' }}>
-            <img src="/assets/images/icons_top.png" style={{ position: 'relative', top: '-17px' }} />
+            <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/icons_top.png`} style={{ position: 'relative', top: '-17px' }} />
 
-            <a onClick={close}><img src="assets/images/cross_grey.png" style={{ position: 'relative', top: '-17px', left: '540px' }} /></a>
+            <a onClick={close}><img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/cross_grey.png`} style={{ position: 'relative', top: '-17px', left: '540px' }} /></a>
           </div>
         </Modal.Header>
         <Modal.Content style={{ marginTop: '-1px' }}>
@@ -133,7 +127,7 @@ export const AddPinFile = (props: AddPinProps) => {
                         <Form.Field classname="buttonbluedown">
                           <label> </label>
                           <button className="ui mini button pinbutton" onClick={changePinTask}>Click to add pin-mark task</button>
-                          <img src={img} className="pinadd" />
+                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/grey_pin.png`} className="pinadd" />
                         </Form.Field>
                       </div>
                       :
