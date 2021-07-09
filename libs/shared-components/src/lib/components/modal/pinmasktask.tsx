@@ -58,7 +58,7 @@ export const PinMaskTask = () => {
         >
           <Modal.Header>File_name.cad
             <div style={{ textAlign: 'center', marginBottom: '-30px' }}>
-              <img src="assets/images/icons_top.png" style={{ position: 'relative', top: '-17px' }} />
+              <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/icons_top.png`} style={{ position: 'relative', top: '-17px' }} />
 
             </div>
 
@@ -68,7 +68,7 @@ export const PinMaskTask = () => {
               <Grid stackable columns={2}>
                 <Grid.Column className="colorback" style={{ width: '65%' }}>
                   <Segment>
-                    <img src="assets/images/Image 3.png" className=" fluid " />
+                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/Image 3.png`} className=" fluid " />
                   </Segment>
                 </Grid.Column>
                 <Grid.Column style={{ width: '35%', marginLeft: '-9px', marginTop: '-10px' }}>
@@ -76,7 +76,7 @@ export const PinMaskTask = () => {
                     <Form.Field classname="buttonbluedown">
                       <label> </label>
                       <button className="ui mini button pinbutton"> {t('pin_mask.pin_mark_task')} </button>
-                      <img src="assets/images/grey_pin.png" className="pinadd" />
+                      <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/grey_pin.png`} className="pinadd" />
                     </Form.Field>
                   </div>
                   <Form.Field>
@@ -85,7 +85,7 @@ export const PinMaskTask = () => {
                         <div className="d-flex align-items-center  py-2">
                           <span>
 
-                            <img src="assets/images/dots.png" style={{ marginRight: '6px !important;' }} className="  mr-10 " />
+                            <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} style={{ marginRight: '6px !important;' }} className="  mr-10 " />
                           </span>
 
                           <span>
@@ -99,7 +99,7 @@ export const PinMaskTask = () => {
 
                         <div className="symbol-group symbol-hover py-2 text-right">
                           <div className="symbol symbol-30">
-                            <img src="assets/images/people_1.png" />
+                            <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/people_1.png`} />
                           </div>
                         </div>
                       </div>
@@ -185,7 +185,7 @@ export const PinMaskTask = () => {
 
                           <div className="symbol-group symbol-hover py-2 text-right">
                             <div className="symbol symbol-30">
-                              <img src="assets/images/people_1.png" />
+                              <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/people_1.png`} />
                             </div>
                           </div>
                         </div>

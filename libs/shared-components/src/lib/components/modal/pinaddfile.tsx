@@ -106,9 +106,9 @@ export const AddPinFile = (props: AddPinProps) => {
       >
         <Modal.Header>{props.filesData?.fileTitle}
           <div style={{ textAlign: 'center', marginBottom: '-30px' }}>
-            <img src="/assets/images/icons_top.png" style={{ position: 'relative', top: '-17px' }} />
+            <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/icons_top.png`} style={{ position: 'relative', top: '-17px' }} />
 
-            <a onClick={close}><img src="assets/images/cross_grey.png" style={{ position: 'relative', top: '-17px', left: '540px' }} /></a>
+            <a onClick={close}><img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/cross_grey.png`} style={{ position: 'relative', top: '-17px', left: '540px' }} /></a>
           </div>
         </Modal.Header>
         <Modal.Content style={{ marginTop: '-1px' }}>

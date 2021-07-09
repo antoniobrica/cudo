@@ -122,7 +122,7 @@ export function SelectFilePopup(props: FileStructureProps) {
             <Form>
               <div className="slect-file-search-box">
                 <Form.Field>
-                  <img src="assets/images/search_white.png" style={{ position: 'relative', top: '11px' }}></img>
+                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/search_white.png`} style={{ position: 'relative', top: '11px' }}></img>
 
                   <Input
                     placeholder="search.."
