@@ -1,4 +1,3 @@
-
 interface IURL {
   url: string;
 }

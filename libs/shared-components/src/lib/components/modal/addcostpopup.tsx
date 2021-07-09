@@ -88,7 +88,7 @@ export function ModalCost(props: ModalCostProps) {
     console.log('cost-items==>', items);
     props.createCost(items)
     // setOpen(false);
-    props.cancel();
+    cancel();
   }
   function CostItem() {
     return items.map((item, index) =>
@@ -106,7 +106,7 @@ export function ModalCost(props: ModalCostProps) {
           <Input name='description' size='small' className="full-width" onChange={e => handleChange(e, index)} value={item.description || ''} />
         </Table.Cell>
         <Table.Cell collapsing className="cost-files">
-          <span onClick={() => uploadFile(index)} className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <Label horizontal>2</Label>  </span>
+          <span onClick={() => uploadFile(index)} className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <Label horizontal>{files.length}</Label>  </span>
         </Table.Cell>
         <Table.Cell className="width100">
           <Input name='itemQuantity' type='number' size='small' className="full-width" onChange={e => handleChange(e, index)} value={item.itemQuantity || 0} />

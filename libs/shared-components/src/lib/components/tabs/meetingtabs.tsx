@@ -191,11 +191,11 @@ export function MeetingTab(props: MeetingTab) {
         </div> : null
       }
 
-      <div className="meetings-outer-con">
+      <div className="tabs-main-info-container meetings-outer-con">
 
         <h3>Meetings
           <Button onClick={clickAddSession} size="small" className="primary">
-            + Add New Session
+            <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> Add New Session
           </Button>
 
         </h3>
