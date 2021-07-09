@@ -49,6 +49,7 @@ if (!document.getElementById("MeetingApp-container")) {
         <ApolloProvider client={client}>
           <ApolloHooksProvider client={client as any}>
             <App />
+
           </ApolloHooksProvider>
         </ApolloProvider>
       </BrowserRouter>

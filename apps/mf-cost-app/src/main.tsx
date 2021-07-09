@@ -46,6 +46,7 @@ if (!document.getElementById("CostApp-container")) {
       <ApolloProvider client={client}>
         <ApolloHooksProvider client={client as any}>
           <App />
+
         </ApolloHooksProvider>
       </ApolloProvider>
     </BrowserRouter>,
