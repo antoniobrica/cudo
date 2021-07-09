@@ -6,9 +6,8 @@ import { BkpIndex, PhaseIndex, FileTypeIndex, FileStructureIndex } from "@cudo/m
 import { UploadsViewStateContext, SharedViewStateContext } from 'libs/mf-document-lib/src/azure-storage/contexts/viewStateContext';
 import { BlobItemUpload } from 'libs/mf-document-lib/src/azure-storage/types/azure-storage';
 import { BlobItem, ContainerItem } from '@azure/storage-blob';
-
-import img from 'libs/shared-components/src/default.png';
 import { tap } from 'rxjs/operators';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 // import { BlobItemUpload } from 'libs/mf-document-lib/src/azure-storage/types/azure-storage';
 
 interface AlertProps {
@@ -200,7 +199,7 @@ export function UploadNewVersion(props: AlertProps) {
                     <Form.Field>
                       <label>File to replace:</label>
 
-                      <img src={img} className="mr-10 " /> {props?.file?.fileTitle}
+                      <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/default.png`} className="mr-10 " /> {props?.file?.fileTitle}
                     </Form.Field>
                   </Grid.Column>
 
@@ -243,7 +242,7 @@ export function UploadNewVersion(props: AlertProps) {
                     <Form.Field>
                       <div className="content">
                         <div className="description">Generate file number
-                  <p className="enable">Enable this option to generate file numbering</p>
+                          <p className="enable">Enable this option to generate file numbering</p>
                           <Checkbox toggle className="toggle_area" />
 
                         </div>
@@ -359,7 +358,7 @@ export function UploadNewVersion(props: AlertProps) {
           />
           <Button size='small' className="icon-border" onClick={cancel}>
             X  Cancel
-        </Button>
+          </Button>
 
         </Modal.Actions>
       </Modal>

@@ -2,9 +2,8 @@ import { radios } from '@storybook/addon-knobs';
 import React, { useEffect, useState } from 'react';
 import { Button, Select, Modal, Tab, Table, Input, Form, Grid, Image, Segment, TextArea } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
-
-import img from 'libs/shared-components/src/user_profile.png';
 import { FormField } from '@oryd/kratos-client';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 export interface UserProfileProps {
   image?
@@ -91,7 +90,7 @@ export function UserProfile(props: UserProfileProps) {
         <Grid.Column>
           <div className="card card-custom gutter-b">
             <div className="card-body">
-              <img src={img} /><br />
+              <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user_profile.png`} /><br />
               <label className="text-center">Change Picture</label>
               <Input type="file" className="file-upload-input" placeholder='Firstname' />
             </div>

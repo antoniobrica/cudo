@@ -2,15 +2,7 @@ import React from 'react';
 
 import './../../../assets/style/index.scss'
 import { Tab, Accordion, Dropdown } from 'semantic-ui-react'
-
-import img4 from 'libs/shared-components/src/folder.png';
-import img5 from 'libs/shared-components/src/image2.png';
-import img6 from 'libs/shared-components/src/eyeview.png';
-import img1 from 'libs/shared-components/src/powerpoint.png';
-import img2 from 'libs/shared-components/src/pdf.png';
-import img from 'libs/shared-components/src/user2.png';
-import img8 from 'libs/shared-components/src/circle_blue.png';
-import img9 from 'libs/shared-components/src/grey_circle.png';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 /* eslint-disable-next-line */
 export interface FileStructureProps {
     files?,
@@ -35,7 +27,7 @@ export function PinFileStructure(props: FileStructureProps) {
     const [tick, setTick] = React.useState([[]]);
     const [isTick, setIsTick] = React.useState('');
     const [fileId, setFileId] = React.useState('');
-    const [selectedFile, setSelectedFile]= React.useState(null)
+    const [selectedFile, setSelectedFile] = React.useState(null)
 
     React.useEffect(() => {
         if (props.isPinFile) {
@@ -112,8 +104,8 @@ export function PinFileStructure(props: FileStructureProps) {
                             <span>
                                 {data.fileType == ("image/jpeg" || "image/png")
                                     ?
-                                    <img src={img5} className="  mr-10 " /> :
-                                    <img src={img2} className="  mr-10 " />
+                                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} className="  mr-10 " /> :
+                                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} className="  mr-10 " />
                                 }
 
                             </span>
@@ -137,17 +129,17 @@ export function PinFileStructure(props: FileStructureProps) {
                             <div>
                                 {/* <a onClick={() => download(file.fileTitle)}>  <i className="ms-Icon ms-Icon--Download mr-10" aria-hidden="true"></i></a> */}
                                 {/* <a onClick={() => viewFile(file)}> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a> */}
-                               {isTick === i && selectedFile === data.uploadedFileID? 
-                               <img src={img8} />
-                               : 
-                               <a
-                                    onClick={() => viewFile(data, i)}
-                                    className="navi-link active"
-                                    
-                                >
-                                    <img src={img9} />
+                                {isTick === i && selectedFile === data.uploadedFileID ?
+                                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/circle_blue.png`} />
+                                    :
+                                    <a
+                                        onClick={() => viewFile(data, i)}
+                                        className="navi-link active"
 
-                                </a>
+                                    >
+                                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/grey_circle.png`} />
+
+                                    </a>
                                 }
                             </div>
 

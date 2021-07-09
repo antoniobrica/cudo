@@ -14,10 +14,6 @@ import {
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 import { Dropdown } from 'semantic-ui-react';
-
-import img2 from 'libs/shared-components/src/avatar_1.png';
-import img3 from 'libs/shared-components/src/avatar_2.png';
-import img4 from 'libs/shared-components/src/avatar_3.png';
 import { MeetingCategoryIndex, SessionInvitationIndex, SessionProtocolIndex, FollowersIndex, AssigneeIndex, AdminsIndex, MembersIndex } from '@cudo/mf-account-app-lib';
 import { ValidationError } from '@hapi/joi';
 
@@ -99,33 +95,33 @@ export function ModalSession(props: SessionProps) {
   const validation = () => {
     let response = true
     let errorMessages = []
-    if(!sessionTitle){
+    if (!sessionTitle) {
       response = false
       errorMessages.push("Please provide session title")
     }
-    if(!catagory){
+    if (!catagory) {
       response = false
       errorMessages.push("Please provide meeting category")
     }
-    if(!protocol){
+    if (!protocol) {
       response = false
       errorMessages.push("Please provide protocol")
     }
-    if(!invitation){
+    if (!invitation) {
       errorMessages.push("Please provide invitation")
     }
-    if(!workTypeD){
+    if (!workTypeD) {
       response = false
       errorMessages.push("Please provide workType")
     }
-    if(!response){
+    if (!response) {
       return errorMessages
     }
     return []
   }
   const createSession = () => {
     const validationResponse = validation()
-    if(validationResponse?.length>0){
+    if (validationResponse?.length > 0) {
       setValidationErrors(validationResponse)
       return false
     }
@@ -136,7 +132,7 @@ export function ModalSession(props: SessionProps) {
     const memberList = members?.map((item, index) => {
       return { memberID: item.userID, memberName: item.userName, image: "" }
     })
-    
+
     const data = {
       sessionTitle: sessionTitle,
       meetingCategoryID: catagory.meetingCatagoryID,
@@ -150,45 +146,45 @@ export function ModalSession(props: SessionProps) {
       admins: adminList, // : [{ adminID: "1", adminName: "ram", image: "image.com" }],
       members: memberList // : [{ memberID: "1", memberName: "lakhan", image: "image.com" }]
     }
-    
+
     props.createSession(data);
 
     setOpen(false);
     resetAddData();
   }
-  
+
   React.useEffect(() => {
     if (props.openAddSession) {
       console.log('---add session - useEffect props.openAddSession')
-      setOpen(true);        
-    } 
+      setOpen(true);
+    }
 
-    if(validationErrors?.length>0){
+    if (validationErrors?.length > 0) {
       console.log('----validation errors----', validationErrors)
     }
   }, [props.openAddSession, validationErrors])
-  
+
   const openSessionAddPopup = () => {
     console.log('---add session - openSessionAddPopup function')
     setOpen(true)
-    props.openAddSession(true) 
+    props.openAddSession(true)
   }
   const cancel = () => {
     console.log('---add session - cancel function')
     setOpen(false)
-    props.cancel(true) 
-    resetAddData()  
- }
+    props.cancel(true)
+    resetAddData()
+  }
 
- const resetAddData = () => {
-  setSessionTitle("")
-  setworkTypeD(null)
-  setCatagory(null)
-  setInvitation(null)
-  setProtocol(null)
-  setAdmins([])
-  setMembers([])
- }
+  const resetAddData = () => {
+    setSessionTitle("")
+    setworkTypeD(null)
+    setCatagory(null)
+    setInvitation(null)
+    setProtocol(null)
+    setAdmins([])
+    setMembers([])
+  }
 
   return (
     <div style={{ marginLeft: 900 }} >
@@ -304,7 +300,7 @@ export function ModalSession(props: SessionProps) {
                   <Grid.Column>
                     <Form.Field>
                       <div className="below_area">
-                        <img src={img2} className="avatar" />
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_1.png`} className="avatar" />
                         <span className="span_name">Barthelemy Chalvet</span>
                         <i
                           className="ms-Icon ms-Icon--CalculatorMultiply right_float"
@@ -317,7 +313,7 @@ export function ModalSession(props: SessionProps) {
                   <Grid.Column>
                     <Form.Field>
                       <div className="below_area">
-                        <img src={img3} className="avatar" />
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_2.png`} className="avatar" />
                         <span className="span_name">Barthelemy Chalvet</span>
                         <i
                           className="ms-Icon ms-Icon--CalculatorMultiply right_float"
@@ -329,7 +325,7 @@ export function ModalSession(props: SessionProps) {
                   <Grid.Column>
                     <Form.Field>
                       <div className="below_area">
-                        <img src={img4} className="avatar" />
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_3.png`} className="avatar" />
                         <span className="span_name">Barthelemy Chalvet</span>
                         <i
                           className="ms-Icon ms-Icon--CalculatorMultiply right_float"
@@ -383,7 +379,7 @@ export function ModalSession(props: SessionProps) {
                   <Grid.Column>
                     <Form.Field>
                       <div className="below_area">
-                        <img src={img2} className="avatar" />
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_1.png`} className="avatar" />
                         <span className="span_name">Barthelemy Chalvet</span>
                         <i
                           className="ms-Icon ms-Icon--CalculatorMultiply right_float"
@@ -396,7 +392,7 @@ export function ModalSession(props: SessionProps) {
                   <Grid.Column>
                     <Form.Field>
                       <div className="below_area">
-                        <img src={img3} className="avatar" />
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_2.png`} className="avatar" />
                         <span className="span_name">Barthelemy Chalvet</span>
                         <i
                           className="ms-Icon ms-Icon--CalculatorMultiply right_float"
@@ -408,7 +404,7 @@ export function ModalSession(props: SessionProps) {
                   <Grid.Column>
                     <Form.Field>
                       <div className="below_area">
-                        <img src={img4} className="avatar" />
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_3.png`} className="avatar" />
                         <span className="span_name">Barthelemy Chalvet</span>
                         <i
                           className="ms-Icon ms-Icon--CalculatorMultiply right_float"
@@ -463,7 +459,7 @@ export function ModalSession(props: SessionProps) {
             // onClick={() => setOpen(false)}
             onClick={cancel}
           >
-            X Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> Cancel
           </Button>
         </Modal.Actions>
       </Modal>

@@ -2,14 +2,9 @@ import React, { useState, useEffect } from 'react';
 
 import './../../../assets/style/index.scss'
 import { Segment, Dropdown, Input, Grid, Form, Button } from 'semantic-ui-react';
-import img from 'libs/shared-components/src/user.png';
-import img6 from 'libs/shared-components/src/yellow_calendar.png';
-import img1 from 'libs/shared-components/src/blue_file.png';
-import img3 from 'libs/shared-components/src/pink.png';
-import img2 from 'libs/shared-components/src/star_img.png';
-import img5 from 'libs/shared-components/src/green.png';
 
 import { InvitationTab, ModalAddInvitation } from '@cudo/shared-components'
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 // import ModalSession from 'libs/shared-components/src/lib/components/modal/addsession'
 //  /add-session/add-session';
@@ -91,14 +86,14 @@ export function MeetingTab(props: MeetingTab) {
 
             <div className="session-actions-con">
               <div className="session-attach-dropdown tasks-action-area single-search-list">
-                {/* <img src={img} />
-              <img src={img2} /> */}
+                {/* <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />
+              <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/star_img.png`} /> */}
                 {admins.map(({ adminID, image, adminName }) => {
-                  return (<img key={adminID} src={img} title={`admin-${adminName}`} alt={image} />)
+                  return (<img key={adminID} src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} title={`admin-${adminName}`} alt={image} />)
                 })
                 }
                 {members.map(({ memberID, image, memberName }) => {
-                  return (<img key={memberID} src={img2} title={`Member-${memberName}`} alt={image} />)
+                  return (<img key={memberID} src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/star_img.png`} title={`Member-${memberName}`} alt={image} />)
                 })
                 }
 
@@ -143,7 +138,7 @@ export function MeetingTab(props: MeetingTab) {
       return (
         <div className="meetings-listing" key={meetingCategoryID}>
           <span className="preliminary-font">
-            <img src={img5} className="  mr-10 " />
+            <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/green.png`} className="  mr-10 " />
             <h3>
               {meetingCategoryTitle} <span className="sessiontext">({categoryWiseSessionCount} sessions)</span>
             </h3>
@@ -191,11 +186,11 @@ export function MeetingTab(props: MeetingTab) {
         </div> : null
       }
 
-      <div className="meetings-outer-con">
+      <div className="tabs-main-info-container meetings-outer-con">
 
         <h3>Meetings
           <Button onClick={clickAddSession} size="small" className="primary">
-            + Add New Session
+            <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> Add New Session
           </Button>
 
         </h3>
@@ -203,7 +198,7 @@ export function MeetingTab(props: MeetingTab) {
         {/* //=====Upcoming List for Invitations============== */}
         <div className="meetings-listing upcoming-meeting-con">
           <span className="preliminary-font">
-            <img src={img6} />
+            <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/yellow_calendar.png`} />
             <h3>
               {' '}
               Upcoming meetings{' '}
@@ -247,7 +242,7 @@ export function MeetingTab(props: MeetingTab) {
 
               <div className="session-actions-con">
                 <div className="session-attach-dropdown tasks-action-area">
-                  <img src={img} />
+                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />
                   <span className="session-attachements">
                     <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>
                     3
@@ -310,7 +305,7 @@ export function MeetingTab(props: MeetingTab) {
 
               <div className="session-actions-con">
                 <div className="session-attach-dropdown tasks-action-area">
-                  <img src={img} />
+                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />
                   <span className="session-attachements">
                     <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>
                     3
@@ -345,7 +340,7 @@ export function MeetingTab(props: MeetingTab) {
     <div className="app-content-body ">
       <div style={{ background: '#FFF9F1', padding: '10px' }}>
         <span className="preliminary-font">
-          <img src={img6} className="  mr-10 " />
+          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/yellow_calendar.png`} className="  mr-10 " />
           <div
             style={{
               marginTop: '-33px',
@@ -395,7 +390,7 @@ export function MeetingTab(props: MeetingTab) {
 
             <div className="symbol-group symbol-hover py-2">
               <div className="symbol symbol-30">
-                <img src={img} />
+                <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />
                 <span className="font-weight-bold mb-0 mr-10">
                   <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>
                   3
@@ -454,7 +449,7 @@ export function MeetingTab(props: MeetingTab) {
 
             <div className="symbol-group symbol-hover py-2">
               <div className="symbol symbol-30">
-                <img src={img} />
+                <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />
                 <span className="font-weight-bold mb-0 mr-10">
                   <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>
                   2
@@ -479,7 +474,7 @@ export function MeetingTab(props: MeetingTab) {
       <br />
       <div style={{ padding: '10px' }}>
         <span className="preliminary-font">
-          <img src={img1} className="  mr-10 " />
+          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/blue_file.png`} className="  mr-10 " />
           <div
             style={{
               marginTop: '-33px',
@@ -519,8 +514,8 @@ export function MeetingTab(props: MeetingTab) {
 
             <div className="symbol-group symbol-hover py-2">
               <div className="symbol symbol-30">
-                <img src={img} />
-                <img src={img2} />
+                <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />
+                <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/star_img.png`} />
 
                 <span className="mr-2">
                   <Dropdown text="...">
@@ -542,7 +537,7 @@ export function MeetingTab(props: MeetingTab) {
       <br />
       <div style={{ padding: '10px' }}>
         <span className="preliminary-font">
-          <img src={img3} className="  mr-10 " />
+          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pink.png`} className="  mr-10 " />
           <div
             style={{
               marginTop: '-33px',
@@ -582,8 +577,8 @@ export function MeetingTab(props: MeetingTab) {
 
             <div className="symbol-group symbol-hover py-2">
               <div className="symbol symbol-30">
-                <img src={img} />
-                <img src={img2} />
+                <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />
+                <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/star_img.png`} />
 
                 <span className="mr-2">
                   <Dropdown text="...">
@@ -605,7 +600,7 @@ export function MeetingTab(props: MeetingTab) {
       <br /> 
       <div style={{ padding: '10px' }}>
         <span className="preliminary-font">
-          <img src={img5} className="  mr-10 " />
+          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/green.png`} className="  mr-10 " />
           <div
             style={{
               marginTop: '-33px',
@@ -645,8 +640,8 @@ export function MeetingTab(props: MeetingTab) {
 
             <div className="symbol-group symbol-hover py-2">
               <div className="symbol symbol-30">
-                <img src={img} />
-                <img src={img2} />
+                <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />
+                <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/star_img.png`} />
 
                 <span className="mr-2">
                   <Dropdown text="...">

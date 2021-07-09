@@ -2,11 +2,9 @@ import { radios } from '@storybook/addon-knobs';
 import React from 'react';
 import { Button, Select, Modal, Tab, Table, Input, Form, Grid, Image, Segment, TextArea } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
-
-import img from 'libs/shared-components/src/user_profile.png';
-import img5 from 'libs/shared-components/src/edit.png';
 // import { initI18n } from '@cudo/mf-core';
 import { useTranslation } from 'react-i18next';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 // const defaultLanguage = 'en-GB';
 // const supportedLanguages = [defaultLanguage, 'en-GB'];
 // initI18n('./assets/i18n/{{lng}}.json', defaultLanguage);
@@ -30,7 +28,7 @@ export function UserProfileView(props: UserProfileEditProps) {
         <Grid.Column style={{ height: '243px;' }}>
           <div className="card card-custom gutter-b">
             <div className="card-body">
-              <img src={img} /><br />
+              <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user_profile.png`} /><br />
               <label className="text-center">Change Picture</label>
               <Input type="file" className="file-upload-input" placeholder='Firstname' />
             </div>
@@ -146,7 +144,7 @@ export function UserProfileView(props: UserProfileEditProps) {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <button onClick={props.edit} className="ui mini button edit_btn">  <img src={img5} /> Edit</button>
+                        <button onClick={props.edit} className="ui mini button edit_btn">  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/edit.png`} /> Edit</button>
                       </Form.Field>
                     </Grid.Column>
                   </Grid.Row>
