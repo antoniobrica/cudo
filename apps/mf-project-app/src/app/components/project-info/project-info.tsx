@@ -13,6 +13,7 @@ import ReactQuill, { Quill } from 'react-quill';
 //import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
 
 import ModalExampleModal from '../modal/modal'
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 /* eslint-disable-next-line */
 export interface ProjectInfoProps { }
@@ -136,24 +137,27 @@ export function ProjectInfo(props: ProjectInfoProps) {
                   <li key={i} >
                     <div className="project-logo-action">
                       <div className="project-logo">
-                        <img src="/assets/images/default-logo.png" alt="Logo" />
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/default-logo.png`} alt="Logo" />
                       </div>
 
                       <div className="project-action">
-                        <Dropdown icon='ellipsis horizontal' pointing='right'>
-                          <Dropdown.Menu className="dropdowncomplete">
-                            <Dropdown.Item icon='eye' text='View detail' onClick={() => openTask(project)} />
-                            <Dropdown.Item icon='setting' text='Manage project' />
-                            <Dropdown.Item icon='tasks' text='View activity' />
-                            <Dropdown.Item icon='archive' text='Archive' />
-                            <Dropdown.Item icon='trash alternate outline' text='Delete' />
-                          </Dropdown.Menu>
-                        </Dropdown>
+                        <div className="symbol symbol-30 d-flex">
+                          <span className="dropdown-action">
+                            <Dropdown icon='ellipsis horizontal' pointing='right'>
+                              <Dropdown.Menu className="dropdowncomplete">
+                                <Dropdown.Item icon='setting' text='Manage project' />
+                                <Dropdown.Item icon='tasks' text='View activity' />
+                                <Dropdown.Item icon='archive' text='Archive' />
+                                <Dropdown.Item icon='trash alternate outline' text='Delete' />
+                              </Dropdown.Menu>
+                            </Dropdown>
+                          </span>
+                        </div>
                       </div>
                     </div>
 
                     <div className="project-name">
-                      <h4>{projectName ? projectName : 'NA'} <span>{client ? client : 'NA'}</span></h4>
+                      <h4 onClick={() => openTask(project)}>{projectName ? projectName : 'NA'} <span>{client ? client : 'NA'}</span></h4>
                     </div>
 
                     <div className="project-info">
@@ -164,11 +168,11 @@ export function ProjectInfo(props: ProjectInfoProps) {
                     <div className="project-description">
                       {/* <p>{shortDescription ? shortDescription : 'NA'}</p> */}
                       <p><ReactQuill id="txtDescription" readOnly={true} value={description} modules={{ toolbar: null }} /></p>
-                      <div className="project-members">
-                        {/* <Label circular color="orange">AK</Label>
+                      {/* <div className="project-members">
+                        <Label circular color="orange">AK</Label>
                         <Label circular color="violet">AM</Label>
-                        <Label circular color="brown">VN</Label> */}
-                      </div>
+                        <Label circular color="brown">VN</Label>
+                      </div> */}
                     </div>
                   </li>
                 )
@@ -177,7 +181,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
               {/* <li>
                 <div className="project-logo-action">
                   <div className="project-logo">
-                    <img src="/assets/images/default-logo.png" alt="Logo" />
+                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/default-logo.png`} alt="Logo" />
                   </div>
 
                   <div className="project-action">
@@ -214,7 +218,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
               <li>
                 <div className="project-logo-action">
                   <div className="project-logo">
-                    <img src="/assets/images/default-logo.png" alt="Logo" />
+                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/default-logo.png`} alt="Logo" />
                   </div>
 
                   <div className="project-action">

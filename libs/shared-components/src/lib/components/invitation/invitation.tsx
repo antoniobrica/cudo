@@ -1,18 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './../../../assets/style/index.scss'
 import { Tab, Dropdown, Button } from 'semantic-ui-react';
-import img from 'libs/shared-components/src/user.png';
-import img3 from 'libs/shared-components/src/calendar.png';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 /* eslint-disable-next-line */
-export interface ViewInvitationProps { 
+export interface ViewInvitationProps {
   sessionId?
 }
 
 export function InvitationTab(props: ViewInvitationProps) {
 
-  
+
 
   const panes = [
     {
@@ -26,52 +25,37 @@ export function InvitationTab(props: ViewInvitationProps) {
           <div className="ui-tabs">
             <div className="card1 card-custom gutter-b">
               <div
-                className="card-body d-flex align-items-center justify-content-between flex-wrap py-3"
-                style={{ width: '80%' }}
-              >
-                <div className="d-flex align-items-center  py-2">
-                  <img src={img3} style={{ width: '30px' }} />
-                  <span className="font-weight-bold mb-0 mr-10">
-                    &nbsp; 10 Aug, 2020
-                    <br />
-                    &nbsp; This is invitation title
-                  </span>
-
-                  <span
-                    className="font-weight-bold mb-0 mr-10"
-                    style={{ marginTop: '-21px' }}
-                  >
-                    <i
-                      className="ms-Icon ms-Icon--Clock"
-                      aria-hidden="true"
-                    ></i>
-                    11:00 AM - 11:45 AM
-                  </span>
-                  <span className="textt2" style={{ marginTop: '-21px' }}>
-                    45 min
-                  </span>
-                  <div className="d-flex mr-3" style={{ marginTop: '-21px' }}>
-                    <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
-                      <div className="navi-item mr-2">
-                        <a className="navi-link">
-                          <span className="navi-text">
-                            {' '}
-                            <i
-                              className="ms-Icon ms-Icon--Link"
-                              aria-hidden="true"
-                            ></i>
-                            Protocol here{' '}
-                          </span>
-                        </a>
-                      </div>
+                className="card-body d-flex align-items-center justify-content-between flex-wrap invitation-list-card">
+                <div className="d-flex align-items-center invitaiton-info-left">
+                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/calendar.png`} />
+                  <div className="invitation-date-time">
+                    <div className="timing-details">
+                      <span className="invitation-date-time">
+                        10 Aug, 2020
+                      </span>
+                      <span className="invitaiton-time-left">
+                        <i className="ms-Icon ms-Icon--Clock" aria-hidden="true"></i>
+                        11:00 AM - 11:45 AM
+                      </span>
+                      <span className="invitaion-minutes">
+                        45 min
+                      </span>
+                      <a href="" className="protocol-text">
+                        {' '}
+                        <i className="ms-Icon ms-Icon--Link" aria-hidden="true"></i>
+                        Protocol here{' '}
+                      </a>
+                    </div>
+                    <div className="invitation-title">
+                      This is Invitation title
                     </div>
                   </div>
                 </div>
 
-                <div className="symbol-group symbol-hover py-2">
+                <div className="symbol-group symbol-hover">
                   <div className="symbol symbol-30">
-                    <img src={img} />
-                    <span className="font-weight-bold mb-0 mr-10">
+                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />
+                    <span className="font-weight-bold">
                       {' '}
                       <i
                         className="ms-Icon ms-Icon--Attach"
@@ -83,65 +67,7 @@ export function InvitationTab(props: ViewInvitationProps) {
                 </div>
               </div>
             </div>
-            <div className="card1 card-custom gutter-b">
-              <div
-                className="card-body d-flex align-items-center justify-content-between flex-wrap py-3"
-                style={{ width: '80%' }}
-              >
-                <div className="d-flex align-items-center  py-2">
-                  <img src={img3} style={{ width: '30px' }} />
-                  <span className="font-weight-bold mb-0 mr-10">
-                    &nbsp; 10 Aug, 2020
-                    <br />
-                    &nbsp; This is invitation title
-                  </span>
 
-                  <span
-                    className="font-weight-bold mb-0 mr-10"
-                    style={{ marginTop: '-21px' }}
-                  >
-                    <i
-                      className="ms-Icon ms-Icon--Clock"
-                      aria-hidden="true"
-                    ></i>
-                    11:00 AM - 11:45 AM
-                  </span>
-                  <span className="textt2" style={{ marginTop: '-21px' }}>
-                    45 min
-                  </span>
-                  <div className="d-flex mr-3" style={{ marginTop: '-21px' }}>
-                    <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
-                      <div className="navi-item mr-2">
-                        <a className="navi-link">
-                          <span className="navi-text">
-                            {' '}
-                            <i
-                              className="ms-Icon ms-Icon--Link"
-                              aria-hidden="true"
-                            ></i>
-                            Protocol here{' '}
-                          </span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="symbol-group symbol-hover py-2">
-                  <div className="symbol symbol-30">
-                    <img src={img} />
-                    <span className="font-weight-bold mb-0 mr-10">
-                      {' '}
-                      <i
-                        className="ms-Icon ms-Icon--Attach"
-                        aria-hidden="true"
-                      ></i>
-                      3
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </Tab.Pane>
       ),
@@ -161,7 +87,7 @@ export function InvitationTab(props: ViewInvitationProps) {
                 style={{ width: '80%' }}
               >
                 <div className="d-flex align-items-center  py-2">
-                  <img src={img3} style={{ width: '30px' }} />
+                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/calendar.png`} style={{ width: '30px' }} />
                   <span className="font-weight-bold mb-0 mr-10">
                     &nbsp; 10 Aug, 2020
                     <br />
@@ -202,7 +128,7 @@ export function InvitationTab(props: ViewInvitationProps) {
 
                 <div className="symbol-group symbol-hover py-2">
                   <div className="symbol symbol-30">
-                    <img src={img} />
+                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />
                     <span className="mr-2">
                       <Dropdown text="...">
                         <Dropdown.Menu className="dropdowncomplete">
@@ -230,7 +156,7 @@ export function InvitationTab(props: ViewInvitationProps) {
                 style={{ width: '80%' }}
               >
                 <div className="d-flex align-items-center  py-2">
-                  <img src={img3} style={{ width: '30px' }} />
+                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/calendar.png`} style={{ width: '30px' }} />
                   <span className="font-weight-bold mb-0 mr-10">
                     &nbsp; 10 Aug, 2020
                     <br />
@@ -253,7 +179,7 @@ export function InvitationTab(props: ViewInvitationProps) {
 
                 <div className="symbol-group symbol-hover py-2">
                   <div className="symbol symbol-30">
-                    <img src={img} />
+                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />
                     <span className="mr-2">
                       <Dropdown text="...">
                         <Dropdown.Menu className="dropdowncomplete">
@@ -281,20 +207,20 @@ export function InvitationTab(props: ViewInvitationProps) {
     },
   ];
 
-  return (    
-    <div className="app-content-body-dash navbar-collapse">
-      <div>
+  return (
+    <div className="tabs-main-info-container invitation-tab">
+      <div className="invitation-header">
         <i className="ms-Icon ms-Icon--Back" aria-hidden="true"></i>{' '}
         <span className="">Invitation</span> /{' '}
         <span className="preliminary-font">Protocol</span>
         <br />{' '}
-        <span style={{ fontSize: '10px' }}>
+        <span className="invitation-sub-heading">
           <strong>Bulider Meeting</strong>- Project begining sessions
         </span>
       </div>
 
       <Tab
-        className="ui-tabs"
+        className="ui-tabs work-tabs invitation-listing"
         menu={{ secondary: true, pointing: true }}
         panes={panes}
       />
