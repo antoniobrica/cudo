@@ -134,7 +134,7 @@ jobs:
 - job: packages
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
-  condition: eq(dependencies.cudogetchp.outputs['cudovars.package'],  'true')
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.packages'],  'true')
   steps:
           - checkout: self
             clean: false
