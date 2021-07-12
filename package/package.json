@@ -24,6 +24,7 @@
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph" ,
     "help": "nx help"
+
   },
   "private": true,
   "dependencies": {
