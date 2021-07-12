@@ -29,117 +29,122 @@ export function Menubar(props: MenuProps) {
           visible
           width='thin'
         >
-          <Menu.Item as='a'>
-            {/* <img src={logo} alt="logo"></img> */}
 
-          </Menu.Item>
+          <div className="sidebar-top-menu">
+            <Menu.Item as='a'>
+              {/* <img src={logo} alt="logo"></img> */}
 
-          <Menu.Item as={NavLink} to={`${url}"/add"`}
-            name='add'
-            active={visible === 'add'} onClick={() => handleOpenProject('add')}>
+            </Menu.Item>
 
-            <Popup
-              content='Add Project'
+            <Menu.Item as={NavLink} to={`${url}"/add"`}
+              name='add'
+              active={visible === 'add'} onClick={() => handleOpenProject('add')}>
 
-              trigger={<i className="ms-Icon ms-Icon--CirclePlus" aria-hidden="true"></i>}
-              size='small' position='right center'
-            />
+              <Popup
+                content='Add Project'
 
-          </Menu.Item>
+                trigger={<i className="ms-Icon ms-Icon--CirclePlus" aria-hidden="true"></i>}
+                size='small' position='right center'
+              />
 
-          <Menu.Item as='a' onClick={() => handleOpenProject('search')} >
+            </Menu.Item>
 
-            <Popup
+            <Menu.Item as='a' onClick={() => handleOpenProject('search')} >
 
-
-
-              content='Search'
-              trigger={<i className="ms-Icon ms-Icon--Search" aria-hidden="true"></i>} size='small' position='right center'>
-
-            </Popup>
-          </Menu.Item>
-
-          <Menu.Item as='a' onClick={() => handleOpenProject('dashboard')}>
+              <Popup
 
 
-            <Popup
-              content=' '
-              trigger={<i className="ms-Icon ms-Icon--ViewDashboard" aria-hidden="true"></i>} size='small' position='right center'>
 
-            </Popup>
-          </Menu.Item>
+                content='Search'
+                trigger={<i className="ms-Icon ms-Icon--Search" aria-hidden="true"></i>} size='small' position='right center'>
 
-          <Menu.Item as={NavLink} to={`${url}/project`}
-            name='project'
-            active={visible === 'project'} onClick={() => handleOpenProject('project')}>
-            <Popup
-              content='Project'
-              trigger={<i className="ms-Icon ms-Icon--FabricNewFolder" aria-hidden="true"></i>
-              } size='small' position='right center'>
-            </Popup>
-          </Menu.Item>
+              </Popup>
+            </Menu.Item>
 
-          <Menu.Item as='a' onClick={() => handleOpenProject('calendar')}>
-            <Popup
-              content='Calendar'
-              trigger={<i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i>
-              } size='small' position='right center'>
-            </Popup>
-          </Menu.Item>
+            <Menu.Item as='a' onClick={() => handleOpenProject('dashboard')}>
 
-          <Menu.Item as='a' onClick={() => handleOpenProject('Notification')}>
-            <Popup
-              content='Notification'
-              trigger={<i className="ms-Icon ms-Icon--Ringer" aria-hidden="true"></i>
-              } size='small' position='right center'>
-            </Popup>
-          </Menu.Item>
 
-          <Menu.Item as='a' onClick={() => handleOpenProject('people')}>
-            <Popup
-              content='People'
-              trigger={<i className="ms-Icon ms-Icon--People" aria-hidden="true"></i>
-              } size='small' position='right center'>
-            </Popup>
-          </Menu.Item>
+              <Popup
+                content=' '
+                trigger={<i className="ms-Icon ms-Icon--ViewDashboard" aria-hidden="true"></i>} size='small' position='right center'>
 
-          <Menu.Item as='a' onClick={() => handleOpenProject('message')}>
-            <Popup
-              content='Message'
-              trigger={<i className="ms-Icon ms-Icon--FollowUser" aria-hidden="true"></i>
-              } size='small' position='right center'>
-            </Popup>
-          </Menu.Item>
+              </Popup>
+            </Menu.Item>
 
-          <Menu.Item as='a' onClick={() => handleOpenProject('Notification')}>
-            <Popup
-              content='Configuration'
-              trigger={<i className="ms-Icon ms-Icon--Settings" aria-hidden="true"></i>
-              } size='small' position='right center'>
-            </Popup>
-          </Menu.Item>
+            <Menu.Item as={NavLink} to={`${url}/project`}
+              name='project'
+              active={visible === 'project'} onClick={() => handleOpenProject('project')}>
+              <Popup
+                content='Project'
+                trigger={<i className="ms-Icon ms-Icon--FabricNewFolder" aria-hidden="true"></i>
+                } size='small' position='right center'>
+              </Popup>
+            </Menu.Item>
 
-          <Menu.Item as='a' onClick={() => handleOpenProject('project')}>
-            <i className="ms-Icon ms-Icon--DoubleChevronRight" aria-hidden="true"></i>
-          </Menu.Item>
+            <Menu.Item as='a' onClick={() => handleOpenProject('calendar')}>
+              <Popup
+                content='Calendar'
+                trigger={<i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i>
+                } size='small' position='right center'>
+              </Popup>
+            </Menu.Item>
 
-          <Menu.Item as='a' onClick={() => handleOpenProject('logout')}>
-            <Popup
-              content='Logout'
-              trigger={<i className="ms-Icon ms-Icon--People" aria-hidden="true"></i>
-              } size='small' position='right center'>
-            </Popup>
-          </Menu.Item>
+            <Menu.Item as='a' onClick={() => handleOpenProject('Notification')}>
+              <Popup
+                content='Notification'
+                trigger={<i className="ms-Icon ms-Icon--Ringer" aria-hidden="true"></i>
+                } size='small' position='right center'>
+              </Popup>
+            </Menu.Item>
 
-          <Menu.Item as={NavLink} to={`${url}/profile`}
-            name='profile'
-            active={visible === 'profile'} onClick={() => handleOpenProject('profile')}>
-            <Popup
-              content='profile'
-              trigger={<i className="ms-Icon ms-Icon--People" aria-hidden="true"></i>
-              } size='small' position='right center'>
-            </Popup>
-          </Menu.Item>
+            <Menu.Item as='a' onClick={() => handleOpenProject('people')}>
+              <Popup
+                content='People'
+                trigger={<i className="ms-Icon ms-Icon--People" aria-hidden="true"></i>
+                } size='small' position='right center'>
+              </Popup>
+            </Menu.Item>
+
+            <Menu.Item as='a' onClick={() => handleOpenProject('message')}>
+              <Popup
+                content='Message'
+                trigger={<i className="ms-Icon ms-Icon--FollowUser" aria-hidden="true"></i>
+                } size='small' position='right center'>
+              </Popup>
+            </Menu.Item>
+
+            <Menu.Item as='a' onClick={() => handleOpenProject('Notification')}>
+              <Popup
+                content='Configuration'
+                trigger={<i className="ms-Icon ms-Icon--Settings" aria-hidden="true"></i>
+                } size='small' position='right center'>
+              </Popup>
+            </Menu.Item>
+
+            <Menu.Item as='a' onClick={() => handleOpenProject('project')}>
+              <i className="ms-Icon ms-Icon--DoubleChevronRight" aria-hidden="true"></i>
+            </Menu.Item>
+
+            <Menu.Item as={NavLink} to={`${url}/profile`}
+              name='profile'
+              active={visible === 'profile'} onClick={() => handleOpenProject('profile')}>
+              <Popup
+                content='profile'
+                trigger={<i className="ms-Icon ms-Icon--People" aria-hidden="true"></i>
+                } size='small' position='right center'>
+              </Popup>
+            </Menu.Item>
+          </div>  
+
+          <div className="sidebar-bottom-menu">
+            <Menu.Item as='a' onClick={() => handleOpenProject('logout')}>
+              <Popup
+                content='Logout'
+                trigger={<i className="ms-Icon ms-Icon--SignOut" aria-hidden="true"></i>
+                } size='small' position='right center'>
+              </Popup>
+            </Menu.Item>
+          </div>
 
         </Sidebar>
       </Sidebar.Pushable>

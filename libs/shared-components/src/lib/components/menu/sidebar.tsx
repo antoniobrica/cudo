@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import './../../../assets/style/index.scss'
-import { Icon, Sidebar, Accordion, Form } from 'semantic-ui-react'
+import { Icon, Sidebar, Accordion, Form, Dropdown } from 'semantic-ui-react'
 
 const ColorForm = (
   <Form>
@@ -71,19 +71,110 @@ export class AccordionExampleMenu extends Component<MyProps> {
                 </Accordion.Title>
                 <Accordion.Content className="active-title menu-sub-option" active={activeIndex === i}>
                   <ul>
-                    <li className="active-li">
-                      <span className="strategic_plan">Strategic Planning</span> <span className="dots_area">...</span> </li>
-                    <li>
-                      <span className="strategic_plan">Preliminary Studies</span> <span className="dots_area">...</span>
+                    <li className="done">
+                      <span className="strategic_plan">Strategic Planning</span>
+                      <span className="dots_area">
+                        <div className="symbol-group symbol-hover py-2" >
+                          <div className="symbol symbol-30 d-flex">
+                            <span className="dropdown-action">
+                              <Dropdown icon='ellipsis horizontal' pointing='left'>
+                                <Dropdown.Menu>
+                                  <Dropdown.Item icon="check circle outline" text="Mark as complete" />
+                                  <Dropdown.Item icon="pencil" text="Add Task" />
+                                  <Dropdown.Item
+                                    icon="trash alternate outline"
+                                    text="Add File"
+                                  />
+                                </Dropdown.Menu>
+                              </Dropdown>
+                            </span>
+                          </div>
+                        </div>
+                      </span> 
+                    </li>
+                    <li className="active">
+                      <span className="strategic_plan">Preliminary Studies</span>
+                      <span className="dots_area">
+                        <div className="symbol-group symbol-hover py-2" >
+                          <div className="symbol symbol-30 d-flex">
+                            <span className="dropdown-action">
+                              <Dropdown icon='ellipsis horizontal' pointing='left'>
+                                <Dropdown.Menu>
+                                  <Dropdown.Item icon="check circle outline" text="Mark as complete" />
+                                  <Dropdown.Item icon="pencil" text="Add Task" />
+                                  <Dropdown.Item
+                                    icon="trash alternate outline"
+                                    text="Add File"
+                                  />
+                                </Dropdown.Menu>
+                              </Dropdown>
+                            </span>
+                          </div>
+                        </div>
+                      </span> 
                     </li>
                     <li>
-                      <span className="strategic_plan">Project Plannings</span> <span className="dots_area">...</span>
+                      <span className="strategic_plan">Project Plannings</span> 
+                      <span className="dots_area">
+                        <div className="symbol-group symbol-hover py-2" >
+                          <div className="symbol symbol-30 d-flex">
+                            <span className="dropdown-action">
+                              <Dropdown icon='ellipsis horizontal' pointing='left'>
+                                <Dropdown.Menu>
+                                  <Dropdown.Item icon="check circle outline" text="Mark as complete" />
+                                  <Dropdown.Item icon="pencil" text="Add Task" />
+                                  <Dropdown.Item
+                                    icon="trash alternate outline"
+                                    text="Add File"
+                                  />
+                                </Dropdown.Menu>
+                              </Dropdown>
+                            </span>
+                          </div>
+                        </div>
+                      </span> 
                     </li>
                     <li>
-                      <span className="strategic_plan">Tender</span> <span className="dots_area">...</span>
+                      <span className="strategic_plan">Tender</span> 
+                      <span className="dots_area">
+                        <div className="symbol-group symbol-hover py-2" >
+                          <div className="symbol symbol-30 d-flex">
+                            <span className="dropdown-action">
+                              <Dropdown icon='ellipsis horizontal' pointing='left' floating>
+                                <Dropdown.Menu>
+                                  <Dropdown.Item icon="check circle outline" text="Mark as complete" />
+                                  <Dropdown.Item icon="pencil" text="Add Task" />
+                                  <Dropdown.Item
+                                    icon="trash alternate outline"
+                                    text="Add File"
+                                  />
+                                </Dropdown.Menu>
+                              </Dropdown>
+                            </span>
+                          </div>
+                        </div>
+                      </span> 
                     </li>
                     <li>
-                      <span className="strategic_plan">Realization</span> <span className="dots_area">...</span>
+                      <span className="strategic_plan">Realization</span> 
+                      <span className="dots_area">
+                        <div className="symbol-group symbol-hover py-2" >
+                          <div className="symbol symbol-30 d-flex">
+                            <span className="dropdown-action">
+                              <Dropdown icon='ellipsis horizontal' pointing='left'>
+                                <Dropdown.Menu>
+                                  <Dropdown.Item icon="check circle outline" text="Mark as complete" />
+                                  <Dropdown.Item icon="pencil" text="Add Task" />
+                                  <Dropdown.Item
+                                    icon="trash alternate outline"
+                                    text="Add File"
+                                  />
+                                </Dropdown.Menu>
+                              </Dropdown>
+                            </span>
+                          </div>
+                        </div>
+                      </span> 
                     </li>
                   </ul>
                 </Accordion.Content>

@@ -277,17 +277,44 @@ span.strategic_plan {
 				ul {
 					margin: 0;
 					padding: 5px 10px 10px 32px;
-					list-style: auto;
+					list-style: none;
+					counter-reset: section;
 					li {
-						padding: 0 2px;
+						padding: 3px 2px;
+						position: relative;
+						@include flex(flex);
+						@include  justify-content(space-between);
 						span.strategic_plan {
 							font-size: 14px;
 							color: #718898;
 							font-weight: 500;
 							margin: 0;
 						}
-						&:marker {
+						&:before {
+							position: absolute;
+							left: -20px;
+							content: counter(section) ".";
+							counter-increment: section;
+							top: 8px;
 							color: #718898;
+						}
+						&.done {
+							span.strategic_plan {
+								color: #37BA77;
+							}
+							&:before {
+								content: "\f058";
+								color: #37BA77;
+								font-family: outline-icons;
+							}
+						}
+						&.active {
+							span.strategic_plan {
+								color: #2D62ED;
+							}
+							&:before {
+								color: #2D62ED;
+							}
 						}
 					}
 				}
@@ -315,6 +342,9 @@ span.strategic_plan {
     @include align-items(center);
     @include  justify-content(space-between);
     padding: 0 20px;
+	.project-sub-heading {
+		padding: 0 20px 15px;
+	}
 	.project-name {
 		font-size: 20px;
 		font-weight: 600;

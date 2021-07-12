@@ -2,7 +2,7 @@ import React from "react"
 import { FormField, Message } from "@oryd/kratos-client"
 import { FORM_LABELS } from "@cudo/mf-core"
 import { KratosMessages } from "../components/KratosMessages"
-import { Button, Form, Grid, Segment } from "semantic-ui-react"
+import { Button, Form, Grid, Segment, Input, Icon } from "semantic-ui-react"
 import logo from '../../assets/images/slider.png';
 import img from '../../assets/images/Shape 2.png';
 import { ToEmail } from "../services/auth"
@@ -26,11 +26,25 @@ export const KratosForm = ({ action, messages = [], fields, submitLabel = "Submi
                     <h2 className="login">{submitLabel}</h2>
                   </div>
                   <div className="form-inner">
+                    <Form>
+                      <Form.Field className="login-password">
+                        <Input placeholder='example@domain.com' className="full-width paratext1" icon='at' name="email"
+                          type="email"
+                        />
+                      </Form.Field>
+                      <Button size='large' className="primary btn-large">Send recovery link <Icon name='arrow right' /></Button> 
+                      <div className="center-form-link">
+                        <a href='#' className="form-link">Back to Login</a>
+                      </div>
+                      {/* <span> <br /> <a href="/auth/registration" className="blue_color"> Register with us</a>  </span>
+                      <span className="float_right ">   <a href="/recovery" className="blue_color"> Forgot Password ?</a>  </span>*/}
+                    </Form>
                     {!!messages?.length && <KratosMessages messages={messages} />}
                     {action &&
                       <Form className="ln-form-outer" action={action} style={{ margin: "60px 0" }} method="POST">
                         {renderFormFields({ fields: fieldsSorted })}
                         <Button size='large' className="grey-btn btn-large" type="submit">{submitLabel}</Button>
+                        <Button onClick={login} size='large' className="grey-btn btn-large">Login </Button>
                       </Form>}
                   </div>
                 </div>
@@ -39,11 +53,6 @@ export const KratosForm = ({ action, messages = [], fields, submitLabel = "Submi
             <Grid.Column>
               <img src={logo} className="massive" />
             </Grid.Column>
-          </Grid.Row>
-          <Grid.Row columns={2}>
-            <div className="form-header">
-              <Button onClick={login} size='large' className="grey-btn btn-large">Login </Button>
-            </div>
           </Grid.Row>
         </Grid>
       </div>
@@ -76,5 +85,9 @@ const renderFormFields = ({ fields = [] }: { fields: FormField[] }) => fields.ma
       </label>
       <KratosMessages messages={messages} />
     </fieldset>
+
+
+    
+
   )
 })

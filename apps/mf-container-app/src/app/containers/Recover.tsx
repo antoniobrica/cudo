@@ -20,11 +20,9 @@ export const Recover = () => {
   const messages = requestResponse?.messages
 
   return (
-    <div className="content">
+    <div>
       {/* <Header /> */}
-      <div className="container">
-        <h4>Recover Your Account</h4>
-
+      <div>
         {messages && <KratosMessages messages={messages} />}
         {form &&
           <KratosForm

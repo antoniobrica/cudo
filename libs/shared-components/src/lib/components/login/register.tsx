@@ -165,12 +165,12 @@ export function RegisterPage(props: RegisterProps) {
                                 defaultValue={password?.value as any}
                                 {...password?.required} />
                             </Form.Field>
-                            <Form.Field key={csrf_token?.name}>
+                            {/* <Form.Field key={csrf_token?.name}>
                               <Input placeholder='Email Address' size='small' className="full-width  " type={csrf_token?.type}
                                 name={csrf_token?.name}
                                 defaultValue={csrf_token?.value as any}
                                 {...csrf_token?.required} />
-                            </Form.Field>
+                            </Form.Field> */}
                           </Grid.Column>
                         </Grid.Row>
                       </Grid>
@@ -249,10 +249,13 @@ export function RegisterPage(props: RegisterProps) {
                           </Grid.Column>
                         </Grid.Row>
                       </Grid>
-                      <button type="submit" className="ui large button grey-btn btn-large">Register <i aria-hidden="true" className="arrow right icon"></i></button>
+                      <button type="submit" className="ui large button primary btn-large">Register <i aria-hidden="true" className="arrow right icon"></i></button>
                     </Form>
                   }</div>
-                <button onClick={props.login} className="ui large button grey-btn btn-large">Login <i aria-hidden="true" className="arrow right icon"></i></button>
+                {/* <button onClick={props.login} className="ui large button grey-btn btn-large">Login <i aria-hidden="true" className="arrow right icon"></i></button> */}
+                <div className="center-form-link">
+                  <a href='#' onClick={props.login} className="form-link">Back to Login</a>
+                </div>
               </div>
             </Grid.Column>
           </Grid.Row>
