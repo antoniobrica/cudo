@@ -160,7 +160,7 @@ jobs:
               repository: ory-dev
               dockerfile: deploy/docker-compose-ory/Dockerfile
               containerRegistry: dev-docker-registry
-              tags: latest
+              tags: $(tag)
       ###################################################Frontend###############################################################################
 - job: mfaccountapp
   pool: cudo-selfhosted-agent
