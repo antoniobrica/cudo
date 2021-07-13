@@ -81,6 +81,7 @@
     "i18next": "^19.8.4",
     "i18next-browser-languagedetector": "^6.0.1",
     "i18next-http-backend": "^1.1.0",
+    "moment": "^2.29.1",
     "mongodb": "^3.6.3",
     "mssql": "^6.3.1",
     "nestjs-i18n": "^8.0.10",

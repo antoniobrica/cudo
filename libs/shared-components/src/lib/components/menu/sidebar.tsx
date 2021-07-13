@@ -52,24 +52,24 @@ export class AccordionExampleMenu extends Component<MyProps> {
     console.log('renderactiveIndex', activeIndex)
     return (
       <div className="sidebar-wrapper sidebar-theme">
-        <div className="sidebar-top">
-          <span className="burj">Burj Khalifa</span>
+        <div className="sidebar-header-project-name">
+          <span className="project-name">Burj Khalifa</span>
           <span className="summary"><span className="dot">...</span></span>
         </div>
-        <div className="description"><span className="subdescription">John &amp; co. </span></div>
+        <div className="project-sub-heading">John &amp; co.</div>
         <Accordion className="ui-accordion accordion-top">
           {(this.state.worktypes || []).map((worktype, i) => {
             return (
-              <div key={i}>
+              <div key={i} className="sidebar-menu-item">
                 <Accordion.Title
                   active={activeIndex === i}
                   index={i}
                   onClick={() => this.handleClick(i)}
-                  className="active-title"
+                  className="active-title sidebar-menu-heading"
                 >
                   {worktype.workTypeName} <span className="workspan">({i + 1}/{this.state.worktypes.length}) </span>  <Icon name='angle down' />
                 </Accordion.Title>
-                <Accordion.Content className="active-title" active={activeIndex === i}>
+                <Accordion.Content className="active-title menu-sub-option" active={activeIndex === i}>
                   <ul>
                     <li className="active-li">
                       <span className="strategic_plan">Strategic Planning</span> <span className="dots_area">...</span> </li>
