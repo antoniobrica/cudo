@@ -43,3 +43,8 @@ export interface IPaginatedSession {
   results: ISession[]
 }
 
+export interface ISessionByID {
+  SessionByID: ISession
+}
+
+
