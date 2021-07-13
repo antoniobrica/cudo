@@ -14,6 +14,7 @@ import ReactQuill, { Quill } from 'react-quill';
 //import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
 
 import ModalExampleModal from '../modal/modal'
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 /* eslint-disable-next-line */
 export interface ProjectInfoProps { }
@@ -137,7 +138,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
                   <li key={i} >
                     <div className="project-logo-action">
                       <div className="project-logo">
-                        <img src="/assets/images/default-logo.png" alt="Logo" />
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/default-logo.png`} alt="Logo" />
                       </div>
 
                       <div className="project-action">
@@ -181,7 +182,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
               {/* <li>
                 <div className="project-logo-action">
                   <div className="project-logo">
-                    <img src="/assets/images/default-logo.png" alt="Logo" />
+                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/default-logo.png`} alt="Logo" />
                   </div>
 
                   <div className="project-action">
@@ -218,7 +219,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
               <li>
                 <div className="project-logo-action">
                   <div className="project-logo">
-                    <img src="/assets/images/default-logo.png" alt="Logo" />
+                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/default-logo.png`} alt="Logo" />
                   </div>
 
                   <div className="project-action">

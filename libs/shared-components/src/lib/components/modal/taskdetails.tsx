@@ -3,8 +3,8 @@ import ReactQuill, { Quill } from 'react-quill';
 
 import { Button, Modal, Form, Grid, TextArea, Icon, Divider } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
-import img8 from 'libs/shared-components/src/default_area.png';
 import Moment from 'moment';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 function exampleReducer(state, action) {
   switch (action.type) {
     case 'close':
@@ -269,7 +269,7 @@ export const ModalViewTask = (props: AlertProps) => {
                   <Grid.Column>
                     <Form.Field>
                       <div>
-                        <img src={img8} className="image_center"></img>
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/default_area.png`} className="image_center"></img>
                       </div>
                       <div className="text-center margin-top no-update-message">
                         <span>No update yet</span>

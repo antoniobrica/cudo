@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './../../../assets/style/index.scss'
 import { Tab, Dropdown, Button, Icon } from 'semantic-ui-react';
@@ -6,13 +6,13 @@ import img from 'libs/shared-components/src/user.png';
 import img3 from 'libs/shared-components/src/calendar.png';
 
 /* eslint-disable-next-line */
-export interface ViewInvitationProps { 
+export interface ViewInvitationProps {
   sessionId?
 }
 
 export function InvitationTab(props: ViewInvitationProps) {
 
-  
+
 
   const panes = [
     {
@@ -46,8 +46,8 @@ export function InvitationTab(props: ViewInvitationProps) {
                       </span>
                       <a href="" className="protocol-text">
                         {' '}
-                          <i className="ms-Icon ms-Icon--Link" aria-hidden="true"></i>
-                          Protocol here{' '}
+                        <i className="ms-Icon ms-Icon--Link" aria-hidden="true"></i>
+                        Protocol here{' '}
                       </a>
                     </div>
                     <div className="invitation-title">
@@ -279,7 +279,7 @@ export function InvitationTab(props: ViewInvitationProps) {
     },
   ];
 
-  return (    
+  return (
     <div className="tabs-main-info-container invitation-tab">
       <div className="invitation-header">
         <i className="ms-Icon ms-Icon--Back" aria-hidden="true"></i>{' '}
