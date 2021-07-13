@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 import axios from 'axios';
 import { useMutation } from '@apollo/client';
 import { ADD_SESSION, GET_SESSIONS } from '../graphql/graphql'
-import { ISessions } from '../interfaces/meeting';
+import { ISessions } from '../interfaces/session';
 import { ProjectWorktypes } from '@cudo/mf-project-lib';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 
@@ -72,7 +72,7 @@ export function AddSession(props: AddSessionProps) {
   }
 
   const createSession = (data) => {
-    console.log('---createSession', data)
+    
     addSession({
       variables: {
         sessionTitle: data.sessionTitle,
@@ -96,8 +96,7 @@ export function AddSession(props: AddSessionProps) {
         cache.writeQuery({
           query: GET_SESSIONS,
           data: {
-            // getSessions: [...cacheData.sessions, data]
-            getSessions: [...cacheData.paginatedSession.results, data]
+             getSessions: [...cacheData.paginatedSession.results, data]
           }
         });
         

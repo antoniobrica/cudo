@@ -7,6 +7,7 @@ import { useHistory } from 'react-router';
 import axios from 'axios';
 import { CreateFileTaskIndex, PinTaskListIndex } from '@cudo/mf-task-lib';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { useTranslation } from 'react-i18next';
 
 function exampleReducer(state, action) {
   switch (action.type) {
@@ -40,6 +41,8 @@ export const AddPinFile = (props: AddPinProps) => {
   const [saveNewPinOnCanvase, setSaveNewPinOnCanvase] = React.useState(false);
   const [pinSavedOnCanvase, setPinSavedOnCanvase] = React.useState(false);
 
+  const { t } = useTranslation();
+  
   React.useEffect(() => {
     console.log("New Pin created ", isPinCreated);
     setAllowToCreateNewPin(false);
@@ -126,7 +129,7 @@ export const AddPinFile = (props: AddPinProps) => {
                       <div style={{ background: '#F1F5F8', padding: '10px', marginBottom: '-18px' }}>
                         <Form.Field classname="buttonbluedown">
                           <label> </label>
-                          <button className="ui mini button pinbutton" onClick={changePinTask}>Click to add pin-mark task</button>
+                          <button className="ui mini button pinbutton" onClick={changePinTask}>{t('pin_mask.pin_mark_task')}</button>
                           <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/grey_pin.png`} className="pinadd" />
                         </Form.Field>
                       </div>
