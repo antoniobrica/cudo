@@ -165,7 +165,7 @@ export function Menubar(props: MenuProps) {
               </Header>
             </Menu.Item>
 
-            <Menu.Item as='a' className="expand-main-menu" onClick={() => handleOpenProject('project')}>
+            <Menu.Item as='a' onClick={() => handleOpenProject('project')}>
               <i className="ms-Icon ms-Icon--DoubleChevronRight" aria-hidden="true"></i>
             </Menu.Item>
           </div>

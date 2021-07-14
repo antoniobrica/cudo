@@ -19,13 +19,14 @@ export interface HomeProps { }
 export function Home(props: HomeProps) {
   const [input, setInput] = useState("");
   const [state, setState] = useState('');
+  const [menuExpand, setMenuExpand] = useState(false)
   const data = "parrent"
   const history = useHistory()
   const location = useLocation();
   // const routeMatch = useRouteMatch();
   const { url, path } = useRouteMatch();
   console.log('path==>', path);
-  
+
   useEffect(() => {
     if (!isAuthenticated()) ToEmail()
   }, [])
@@ -49,9 +50,16 @@ export function Home(props: HomeProps) {
   const update = (childData) => {
     history.push('/home');
   }
+
+  const showHideMenu = () => {    
+    setMenuExpand(!menuExpand)
+  }
+
   return (
-    <div>
-      <Menubar data={data} parentCallback={callbackFunction}></Menubar>
+    <div className={menuExpand?"expand-main-menu":""} onClick={showHideMenu}>
+      <div>
+        <Menubar data={data} parentCallback={callbackFunction}></Menubar>
+      </div>
       <div>
         <Switch>
           <Route exact path={`${path}/profile`} render={() => <UserProfile />} />
