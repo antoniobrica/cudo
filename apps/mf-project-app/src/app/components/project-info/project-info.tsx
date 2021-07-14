@@ -144,7 +144,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
                       <div className="project-action">
                         <div className="symbol symbol-30 d-flex">
                           <span className="dropdown-action">
-                            <Dropdown icon='ellipsis horizontal' pointing='right'>
+                            <Dropdown icon='ellipsis horizontal' floating labeled>
                               <Dropdown.Menu className="dropdowncomplete">
                                 <Dropdown.Item icon='setting' text='Manage project' />
                                 <Dropdown.Item icon='tasks' text='View activity' />
