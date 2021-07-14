@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom';
 
 import { BrowserRouter } from 'react-router-dom';
@@ -22,17 +22,20 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
+// const App = lazy(() => import('./app/app'))
 
 window.renderProjectApp = (containerId, history) => {
   ReactDOM.render(
-    <BrowserRouter>
-      <ApolloProvider client={client}>
-        <ApolloHooksProvider client={client as any}>
-          <App />
-        </ApolloHooksProvider>
-      </ApolloProvider>
-    </BrowserRouter>,
-    document.getElementById(containerId)
+    // <Suspense fallback={<div>mkkk--project---loading....</div>}>
+      <BrowserRouter>
+        <ApolloProvider client={client}>
+          <ApolloHooksProvider client={client as any}>
+            <App />
+          </ApolloHooksProvider>
+        </ApolloProvider>
+      </BrowserRouter>
+    // </Suspense>
+    , document.getElementById(containerId)
   );
   serviceWorker.unregister();
 };
@@ -44,13 +47,15 @@ if (!document.getElementById("ProjectApp-container")) {
   // ReactDOM.render(<App />, document.getElementById("root"));
   ReactDOM.render(
     // <React.StrictMode>
-    <BrowserRouter>
-      <ApolloProvider client={client}>
-        <ApolloHooksProvider client={client as any}>
-          <App />
-        </ApolloHooksProvider>
-      </ApolloProvider>
-    </BrowserRouter>
+    // <Suspense fallback={<div>mkkk--Project--ProjectApp-container---loading....</div>}>
+      <BrowserRouter>
+        <ApolloProvider client={client}>
+          <ApolloHooksProvider client={client as any}>
+            <App />
+          </ApolloHooksProvider>
+        </ApolloProvider>
+      </BrowserRouter>
+      // </Suspense>
     // </React.StrictMode>
     ,
     document.getElementById("root")

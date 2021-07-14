@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom';
+// import Modal from 'react-modal'
 
 import { BrowserRouter } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
@@ -23,13 +24,19 @@ const store = configureStore({
   enhancers: [],
 });
 
+// const App = lazy(() => import('./app/app'))
+
 ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>,
-  document.getElementById('root')
+  // <Suspense fallback={<div>----container---loading....</div>}>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
+  // </Suspense>
+  ,
+  document.getElementById('root') // ,
+  // Modal.setAppElement(document.getElementById('root'))
 );
 
 serviceWorker.unregister();

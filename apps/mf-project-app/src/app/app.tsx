@@ -1,7 +1,6 @@
-import React, { Suspense, useState } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 
 import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch, useHistory, useLocation } from "react-router-dom";
-import ProjectInfo from './components/project-info/project-info';
 
 import { initI18n } from '@cudo/mf-core';
 import { Loading } from '@cudo/ui'
@@ -9,7 +8,12 @@ import { TestComponent } from './test-component/test-component';
 import { createBrowserHistory } from "history";
 import MicroFrontend from "../MicroFrontend";
 import { environment } from '../environments/environment';
+
 import TabMenu from './components/tab-menu/tab-menu';
+import ProjectInfo from './components/project-info/project-info';
+
+// const TabMenu = lazy(() => import('./components/tab-menu/tab-menu'))
+// const ProjectInfo = lazy(() => import('./components/project-info/project-info'))
 
 const defaultLanguage = 'de-DE';
 const supportedLanguages = [defaultLanguage, 'en-GB'];
@@ -85,14 +89,18 @@ function App() {
   const history = useHistory()
   const location = useLocation();
   const { url, path } = useRouteMatch();
-  console.log('path-project-app',history.location.pathname)
+  console.log('path-project-app', history.location.pathname)
   return (
     <Router>
-      <Switch>
-        <Route exact path={`${history.location.pathname}/:projectId`} render={() => <TabMenu />} />
-        <Route exact path={`${history.location.pathname}`}  render={() => <ProjectInfo />}/>
-      </Switch>
-      </Router>
+      {/* <Suspense fallback={<div>--project--component---Loading...</div>}> */}
+        <Switch>
+          <Route exact path={`${history.location.pathname}/:projectId`} render={() => <TabMenu />} />
+          <Route exact path={`${history.location.pathname}`} render={() => <ProjectInfo />} />
+          {/* <Route exact path={`${history.location.pathname}/:projectId`} component={TabMenu} />
+          <Route exact path={`${history.location.pathname}`} component={ProjectInfo} /> */}
+        </Switch>
+      {/* </Suspense> */}
+    </Router>
   );
 }
 

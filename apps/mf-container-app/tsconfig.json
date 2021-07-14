@@ -3,6 +3,7 @@
   "compilerOptions": {
     "jsx": "react",
     "allowJs": true,
+    "module": "ES2020",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
   },
