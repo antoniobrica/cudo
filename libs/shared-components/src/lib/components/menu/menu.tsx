@@ -152,7 +152,7 @@ export function Menubar(props: MenuProps) {
                 } size='small' position='right center'>
               </Popup> */}
 
-            <Menu.Item as='a' onClick={() => handleOpenProject('logout')}>
+            <Menu.Item as='a'>
 
               <Header as='h4'>
                 <Icon name='trophy' />
