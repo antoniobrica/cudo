@@ -1,13 +1,22 @@
 import React from 'react';
 
 import './../../../assets/style/index.scss'
-import { Header, Icon, Image, Menu, Segment, Sidebar, Button, Popup } from 'semantic-ui-react'
+import { Header, Icon, Image, Menu, Segment, Sidebar, Button, Popup,Dropdown } from 'semantic-ui-react'
 import { NavLink, useRouteMatch } from 'react-router-dom';
 /* eslint-disable-next-line */
 export interface MenuProps {
   parentCallback?
   data?
 }
+
+const profileOption = [
+  {
+    key: 'Jenny Hess',
+    text: 'Jenny Hess',
+    value: 'Jenny Hess',
+    image: { avatar: true, src: '/images/avatar/small/jenny.jpg' },
+  },
+]
 
 export function Menubar(props: MenuProps) {
   const { url, path } = useRouteMatch();
@@ -76,7 +85,7 @@ export function Menubar(props: MenuProps) {
               active={visible === 'project'} onClick={() => handleOpenProject('project')}>
               <Popup
                 content='Project'
-                trigger={<i className="ms-Icon ms-Icon--FabricNewFolder" aria-hidden="true"></i>
+                trigger={<i className="ms-Icon ms-Icon--NewTeamProject" aria-hidden="true"></i>
                 } size='small' position='right center'>
               </Popup>
             </Menu.Item>
@@ -108,22 +117,14 @@ export function Menubar(props: MenuProps) {
             <Menu.Item as='a' onClick={() => handleOpenProject('message')}>
               <Popup
                 content='Message'
-                trigger={<i className="ms-Icon ms-Icon--FollowUser" aria-hidden="true"></i>
+                trigger={<i className="ms-Icon ms-Icon--ChatInviteFriend" aria-hidden="true"></i>
                 } size='small' position='right center'>
               </Popup>
             </Menu.Item>
 
-            <Menu.Item as='a' onClick={() => handleOpenProject('Notification')}>
-              <Popup
-                content='Configuration'
-                trigger={<i className="ms-Icon ms-Icon--Settings" aria-hidden="true"></i>
-                } size='small' position='right center'>
-              </Popup>
-            </Menu.Item>
+            
 
-            <Menu.Item as='a' onClick={() => handleOpenProject('project')}>
-              <i className="ms-Icon ms-Icon--DoubleChevronRight" aria-hidden="true"></i>
-            </Menu.Item>
+            
 
             <Menu.Item as={NavLink} to={`${url}/profile`}
               name='profile'
@@ -137,12 +138,35 @@ export function Menubar(props: MenuProps) {
           </div>  
 
           <div className="sidebar-bottom-menu">
-            <Menu.Item as='a' onClick={() => handleOpenProject('logout')}>
+            <Menu.Item as='a' onClick={() => handleOpenProject('Notification')}>
               <Popup
+                content='Configuration'
+                trigger={<i className="ms-Icon ms-Icon--Settings" aria-hidden="true"></i>
+                } size='small' position='right center'>
+              </Popup>
+            </Menu.Item>
+            {/* <Menu.Item as='a' onClick={() => handleOpenProject('logout')}> */}
+              {/* <Popup
                 content='Logout'
                 trigger={<i className="ms-Icon ms-Icon--SignOut" aria-hidden="true"></i>
                 } size='small' position='right center'>
-              </Popup>
+              </Popup> */}
+
+            <Menu.Item as='a' onClick={() => handleOpenProject('logout')}>
+
+              <Header as='h4'>
+                <Icon name='trophy' />
+                <Header.Content>
+                  <Dropdown
+                    inline
+                    options={profileOption}
+                  />
+                </Header.Content>
+              </Header>
+            </Menu.Item>
+
+            <Menu.Item as='a' className="expand-main-menu" onClick={() => handleOpenProject('project')}>
+              <i className="ms-Icon ms-Icon--DoubleChevronRight" aria-hidden="true"></i>
             </Menu.Item>
           </div>
 
