@@ -1,12 +1,13 @@
 import React from 'react';
 
 import './../../../assets/style/index.scss'
-import { Header, Icon, Image, Menu, Segment, Sidebar, Button, Popup,Dropdown } from 'semantic-ui-react'
+import { Header, Icon, Image, Menu, Segment, Sidebar, Button, Popup, Dropdown } from 'semantic-ui-react'
 import { NavLink, useRouteMatch } from 'react-router-dom';
 /* eslint-disable-next-line */
 export interface MenuProps {
   parentCallback?
   data?
+  mainMenuExpand?
 }
 
 const profileOption = [
@@ -24,6 +25,10 @@ export function Menubar(props: MenuProps) {
 
   const handleOpenProject = (item) => {
     props?.parentCallback(item)
+  }
+
+  const showHideMenu = () => {
+    props?.mainMenuExpand(!props?.mainMenuExpand)
   }
 
   return (
@@ -122,9 +127,9 @@ export function Menubar(props: MenuProps) {
               </Popup>
             </Menu.Item>
 
-            
 
-            
+
+
 
             <Menu.Item as={NavLink} to={`${url}/profile`}
               name='profile'
@@ -135,7 +140,7 @@ export function Menubar(props: MenuProps) {
                 } size='small' position='right center'>
               </Popup>
             </Menu.Item>
-          </div>  
+          </div>
 
           <div className="sidebar-bottom-menu">
             <Menu.Item as='a' onClick={() => handleOpenProject('Notification')}>
@@ -146,7 +151,7 @@ export function Menubar(props: MenuProps) {
               </Popup>
             </Menu.Item>
             {/* <Menu.Item as='a' onClick={() => handleOpenProject('logout')}> */}
-              {/* <Popup
+            {/* <Popup
                 content='Logout'
                 trigger={<i className="ms-Icon ms-Icon--SignOut" aria-hidden="true"></i>
                 } size='small' position='right center'>
@@ -165,7 +170,8 @@ export function Menubar(props: MenuProps) {
               </Header>
             </Menu.Item>
 
-            <Menu.Item as='a' onClick={() => handleOpenProject('project')}>
+            {/* <Menu.Item as='a' onClick={() => handleOpenProject('project')}> */}
+            <Menu.Item as='a' onClick={showHideMenu}>
               <i className="ms-Icon ms-Icon--DoubleChevronRight" aria-hidden="true"></i>
             </Menu.Item>
           </div>

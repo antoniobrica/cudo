@@ -19,7 +19,8 @@ export interface HomeProps { }
 export function Home(props: HomeProps) {
   const [input, setInput] = useState("");
   const [state, setState] = useState('');
-  const [menuExpand, setMenuExpand] = useState(false)
+  const [menuExpand, setMenuExpand] = React.useState(false)
+
   const data = "parrent"
   const history = useHistory()
   const location = useLocation();
@@ -51,14 +52,14 @@ export function Home(props: HomeProps) {
     history.push('/home');
   }
 
-  const showHideMenu = () => {    
+  const onClickMenuExpand = () => {
     setMenuExpand(!menuExpand)
   }
 
   return (
-    <div className={menuExpand?"expand-main-menu":""} onClick={showHideMenu}>
+    <div className={menuExpand?"expand-main-menu":""}>
       <div>
-        <Menubar data={data} parentCallback={callbackFunction}></Menubar>
+        <Menubar data={data} parentCallback={callbackFunction} mainMenuExpand={onClickMenuExpand}></Menubar>
       </div>
       <div>
         <Switch>
