@@ -256,3 +256,49 @@
   margin-right: 4%;
   float: left;
 }
+
+
+// new changes
+.field.login-user.email-filled {
+  @include flex(flex);
+  @include align-items(center);
+  .img-src {
+    margin-right: 15px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+  .ui.input {
+    input {
+      border: none;
+      font-size: 18px;
+      background: none;
+      color: #707070;
+      padding: 0 5px;
+    }
+  }
+  i {
+    font-size: 16px;
+    color: #718898;
+    margin-right: 5px;
+  }
+}
+.field.login-password {
+  .ui.input {
+    input {
+      height: 55px;
+      font-size: 16px;
+      padding: 0 25px;
+    }
+  }
+  input {
+    height: 55px;
+    font-size: 16px;
+    padding: 0 25px;
+  }
+  i {
+    font-size: 16px;
+    color: #A2A3B0;
+    margin-right: 2px;
+  }
+}

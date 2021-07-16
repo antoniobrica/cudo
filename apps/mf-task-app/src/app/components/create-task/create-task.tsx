@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
+import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea, Checkbox } from 'semantic-ui-react';
 import { radios } from '@storybook/addon-knobs';
 import { IPeople, IPeoples, ITask, ITasks, TaskMutation } from "../../interfaces/task";
 import { useTaskMutation } from '../../services/useRequest';
@@ -59,8 +59,8 @@ export function CreateTask(props: CreateTaskProps) {
   const [workType, setworkType] = React.useState(null)
   const [workTypeD, setworkTypeD] = React.useState(null)
   const [workTypeData, setworkTypeData] = React.useState('')
-  const [worktypeID, setworktypeID] = React.useState("")
-  const [worktypeName, setworktypeName] = React.useState("")
+  const [workTypeID, setworktypeID] = React.useState("")
+  const [workTypeName, setworktypeName] = React.useState("")
   const [assignees, setAssignees] = React.useState<any>([]);
   const [followers, setfollowers] = React.useState<any>([]);
   const [date, setDate] = React.useState(null)
@@ -205,7 +205,9 @@ export function CreateTask(props: CreateTaskProps) {
         followers,
         description,
         subtasks: [],
-        referenceID
+        referenceID,
+        workTypeID,
+        workTypeName
       },
       update: (
         cache,
@@ -234,7 +236,8 @@ export function CreateTask(props: CreateTaskProps) {
 
   return (
     <div >
-      <Modal className="modal_media" style={{ width: '800px', marginLeft: '155px' }}
+      <Modal className="modal_media right-side--fixed-modal add-new-task-modal"
+        closeIcon
         onClose={cancel}
         onOpen={() => setOpen(true)}
         open={open}
@@ -317,40 +320,41 @@ export function CreateTask(props: CreateTaskProps) {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <AssigneeIndex parentAsigneeSelect={setAsignee} name="Assignee" />
+                    <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Assignee" />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
-              <Grid columns={2}>
+              <Grid>
                 <Grid.Row>
                   <Grid.Column>
-                    <FollowersIndex parentFollowersSelect={onFollowers} />
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Form.Field>
-                      <div className="event top-event">
-                        {followers.map((p, id) => {
-                          const name = p.userName.split(" ").map((n) => n[0]).join("");
-                          //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
-                          return (
-                            <div className="label-light-purple-circle label-spacer" key={id}>
-                              <span className="white-text">{name}</span>
-                            </div>
-                          )
-                        })
-                        }
-
-                        {/* <div className="label-light-black-circle label-spacer">
-                          <span className="white-text ">RJ</span>
-                        </div>
-                        <div className="label-light-blue-circle label-spacer">
-                          <span className="white-text">JB</span>
-                        </div> */}
-                      </div>
-                    </Form.Field>
+                    <FollowersIndex followers={[]} parentFollowersSelect={onFollowers} />
                   </Grid.Column>
                 </Grid.Row>
+                <div className="followers-label-area">
+                  <Form.Field>
+                    <div className="event top-event follower-listing-labels">
+                      {followers.map((p, id) => {
+                        const name = p.userName.split(" ").map((n) => n[0]).join("");
+                        //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
+                        return (
+                          <div className="label-light-purple-circle label-spacer" key={id}>
+                            <span className="white-text">{name}</span>
+                          </div>
+                        )
+                      })
+                      }
+
+                      {/* <div className="label-light-black-circle label-spacer">
+                        <span className="white-text ">RJ</span>
+                      </div>
+                      <div className="label-light-blue-circle label-spacer">
+                        <span className="white-text">JB</span>
+                      </div> */}
+                    </div>
+                  </Form.Field>
+                </div>
               </Grid>
+
               <Grid columns={3}>
                 <Grid.Row>
                   <Grid.Column>
@@ -369,6 +373,7 @@ export function CreateTask(props: CreateTaskProps) {
                       <label>End Date </label>
                       {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
                       <Input placeholder='Default' size='small' className="full-width" type="date"
+                        defaultValue={startDate}
                         value={endDate}
                         onChange={onEndDateChange}
                       />
@@ -392,8 +397,8 @@ export function CreateTask(props: CreateTaskProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>Task Configuration  </label>
-                      <div className="content">
-                        <p className="paragraph">Send notification to assignee/followers for the task</p></div>
+                      <div className="content configuration-toggle">
+                        <p className="paragraph task-configuration">Send notification to assignee/followers for the task <Checkbox toggle className="task-toggle" /></p></div>
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -403,9 +408,9 @@ export function CreateTask(props: CreateTaskProps) {
               content="Submit"
               onClick={handleSaveTask}
               positive
-              size='mini' className="grey-btn"
+              size='small' className="primary"
             />
-            <Button size='mini' className="icon-border" onClick={cancel}>
+            <Button size='small' className="icon-border" onClick={cancel}>
               X  Cancel
             </Button>
           </div>

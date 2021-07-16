@@ -57,6 +57,10 @@ export default class BKPCostEntity extends BaseEntity {
     updatedBy?: string;
 
     @Expose()
+    @Column({ nullable: true, default: false })
+    isDeleted?: Boolean;
+
+    @Expose()
     // n:n relation with TaskFllowersEntity
     @ManyToMany(type => BKPCostFilesEntity, { cascade: true })
     @JoinTable()

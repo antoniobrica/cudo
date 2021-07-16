@@ -13,7 +13,7 @@ import {
   TextArea,
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
-import img1 from 'libs/shared-components/src/filter.png';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 export function FilterPopup() {
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
@@ -24,8 +24,9 @@ export function FilterPopup() {
 
   return (
     <div>
-      <Modal style={{ width: '390px', marginLeft: '770px', height: '660px' }}
-        className="modal_media"
+      <Modal style={{ width: '450px' }}
+        className="modal_media right-side--fixed-modal filter-modal"
+        closeIcon
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
@@ -33,7 +34,7 @@ export function FilterPopup() {
           // <Button size="mini" className="grey-btn">
           //   Filter
           // </Button>
-          <img src={img1} className="  mr-10 " />
+          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/filter.png`} className="filter-icon mr-10 " />
 
         }
       >
@@ -146,11 +147,11 @@ export function FilterPopup() {
             content="Apply"
             onClick={() => setOpen(false)}
             positive
-            size="mini"
-            className="grey-btn"
+            size="small"
+            className="primary"
           />
           <Button
-            size="mini"
+            size="small"
             className="icon-border"
             onClick={() => setOpen(false)}
           >

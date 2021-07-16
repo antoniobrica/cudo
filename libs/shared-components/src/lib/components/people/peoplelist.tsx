@@ -3,8 +3,8 @@ import React from 'react';
 import './../../../assets/style/index.scss'
 import { Segment, Table } from 'semantic-ui-react'
 
-import img4 from 'libs/shared-components/src/NoPath.png';
-
+// import img4 from 'libs/shared-components/src/NoPath.png';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 /* eslint-disable-next-line */
 export interface PeopleTasks { }
 
@@ -31,27 +31,27 @@ export function PeopleList(props: PeopleTasks) {
 
         <Table.Body>
           <Table.Row>
-            <Table.Cell><span> <img src={img4} className="  mr-10 " /> Zhenya Rynzhuk  </span>
+            <Table.Cell><span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/NoPath.png`} className="  mr-10 " /> Zhenya Rynzhuk  </span>
             </Table.Cell>
             <Table.Cell>zhenya.rynzhuk@gmail.com</Table.Cell>
             <Table.Cell>+1-253-652-2514</Table.Cell>
-            <Table.Cell><button className="ui mini button grey-btn btn_radius"> Project Leader</button> </Table.Cell>
+            <Table.Cell><button className="ui mini button primary btn_radius"> Project Leader</button> </Table.Cell>
             <Table.Cell><span className="mr-2"  >...</span></Table.Cell>
           </Table.Row>
           <Table.Row>
-            <Table.Cell><span> <img src={img4} className="  mr-10 " /> Zhenya Rynzhuk  </span>
+            <Table.Cell><span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/NoPath.png`} className="  mr-10 " /> Zhenya Rynzhuk  </span>
             </Table.Cell>
             <Table.Cell>zhenya.rynzhuk@gmail.com</Table.Cell>
             <Table.Cell>+1-253-652-2514</Table.Cell>
-            <Table.Cell><button className="ui mini button grey-btn btn_radius"> Disciplene leader</button> </Table.Cell>
+            <Table.Cell><button className="ui mini button primary btn_radius"> Disciplene leader</button> </Table.Cell>
             <Table.Cell><span className="mr-2"  >...</span></Table.Cell>
           </Table.Row>
           <Table.Row>
-            <Table.Cell><span> <img src={img4} className="  mr-10 " /> Zhenya Rynzhuk  </span>
+            <Table.Cell><span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/NoPath.png`} className="  mr-10 " /> Zhenya Rynzhuk  </span>
             </Table.Cell>
             <Table.Cell>zhenya.rynzhuk@gmail.com</Table.Cell>
             <Table.Cell>+1-253-652-2514</Table.Cell>
-            <Table.Cell><button className="ui mini button grey-btn btn_radius"> Standard user </button> </Table.Cell>
+            <Table.Cell><button className="ui mini button primary btn_radius"> Standard user </button> </Table.Cell>
             <Table.Cell><span className="mr-2"  >...</span></Table.Cell>
           </Table.Row>
         </Table.Body>

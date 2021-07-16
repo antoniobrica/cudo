@@ -230,10 +230,10 @@ export function ModalExampleModal() {
             content="Click to continue"
             onClick={() => setOpen(false)}
             positive
-            size='mini' className="grey-btn"
+            size='small' className="primary"
           />
-          <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
-            X  Cancel
+          <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply ms-fontColor-themePrimary"></i>  Cancel
           </Button>
         </Form>
       </Tab.Pane>,
@@ -309,18 +309,18 @@ export function ModalExampleModal() {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-          <Button size='mini' className="disabled" onClick={() => setOpen(false)}>
+          <Button size='small' className="disabled" onClick={() => setOpen(false)}>
             Skip
           </Button>
           <div className="float-area">
-            <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
-              X  Cancel
+            <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
+              <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply ms-fontColor-themePrimary"></i>  Cancel
             </Button>
             <Button
               content="Submit"
               onClick={() => setOpen(false)}
               positive
-              size='mini' className="grey-btn"
+              size='small' className="primary"
             />
           </div>
         </Form>
@@ -333,11 +333,12 @@ export function ModalExampleModal() {
 
   return (
     <div id="navbar">
-      <Modal className="modal_media"
+      <Modal className="modal_media right-side--fixed-modal add-new-project-modal"
+        closeIcon
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button size='mini' className="grey-btn">+ Add New</Button>}      >
+        trigger={<Button size='small' className="primary">+ Add New</Button>}      >
         <Modal.Header><h3>Add New Project </h3></Modal.Header>
         <Modal.Content body>
           <div>
@@ -463,19 +464,19 @@ export function ModalExampleModal() {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <label>City  </label>
+                        <label>City</label>
                         <Input placeholder='City' size='small' className="full-width" type="text" />
                       </Form.Field>
                     </Grid.Column>
                     <Grid.Column>
                       <Form.Field>
-                        <label>State Pin </label>
+                        <label>State Pin</label>
                         <Input placeholder='State Pin' size='small' className="full-width" type="text" />
                       </Form.Field>
                     </Grid.Column>
                     <Grid.Column>
                       <Form.Field>
-                        <label>Country  </label>
+                        <label>Country</label>
                         <Select placeholder='Select' className="small" options={countryOptions} />
                       </Form.Field>
                     </Grid.Column>
@@ -488,10 +489,10 @@ export function ModalExampleModal() {
                 content="Add Company"
                 onClick={() => setOpen(false)}
                 positive
-                size='mini' className="grey-btn"
+                size='small' className="primary"
               />
-              <Button size='mini' className="icon-border" onClick={() => setSecondOpen(false)}>
-                X  Cancel
+              <Button size='small' className="icon-border" onClick={() => setSecondOpen(false)}>
+              <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply ms-fontColor-themePrimary"></i>  Cancel
               </Button>
             </div>
           </Modal.Content>

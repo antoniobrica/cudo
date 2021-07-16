@@ -176,7 +176,7 @@
   margin-right: 5px;
 }
 .small_drop {
-  height: 20px !important;
+  // height: 20px !important;
   border-color: #d0d8df !important;
 }
 
@@ -188,6 +188,9 @@
 }
 .anchor_complete {
   cursor: pointer;
+  font-size: 13px;
+  color: #9FB5C5;
+  font-weight: 500;
 }
 .image_center {
   display: block;
@@ -239,7 +242,7 @@
 }
 
 .alltask {
-  color: black;
+  color: #262B43;
   margin-top: 0 !important;
   font-size: 18px;
   margin-bottom: 25px;
@@ -350,8 +353,29 @@ canvas.coveringCanvas{
 .tasks-action-area .navi-item {
   margin: 0 5px;
 }
-.tasks-action-area .symbol-group .symbol span {
+.symbol span {
   margin-left: 0.7rem !important;
+  .dropdown {
+    .menu {
+      min-width: 180px;
+      border-radius: 5px;
+      .item {
+        padding: 1.3rem 1rem !important;
+        i {
+          margin-right: 0.485714rem;
+          font-size: 16px;
+          min-width: 22px;
+          color: #262B43;
+        }
+        span {
+          margin-left: 0.7rem !important;
+          font-size: 13px;
+          font-weight: 500;
+          color: #262B43;
+        }
+      }
+    }
+  }
 }
 .tasks-action-area .symbol-group .symbol span i.dropdown.icon {
   display: none;
@@ -391,9 +415,7 @@ span.completed-task-list-text.line-through {
 .tasks-action-area .symbol-group .symbol i {
   font-size: 1.4em;
   color: #718898;
-}
-span.navi-text.pin-action {
-  margin-right: 18px;
+  height: 20px;
 }
 .card1.card-custom.gutter-b.checklist-main-con {
   box-shadow: none;
@@ -409,8 +431,26 @@ span.navi-text.pin-action {
 }
 .checklist-listing-main {
   margin: 0 10px;
+  @include transition(all .25s);
   .anchor_complete {
     padding: 0 15px 0 0;
+  }
+  span.checklist-actions {
+    margin: 0 0 0 10px;
+    opacity: 0;
+    i {
+      margin: 0 8px;
+      font-size: 14px;
+      color: #718898;
+      font-weight: 400;
+      line-height: 1;
+      cursor: pointer;
+    }
+  }
+  &:hover {
+    span.checklist-actions {
+      opacity: 1;
+    }
   }
 }
 .card1.card-custom.gutter-b.card-complete .task-upper-con {
@@ -454,6 +494,9 @@ span.anchor_complete.checklist-complete-box span.material-icons.check-grey {
   .field.fillarea {
     flex: 2;
     margin-right: 5px;
+    input {
+      width: 100% !important;
+    }
   }
 }
 .d-flex.align-items-center.checklist-listing-main:last-child {
@@ -482,6 +525,16 @@ span.anchor_complete.checklist-complete-box span.material-icons.check-grey {
     min-width: 190px !important;
     left: auto !important;
     right: 0 !important;
+    .item {
+      font-size: 13px;
+      font-weight: 500;
+      i {
+        color: #262B43;
+        min-width: 22px;
+        margin-right: 0.785714rem !important;
+        font-size: 16px;
+      }
+    }
   }
   .divider.text {
     font-size: 13px;
@@ -492,4 +545,44 @@ span.anchor_complete.checklist-complete-box span.material-icons.check-grey {
 .add-task-dropdown .ui.active.visible.button.floating.labeled.dropdown:hover {
   background: #2d62ed;
   color: #fff;
+}
+.ui.multiple.dropdown.small_drop.follower-select {
+  min-height: 1rem !important;
+  height: auto !important;
+  input {
+    height: auto !important;
+  }
+  .divider.text {
+    padding: 5px;
+  }
+}
+.ui.multiple.dropdown.small_drop.follower-select a.label {
+  top: inherit;
+}
+.followers-label-area {
+  padding: 0 1rem;
+}
+.event.top-event.follower-listing-labels {
+  margin-top: 0;
+  .label-spacer {
+    margin-bottom: 5px;
+  }
+}
+p.paragraph.task-configuration {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1B1B40;
+}
+button.anchor_complete i {
+  color: #fff;
+}
+.filter-modal i.close.icon {
+  color: #fff !important;
+  opacity: 1;
+}
+h3.alltask {
+  margin-bottom: 15px;
 }

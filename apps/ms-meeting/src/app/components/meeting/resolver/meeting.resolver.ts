@@ -1,10 +1,16 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import MeetingEntity from '../../../entities/meeting.entity';
-// import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
+// import ReferenceFilterParams from '../../../utils/types/referenceFilterParams'; 
+
 import { Pagination } from '../../paginate';
-import { PaginationModel } from '../../paginate/pagination.model';
+import { PaginationMeetingModel } from '../../paginate/pagination.meeting.model'
+
 import { pageParams } from '../../paginate/pagination.param';
 import MeetingFilterParam from '../dto/args/meeting.filter';
+import MeetingDetailFilterParam from '../dto/args/meeting.detail.filter';
+import SortFilterParam from '../../../utils/types/sortParam';
+import StatusFilterParam from '../../../utils/types/status.filter';
+
 import { MeetingDeleteInput } from '../dto/input/meeting-delete.input';
 import { MeetingDetailsUpdateInput } from '../dto/input/meeting-details-update.input';
 import { MeetingDetailsInput } from '../dto/input/meeting-details.input';
@@ -24,38 +30,28 @@ export class MeetingResolver {
             // @Args("referenceFilter") getReferenceArgs: ReferenceFilterParams,
         ) {
             // return this.meetingService.create(createInput, getTasksArgs);
-            return this.meetingService.create(createInput);
+            return this.meetingService.addMeeting(createInput);
         }
 
-        // @Query(() => MeetingModel)
-        // // async getMeetingList(@Args("meetingFilter") meetingFilter?: MeetingFilterParam
-        // async getMeetingList() {
-        //     const meetings = await this.meetingService.getMeetingList();
-        //     return meetings;
-        // }
+        @Query(() => PaginationMeetingModel, { nullable: true })
+        async getMeetingList(
+            @Args('options',{nullable: true}) options: pageParams,
+            @Args('meetingFilter',) meetingFilter?: MeetingFilterParam,
+            @Args("statusFilter",{nullable: true}) status?:StatusFilterParam,
+            @Args("sortFilter",{nullable: true}) sortFilter?:SortFilterParam,
+        ) : Promise<Pagination<MeetingEntity>> {
+                return await this.meetingService.findMeetingList(options, meetingFilter,  status, sortFilter
+            )           
+        }       
 
-        // #region Commented Sample Session code
-        // @Query(() => SessionModel)
-        // async SessionByID(@Args("sessionFilter") sessionFilter?: SessionFilterParam
-        // ) {
-        //     const session = await this.sessionService.getSessionID(sessionFilter);
-        //     return session;
-        // }
-
-        // @Query(() => PaginationModel, { nullable: true })
-        // async paginatedSession(@Args('options',)options:pageParams,
-        // @Args("referenceFilter") getTasksArgs: ReferenceFilterParams): Promise<Pagination<SessionEntity>>  {
-        //     return await this.sessionService.paginate(options,getTasksArgs
-        //       )
-        // }
-
-        // @Query(() => [SessionModel], { nullable: true })
-        // async findAllSessions(): Promise<SessionEntity[]> {
-        //   return await this.sessionService.findAllSessions()
-        // }
-
-
-
+        @Query(() => MeetingModel)
+        async getMeetingByID(@Args("meetingDetailFilter") meetingDetailFilter?: MeetingDetailFilterParam
+        ) {
+                const meeting = await this.meetingService.findMeetingByID(meetingDetailFilter);
+                return meeting;
+            }
+            
+        // #region Commented Sample Session code       
         // @Mutation(() => [SessionModel])
         // async updateSession(
         //     @Args('sessionDetailsUpdate') createInput: SessionDetailsUpdateInput

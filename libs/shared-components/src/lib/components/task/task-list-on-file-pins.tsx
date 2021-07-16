@@ -1,9 +1,6 @@
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 import React, { Suspense } from 'react';
-import { Dropdown, Form } from 'semantic-ui-react';
-import img4 from 'libs/shared-components/src/dots.png';
-import img3 from 'libs/shared-components/src/check_grey.png';
-import img2 from 'libs/shared-components/src/people_1.png';
-import img5 from 'libs/shared-components/src/green_tick.png';
+import { Dropdown, Form, Label } from 'semantic-ui-react';
 /* eslint-disable-next-line */
 export interface TaskListOnFilePinsProps {
   pinTasks?
@@ -41,18 +38,32 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
                       <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
                         <div style={{ color: props.cord.pinsID === task?.taskTypeID ? "red" : "" }} className="d-flex align-items-center  py-2">
                           <span>
-                            <img src={img4} style={{ marginRight: '6px !important;' }} />
+                            <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} style={{ marginRight: '6px !important;' }} />
                           </span>
-                          <span onClick={() => updateStatus(task)} className="anchor_complete">  <img src={img5} className=" mr-2 mr-10 " />   </span>
+                          <span onClick={() => updateStatus(task)} className="anchor_complete">  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/green_tick.png`} className=" mr-2 mr-10 " />   </span>
                           <span className="font-weight-bold mb-0 mr-10  ">
                             <div style={{ color: props.cord.pinsID === task?.taskTypeID ? "red" : "black" }}>{task.taskTitle}</div>
                           </span>
                         </div>
-                        <div className="symbol-group symbol-hover py-2 text-right">
-                          <div className="symbol symbol-30">
-                            <img src={img2} />
+                        {task?.assignees.length > 0 ?
+                          <div className="symbol-group symbol-hover py-2 text-right">
+                            <div className="symbol symbol-30">
+                              {task.assignees.map(({ userID, userName, imageUrl }, id) => {
+                                const name = userName.split(" ").map((n) => n[0]).join("");
+                                //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");                                    
+                                if (imageUrl) {
+                                  return (<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/people_1.png`} title={userName} />)
+                                } else {
+                                  return (
+                                    <Label circular color="green" key={`${id}${userID}`}>{name}</Label>
+                                  )
+                                }
+                              })
+                              }
+                            </div>
                           </div>
-                        </div>
+                          : null
+                        }
                       </div>
                       <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
                         <div className="d-flex align-items-center  py-2">
@@ -108,20 +119,37 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
                       <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
                         <div style={{ color: props.cord.pinsID === task?.taskTypeID ? "red" : "" }} className="d-flex align-items-center  py-2">
                           <span>
-                            <img src={img4} style={{ marginRight: '6px !important;' }} />
+                            <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} style={{ marginRight: '6px !important;' }} />
                           </span>
                           <span onClick={() => updateStatus(task)} >
-                            <img src={img3} className=" mr-10 " />
+                            <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/check_grey.png`} className=" mr-10 " />
                           </span>
                           <span className="font-weight-bold mb-0 mr-10  ">
                             <div style={{ color: props.cord.pinsID === task?.taskTypeID ? "red" : "black" }}>{task.taskTitle}</div>
                           </span>
                         </div>
-                        <div className="symbol-group symbol-hover py-2 text-right">
-                          <div className="symbol symbol-30">
-                            <img src={img2} />
+
+                        {task?.assignees.length > 0 ?
+                          <div className="symbol-group symbol-hover py-2 text-right">
+                            <div className="symbol symbol-30">
+
+                              {task.assignees.map(({ userID, userName, imageUrl }, id) => {
+                                const name = userName.split(" ").map((n) => n[0]).join("");
+                                //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");                                    
+                                if (imageUrl) {
+                                  return (<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/people_1.png`} title={userName} />)
+                                } else {
+                                  return (
+                                    <Label circular color="green" key={`${id}${userID}`}>{name}</Label>
+                                  )
+                                }
+                              })
+                              }
+
+                            </div>
                           </div>
-                        </div>
+                          : null
+                        }
                       </div>
                       <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
                         <div className="d-flex align-items-center  py-2">

@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import './../../../assets/style/index.scss'
 import { Select, Input, Segment, Form, Grid, Image, Checkbox, Button, Icon } from 'semantic-ui-react'
-import logo from 'libs/shared-components/src/slider.png';
-import img from 'libs/shared-components/src/Shape 2.png';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { FormField, Message } from "@oryd/kratos-client"
 
 export interface RegisterProps {
@@ -88,7 +87,7 @@ export function RegisterPage(props: RegisterProps) {
           <Grid.Row  >
             <Grid.Column >
               <div className="ln-form-outer">
-                <img src={img} />
+                <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/Shape 2.png`} />
                 <div className="form-header">
                   <h2 className="login">Register your account</h2>
                 </div>

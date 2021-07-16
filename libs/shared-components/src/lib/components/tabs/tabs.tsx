@@ -2,6 +2,7 @@ import React from 'react';
 
 import './../../../assets/style/index.scss'
 import { Tab, Image, Input, Accordion, Form, Grid, Card, Dropdown } from 'semantic-ui-react';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 /* eslint-disable-next-line */
 export interface TabsProps { }
 
@@ -275,10 +276,10 @@ export function Tabsbar(props: TabsProps) {
         <div className="ui-tabs">
           <h6 style={{ fontWeight: 'normal' }} className="h5heading">
             Cost managment
-            </h6>
+          </h6>
           <span className="sessiontext" style={{ display: 'flex' }}>Please manage the cost for Electrical Work
 
-                       <div className="symbol-group symbol-hover py-2 marginestimate">
+            <div className="symbol-group symbol-hover py-2 marginestimate">
               <div className="symbol symbol-30 d-flex">
 
                 <span className="mr-2" style={{ background: '#fff', padding: '3px' }} >
@@ -301,7 +302,7 @@ export function Tabsbar(props: TabsProps) {
               <Grid.Row>
                 <Grid.Column>
                   <Form.Field className="fillarea" style={{ display: 'flex' }}>
-                    <img src='/assets/images/money.png'></img>  <label style={{ marginLeft: '10px' }}>Estimated Cost</label>
+                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/money.png`}></img>  <label style={{ marginLeft: '10px' }}>Estimated Cost</label>
                   </Form.Field>
                 </Grid.Column>
                 <Grid.Column>
@@ -314,7 +315,7 @@ export function Tabsbar(props: TabsProps) {
                 <Grid.Column style={{ marginTop: '5px' }}>
                   <Form.Field style={{ marginleft: '145px' }}>
                     <button className="greenbutton"><i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i> </button>
-	 &nbsp;  <button className="redbutton"><i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> </button>
+                    &nbsp;  <button className="redbutton"><i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> </button>
                   </Form.Field>
                 </Grid.Column>
               </Grid.Row>
@@ -328,7 +329,7 @@ export function Tabsbar(props: TabsProps) {
           <br />
           <h6 style={{ fontWeight: 'normal' }} className="h5heading">
             Items
-            </h6>
+          </h6>
           <div className="ui card " style={{ width: '80%' }}>
             <Accordion className="widtharea" defaultActiveIndex={0} panels={rootPanels} styled  >
             </Accordion>

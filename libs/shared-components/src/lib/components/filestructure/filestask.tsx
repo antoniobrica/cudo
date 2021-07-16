@@ -2,16 +2,9 @@ import React from 'react';
 
 import './../../../assets/style/index.scss'
 import { Tab, Accordion, Dropdown } from 'semantic-ui-react'
-
-import img4 from 'libs/shared-components/src/folder.png';
-import img5 from 'libs/shared-components/src/image2.png';
-import img6 from 'libs/shared-components/src/eyeview.png';
-import img1 from 'libs/shared-components/src/powerpoint.png';
-import img2 from 'libs/shared-components/src/pdf.png';
-import img from 'libs/shared-components/src/user2.png';
-
 import ViewFileDetail from '../modal/viewdetailsfile';
 import AddPinFile from '../modal/pinaddfile';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 /* eslint-disable-next-line */
 export interface FileStructureProps {
 	files?,
@@ -99,20 +92,20 @@ export function FileStructure(props: FileStructureProps) {
 							<span>
 								{data.fileType == ("image/jpeg" || "image/png")
 									?
-									<img src={img5} className="  mr-10 " /> :
-									<img src={img2} className="  mr-10 " />
+									<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} className="  mr-10 " /> :
+									<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} className="  mr-10 " />
 								}
 
 							</span>
 
-							<span className="font-weight-bold mb-0 mr-10">{data.fileTitle}</span>
+							<span className="mb-0 mr-10 file-name-extension">{data.fileTitle}</span>
 							{data.fileVersion > 0 ?
 								<div className="d-flex mr-3">
 
 									<div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
 
 										<div className="navi-item mr-2">
-											<button className="ui mini button grey-btn">Ver {data.fileVersion}</button>
+											<button className="ui mini button primary">Ver {data.fileVersion}</button>
 										</div>
 
 									</div>
@@ -129,7 +122,7 @@ export function FileStructure(props: FileStructureProps) {
 								<a onClick={() => viewFile(data)}> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a>
 
 								<span className="mr-2"  >
-									<Dropdown text='...'>
+									<Dropdown text='...' pointing='right'>
 										<Dropdown.Menu>
 											<Dropdown.Item icon='pencil' text='Edit file detail' />
 											<Dropdown.Item onClick={() => uploadNewVersion(data)} icon='eye' text='Upload new version' />
@@ -155,7 +148,7 @@ export function FileStructure(props: FileStructureProps) {
 	]
 	const panes = [
 		{
-			menuItem: { key: 'Overview', icon: 'images', content: 'All files' },
+			menuItem: { key: 'Overview', icon: 'images', content: 'All files', className: 'files-tab-inner' },
 			render: () => <Tab.Pane attached={false}>
 				<div className="ui-tabs">
 					{/* <div className="card1 card-custom gutter-b width_card">
@@ -163,7 +156,7 @@ export function FileStructure(props: FileStructureProps) {
 						<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
 
 							<div className="d-flex align-items-center py-2">
-								<span> <img src={img4} className="  mr-10 " />  </span>
+								<span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/folder.png`} className="  mr-10 " />  </span>
 
 								<span className="font-weight-bold mb-0 mr-10">Information Data</span>
 								<div className="d-flex mr-3">
@@ -199,7 +192,7 @@ export function FileStructure(props: FileStructureProps) {
 						<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
 
 							<div className="d-flex align-items-center py-2">
-								<span> <img src={img5} className="  mr-10 " />  </span>
+								<span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} className="  mr-10 " />  </span>
 
 								<span className="font-weight-bold mb-0 mr-10">1542.313.3231_project_plan_0358.cad</span>
 								<div className="d-flex mr-3">
@@ -220,7 +213,7 @@ export function FileStructure(props: FileStructureProps) {
 
 							<div className="symbol-group symbol-hover py-2">
 								<div className="symbol symbol-30">
-									<a href=""><img src={img6} className="  mr-10 " /> </a>
+									<a href=""><img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/eyeview.png`} className="  mr-10 " /> </a>
 									<a href="">  <i className="ms-Icon ms-Icon--Download mr-10" aria-hidden="true"></i></a>
 									<a href=""> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a>
 
@@ -242,7 +235,7 @@ export function FileStructure(props: FileStructureProps) {
 							<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
 
 								<div className="d-flex align-items-center py-2">
-									<span> <img src={img4} className="  mr-10 " />  </span>
+									<span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/folder.png`} className="  mr-10 " />  </span>
 
 									<span className="font-weight-bold mb-0 mr-10">{file.isFolder ? file.folderName : file.BKPIDTitle}</span>
 									<div className="d-flex mr-3">
@@ -284,8 +277,8 @@ export function FileStructure(props: FileStructureProps) {
 										<span> 
 											{file.fileType == ("image/jpeg" || "image/png")
 											?
-											<img src={img5} className="  mr-10 " /> :
-											<img src={img2} className="  mr-10 " /> 
+											<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} className="  mr-10 " /> :
+											<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} className="  mr-10 " /> 
 										}
 										
 										 </span>
@@ -321,7 +314,7 @@ export function FileStructure(props: FileStructureProps) {
 					})
 
 					: null} */}
-				<div className="ui card " style={{ width: '80%' }}>
+				<div className="ui card " style={{ width: '100%' }}>
 					<Accordion className="widtharea" defaultActiveIndex={0} panels={items} styled  >
 
 
@@ -340,7 +333,7 @@ export function FileStructure(props: FileStructureProps) {
 	]
 
 	return (
-		<div className=" navbar-collapse box-shadow " style={{ marginTop: '-63px' }}>
+		<div className=" navbar-collapse files-tab-outer">
 			{view && imgUrl.length > 0 ?
 				<div>
 					{/* <ViewFileDetail open={view} fType={fType} filesData={filesData} dowloadFilesData={props.downloadedImg} ></ViewFileDetail> */}
@@ -351,7 +344,7 @@ export function FileStructure(props: FileStructureProps) {
 					<AddPinFile isOpen={openPinFile} filesData={filesData} dowloadFilesData={props.downloadedImg} savePin={savePins} onSuccess={""} />
 				</div> : null}
 
-			<Tab className="ui-tabs" menu={{ secondary: true, pointing: true }} panes={panes} />
+			<Tab className="ui-tabs work-tabs" menu={{ secondary: true, pointing: true }} panes={panes} />
 		</div>
 
 

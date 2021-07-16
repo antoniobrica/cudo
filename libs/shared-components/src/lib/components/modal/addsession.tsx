@@ -14,30 +14,17 @@ import {
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 import { Dropdown } from 'semantic-ui-react';
-
-import img2 from 'libs/shared-components/src/avatar_1.png';
-import img3 from 'libs/shared-components/src/avatar_2.png';
-import img4 from 'libs/shared-components/src/avatar_3.png';
-import { MeetingCategoryIndex, SessionInvitationIndex, SessionProtocolIndex, FollowersIndex, AssigneeIndex, } from '@cudo/mf-account-app-lib';
+import { MeetingCategoryIndex, SessionInvitationIndex, SessionProtocolIndex, FollowersIndex, AssigneeIndex, AdminsIndex, MembersIndex } from '@cudo/mf-account-app-lib';
+import { ValidationError } from '@hapi/joi';
 
 export interface SessionProps {
   workTypes?
   createSession?
+  openAddSession?
+  cancel?
 }
+
 export function ModalSession(props: SessionProps) {
-  const countryOptions = [
-    { key: 'af', value: 'af', text: 'Afghanistan' },
-    { key: 'ax', value: 'ax', text: 'Aland Islands' },
-    { key: 'az', value: 'az', flag: 'az', text: 'Azerbaijan' },
-    { key: 'bs', value: 'bs', flag: 'bs', text: 'Bahamas' },
-    { key: 'bh', value: 'bh', flag: 'bh', text: 'Bahrain' },
-    { key: 'bd', value: 'bd', flag: 'bd', text: 'Bangladesh' },
-    { key: 'bb', value: 'bb', flag: 'bb', text: 'Barbados' },
-    { key: 'by', value: 'by', flag: 'by', text: 'Belarus' },
-    { key: 'be', value: 'be', flag: 'be', text: 'Belgium' },
-    { key: 'bz', value: 'bz', flag: 'bz', text: 'Belize' },
-    { key: 'bj', value: 'bj', flag: 'bj', text: 'Benin' },
-  ];
 
   const [open, setOpen] = React.useState(false);
   const [sessionTitle, setSessionTitle] = React.useState("");
@@ -49,8 +36,10 @@ export function ModalSession(props: SessionProps) {
   const [catagory, setCatagory] = React.useState(null);
   const [protocol, setProtocol] = React.useState(null);
   const [invitation, setInvitation] = React.useState(null);
-  const [followers, setfollowers] = React.useState("")
+  const [admins, setAdmins] = React.useState<any>([]);
+  const [members, setMembers] = React.useState<any>([]);
 
+  const [validationErrors, setValidationErrors] = React.useState(null)
 
 
   const onSessionTitleChange = (e) => {
@@ -58,7 +47,7 @@ export function ModalSession(props: SessionProps) {
   }
   React.useEffect(() => {
     if (props.workTypes) {
-      console.log('worktypes', props.workTypes);
+      // console.log('worktypes', props.workTypes);
       setworkType(props.workTypes.map(({ workTypeName, projectWorkTypeID }) => ({ key: projectWorkTypeID, value: workTypeName, text: workTypeName, id: projectWorkTypeID })));
 
     }
@@ -71,7 +60,7 @@ export function ModalSession(props: SessionProps) {
     };
     for (let i = 0; i < props.workTypes.length; i++) {
       if (props.workTypes[i]?.workTypeName === data.value) {
-        console.log('props.worktypes[i]', props.workTypes[i]);
+        // console.log('props.worktypes[i]', props.workTypes[i]);
         workT.worktypeID = props.workTypes[i].projectWorkTypeID;
         workT.worktypeName = data.value;
         setworktypeName(workT.worktypeName);
@@ -81,29 +70,69 @@ export function ModalSession(props: SessionProps) {
     }
     setworkTypeData(data.value)
 
-    console.log('worktypeName-', workTypeD);
+    // console.log('worktypeName-', workTypeD);
   }
 
   const parentCatagorySelect = (data) => {
-    console.log('parentCatagorySelect', data);
+    // console.log('parentCatagorySelect', data);
     setCatagory(data)
   }
   const parentSessionSelect = (data) => {
-    console.log('parentSessionSelect', data);
+    // console.log('parentSessionSelect', data);
     setProtocol(data)
   }
   const parentInvitationSelect = (data) => {
     console.log('parentInvitationSelect', data);
     setInvitation(data)
   }
-  const onFollowers = (data) => {
-    setfollowers(data.value);
+  const onAdmins = (data) => {
+    // console.log('--admin-data---', data)
+    setAdmins(data);
   }
-  const setAsignee = (data) => {
-    // setAsignis(data)
+  const onMembers = (data) => {
+    setMembers(data)
+  }
+  const validation = () => {
+    let response = true
+    let errorMessages = []
+    if (!sessionTitle) {
+      response = false
+      errorMessages.push("Please provide session title")
+    }
+    if (!catagory) {
+      response = false
+      errorMessages.push("Please provide meeting category")
+    }
+    if (!protocol) {
+      response = false
+      errorMessages.push("Please provide protocol")
+    }
+    if (!invitation) {
+      errorMessages.push("Please provide invitation")
+    }
+    if (!workTypeD) {
+      response = false
+      errorMessages.push("Please provide workType")
+    }
+    if (!response) {
+      return errorMessages
+    }
+    return []
   }
   const createSession = () => {
-    setOpen(false);
+    const validationResponse = validation()
+    if (validationResponse?.length > 0) {
+      setValidationErrors(validationResponse)
+      return false
+    }
+    const adminList = admins?.map((item, index) => {
+      return { adminID: item.userID, adminName: item.userName, image: "" }
+    })
+    // console.log('----add session adminList---', adminList)
+    const memberList = members?.map((item, index) => {
+      return { memberID: item.userID, memberName: item.userName, image: "" }
+    })
+
     const data = {
       sessionTitle: sessionTitle,
       meetingCategoryID: catagory.meetingCatagoryID,
@@ -114,24 +143,64 @@ export function ModalSession(props: SessionProps) {
       invitationTitle: invitation.invitationTemplateTitle,
       worktypeID: workTypeD.worktypeID,
       worktypeTitle: workTypeD.worktypeName,
-      admins: [{ adminID: "1", adminName: "ram", image: "image.com" }],
-      members: [{ memberID: "1", memberName: "lakhan", image: "image.com" }]
+      admins: adminList, // : [{ adminID: "1", adminName: "ram", image: "image.com" }],
+      members: memberList // : [{ memberID: "1", memberName: "lakhan", image: "image.com" }]
     }
+
     props.createSession(data);
+
+    setOpen(false);
+    resetAddData();
+  }
+
+  React.useEffect(() => {
+    if (props.openAddSession) {
+      console.log('---add session - useEffect props.openAddSession')
+      setOpen(true);
+    }
+
+    if (validationErrors?.length > 0) {
+      console.log('----validation errors----', validationErrors)
+    }
+  }, [props.openAddSession, validationErrors])
+
+  const openSessionAddPopup = () => {
+    console.log('---add session - openSessionAddPopup function')
+    setOpen(true)
+    props.openAddSession(true)
+  }
+  const cancel = () => {
+    console.log('---add session - cancel function')
+    setOpen(false)
+    props.cancel(true)
+    resetAddData()
+  }
+
+  const resetAddData = () => {
+    setSessionTitle("")
+    setworkTypeD(null)
+    setCatagory(null)
+    setInvitation(null)
+    setProtocol(null)
+    setAdmins([])
+    setMembers([])
   }
 
   return (
     <div style={{ marginLeft: 900 }} >
       <Modal
-        className="modal_media"
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
+        className="modal_media right-side--fixed-modal add-session-modal"
+        closeIcon
+        // onClose={() => setOpen(false)}
+        // onOpen={() => setOpen(true)}
+        onClose={cancel}
+        onOpen={openSessionAddPopup}
         open={open}
-        trigger={
-          <Button size="mini" className="grey-btn">
-            + Add New Session{' '}
-          </Button>
-        }
+      // trigger={
+      //   <Button size="small" className="primary">
+      //     + Add New Session{' '}
+      //   </Button>
+      // }
       >
         <Modal.Header>
           <h3>Add sessions </h3>
@@ -204,10 +273,26 @@ export function ModalSession(props: SessionProps) {
                         placeholder="Select Country"
                       />
                     </Form.Field> */}
-                    <AssigneeIndex parentAsigneeSelect={setAsignee} name="Admin" />
+                    <AdminsIndex admins={[]} parentAdminsSelect={onAdmins} />
 
                   </Grid.Column>
                 </Grid.Row>
+                <div className="followers-label-area">
+                  <Form.Field>
+                    <div className="event top-event follower-listing-labels">
+                      {admins?.map((p, id) => {
+                        const name = p.userName.split(" ").map((n) => n[0]).join("");
+                        //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
+                        return (
+                          <div className="label-light-purple-circle label-spacer" key={id}>
+                            <span className="white-text">{name}</span>
+                          </div>
+                        )
+                      })
+                      }
+                    </div>
+                  </Form.Field>
+                </div>
               </Grid>
 
               {/* <Grid columns={5}>
@@ -215,7 +300,7 @@ export function ModalSession(props: SessionProps) {
                   <Grid.Column>
                     <Form.Field>
                       <div className="below_area">
-                        <img src={img2} className="avatar" />
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_1.png`} className="avatar" />
                         <span className="span_name">Barthelemy Chalvet</span>
                         <i
                           className="ms-Icon ms-Icon--CalculatorMultiply right_float"
@@ -228,7 +313,7 @@ export function ModalSession(props: SessionProps) {
                   <Grid.Column>
                     <Form.Field>
                       <div className="below_area">
-                        <img src={img3} className="avatar" />
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_2.png`} className="avatar" />
                         <span className="span_name">Barthelemy Chalvet</span>
                         <i
                           className="ms-Icon ms-Icon--CalculatorMultiply right_float"
@@ -240,7 +325,7 @@ export function ModalSession(props: SessionProps) {
                   <Grid.Column>
                     <Form.Field>
                       <div className="below_area">
-                        <img src={img4} className="avatar" />
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_3.png`} className="avatar" />
                         <span className="span_name">Barthelemy Chalvet</span>
                         <i
                           className="ms-Icon ms-Icon--CalculatorMultiply right_float"
@@ -268,9 +353,25 @@ export function ModalSession(props: SessionProps) {
                         placeholder="Select Country"
                       />
                     </Form.Field> */}
-                    <AssigneeIndex parentAsigneeSelect={setAsignee} name="Members" />
+                    <MembersIndex members={[]} parentMembersSelect={onMembers} />
                   </Grid.Column>
                 </Grid.Row>
+                <div className="followers-label-area">
+                  <Form.Field>
+                    <div className="event top-event follower-listing-labels">
+                      {members?.map((p, id) => {
+                        const name = p.userName.split(" ").map((n) => n[0]).join("");
+                        //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
+                        return (
+                          <div className="label-light-purple-circle label-spacer" key={id}>
+                            <span className="white-text">{name}</span>
+                          </div>
+                        )
+                      })
+                      }
+                    </div>
+                  </Form.Field>
+                </div>
               </Grid>
 
               {/* <Grid columns={5}>
@@ -278,7 +379,7 @@ export function ModalSession(props: SessionProps) {
                   <Grid.Column>
                     <Form.Field>
                       <div className="below_area">
-                        <img src={img2} className="avatar" />
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_1.png`} className="avatar" />
                         <span className="span_name">Barthelemy Chalvet</span>
                         <i
                           className="ms-Icon ms-Icon--CalculatorMultiply right_float"
@@ -291,7 +392,7 @@ export function ModalSession(props: SessionProps) {
                   <Grid.Column>
                     <Form.Field>
                       <div className="below_area">
-                        <img src={img3} className="avatar" />
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_2.png`} className="avatar" />
                         <span className="span_name">Barthelemy Chalvet</span>
                         <i
                           className="ms-Icon ms-Icon--CalculatorMultiply right_float"
@@ -303,7 +404,7 @@ export function ModalSession(props: SessionProps) {
                   <Grid.Column>
                     <Form.Field>
                       <div className="below_area">
-                        <img src={img4} className="avatar" />
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_3.png`} className="avatar" />
                         <span className="span_name">Barthelemy Chalvet</span>
                         <i
                           className="ms-Icon ms-Icon--CalculatorMultiply right_float"
@@ -349,15 +450,16 @@ export function ModalSession(props: SessionProps) {
             content="Submit"
             onClick={createSession}
             positive
-            size="mini"
-            className="grey-btn"
+            size="small"
+            className="primary"
           />
           <Button
-            size="mini"
+            size="small"
             className="icon-border"
-            onClick={() => setOpen(false)}
+            // onClick={() => setOpen(false)}
+            onClick={cancel}
           >
-            X Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> Cancel
           </Button>
         </Modal.Actions>
       </Modal>

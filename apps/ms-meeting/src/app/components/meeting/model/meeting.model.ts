@@ -33,6 +33,9 @@ export class MeetingModel {
   @Field({ nullable: true, description: `This is for meeting End Time` })
   meetingEndTime?: Date;
 
+  @Field({ nullable: true, description: `This is for meeting duration Time` })
+  meetingDuration?: string;
+
   @Field({ nullable: true, description: `This is for meeting invited Guests` })
   inviteGuests?: string;
 
@@ -65,5 +68,7 @@ export class MeetingModel {
 
   @Field(type => [MeetingFilesModel], { nullable: true })
   meetingFiles?: MeetingFilesModel[] 
-  
+
+  @Field({ nullable: true, description: `This is for meeting status` })
+  status?: string;  
 }

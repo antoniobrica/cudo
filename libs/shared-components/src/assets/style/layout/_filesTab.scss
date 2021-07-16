@@ -1,0 +1,53 @@
+.app-content-body-dash {
+  .work-tabs {
+    &.ui-tabs {
+      .ui.secondary.menu {
+        background: none;
+        padding: 0;
+        border: none;
+        a.item {
+          padding-left: 0;
+          padding-right: 0;
+          margin-right: 20px;
+          font-size: 15px;
+        }
+      }
+      .ui.tab {
+        margin-top: 15px;
+        .ui.card {
+          background: none;
+          .accordion {
+            padding: 0;
+            background: none;
+            .title {
+              background: #fff;
+              box-shadow: 0px 1px 2px #00000014;
+              border: none;
+              margin-bottom: 5px;
+              font-size: 14px;
+              font-weight: 600;
+              color: #1B1B40;
+              &.active {
+                box-shadow: none;
+                margin-bottom: 0;
+              }
+            }
+            .content {
+              box-shadow: 0px 1px 2px #00000014;
+              margin-bottom: 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.file-name-extension {
+  color: #1b1b40;
+  font-size: 15px;
+  font-weight: 500;
+}
+.field.filled-fields span {
+  font-size: 14px;
+}

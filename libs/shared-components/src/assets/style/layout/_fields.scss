@@ -86,7 +86,7 @@ input,
             display: none;
         }
         &.small {
-            min-height: 4.6rem;
+            min-height: 4rem;
             @media (max-width:#{$large-desktop-up}) {
                 min-height: 4rem;
             }
@@ -395,7 +395,7 @@ select:-webkit-autofill:focus {
         
         box-shadow: $none;
         transition: color .1s ease, border-color .1s ease;
-        height: 6rem;
+        // height: 6rem;
         border: 1px solid #D0D8DF;
         font-weight: 400;
         width: 100%;
@@ -420,7 +420,7 @@ select:-webkit-autofill:focus {
             &[type=text],
             &[type=time],
             &[type=url] {
-                height: 4.6rem;
+                height: 4rem;
                 @media (max-width:#{$large-desktop-up}) {
                     height: 4rem;
                 }
@@ -510,4 +510,29 @@ select:-webkit-autofill:focus {
 
 .ui.form div.disabled.field {
     opacity: .7;
+}
+
+span.error-message {
+    bottom: -16px;
+    left: 0;
+    position: absolute;
+    font-size: 1.2rem;
+    color: #F96666;
+    font-weight: 400;
+}
+
+.ui.form .field.error input:not([type]), 
+.ui.form .field.error input[type=date], 
+.ui.form .field.error input[type=datetime-local], 
+.ui.form .field.error input[type=email], 
+.ui.form .field.error input[type=file], 
+.ui.form .field.error input[type=number], 
+.ui.form .field.error input[type=password], 
+.ui.form .field.error input[type=search], 
+.ui.form .field.error input[type=tel], 
+.ui.form .field.error input[type=text], 
+.ui.form .field.error input[type=time], 
+.ui.form .field.error input[type=url] {
+    background: #fff !important;
+    border-color: #F96666;
 }

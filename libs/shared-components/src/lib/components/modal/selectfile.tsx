@@ -8,6 +8,7 @@ import {
   Grid,
   Select,
   TextArea,
+  Icon
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 
@@ -15,6 +16,7 @@ import PinFileStructure from '../filestructure/pinfilestructure';
 import AddPinFile from './pinaddfile';
 import FilterPopup from './fliter';
 import { relative } from 'path';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 export interface FileStructureProps {
   // files?,
   downloadFiles?,
@@ -100,9 +102,8 @@ export function SelectFilePopup(props: FileStructureProps) {
         <div>
           <AddPinFile isOpen={view} filesData={filesData} dowloadFilesData={props.downloadedImg} savePin={props.savePins} />
         </div> : null}
-      <Modal
-        style={{ width: '500px', marginLeft: '605px', height: '660px' }}
-        className="modal_media"
+      <Modal className="modal_media right-side--fixed-modal select-file-modal"
+        closeIcon
         onClose={cancel}
         onOpen={() => setOpen(true)}
         open={open}
@@ -114,39 +115,31 @@ export function SelectFilePopup(props: FileStructureProps) {
       // }
       >
         <Modal.Header>
-          <label>Select file </label>
+          <h3>Select file</h3>
         </Modal.Header>
         <Modal.Content body>
-          <div >
-
+          <div>
             <Form>
-              <Grid columns={2}>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Form.Field>
-                      <img src="assets/images/search_white.png" style={{ position: 'relative', top: '11px' }}></img>
+              <div className="slect-file-search-box">
+                <Form.Field>
+                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/search_white.png`} style={{ position: 'relative', top: '11px' }}></img>
 
-                      <Input
-                        placeholder="search.."
-                        size="small"
-                        className="full-width inputfieldarea bordernone"
-                        type="search" style={{ marginLeft: '5px' }}
-                      />
-                    </Form.Field>
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Form.Field>
+                  <Input
+                    placeholder="search.."
+                    size="small"
+                    className="full-width inputfieldarea bordernone"
+                    type="search" style={{ marginLeft: '5px' }}
+                  />
+                </Form.Field>
+                <Form.Field>
 
-                      <img src="assets/images/filter.png" style={{ position: 'relative', left: '30px', top: '6px' }}></img>
-                      {/* <FilterPopup /> */}
-                      <img src="assets/images/plus_white.png" style={{ position: 'relative', top: '4px', marginRight: '-22px', left: '49px' }} />
-                      <Button size="mini" className="grey-btn" style={{ marginLeft: '50', height: '33px', width: '50%' }}>
-                        Add New
-                      </Button>
-                    </Form.Field>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
+                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/filter.png`} style={{ position: 'relative', left: '30px', top: '6px' }}></img>
+                  {/* <FilterPopup /> */}
+                  <Button size="small" className="primary" style={{ marginLeft: '50', }}>
+                    <Icon name='add' /> Add New
+                  </Button>
+                </Form.Field>
+              </div>
             </Form><br />
             <PinFileStructure uploadNewVersion={null} files={props.files} downloadFiles={props.downloadFiles} viewFiles={viewFiles} downloadedImg={props.downloadedImg} isPinFile={isPinFile}></PinFileStructure>
 
@@ -231,11 +224,11 @@ export function SelectFilePopup(props: FileStructureProps) {
             content="Continue"
             onClick={goToAddPin}
             positive
-            size="mini"
-            className="grey-btn"
+            size="small"
+            className="primary"
           />
           <Button
-            size="mini"
+            size="small"
             className="icon-border"
             onClick={cancel}
           >

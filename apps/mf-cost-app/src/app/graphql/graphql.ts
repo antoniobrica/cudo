@@ -10,6 +10,8 @@ export const GET_COST = gql`
   costs(referenceFilter: { referenceID: "dapr", referenceType: PROJECTTYPE }) { 
     id 
     costID 
+    structureID
+    structureName
     BKPCosts { 
       BKPID 
       description
@@ -76,4 +78,14 @@ mutation CreateCost(
     } 
 }`;
 
-
+export const DELETE_COST = gql`
+mutation 
+DeleteCost(
+  $costID: String!,
+  )
+{
+  deleteCost( costFilter: {  costID: $costID} )
+{
+  id
+}
+}`

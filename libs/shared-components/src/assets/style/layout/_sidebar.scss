@@ -22,14 +22,14 @@
 	min-width: 0em;
 }
 .ui.thin.left.sidebar{
-	width: 6em;
+	width: 100%;
 }
 i.add.icon{
 	font-size: 12px !important;
 }
 #sidebar {
-	min-width: 100px;
-	max-width: 100px;
+	min-width: 75px;
+    max-width: 75px;
 	position: fixed;
 	 
 	color: #fff;
@@ -215,20 +215,16 @@ a.article {
     -webkit-user-drag: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     background: #ffffff;
-    left: 57px;
+    left: 75px;
 	background: #ffffff 0% 0% no-repeat padding-box;
 	background: #FFFFFF 0% 0% no-repeat padding-box;
 	box-shadow: 1px 0px 0px #0000001A;
 	opacity: 1;
-
+	width: 249px;
 }
 .ui-accordion{
 	padding: 20px;
 	font-size: 14px;
-}
-.content.active li{
-	color: #718898;
-	list-style: none;
 }
 .accordion.ui.ui-accordion .active.title.active-title {
     background-color: #2D62ED;
@@ -248,23 +244,11 @@ i.angle.down.icon {
 	font-weight: 600;
 
 }
-.sidebar-top{
-	margin-top: 15px;
-}
 
 .subdescription{   
 	 padding: 40px;
     font-size: 14px;
     color: #9A9EA1;
-}
-.strategic_plan{
-	margin-left: -30px;
-	font-size: 14px;
-}
-.dots_area{
-	float: right;
-	margin-right: 20px;
-	margin-left: 10px;
 }
 .ui.inverted.menu .link.item:active, .ui.inverted.menu a.item:active {
     background: #2D62ED;
@@ -279,4 +263,72 @@ i.angle.down.icon {
 }
 span.strategic_plan {
     line-height: 30px;
+}
+
+.sidebar-wrapper {
+	.accordion.ui.ui-accordion {
+		.sidebar-menu-item {
+			margin-bottom: 10px;
+			.content.menu-sub-option {
+				background: #EFF8FF;
+				border-radius: 3px;
+				padding: 0 !important;
+				margin-top: 3px;
+				ul {
+					margin: 0;
+					padding: 5px 10px 10px 32px;
+					list-style: auto;
+					li {
+						padding: 0 2px;
+						span.strategic_plan {
+							font-size: 14px;
+							color: #718898;
+							font-weight: 500;
+							margin: 0;
+						}
+						&:marker {
+							color: #718898;
+						}
+					}
+				}
+			}
+			.title.active-title.sidebar-menu-heading {
+				padding: 8px 15px;
+				background: #F1F5F8;
+				&.active {
+					background-color: #2D62ED;
+					i {
+						color: #fff;
+					}
+				}
+				i {
+					color: #718898;
+				}
+			}
+		}
+	}
+}
+
+.sidebar-header-project-name {
+	margin-top: 15px;
+    @include flex(flex);
+    @include align-items(center);
+    @include  justify-content(space-between);
+    padding: 0 20px;
+	.project-name {
+		font-size: 20px;
+		font-weight: 600;
+		color: #1B1B40;
+	}
+	.summary {
+		.dot {
+			font-weight: 600;
+		}
+	}
+	.project-sub-heading {
+		font-size: 14px;
+		color: #9A9EA1;
+		padding: 0 20px;
+    	margin-bottom: 15px;
+	}
 }

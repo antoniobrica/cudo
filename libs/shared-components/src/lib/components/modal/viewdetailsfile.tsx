@@ -1,11 +1,10 @@
 import React from 'react'
 import { Button, Pagination, Modal, Input, Form, Grid, Image, Comment, Select, TextArea } from 'semantic-ui-react'
-
-import img from 'libs/shared-components/src/check_grey.png';
 import Canvas from './canvas';
 // import { Document, Page } from 'react-pdf';
 
 import { Document, Page, pdfjs } from "react-pdf";
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 function exampleReducer(state, action) {
@@ -111,7 +110,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     }
 
                     <div className="align_center">File versions
-                        <Pagination
+                      <Pagination
                         defaultActivePage={1}
                         firstItem={null}
                         lastItem={null}
@@ -164,7 +163,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                               <label>File versions(2)</label>
                               <p className="form_desc_2">Version 2- <span className="git_area">2302101_version_03647.pptx </span></p>
                               <p className="form_desc_2 git">By: John Smith - Uploaded on: 20 sep,2021
-       <i className="ms-Icon ms-Icon--RedEye right_float" aria-hidden="true"></i>
+                                <i className="ms-Icon ms-Icon--RedEye right_float" aria-hidden="true"></i>
                               </p>
 
                             </Form.Field>
@@ -180,7 +179,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                               <label>File versions(2)</label>
                               <p className="form_desc_2">Version 1- <span className="git_area">2302101_version_03647.pptx </span></p>
                               <p className="form_desc_2 git">By: John Smith - Uploaded on: 20 sep,2021
-       <i className="ms-Icon ms-Icon--RedEye right_float" aria-hidden="true"></i>
+                                <i className="ms-Icon ms-Icon--RedEye right_float" aria-hidden="true"></i>
                               </p>
 
                             </Form.Field>
@@ -197,10 +196,10 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                               <label>Task(1)</label>
 
                               <p>
-                                <img src={img} className="mr-10 " />
+                                <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/check_grey.png`} className="mr-10 " />
                                 <span className="form_desc_2_1"> Another task here </span> <span className="git_area">2302101_version_03647.pptx </span></p>
                               <p className="form_desc_2 git">Starts Tomorrow ↦ Due Fri Aug 28th
-       <span className="mr-2 float_right"  >...</span>
+                                <span className="mr-2 float_right"  >...</span>
                               </p>
                               <p className="form_desc_2 git">Strategic Planning  -  Paint Work </p>
 
@@ -251,7 +250,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                                     <Comment.Text>
                                       Hey guys, I hope this example comment is helping you read this
                                       documentation.
-        </Comment.Text>
+                                    </Comment.Text>
                                   </Comment>
                                 </Comment>
                               </Comment.Group>
@@ -272,9 +271,9 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
 
         </Modal.Content>
         <Modal.Actions>
-          <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+          <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
             X  Cancel
-        </Button>
+          </Button>
 
 
         </Modal.Actions>

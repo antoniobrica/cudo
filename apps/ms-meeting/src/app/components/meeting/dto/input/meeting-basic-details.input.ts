@@ -39,4 +39,10 @@ export class MeetingBasicDetailsInput {
   @Field({ description: `This is for protocol Title`, nullable: true })
   protocolTitle?: string;
 
+  @Field({ description: `This is for meeting Duration`, nullable: true })
+  meetingDuration: string;
+
+  @Field({ description: `This is for meeting status`, nullable: true })
+  status: string;
+
 }

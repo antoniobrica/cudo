@@ -5,19 +5,22 @@ import { useHistory } from 'react-router';
 import axios from 'axios';
 import { useMutation } from '@apollo/client';
 import { ADD_SESSION, GET_SESSIONS } from '../graphql/graphql'
-import { ISessions } from '../interfaces/meeting';
+import { ISessions } from '../interfaces/session';
 import { ProjectWorktypes } from '@cudo/mf-project-lib';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 /* eslint-disable-next-line */
-export interface AddSessionProps { }
+export interface AddSessionProps {
+  openAddSession
+  cancel
+}
 
 export function AddSession(props: AddSessionProps) {
   const [workTypes, setWorkTypes] = React.useState([]);
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
-  console.log('referenceID', referenceID);
+  
   React.useEffect(() => {
     if (referenceID) {
       getWorkType(referenceID)
@@ -52,7 +55,7 @@ export function AddSession(props: AddSessionProps) {
  }`;
 
   const getWorkType = (referenceID) => {
-    console.log('sasstoken');
+    
     return axios.post(
       MS_SERVICE_URL['ms_project'].url,
       {
@@ -69,7 +72,7 @@ export function AddSession(props: AddSessionProps) {
   }
 
   const createSession = (data) => {
-    console.log('createSession', data)
+    
     addSession({
       variables: {
         sessionTitle: data.sessionTitle,
@@ -89,21 +92,21 @@ export function AddSession(props: AddSessionProps) {
         data
       ) => {
         const cacheData = cache.readQuery({ query: GET_SESSIONS }) as ISessions;
-        console.log('data--', data)
+        
         cache.writeQuery({
           query: GET_SESSIONS,
           data: {
-            getSessions: [...cacheData.sessions, data]
+             getSessions: [...cacheData.paginatedSession.results, data]
           }
         });
-        console.log('data==', data);
+        
       }
     });
 
   }
   return (
     <div>
-      <ModalSession workTypes={workTypes} createSession={createSession} />
+      <ModalSession openAddSession={props.openAddSession} cancel={props.cancel} workTypes={workTypes} createSession={createSession} />
     </div>
   );
 }

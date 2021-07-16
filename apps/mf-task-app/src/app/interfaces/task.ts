@@ -17,6 +17,7 @@ export interface IPeoples {
 }
 export interface ITask {
   taskID: string
+  sequenceNumber: number
   taskTitle: string
   startDate: string
   endDate: string
@@ -37,6 +38,9 @@ export interface ITask {
   fileName: string
   taskTypeID: string
   taskType: string
+  workTypeID: string
+  workTypeName: string
+  subtasks: ISubTask[]
 }
 export interface ITodos {
   getTodos: ITodo[];
@@ -57,3 +61,17 @@ export interface TaskUpdateMutation {
   addTask: ITaskUpdate;
 }
 
+
+export interface ISubTask {
+  subtaskID: string
+  subtaskTitle: string
+  status: string
+  isDeleted: boolean
+}
+export interface ISubTaskUpdate {
+  subtaskID?: string;
+  status: string;
+}
+export interface SubTaskUpdateMutation {
+  updateSubTask: ISubTaskUpdate;
+}

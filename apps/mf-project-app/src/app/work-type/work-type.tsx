@@ -46,13 +46,11 @@ export function WorkType(props: WorkTypeProps) {
   }
 
   return (
-    <Table>
+    <Table className="manage-work-table" celled>
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell>Work Type</Table.HeaderCell>
-          <Table.HeaderCell> </Table.HeaderCell>
-          <Table.HeaderCell>Estimate Cost</Table.HeaderCell>
-
+          <Table.HeaderCell width={12}>Work Type</Table.HeaderCell>
+          <Table.HeaderCell width={4}>Estimate Cost</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
 
@@ -64,60 +62,34 @@ export function WorkType(props: WorkTypeProps) {
                 <Table.Row key={`${field}-${idx}`}>
                   <Table.Cell>
                     <Form>
-                      <Grid columns={1}>
-                        <Grid.Row>
-                          <Grid.Column>
-                            {/* <Form.Field>
-                            <Select placeholder='Select' className="small"  options={props.worktypes}
-                              value={field.workTypeName}
-                              onChange={e =>handleChangeInput( idx, e, 'worktype')}
-                            />
-                          </Form.Field> */}
-                          <WorkTypeDropdown data={props.worktypes} id={idx} selectedWorkType={getWorktype}/>
-                        </Grid.Column>
-
-                      </Grid.Row>
-                    </Grid>
-                  </Form>
-
-                </Table.Cell>
-                <Table.Cell></Table.Cell>
-                <Table.Cell>
-                  <Form>
-                    <Grid columns={1}>
-                      <Grid.Row>
-                        <Grid.Column>
-                          <Form.Field>
-
-                            <Input label='$' size='small' className="full-width"
-                              type="text"
-                              value={field.estimatedCost}
-                              onChange={e =>handleChangeInput( idx, e, 'estCost')}
-                            />
-                          </Form.Field>
-                        </Grid.Column>
-
-                        </Grid.Row>
-                      </Grid>
+                      {/* <Form.Field>
+                        <Select placeholder='Select' className="small"  options={props.worktypes}
+                          value={field.workTypeName}
+                          onChange={e =>handleChangeInput( idx, e, 'worktype')}
+                        />
+                      </Form.Field> */}
+                      <WorkTypeDropdown data={props.worktypes} id={idx} selectedWorkType={getWorktype}/>
                     </Form>
-
                   </Table.Cell>
-
+                  <Table.Cell>
+                    <Form>
+                      <Form.Field className="estimated-cost-field">
+                        <Input label='$' size='small' className="full-width"
+                          type="text"
+                          value={field.estimatedCost}
+                          onChange={e =>handleChangeInput( idx, e, 'estCost')}
+                        />
+                      </Form.Field>
+                    </Form>
+                  </Table.Cell>
                 </Table.Row>
-
-
               )
             }
             )
           }
           <Table.Row>
-            <Table.Cell>
-              <a onClick={() => handleAddInput()}>+ Add more </a>
-
-            </Table.Cell>
-            <Table.Cell></Table.Cell>
-            <Table.Cell>
-
+            <Table.Cell colspan="2" className="add-more-work">
+              <a onClick={() => handleAddInput()}><i className="ms-Icon ms-font-xl ms-Icon--Add ms-fontColor-themePrimary"></i> Add more </a>
             </Table.Cell>
           </Table.Row>
         </Table.Body>

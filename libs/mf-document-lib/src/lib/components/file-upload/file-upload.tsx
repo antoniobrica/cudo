@@ -2,12 +2,6 @@ import React, { useContext, useRef } from 'react';
 import { Button, Checkbox, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 
-import img from 'libs/shared-components/src/upload.png';
-import img2 from 'libs/shared-components/src/avatar_1.png';
-import img3 from 'libs/shared-components/src/avatar_2.png';
-import img4 from 'libs/shared-components/src/avatar_3.png';
-import img5 from 'libs/shared-components/src/file_1.png';
-import img6 from 'libs/shared-components/src/file_2.png';
 import ProgressBar from 'libs/shared-components/src/lib/components/progress_bar/progressbar';
 import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex, FileTypeIndex, FileStructureIndex, AddFolderIndex } from "@cudo/mf-account-app-lib"
 import { UploadsViewStateContext, SharedViewStateContext, DownloadsViewStateContext } from './../../../azure-storage/contexts/viewStateContext';
@@ -21,6 +15,7 @@ import { GET_FILES, UPLOAD_FILE } from '../../graphql/graphql';
 import { FileMutation, IFiles } from '../../interfaces/document';
 import { FetchResult, useMutation } from '@apollo/client';
 import { AddNewFolder } from '@cudo/shared-components';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 export interface FileProps {
   openSettingF?,
   close?,
@@ -241,7 +236,7 @@ export function FileUpload(props: FileProps) {
                     <Form.Field>
                       <div className="dashed_area" style={{ paddingTop: 15 }}>
                         <div className="file-upload-message">
-                          <img src={img} className="mr-10 " />
+                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/upload.png`} className="mr-10 " />
                           <p className="file-upload-default-message">Drag & drop or click here to upload file</p>
 
                         </div>
@@ -275,7 +270,7 @@ export function FileUpload(props: FileProps) {
                           <Grid.Column>
                             <Form.Field>
 
-                              <img src={img6} />
+                              <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/file_2.png`} />
 
                             </Form.Field>
                           </Grid.Column>
@@ -336,7 +331,7 @@ export function FileUpload(props: FileProps) {
                     </div>
                   )
                 })}
-              <Grid columns={1}>
+              {/* <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
@@ -349,8 +344,8 @@ export function FileUpload(props: FileProps) {
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
-              </Grid>
-              <Grid columns={2}>
+              </Grid> */}
+              {/* <Grid columns={2}>
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
@@ -363,8 +358,8 @@ export function FileUpload(props: FileProps) {
                     <PhaseIndex parentPhaseSelect={onsetPhasesID} />
                   </Grid.Column>
                 </Grid.Row>
-              </Grid>
-              <Grid columns={3}>
+              </Grid> */}
+              {/* <Grid columns={3}>
                 <Grid.Row>
                   <Grid.Column>
                     <BkpIndex bkp={BKPID} parentBKPSelect={setBKPIDChange}></BkpIndex>
@@ -373,23 +368,16 @@ export function FileUpload(props: FileProps) {
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
-                    {/* <Form.Field>
-                      <label>File type</label>
-                      <Select placeholder='Select' className="small" options={fileTypeOptions} />
-                    </Form.Field> */}
+                   
                     <FileTypeIndex parentFileTypeSelect={setFileTypeChange} />
                   </Grid.Column>
                   <Grid.Column>
                     <FileStructureIndex structureTitle={structureTitle} parentFileStructureSelect={setFileStructureChange} />
-                    {/* <Form.Field>
-                      <label>File structure</label>
-                      <Select placeholder='Select' className="small" options={fileOptions} />
-
-                    </Form.Field> */}
+                 
                   </Grid.Column>
                 </Grid.Row>
-              </Grid>
-              <Grid  >
+              </Grid> */}
+              {/* <Grid  >
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
@@ -397,8 +385,8 @@ export function FileUpload(props: FileProps) {
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
-              </Grid>
-              <Grid columns={2} >
+              </Grid> */}
+              {/* <Grid columns={2} >
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
@@ -411,13 +399,13 @@ export function FileUpload(props: FileProps) {
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
-              </Grid>
-              {showPeople ?
+              </Grid> */}
+              {/* {showPeople ?
                 <div>
                   <Grid columns={1} >
                     <Grid.Row>
                       <Grid.Column>
-                        <AssigneeIndex parentAsigneeSelect={setAsignee} name="Select people" />
+                        <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Select people" />
                       </Grid.Column>
                     </Grid.Row>
                   </Grid>
@@ -428,7 +416,7 @@ export function FileUpload(props: FileProps) {
                           <Grid.Column key={i}>
                             <Form.Field>
                               <div className="below_area">
-                                <img src={img3} className="avatar" />
+                                <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_2.png`} className="avatar" />
                                 <span className="span_name">{asign.userName}</span>
                                 <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
                               </div>
@@ -438,34 +426,11 @@ export function FileUpload(props: FileProps) {
                         )
                       })}
 
-                      {/* <Grid.Column>
-                        <Form.Field>
-
-                          <div className="below_area">
-                            <img src={img3} className="avatar" />
-                            <span className="span_name">Barthelemy Chalvet</span>
-                            <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
-
-                          </div>
-                        </Form.Field>
-
-                      </Grid.Column>
-                      <Grid.Column>
-                        <Form.Field>
-
-                          <div className="below_area">
-                            <img src={img4} className="avatar" />
-                            <span className="span_name">Barthelemy Chalvet</span>
-                            <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
-
-                          </div>
-                        </Form.Field>
-
-                      </Grid.Column> */}
+                    
                     </Grid.Row>
                   </Grid> </div> :
                 null
-              }
+              } */}
             </Form>
 
           </div>
@@ -478,9 +443,9 @@ export function FileUpload(props: FileProps) {
             content="Submit"
             onClick={handleSaveFile}
             positive
-            size='mini' className="grey-btn"
+            size='small' className="primary"
           />
-          <Button size='mini' className="icon-border" onClick={close}>
+          <Button size='small' className="icon-border" onClick={close}>
             X  Cancel
           </Button>
 
