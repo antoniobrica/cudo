@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom';
 // import Modal from 'react-modal'
+import { LazyLoading } from '@cudo/shared-components'
 
 import { BrowserRouter } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
@@ -27,16 +28,15 @@ const store = configureStore({
 // const App = lazy(() => import('./app/app'))
 
 ReactDOM.render(
-  // <Suspense fallback={<div>----container---loading....</div>}>
+  <Suspense fallback={<LazyLoading />}>
     <Provider store={store}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
     </Provider>
-  // </Suspense>
+   </Suspense>
   ,
-  document.getElementById('root') // ,
-  // Modal.setAppElement(document.getElementById('root'))
+  document.getElementById('root')
 );
 
 serviceWorker.unregister();

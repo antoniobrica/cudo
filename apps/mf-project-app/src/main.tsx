@@ -1,10 +1,10 @@
 import React, { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom';
-
+import { LazyLoading } from '@cudo/shared-components'
 import { BrowserRouter } from 'react-router-dom';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
-import 'semantic-ui-css/semantic.min.css'
+// import 'semantic-ui-css/semantic.min.css'
 import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
 import * as serviceWorker from "./serviceWorker";
 import "./SubscriberWidgetElement";
@@ -26,7 +26,7 @@ const client = new ApolloClient({
 
 window.renderProjectApp = (containerId, history) => {
   ReactDOM.render(
-    // <Suspense fallback={<div>mkkk--project---loading....</div>}>
+    <Suspense fallback={<LazyLoading />}>
       <BrowserRouter>
         <ApolloProvider client={client}>
           <ApolloHooksProvider client={client as any}>
@@ -34,7 +34,7 @@ window.renderProjectApp = (containerId, history) => {
           </ApolloHooksProvider>
         </ApolloProvider>
       </BrowserRouter>
-    // </Suspense>
+    </Suspense>
     , document.getElementById(containerId)
   );
   serviceWorker.unregister();
@@ -47,7 +47,7 @@ if (!document.getElementById("ProjectApp-container")) {
   // ReactDOM.render(<App />, document.getElementById("root"));
   ReactDOM.render(
     // <React.StrictMode>
-    // <Suspense fallback={<div>mkkk--Project--ProjectApp-container---loading....</div>}>
+    <Suspense fallback={<LazyLoading />}>
       <BrowserRouter>
         <ApolloProvider client={client}>
           <ApolloHooksProvider client={client as any}>
@@ -55,7 +55,7 @@ if (!document.getElementById("ProjectApp-container")) {
           </ApolloHooksProvider>
         </ApolloProvider>
       </BrowserRouter>
-      // </Suspense>
+    </Suspense>
     // </React.StrictMode>
     ,
     document.getElementById("root")

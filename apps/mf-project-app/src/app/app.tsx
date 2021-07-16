@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useState } from 'react';
-
+import { LazyLoading } from '@cudo/shared-components'
 import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch, useHistory, useLocation } from "react-router-dom";
 
 import { initI18n } from '@cudo/mf-core';
@@ -92,12 +92,12 @@ function App() {
   console.log('path-project-app', history.location.pathname)
   return (
     <Router>
-      {/* <Suspense fallback={<div>--project--component---Loading...</div>}> */}
+      {/* <Suspense fallback={<LazyLoading />}> */}
         <Switch>
           <Route exact path={`${history.location.pathname}/:projectId`} render={() => <TabMenu />} />
           <Route exact path={`${history.location.pathname}`} render={() => <ProjectInfo />} />
-          {/* <Route exact path={`${history.location.pathname}/:projectId`} component={TabMenu} />
-          <Route exact path={`${history.location.pathname}`} component={ProjectInfo} /> */}
+          {/* <Route exact path={`${history.location.pathname}/:projectId`} component={TabMenu} /> */}
+          {/* <Route exact path={`${history.location.pathname}`} component={ProjectInfo} /> */}
         </Switch>
       {/* </Suspense> */}
     </Router>

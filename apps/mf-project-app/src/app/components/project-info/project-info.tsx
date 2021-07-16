@@ -7,7 +7,7 @@ import { ITodo, IProject } from "../../interfaces/project";
 import Modal from 'react-modal';
 import { Card, Icon, Form, Grid, Button, Dropdown, Label } from 'semantic-ui-react'
 import { useHistory } from "react-router";
-import { LoaderPage } from "@cudo/shared-components"
+import { LoaderPage, LazyLoading } from "@cudo/shared-components"
 import ReactQuill, { Quill } from 'react-quill';
 
 
@@ -25,7 +25,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
   const history = useHistory();
-  if (loading) return <LoaderPage />;
+  if (loading) return <LazyLoading />;
 
   const addProject = () => {
     setopenForm(!openForm);
