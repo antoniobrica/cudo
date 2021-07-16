@@ -64,14 +64,13 @@ export function ProjectInfo(props: ProjectInfoProps) {
         <div className="dashboard-header">
           <h3>All Projects <span className="total">Total {data.projects.length} project added</span></h3>
           
-          <div>
+          {/* <div>
               <button onClick={notify}>Notify!</button>
               <ToastContainer position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
-          </div>
-          {/* <div className="add-project-area"> */}
-          {/* <Button size='small' className="primary"><i className="ms-Icon ms-font-xl ms-Icon--Add ms-fontColor-themePrimary"></i> Add New</Button> */}
+          </div> */}
+          
           <ModalExampleModal onSuccess={refresh}></ModalExampleModal>
-          {/* </div> */}
+          
         </div>
 
         <Form>
