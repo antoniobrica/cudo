@@ -10,6 +10,9 @@ import { useHistory } from "react-router";
 import { LoaderPage } from "@cudo/shared-components"
 import ReactQuill, { Quill } from 'react-quill';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 //import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
 
@@ -20,6 +23,7 @@ import { MS_SERVICE_URL } from '@cudo/mf-core';
 export interface ProjectInfoProps { }
 
 export function ProjectInfo(props: ProjectInfoProps) {
+  const notify = () => toast("Wow so easy!");
   const { loading, error, data } = useProjectQuery(GET_PROJECTS);
   const [openForm, setopenForm] = React.useState(false);
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -59,6 +63,11 @@ export function ProjectInfo(props: ProjectInfoProps) {
       <div className="app-content-body body_cards_area project-listing-page">
         <div className="dashboard-header">
           <h3>All Projects <span className="total">Total {data.projects.length} project added</span></h3>
+          
+          <div>
+              <button onClick={notify}>Notify!</button>
+              <ToastContainer position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
+          </div>
           {/* <div className="add-project-area"> */}
           {/* <Button size='small' className="primary"><i className="ms-Icon ms-font-xl ms-Icon--Add ms-fontColor-themePrimary"></i> Add New</Button> */}
           <ModalExampleModal onSuccess={refresh}></ModalExampleModal>

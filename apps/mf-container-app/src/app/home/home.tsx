@@ -57,7 +57,7 @@ export function Home(props: HomeProps) {
   }
 
   return (
-    <div className={menuExpand?"expand-main-menu":""}>
+    <div className={menuExpand?"expand-main-menu":"collapsed-main-menu"}>
       <div>
         <Menubar data={data} parentCallback={callbackFunction} mainMenuExpand={onClickMenuExpand}></Menubar>
       </div>
