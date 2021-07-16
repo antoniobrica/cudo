@@ -238,15 +238,15 @@ const updateMilestone=()=>{
             content="Submit"
             onClick={updateMilestone}
             positive
-            size="mini"
-            className="grey-btn"
+            size="small"
+            className="primary"
           />
           <Button
-            size="mini"
+            size="small"
             className="icon-border"
             onClick={cancel}
           >
-            X Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> Cancel
           </Button>
         </Modal.Actions>
       </Modal>

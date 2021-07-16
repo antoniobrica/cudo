@@ -105,6 +105,9 @@ input,
         }
         .default.text {
             color: color("grey", "lighten-2");
+            // height: 38px;
+            // line-height: 38px;
+            // padding: 0;
         }
         &.style-2 {
             .dropdown.icon {
@@ -521,18 +524,18 @@ span.error-message {
     font-weight: 400;
 }
 
-.ui.form .field.error input:not([type]), 
-.ui.form .field.error input[type=date], 
-.ui.form .field.error input[type=datetime-local], 
-.ui.form .field.error input[type=email], 
-.ui.form .field.error input[type=file], 
-.ui.form .field.error input[type=number], 
-.ui.form .field.error input[type=password], 
-.ui.form .field.error input[type=search], 
-.ui.form .field.error input[type=tel], 
-.ui.form .field.error input[type=text], 
-.ui.form .field.error input[type=time], 
-.ui.form .field.error input[type=url] {
+.ui.form .field .ui.error input:not([type]), 
+.ui.form .field .ui.error input[type=date], 
+.ui.form .field .ui.error input[type=datetime-local], 
+.ui.form .field .ui.error input[type=email], 
+.ui.form .field .ui.error input[type=file], 
+.ui.form .field .ui.error input[type=number], 
+.ui.form .field .ui.error input[type=password], 
+.ui.form .field .ui.error input[type=search], 
+.ui.form .field .ui.error input[type=tel], 
+.ui.form .field .ui.error input[type=text], 
+.ui.form .field .ui.error input[type=time], 
+.ui.form .field .ui.error input[type=url] {
     background: #fff !important;
     border-color: #F96666;
 }

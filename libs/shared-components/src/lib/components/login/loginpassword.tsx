@@ -73,8 +73,8 @@ export function Loginpassword(props: LoginPasswordProps) {
                       </Form.Field>
                       <Button size='large' className="primary btn-large" type="submit">Login <Icon name='arrow right' /></Button>
 
-                      <span> <br /> <a href="/auth/registration" className="blue_color"> Register with us</a>  </span>
-                      <span className="float_right ">   <a href="/recovery" className="blue_color"> Forgot Password ?</a>  </span>
+                      <span> <br /> <a href="/auth/registration" className="blue_color form-link"> Register with us</a>  </span>
+                      <span className="float_right ">   <a href="/recovery" className="blue_color form-link"> Forgot Password ?</a>  </span>
                     </Form>
 
                   </div>

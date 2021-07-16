@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment'
 import './../../../assets/style/index.scss'
-import { Tab, Dropdown, Button } from 'semantic-ui-react';
+import { Tab, Dropdown, Button, Icon } from 'semantic-ui-react';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 /* eslint-disable-next-line */
@@ -181,7 +181,7 @@ export function InvitationTab(props: ViewInvitationProps) {
                 className="card-body d-flex align-items-center justify-content-between flex-wrap invitation-list-card">
                 <div className="d-flex align-items-center invitaiton-info-left">
                   {/* <Icon name="newspaper outline" /> */}
-                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/calendar.png`} style={{ width: '30px' }} />
+                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/calendar.png`} />
                   <div className="invitation-date-time">
                     <div className="timing-details">
                       <span className="invitation-date-time">
@@ -240,7 +240,7 @@ export function InvitationTab(props: ViewInvitationProps) {
                 className="card-body d-flex align-items-center justify-content-between flex-wrap invitation-list-card">
                 <div className="d-flex align-items-center invitaiton-info-left">
                   {/* <Icon name="newspaper outline" /> */}
-                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/calendar.png`} style={{ width: '30px' }} />
+                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/calendar.png`} />
 
                   <div className="invitation-date-time">
                     <div className="timing-details">
