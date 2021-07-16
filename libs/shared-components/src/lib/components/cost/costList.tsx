@@ -20,6 +20,11 @@ export function CostList(props: CostListProps) {
   const [estimateCost, setEstimateCost] = React.useState('5,000.00')
   const [showBkp, setexpandBkp] = React.useState(false)
   const [editBkpData, setEditBkpData] = React.useState(null);
+  const [editBkpT, setEditBkpT] = React.useState(null);
+  const [editBkpD, setEditBkpD] = React.useState(null);
+  const [editBkpIq, setEditBkpIq] = React.useState(null);
+  const [editBkpIp, setEditBkpIp] = React.useState(null);
+
   const addNew = () => {
     console.log('add new');
     props.addNew()
@@ -40,8 +45,12 @@ export function CostList(props: CostListProps) {
     props.delete(data)
   }
   const editBkp = (data) => {
-    console.log('edit', data)
-    setEditBkpData(data)
+    console.log('edit', data);
+    setEditBkpData(data);
+    setEditBkpT(data.BKPTitle);
+    setEditBkpD(data.description);
+    setEditBkpIq(data.itemQuantity);
+    setEditBkpIp(data.itemPrice);
     setIsBkpEdited(true)
   }
   const rootPanels = [
@@ -51,10 +60,21 @@ export function CostList(props: CostListProps) {
   const editBkpTitle = (data) => {
     setIsBkpEdited(false)
   }
-  const handleBkpTitle = (data) => {
-    console.log('bkp title', data);
-
+  const handleBkpDescription = (e) => {
+    setEditBkpD(e.target.value)
   }
+
+  const handleBkpQuantity = (e) => {
+    setEditBkpIq(e.target.value)
+  }
+
+  const handleBkpPrice = (e) => {
+    setEditBkpIp(e.target.value)
+  }
+  const handleBkpTitle = (e) => {
+    setEditBkpT(e.target.value)
+  }
+
   return (
     <div>
 
@@ -226,7 +246,7 @@ export function CostList(props: CostListProps) {
                                               <Form.Field className="fillarea">
                                                 <Input placeholder='Enter your text here....' size='small' className="full-width "
                                                   type="text"
-                                                  value={''}
+                                                  value={editBkpT}
                                                   onChange={handleBkpTitle}
                                                 />
                                               </Form.Field>
@@ -237,8 +257,8 @@ export function CostList(props: CostListProps) {
                                               <Form.Field className="fillarea">
                                                 <Input placeholder='Enter your text here....' size='small' className="full-width "
                                                   type="text"
-                                                  value={''}
-                                                  onChange={handleBkpTitle}
+                                                  value={editBkpD}
+                                                  onChange={handleBkpDescription}
                                                 />
                                               </Form.Field>
                                             </div>
@@ -248,8 +268,8 @@ export function CostList(props: CostListProps) {
                                               <Form.Field className="fillarea">
                                                 <Input placeholder='Enter your text here....' size='small' className="full-width "
                                                   type="text"
-                                                  value={''}
-                                                  onChange={handleBkpTitle}
+                                                  value={editBkpIq}
+                                                  onChange={handleBkpQuantity}
                                                 />
                                               </Form.Field>
                                             </div>
@@ -259,8 +279,8 @@ export function CostList(props: CostListProps) {
                                               <Form.Field className="fillarea">
                                                 <Input placeholder='Enter your text here....' size='small' className="full-width "
                                                   type="text"
-                                                  value={''}
-                                                  onChange={handleBkpTitle}
+                                                  value={editBkpIp}
+                                                  onChange={handleBkpPrice}
                                                 />
                                               </Form.Field>
                                             </div>
