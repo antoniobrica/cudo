@@ -2,12 +2,7 @@ import {configureStore} from '@reduxjs/toolkit'
 import projectAppReducer from '../reducer/app/project.app.reducer'
 
 const store = configureStore({
-    reducer: {
-        // posts: postsReducer,
-        // Comments: commentsReducer,
-        // users: usersReducer,
-        projects: projectAppReducer
-    },
+    reducer: { projects: projectAppReducer },
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
