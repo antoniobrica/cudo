@@ -237,15 +237,15 @@ export function ModalPlanningNew(props: PlanningProps) {
             content="Submit"
             onClick={createMilestone}
             positive
-            size="mini"
-            className="grey-btn"
+            size="small"
+            className="primary"
           />
           <Button
-            size="mini"
+            size="small"
             className="icon-border"
             onClick={() => setOpen(false)}
           >
-            X Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> Cancel
           </Button>
         </Modal.Actions>
       </Modal>

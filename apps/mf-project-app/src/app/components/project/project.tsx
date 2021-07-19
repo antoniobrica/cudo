@@ -5,12 +5,16 @@ import { ITodo, IProject } from "../../interfaces/project";
 import './../../../assets/style/index.scss'
 import { Card, Icon,Form, Grid } from 'semantic-ui-react'
 
+
+
+
 /* eslint-disable-next-line */
 export interface ProjectProps {
   project: IProject;
 }
 
 export function Project(props: ProjectProps) {
+  
   const {  projectId,
     projectName,
     projectNum,buildingType } = props.project;

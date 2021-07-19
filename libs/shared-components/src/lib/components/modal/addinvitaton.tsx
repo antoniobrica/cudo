@@ -283,7 +283,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
                         type="text"
                         value={invitationTitle}
                         onChange={onInvitationTitleChange}
-                        error={errors.titleError !== null}
+                        error={errors.titleError !== null && !invitationTitle}
                       />
                       {errors?.titleError && !invitationTitle ? <span className="error-message">{errors.titleError}</span> : null}
                     </Form.Field>
@@ -303,7 +303,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
                         type="date"
                         value={meetingDate}
                         onChange={(e) => setMeetingDate(e.target.value)}
-                        error={errors.dateError !== null}
+                        error={errors.dateError !== null && !meetingDate}
                       />
                       {errors?.dateError && !meetingDate ? <span className="error-message">{errors.dateError}</span> : null}
                     </Form.Field>
@@ -319,7 +319,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
                         name="time"
                         value={meetingStartTime}
                         onChange={onClickStartTime}
-                        error={errors.startTimeError !== null}
+                        error={errors.startTimeError !== null && !meetingStartTime}
                       />
                       {errors?.startTimeError && !meetingStartTime ? <span className="error-message">{errors.startTimeError}</span> : null}
                     </Form.Field>
@@ -334,7 +334,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
                         type="time"
                         value={meetingEndTime}
                         onChange={onClickEndTime}
-                        error={errors.endTimeError !== null}
+                        error={errors.endTimeError !== null && !meetingEndTime}
                       />
                       {errors?.endTimeError && !meetingEndTime ? <span className="error-message">{errors.endTimeError}</span> : null}
                       {errors?.startEndTimeError ? <span className="error-message">{errors.startEndTimeError}</span> : null}
@@ -345,11 +345,11 @@ export function ModalAddInvitation(props: AddInvitationProps) {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
+                    {/* <Form.Field> */}
                       {/* <label>Members</label> */}
                       <MembersIndex members={[]} parentMembersSelect={onMembers} />
                       {errors?.membersError && !members.length ? <span className="error-message">{errors.membersError}</span> : null}
-                    </Form.Field>
+                    {/* </Form.Field> */}
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
