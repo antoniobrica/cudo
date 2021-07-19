@@ -13,7 +13,7 @@ const orm = {
 		url: environment.DATABASE_HOST
 	},
 	staging: {
-		host: '192.168.43.138',
+		host: '192.168.1.5',
 		port: environment.DATABASE_PORT,
 		username: '',
 		password: '',
