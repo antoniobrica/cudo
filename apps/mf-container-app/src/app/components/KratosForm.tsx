@@ -3,8 +3,7 @@ import { FormField, Message } from "@oryd/kratos-client"
 import { FORM_LABELS } from "@cudo/mf-core"
 import { KratosMessages } from "../components/KratosMessages"
 import { Button, Form, Grid, Segment, Input, Icon } from "semantic-ui-react"
-import logo from '../../assets/images/slider.png';
-import img from '../../assets/images/Shape 2.png';
+
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { ToEmail } from "../services/auth"
 
