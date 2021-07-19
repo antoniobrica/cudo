@@ -393,6 +393,7 @@ function EditProject() {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={<Button size='mini' className="grey-btn">edit</Button>}
+        closeOnDimmerClick={false}
       >
         <Modal.Header><h3>Edit Project </h3></Modal.Header>
         <Modal.Content body>

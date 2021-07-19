@@ -55,6 +55,7 @@ export const PinMaskTask = () => {
           open={open}
           onClose={() => dispatch({ type: 'close' })}
           style={{ marginLeft: '35px' }}
+          closeOnDimmerClick={false}
         >
           <Modal.Header>File_name.cad
             <div style={{ textAlign: 'center', marginBottom: '-30px' }}>

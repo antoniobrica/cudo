@@ -338,7 +338,9 @@ export function ModalExampleModal() {
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button size='small' className="primary">+ Add New</Button>}      >
+        trigger={<Button size='small' className="primary">+ Add New</Button>} 
+        closeOnDimmerClick={false}
+        >
         <Modal.Header><h3>Add New Project </h3></Modal.Header>
         <Modal.Content body>
           <div>

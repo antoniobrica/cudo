@@ -21,6 +21,7 @@ export function ModalExampleCompany() {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={<Button size='mini' className="grey-btn">+ Add Company</Button>}
+        closeOnDimmerClick={false}
       >
         <Modal.Header><h3>Add Company</h3></Modal.Header>
         <Modal.Content body>

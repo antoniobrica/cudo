@@ -35,8 +35,8 @@ export function FilterPopup() {
           //   Filter
           // </Button>
           <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/filter.png`} className="filter-icon mr-10 " />
-
         }
+        closeOnDimmerClick={false}
       >
 
         <Modal.Header className="headertop">

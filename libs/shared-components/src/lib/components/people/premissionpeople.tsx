@@ -102,6 +102,7 @@ function PremissionPeople() {
       onOpen={() => setOpen(true)}
       open={open}
       trigger={<Button size='mini' className="grey-btn">User Permission</Button> }
+      closeOnDimmerClick={false}
     >
       <Modal.Header><h3>User Project Permissions </h3></Modal.Header>
       <Modal.Content body>

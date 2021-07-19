@@ -242,6 +242,7 @@ export function CreateTask(props: CreateTaskProps) {
         onOpen={() => setOpen(true)}
         open={open}
       // trigger={<Button size='mini' className="grey-btn taskmargin">+ Add  New Task</Button>} 
+      closeOnDimmerClick={false}
       >
         <Modal.Header><h3>Add New Task </h3></Modal.Header>
         <Modal.Content body>

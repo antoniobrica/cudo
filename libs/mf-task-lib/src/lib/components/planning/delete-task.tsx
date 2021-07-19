@@ -34,6 +34,7 @@ const size = undefined
         onClose={() => setOpen(false)}
         onOpen={openf}
         open={open} className="mini"
+        closeOnDimmerClick={false}
       >
         {/* <Modal.Header>Update your Task</Modal.Header> */}
         <Modal.Header>Delete Milestone 

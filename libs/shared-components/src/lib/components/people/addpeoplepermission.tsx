@@ -227,6 +227,7 @@ function AddPeoplePermission() {
       onOpen={() => setOpen(true)}
       open={open}
       trigger={<Button size='mini' className="grey-btn">Add new user</Button> }
+      closeOnDimmerClick={false}
     >
       <Modal.Header><h3>Add New User </h3></Modal.Header>
       <Modal.Content body>

@@ -309,6 +309,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
             Edit Task
           </Button>
         }
+        closeOnDimmerClick={false}
       >
         <Modal.Header>
           <h3>Edit Task </h3>

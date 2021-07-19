@@ -628,6 +628,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={<Button size='small' className="primary"><i className="ms-Icon ms-font-xl ms-Icon--Add ms-fontColor-themePrimary"></i> Add New</Button>}
+        closeOnDimmerClick={false}
       >
         <Modal.Header><h3>Add New Project </h3></Modal.Header>
         <Modal.Content body>
@@ -661,6 +662,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
           onClose={() => setSecondOpen(false)}
           open={secondOpen}
           size='small'
+          closeOnDimmerClick={false}
         >
 
           <Modal.Header><h3>Add Company</h3></Modal.Header>

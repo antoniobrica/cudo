@@ -169,6 +169,7 @@ function AddNewPeople() {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={<Button size='mini' className="grey-btn">+ Add People</Button>}
+        closeOnDimmerClick={false}
       >
         <Modal.Header><h3>Add People </h3></Modal.Header>
         <Modal.Content body>

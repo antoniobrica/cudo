@@ -22,6 +22,7 @@ export function ModalExamplePrinting() {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={<Button size='mini' className="grey-btn">  Printing Company</Button>}
+        closeOnDimmerClick={false}
       >
         <Modal.Header><h3>Add Printing Company</h3></Modal.Header>
         <Modal.Content body>

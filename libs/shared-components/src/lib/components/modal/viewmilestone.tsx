@@ -31,6 +31,7 @@ function ModalEditViewMilestone() {
             Edit Milestone
           </Button>
         }
+        closeOnDimmerClick={false}
       >
         <Modal.Header>
           <h3> Edit Milestone Details </h3>

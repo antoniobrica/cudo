@@ -184,6 +184,7 @@ export function UploadNewVersion(props: AlertProps) {
         onOpen={openf}
         open={open}
         trigger={<Button size='mini' className="grey-btn"> New version</Button>}
+        closeOnDimmerClick={false}
       >
         <Modal.Header><h3>Upload new version </h3></Modal.Header>
         <Modal.Content body>

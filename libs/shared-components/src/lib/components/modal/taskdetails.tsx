@@ -60,6 +60,7 @@ export const ModalViewTask = (props: AlertProps) => {
             Task Details
           </Button>
         }
+        closeOnDimmerClick={false}
       >
         <Modal.Header>
           <h3 className="d-flex align-items-center">

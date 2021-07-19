@@ -201,6 +201,7 @@ export function ModalSession(props: SessionProps) {
       //     + Add New Session{' '}
       //   </Button>
       // }
+      closeOnDimmerClick={false}
       >
         <Modal.Header>
           <h3>Add sessions </h3>

@@ -121,6 +121,7 @@ export function ModalPlanningNew(props: PlanningProps) {
             + Add New
           </Button>
         }
+        closeOnDimmerClick={false}
       >
         <Modal.Header>
           <h3>Add Milestone </h3>
