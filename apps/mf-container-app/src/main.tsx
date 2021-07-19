@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import { LazyLoading } from '@cudo/shared-components'
 
 import { BrowserRouter } from 'react-router-dom';
-import 'semantic-ui-css/semantic.min.css';
 import * as serviceWorker from './serviceWorker';
 
 import App from './app/app';
