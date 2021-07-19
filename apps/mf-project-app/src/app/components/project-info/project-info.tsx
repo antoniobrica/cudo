@@ -23,7 +23,7 @@ import { MS_SERVICE_URL } from '@cudo/mf-core';
 export interface ProjectInfoProps { }
 
 export function ProjectInfo(props: ProjectInfoProps) {
-  const notify = () => toast("Wow so easy!");
+  const notify = () => toast("This is Warning Message");
   const { loading, error, data } = useProjectQuery(GET_PROJECTS);
   const [openForm, setopenForm] = React.useState(false);
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -65,8 +65,8 @@ export function ProjectInfo(props: ProjectInfoProps) {
           <h3>All Projects <span className="total">Total {data.projects.length} project added</span></h3>
           
           <div>
-              <button onClick={notify}>Notify!</button>
-              <ToastContainer position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
+              <button onClick={notify}>Warning Notify!</button>
+              <ToastContainer className="success" position="top-right" autoClose={90000} hideProgressBar={false} closeOnClick pauseOnFocusLoss pauseOnHover />
           </div>
           {/* <div className="add-project-area"> */}
           {/* <Button size='small' className="primary"><i className="ms-Icon ms-font-xl ms-Icon--Add ms-fontColor-themePrimary"></i> Add New</Button> */}

@@ -78,3 +78,4 @@ courier:
     # connection_uri: smtps://test:test@mailslurper:1025/?skip_ssl_verify=true
     connection_uri: smtp://test@softobiz.com:Xum83875@smtp.office365.com:587/?skip_ssl_verify=false
     from_address: test@softobiz.com
+ 
