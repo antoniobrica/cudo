@@ -7,7 +7,7 @@ import { ITodo, IProject } from "../../interfaces/project";
 import Modal from 'react-modal';
 import { Card, Icon, Form, Grid, Button, Dropdown, Label } from 'semantic-ui-react'
 import { useHistory } from "react-router";
-import { LoaderPage } from "@cudo/shared-components"
+import { LoaderPage, LazyLoading } from "@cudo/shared-components"
 import ReactQuill, { Quill } from 'react-quill';
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -29,7 +29,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
   const history = useHistory();
-  if (loading) return <LoaderPage />;
+  if (loading) return <LazyLoading />;
 
   const addProject = () => {
     setopenForm(!openForm);
@@ -64,14 +64,13 @@ export function ProjectInfo(props: ProjectInfoProps) {
         <div className="dashboard-header">
           <h3>All Projects <span className="total">Total {data.projects.length} project added</span></h3>
           
-          <div>
-              <button onClick={notify}>Warning Notify!</button>
-              <ToastContainer className="success" position="top-right" autoClose={90000} hideProgressBar={false} closeOnClick pauseOnFocusLoss pauseOnHover />
-          </div>
-          {/* <div className="add-project-area"> */}
-          {/* <Button size='small' className="primary"><i className="ms-Icon ms-font-xl ms-Icon--Add ms-fontColor-themePrimary"></i> Add New</Button> */}
+          {/* <div>
+              <button onClick={notify}>Notify!</button>
+              <ToastContainer className="success" position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
+          </div> */}
+          
           <ModalExampleModal onSuccess={refresh}></ModalExampleModal>
-          {/* </div> */}
+          
         </div>
 
         <Form>

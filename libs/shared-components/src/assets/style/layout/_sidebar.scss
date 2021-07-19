@@ -208,8 +208,8 @@ a.article {
 
 .sidebar-wrapper.sidebar-theme
 {    
+    @include transition(all .25s);
     position: fixed;
-    transition: .600s;
     height: 100vh;
     touch-action: none;
     user-select: none;
@@ -580,6 +580,7 @@ span.strategic_plan {
 	.app-content-body-dash {
 		margin-left: 450px;
 		width: calc(100% - 450px);
+		@include transition(all .25s);
 	}
 }
 

@@ -9,12 +9,22 @@
   },
   "user_profile": "User Profile",
   "first_name": "First Name",
-  "add_cost": { "add_new_item": "Add New Item" },
-  "pin_mask":{"pin_mark_task":"Click to add pin-mark task",
+  "add_cost": {
+    "add_new_item": "Add New Item"
+  },
+  "pin_mask": {
+    "pin_mark_task": "Click to add pin-mark task",
     "paint_work": "Paint Work",
-    "this_task":" This is task name here",
-    "tender":"Tender"
-
+    "this_task": " This is task name here",
+    "tender": "Tender"
+  },
+  "invitation_add":{
+    "error_title": "Please provide title",
+    "error_date": "Please select a date",
+    "error_start_time": "Please select start time",
+    "error_end_time": "Please select end time",
+    "error_start_end_time": "Start time must be smaller than end time",
+    "error_members": "Please select members"
   },
   "language": {
     "en-GB": "English",
