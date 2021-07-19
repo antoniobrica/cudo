@@ -16,37 +16,37 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
     url: "http://dev.cudo.ch/api/ms-task/graphql"
   },
   "ms_cost": {
-    url: "http://192.168.1.5:5002/graphql"
+    url: "http://192.168.43.138:5002/graphql"
   },
   "ms_meeting": {
     url: "http://dev.cudo.ch/api/ms-meeting/graphql"
   },
   "mf_cost_app": {
-    url: "http://192.168.1.5:6004"
+    url: "http://192.168.43.138:6004"
   },
   "mf_meeting_app": {
-    url: "http://192.168.1.5:6005"
+    url: "http://192.168.43.138:6005"
   },
   "mf_project_app": {
-    url: "http://192.168.1.5:6006"
+    url: "http://192.168.43.138:6006"
   },
   "mf_task_app": {
-    url: "http://192.168.1.5:6009"
+    url: "http://192.168.43.138:6009"
   },
   "mf_document_app": {
-    url: "http://192.168.1.5:6010"
+    url: "http://192.168.43.138:6010"
   },
   "kratos_BASE_URL": {
-    url: "http://192.168.1.5:4455"
+    url: "http://192.168.43.138:4455"
   },
   "kratos_KRATOS_BROWSER_URL": {
-    url: "http://192.168.1.5:4455/.ory/kratos/public"
+    url: "http://192.168.43.138:4455/.ory/kratos/public"
   },
   "kratos_KRATOS_PUBLIC_URL": {
-    url: "http://192.168.1.5:4455/.ory/kratos/public"
+    url: "http://192.168.43.138:4455/.ory/kratos/public"
   },
   "kratos_KRATOS_ADMIN_URL": {
-    url: "http://192.168.1.5:4434"
+    url: "http://192.168.43.138:4434"
   }
 
 }

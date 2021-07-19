@@ -10,7 +10,7 @@ const loadDynamicScript = (callback) => {
 
   if (!existingScript) {
     const script = document.createElement('script');
-    script.src = 'http://192.168.1.5:6001/main.js'; // URL for the third-party library being loaded.
+    script.src = 'http://192.168.43.138:6001/main.js'; // URL for the third-party library being loaded.
     script.id = 'scriptId'; // e.g., googleMaps or stripe
     // script.setAttribute('crossOrigin', '*');
     document.body.appendChild(script);

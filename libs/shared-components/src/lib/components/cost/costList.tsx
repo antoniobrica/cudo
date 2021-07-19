@@ -11,6 +11,7 @@ export interface CostListProps {
   addNew?,
   costs?,
   delete?
+  updateBkpCost?
 }
 
 
@@ -57,7 +58,22 @@ export function CostList(props: CostListProps) {
     { key: 'panel-1', title: 'Jack W. Elementary School', content: { content: <a href=''>+ Add item</a> }, },
     { key: 'panel-2', title: 'Freehold Two Solar LLC', content: { content: <a href=''>+ Add item</a> } },
   ]
-  const editBkpTitle = (data) => {
+  const editBkpTitle = (d) => {
+    console.log('editted bkp', d)
+    const data = {
+      BKPID: d.BKPID,
+      bkpCostID: d.bkpCostID,
+      BKPTitle: editBkpT,
+      description: editBkpD,
+      itemPrice: Number(editBkpIp),
+      itemQuantity: Number(editBkpIq)
+    }
+
+    setIsBkpEdited(false)
+
+    props.updateBkpCost(data)
+  }
+  const cancelEdit = () => {
     setIsBkpEdited(false)
   }
   const handleBkpDescription = (e) => {
@@ -288,9 +304,9 @@ export function CostList(props: CostListProps) {
                                           <Table.Cell>
                                             <div className="edit-estimated-price" >
                                               <Form.Field className="d-flex">
-                                                <button className="greenbutton anchor_complete" onClick={editBkpTitle}>
+                                                <button className="greenbutton anchor_complete" onClick={() => editBkpTitle(cost?.BKPCosts[0])}>
                                                   <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
-                                                </button> &nbsp;  <button className="redbutton anchor_complete" onClick={editBkpTitle}>
+                                                </button> &nbsp;  <button className="redbutton anchor_complete" onClick={cancelEdit}>
                                                   <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i>
                                                 </button>
                                               </Form.Field>
