@@ -2,9 +2,12 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { toast, ToastContainer } from 'react-toastify'
 
-import { usePrevious } from 'hooks'
-import Route from './Route/Route'
+import { usePrevious } from '../app/redux/hooks/hooks'
+// import Route from './Route/Route'
+import App from '../app/app';
 import 'react-toastify/dist/ReactToastify.css'
+
+// const App = lazy(() => import('./app/app'))
 
 function ErrorContainer(props) {
   const { error } = props
@@ -22,7 +25,7 @@ function ErrorContainer(props) {
   return (
     <>
       <ToastContainer />
-      <Route />
+      <App />
     </>
   )
 }

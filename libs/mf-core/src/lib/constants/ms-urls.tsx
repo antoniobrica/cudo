@@ -3,7 +3,8 @@ interface IURL {
 }
 export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
   "ms_account": {
-    url: "http://dev.cudo.ch/api/ms-account/graphql"
+    // url: "http://dev.cudo.ch/api/ms-account/graphql"
+    url: "http://192.168.3.198:5001/graphql"
   },
   "ms_document": {
     url: "http://dev.cudo.ch/api/ms-document/graphql"
