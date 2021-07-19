@@ -155,7 +155,7 @@ export function FilterPopup() {
             className="icon-border"
             onClick={() => setOpen(false)}
           >
-            X Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> Cancel
           </Button>
         </Modal.Actions>
       </Modal>

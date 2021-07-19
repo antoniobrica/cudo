@@ -98,6 +98,8 @@
     "react-redux": "7.2.3",
     "react-router-config": "^5.1.1",
     "react-router-dom": "5.2.0",
+    "react-semantic-toasts": "^0.6.5",
+    "react-toastify": "^7.0.4",
     "react-toastr": "^3.0.0",
     "reflect-metadata": "^0.1.13",
     "regenerator-runtime": "0.13.7",

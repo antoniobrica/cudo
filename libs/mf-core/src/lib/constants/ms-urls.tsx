@@ -3,22 +3,22 @@ interface IURL {
 }
 export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
   "ms_account": {
-    url: "http://cudo-ms-account.softobiz.net/graphql"
+    url: "http://dev.cudo.ch/api/ms-account/graphql"
   },
   "ms_document": {
-    url: "http://cudo-ms-document.softobiz.net/graphql"
+    url: "http://dev.cudo.ch/api/ms-document/graphql"
   },
   "ms_project": {
-    url: "http://cudo-ms-project.softobiz.net/graphql"
+    url: "http://dev.cudo.ch/api/ms-project/graphql"
   },
   "ms_task": {
-    url: "http://cudo-ms-task.softobiz.net/graphql"
+    url: "http://dev.cudo.ch/api/ms-task/graphql"
   },
   "ms_cost": {
-    url: "http://cudo-ms-cost.softobiz.net/graphql"
+    url: "http://dev.cudo.ch/api/ms-cost/graphql"
   },
   "ms_meeting": {
-    url: "http://cudo-ms-meeting.softobiz.net/graphql"
+    url: "http://dev.cudo.ch/api/ms-meeting/graphql"
   },
   "mf_cost_app": {
     url: "http://cudo-mf_cost.softobiz.net"
