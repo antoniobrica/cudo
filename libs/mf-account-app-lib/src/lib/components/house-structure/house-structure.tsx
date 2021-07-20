@@ -28,7 +28,7 @@ export function HouseStructure(props: HouseStructureProps) {
           options={items}
           placeholder="Select House"
           search
-          searchInput={{ autoFocus: true }}
+          // searchInput={{ autoFocus: true }}
           selection
         />
       </Segment>

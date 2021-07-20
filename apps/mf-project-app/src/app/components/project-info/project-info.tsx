@@ -25,7 +25,7 @@ import { MS_SERVICE_URL } from '@cudo/mf-core';
 export interface ProjectInfoProps { }
 
 export function ProjectInfo(props: ProjectInfoProps) {
-  const notify = () => toast("Wow so easy!");
+  const notify = () => toast("This is Warning Message");
   const { loading, error, data } = useProjectQuery(GET_PROJECTS);
   const [openForm, setopenForm] = React.useState(false);
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -73,8 +73,8 @@ export function ProjectInfo(props: ProjectInfoProps) {
           
           <div>
               <button onClick={notify}>Notify!</button>
-              <ToastContainer position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
-          </div>
+              <ToastContainer className="success" position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
+          </div> 
           
           <ModalExampleModal onSuccess={refresh}></ModalExampleModal>
           
