@@ -23,6 +23,7 @@ export function ModalExampleModal2() {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={<Button size='mini' className="grey-btn">+ Add  New Task</Button>}
+        closeOnDimmerClick={false}
       >
         <Modal.Header><h3>Add New Task </h3></Modal.Header>
         <Modal.Content body>
@@ -72,7 +73,7 @@ export function ModalExampleModal2() {
                   <Grid.Column>
                     <Form.Field>
                       <label>Select Phase </label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select clearable placeholder='Select' className="small" options={countryOptions} />
 
                     </Form.Field>
                   </Grid.Column>
@@ -80,7 +81,7 @@ export function ModalExampleModal2() {
                   <Grid.Column>
                     <Form.Field>
                       <label>Select BKP   </label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select clearable placeholder='Select' className="small" options={countryOptions} />
 
                     </Form.Field>
                   </Grid.Column>
@@ -103,7 +104,7 @@ export function ModalExampleModal2() {
                   <Grid.Column>
                     <Form.Field>
                       <label>Followers  </label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select clearable placeholder='Select' className="small" options={countryOptions} />
 
                     </Form.Field>
                   </Grid.Column>
@@ -145,7 +146,7 @@ export function ModalExampleModal2() {
                   <Grid.Column>
                     <Form.Field>
                       <label>Estimated Days  </label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select clearable placeholder='Select' className="small" options={countryOptions} />
 
                     </Form.Field>
                   </Grid.Column>

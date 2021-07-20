@@ -80,6 +80,7 @@ export function AddFolder(props: AddFolderProps) {
       onOpen={() => setOpen(true)}
       open={open}
       trigger={<Button size='mini' className="grey-btn"> Add Folder</Button> }
+      closeOnDimmerClick={false}
     >
       <Modal.Header><h3>Add new folder </h3></Modal.Header>
       <Modal.Content body>

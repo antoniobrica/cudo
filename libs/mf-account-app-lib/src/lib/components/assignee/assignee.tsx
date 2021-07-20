@@ -71,6 +71,7 @@ export function Assignee(props: AssigneeProps) {
         options={items}
         value={assignee}
         onChange={onAssignee}
+        clearable
       />
       {/* <label>{props.name}</label>
 

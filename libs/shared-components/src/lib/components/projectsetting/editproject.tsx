@@ -57,7 +57,7 @@ function EditProject() {
               <Grid.Column>
                 <Form.Field>
                   <label>Client <span className="danger">*</span></label>
-                  <Select placeholder='Select' className="small" options={countryOptions} />
+                  <Select clearable placeholder='Select' className="small" options={countryOptions} />
                 </Form.Field>
 
               </Grid.Column>
@@ -65,7 +65,7 @@ function EditProject() {
               <Grid.Column>
                 <Form.Field>
                   <label>Type of building <span className="danger">*</span></label>
-                  <Select placeholder='Select' className="small" options={countryOptions} />
+                  <Select clearable placeholder='Select' className="small" options={countryOptions} />
                 </Form.Field>
               </Grid.Column>
             </Grid.Row>
@@ -75,7 +75,7 @@ function EditProject() {
               <Grid.Column>
                 <Form.Field>
                   <label>Printing Company </label>
-                  <Select placeholder='Select' className="small" options={countryOptions} />
+                  <Select clearable placeholder='Select' className="small" options={countryOptions} />
                 </Form.Field>
               </Grid.Column>
 
@@ -106,7 +106,7 @@ function EditProject() {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <Select placeholder='Select' className="small" options={countryOptions} />
+                          <Select clearable placeholder='Select' className="small" options={countryOptions} />
                         </Form.Field>
                       </Grid.Column>
 
@@ -141,7 +141,7 @@ function EditProject() {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <Select placeholder='Select' className="small" options={countryOptions} />
+                          <Select clearable placeholder='Select' className="small" options={countryOptions} />
                         </Form.Field>
                       </Grid.Column>
 
@@ -230,7 +230,7 @@ function EditProject() {
               <Grid.Column>
                 <Form.Field>
                   <label>State</label>
-                  <Select placeholder='Select' className="small" options={countryOptions} />
+                  <Select clearable placeholder='Select' className="small" options={countryOptions} />
                 </Form.Field>
               </Grid.Column>
             </Grid.Row>
@@ -275,7 +275,7 @@ function EditProject() {
           <Grid columns={2}>
             <Grid.Row>
               <Grid.Column>
-                <Form.Field> <Select placeholder='Select' className="small" options={countryOptions} />
+                <Form.Field> <Select clearable placeholder='Select' className="small" options={countryOptions} />
 
                 </Form.Field>
               </Grid.Column>
@@ -330,7 +330,7 @@ function EditProject() {
                       </Table.Cell>
                       <Table.Cell>
                         <Form.Field>
-                          <Select placeholder='Select' className="small" options={countryOptions} />
+                          <Select clearable placeholder='Select' className="small" options={countryOptions} />
 
                         </Form.Field>
                       </Table.Cell>
@@ -347,7 +347,7 @@ function EditProject() {
                       </Table.Cell>
                       <Table.Cell>
                         <Form.Field>
-                          <Select placeholder='Select' className="small" options={countryOptions} />
+                          <Select clearable placeholder='Select' className="small" options={countryOptions} />
                         </Form.Field>
                       </Table.Cell>
                       <Table.Cell>
@@ -393,6 +393,7 @@ function EditProject() {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={<Button size='mini' className="grey-btn">edit</Button>}
+        closeOnDimmerClick={false}
       >
         <Modal.Header><h3>Edit Project </h3></Modal.Header>
         <Modal.Content body>

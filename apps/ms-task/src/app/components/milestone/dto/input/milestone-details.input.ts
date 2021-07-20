@@ -9,7 +9,7 @@ export class MilestoneDetailsInput {
     @Field(type => MilestoneBasicDetailsInput)
     milestoneBasics?: MilestoneBasicDetailsInput;
 
-    @Field(type => [TaskFileParams], { description: `Task Files` })
+    @Field(type => [TaskFileParams], { nullable:true, description: `Task Files` })
     files?: TaskFileParams[];
 
 }
