@@ -388,7 +388,8 @@ export function CreateTask(props: CreateTaskProps) {
                         value={workTypeData}
                         options={workType}
                         onChange={onMworkType}
-                        clearable
+                        selection
+                        clearable 
                         error={errors?.workTypeError && !workTypeID }
                       />
                       {errors?.workTypeError && !workTypeID ? <span className="error-message">{errors.workTypeError}</span> : null}
