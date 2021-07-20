@@ -17,6 +17,9 @@ export interface CostListProps {
 
 export function CostList(props: CostListProps) {
   const [editC, setEditC] = React.useState(false)
+  const [expandBkpF, setExpandBkpF] = React.useState(false)
+  const [expandFirstLayer, setExpandFirstLayer] = React.useState(false)
+
   const [isBkpEdited, setIsBkpEdited] = React.useState(false)
   const [estimateCost, setEstimateCost] = React.useState('5,000.00')
   const [showBkp, setexpandBkp] = React.useState(false)
@@ -216,18 +219,18 @@ export function CostList(props: CostListProps) {
             <ul>
               <li>
                 <div className="treeview__level show" data-level="A">
-                  <Icon name="add" className="show-view" style={{ display: 'none' }} />
-                  <Icon name="minus" className="hide-view" />
+                  <Icon name="add" className="show-view" onClick={() => setExpandFirstLayer(!expandFirstLayer)} />
+                  {expandFirstLayer && <Icon name="minus" className="hide-view" onClick={() => setExpandFirstLayer(!expandFirstLayer)} />}
                   <span className="level-title cost-item-parent"><Icon name="list" /> Jack W. Elementary School <span className="item-total-price">Total price: $1500.00</span></span>
                 </div>
-                <ul>
+                {expandFirstLayer && <ul>
                   <li>
                     <div className="treeview__level show" data-level="B">
-                      <Icon name="add" className="show-view" style={{ display: 'none' }} />
-                      <Icon name="minus" className="hide-view" />
+                      <Icon name="add" className="show-view" onClick={() => setExpandBkpF(!expandBkpF)} />
+                      {expandBkpF && <Icon name="minus" className="hide-view" onClick={() => setExpandBkpF(!expandBkpF)} />}
                       <span className="level-title"><Icon name="level up alternate" className="rotate-level-icon" /> 0 - Grundstück</span>
                     </div>
-                    <ul>
+                    {expandBkpF && <ul>
                       <li>
                         <div className="treeview__level show" data-level="B">
                           {showBkp ?
@@ -367,6 +370,7 @@ export function CostList(props: CostListProps) {
                         </div>
                       </li>
                     </ul>
+                    }
                   </li>
 
                   <li>
@@ -387,6 +391,7 @@ export function CostList(props: CostListProps) {
                   </li>
 
                 </ul>
+                }
                 {/* </li>
             </ul> */}
 
