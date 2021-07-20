@@ -78,6 +78,35 @@ mutation CreateCost(
     } 
 }`;
 
+
+
+export const EDIT_COST = gql`
+mutation 
+UpdateBkpCost(
+  $BKPID: String!,
+  $bkpCostID: String!,
+  $description: String!,
+  $BKPTitle: String!,
+  $itemPrice: Float!,
+  $itemQuantity: Float!
+  )
+  {
+    updateBkpCost(bkpCostDetailsUpdate:{
+      bkpCostID:$bkpCostID
+      BKPID: $BKPID
+      BKPTitle: $BKPTitle
+      description: $description
+      itemPrice: $itemPrice 
+      itemQuantity: $itemQuantity
+    } 
+    )
+    {
+      BKPTitle
+    }
+    
+  }
+`
+
 export const DELETE_COST = gql`
 mutation 
 DeleteCost(

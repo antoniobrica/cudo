@@ -24,16 +24,20 @@
     font-size: 14px;
   }
 }
-
-.meetings-outer-con {
+.tabs-main-info-container {
   > h3 {
     font-size: 18px;
     font-weight: 600;
     color: #000;
     margin-bottom: 18px;
     @include flex(flex);
-    @include justify-content(space-between);
+    @include justify-content(space-between);    
+    @include align-items(center);
   }
+}
+
+.meetings-outer-con {
+  
   .meetings-listing {
     margin-bottom: 30px;
     &.upcoming-meeting-con {
