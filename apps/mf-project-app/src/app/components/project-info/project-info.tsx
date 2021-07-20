@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { connect } from 'react-redux'
+import { projectAction } from '../../redux/actions'
 
 import './project-info.module.scss';
 import { GET_TODOS, GET_PROJECTS } from "../../graphql/graphql";
@@ -10,8 +12,8 @@ import { useHistory } from "react-router";
 import { LoaderPage, LazyLoading } from "@cudo/shared-components"
 import ReactQuill, { Quill } from 'react-quill';
 
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 //import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
@@ -23,7 +25,7 @@ import { MS_SERVICE_URL } from '@cudo/mf-core';
 export interface ProjectInfoProps { }
 
 export function ProjectInfo(props: ProjectInfoProps) {
-  // const notify = () => toast("Wow so easy!");
+  const notify = () => toast("Wow so easy!");
   const { loading, error, data } = useProjectQuery(GET_PROJECTS);
   const [openForm, setopenForm] = React.useState(false);
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -41,6 +43,8 @@ export function ProjectInfo(props: ProjectInfoProps) {
     history.push({pathname: `/home/project/${project.projectId}`, state: {projectId: project.projectId}});
     // TODO:dispatch call to store in redux
     // selectedProjectId=project.projectId
+    // dispatch({ type: projectAction.SELECT_PROJECT_ID, project.projectId })
+
   }
   function openModal() {
     setIsOpen(true);
@@ -67,10 +71,10 @@ export function ProjectInfo(props: ProjectInfoProps) {
         <div className="dashboard-header">
           <h3>All Projects <span className="total">Total {data.projects.length} project added</span></h3>
           
-          {/* <div>
+          <div>
               <button onClick={notify}>Notify!</button>
               <ToastContainer position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
-          </div> */}
+          </div>
           
           <ModalExampleModal onSuccess={refresh}></ModalExampleModal>
           
@@ -280,4 +284,10 @@ export function ProjectInfo(props: ProjectInfoProps) {
   );
 }
 
+// const mapDispatchToProps = dispatch => ({
+//   login: payload => dispatch({ type: projectAction.SELECT_PROJECT_ID, projecct })
+// })
+
 export default ProjectInfo;
+
+// export default connect(mapDispatchToProps)(ProjectInfo)

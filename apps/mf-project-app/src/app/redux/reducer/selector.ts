@@ -1,3 +1,4 @@
-const getProjectId = state => state.app.projectdata.projectId
+const getCompanyId = state => state.app.selectedProject.selectedCompanyId
+const getProjectId = state => state.app.selectedProject.selectedProjectId
 
-export { getProjectId }
+export { getCompanyId, getProjectId }

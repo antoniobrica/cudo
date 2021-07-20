@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
+// import thunk from 'redux-thunk'
 import storage from 'redux-persist/es/storage'
 
 // import { reducers, Logger, rootSaga, sagaMiddleware } from './reducer'
@@ -8,7 +9,7 @@ import {reducers} from '../reducer'
 const persistConfig = {
   key: 'root',
   storage: storage,
-  whitelist: ['app', 'users']
+  whitelist: ['app']
 }
 
  const persistedReducer = persistReducer(persistConfig, reducers)
@@ -17,8 +18,8 @@ const config = () => {
   const store = createStore(
     persistedReducer,
     // compose(
-    //   // applyMiddleware(sagaMiddleware),
-    //   window.devToolsExtension ? window.devToolsExtension() : f => f
+    //   // applyMiddleware(sagaMiddleware)
+    //   // applyMiddleware(thunk)    
     // )
   )
   const persistor = persistStore(store)
