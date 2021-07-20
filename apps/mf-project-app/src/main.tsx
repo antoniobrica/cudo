@@ -9,7 +9,7 @@ import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
 import * as serviceWorker from "./serviceWorker";
 import "./SubscriberWidgetElement";
 import App from './app/app';
-// import ErrorContainer from './app/ErrorContainer';
+
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 declare global {
@@ -31,8 +31,7 @@ window.renderProjectApp = (containerId, history) => {
       <BrowserRouter>
         <ApolloProvider client={client}>
           <ApolloHooksProvider client={client as any}>
-            <App />
-            {/* <ErrorContainer /> */}
+            <App />            
           </ApolloHooksProvider>
         </ApolloProvider>
       </BrowserRouter>
@@ -54,7 +53,6 @@ if (!document.getElementById("ProjectApp-container")) {
         <ApolloProvider client={client}>
           <ApolloHooksProvider client={client as any}>
             <App />
-            {/* <ErrorContainer /> */}
           </ApolloHooksProvider>
         </ApolloProvider>
       </BrowserRouter>

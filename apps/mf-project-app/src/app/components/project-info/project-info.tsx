@@ -10,8 +10,8 @@ import { useHistory } from "react-router";
 import { LoaderPage, LazyLoading } from "@cudo/shared-components"
 import ReactQuill, { Quill } from 'react-quill';
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 
 //import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
@@ -23,7 +23,7 @@ import { MS_SERVICE_URL } from '@cudo/mf-core';
 export interface ProjectInfoProps { }
 
 export function ProjectInfo(props: ProjectInfoProps) {
-  const notify = () => toast("Wow so easy!");
+  // const notify = () => toast("Wow so easy!");
   const { loading, error, data } = useProjectQuery(GET_PROJECTS);
   const [openForm, setopenForm] = React.useState(false);
   const [modalIsOpen, setIsOpen] = React.useState(false);

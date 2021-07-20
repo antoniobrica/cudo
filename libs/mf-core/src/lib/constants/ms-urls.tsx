@@ -3,8 +3,8 @@ interface IURL {
 }
 export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
   "ms_account": {
-    // url: "http://dev.cudo.ch/api/ms-account/graphql"
-    url: "http://192.168.3.198:5001/graphql"
+    url: "http://dev.cudo.ch/api/ms-account/graphql"
+    // url: "http://192.168.3.198:5001/graphql"
   },
   "ms_document": {
     url: "http://dev.cudo.ch/api/ms-document/graphql"
@@ -19,7 +19,8 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
     url: "http://dev.cudo.ch/api/ms-cost/graphql"
   },
   "ms_meeting": {
-    url: "http://dev.cudo.ch/api/ms-meeting/graphql"
+    // url: "http://dev.cudo.ch/api/ms-meeting/graphql"
+    url: "http://192.168.3.198:5004/graphql"
   },
   "mf_cost_app": {
     url: "http://192.168.3.198:6004"

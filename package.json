@@ -102,6 +102,7 @@
     "react-toastify": "^7.0.4",
     "react-toastr": "^3.0.0",
     "redux": "^4.1.0",
+    "redux-persist": "^6.0.0",
     "reflect-metadata": "^0.1.13",
     "regenerator-runtime": "0.13.7",
     "rxjs": "^6.5.5",

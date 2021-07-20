@@ -3,6 +3,7 @@ import { projectAction } from '../../actions'
 
 const initialState = {
   selectedProjectId: null,
+  company: "Sftobiz_1234" // localStorage ? JSON.parse(localStorage.getItem('selectedCompany')) : "dapr"
 }
 
 export default function projectAppReducer(state = initialState, action) {

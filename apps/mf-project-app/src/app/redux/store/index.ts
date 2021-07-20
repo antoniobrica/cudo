@@ -1,12 +1,31 @@
-import {configureStore} from '@reduxjs/toolkit'
-import projectAppReducer from '../reducer/app/project.app.reducer'
+import { createStore, applyMiddleware, compose } from 'redux'
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/es/storage'
 
-const store = configureStore({
-    reducer: { projects: projectAppReducer },
-})
+// import { reducers, Logger, rootSaga, sagaMiddleware } from './reducer'
+import {reducers} from '../reducer'
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof store.dispatch
+const persistConfig = {
+  key: 'root',
+  storage: storage,
+  whitelist: ['app', 'users']
+}
 
+ const persistedReducer = persistReducer(persistConfig, reducers)
+
+const config = () => {
+  const store = createStore(
+    persistedReducer,
+    // compose(
+    //   // applyMiddleware(sagaMiddleware),
+    //   window.devToolsExtension ? window.devToolsExtension() : f => f
+    // )
+  )
+  const persistor = persistStore(store)
+
+  // sagaMiddleware.run(rootSaga)
+
+  return { store, persistor }
+}
+
+export default config
