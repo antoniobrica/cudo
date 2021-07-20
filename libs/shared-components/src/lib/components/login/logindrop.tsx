@@ -37,23 +37,25 @@ export function Logindrop(props: LoginDropProps) {
                   </div>
                   <div className="form-inner">
                     <Form>
-                      <Form.Field className="login-user">
-                        <label>  <span><img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/green_tick.png`} className="img-src" /> </span> <span>{props.email}  </span><span className="float-area">
-                          <i className="ms-Icon ms-Icon--Accounts" aria-hidden="true"></i> </span> </label>
+                      <Form.Field className="login-user email-filled">
+                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/green_tick.png`} className="img-src" />
+                          <span className="email-text">{props.email}</span>
+                          <i className="ms-Icon ms-Icon--Accounts" aria-hidden="true"></i>
                       </Form.Field>
-                      <Form.Field>
+                      <Form.Field className="form-dropdown">
                         <Dropdown
                           placeholder='Please select'
                           fluid
                           selection
                           options={props?.companies}
                           onChange={handleOnChange}
+                          size="small"
                         />
                         {/* <Select placeholder='Select Company' options={props?.companies} defaultValue={props?.companies[0]?.value} className="full-width" /> */}
                       </Form.Field>
                       <Button onClick={handleLogin} size='large' className="primary btn-large">Continue <Icon name='arrow right' />   </Button>
-                      <span> <br /> <a href="/auth/registration" className="blue_color"> Register with us</a>  </span>
-                      <span className="float_right ">   <a href="/recovery" className="blue_color"> Forgot Password ?</a>  </span>
+                      <span> <br /> <a href="/auth/registration" className="blue_color form-link"> Register with us</a>  </span>
+                      <span className="float_right ">   <a href="/recovery" className="blue_color form-link"> Forgot Password ?</a>  </span>
                     </Form>
                   </div>
                 </div>

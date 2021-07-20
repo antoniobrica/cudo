@@ -14,15 +14,20 @@
     "add_new": "Add New",
     "select_house": "Select house"
   },
-
-  "pin_mask":{"pin_mark_task":"Klicken Sie hier, um eine Stecknadel-Aufgabe hinzuzufügen",
-  "paint_work": "Lackierarbeiten",
-  "this_task":"  Dies ist der Aufgabenname hier",
-  "tender":"zärtlich"
-
-  }
-,
-
+  "pin_mask": {
+    "pin_mark_task": "Klicken Sie hier, um eine Stecknadel-Aufgabe hinzuzufügen",
+    "paint_work": "Lackierarbeiten",
+    "this_task": "  Dies ist der Aufgabenname hier",
+    "tender": "zärtlich"
+  },
+  "invitation_add":{
+    "error_title": "Please provide title",
+    "error_date": "Please select a date",
+    "error_start_time": "Please select start time",
+    "error_end_time": "Please select end time",
+    "error_start_end_time": "Start time must be smaller than end time",
+    "error_members": "Please select members"
+  },
   "language": {
     "en-GB": "English",
     "de-DE": "Deutsche"

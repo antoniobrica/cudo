@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import './../../../assets/style/index.scss'
 import { Segment, Dropdown, Input, Grid, Form, Button } from 'semantic-ui-react';
 
-import { InvitationTab, ModalAddInvitation } from '@cudo/shared-components'
+// import { InvitationTab, ModalAddInvitation } from '@cudo/shared-components'
+
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 // import ModalSession from 'libs/shared-components/src/lib/components/modal/addsession'
@@ -13,14 +14,15 @@ import { MS_SERVICE_URL } from '@cudo/mf-core';
 export interface MeetingTab {
   sessionListData?
   addSession?
+  // viewSession?
+  selectedSessionId?
 }
 
 export function MeetingTab(props: MeetingTab) {
 
   const [categoryItems, setCategoryItems] = useState([])
   const [sessionList, setSessionList] = useState([])
-  const [openSessionDetail, setOpenSessionDetail] = useState(false)
-  const [sessionId, setSessionId] = useState(null)
+  // const [openSessionDetail, setOpenSessionDetail] = useState(false)
 
   useEffect(() => {
     if (props?.sessionListData?.paginatedSession?.results) {
@@ -51,7 +53,7 @@ export function MeetingTab(props: MeetingTab) {
 
     const renderedCategoryList = sessionList ? sessionList.filter((sessionItem) => {
       return sessionItem.meetingCategoryID === meetingCategoryID
-    }).map((item) => {
+    }).map((item, index) => {
       const meetingOnSessionCount = 0
       const protocolOnSessionCount = 0
 
@@ -61,23 +63,23 @@ export function MeetingTab(props: MeetingTab) {
         <div key={sessionID} className="card1 card-custom" >
           <div className="card-body d-flex align-items-center justify-content-between flex-wrap">
             <div className="d-flex align-items-center meetings-session-info">
-              <span className="textt">#251</span>
+              <span className="textt">#{index + 1}</span>
               <span className="session-date">{sessionTitle}</span>
               <div className="d-flex session-time">
                 <div className="d-flex">
                   <div className="navi-item mr-2">
-                    <a href=" " className="navi-link active">
+                    <div className="navi-link active">
                       <span className="navi-text">
 
                         {meetingOnSessionCount} invitation - {protocolOnSessionCount} protocol
                       </span>
-                    </a>
+                    </div>
                   </div>
 
                   <div className="navi-item mr-2">
-                    <a className="navi-link">
+                    <div className="navi-link">
                       <span className="navi-text"> - {worktypeTitle} </span>
-                    </a>
+                    </div>
                   </div>
 
                 </div>
@@ -153,21 +155,19 @@ export function MeetingTab(props: MeetingTab) {
 
 
   const viewSessionDetail = (sessionID) => {
-    console.log('---View invitation list and show add invitation option')
-    setSessionId(sessionID)
-    setOpenSessionDetail(true)
+    props.selectedSessionId(sessionID)
+
   }
 
   const editSessionDetail = (sessionID) => {
-    console.log('---Edit session')
+
   }
 
   const deleteSessionDetail = (sessionID) => {
-    console.log('---Delete session')
+
   }
 
   const clickAddSession = () => {
-    console.log('---meeting tab---clickAddSession -function')
     props.addSession(true)
   }
 
@@ -179,13 +179,13 @@ export function MeetingTab(props: MeetingTab) {
 
   return (
     <div>
-      {openSessionDetail ?
+      {/* {openSessionDetail ?
         <div>
-          <ModalAddInvitation sessionId={sessionId} />
-          <InvitationTab sessionId={sessionId} />
-        </div> : null
-      }
+           <ModalAddInvitation sessionId={sessionId} />
+          <InvitationTab sessionId={sessionId} /> 
 
+        </div> : null
+      } */}
       <div className="tabs-main-info-container meetings-outer-con">
 
         <h3>Meetings
@@ -213,7 +213,7 @@ export function MeetingTab(props: MeetingTab) {
                 <div className="d-flex session-time">
                   <div className="d-flex">
                     <div className="navi-item mr-2">
-                      <a href=" " className="navi-link active">
+                      <div className="navi-link active">
                         <span className="navi-text">
                           {' '}
                           <i
@@ -222,19 +222,19 @@ export function MeetingTab(props: MeetingTab) {
                           ></i>{' '}
                           11:00 AM-11:45 AM
                         </span>
-                      </a>
+                      </div>
                     </div>
 
                     <div className="navi-item mr-2">
-                      <a className="navi-link">
+                      <div className="navi-link">
                         <span className="session-time-left">45 min </span>
-                      </a>
+                      </div>
                     </div>
 
                     <div className="navi-item ">
-                      <a href="" className="navi-link">
+                      <div className="navi-link">
                         <span className="session-job-title">(Electrical Work) </span>
-                      </a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -276,7 +276,7 @@ export function MeetingTab(props: MeetingTab) {
                 <div className="d-flex session-time">
                   <div className="d-flex">
                     <div className="navi-item mr-2">
-                      <a href=" " className="navi-link active">
+                      <div className="navi-link active">
                         <span className="navi-text">
                           {' '}
                           <i
@@ -285,19 +285,19 @@ export function MeetingTab(props: MeetingTab) {
                           ></i>{' '}
                           11:00 AM-11:45 AM
                         </span>
-                      </a>
+                      </div>
                     </div>
 
                     <div className="navi-item mr-2">
-                      <a className="navi-link">
+                      <div className="navi-link">
                         <span className="session-time-left">45 min </span>
-                      </a>
+                      </div>
                     </div>
 
                     <div className="navi-item ">
-                      <a href="" className="navi-link">
+                      <div className="navi-link">
                         <span className="session-job-title">(Electrical Work) </span>
-                      </a>
+                      </div>
                     </div>
                   </div>
                 </div>

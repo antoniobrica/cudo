@@ -5,6 +5,7 @@ a {
   padding: 2.5rem 4.5rem;
   top: 0 !important;
   margin-left: 75px;
+  @include transition(all .25s);
   .dashboard-header {
     @include flex(flex);
     @include justify-content(space-between);

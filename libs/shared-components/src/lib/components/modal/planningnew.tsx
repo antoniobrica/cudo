@@ -21,6 +21,9 @@ import ReactQuill, { Quill } from 'react-quill';
 export interface PlanningProps {
   getMilestoneData?,
   worktypes?
+  openNew?
+  cancel?
+
 }
 export function ModalPlanningNew(props: PlanningProps) {
   const countryOptions = [
@@ -49,6 +52,11 @@ export function ModalPlanningNew(props: PlanningProps) {
 
 
   const [open, setOpen] = React.useState(false);
+  React.useEffect(() => {
+    if (props.openNew) {
+      setOpen(props.openNew)
+    }
+  }, [props.openNew])
   React.useEffect(() => {
     if (props.worktypes) {
       console.log('worktypes', props.worktypes);
@@ -107,20 +115,25 @@ export function ModalPlanningNew(props: PlanningProps) {
       worktypeName: workTypeD.worktypeName
     }
     props.getMilestoneData(data);
+    props.cancel()
+    //setOpen(false)
+  }
+  const cancel = () => {
     setOpen(false)
+    props.cancel()
   }
   return (
     <div style={{ marginLeft: 900 }} >
       <Modal style={{ height: '650px' }}
         className="modal_media"
-        onClose={() => setOpen(false)}
+        onClose={cancel}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={
-          <Button size="small" className="primary">
-            + Add New
-          </Button>
-        }
+      // trigger={
+      //   <Button size="small" className="primary">
+      //     + Add New
+      //   </Button>
+      // }
       >
         <Modal.Header>
           <h3>Add Milestone </h3>
@@ -237,15 +250,15 @@ export function ModalPlanningNew(props: PlanningProps) {
             content="Submit"
             onClick={createMilestone}
             positive
-            size="mini"
-            className="grey-btn"
+            size="small"
+            className="primary"
           />
           <Button
-            size="mini"
+            size="small"
             className="icon-border"
-            onClick={() => setOpen(false)}
+            onClick={cancel}
           >
-            X Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> Cancel
           </Button>
         </Modal.Actions>
       </Modal>

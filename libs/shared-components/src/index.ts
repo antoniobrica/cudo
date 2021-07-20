@@ -48,3 +48,4 @@ export * from './lib/components/modal/confirmsubtaskstatus';
 export * from './lib/components/tabs/meetingtabs'
 export * from './lib/components/invitation/invitation';
 export * from './lib/components/modal/addinvitaton'
+export * from './lib/components/loader/lazyloader';

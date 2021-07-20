@@ -63,6 +63,7 @@ import ModalCost from 'libs/shared-components/src/lib/components/modal/addcostpo
 import PinMaskTask from 'libs/shared-components/src/lib/components/modal/pinmasktask';
 
 // import { Sidebar } from 'semantic-ui-react';
+import LazyLoading from 'libs/shared-components/src/lib/components/loader/lazyloader';
 
 export function App() {
   return (
@@ -120,10 +121,10 @@ export function App() {
         <SelectFilePopup></SelectFilePopup><br />
         <ToggleButton></ToggleButton><br />
         <ModalCost></ModalCost><br />
-        <PinMaskTask></PinMaskTask>
+        <PinMaskTask></PinMaskTask><br />
+        <LazyLoading></LazyLoading>
 
       </div>
-
 
     </Suspense>
 

@@ -425,15 +425,17 @@ export function CreateFileTask(props: CreateFileTaskProps) {
             </Grid.Row>
           </Grid>
         </Form>
-        <Button
-          content="Submit"
-          onClick={handleSaveTask}
-          positive
-          size='mini' className="grey-btn"
-        />
-        <Button size='mini' className="icon-border" onClick={cancel}>
-          X  Cancel
-        </Button>
+        <Modal.Actions>
+          <Button
+            content="Submit"
+            onClick={handleSaveTask}
+            positive
+            size='small' className="primary"
+          />
+          <Button size='small' className="icon-border" onClick={cancel}>
+          <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i>  Cancel
+          </Button>
+        </Modal.Actions>
       </div>
       {/* </Modal.Content>
         <Modal.Actions>
