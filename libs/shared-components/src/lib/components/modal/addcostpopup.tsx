@@ -6,6 +6,7 @@ import './../../../assets/style/index.scss'
 import { options, types } from '@hapi/joi';
 import { BkpsIndex, HouseStructureIndex } from '@cudo/mf-account-app-lib';
 import { FileUpload } from '@cudo/mf-document-lib';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 export interface IHouse {
   option
   value
@@ -100,7 +101,7 @@ export function ModalCost(props: ModalCostProps) {
     return items.map((item, index) =>
       <Table.Row>
         <Table.Cell className="row-icon">
-          <span> <img src='/assets/images/dots.png' alt='' />  </span>
+          <span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} alt='' />  </span>
         </Table.Cell>
         <Table.Cell collapsing className="row-number">
           {index + 1 || 0}

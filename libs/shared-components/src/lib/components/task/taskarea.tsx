@@ -2,14 +2,9 @@ import React, { useEffect } from 'react';
 
 import './../../../assets/style/index.scss'
 import { Segment, Dropdown, Input, Grid, Form, Icon } from 'semantic-ui-react';
-import img from 'libs/shared-components/src/user.png';
-import img2 from 'libs/shared-components/src/user2.png';
-import img3 from 'libs/shared-components/src/green_tick.png';
-import img4 from 'libs/shared-components/src/dots.png';
-import img5 from 'libs/shared-components/src/tasks.png';
-import img6 from 'libs/shared-components/src/assets/images/pin_blue.png';
 
 import { useTranslation } from 'react-i18next';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 /* eslint-disable-next-line */
 export interface Tasks {
   task?,
@@ -148,7 +143,7 @@ export function TaskArea(props: Tasks) {
           {subtaskStatus === 'INPROGRESS' ?
             <a title="Mark as complete"><span className="material-icons check-grey">check_circle_outline</span> </a>
             :
-            <img src={img3} className=" mr-2 mr-10 " />
+            <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/green_tick.png`} className=" mr-2 mr-10 " />
           }
         </span>
         <span className="task-checklisting-text">{index + 1}. {subTaskTitle}</span>
@@ -171,9 +166,9 @@ export function TaskArea(props: Tasks) {
             <div className="task-upper-con d-flex justify-content-between">
 
               <div className="d-flex align-items-center py-2">
-                <span> <img src={img4} className="  mr-10 " />  </span>
+                <span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} className="  mr-10 " />  </span>
                 <span className="textt">T-{props?.task?.sequenceNumber}</span>
-                <span onClick={() => updateStatus(props.task, props.id)} className="anchor_complete">  <img src={img3} className=" mr-2 mr-10 " />   </span>
+                <span onClick={() => updateStatus(props.task, props.id)} className="anchor_complete">  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/green_tick.png`} className=" mr-2 mr-10 " />   </span>
                 <span className="completed-task-list-text line-through">{props?.task?.taskTitle}</span>
                 <div className="d-flex mr-3">
 
@@ -249,7 +244,7 @@ export function TaskArea(props: Tasks) {
                     <a className="navi-link">
                       <span className="navi-text">
                         {props.task.taskType == 'PIN' &&
-                          <img src={img6} />
+                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pin_blue.png`} />
                         }
 
                       </span>
@@ -260,7 +255,7 @@ export function TaskArea(props: Tasks) {
                   return (
                     <div className="navi-item " style={{ paddingLeft: '154px' }}>
                       <a className="navi-link">
-                        <span className="navi-text"> <img src={img} /> </span>
+                        <span className="navi-text"> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} /> </span>
                       </a>
                     </div>
                   )
@@ -269,7 +264,7 @@ export function TaskArea(props: Tasks) {
 
                   <div className="navi-item ">
                     <a className="navi-link">
-                      <span className="navi-text pin-action"> <img src={img} /> </span>
+                      <span className="navi-text pin-action"> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} /> </span>
                     </a>
                   </div> : null
                 }
@@ -279,7 +274,7 @@ export function TaskArea(props: Tasks) {
                   <div className="symbol symbol-30 d-flex">
 
 
-                    {/* <img src={img2} /> */}
+                    {/* <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user2.png`} /> */}
                     <span  >
 
                       <Dropdown icon='ellipsis horizontal' pointing='right'>
@@ -306,7 +301,7 @@ export function TaskArea(props: Tasks) {
           <div className="card-body">
             <div className="task-upper-con d-flex justify-content-between">
               <div className="d-flex align-items-center py-2">
-                <span> <img src={img4} className="  mr-10 " />  </span>
+                <span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} className="  mr-10 " />  </span>
                 <span className="textt">T-{props?.task?.sequenceNumber}</span>
                 <span onClick={() => updateStatus(props.task, props.id)}><span className="anchor_complete"><a title="Mark as complete"> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span></span>
                 <span className="task-heading">{props?.task?.taskTitle}</span>
@@ -370,7 +365,7 @@ export function TaskArea(props: Tasks) {
                     <a className="navi-link">
                       <span className="navi-text pin-action">
                         {props.task.taskType == 'PIN' &&
-                          <img src={img6} />
+                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pin_blue.png`} />
                         }
 
                       </span>
@@ -381,7 +376,7 @@ export function TaskArea(props: Tasks) {
 
                   <div className="navi-item ">
                     <a className="navi-link">
-                      <span className="navi-text"> <img src={img} /> </span>
+                      <span className="navi-text"> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} /> </span>
                     </a>
                   </div> : null
                 }
@@ -389,7 +384,7 @@ export function TaskArea(props: Tasks) {
                   <div className="symbol symbol-30 d-flex">
 
 
-                    {/* <img src={img} /> */}
+                    {/* <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} /> */}
                     <span  >
 
                       <Dropdown icon='ellipsis horizontal' pointing='right'>

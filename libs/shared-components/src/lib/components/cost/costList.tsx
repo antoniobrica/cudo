@@ -3,7 +3,7 @@ import React from 'react';
 import './../../../assets/style/index.scss'
 import { Tab, Image, Input, Accordion, Form, Grid, Card, Dropdown, Icon, Table, Label } from 'semantic-ui-react';
 import { NONAME } from 'dns';
-// import img from '../../../assets/images/upload.png';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 
 /* eslint-disable-next-line */
@@ -119,7 +119,7 @@ export function CostList(props: CostListProps) {
             <Grid.Row>
               <Grid.Column>
                 <Form.Field className="fillarea" style={{ display: 'flex' }}>
-                  <img src='/assets/images/money.png'></img>  <label style={{ marginLeft: '10px' }}>Estimated Cost</label>
+                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/money.png`}></img>  <label style={{ marginLeft: '10px' }}>Estimated Cost</label>
                 </Form.Field>
               </Grid.Column>
               <Grid.Column>
@@ -315,7 +315,7 @@ export function CostList(props: CostListProps) {
                                         </Table.Row>
                                         :
                                         <Table.Row>
-                                          <Table.Cell><img src='/assets/images/dots.png' alt='' /></Table.Cell>
+                                          <Table.Cell><img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} alt='' /></Table.Cell>
                                           <Table.Cell>{cost?.BKPCosts[0]?.BKPID}</Table.Cell>
                                           <Table.Cell>{cost?.BKPCosts[0]?.BKPTitle}</Table.Cell>
                                           <Table.Cell>{cost?.BKPCosts[0]?.description}</Table.Cell>

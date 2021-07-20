@@ -1,3 +1,4 @@
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 import React from 'react';
 import {
   Button,
@@ -10,14 +11,6 @@ import {
   TextArea,
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
-import img from 'libs/shared-components/src/upload.png';
-
-import img2 from 'libs/shared-components/src/avatar_1.png';
-import img3 from 'libs/shared-components/src/avatar_2.png';
-import img4 from 'libs/shared-components/src/avatar_3.png';
-
-import img5 from 'libs/shared-components/src/user.png';
-import img6 from 'libs/shared-components/src/calendar.png';
 function ModalEditInvitation() {
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
@@ -125,7 +118,7 @@ function ModalEditInvitation() {
                   <Grid.Column>
                     <Form.Field>
                       <div className="below_area">
-                        <img src={img2} className="avatar" />
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_1.png`} className="avatar" />
                         <span className="span_name">Barthelemy Chalvet</span>
                         <i
                           className="ms-Icon ms-Icon--CalculatorMultiply right_float"
@@ -138,7 +131,7 @@ function ModalEditInvitation() {
                   <Grid.Column>
                     <Form.Field>
                       <div className="below_area">
-                        <img src={img3} className="avatar" />
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_2.png`} className="avatar" />
                         <span className="span_name">Barthelemy Chalvet</span>
                         <i
                           className="ms-Icon ms-Icon--CalculatorMultiply right_float"
@@ -150,7 +143,7 @@ function ModalEditInvitation() {
                   <Grid.Column>
                     <Form.Field>
                       <div className="below_area">
-                        <img src={img4} className="avatar" />
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_3.png`} className="avatar" />
                         <span className="span_name">Barthelemy Chalvet</span>
                         <i
                           className="ms-Icon ms-Icon--CalculatorMultiply right_float"
@@ -203,7 +196,7 @@ function ModalEditInvitation() {
                           <Grid.Column>
                             <Form.Field>
                               <div className="below_area">
-                                <img src={img2} className="avatar" />
+                                <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_1.png`} className="avatar" />
                                 <span className="span_name">
                                   Barthelemy Chalvet
                                 </span>
@@ -218,7 +211,7 @@ function ModalEditInvitation() {
                           <Grid.Column>
                             <Form.Field>
                               <div className="below_area">
-                                <img src={img3} className="avatar" />
+                                <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_2.png`} className="avatar" />
                                 <span className="span_name">
                                   Barthelemy Chalvet
                                 </span>
@@ -232,7 +225,7 @@ function ModalEditInvitation() {
                           <Grid.Column>
                             <Form.Field>
                               <div className="below_area">
-                                <img src={img4} className="avatar" />
+                                <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_3.png`} className="avatar" />
                                 <span className="span_name">
                                   Barthelemy Chalvet
                                 </span>
@@ -249,7 +242,7 @@ function ModalEditInvitation() {
                       <div className="dashed_area md_upload">
                         <div className="file-upload-message">
                           <img
-                            src={img}
+                            src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/upload.png`}
                             className="mr-10 "
                             style={{ marginTop: '65px' }}
                           />
@@ -275,7 +268,7 @@ function ModalEditInvitation() {
                           style={{ width: '80%' }}
                         >
                           <div className="d-flex align-items-center  py-2">
-                            <img src={img6} style={{ width: '30px' }} />
+                            <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/calendar.png`} style={{ width: '30px' }} />
                             <span className="font-weight-bold mb-0 mr-10">
                               &nbsp; 10 Aug, 2020
                               <br />
@@ -321,7 +314,7 @@ function ModalEditInvitation() {
 
                           <div className="symbol-group symbol-hover py-2">
                             <div className="symbol symbol-30">
-                              <img src={img5} />
+                              <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />
                               <span className="mr-2">
                                 <Dropdown text="...">
                                   <Dropdown.Menu className="dropdowncomplete">
@@ -365,7 +358,7 @@ function ModalEditInvitation() {
             className="icon-border"
             onClick={() => setOpen(false)}
           >
-            X Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> Cancel
           </Button>
         </Modal.Actions>
       </Modal>

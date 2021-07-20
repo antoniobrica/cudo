@@ -529,7 +529,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
             className="icon-border"
             onClick={cancel}
           >
-            X Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> Cancel
           </Button>
         </Modal.Actions>
       </Modal>

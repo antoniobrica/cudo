@@ -112,10 +112,11 @@ $white: #ffffff;
   padding: 30px;
 }
 .app-content-body-dash {
-  margin-left: 283px;
-  width: calc(100% - 283px);
+  margin-left: 325px;
+  width: calc(100% - 325px);
   padding: 0 0 20px;
   height: 100%;
+  @include transition(all .25s);
 }
 
 .dash_area {
@@ -178,6 +179,8 @@ span.dash-seperator {
       position: relative;
       z-index: 1;
       background: #fff;
+      overflow-x: auto;
+      overflow-y: hidden;
     }
     .ui.bottom.segment {
       border: $none;

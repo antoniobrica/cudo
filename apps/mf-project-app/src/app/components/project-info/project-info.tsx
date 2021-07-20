@@ -7,23 +7,29 @@ import { ITodo, IProject } from "../../interfaces/project";
 import Modal from 'react-modal';
 import { Card, Icon, Form, Grid, Button, Dropdown, Label } from 'semantic-ui-react'
 import { useHistory } from "react-router";
-import { LoaderPage } from "@cudo/shared-components"
+import { LoaderPage, LazyLoading } from "@cudo/shared-components"
 import ReactQuill, { Quill } from 'react-quill';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 //import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
 
 import ModalExampleModal from '../modal/modal'
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 /* eslint-disable-next-line */
 export interface ProjectInfoProps { }
 
 export function ProjectInfo(props: ProjectInfoProps) {
+  const notify = () => toast("This is Warning Message");
   const { loading, error, data } = useProjectQuery(GET_PROJECTS);
   const [openForm, setopenForm] = React.useState(false);
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
   const history = useHistory();
-  if (loading) return <LoaderPage />;
+  if (loading) return <LazyLoading />;
 
   const addProject = () => {
     setopenForm(!openForm);
@@ -57,10 +63,14 @@ export function ProjectInfo(props: ProjectInfoProps) {
       <div className="app-content-body body_cards_area project-listing-page">
         <div className="dashboard-header">
           <h3>All Projects <span className="total">Total {data.projects.length} project added</span></h3>
-          {/* <div className="add-project-area"> */}
-          {/* <Button size='small' className="primary"><i className="ms-Icon ms-font-xl ms-Icon--Add ms-fontColor-themePrimary"></i> Add New</Button> */}
+          
+          {/* <div>
+              <button onClick={notify}>Notify!</button>
+              <ToastContainer className="success" position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
+          </div> */}
+          
           <ModalExampleModal onSuccess={refresh}></ModalExampleModal>
-          {/* </div> */}
+          
         </div>
 
         <Form>
@@ -136,13 +146,13 @@ export function ProjectInfo(props: ProjectInfoProps) {
                   <li key={i} >
                     <div className="project-logo-action">
                       <div className="project-logo">
-                        <img src="/assets/images/default-logo.png" alt="Logo" />
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/default-logo.png`} alt="Logo" />
                       </div>
 
                       <div className="project-action">
                         <div className="symbol symbol-30 d-flex">
                           <span className="dropdown-action">
-                            <Dropdown icon='ellipsis horizontal' pointing='right'>
+                            <Dropdown icon='ellipsis horizontal' floating labeled>
                               <Dropdown.Menu className="dropdowncomplete">
                                 <Dropdown.Item icon='setting' text='Manage project' />
                                 <Dropdown.Item icon='tasks' text='View activity' />
@@ -180,7 +190,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
               {/* <li>
                 <div className="project-logo-action">
                   <div className="project-logo">
-                    <img src="/assets/images/default-logo.png" alt="Logo" />
+                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/default-logo.png`} alt="Logo" />
                   </div>
 
                   <div className="project-action">
@@ -217,7 +227,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
               <li>
                 <div className="project-logo-action">
                   <div className="project-logo">
-                    <img src="/assets/images/default-logo.png" alt="Logo" />
+                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/default-logo.png`} alt="Logo" />
                   </div>
 
                   <div className="project-action">
