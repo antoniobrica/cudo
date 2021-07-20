@@ -3,6 +3,7 @@ export interface IToken {
 }
 export interface ICost {
   BKPID: string,
+  bkpCostID: string,
   BKPTitle: string,
   description: string,
   itemQuantity: number,

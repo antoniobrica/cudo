@@ -21,6 +21,9 @@ import ReactQuill, { Quill } from 'react-quill';
 export interface PlanningProps {
   getMilestoneData?,
   worktypes?
+  openNew?
+  cancel?
+
 }
 export function ModalPlanningNew(props: PlanningProps) {
   const countryOptions = [
@@ -54,6 +57,11 @@ export function ModalPlanningNew(props: PlanningProps) {
     workTypeError: ''
   })
   const [open, setOpen] = React.useState(false);
+  React.useEffect(() => {
+    if (props.openNew) {
+      setOpen(props.openNew)
+    }
+  }, [props.openNew])
   React.useEffect(() => {
     if (props.worktypes) {
       console.log('worktypes', props.worktypes);
@@ -104,38 +112,38 @@ export function ModalPlanningNew(props: PlanningProps) {
   const validation = () => {
     let response = true
 
-    if(!milestone){
-      response=false
-      setErrors({...errors,titleError:" Please provide title"})
+    if (!milestone) {
+      response = false
+      setErrors({ ...errors, titleError: " Please provide title" })
       return false
     }
 
-    if(!dueDate){
-      response=false
-      setErrors({...errors,dateError:" Please provide due Date"})
+    if (!dueDate) {
+      response = false
+      setErrors({ ...errors, dateError: " Please provide due Date" })
       return false
     }
 
-    if(!worktypeID){
-      response=false
-      setErrors({...errors,workTypeError:" Please provide work-type"})
+    if (!worktypeID) {
+      response = false
+      setErrors({ ...errors, workTypeError: " Please provide work-type" })
       return false
     }
 
-    if(!phaseID){
-      response=false
-      setErrors({...errors,phaseError:" Please provide Phase"})
+    if (!phaseID) {
+      response = false
+      setErrors({ ...errors, phaseError: " Please provide Phase" })
       return false
     }
 
-    if(!response){
+    if (!response) {
       return false
     }
     return true
   }
 
   const createMilestone = () => {
-    if(!validation()){
+    if (!validation()) {
       return false
     }
     resetAddData()
@@ -149,7 +157,12 @@ export function ModalPlanningNew(props: PlanningProps) {
       worktypeName: workTypeD.worktypeName
     }
     props.getMilestoneData(data);
+    props.cancel()
+    //setOpen(false)
+  }
+  const cancel = () => {
     setOpen(false)
+    props.cancel()
   }
 
   const resetAddData = () => {
@@ -175,15 +188,14 @@ export function ModalPlanningNew(props: PlanningProps) {
     <div style={{ marginLeft: 900 }} >
       <Modal style={{ height: '650px' }}
         className="modal_media"
-        onClose={() => setOpen(false)}
+        onClose={cancel}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={
-          <Button size="small" className="primary">
-            + Add New
-          </Button>
-        }
-        closeOnDimmerClick={false}
+      // trigger={
+      //   <Button size="small" className="primary">
+      //     + Add New
+      //   </Button>
+      // }
       >
         <Modal.Header>
           <h3>Add Milestone </h3>
@@ -313,7 +325,7 @@ export function ModalPlanningNew(props: PlanningProps) {
           <Button
             size="small"
             className="icon-border"
-            onClick={() => setOpen(false)}
+            onClick={cancel}
           >
             <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> Cancel
           </Button>

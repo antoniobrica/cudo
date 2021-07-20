@@ -42,6 +42,12 @@ export function ModalCost(props: ModalCostProps) {
       setOpen(true);
     }
   }, [props.openCost])
+
+  React.useEffect(() => {
+    setItems([...items, {
+    } as Iitem])
+  }, [])
+
   const cancel = () => {
     setOpen(false)
     props.cancel(false)

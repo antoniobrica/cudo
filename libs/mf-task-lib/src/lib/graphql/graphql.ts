@@ -74,11 +74,12 @@ mutation CreateMileStone(
           phaseName: $phaseName
           worktypeID: $worktypeID
           worktypeName: $worktypeName
-          status: INPROGRESS
+          status: INPROGRESS,
         }
         files: [
           {  fileUrl: "Pull.comm", fileName: "requeest" }
         ]
+        fileID: "swsd"
       }
     ) {
       milestoneID
