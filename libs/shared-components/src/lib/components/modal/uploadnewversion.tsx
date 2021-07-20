@@ -260,21 +260,21 @@ export function UploadNewVersion(props: AlertProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>Project</label>
-                      <Select placeholder='Select' className="small" options={projectOptions} />
+                      <Select clearable placeholder='Select' className="small" options={projectOptions} />
 
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
                       <label>Work type</label>
-                      <Select placeholder='Select' className="small" options={projectOptions} />
+                      <Select clearable placeholder='Select' className="small" options={projectOptions} />
 
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     {/* <Form.Field>
                       <label>Phase</label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select clearable placeholder='Select' className="small" options={countryOptions} />
 
                     </Form.Field> */}
                     <PhaseIndex phaseName={phaseName} parentPhaseSelect={onsetPhasesID} />
@@ -286,7 +286,7 @@ export function UploadNewVersion(props: AlertProps) {
                   <Grid.Column>
                     {/* <Form.Field>
                       <label>BKP/Folder</label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select clearable placeholder='Select' className="small" options={countryOptions} />
 
                     </Form.Field> */}
                     <BkpIndex bkp={BKPIDTitle} parentBKPSelect={setBKPIDChange} />
@@ -295,7 +295,7 @@ export function UploadNewVersion(props: AlertProps) {
                   <Grid.Column>
                     {/* <Form.Field>
                       <label>File type</label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select clearable placeholder='Select' className="small" options={countryOptions} />
 
                     </Form.Field> */}
                     <FileTypeIndex fileTypeName={fileTypeName} parentFileTypeSelect={setFileTypeChange} />
@@ -304,7 +304,7 @@ export function UploadNewVersion(props: AlertProps) {
                   <Grid.Column>
                     {/* <Form.Field>
                       <label>File structure</label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select clearable placeholder='Select' className="small" options={countryOptions} />
 
                     </Form.Field> */}
                     <FileStructureIndex structureTitle={structureTitle} parentFileStructureSelect={setFileStructureChange} />

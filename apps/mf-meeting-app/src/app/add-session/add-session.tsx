@@ -43,7 +43,7 @@ export function AddSession(props: AddSessionProps) {
       projectNum
       client
       buildingType
-      printingCom
+      printingCompany
       projectWorkTypes{
         workTypeName
         projectWorkTypeID

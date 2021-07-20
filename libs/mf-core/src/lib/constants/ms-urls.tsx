@@ -68,8 +68,8 @@ interface IURL {
   url: "http://dev.cudo.ch/api/ms-project/graphql"
   },
   "ms_task": {
-  url: 'http://192.168.43.114:5007/graphql'
-  // url: "http://dev.cudo.ch/api/ms-task/graphql"
+  // url: 'http://192.168.43.114:5007/graphql'
+  url: "http://dev.cudo.ch/api/ms-task/graphql"
   },
   "ms_cost": {
   // url: 'http://192.168.43.114:5002/graphql'

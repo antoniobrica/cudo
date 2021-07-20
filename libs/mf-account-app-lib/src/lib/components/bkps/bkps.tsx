@@ -65,6 +65,7 @@ export function Bkps(props: BkpsProps) {
         options={items}
         value={BKPID}
         onChange={onBkp}
+        clearable
       />
 
     </Form.Field>

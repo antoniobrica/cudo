@@ -85,10 +85,10 @@ export function CreateFileTask(props: CreateFileTaskProps) {
     {
       projectId
       projectName
-      projectNum
+      printingCompany
       client
       buildingType
-      printingCom
+      printingCompany
       projectWorkTypes{
         workTypeName
         projectWorkTypeID
@@ -319,6 +319,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
                     value={workTypeData}
                     options={workType}
                     onChange={onMworkType}
+                    clearable
                   />
                 </Form.Field>
               </Grid.Column>

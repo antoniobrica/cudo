@@ -59,7 +59,7 @@ export function ModalExamplePrinting() {
                   <Grid.Column>
                     <Form.Field>
                       <label>Type  </label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select  clearable placeholder='Select' className="small" options={countryOptions} />
 
                     </Form.Field>
                   </Grid.Column>
@@ -87,7 +87,7 @@ export function ModalExamplePrinting() {
                         <Grid.Row>
                           <Grid.Column>
                             <Form.Field>
-                              <Select placeholder='Select' className="small" options={countryOptions} />
+                              <Select  clearable placeholder='Select' className="small" options={countryOptions} />
                             </Form.Field>
                             <Form.Field>
                               <a href="" className="anchor-color">+ Add New</a>
@@ -95,7 +95,7 @@ export function ModalExamplePrinting() {
                           </Grid.Column>
                           <Grid.Column>
                             <Form.Field>
-                              <Select placeholder='Select' className="small" options={countryOptions} />
+                              <Select  clearable placeholder='Select' className="small" options={countryOptions} />
                             </Form.Field>
 
                           </Grid.Column>
@@ -108,7 +108,7 @@ export function ModalExamplePrinting() {
                   <Grid.Column  >
                     <Form.Field>
                       <label>Type  </label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select  clearable placeholder='Select' className="small" options={countryOptions} />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -157,7 +157,7 @@ export function ModalExamplePrinting() {
                   <Grid.Column>
                     <Form.Field>
                       <label>Country  </label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select  clearable placeholder='Select' className="small" options={countryOptions} />
 
                     </Form.Field>
                   </Grid.Column>

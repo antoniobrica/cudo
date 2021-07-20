@@ -136,7 +136,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
       projectNum
       client
       buildingType
-      printingCom
+      printingCompany
       projectWorkTypes{
         workTypeName
         projectWorkTypeID
@@ -377,6 +377,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         <span className="danger">*</span>
                       </label>
                       <Select
+                       clearable
                         placeholder="Select"
                         className="small"
                         value={workTypeData}
@@ -393,6 +394,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                     {/* <Form.Field>
                       <label>Select Phase </label>
                       <Select
+                       clearable
                         placeholder="Select"
                         className="small"
                         options={countryOptions}
@@ -405,6 +407,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                     {/* <Form.Field>
                       <label>Select BKP </label>
                       <Select
+                       clearable
                         placeholder="Select"
                         className="small"
                         options={countryOptions}
@@ -439,6 +442,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                     {/* <Form.Field>
                       <label>Followers </label>
                       <Select
+                       clearable
                         placeholder="Select"
                         className="small"
                         options={countryOptions}

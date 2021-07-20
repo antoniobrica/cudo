@@ -51,7 +51,7 @@ export function ModalExampleModal() {
               <Grid.Column>
                 <Form.Field>
                   <label>Client <span className="danger">*</span></label>
-                  <Select placeholder='Select' className="small" options={countryOptions} />
+                  <Select clearable placeholder='Select' className="small" options={countryOptions} />
                 </Form.Field>
                 <Form.Field>
                   <a className="anchor-color" onClick={() => setSecondOpen(true)}>+ Add New</a>
@@ -61,7 +61,7 @@ export function ModalExampleModal() {
               <Grid.Column>
                 <Form.Field>
                   <label>Type of building <span className="danger">*</span></label>
-                  <Select placeholder='Select' className="small" options={countryOptions} />
+                  <Select clearable placeholder='Select' className="small" options={countryOptions} />
                 </Form.Field>
               </Grid.Column>
             </Grid.Row>
@@ -71,7 +71,7 @@ export function ModalExampleModal() {
               <Grid.Column>
                 <Form.Field>
                   <label>Printing Company </label>
-                  <Select placeholder='Select' className="small" options={countryOptions} />
+                  <Select clearable placeholder='Select' className="small" options={countryOptions} />
                 </Form.Field>
               </Grid.Column>
             </Grid.Row>
@@ -100,7 +100,7 @@ export function ModalExampleModal() {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <Select placeholder='Select' className="small" options={countryOptions} />
+                          <Select clearable placeholder='Select' className="small" options={countryOptions} />
                         </Form.Field>
                       </Grid.Column>
                     </Grid.Row>
@@ -130,7 +130,7 @@ export function ModalExampleModal() {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <Select placeholder='Select' className="small" options={countryOptions} />
+                          <Select clearable placeholder='Select' className="small" options={countryOptions} />
                         </Form.Field>
                       </Grid.Column>
                     </Grid.Row>
@@ -211,7 +211,7 @@ export function ModalExampleModal() {
               <Grid.Column>
                 <Form.Field>
                   <label>State</label>
-                  <Select placeholder='Select' className="small" options={countryOptions} />
+                  <Select clearable placeholder='Select' className="small" options={countryOptions} />
                 </Form.Field>
               </Grid.Column>
             </Grid.Row>
@@ -281,7 +281,7 @@ export function ModalExampleModal() {
                       </Table.Cell>
                       <Table.Cell>
                         <Form.Field>
-                          <Select placeholder='Select' className="small" options={countryOptions} />
+                          <Select clearable placeholder='Select' className="small" options={countryOptions} />
                         </Form.Field>
                       </Table.Cell>
                       <Table.Cell>
@@ -297,7 +297,7 @@ export function ModalExampleModal() {
                       </Table.Cell>
                       <Table.Cell>
                         <Form.Field>
-                          <Select placeholder='Select' className="small" options={countryOptions} />
+                          <Select clearable placeholder='Select' className="small" options={countryOptions} />
                         </Form.Field>
                       </Table.Cell>
                       <Table.Cell>
@@ -380,7 +380,7 @@ export function ModalExampleModal() {
                     <Grid.Column>
                       <Form.Field>
                         <label>Company Name </label>
-                        <Select placeholder='Select' className="small" options={countryOptions} />
+                        <Select clearable placeholder='Select' className="small" options={countryOptions} />
                       </Form.Field>
                     </Grid.Column>
                   </Grid.Row>
@@ -396,7 +396,7 @@ export function ModalExampleModal() {
                     <Grid.Column>
                       <Form.Field>
                         <label>Type  </label>
-                        <Select placeholder='Select' className="small" options={countryOptions} />
+                        <Select clearable placeholder='Select' className="small" options={countryOptions} />
                       </Form.Field>
                     </Grid.Column>
                   </Grid.Row>
@@ -419,7 +419,7 @@ export function ModalExampleModal() {
                           <Grid.Row>
                             <Grid.Column>
                               <Form.Field>
-                                <Select placeholder='Select' className="small" options={countryOptions} />
+                                <Select clearable placeholder='Select' className="small" options={countryOptions} />
                               </Form.Field>
                               <Form.Field>
                                 <a href="" className="anchor-color">+ Add New</a>
@@ -427,7 +427,7 @@ export function ModalExampleModal() {
                             </Grid.Column>
                             <Grid.Column>
                               <Form.Field>
-                                <Select placeholder='Select' className="small" options={countryOptions} />
+                                <Select clearable placeholder='Select' className="small" options={countryOptions} />
                               </Form.Field>
                             </Grid.Column>
                           </Grid.Row>
@@ -437,7 +437,7 @@ export function ModalExampleModal() {
                     <Grid.Column  >
                       <Form.Field>
                         <label>Type  </label>
-                        <Select placeholder='Select' className="small" options={countryOptions} />
+                        <Select clearable placeholder='Select' className="small" options={countryOptions} />
                       </Form.Field>
                     </Grid.Column>
                   </Grid.Row>
@@ -479,7 +479,7 @@ export function ModalExampleModal() {
                     <Grid.Column>
                       <Form.Field>
                         <label>Country</label>
-                        <Select placeholder='Select' className="small" options={countryOptions} />
+                        <Select clearable placeholder='Select' className="small" options={countryOptions} />
                       </Form.Field>
                     </Grid.Column>
                   </Grid.Row>

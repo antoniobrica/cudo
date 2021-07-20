@@ -205,6 +205,7 @@ const updateMilestone=()=>{
                         
                       </label>
                       <Select
+                        clearable
                         placeholder="Select"
                         className="small"
                         value={workTypeData}
@@ -221,6 +222,7 @@ const updateMilestone=()=>{
                     {/* <Form.Field>
                       <label>Select Phase </label>
                       <Select
+                        clearable
                         placeholder="Select"
                         className="small"
                         options={countryOptions}

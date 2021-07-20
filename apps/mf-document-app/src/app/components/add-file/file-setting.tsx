@@ -336,7 +336,7 @@ export function FileSetting(props: FileProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>Project</label>
-                      <Select placeholder='Select' className="small" options={projectOptions} />
+                      <Select clearable placeholder='Select' className="small" options={projectOptions} />
 
                     </Form.Field>
                   </Grid.Column>

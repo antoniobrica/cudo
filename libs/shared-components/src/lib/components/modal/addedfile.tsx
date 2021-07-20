@@ -276,7 +276,7 @@ function ModalAddFile() {
                   <Grid.Column>
                     <Form.Field>
                       <label>Project</label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select placeholder='Select' className="small" options={countryOptions} clearable />
 
                     </Form.Field>
                   </Grid.Column>
@@ -288,7 +288,7 @@ function ModalAddFile() {
                   <Grid.Column>
                     <Form.Field>
                       <label>BKP/Folder</label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select placeholder='Select' className="small" options={countryOptions} clearable />
 
                     </Form.Field>
 
@@ -304,7 +304,7 @@ function ModalAddFile() {
                   <Grid.Column>
                     <Form.Field>
                       <label>File structure</label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select placeholder='Select' className="small" options={countryOptions} clearable />
 
                     </Form.Field>
                   </Grid.Column>

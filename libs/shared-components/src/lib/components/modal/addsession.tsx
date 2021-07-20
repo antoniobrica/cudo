@@ -234,6 +234,7 @@ export function ModalSession(props: SessionProps) {
                     <Form.Field>
                       <label>Work Type</label>
                       <Select
+                        clearable
                         placeholder="Select"
                         className="small"
                         value={workTypeData}

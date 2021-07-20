@@ -83,6 +83,7 @@ function ModalEditViewMilestone() {
                     <Form.Field>
                       <label>Associate with work type</label>
                       <Select
+                       clearable
                         placeholder="Select"
                         className="small"
                         options={countryOptions}
@@ -97,6 +98,7 @@ function ModalEditViewMilestone() {
                     <Form.Field>
                       <label>Phase type</label>
                       <Select
+                       clearable
                         placeholder="Select"
                         className="small"
                         options={countryOptions}
