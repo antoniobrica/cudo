@@ -9,6 +9,7 @@ import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
 import * as serviceWorker from "./serviceWorker";
 import "./SubscriberWidgetElement";
 import App from './app/app';
+
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 declare global {
@@ -30,7 +31,7 @@ window.renderProjectApp = (containerId, history) => {
       <BrowserRouter>
         <ApolloProvider client={client}>
           <ApolloHooksProvider client={client as any}>
-            <App />
+            <App />            
           </ApolloHooksProvider>
         </ApolloProvider>
       </BrowserRouter>

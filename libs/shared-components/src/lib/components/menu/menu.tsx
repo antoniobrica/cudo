@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import './../../../assets/style/index.scss'
 import { Header, Icon, Image, Menu, Segment, Sidebar, Button, Popup, Dropdown } from 'semantic-ui-react'
-import { NavLink, useRouteMatch } from 'react-router-dom';
+import { NavLink, useRouteMatch, useHistory } from 'react-router-dom';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 /* eslint-disable-next-line */
 export interface MenuProps {
   parentCallback?
   data?
   mainMenuExpand?
+  historyPath?
 }
 
 const profileOption = [
@@ -62,8 +63,17 @@ const addNew = [
 export function Menubar(props: MenuProps) {
   const { url, path } = useRouteMatch();
   const [visible, setVisible] = React.useState('')
+  const history = useHistory()
+
+  useEffect(() => {    
+    if (props?.historyPath?.includes('/home/project/')) {
+      // console.log('--container menu useEffect-----props?.historyPath---', props?.historyPath)
+      handleOpenProject('project')
+    }  
+  }, [props?.historyPath])
 
   const handleOpenProject = (item) => {
+    setVisible(item)
     props?.parentCallback(item)
   }
 
@@ -98,11 +108,11 @@ export function Menubar(props: MenuProps) {
               <Dropdown text='John Smith' floating labeled>
                 <Dropdown.Menu>
                   <Dropdown.Item><i className="ms-Icon ms-Icon--PlayerSettings" aria-hidden="true"></i> User Profile</Dropdown.Item>
-                  <Dropdown.Item><i className="ms-Icon ms-Icon--PowerButton" aria-hidden="true"></i> Logout</Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleOpenProject('logout')} ><i className="ms-Icon ms-Icon--PowerButton" aria-hidden="true"></i> Logout</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Menu.Item>
-            
+
 
             {/* <Menu.Item as='a' className="menu-dropdown-sidebar profile-dropdown-menu">
               <div className="profile-img-main-menu">
@@ -120,17 +130,17 @@ export function Menubar(props: MenuProps) {
               </ul>
             </Menu.Item> */}
 
-            <Menu.Item as='a'  className="menu-dropdown-sidebar add-new-menu">
-                <i className="ms-Icon ms-Icon--CirclePlus" aria-hidden="true"></i>
+            <Menu.Item as='a' className="menu-dropdown-sidebar add-new-menu">
+              <i className="ms-Icon ms-Icon--CirclePlus" aria-hidden="true"></i>
 
-                <Dropdown text='Add new' floating labeled>
-                  <Dropdown.Menu>
-                    <Dropdown.Item><i className="ms-Icon ms-Icon--NewTeamProject" aria-hidden="true"></i> Project</Dropdown.Item>
-                    <Dropdown.Item><i className="ms-Icon ms-Icon--AddNotes" aria-hidden="true"></i> Task</Dropdown.Item>
-                    <Dropdown.Item><i className="ms-Icon ms-Icon--IconSetsFlag" aria-hidden="true"></i> Milestone</Dropdown.Item>
-                    <Dropdown.Item><i className="ms-Icon ms-Icon--DecisionSolid" aria-hidden="true"></i> Tender</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+              <Dropdown text='Add new' floating labeled>
+                <Dropdown.Menu>
+                  <Dropdown.Item><i className="ms-Icon ms-Icon--NewTeamProject" aria-hidden="true"></i> Project</Dropdown.Item>
+                  <Dropdown.Item><i className="ms-Icon ms-Icon--AddNotes" aria-hidden="true"></i> Task</Dropdown.Item>
+                  <Dropdown.Item><i className="ms-Icon ms-Icon--IconSetsFlag" aria-hidden="true"></i> Milestone</Dropdown.Item>
+                  <Dropdown.Item><i className="ms-Icon ms-Icon--DecisionSolid" aria-hidden="true"></i> Tender</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
               {/* <span>Add new</span> */}
               {/* <ul>
                 <li>
@@ -166,10 +176,11 @@ export function Menubar(props: MenuProps) {
               <span>Dashboard</span>
             </Menu.Item>
 
-            <Menu.Item as={NavLink} to={`${url}/project`}
+            {/* <Menu.Item as={NavLink} to={`${url}/project`} */}
+            <Menu.Item as='a'
               name='project'
               active={visible === 'project'} onClick={() => handleOpenProject('project')}>
-                <i className="ms-Icon ms-Icon--NewTeamProject" aria-hidden="true"></i>
+              <i className="ms-Icon ms-Icon--NewTeamProject" aria-hidden="true"></i>
               {/* <Popup
                 content='Project'
                 trigger={<i className="ms-Icon ms-Icon--NewTeamProject" aria-hidden="true"></i>
@@ -221,7 +232,7 @@ export function Menubar(props: MenuProps) {
             <Menu.Item as={NavLink} to={`${url}/profile`}
               name='profile'
               active={visible === 'profile'} onClick={() => handleOpenProject('profile')}>
-                <i className="ms-Icon ms-Icon--People" aria-hidden="true"></i>
+              <i className="ms-Icon ms-Icon--People" aria-hidden="true"></i>
               {/* <Popup
                 content='profile'
                 trigger={
@@ -248,7 +259,7 @@ export function Menubar(props: MenuProps) {
                 } size='small' position='right center'>
               </Popup> */}
 
-            <Menu.Item as='a' onClick={() => handleOpenProject('logout')}>L</Menu.Item>
+            {/* <Menu.Item as='a' onClick={() => handleOpenProject('logout')}>L</Menu.Item> */}
 
             {/* <Menu.Item as='a' onClick={() => handleOpenProject('project')}> */}
             <Menu.Item as='a' onClick={showHideMenu} className="logout-menu">
