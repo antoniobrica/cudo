@@ -141,6 +141,7 @@ const updateMilestone=()=>{
             edit Milestone   
           </Button>
         }
+        closeOnDimmerClick={false}
       >
         <Modal.Header>
           <h3>Edit Milestone </h3>
@@ -204,6 +205,7 @@ const updateMilestone=()=>{
                         
                       </label>
                       <Select
+                        clearable
                         placeholder="Select"
                         className="small"
                         value={workTypeData}
@@ -220,6 +222,7 @@ const updateMilestone=()=>{
                     {/* <Form.Field>
                       <label>Select Phase </label>
                       <Select
+                        clearable
                         placeholder="Select"
                         className="small"
                         options={countryOptions}

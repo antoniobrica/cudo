@@ -88,6 +88,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
         onClose={() => setOpen(false)}
         onOpen={openf}
         style={{ marginLeft: '40px' }}
+        closeOnDimmerClick={false}
       >
         <Modal.Content>
           <Form>

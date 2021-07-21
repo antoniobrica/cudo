@@ -55,10 +55,5 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
   "ASSETS_CDN_URL": {
     url: "https://cudodevcdn.azureedge.net"
   }
-
 }
-
-
-
-
 

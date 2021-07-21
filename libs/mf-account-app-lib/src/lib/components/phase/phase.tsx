@@ -42,11 +42,12 @@ export function Phase(props: PhaseProps) {
   }
   return (
     <Form.Field>
-      <label>Select Phase   </label>
+      <label>Select Phase <span className="danger">*</span>  </label>
       <Select placeholder='Select' className="small"
         options={items}
         value={phase}
         onChange={onPhase}
+        clearable
       />
 
     </Form.Field>

@@ -47,6 +47,7 @@ export function FileType(props: FileTypeProps) {
         options={items}
         value={fileType}
         onChange={onFile}
+        clearable
       />
 
     </Form.Field>

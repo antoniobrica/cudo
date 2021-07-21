@@ -106,6 +106,7 @@ export const AddPinFile = (props: AddPinProps) => {
         onOpen={openM}
         open={open}
         style={{ marginLeft: '35px' }}
+        closeOnDimmerClick={false}
       >
         <Modal.Header>{props.filesData?.fileTitle}
           <div style={{ textAlign: 'center', marginBottom: '-30px' }}>

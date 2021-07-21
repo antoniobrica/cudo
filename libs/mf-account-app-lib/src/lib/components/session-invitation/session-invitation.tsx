@@ -44,6 +44,7 @@ export function SessionInvitation(props: SessionInvitationProps) {
         options={items}
         value={protocol}
         onChange={onCatogory}
+        clearable
       />
     </Form.Field>
   );
