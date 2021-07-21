@@ -97,23 +97,19 @@ function App() {
   const history = useHistory()
   const location = useLocation();
   const { url, path } = useRouteMatch();
-  console.log('path-project-app', history.location.pathname)
+  // console.log('---Project--app--history---', history)
 
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-           <Router>
-      {/* <Suspense fallback={<LazyLoading />}> */}
-        <Switch>
-          <Route exact path={`${history.location.pathname}/:projectId`} render={() => <TabMenu />} />
-          <Route exact path={`${history.location.pathname}`} render={() => <ProjectInfo />} />
-          {/* <Route exact path={`${history.location.pathname}/:projectId`} component={TabMenu} /> */}
-          {/* <Route exact path={`${history.location.pathname}`} component={ProjectInfo} /> */}
-        </Switch>
-      {/* </Suspense> */}
-    </Router>
-    </PersistGate>
- </Provider>
+        <Router>
+          <Switch>
+            <Route exact path={`${history.location.pathname}/:projectId`} render={() => <TabMenu />} />
+            <Route exact path={`${history.location.pathname}`} render={() => <ProjectInfo />} />
+          </Switch>
+        </Router>
+      </PersistGate>
+    </Provider>
   );
 }
 
