@@ -631,6 +631,10 @@ export function Planning(props: PlanningProps) {
                   </div>
                 </li>
               </ul>
+
+              <div className="compltete-phase">
+                <a href=""><i className="ms-Icon ms-Icon--Completed" aria-hidden="true"></i> <span>Complete this phase</span></a>
+              </div>
             </div>
 
 

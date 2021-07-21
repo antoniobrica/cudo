@@ -110,9 +110,9 @@ export function ModalPlanningNew(props: PlanningProps) {
     setOpen(false)
   }
   return (
-    <div style={{ marginLeft: 900 }} >
-      <Modal style={{ height: '650px' }}
-        className="modal_media"
+    <div>
+      <Modal className="modal_media right-side--fixed-modal add-new-milestone-modal"
+        closeIcon
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
