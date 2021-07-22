@@ -24,46 +24,44 @@ export class MeetingResolver {
     constructor(
         private readonly meetingService: MeetingService) { }
 
-        @Mutation(() => MeetingModel)
-        async createMeeting(
-            @Args('meetingDetails') createInput: MeetingDetailsInput,
-            // @Args("referenceFilter") getReferenceArgs: ReferenceFilterParams,
-        ) {
-            // return this.meetingService.create(createInput, getTasksArgs);
-            return this.meetingService.addMeeting(createInput);
-        }
+    @Mutation(() => MeetingModel)
+    async createMeeting(
+        @Args('meetingDetails') createInput: MeetingDetailsInput,
+        // @Args("referenceFilter") getReferenceArgs: ReferenceFilterParams,
+    ) {
+        // return this.meetingService.create(createInput, getTasksArgs);
+        return this.meetingService.addMeeting(createInput);
+    }
 
-        @Query(() => PaginationMeetingModel, { nullable: true })
-        async getMeetingList(
-            @Args('options',{nullable: true}) options: pageParams,
-            @Args('meetingFilter',) meetingFilter?: MeetingFilterParam,
-            @Args("statusFilter",{nullable: true}) status?:StatusFilterParam,
-            @Args("sortFilter",{nullable: true}) sortFilter?:SortFilterParam,
-        ) : Promise<Pagination<MeetingEntity>> {
-                return await this.meetingService.findMeetingList(options, meetingFilter,  status, sortFilter
-            )           
-        }       
+    @Query(() => PaginationMeetingModel, { nullable: true })
+    async getMeetingList(
+        @Args('options', { nullable: true }) options: pageParams,
+        @Args('meetingFilter',) meetingFilter?: MeetingFilterParam,
+        @Args("statusFilter", { nullable: true }) status?: StatusFilterParam,
+        @Args("sortFilter", { nullable: true }) sortFilter?: SortFilterParam,
+    ): Promise<Pagination<MeetingEntity>> {
+        return await this.meetingService.findMeetingList(options, meetingFilter, status, sortFilter
+        )
+    }
 
-        @Query(() => MeetingModel)
-        async getMeetingByID(@Args("meetingDetailFilter") meetingDetailFilter?: MeetingDetailFilterParam
-        ) {
-                const meeting = await this.meetingService.findMeetingByID(meetingDetailFilter);
-                return meeting;
-            }
-            
-        // #region Commented Sample Session code       
-        // @Mutation(() => [SessionModel])
-        // async updateSession(
-        //     @Args('sessionDetailsUpdate') createInput: SessionDetailsUpdateInput
-        // ) {
-        //     return this.sessionService.updateSessionByID(createInput);
-        // }
+    @Query(() => MeetingModel)
+    async getMeetingById(@Args("meetingDetailFilter") meetingDetailFilter?: MeetingDetailFilterParam
+    ) {
+        const meeting = await this.meetingService.findMeetingById(meetingDetailFilter);
+        return meeting;
+    }
 
-        // @Mutation(() => [SessionModel])
-        // async deleteSession(
-        //     @Args('sessionDeleteInput') sessionDeleteInput: SessionDeleteInput
-        // ) {
-        //     return this.sessionService.deleteSessionByID(sessionDeleteInput);
-        // }
-        // #endregion
+    @Mutation(() => MeetingModel)
+    async updateMeeting(
+        @Args('meetingUpdateInput') meetingUpdateInput: MeetingDetailsUpdateInput
+    ) {
+        return this.meetingService.updateMeetingById(meetingUpdateInput);
+    }
+
+    @Mutation(() => MeetingModel)
+    async deleteMeeting(
+        @Args('meetingDeleteInput') meetingDeleteInput: MeetingDeleteInput
+    ) {
+        return this.meetingService.deleteMeetingById(meetingDeleteInput);
+    }
 }

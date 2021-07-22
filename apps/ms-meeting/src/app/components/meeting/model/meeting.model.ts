@@ -1,11 +1,11 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 // import { ReferenceModel } from '../../reference/model/reference.model';
 import { MemberModel } from '../../session/model/member.model';
-import { MeetingFilesModel} from './meeting-files.model'
+import { MeetingFilesModel } from './meeting-files.model'
 
 @ObjectType()
 export class MeetingModel {
-  
+
   @Field({ nullable: true, description: `This is for company Id` })
   companyId?: string;
 
@@ -48,8 +48,8 @@ export class MeetingModel {
   @Field({ nullable: true, description: `This is for protocol title` })
   protocolTitle?: string;
 
-  @Field({ description: `This is for meeting updated at` })
-  updatedAt?: Date;
+  @Field({ nullable: true, description: `This is for meeting created by` })
+  createdBy?: string;
 
   @Field({ description: `This is for meeting created at` })
   createdAt?: Date;
@@ -57,8 +57,12 @@ export class MeetingModel {
   @Field({ nullable: true, description: `This is for meeting updated By` })
   updatedBy?: string;
 
-  @Field({ nullable: true, description: `This is for meeting created by` })
-  createdBy?: string;
+  @Field({ description: `This is for meeting updated at` })
+  updatedAt?: Date;
+
+
+  @Field({ nullable: true, description: `This is for meeting isDeleted` })
+  isDeleted?: boolean;
 
   // @Field()
   // reference?: ReferenceModel
@@ -67,8 +71,9 @@ export class MeetingModel {
   members?: MemberModel[]
 
   @Field(type => [MeetingFilesModel], { nullable: true })
-  meetingFiles?: MeetingFilesModel[] 
+  meetingFiles?: MeetingFilesModel[]
 
   @Field({ nullable: true, description: `This is for meeting status` })
-  status?: string;  
+  status?: string;
+
 }
