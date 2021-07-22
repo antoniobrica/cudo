@@ -262,6 +262,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
       //     Add Invitation
       //   </Button>
       // }
+      closeOnDimmerClick={false}
       >
         <Modal.Header>
           <h3>Add Invitation </h3>

@@ -11,6 +11,7 @@ import 'react-quill/dist/quill.snow.css';
 import moment, { calendarFormat } from 'moment';
 import { FollowersIndex, AssigneeIndex, BkpsIndex, PhaseIndex } from "@cudo/mf-account-app-lib"
 import { useHistory } from 'react-router';
+import { start } from 'repl';
 /* eslint-disable-next-line */
 export interface CreateTaskProps {
   onSuccess?,
@@ -70,6 +71,12 @@ export function CreateTask(props: CreateTaskProps) {
   // const [addTask] = useTaskMutation(ADD_TASK, {
   //   variables: { referenceID },
   // });
+  const [errors, setErrors] = React.useState({
+    titleError: '',
+    dateError: '',
+    assigneeError: '',
+    workTypeError: ''
+  })
 
   React.useEffect(() => {
     if (props.isNewTask) {
@@ -186,16 +193,51 @@ export function CreateTask(props: CreateTaskProps) {
     console.log('worktypeName-', workTypeD);
   }
 
+  const validation = () => {
+    let response = true
+
+    if(!taskTitle){
+      response=false
+      setErrors({...errors,titleError:" Please provide title"})
+      return false
+    }
+
+    if(!workTypeID){
+      response=false
+      setErrors({...errors,workTypeError:" Please provide work-type"})
+      return false
+    }
+
+    if(!assignees.length){
+      response=false
+      setErrors({...errors,assigneeError:" Please provide Assignee"})
+      return false
+    }
+
+    if(startDate>endDate){
+      response=false
+      setErrors({...errors,dateError:" Start Date must be less than End Date"})
+      return false
+    }
+
+    if(!response){
+      return false
+    }
+    return true
+  }
+
   const handleSaveTask = () => {
+    if(!validation()){
+      return false
+    }
     // setOpen(false);
     console.log('====================================');
     console.log('assignee', assignees);
     console.log('followes', followers);
     console.log('====================================');
     cancel();
-    addTask({
-      variables: {
-        taskTitle, startDate, endDate, estimatedDays,
+      const variables = {
+        taskTitle, estimatedDays,
         sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
         fileID: "",
         fileName: "$fileName",
@@ -208,7 +250,15 @@ export function CreateTask(props: CreateTaskProps) {
         referenceID,
         workTypeID,
         workTypeName
-      },
+      }
+      if(startDate){
+        variables['startDate']=startDate
+      }
+      if(startDate){
+        variables['endDate']=endDate
+      }
+    addTask({
+      variables,
       update: (
         cache,
         { data: { addTask } }: FetchResult<TaskMutation>
@@ -232,6 +282,38 @@ export function CreateTask(props: CreateTaskProps) {
   const cancel = () => {
     setOpen(false)
     props.cancel(false)
+    resetAddData()
+  }
+
+  const resetAddData = () => {
+    setTaskTitle('')
+    setStartDate('')
+    setEndDate('')
+    setDescription('')
+    setEstimatedDays('')
+    setAsignee([])
+    setfollowers([])
+    setEendNotification(false)
+    setBKPID('')
+    setSaveTaskAsTemplate('')
+    setPhasesID('')
+    setStatus('')
+    setPhasesName('')
+    setPhasesID('')
+    setBKPIDTitle('')
+    setworkTypeD(null)
+    setworktypeName('')
+    setworktypeID('')
+    setworkType(null)
+    setworkTypeData('')
+    setDate(null)
+    setErrors({
+      titleError:'',
+      dateError:'',
+      assigneeError:'',
+      workTypeError:''
+    })
+
   }
 
   return (
@@ -242,6 +324,7 @@ export function CreateTask(props: CreateTaskProps) {
         onOpen={() => setOpen(true)}
         open={open}
       // trigger={<Button size='mini' className="grey-btn taskmargin">+ Add  New Task</Button>} 
+      closeOnDimmerClick={false}
       >
         <Modal.Header><h3>Add New Task </h3></Modal.Header>
         <Modal.Content body>
@@ -254,7 +337,10 @@ export function CreateTask(props: CreateTaskProps) {
                       <label>Task Title <span className="danger">*</span></label>
                       <Input placeholder='Task title' size='small' className="full-width" type="text"
                         value={taskTitle}
-                        onChange={onTaskTitleChange} />
+                        onChange={onTaskTitleChange}
+                        error={errors?.titleError && !taskTitle}
+                        />
+                         {errors?.titleError && !taskTitle ? <span className="error-message">{errors.titleError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -302,7 +388,11 @@ export function CreateTask(props: CreateTaskProps) {
                         value={workTypeData}
                         options={workType}
                         onChange={onMworkType}
+                        selection
+                        clearable 
+                        error={errors?.workTypeError && !workTypeID }
                       />
+                      {errors?.workTypeError && !workTypeID ? <span className="error-message">{errors.workTypeError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -321,6 +411,7 @@ export function CreateTask(props: CreateTaskProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Assignee" />
+                    {errors?.assigneeError && !assignees.length ? <span className="error-message">{errors.assigneeError}</span> : null}
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
@@ -388,6 +479,7 @@ export function CreateTask(props: CreateTaskProps) {
                       />
                     </Form.Field>
                   </Grid.Column>
+                {errors?.dateError && (startDate>endDate) ? <span className="error-message">{errors.dateError}</span> : null}
                 </Grid.Row>
                 <Grid.Row>
                 </Grid.Row>

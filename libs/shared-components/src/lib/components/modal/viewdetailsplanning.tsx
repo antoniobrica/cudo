@@ -51,6 +51,7 @@ export function ModalViewPlanning(props: PlanningProps) {
             View Milestone
           </Button>
         }
+        closeOnDimmerClick={false}
       >
         <Modal.Header>
           <h3>View Milestone Details </h3>

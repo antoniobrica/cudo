@@ -12,6 +12,12 @@ import { environment } from '../environments/environment';
 import TabMenu from './components/tab-menu/tab-menu';
 import ProjectInfo from './components/project-info/project-info';
 
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+
+import config from './redux/store'
+
+
 // const TabMenu = lazy(() => import('./components/tab-menu/tab-menu'))
 // const ProjectInfo = lazy(() => import('./components/project-info/project-info'))
 
@@ -85,22 +91,25 @@ function loadApp() {
   );
 }
 
+const { store, persistor } = config()
+
 function App() {
   const history = useHistory()
   const location = useLocation();
   const { url, path } = useRouteMatch();
-  console.log('path-project-app', history.location.pathname)
+  // console.log('---Project--app--history---', history)
+
   return (
-    <Router>
-      {/* <Suspense fallback={<LazyLoading />}> */}
-        <Switch>
-          <Route exact path={`${history.location.pathname}/:projectId`} render={() => <TabMenu />} />
-          <Route exact path={`${history.location.pathname}`} render={() => <ProjectInfo />} />
-          {/* <Route exact path={`${history.location.pathname}/:projectId`} component={TabMenu} /> */}
-          {/* <Route exact path={`${history.location.pathname}`} component={ProjectInfo} /> */}
-        </Switch>
-      {/* </Suspense> */}
-    </Router>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <Router>
+          <Switch>
+            <Route exact path={`${history.location.pathname}/:projectId`} render={() => <TabMenu />} />
+            <Route exact path={`${history.location.pathname}`} render={() => <ProjectInfo />} />
+          </Switch>
+        </Router>
+      </PersistGate>
+    </Provider>
   );
 }
 

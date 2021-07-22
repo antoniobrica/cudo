@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux'
+
 import './tab-menu.module.scss';
 import { AccordionExampleMenu } from "@cudo/shared-components"
 import { environment } from "../../../environments/environment";
@@ -32,10 +34,9 @@ function TabMenu(props: TabMenuProps) {
   const [worktypeName, setWorktype] = React.useState("");
   const [worktypes, setWorktypes] = React.useState();
 
-
   const history = useHistory();
   const params = useParams<params>();
-  console.log('urlparams', params.projectId)
+  // console.log('----tab menu----projectId---', params.projectId)
   const projectId = params.projectId
 
   const { loading, error, data } = useQuery(GET_PROJECT_BY_ID, {
@@ -50,11 +51,11 @@ function TabMenu(props: TabMenuProps) {
   }, [data]);
 
   const changeWorktypeName = (data) => {
-    console.log('changeWorktypeName', data)
+    // console.log('changeWorktypeName', data)
     setWorktype(data);
   }
   function TaskApp(history: any) {
-    console.log('history---', history);
+    // console.log('---tab Menu---TaskApp---history---', history);
 
     return (
       <MicroFrontend history={history} host={taskHost} name="TaskApp" />
@@ -131,7 +132,8 @@ function TabMenu(props: TabMenuProps) {
           exact
           render={() => (
             <Tab.Pane onClick={handleOpenProject('task')}>
-              <TaskApp id={params.projectId}></TaskApp>
+              {/* <TaskApp id={params.projectId}></TaskApp> */}
+              <TaskApp id={projectId}></TaskApp>
             </Tab.Pane>
           )}
         />,
@@ -296,5 +298,10 @@ function TabMenu(props: TabMenuProps) {
     </div>
   );
 }
+const mapStateToProps = state => ({
+  projectId: state.app.selectedProject.selectedProjectId
+})
 
-export default TabMenu;
+// export default TabMenu;
+
+export default connect(mapStateToProps)(TabMenu)

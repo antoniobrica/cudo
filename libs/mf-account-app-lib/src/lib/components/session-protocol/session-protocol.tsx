@@ -45,6 +45,7 @@ export function SessionProtocol(props: SessionProtocolProps) {
         options={items}
         value={protocol}
         onChange={onCatogory}
+        clearable
       />
     </Form.Field>
   );

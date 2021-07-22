@@ -33,6 +33,7 @@ export function Country(props: CountryProps) {
         placeholder='Select' className="small" options={items}
         value={country}
         onChange={onCountry}
+        clearable
       />
     </Form.Field>
   );

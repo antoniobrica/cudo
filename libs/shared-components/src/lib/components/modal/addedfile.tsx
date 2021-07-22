@@ -27,6 +27,7 @@ function ModalAddFile() {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={<Button size='mini' className="grey-btn">Uploaded File</Button>}
+        closeOnDimmerClick={false}
       >
         <Modal.Header><h3>Add File </h3></Modal.Header>
         <Modal.Content body>
@@ -275,7 +276,7 @@ function ModalAddFile() {
                   <Grid.Column>
                     <Form.Field>
                       <label>Project</label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select placeholder='Select' className="small" options={countryOptions} clearable />
 
                     </Form.Field>
                   </Grid.Column>
@@ -287,7 +288,7 @@ function ModalAddFile() {
                   <Grid.Column>
                     <Form.Field>
                       <label>BKP/Folder</label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select placeholder='Select' className="small" options={countryOptions} clearable />
 
                     </Form.Field>
 
@@ -303,7 +304,7 @@ function ModalAddFile() {
                   <Grid.Column>
                     <Form.Field>
                       <label>File structure</label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select placeholder='Select' className="small" options={countryOptions} clearable />
 
                     </Form.Field>
                   </Grid.Column>

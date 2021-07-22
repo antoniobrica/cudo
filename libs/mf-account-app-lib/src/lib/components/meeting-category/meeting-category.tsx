@@ -45,6 +45,7 @@ export function MeetingCategory(props: MeetingCategoryProps) {
         options={items}
         value={catagory}
         onChange={onCatogory}
+        clearable
       />
     </Form.Field>
   );

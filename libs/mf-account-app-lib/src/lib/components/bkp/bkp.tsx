@@ -93,6 +93,7 @@ export function Bkp(props: BkpProps) {
         options={items2}
         value={BKPID}
         onChange={onBkp}
+        clearable
       />
 
     </Form.Field>

@@ -141,7 +141,7 @@ export function UserProfile(props: UserProfileProps) {
                             <Grid.Row>
                               <Grid.Column>
                                 <Form.Field key={country_code?.name}>
-                                  <Select placeholder='Select' className="small" options={countryOptions} type={country_code?.type}
+                                  <Select clearable placeholder='Select' className="small" options={countryOptions} type={country_code?.type}
                                     name={country_code?.name}
                                     defaultValue={country_code?.value as any}
                                     {...country_code?.required} />
@@ -240,7 +240,7 @@ export function UserProfile(props: UserProfileProps) {
                       <Grid.Column>
                         <Form.Field>
                           <label>Country</label>
-                          <Select placeholder='Select' className="small" options={countryOptions} type={state_pin?.type}
+                          <Select clearable placeholder='Select' className="small" options={countryOptions} type={state_pin?.type}
                             name={state_pin?.name}
                             defaultValue={state_pin?.value as any}
                             {...state_pin?.required} />

@@ -9,34 +9,34 @@ export class TaskBasicDetailsInput {
     @Field({ description: `This is for title task title` })
     taskTitle?: string;
 
-    @Field({ description: `This is for task start date in UTC` })
+    @Field({ nullable:true, description: `This is for task start date in UTC` })
     startDate?: Date;
 
-    @Field({ description: `This is for task end date in UTC` })
+    @Field({ nullable:true, description: `This is for task end date in UTC` })
     endDate?: Date;
 
-    @Field({ description: `This is for task estimated days` })
+    @Field({ nullable:true, description: `This is for task estimated days` })
     estimatedDays?: string;
 
-    @Field({ description: `To send notificatioin on task created` })
+    @Field({ nullable:true, description: `To send notificatioin on task created` })
     sendNotification?: boolean;
 
-    @Field({ description: `To save task as template as well` })
+    @Field({ nullable:true, description: `To save task as template as well` })
     saveTaskAsTemplate?: string;
 
-    @Field({ description: `BKPID attached with task` })
+    @Field({ nullable:true, description: `BKPID attached with task` })
     BKPID?: string;
 
-    @Field({ description: `PhaseID attached with task` })
+    @Field({ nullable:true, description: `PhaseID attached with task` })
     phaseID?: string;
 
-    @Field({ description: `BKP Title attached with task` })
+    @Field({ nullable:true, description: `BKP Title attached with task` })
     BKPTitle?: string;
 
-    @Field({ description: `Phase Name attached with task` })
+    @Field({ nullable:true, description: `Phase Name attached with task` })
     phaseName?: string;
 
-    @Field(type => StatusEnum, { description: `Task status` })
+    @Field(type => StatusEnum, { nullable:true, description: `Task status` })
     status?: StatusEnum;
 
     @Field({ nullable: true, description: ` Task ParentID`  })
@@ -57,7 +57,7 @@ export class TaskBasicDetailsInput {
     @Field({ nullable: true, description: ` Task ParentID`  })
     taskTypeID?: string;
 
-    @Field(type => TaskTypeEnum, { description: `Task status` })
+    @Field(type => TaskTypeEnum, { nullable:true, description: `Task status` })
     taskType?: TaskTypeEnum;
 
     @Field({ nullable: true, description: ` Task Type Name`  })
@@ -71,7 +71,7 @@ export class TaskBasicDetailsInput {
     @Field({ nullable: true, description: ` work Type Name `  })
     workTypeName?: string;
 
-    @Field({ description: `Description of task` })
+    @Field({ nullable:true, description: `Description of task` })
     description?: string;
 
 }

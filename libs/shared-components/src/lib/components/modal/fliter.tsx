@@ -35,8 +35,8 @@ export function FilterPopup() {
           //   Filter
           // </Button>
           <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/filter.png`} className="filter-icon mr-10 " />
-
         }
+        closeOnDimmerClick={false}
       >
 
         <Modal.Header className="headertop">
@@ -53,6 +53,7 @@ export function FilterPopup() {
                         Assing to
                       </label>
                       <Select
+                         clearable
                         placeholder="Select"
                         className="small"
                         options={countryOptions}
@@ -69,6 +70,7 @@ export function FilterPopup() {
                     <Form.Field>
                       <label>Followers </label>
                       <Select
+                         clearable
                         placeholder="Select"
                         className="small"
                         options={countryOptions}
@@ -85,6 +87,7 @@ export function FilterPopup() {
                         Status
                       </label>
                       <Select
+                         clearable
                         placeholder="Select"
                         className="small"
                         options={countryOptions}
@@ -131,6 +134,7 @@ export function FilterPopup() {
                         Type
                       </label>
                       <Select
+                         clearable
                         placeholder="Select"
                         className="small"
                         options={countryOptions}

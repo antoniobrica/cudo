@@ -23,6 +23,7 @@ function ManageFileStructure() {
       onOpen={() => setOpen(true)}
       open={open}
       trigger={<Button size='mini' className="grey-btn">Manage naming</Button> }
+      closeOnDimmerClick={false}
     >
       <Modal.Header><h3>Manage file naming structure </h3></Modal.Header>
       <Modal.Content body>
