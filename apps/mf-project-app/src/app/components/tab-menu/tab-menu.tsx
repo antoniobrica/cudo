@@ -12,6 +12,7 @@ import { PlanningIndex } from '@cudo/mf-task-lib';
 import { useProjectByIdQuery } from '../../services/useRequest';
 import { GET_PROJECT_BY_ID } from '../../graphql/graphql';
 import { useQuery } from '@apollo/client';
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -31,7 +32,7 @@ type params = {
 function TabMenu(props: TabMenuProps) {
   const [worktypeName, setWorktype] = React.useState("");
   const [worktypes, setWorktypes] = React.useState();
-
+  const {t} = useTranslation()
 
   const history = useHistory();
   const params = useParams<params>();
@@ -100,7 +101,7 @@ function TabMenu(props: TabMenuProps) {
     }
     const panes = [
       {
-        menuItem: { key: 'Overview', icon: 'file alternate outline', content: 'Overview', to: `${url}/overview`, as: NavLink, exact: true, },
+        menuItem: { key: 'Overview', icon: 'file alternate outline', content: t("project_tab_menu.overview.title"), to: `${url}/overview`, as: NavLink, exact: true, },
         render: () => <Route
           path={`${url}/overview`}
           exact
@@ -114,8 +115,8 @@ function TabMenu(props: TabMenuProps) {
                 </div>
                 <div className="text-center margin-top">
 
-                  <span className="found">No Data Found</span>
-                  <p className="project-sub" style={{ color: '#9A9EA1' }}>Hey User, you don't have any active sub project lists on this project. Click the button <br /> below  to create a sub project list.</p>
+                  <span className="found">{t("project_tab_menu.overview.data_not_found")}</span>
+                  <p className="project-sub" style={{ color: '#9A9EA1' }}>{t("project_tab_menu.overview.desc_line1")} <br /> {t("project_tab_menu.overview.desc_line2")}</p>
                 </div>
               </div>
 
@@ -125,7 +126,7 @@ function TabMenu(props: TabMenuProps) {
         />,
       },
       {
-        menuItem: { key: 'Task', icon: 'shield alternate', content: 'Task', to: `${url}/task`, as: NavLink, exact: true, },
+        menuItem: { key: 'Task', icon: 'shield alternate', content:t("project_tab_menu.task.title"), to: `${url}/task`, as: NavLink, exact: true, },
         render: () => <Route
           path={`${url}/task`}
           exact
@@ -138,7 +139,7 @@ function TabMenu(props: TabMenuProps) {
       },
       {
 
-        menuItem: { key: 'Planning', icon: 'flag outline', to: `${url}/planning`, as: NavLink, exact: true, content: 'Planning' },
+        menuItem: { key: 'Planning', icon: 'flag outline', to: `${url}/planning`, as: NavLink, exact: true, content:t("project_tab_menu.planning.title") },
         render: () => <Route
           path={`${url}/planning`}
           exact
@@ -151,7 +152,7 @@ function TabMenu(props: TabMenuProps) {
       },
       {
 
-        menuItem: { key: 'Cost', icon: 'money bill alternate outline', content: 'Cost', to: `${url}/cost`, as: NavLink, exact: true, },
+        menuItem: { key: 'Cost', icon: 'money bill alternate outline', content:t("project_tab_menu.cost") , to: `${url}/cost`, as: NavLink, exact: true, },
         render: () => <Route
           path={`${url}/cost`}
           exact
@@ -164,7 +165,7 @@ function TabMenu(props: TabMenuProps) {
       },
       {
 
-        menuItem: { key: 'Tender', icon: 'gavel', content: 'Tender', to: `${url}/tender`, as: NavLink, exact: true },
+        menuItem: { key: 'Tender', icon: 'gavel', content:t("project_tab_menu.tender.title") , to: `${url}/tender`, as: NavLink, exact: true },
         render: () => <Route
           path={`${url}/tender`}
           exact
@@ -175,7 +176,7 @@ function TabMenu(props: TabMenuProps) {
       },
       {
 
-        menuItem: { key: 'Meetings', icon: 'calendar outline', content: 'Meetings', to: `${url}/meetings`, as: NavLink, exact: true },
+        menuItem: { key: 'Meetings', icon: 'calendar outline', content:t("project_tab_menu.meeting"), to: `${url}/meetings`, as: NavLink, exact: true },
         render: () => <Route
           path={`${url}/meetings`}
           exact
@@ -189,7 +190,7 @@ function TabMenu(props: TabMenuProps) {
       },
       {
 
-        menuItem: { key: ' ', icon: 'folder open outline', content: 'Files', to: `${url}/files`, as: NavLink, exact: true, },
+        menuItem: { key: ' ', icon: 'folder open outline', content:t("project_tab_menu.files.title"), to: `${url}/files`, as: NavLink, exact: true, },
         render: () =>
           <Route
             path={`${url}/files`}
@@ -204,7 +205,7 @@ function TabMenu(props: TabMenuProps) {
       },
       {
 
-        menuItem: { key: 'Questions', icon: 'question circle outline', content: 'Questions', to: `${url}/questions`, as: NavLink, exact: true },
+        menuItem: { key: 'Questions', icon: 'question circle outline', content:t("project_tab_menu.questions"), to: `${url}/questions`, as: NavLink, exact: true },
         render: () =>
           <Route
             path={`${url}/questions`}
@@ -217,7 +218,7 @@ function TabMenu(props: TabMenuProps) {
       },
       {
 
-        menuItem: { key: 'People', icon: 'user outline', content: 'People', to: `${url}/people`, as: NavLink, exact: true },
+        menuItem: { key: 'People', icon: 'user outline', content:t("project_list.add_new_project.people"), to: `${url}/people`, as: NavLink, exact: true },
         render: () =>
           <Route
             path={`${url}/people`}
@@ -230,7 +231,7 @@ function TabMenu(props: TabMenuProps) {
       },
       {
 
-        menuItem: { key: 'Settings', icon: 'setting', content: 'Settings', to: `${url}/settings`, as: NavLink, exact: true },
+        menuItem: { key: 'Settings', icon: 'setting', content:t("project_tab_menu.setting"), to: `${url}/settings`, as: NavLink, exact: true },
         render: () => <Route
           path={`${url}/settings`}
           exact
@@ -241,7 +242,7 @@ function TabMenu(props: TabMenuProps) {
       },
       {
 
-        menuItem: { key: 'Messages', icon: 'envelope open outline', content: 'Messages', to: `${url}/messages`, as: NavLink, exact: true },
+        menuItem: { key: 'Messages', icon: 'envelope open outline', content:t("project_tab_menu.messages.title"), to: `${url}/messages`, as: NavLink, exact: true },
         render: () => <Route
           path={`${url}/messages`}
           exact
@@ -256,7 +257,7 @@ function TabMenu(props: TabMenuProps) {
       <Router>
         <div className="app-content-body-dash navbar-collapse">
           <div className="main-page-heading">
-            <span className="">{worktypeName ? worktypeName : 'WorktypeName'}</span> <span className="preliminary-font">Preliminary Studies</span>
+            <span className="">{worktypeName ? worktypeName : 'WorktypeName'}</span> <span className="preliminary-font">{t("project_tab_menu.preiminary_studies")}</span>
           </div>
           <Switch>
             <Tab className="ui-tabs" menu={{ secondary: true, pointing: true }} panes={panes} />
@@ -288,7 +289,7 @@ function TabMenu(props: TabMenuProps) {
     <div>
       {data ?
         <div>
-          <AccordionExampleMenu changeWorktypeName={changeWorktypeName} workTypeData={data}>
+          <AccordionExampleMenu t={t} changeWorktypeName={changeWorktypeName} workTypeData={data}>
           </AccordionExampleMenu>
           <Home></Home>
         </div> :

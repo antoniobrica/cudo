@@ -18,6 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import ModalExampleModal from '../modal/modal'
 import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { useTranslation } from 'react-i18next';
 
 /* eslint-disable-next-line */
 export interface ProjectInfoProps { }
@@ -27,6 +28,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
   const { loading, error, data } = useProjectQuery(GET_PROJECTS);
   const [openForm, setopenForm] = React.useState(false);
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const {t} = useTranslation()
 
   const history = useHistory();
   if (loading) return <LazyLoading />;
@@ -62,7 +64,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
 
       <div className="app-content-body body_cards_area project-listing-page">
         <div className="dashboard-header">
-          <h3>All Projects <span className="total">Total {data.projects.length} project added</span></h3>
+          <h3>{t("project_list.header.header_title")} <span className="total">{t("project_list.header.header_line.total")} {data.projects.length} {t("project_list.header.header_line.project_added")}</span></h3>
           
           {/* <div>
               <button onClick={notify}>Notify!</button>
@@ -154,10 +156,10 @@ export function ProjectInfo(props: ProjectInfoProps) {
                           <span className="dropdown-action">
                             <Dropdown icon='ellipsis horizontal' floating labeled>
                               <Dropdown.Menu className="dropdowncomplete">
-                                <Dropdown.Item icon='setting' text='Manage project' />
-                                <Dropdown.Item icon='tasks' text='View activity' />
-                                <Dropdown.Item icon='archive' text='Archive' />
-                                <Dropdown.Item icon='trash alternate outline' text='Delete' />
+                                <Dropdown.Item icon='setting' text={t("project_list.project_card.manage_project")} />
+                                <Dropdown.Item icon='tasks' text={t("project_list.project_card.view_activity")} />
+                                <Dropdown.Item icon='archive' text={t("project_list.project_card.archive")} />
+                                <Dropdown.Item icon='trash alternate outline' text={t("common.delete")} />
                               </Dropdown.Menu>
                             </Dropdown>
                           </span>
@@ -170,7 +172,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
                     </div>
 
                     <div className="project-info">
-                      <p>Type of building <span>{buildingType}</span></p>
+                      <p>{t("project_list.add_new_project.building_type_lable")} <span>{buildingType}</span></p>
                       {/* <p>Level of building <span>3rd</span></p> */}
                     </div>
 

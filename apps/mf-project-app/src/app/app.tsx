@@ -15,7 +15,7 @@ import ProjectInfo from './components/project-info/project-info';
 // const TabMenu = lazy(() => import('./components/tab-menu/tab-menu'))
 // const ProjectInfo = lazy(() => import('./components/project-info/project-info'))
 
-const defaultLanguage = 'de-DE';
+const defaultLanguage = 'en-GB';
 const supportedLanguages = [defaultLanguage, 'en-GB'];
 initI18n('./assets/i18n/{{lng}}.json', defaultLanguage);
 

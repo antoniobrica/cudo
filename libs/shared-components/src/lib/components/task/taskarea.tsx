@@ -114,7 +114,7 @@ export function TaskArea(props: Tasks) {
 
       renderSubTaskEditForm =
         <div key={`edit-form-${subTaskId}`} className="add-new-task-con">
-          <span className="anchor_complete checklist-complete-box"><a title="Mark as complete"> <span className="material-icons check-grey">check_circle_outline</span> </a> </span>
+          <span className="anchor_complete checklist-complete-box"><a title={t("project_tab_menu.task.completed")}> <span className="material-icons check-grey">check_circle_outline</span> </a> </span>
           <div className="classtop add-new-task-field">
             <Form.Field className="fillarea">
               <Input placeholder='Enter your text here....' size='small' className="full-width "
@@ -141,15 +141,15 @@ export function TaskArea(props: Tasks) {
       <div className="d-flex align-items-center checklist-listing-main" key={subTaskId}>
         <span className="anchor_complete" onClick={() => onClickSubTaskStatusUpdate(taskId, subTaskId, subtaskStatus === 'INPROGRESS' ? 'COMPLETED' : 'INPROGRESS')}>
           {subtaskStatus === 'INPROGRESS' ?
-            <a title="Mark as complete"><span className="material-icons check-grey">check_circle_outline</span> </a>
+            <a title={t("project_tab_menu.task.completed")}><span className="material-icons check-grey">check_circle_outline</span> </a>
             :
             <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/green_tick.png`} className=" mr-2 mr-10 " />
           }
         </span>
         <span className="task-checklisting-text">{index + 1}. {subTaskTitle}</span>
 
-        <span className="anchor_complete" onClick={() => onClickEditSubTask(taskId, subTaskId, subTaskTitle)}>Edit</span>
-        <span className="anchor_complete" onClick={() => onClickDeleteSubTask(taskId, subTaskId)}>Delete</span>
+        <span className="anchor_complete" onClick={() => onClickEditSubTask(taskId, subTaskId, subTaskTitle)}>{t("common.edit")}</span>
+        <span className="anchor_complete" onClick={() => onClickDeleteSubTask(taskId, subTaskId)}>{t("common.delete")}</span>
       </div>
 
     return renderSubtaskItems
@@ -182,7 +182,7 @@ export function TaskArea(props: Tasks) {
                     }
                     <div className="navi-item">
                       <a className="navi-link">
-                        <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> 5 days <span className="dash-seperator">-</span> </span>
+                        <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> 5 {t("project_tab_menu.task.days")} <span className="dash-seperator">-</span> </span>
                       </a>
                     </div>
                     <div className="navi-item">
@@ -279,10 +279,10 @@ export function TaskArea(props: Tasks) {
 
                       <Dropdown icon='ellipsis horizontal' pointing='right'>
                         <Dropdown.Menu>
-                          <Dropdown.Item onClick={() => veiwTaskbyId(props.task, props.id)} icon='eye' text='View detail' />
-                          <Dropdown.Item onClick={() => editTaskbyId(props.task, props.id)} icon='pencil' text='Edit' />
-                          <Dropdown.Item onClick={() => updateStatus(props.task, props.id)} icon='check circle outline' text='Re-open' />
-                          <Dropdown.Item onClick={() => deleteTaskbyId(props.task, props.id)} icon='trash alternate outline' text='Delete' />
+                          <Dropdown.Item onClick={() => veiwTaskbyId(props.task, props.id)} icon='eye' text={t("common.view_details")} />
+                          <Dropdown.Item onClick={() => editTaskbyId(props.task, props.id)} icon='pencil' text={t("common.edit")} />
+                          <Dropdown.Item onClick={() => updateStatus(props.task, props.id)} icon='check circle outline' text={t("project_tab_menu.task.re_open")} />
+                          <Dropdown.Item onClick={() => deleteTaskbyId(props.task, props.id)} icon='trash alternate outline' text={t("common.delete")} />
                         </Dropdown.Menu>
                       </Dropdown>
                     </span>
@@ -303,7 +303,7 @@ export function TaskArea(props: Tasks) {
               <div className="d-flex align-items-center py-2">
                 <span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} className="  mr-10 " />  </span>
                 <span className="textt">T-{props?.task?.sequenceNumber}</span>
-                <span onClick={() => updateStatus(props.task, props.id)}><span className="anchor_complete"><a title="Mark as complete"> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span></span>
+                <span onClick={() => updateStatus(props.task, props.id)}><span className="anchor_complete"><a title={t("project_tab_menu.task.completed")}> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span></span>
                 <span className="task-heading">{props?.task?.taskTitle}</span>
                 <div className="d-flex mr-3">
 
@@ -325,7 +325,7 @@ export function TaskArea(props: Tasks) {
 
                     <div className="navi-item">
                       <a className="navi-link">
-                        <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> {props?.task?.estimatedDays} Days <span className="dash-seperator">-</span> </span>
+                        <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> {props?.task?.estimatedDays} {t("project_tab_menu.task.days")} <span className="dash-seperator">-</span> </span>
                       </a>
                     </div>
                     <div className="navi-item">
@@ -389,10 +389,10 @@ export function TaskArea(props: Tasks) {
 
                       <Dropdown icon='ellipsis horizontal' pointing='right'>
                         <Dropdown.Menu className="dropdowncomplete">
-                          <Dropdown.Item onClick={() => veiwTaskbyId(props.task, props.id)} icon='eye' text='View detail' />
-                          <Dropdown.Item onClick={() => editTaskbyId(props.task, props.id)} icon='pencil' text='Edit' />
-                          <Dropdown.Item onClick={() => updateStatus(props.task, props.id)} icon='check circle outline' text='Mark as complete' />
-                          <Dropdown.Item onClick={() => deleteTaskbyId(props.task, props.id)} icon='trash alternate outline' text='Delete' />
+                          <Dropdown.Item onClick={() => veiwTaskbyId(props.task, props.id)} icon='eye' text={t("common.view_details")} />
+                          <Dropdown.Item onClick={() => editTaskbyId(props.task, props.id)} icon='pencil' text={t("common.edit")} />
+                          <Dropdown.Item onClick={() => updateStatus(props.task, props.id)} icon='check circle outline' text={t("project_tab_menu.task.completed")} />
+                          <Dropdown.Item onClick={() => deleteTaskbyId(props.task, props.id)} icon='trash alternate outline' text={t("common.delete")} />
                         </Dropdown.Menu>
                       </Dropdown>
                     </span>
@@ -420,7 +420,7 @@ export function TaskArea(props: Tasks) {
                       {
                         openSubTaskEdit === false && viewSubTaskAdd ?
                           <div className="add-new-task-con">
-                            <span className="anchor_complete checklist-complete-box"><a title="Mark as complete"> <span className="material-icons check-grey">check_circle_outline</span> </a> </span>
+                            <span className="anchor_complete checklist-complete-box"><a title={t("project_tab_menu.task.completed")}> <span className="material-icons check-grey">check_circle_outline</span> </a> </span>
                             <div className="classtop add-new-task-field">
                               <Form.Field className="fillarea">
                                 <Input placeholder='Enter your text here....' size='small' className="full-width "
@@ -438,7 +438,7 @@ export function TaskArea(props: Tasks) {
                             </div>
                           </div>
                           :
-                          <div onClick={addNewSubTask} className="add-new-link"> <span className="anchor_complete"><Icon name="plus"></Icon> Add new</span></div>
+                          <div onClick={addNewSubTask} className="add-new-link"> <span className="anchor_complete"><Icon name="plus"></Icon> {t("common.add_new_button")}</span></div>
 
                       }
 

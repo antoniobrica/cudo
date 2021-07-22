@@ -14,6 +14,7 @@ import {
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { useTranslation } from 'react-i18next';
 export function FilterPopup() {
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
@@ -21,6 +22,7 @@ export function FilterPopup() {
   ];
 
   const [open, setOpen] = React.useState(false);
+  const {t} = useTranslation()
 
   return (
     <div>
@@ -40,7 +42,7 @@ export function FilterPopup() {
       >
 
         <Modal.Header className="headertop">
-          <label>Filter </label>
+          <label>{t("project_tab_menu.task.filter")} </label>
         </Modal.Header>
         <Modal.Content body>
           <div>
@@ -50,11 +52,11 @@ export function FilterPopup() {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                        Assing to
+                        {t("project_tab_menu.task.assign_to")}
                       </label>
                       <Select
                          clearable
-                        placeholder="Select"
+                        placeholder={t("common.select")}
                         className="small"
                         options={countryOptions}
                       />
@@ -68,10 +70,10 @@ export function FilterPopup() {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Followers </label>
+                      <label>{t("common.followers")} </label>
                       <Select
                          clearable
-                        placeholder="Select"
+                        placeholder={t("common.select")}
                         className="small"
                         options={countryOptions}
                       />
@@ -84,11 +86,11 @@ export function FilterPopup() {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                        Status
+                      {t("common.status")}
                       </label>
                       <Select
                          clearable
-                        placeholder="Select"
+                        placeholder={t("common.select")}
                         className="small"
                         options={countryOptions}
                       />
@@ -101,7 +103,7 @@ export function FilterPopup() {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                        Start date
+                      {t("common.start_date")}
                       </label>
                       <Input
                         placeholder="Default"
@@ -114,7 +116,7 @@ export function FilterPopup() {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                        End date
+                      {t("common.end_date")}
                       </label>
                       <Input
                         placeholder="Default"
@@ -131,11 +133,11 @@ export function FilterPopup() {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                        Type
+                      {t("common.type")}
                       </label>
                       <Select
                          clearable
-                        placeholder="Select"
+                        placeholder={t("common.select")}
                         className="small"
                         options={countryOptions}
                       />
@@ -148,7 +150,7 @@ export function FilterPopup() {
         </Modal.Content>
         <Modal.Actions>
           <Button
-            content="Apply"
+            content={t("common.apply")}
             onClick={() => setOpen(false)}
             positive
             size="small"
@@ -159,7 +161,7 @@ export function FilterPopup() {
             className="icon-border"
             onClick={() => setOpen(false)}
           >
-            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> {t("common.cancel")}
           </Button>
         </Modal.Actions>
       </Modal>

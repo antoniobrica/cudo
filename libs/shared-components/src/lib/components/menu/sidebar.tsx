@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { withTranslation } from 'react-i18next'; 
 import './../../../assets/style/index.scss'
 import { Icon, Sidebar, Accordion, Form, Dropdown } from 'semantic-ui-react'
 
@@ -22,6 +22,7 @@ const SizeForm = (
 interface MyProps {
   workTypeData?,
   changeWorktypeName?
+  t?
 }
 export class AccordionExampleMenu extends Component<MyProps> {
   state = {
@@ -48,6 +49,7 @@ export class AccordionExampleMenu extends Component<MyProps> {
   }
 
   render() {
+    const {t} = this.props
     const { activeIndex } = this.state
     console.log('renderactiveIndex', activeIndex)
     return (
@@ -72,18 +74,18 @@ export class AccordionExampleMenu extends Component<MyProps> {
                 <Accordion.Content className="active-title menu-sub-option" active={activeIndex === i}>
                   <ul>
                     <li className="done">
-                      <span className="strategic_plan">Strategic Planning</span>
+                      <span className="strategic_plan">{t("project_tab_menu.strategic_planning")}</span>
                       <span className="dots_area">
                         <div className="symbol-group symbol-hover py-2" >
                           <div className="symbol symbol-30 d-flex">
                             <span className="dropdown-action">
                               <Dropdown icon='ellipsis horizontal' pointing='left'>
                                 <Dropdown.Menu>
-                                  <Dropdown.Item icon="check circle outline" text="Mark as complete" />
-                                  <Dropdown.Item icon="pencil" text="Add Task" />
+                                  <Dropdown.Item icon="check circle outline" text={t("project_tab_menu.mark_complete")} />
+                                  <Dropdown.Item icon="pencil" text={t("project_tab_menu.add_task")} />
                                   <Dropdown.Item
                                     icon="trash alternate outline"
-                                    text="Add File"
+                                    text={t("project_tab_menu.add_file")}
                                   />
                                 </Dropdown.Menu>
                               </Dropdown>
@@ -93,18 +95,18 @@ export class AccordionExampleMenu extends Component<MyProps> {
                       </span> 
                     </li>
                     <li className="active">
-                      <span className="strategic_plan">Preliminary Studies</span>
+                      <span className="strategic_plan">{t("project_tab_menu.preiminary_studies")}</span>
                       <span className="dots_area">
                         <div className="symbol-group symbol-hover py-2" >
                           <div className="symbol symbol-30 d-flex">
                             <span className="dropdown-action">
                               <Dropdown icon='ellipsis horizontal' pointing='left'>
                                 <Dropdown.Menu>
-                                  <Dropdown.Item icon="check circle outline" text="Mark as complete" />
-                                  <Dropdown.Item icon="pencil" text="Add Task" />
+                                  <Dropdown.Item icon="check circle outline" text={t("project_tab_menu.mark_complete")} />
+                                  <Dropdown.Item icon="pencil" text={t("project_tab_menu.add_task")} />
                                   <Dropdown.Item
                                     icon="trash alternate outline"
-                                    text="Add File"
+                                    text={t("project_tab_menu.add_file")}
                                   />
                                 </Dropdown.Menu>
                               </Dropdown>
@@ -114,18 +116,18 @@ export class AccordionExampleMenu extends Component<MyProps> {
                       </span> 
                     </li>
                     <li>
-                      <span className="strategic_plan">Project Plannings</span> 
+                      <span className="strategic_plan">{t("project_tab_menu.project_plannings")} </span> 
                       <span className="dots_area">
                         <div className="symbol-group symbol-hover py-2" >
                           <div className="symbol symbol-30 d-flex">
                             <span className="dropdown-action">
                               <Dropdown icon='ellipsis horizontal' pointing='left'>
                                 <Dropdown.Menu>
-                                  <Dropdown.Item icon="check circle outline" text="Mark as complete" />
-                                  <Dropdown.Item icon="pencil" text="Add Task" />
+                                  <Dropdown.Item icon="check circle outline" text={t("project_tab_menu.mark_complete")} />
+                                  <Dropdown.Item icon="pencil" text={t("project_tab_menu.add_task")} />
                                   <Dropdown.Item
                                     icon="trash alternate outline"
-                                    text="Add File"
+                                    text={t("project_tab_menu.add_file")}
                                   />
                                 </Dropdown.Menu>
                               </Dropdown>
@@ -135,18 +137,18 @@ export class AccordionExampleMenu extends Component<MyProps> {
                       </span> 
                     </li>
                     <li>
-                      <span className="strategic_plan">Tender</span> 
+                      <span className="strategic_plan">{t("project_tab_menu.tender.title")}</span> 
                       <span className="dots_area">
                         <div className="symbol-group symbol-hover py-2" >
                           <div className="symbol symbol-30 d-flex">
                             <span className="dropdown-action">
                               <Dropdown icon='ellipsis horizontal' pointing='left' floating>
                                 <Dropdown.Menu>
-                                  <Dropdown.Item icon="check circle outline" text="Mark as complete" />
-                                  <Dropdown.Item icon="pencil" text="Add Task" />
+                                  <Dropdown.Item icon="check circle outline" text={t("project_tab_menu.mark_complete")} />
+                                  <Dropdown.Item icon="pencil" text={t("project_tab_menu.add_task")} />
                                   <Dropdown.Item
                                     icon="trash alternate outline"
-                                    text="Add File"
+                                    text={t("project_tab_menu.add_file")}
                                   />
                                 </Dropdown.Menu>
                               </Dropdown>
@@ -156,18 +158,18 @@ export class AccordionExampleMenu extends Component<MyProps> {
                       </span> 
                     </li>
                     <li>
-                      <span className="strategic_plan">Realization</span> 
+                      <span className="strategic_plan">{t("project_tab_menu.realization")}</span> 
                       <span className="dots_area">
                         <div className="symbol-group symbol-hover py-2" >
                           <div className="symbol symbol-30 d-flex">
                             <span className="dropdown-action">
                               <Dropdown icon='ellipsis horizontal' pointing='left'>
                                 <Dropdown.Menu>
-                                  <Dropdown.Item icon="check circle outline" text="Mark as complete" />
-                                  <Dropdown.Item icon="pencil" text="Add Task" />
+                                  <Dropdown.Item icon="check circle outline" text={t("project_tab_menu.mark_complete")} />
+                                  <Dropdown.Item icon="pencil" text={t("project_tab_menu.add_task")} />
                                   <Dropdown.Item
                                     icon="trash alternate outline"
-                                    text="Add File"
+                                    text={t("project_tab_menu.add_file")}
                                   />
                                 </Dropdown.Menu>
                               </Dropdown>
@@ -328,4 +330,4 @@ export class AccordionExampleMenu extends Component<MyProps> {
   }
 }
 
-export default AccordionExampleMenu;
+export default  withTranslation()(AccordionExampleMenu);

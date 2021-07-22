@@ -18,6 +18,7 @@ import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 import 'react-quill/dist/quill.snow.css';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function exampleReducer(state, action) {
   switch (action.type) {
@@ -64,6 +65,13 @@ export const ModalTaskEdit = (props: AlertProps) => {
   const [workTypeName, setworktypeName] = React.useState("")
   const [assignees, setAssignees] = React.useState<any>([]);
   const [followers, setfollowers] = React.useState<any>([]);
+  const [errors, setErrors] = React.useState({
+    titleError: '',
+    dateError: '',
+    assigneeError: '',
+    workTypeError: ''
+  })
+  const { t } = useTranslation()
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3]?.toString();
@@ -260,8 +268,43 @@ export const ModalTaskEdit = (props: AlertProps) => {
     console.log('des=>', e);
     setDescription(e);
   }
+  const validation = () => {
+    let response = true
+
+    if(!taskTitle){
+      response=false
+      setErrors({...errors,titleError:t("common.errors.title_error")})
+      return false
+    }
+
+    if(!workTypeID){
+      response=false
+      setErrors({...errors,workTypeError:t("common.errors.worktype_error")})
+      return false
+    }
+
+    if(!assignees.length){
+      response=false
+      setErrors({...errors,assigneeError:t("common.errors.assignee_error")})
+      return false
+    }
+
+    if(startDate>endDate){
+      response=false
+      setErrors({...errors,dateError:t("common.errors.date_error")})
+      return false
+    }
+
+    if(!response){
+      return false
+    }
+    return true
+  }
 
   const editTask = () => {
+    if(!validation()){
+      return false
+    }
     // const assignees = [];
     // props.taskData.assignees.map((data, i) => {
     //   assignees.push({ userID: data.userID, userName: data.userName })
@@ -306,13 +349,13 @@ export const ModalTaskEdit = (props: AlertProps) => {
         open={open}
         trigger={
           <Button size="mini" className="grey-btn">
-            Edit Task
+            {t("project_tab_menu.task.edit_task")}
           </Button>
         }
         closeOnDimmerClick={false}
       >
         <Modal.Header>
-          <h3>Edit Task </h3>
+          <h3>{t("project_tab_menu.task.edit_task")} </h3>
         </Modal.Header>
         <Modal.Content body>
           <div>
@@ -322,16 +365,18 @@ export const ModalTaskEdit = (props: AlertProps) => {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                        Task Title <span className="danger">*</span>
+                        {t("project_tab_menu.task.task_title")} <span className="danger">*</span>
                       </label>
                       <Input
-                        placeholder="Swtichboard fitting"
+                        placeholder={t("project_tab_menu.task.task_title")}
                         size="small"
                         className="full-width"
                         type="text"
                         value={taskTitle}
                         onChange={onTaskTitleChange}
+                        error={errors?.titleError && !taskTitle}
                       />
+                      {errors?.titleError && !taskTitle ? <span className="error-message">{errors.titleError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -341,7 +386,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Description </label>
+                      <label>{t("common.desc")} </label>
                       {/* <TextArea placeholder="Tell us more"
                         value={description}
                         onChange={onDescriptionChange} /> */}
@@ -360,7 +405,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                             ],
                           }
                         }}
-                        placeholder="Add a description"
+                        placeholder={t("common.desc_placeholder")}
                         onChange={(content, delta, source, editor) => onDescriptionChange(content)}
                         id="txtDescription"
                       />
@@ -373,17 +418,19 @@ export const ModalTaskEdit = (props: AlertProps) => {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                        Associate with work type{' '}
+                        {t("project_tab_menu.task.work_type")}
                         <span className="danger">*</span>
                       </label>
                       <Select
-                       clearable
-                        placeholder="Select"
+                        clearable
+                        placeholder={t("common.select")}
                         className="small"
                         value={workTypeData}
                         options={workType}
                         onChange={onMworkType}
+                        error={errors?.workTypeError && !workTypeID }
                       />
+                      {errors?.workTypeError && !workTypeID ? <span className="error-message">{errors.workTypeError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -433,6 +480,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                       />
                     </Form.Field> */}
                     <AssigneeIndex assignees={props?.taskData?.assignees} parentAsigneeSelect={setAsignee} name="Assignee" />
+                    {errors?.assigneeError && !assignees.length ? <span className="error-message">{errors.assigneeError}</span> : null}
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
@@ -475,9 +523,8 @@ export const ModalTaskEdit = (props: AlertProps) => {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Start Date </label>
+                      <label>{t("common.start_date")} </label>
                       <Input
-
                         size='small'
                         className="full-width"
                         type="date"
@@ -487,7 +534,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
-                      <label>End Date </label>
+                      <label>{t("common.end_date")} </label>
                       <Input
                         placeholder="Default"
                         size="small"
@@ -499,13 +546,14 @@ export const ModalTaskEdit = (props: AlertProps) => {
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Estimated Days </label>
-                      <Input placeholder='Enter days' className="small"
+                      <label>{t("common.estimated_days")} </label>
+                      <Input placeholder={t("project_tab_menu.task.enter_days")} className="small"
                         value={estimatedDays}
                         onChange={onsetEstimatedDays}
                       />
                     </Form.Field>
                   </Grid.Column>
+                  {errors?.dateError && (startDate>endDate) ? <span className="error-message">{errors.dateError}</span> : null}
                 </Grid.Row>
                 <Grid.Row></Grid.Row>
               </Grid>
@@ -513,7 +561,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <Checkbox label="Send notification to assignee/followers for the task" />
+                      <Checkbox label={t("common.notification_for_task")} />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -523,7 +571,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
         </Modal.Content>
         <Modal.Actions>
           <Button
-            content="Submit"
+            content={t("common.submit")}
             onClick={editTask}
             positive
             size="small"
@@ -534,7 +582,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
             className="icon-border"
             onClick={cancel}
           >
-            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> {t("common.cancel")}
           </Button>
         </Modal.Actions>
       </Modal>
