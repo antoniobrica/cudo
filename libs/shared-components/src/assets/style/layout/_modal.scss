@@ -374,3 +374,43 @@ img.filter-icon {
     }
   }
 }
+
+// Delete confirmation popup
+.ui.delete-confiramtion-popup {
+  width: 450px;
+  max-width: 100%;
+  .close.icon {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: #605E5C;
+    opacity: 1;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .delete-confirmation-con {
+    padding: 40px 0;
+    box-shadow: 0px 5px 14px #0000002e;
+    .content {
+      text-align: center;
+      background: #fff;
+      margin-bottom: 20px;
+      i {
+        font-size: 40px;
+        color: #2D62ED;
+      }
+      h3 {
+        font-size: 20px;
+        font-weight: 600;
+      }
+      p {
+        font-size: 14px;
+        font-weight: 500;
+        color: #9A9EA1;
+      }
+    }
+    .actions {
+      text-align: center;
+    }
+  }
+}
