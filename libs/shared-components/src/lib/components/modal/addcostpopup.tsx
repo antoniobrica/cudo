@@ -42,6 +42,12 @@ export function ModalCost(props: ModalCostProps) {
       setOpen(true);
     }
   }, [props.openCost])
+
+  React.useEffect(() => {
+    setItems([...items, {
+    } as Iitem])
+  }, [])
+
   const cancel = () => {
     setOpen(false)
     props.cancel(false)
@@ -141,6 +147,7 @@ export function ModalCost(props: ModalCostProps) {
         onOpen={() => setOpen(true)}
         open={open}
       // trigger={<Button size='mini' className="grey-btn">+ {t('add_cost.add_new')} </Button>}
+      closeOnDimmerClick={false}
       >
         <Modal.Header><h3>{t('add_cost.add_new_item')} </h3></Modal.Header>
         <Modal.Content body>

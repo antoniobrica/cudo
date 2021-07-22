@@ -152,3 +152,20 @@
     }
   }
 }
+
+h3.header-w-icon {
+  i {
+    margin-right: 10px;
+    color: #9FB5C5;
+  }
+  .symbol {
+    position: absolute;
+    right: 65px;
+    span.dropdown-action {
+      .menu.transition.visible.dropdowncomplete {
+        margin-left: -120px;
+        min-width: 150px;
+      }
+    }
+  }
+}

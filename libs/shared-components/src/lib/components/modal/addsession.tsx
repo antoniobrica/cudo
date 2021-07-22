@@ -201,6 +201,7 @@ export function ModalSession(props: SessionProps) {
       //     + Add New Session{' '}
       //   </Button>
       // }
+      closeOnDimmerClick={false}
       >
         <Modal.Header>
           <h3>Add sessions </h3>
@@ -233,6 +234,7 @@ export function ModalSession(props: SessionProps) {
                     <Form.Field>
                       <label>Work Type</label>
                       <Select
+                        clearable
                         placeholder="Select"
                         className="small"
                         value={workTypeData}

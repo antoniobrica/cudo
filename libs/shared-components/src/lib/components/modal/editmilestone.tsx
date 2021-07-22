@@ -131,8 +131,9 @@ const updateMilestone=()=>{
 
   return (
     <div id="navbar">
-      <Modal  style={{height:'650px'}}
-        className="modal_media"
+      <Modal 
+        className="modal_media right-side--fixed-modal edit-milestone-modal"
+        closeIcon
         onClose={cancel}
         onOpen={openf}
         open={open}
@@ -141,6 +142,7 @@ const updateMilestone=()=>{
             edit Milestone   
           </Button>
         }
+        closeOnDimmerClick={false}
       >
         <Modal.Header>
           <h3>Edit Milestone </h3>
@@ -204,6 +206,7 @@ const updateMilestone=()=>{
                         
                       </label>
                       <Select
+                        clearable
                         placeholder="Select"
                         className="small"
                         value={workTypeData}
@@ -220,6 +223,7 @@ const updateMilestone=()=>{
                     {/* <Form.Field>
                       <label>Select Phase </label>
                       <Select
+                        clearable
                         placeholder="Select"
                         className="small"
                         options={countryOptions}

@@ -81,7 +81,7 @@ function AddPeoplePermission() {
   <Grid.Column>
     <Form.Field>
       <label>Address 1 <span className="danger">*</span></label>
-      <Select placeholder='Select' className="small" options={countryOptions} />
+      <Select clearable placeholder='Select' className="small" options={countryOptions} />
     </Form.Field>
      
   </Grid.Column>
@@ -89,7 +89,7 @@ function AddPeoplePermission() {
   <Grid.Column>
   <Form.Field>
       <label>Type of building <span className="danger">*</span></label>
-      <Select placeholder='Select' className="small" options={countryOptions} />
+      <Select clearable placeholder='Select' className="small" options={countryOptions} />
     </Form.Field>
   </Grid.Column>
 </Grid.Row>
@@ -111,7 +111,7 @@ function AddPeoplePermission() {
   <Grid.Column>
     <Form.Field>
       <label>City </label>
-      <Select placeholder='Select' className="small" options={countryOptions} />
+      <Select clearable placeholder='Select' className="small" options={countryOptions} />
     </Form.Field>
   </Grid.Column>
   
@@ -153,7 +153,7 @@ function AddPeoplePermission() {
   </Grid.Column>
   <Grid.Column>
     <Form.Field>
-    <Select placeholder='Select' className="small" options={countryOptions} />
+    <Select clearable placeholder='Select' className="small" options={countryOptions} />
             
     </Form.Field>
   </Grid.Column>
@@ -227,6 +227,7 @@ function AddPeoplePermission() {
       onOpen={() => setOpen(true)}
       open={open}
       trigger={<Button size='mini' className="grey-btn">Add new user</Button> }
+      closeOnDimmerClick={false}
     >
       <Modal.Header><h3>Add New User </h3></Modal.Header>
       <Modal.Content body>

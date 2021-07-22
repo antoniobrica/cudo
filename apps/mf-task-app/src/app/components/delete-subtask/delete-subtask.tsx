@@ -35,6 +35,7 @@ const size = undefined
         onClose={() => setOpen(false)}
         onOpen={openf}
         open={open} className="mini"
+        closeOnDimmerClick={false}
       >
         
         <Modal.Header>Delete Sub Task 

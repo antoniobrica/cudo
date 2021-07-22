@@ -31,6 +31,7 @@ function ModalEditInvitation() {
             Edit Invitation
           </Button>
         }
+        closeOnDimmerClick={false}
       >
         <Modal.Header>
           <h3>Edit Invitation </h3>

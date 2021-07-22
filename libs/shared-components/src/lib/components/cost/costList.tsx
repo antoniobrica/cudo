@@ -11,15 +11,24 @@ export interface CostListProps {
   addNew?,
   costs?,
   delete?
+  updateBkpCost?
 }
 
 
 export function CostList(props: CostListProps) {
   const [editC, setEditC] = React.useState(false)
+  const [expandBkpF, setExpandBkpF] = React.useState(false)
+  const [expandFirstLayer, setExpandFirstLayer] = React.useState(false)
+
   const [isBkpEdited, setIsBkpEdited] = React.useState(false)
   const [estimateCost, setEstimateCost] = React.useState('5,000.00')
   const [showBkp, setexpandBkp] = React.useState(false)
   const [editBkpData, setEditBkpData] = React.useState(null);
+  const [editBkpT, setEditBkpT] = React.useState(null);
+  const [editBkpD, setEditBkpD] = React.useState(null);
+  const [editBkpIq, setEditBkpIq] = React.useState(null);
+  const [editBkpIp, setEditBkpIp] = React.useState(null);
+
   const addNew = () => {
     console.log('add new');
     props.addNew()
@@ -40,21 +49,51 @@ export function CostList(props: CostListProps) {
     props.delete(data)
   }
   const editBkp = (data) => {
-    console.log('edit', data)
-    setEditBkpData(data)
+    console.log('edit', data);
+    setEditBkpData(data);
+    setEditBkpT(data.BKPTitle);
+    setEditBkpD(data.description);
+    setEditBkpIq(data.itemQuantity);
+    setEditBkpIp(data.itemPrice);
     setIsBkpEdited(true)
   }
   const rootPanels = [
     { key: 'panel-1', title: 'Jack W. Elementary School', content: { content: <a href=''>+ Add item</a> }, },
     { key: 'panel-2', title: 'Freehold Two Solar LLC', content: { content: <a href=''>+ Add item</a> } },
   ]
-  const editBkpTitle = (data) => {
+  const editBkpTitle = (d) => {
+    console.log('editted bkp', d)
+    const data = {
+      BKPID: d.BKPID,
+      bkpCostID: d.bkpCostID,
+      BKPTitle: editBkpT,
+      description: editBkpD,
+      itemPrice: Number(editBkpIp),
+      itemQuantity: Number(editBkpIq)
+    }
+
+    setIsBkpEdited(false)
+
+    props.updateBkpCost(data)
+  }
+  const cancelEdit = () => {
     setIsBkpEdited(false)
   }
-  const handleBkpTitle = (data) => {
-    console.log('bkp title', data);
-
+  const handleBkpDescription = (e) => {
+    setEditBkpD(e.target.value)
   }
+
+  const handleBkpQuantity = (e) => {
+    setEditBkpIq(e.target.value)
+  }
+
+  const handleBkpPrice = (e) => {
+    setEditBkpIp(e.target.value)
+  }
+  const handleBkpTitle = (e) => {
+    setEditBkpT(e.target.value)
+  }
+
   return (
     <div>
 
@@ -180,18 +219,18 @@ export function CostList(props: CostListProps) {
             <ul>
               <li>
                 <div className="treeview__level show" data-level="A">
-                  <Icon name="add" className="show-view" style={{ display: 'none' }} />
-                  <Icon name="minus" className="hide-view" />
+                  <Icon name="add" className="show-view" onClick={() => setExpandFirstLayer(!expandFirstLayer)} />
+                  {expandFirstLayer && <Icon name="minus" className="hide-view" onClick={() => setExpandFirstLayer(!expandFirstLayer)} />}
                   <span className="level-title cost-item-parent"><Icon name="list" /> Jack W. Elementary School <span className="item-total-price">Total price: $1500.00</span></span>
                 </div>
-                <ul>
+                {expandFirstLayer && <ul>
                   <li>
                     <div className="treeview__level show" data-level="B">
-                      <Icon name="add" className="show-view" style={{ display: 'none' }} />
-                      <Icon name="minus" className="hide-view" />
+                      <Icon name="add" className="show-view" onClick={() => setExpandBkpF(!expandBkpF)} />
+                      {expandBkpF && <Icon name="minus" className="hide-view" onClick={() => setExpandBkpF(!expandBkpF)} />}
                       <span className="level-title"><Icon name="level up alternate" className="rotate-level-icon" /> 0 - Grundstück</span>
                     </div>
-                    <ul>
+                    {expandBkpF && <ul>
                       <li>
                         <div className="treeview__level show" data-level="B">
                           {showBkp ?
@@ -226,7 +265,7 @@ export function CostList(props: CostListProps) {
                                               <Form.Field className="fillarea">
                                                 <Input placeholder='Enter your text here....' size='small' className="full-width "
                                                   type="text"
-                                                  value={''}
+                                                  value={editBkpT}
                                                   onChange={handleBkpTitle}
                                                 />
                                               </Form.Field>
@@ -237,8 +276,8 @@ export function CostList(props: CostListProps) {
                                               <Form.Field className="fillarea">
                                                 <Input placeholder='Enter your text here....' size='small' className="full-width "
                                                   type="text"
-                                                  value={''}
-                                                  onChange={handleBkpTitle}
+                                                  value={editBkpD}
+                                                  onChange={handleBkpDescription}
                                                 />
                                               </Form.Field>
                                             </div>
@@ -248,8 +287,8 @@ export function CostList(props: CostListProps) {
                                               <Form.Field className="fillarea">
                                                 <Input placeholder='Enter your text here....' size='small' className="full-width "
                                                   type="text"
-                                                  value={''}
-                                                  onChange={handleBkpTitle}
+                                                  value={editBkpIq}
+                                                  onChange={handleBkpQuantity}
                                                 />
                                               </Form.Field>
                                             </div>
@@ -259,8 +298,8 @@ export function CostList(props: CostListProps) {
                                               <Form.Field className="fillarea">
                                                 <Input placeholder='Enter your text here....' size='small' className="full-width "
                                                   type="text"
-                                                  value={''}
-                                                  onChange={handleBkpTitle}
+                                                  value={editBkpIp}
+                                                  onChange={handleBkpPrice}
                                                 />
                                               </Form.Field>
                                             </div>
@@ -268,9 +307,9 @@ export function CostList(props: CostListProps) {
                                           <Table.Cell>
                                             <div className="edit-estimated-price" >
                                               <Form.Field className="d-flex">
-                                                <button className="greenbutton anchor_complete" onClick={editBkpTitle}>
+                                                <button className="greenbutton anchor_complete" onClick={() => editBkpTitle(cost?.BKPCosts[0])}>
                                                   <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
-                                                </button> &nbsp;  <button className="redbutton anchor_complete" onClick={editBkpTitle}>
+                                                </button> &nbsp;  <button className="redbutton anchor_complete" onClick={cancelEdit}>
                                                   <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i>
                                                 </button>
                                               </Form.Field>
@@ -331,6 +370,7 @@ export function CostList(props: CostListProps) {
                         </div>
                       </li>
                     </ul>
+                    }
                   </li>
 
                   <li>
@@ -351,6 +391,7 @@ export function CostList(props: CostListProps) {
                   </li>
 
                 </ul>
+                }
                 {/* </li>
             </ul> */}
 

@@ -113,6 +113,7 @@ export function SelectFilePopup(props: FileStructureProps) {
       //     Task from file
       //   </Button>
       // }
+      closeOnDimmerClick={false}
       >
         <Modal.Header>
           <h3>Select file</h3>

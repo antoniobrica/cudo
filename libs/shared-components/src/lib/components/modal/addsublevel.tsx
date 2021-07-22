@@ -16,6 +16,7 @@ function ModalAddSubLevel() {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={<Button size='mini' className="grey-btn">  Add Sub Level</Button>}
+        closeOnDimmerClick={false}
       >
         <Modal.Header><h3>Add sub level </h3>
 

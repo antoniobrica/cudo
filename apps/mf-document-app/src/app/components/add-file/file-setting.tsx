@@ -210,6 +210,7 @@ export function FileSetting(props: FileProps) {
         onOpen={openf}
         open={open}
         trigger={<Button size='mini' className="grey-btn">Uploaded File</Button>}
+        closeOnDimmerClick={false}
       >
         <Modal.Header><h3>Add File </h3></Modal.Header>
         <Modal.Content body>
@@ -335,7 +336,7 @@ export function FileSetting(props: FileProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>Project</label>
-                      <Select placeholder='Select' className="small" options={projectOptions} />
+                      <Select clearable placeholder='Select' className="small" options={projectOptions} />
 
                     </Form.Field>
                   </Grid.Column>

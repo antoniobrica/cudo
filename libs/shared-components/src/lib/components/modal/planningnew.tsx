@@ -21,6 +21,9 @@ import ReactQuill, { Quill } from 'react-quill';
 export interface PlanningProps {
   getMilestoneData?,
   worktypes?
+  openNew?
+  cancel?
+
 }
 export function ModalPlanningNew(props: PlanningProps) {
   const countryOptions = [
@@ -47,8 +50,18 @@ export function ModalPlanningNew(props: PlanningProps) {
   const [workType, setworkType] = React.useState(null)
   const [workTypeD, setworkTypeD] = React.useState(null)
 
-
+  const [errors, setErrors] = React.useState({
+    titleError: '',
+    dateError: '',
+    phaseError: '',
+    workTypeError: ''
+  })
   const [open, setOpen] = React.useState(false);
+  React.useEffect(() => {
+    if (props.openNew) {
+      setOpen(props.openNew)
+    }
+  }, [props.openNew])
   React.useEffect(() => {
     if (props.worktypes) {
       console.log('worktypes', props.worktypes);
@@ -95,8 +108,45 @@ export function ModalPlanningNew(props: PlanningProps) {
   const onDescriptionChange = e => {
     setDescription(e);
   }
-  const createMilestone = () => {
 
+  const validation = () => {
+    let response = true
+
+    if (!milestone) {
+      response = false
+      setErrors({ ...errors, titleError: " Please provide title" })
+      return false
+    }
+
+    if (!dueDate) {
+      response = false
+      setErrors({ ...errors, dateError: " Please provide due Date" })
+      return false
+    }
+
+    if (!worktypeID) {
+      response = false
+      setErrors({ ...errors, workTypeError: " Please provide work-type" })
+      return false
+    }
+
+    if (!phaseID) {
+      response = false
+      setErrors({ ...errors, phaseError: " Please provide Phase" })
+      return false
+    }
+
+    if (!response) {
+      return false
+    }
+    return true
+  }
+
+  const createMilestone = () => {
+    if (!validation()) {
+      return false
+    }
+    resetAddData()
     const data = {
       milestoneTitle: milestone,
       dueDate: dueDate,
@@ -107,8 +157,33 @@ export function ModalPlanningNew(props: PlanningProps) {
       worktypeName: workTypeD.worktypeName
     }
     props.getMilestoneData(data);
-    setOpen(false)
+    props.cancel()
+    //setOpen(false)
   }
+  const cancel = () => {
+    setOpen(false)
+    props.cancel()
+  }
+
+  const resetAddData = () => {
+    setPhasesName("")
+    setPhasesID("")
+    setMilestoneName("")
+    setDueDate("")
+    setDescription("")
+    setworktypeID("")
+    setworktypeName("")
+    setworkTypeData("")
+    setworkType(null)
+    setworkTypeD(null)
+    setErrors({
+      titleError: '',
+      dateError: '',
+      phaseError: '',
+      workTypeError: ''
+    })
+  }
+
   return (
     <div>
       <Modal className="modal_media right-side--fixed-modal add-new-milestone-modal"
@@ -116,11 +191,11 @@ export function ModalPlanningNew(props: PlanningProps) {
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={
-          <Button size="small" className="primary">
-            + Add New
-          </Button>
-        }
+      // trigger={
+      //   <Button size="small" className="primary">
+      //     + Add New
+      //   </Button>
+      // }
       >
         <Modal.Header>
           <h3>Add Milestone </h3>
@@ -142,7 +217,9 @@ export function ModalPlanningNew(props: PlanningProps) {
                         type="text"
                         value={milestone}
                         onChange={onMilestoneChange}
+                        error={errors?.titleError && !milestone}
                       />
+                      {errors?.titleError && !milestone ? <span className="error-message">{errors.titleError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
@@ -156,7 +233,9 @@ export function ModalPlanningNew(props: PlanningProps) {
                         type="date"
                         value={dueDate}
                         onChange={onDueDateChange}
+                        error={errors?.dateError && !dueDate}
                       />
+                      {errors?.dateError && !dueDate ? <span className="error-message">{errors.dateError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -199,16 +278,18 @@ export function ModalPlanningNew(props: PlanningProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                        Associate with work type
+                        Associate with work type <span className="danger">*</span>
 
                       </label>
                       <Select
+                        clearable
                         placeholder="Select"
                         className="small"
                         value={workTypeData}
                         options={workType}
                         onChange={onMworkType}
                       />
+                      {errors?.workTypeError && !worktypeName ? <span className="error-message">{errors.workTypeError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -225,6 +306,7 @@ export function ModalPlanningNew(props: PlanningProps) {
                       />
                     </Form.Field> */}
                     <PhaseIndex parentPhaseSelect={onsetPhasesID} />
+                    {errors?.phaseError && !phaseID ? <span className="error-message">{errors.phaseError}</span> : null}
                   </Grid.Column>
 
                 </Grid.Row>
@@ -243,7 +325,7 @@ export function ModalPlanningNew(props: PlanningProps) {
           <Button
             size="small"
             className="icon-border"
-            onClick={() => setOpen(false)}
+            onClick={cancel}
           >
             <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> Cancel
           </Button>

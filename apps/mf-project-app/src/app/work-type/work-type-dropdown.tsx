@@ -27,6 +27,7 @@ export function WorkTypeDropdown(props: WorktypeDropdownProps) {
       options={props.data}
       value={workType}
       onChange={onMworkType}
+      clearable
     />
   </Form.Field>
   );

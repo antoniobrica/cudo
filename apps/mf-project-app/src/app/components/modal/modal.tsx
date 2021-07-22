@@ -377,6 +377,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     options={clientCompanies}
                     value={client}
                     onChange={onprojectClient}
+                    clearable
                   />
                 </Form.Field>
                 <Form.Field>
@@ -390,6 +391,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                   <Select placeholder='Select' className="small" options={buildingTypes}
                     value={buildingType}
                     onChange={onBuildingType}
+                    clearable
                   />
                 </Form.Field>
               </Grid.Column>
@@ -403,6 +405,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                   <Select placeholder='Select' className="small" options={printingCompanies}
                     value={printing}
                     onChange={onProjectPrinting}
+                    clearable
                   />
                 </Form.Field>
                 <Form.Field>
@@ -628,6 +631,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={<Button size='small' className="primary"><i className="ms-Icon ms-font-xl ms-Icon--Add ms-fontColor-themePrimary"></i> Add New</Button>}
+        closeOnDimmerClick={false}
       >
         <Modal.Header><h3>Add New Project </h3></Modal.Header>
         <Modal.Content body>
@@ -661,6 +665,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
           onClose={() => setSecondOpen(false)}
           open={secondOpen}
           size='small'
+          closeOnDimmerClick={false}
         >
 
           <Modal.Header><h3>Add Company</h3></Modal.Header>
@@ -691,7 +696,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     <Grid.Column>
                       <Form.Field>
                         <label>Company Type </label>
-                        <Select placeholder='Select' className="small" options={companyTypeOptions} />
+                        <Select placeholder='Select' className="small" options={companyTypeOptions}  clearable />
 
                       </Form.Field>
                     </Grid.Column>
@@ -711,7 +716,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     <Grid.Column>
                       <Form.Field>
                         <label>Type  </label>
-                        <Select placeholder='Select' className="small" options={emailTypeOptions} />
+                        <Select placeholder='Select' className="small" options={emailTypeOptions} clearable />
 
                       </Form.Field>
                     </Grid.Column>
@@ -739,7 +744,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                           <Grid.Row>
                             <Grid.Column>
                               <Form.Field>
-                                <Select placeholder='Select' className="small" options={countryOptions} />
+                                <Select placeholder='Select' className="small" options={countryOptions} clearable />
                               </Form.Field>
                               <Form.Field>
                                 <a href="" className="anchor-color">+ Add New</a>
@@ -747,7 +752,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                             </Grid.Column>
                             <Grid.Column>
                               <Form.Field>
-                                <Select placeholder='Select' className="small" options={countryOptions} />
+                                <Select placeholder='Select' className="small" options={countryOptions} clearable />
                               </Form.Field>
 
                             </Grid.Column>
@@ -760,7 +765,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     <Grid.Column  >
                       <Form.Field>
                         <label>Type  </label>
-                        <Select placeholder='Select' className="small" options={phoneTypeOptions} />
+                        <Select placeholder='Select' className="small" options={phoneTypeOptions} clearable />
                       </Form.Field>
                     </Grid.Column>
                   </Grid.Row>
