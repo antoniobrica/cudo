@@ -11,6 +11,7 @@ import { useHistory } from 'react-router';
 import './create-file-task.module.scss';
 import axios from 'axios';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { useTranslation } from 'react-i18next';
 
 
 /* eslint-disable-next-line */
@@ -50,6 +51,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   const [assignees, setAssignees] = React.useState<any>([]);
   const [followers, setfollowers] = React.useState<any>([]);
   const history = useHistory();
+  const {t} = useTranslation()
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
 
@@ -278,7 +280,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
             <Grid.Row>
               <Grid.Column>
                 <Form.Field>
-                  <label>Pin Number {props.cord?.pinNumber} <span className="danger">*</span></label>
+                  <label>{t("project_tab_menu.task.pin_number")} {props.cord?.pinNumber} <span className="danger">*</span></label>
                 </Form.Field>
               </Grid.Column>
             </Grid.Row>
@@ -287,8 +289,8 @@ export function CreateFileTask(props: CreateFileTaskProps) {
             <Grid.Row>
               <Grid.Column>
                 <Form.Field>
-                  <label>Task Title <span className="danger">*</span></label>
-                  <Input placeholder='Task title' size='small' className="full-width" type="text"
+                  <label>{t("project_tab_menu.task.task_title")} <span className="danger">*</span></label>
+                  <Input placeholder={t("project_tab_menu.task.task_title")} size='small' className="full-width" type="text"
                     value={taskTitle}
                     onChange={onTaskTitleChange} />
                 </Form.Field>
@@ -299,8 +301,8 @@ export function CreateFileTask(props: CreateFileTaskProps) {
             <Grid.Row>
               <Grid.Column>
                 <Form.Field>
-                  <label>Description </label>
-                  <TextArea placeholder='Tell us more'
+                  <label>{t("common.desc")} </label>
+                  <TextArea placeholder={t("common.tell_us_more")}
                     value={description}
                     onChange={onDescriptionChange} />
                 </Form.Field>
@@ -311,10 +313,10 @@ export function CreateFileTask(props: CreateFileTaskProps) {
             <Grid.Row>
               <Grid.Column>
                 <Form.Field>
-                  <label>Associate with work type <span className="danger">*</span></label>
+                  <label>{t("project_tab_menu.task.work_type")} <span className="danger">*</span></label>
                   {/* <Select placeholder='Select' className="small" options={workTypes} /> */}
                   <Select
-                    placeholder="Select"
+                    placeholder={t("common.select")}
                     className="small"
                     value={workTypeData}
                     options={workType}
@@ -377,7 +379,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
             <Grid.Row>
               <Grid.Column>
                 <Form.Field>
-                  <label>Start Date  </label>
+                  <label>{t("common.start_date")}  </label>
                   {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
                   <Input placeholder='Default' size='small' className="full-width"
                     type="date"
@@ -388,7 +390,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
               </Grid.Column>
               <Grid.Column>
                 <Form.Field>
-                  <label>End Date </label>
+                  <label>{t("common.end_date")} </label>
                   {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
                   <Input placeholder='Default' size='small' className="full-width" type="date"
                     value={endDate}
@@ -405,8 +407,8 @@ export function CreateFileTask(props: CreateFileTaskProps) {
             <Grid.Row>
               <Grid.Column>
                 <Form.Field>
-                  <label>Estimated Days  </label>
-                  <Input placeholder='Enter days' className="small"
+                  <label>{t("common.estimated_days")}  </label>
+                  <Input placeholder={t("project_tab_menu.task.enter_days")} className="small"
                     value={estimatedDays}
                     onChange={onsetEstimatedDays}
                   />
@@ -418,9 +420,9 @@ export function CreateFileTask(props: CreateFileTaskProps) {
             <Grid.Row>
               <Grid.Column>
                 <Form.Field>
-                  <label>Task Configuration  </label>
+                  <label>{t("common.task_configuration")}  </label>
                   <div className="content configuration-toggle">
-                    <p className="paragraph task-configuration">Send notification to assignee/followers for the task  <Checkbox toggle className="task-toggle" /></p></div>
+                    <p className="paragraph task-configuration">{t("common.notification_for_task")}  <Checkbox toggle className="task-toggle" /></p></div>
                 </Form.Field>
               </Grid.Column>
             </Grid.Row>
@@ -428,13 +430,13 @@ export function CreateFileTask(props: CreateFileTaskProps) {
         </Form>
         <Modal.Actions>
           <Button
-            content="Submit"
+            content={t("common.submit")}
             onClick={handleSaveTask}
             positive
             size='small' className="primary"
           />
           <Button size='small' className="icon-border" onClick={cancel}>
-          <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i>  Cancel
+          <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i>  {t("common.cancel")}
           </Button>
         </Modal.Actions>
       </div>

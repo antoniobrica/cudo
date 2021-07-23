@@ -15,6 +15,7 @@ import {
 import { PhaseIndex } from "@cudo/mf-account-app-lib"
 import moment, { calendarFormat } from 'moment';
 import ReactQuill, { Quill } from 'react-quill';
+import { useTranslation } from 'react-i18next';
 
 // import SampleModal from './sample-modal';
 
@@ -49,7 +50,8 @@ export function ModalPlanningNew(props: PlanningProps) {
   const [workTypeData, setworkTypeData] = React.useState('')
   const [workType, setworkType] = React.useState(null)
   const [workTypeD, setworkTypeD] = React.useState(null)
-
+  
+  const {t} = useTranslation()
   const [errors, setErrors] = React.useState({
     titleError: '',
     dateError: '',
@@ -114,25 +116,25 @@ export function ModalPlanningNew(props: PlanningProps) {
 
     if (!milestone) {
       response = false
-      setErrors({ ...errors, titleError: " Please provide title" })
+      setErrors({ ...errors, titleError: t("common.errors.title_error") })
       return false
     }
 
     if (!dueDate) {
       response = false
-      setErrors({ ...errors, dateError: " Please provide due Date" })
+      setErrors({ ...errors, dateError: t("common.errors.due_date_error") })
       return false
     }
 
     if (!worktypeID) {
       response = false
-      setErrors({ ...errors, workTypeError: " Please provide work-type" })
+      setErrors({ ...errors, workTypeError: t("common.errors.worktype_error") })
       return false
     }
 
     if (!phaseID) {
       response = false
-      setErrors({ ...errors, phaseError: " Please provide Phase" })
+      setErrors({ ...errors, phaseError: t("common.errors.phase_error") })
       return false
     }
 
@@ -196,9 +198,10 @@ export function ModalPlanningNew(props: PlanningProps) {
       //     + Add New
       //   </Button>
       // }
+      closeOnDimmerClick={false}
       >
         <Modal.Header>
-          <h3>Add Milestone </h3>
+          <h3>{t("project_tab_menu.planning.add_milestone")} </h3>
         </Modal.Header>
         <Modal.Content body>
           <div>
@@ -208,10 +211,10 @@ export function ModalPlanningNew(props: PlanningProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                        Milestone Title <span className="danger">*</span>
+                      {t("project_tab_menu.planning.milestone_title")} <span className="danger">*</span>
                       </label>
                       <Input
-                        placeholder="Milestone title"
+                        placeholder={t("project_tab_menu.planning.milestone_title")}
                         size="small"
                         className="full-width"
                         type="text"
@@ -224,7 +227,7 @@ export function ModalPlanningNew(props: PlanningProps) {
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Due Date <span className="danger">*</span></label>
+                      <label>{t("common.due_date")} <span className="danger">*</span></label>
 
                       <Input
                         placeholder="Default"
@@ -245,7 +248,7 @@ export function ModalPlanningNew(props: PlanningProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Description </label>
+                      <label>{t("common.desc")} </label>
                       {/* <TextArea placeholder="Tell us more"    
                        value={description}
                        onChange={onDescriptionChange}
@@ -265,7 +268,7 @@ export function ModalPlanningNew(props: PlanningProps) {
                             ]
                           }
                         }}
-                        placeholder="Add a description"
+                        placeholder={t("common.desc_placeholder")}
                         onChange={(content, delta, source, editor) => onDescriptionChange(content)}
                         id="txtDescription"
                       />
@@ -278,16 +281,17 @@ export function ModalPlanningNew(props: PlanningProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                        Associate with work type <span className="danger">*</span>
+                      {t("project_tab_menu.task.work_type")} <span className="danger">*</span>
 
                       </label>
                       <Select
                         clearable
-                        placeholder="Select"
+                        placeholder={t("common.select")}
                         className="small"
                         value={workTypeData}
                         options={workType}
                         onChange={onMworkType}
+                        error={errors?.workTypeError && !worktypeName}
                       />
                       {errors?.workTypeError && !worktypeName ? <span className="error-message">{errors.workTypeError}</span> : null}
                     </Form.Field>
@@ -316,7 +320,7 @@ export function ModalPlanningNew(props: PlanningProps) {
         </Modal.Content>
         <Modal.Actions>
           <Button
-            content="Submit"
+            content={t("common.submit")}
             onClick={createMilestone}
             positive
             size="small"
@@ -327,7 +331,7 @@ export function ModalPlanningNew(props: PlanningProps) {
             className="icon-border"
             onClick={cancel}
           >
-            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> {t("common.cancel")}
           </Button>
         </Modal.Actions>
       </Modal>

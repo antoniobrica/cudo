@@ -3,6 +3,7 @@ import React from 'react';
 import './../../../assets/style/index.scss'
 import { Tab, Image, Input, Accordion, Form, Grid, Card, Dropdown } from 'semantic-ui-react';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { useTranslation } from 'react-i18next';
 /* eslint-disable-next-line */
 export interface TabsProps { }
 
@@ -16,6 +17,7 @@ export function Tabsbar(props: TabsProps) {
   const handleOpenProject = (item) => {
     // props?.parentCallback(item)
   }
+  const {t} = useTranslation()
   const rootPanels = [
     { key: 'panel-1', title: 'Jack W. Elementary School', content: { content: <a href=''>+ Add item</a> }, },
     { key: 'panel-2', title: 'Freehold Two Solar LLC', content: { content: <a href=''>+ Add item</a> } },
@@ -50,11 +52,11 @@ export function Tabsbar(props: TabsProps) {
         <Tab.Pane attached={false} onClick={handleOpenProject('planning')}>
           <div className="ui-tabs">
             <h6 style={{ fontWeight: 'normal' }} className="h5heading">
-              Planning
+              {t("project_tab_menu.planning.title")}
             </h6>
             <hr style={{ color: '#707070' }}></hr>
             <h6 style={{ fontWeight: 'normal', marginTop: '12px' }} className="h5heading">
-              Active Milestone {' '}
+            {t("project_tab_menu.planning.active_milestone")}
             </h6>
 
             <Form>
@@ -67,9 +69,9 @@ export function Tabsbar(props: TabsProps) {
                           <div className="description ">
                             <span className="time">Aug 26, Wednesday</span>
                             <span className="summary">
-                              {' '}
+
                               <a href="">
-                                {' '}
+
                                 <i
                                   className="ms-Icon ms-Icon--Completed mr-10"
                                   aria-hidden="true"
@@ -155,7 +157,7 @@ export function Tabsbar(props: TabsProps) {
                         <div className="content noborder">
                           <div className="data-built data_area">
                             <p>
-                              {' '}
+
                               This is description will be show sunt in culpa qui
                               officia deserunt mollit anim id est laborum...
                             </p>
@@ -201,9 +203,9 @@ export function Tabsbar(props: TabsProps) {
                           <div className="description">
                             <span className="time2">Aug 1, Saturday</span>
                             <span className="summary">
-                              {' '}
+
                               <a href="">
-                                {' '}
+
                                 <i
                                   className="ms-Icon ms-Icon--Completed mr-10"
                                   aria-hidden="true"
@@ -220,7 +222,7 @@ export function Tabsbar(props: TabsProps) {
                         <div className="content noborder">
                           <div className="data-built data_area">
                             <p>
-                              {' '}
+
                               This is description will be show sunt in culpa qui
                               officia deserunt mollit anim id est laborum...
                             </p>
@@ -378,7 +380,7 @@ export function Tabsbar(props: TabsProps) {
   return (
     <div className="app-content-body-dash navbar-collapse">
       <div className="main-page-heading">
-        <span className="">Electrical Work</span> |{' '}
+        <span className="">Electrical Work</span> |
         <span className="preliminary-font">Preliminary Studies</span>
       </div>
 

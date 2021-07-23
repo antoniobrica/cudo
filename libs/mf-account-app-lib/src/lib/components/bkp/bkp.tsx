@@ -5,6 +5,7 @@ import { Form, Select } from 'semantic-ui-react';
 import { useBkpQuery, useFolderQuery } from '../../services/useRequest';
 
 import './bkp.module.scss';
+import { useTranslation } from 'react-i18next';
 
 /* eslint-disable-next-line */
 export interface BkpProps {
@@ -17,7 +18,7 @@ export function Bkp(props: BkpProps) {
   const [items1, setItems1] = React.useState([])
   const [items2, setItems2] = React.useState([])
   const [BKPID, setBKPID] = React.useState("")
-
+  const {t} = useTranslation()
   const { loading, error, data } = useBkpQuery(GET_BKP);
   const { loading: folderL, error: folderE, data: FolderD } = useFolderQuery(GET_FOLDER)
   React.useEffect(() => {
@@ -88,8 +89,8 @@ export function Bkp(props: BkpProps) {
 
   return (
     <Form.Field>
-      <label>Select BKP   </label>
-      <Select name='bkp' placeholder='Select' className="small"
+      <label>{t("common.select_bkp")}   </label>
+      <Select name='bkp' placeholder={t("common.select")} className="small"
         options={items2}
         value={BKPID}
         onChange={onBkp}

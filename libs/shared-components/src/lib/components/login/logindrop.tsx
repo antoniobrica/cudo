@@ -3,6 +3,7 @@ import React from 'react';
 import './../../../assets/style/index.scss'
 import { Select, Input, Segment, Form, Grid, Image, Checkbox, Button, Icon, Dropdown } from 'semantic-ui-react'
 import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { useTranslation } from 'react-i18next';
 
 /* eslint-disable-next-line */
 export interface LoginDropProps {
@@ -13,6 +14,7 @@ export interface LoginDropProps {
 }
 
 export function Logindrop(props: LoginDropProps) {
+  const {t} = useTranslation()
   const handleLogin = () => {
     props.login();
   }
@@ -32,8 +34,8 @@ export function Logindrop(props: LoginDropProps) {
                 <div className="ln-form-outer">
                   <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/Shape 2.png`} />
                   <div className="form-header">
-                    <span className="welcome">Welcome Back</span>
-                    <h2 className="login">Select your company</h2>
+                    <span className="welcome">{t("login.greet")}</span>
+                    <h2 className="login">{t("login.logindrop_title")}</h2>
                   </div>
                   <div className="form-inner">
                     <Form>
@@ -44,7 +46,7 @@ export function Logindrop(props: LoginDropProps) {
                       </Form.Field>
                       <Form.Field className="form-dropdown">
                         <Dropdown
-                          placeholder='Please select'
+                          placeholder={t("login.dropdown_placeholder")}
                           fluid
                           selection
                           options={props?.companies}
@@ -53,9 +55,9 @@ export function Logindrop(props: LoginDropProps) {
                         />
                         {/* <Select placeholder='Select Company' options={props?.companies} defaultValue={props?.companies[0]?.value} className="full-width" /> */}
                       </Form.Field>
-                      <Button onClick={handleLogin} size='large' className="primary btn-large">Continue <Icon name='arrow right' />   </Button>
-                      <span> <br /> <a href="/auth/registration" className="blue_color form-link"> Register with us</a>  </span>
-                      <span className="float_right ">   <a href="/recovery" className="blue_color form-link"> Forgot Password ?</a>  </span>
+                      <Button onClick={handleLogin} size='large' className="primary btn-large">{t("common.continue")} <Icon name='arrow right' />   </Button>
+                      <span> <br /> <a href="/auth/registration" className="blue_color form-link"> {t("login.register_link")}</a>  </span>
+                      <span className="float_right ">   <a href="/recovery" className="blue_color form-link"> {t("login.forgot_password_link")} ?</a>  </span>
                     </Form>
                   </div>
                 </div>
