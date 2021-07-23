@@ -15,6 +15,7 @@ import { FileMutation, IFiles } from '../../interfaces/document';
 import { FetchResult, useMutation } from '@apollo/client';
 import { AddNewFolder } from '@cudo/shared-components';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { useTranslation } from 'react-i18next';
 export interface FileProps {
   openSettingF
 }
@@ -51,7 +52,7 @@ export function FileSetting(props: FileProps) {
 
   const [items, setItems] = React.useState<BlobItemUpload[]>([]);
   const [download, setDownload] = React.useState<BlobItemDownload[]>([]);
-
+  const {t} = useTranslation()
   const sharedContext = React.useContext(SharedViewStateContext);
 
   const getContainerItemsEffect = () => {
@@ -209,10 +210,10 @@ export function FileSetting(props: FileProps) {
         onClose={() => setOpen(false)}
         onOpen={openf}
         open={open}
-        trigger={<Button size='mini' className="grey-btn">Uploaded File</Button>}
+        trigger={<Button size='mini' className="grey-btn">{t("project_tab_menu.files.uploaded_file")}</Button>}
         closeOnDimmerClick={false}
       >
-        <Modal.Header><h3>Add File </h3></Modal.Header>
+        <Modal.Header><h3>{t("project_tab_menu.add_file")} </h3></Modal.Header>
         <Modal.Content body>
           <div>
             <Form>
@@ -223,7 +224,7 @@ export function FileSetting(props: FileProps) {
                       <div className="dashed_area" style={{ paddingTop: 15 }}>
                         <div className="file-upload-message">
                           <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/upload.png`} className="mr-10 " />
-                          <p className="file-upload-default-message">Drag & drop or click here to upload file</p>
+                          <p className="file-upload-default-message">{t("common.drag_and_drop")}</p>
 
                         </div>
                         <Input type="file" className="file-upload-input" multiple={true} onChange={e => uploadFiles(e.target.files)} />
@@ -239,7 +240,7 @@ export function FileSetting(props: FileProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Upload files</label>
+                      <label>{t("project_tab_menu.files.upload_files")}</label>
 
 
                     </Form.Field>
@@ -322,8 +323,8 @@ export function FileSetting(props: FileProps) {
                   <Grid.Column>
                     <Form.Field>
                       <div className="content">
-                        <div className="description">Generate file number
-                          <p className="enable">Enable this option to generate file numbering</p>
+                        <div className="description">{t("project_tab_menu.files.generate_file_number")}
+                          <p className="enable">{t("project_tab_menu.files.generate_file_number_check")}</p>
                           <Checkbox toggle className="toggle_area" />
                         </div>
                       </div>
@@ -335,8 +336,8 @@ export function FileSetting(props: FileProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Project</label>
-                      <Select clearable placeholder='Select' className="small" options={projectOptions} />
+                      <label>{t("menu.project")}</label>
+                      <Select clearable placeholder={t("common.select")} className="small" options={projectOptions} />
 
                     </Form.Field>
                   </Grid.Column>
@@ -350,7 +351,7 @@ export function FileSetting(props: FileProps) {
                   <Grid.Column>
                     <BkpIndex bkp={BKPID} parentBKPSelect={setBKPIDChange}></BkpIndex>
                     <Form.Field>
-                      <a className="anchor-color" onClick={folderOpen}>+ Add New</a>
+                      <a className="anchor-color" onClick={folderOpen}>+ {t("common.add_new_button")}</a>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
@@ -374,7 +375,7 @@ export function FileSetting(props: FileProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Who can access</label>
+                      <label>{t("common.who_can_access")}</label>
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -383,12 +384,12 @@ export function FileSetting(props: FileProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <Checkbox label='Everyone in the Project/Work type' className="small" />
+                      <Checkbox label={t("common.everyone_in_worktype")} className="small" />
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
-                      <Checkbox label='Specify People only' className="small" onChange={specifyPeople} />
+                      <Checkbox label={t("common.specific_access")} className="small" onChange={specifyPeople} />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -456,13 +457,13 @@ export function FileSetting(props: FileProps) {
         <Modal.Actions>
 
           <Button
-            content="Submit"
+            content={t("common.submit")}
             onClick={handleSaveFile}
             positive
             size='small' className="primary"
           />
           <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
-            X  Cancel
+            X  {t("common.cancel")}
           </Button>
 
         </Modal.Actions>

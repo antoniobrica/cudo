@@ -156,7 +156,8 @@
       "emoji": "Emoji****",
       "mention": "Mention****",
       "no_update_yet": "No update yet****",
-      "no_update_yet_para": "We are not able to see any update here.****"
+      "no_update_yet_para": "We are not able to see any update here.****",
+      "pin_number": "Pin Number****"
     },
     "planning": {
       "title": "Planning****",
@@ -170,14 +171,45 @@
       "delete_milestone": "Delete Milestone****",
       "are_you_sure": "Are you sure you want to delete the milestone?****"
     },
-    "cost": "Cost****",
+    "cost": {
+      "title":"Cost****",
+      "cost_management": "Cost Management****",
+      "manage_cost_for": "Please manage cost for****",
+      "estimated_cost": "Estimated Cost****",
+      "esitmated_cost_edit_placeholder": "Enter yout text here...****",
+      "items": "Items****",
+      "total_price": "Total price****",
+      "sub_total": "Sub Total****",
+      "print": "Print****",
+      "item_quantity": "Item Quantity****",
+      "item_price": "Item Price****"
+    },
     "tender":{
       "title":  "Tender****"
     },
     "meeting": "Meetings****",
     "files": {
       "title": "Files****",
-      "select_file": "Select file****"
+      "select_file": "Select file****",
+      "all_files": "All files****",
+      "send_to_print": "Send to print****",
+      "edit_file_details": "Edit file details****",
+      "upload_new_version": "Upload new version****",
+      "add_task_to_file": "Add task to file****",
+      "file_settings": "File settings****",
+      "upload_files": "Upload files****",
+      "uploaded_file": "Uploaded File****",
+      "generate_file_number": "Generate file number****",
+      "generate_file_number_check": "Enable the option to generate file numbering****",
+      "file_type": "File type****",
+      "file_structure": "File Structure****",
+      "completed":"Completed****",
+      "add_new_folder": "Add new Folder****",
+      "folder_name": "Folder name****",
+      "folder_name_placeholder": "Enter folder name here...****",
+      "file_to_replace": "File to replace****",
+      "click_to_upload": "Click to upload new file****",
+      "new_version": "New version****"
     },
     "questions": "Questions****",
     "setting": "Settings****",
@@ -226,7 +258,7 @@
     "desc": "Description****",
     "desc_placeholder": "Add a description****",
     "select_phase": "Select Phase****",
-    "select_bkp": "Select Bkp****",
+    "select_bkp": "Select BKP****",
     "phase": "Phase****",
     "bkp": "BKP****",
     "followers": "Followers****",
@@ -236,6 +268,13 @@
     "notification_for_task": "Send notification to assignee/followers for the task****",
     "create_on": "Created on****",
     "created_by": "Created by****",
+    "download": "Download****",
+    "downloads": "Downloads****",
+    "drag_and_drop": "Drag & drop or click here to upload file****",
+    "who_can_access": "Who can access****",
+    "everyone_in_worktype": "Everyone in Project/Work type****",
+    "everyone_in_subproject": "Everyone in Project/Subproject****",
+    "specific_access": "Specify People only****",
     "errors": {
       "title_error": "Please provide title****",
       "worktype_error": "Please provide work-type****",

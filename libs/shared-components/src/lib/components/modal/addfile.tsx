@@ -1,5 +1,6 @@
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 export interface FileProps {
@@ -15,7 +16,7 @@ export function ModalAddPrint(props: FileProps) {
 
   ]
 
-
+  const {t}= useTranslation()
   const [open, setOpen] = React.useState(false)
   const [file, setFile] = React.useState(null)
   const onFileChange = event => {
@@ -37,10 +38,10 @@ export function ModalAddPrint(props: FileProps) {
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button size='small' className="primary">+ Add  File</Button>}
+        trigger={<Button size='small' className="primary">+ {t("project_tab_menu.add_file")}</Button>}
         closeOnDimmerClick={false}
       >
-        <Modal.Header><h3>Add File </h3></Modal.Header>
+        <Modal.Header><h3>{t("project_tab_menu.add_file")} </h3></Modal.Header>
         <Modal.Content body>
 
           <div>
@@ -54,7 +55,7 @@ export function ModalAddPrint(props: FileProps) {
                       <div className="dashed_area" style={{ paddingTop: 15 }}>
                         <div className="file-upload-message">
                           <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/upload.png`} className="mr-10 " />
-                          <p className="file-upload-default-message">Drag & drop or click here to upload file</p>
+                          <p className="file-upload-default-message">{t("common.drag_and_drop")}</p>
 
                         </div>
                         <Input type="file" className="file-upload-input" multiple={true} onChange={onFileChange} />
@@ -71,7 +72,7 @@ export function ModalAddPrint(props: FileProps) {
                   <Grid.Column>
                     <Form.Field>
                       <div className="content" onClick={openSetting}>
-                        <div className="description">File settings
+                        <div className="description">{t("project_tab_menu.files.file_settings")}
                           <span className="float_right"><i className="ms-Icon ms-Icon--ChevronRightMed" aria-hidden="true"></i> </span>
                         </div>
 
@@ -89,13 +90,13 @@ export function ModalAddPrint(props: FileProps) {
         </Modal.Content>
         <Modal.Actions>
           <Button
-            content="Submit"
+            content={t("common.submit")}
             onClick={upload}
             positive
             size='small' className="primary"
           />
           <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
-            X  Cancel
+            X  {t("common.cancel")}
           </Button>
 
 

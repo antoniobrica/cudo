@@ -152,7 +152,7 @@ function TabMenu(props: TabMenuProps) {
       },
       {
 
-        menuItem: { key: 'Cost', icon: 'money bill alternate outline', content:t("project_tab_menu.cost") , to: `${url}/cost`, as: NavLink, exact: true, },
+        menuItem: { key: 'Cost', icon: 'money bill alternate outline', content:t("project_tab_menu.cost.title") , to: `${url}/cost`, as: NavLink, exact: true, },
         render: () => <Route
           path={`${url}/cost`}
           exact
