@@ -99,7 +99,7 @@ export function Menubar(props: MenuProps) {
 
               <Dropdown text='John Smith' floating labeled>
                 <Dropdown.Menu>
-                  <Dropdown.Item><i className="ms-Icon ms-Icon--PlayerSettings" aria-hidden="true"></i> {t("menu.user_profile")}</Dropdown.Item>
+                  <Dropdown.Item><i className="ms-Icon ms-Icon--PlayerSettings" aria-hidden="true"></i> {t("menu.profile.user_profile")}</Dropdown.Item>
                   <Dropdown.Item><i className="ms-Icon ms-Icon--PowerButton" aria-hidden="true"></i> {t("menu.logout")}</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
@@ -229,7 +229,7 @@ export function Menubar(props: MenuProps) {
                 trigger={
               } size='small' position='right center'>
               </Popup> */}
-              <span>{t("menu.profile")}</span>
+              <span>{t("menu.profile.title")}</span>
             </Menu.Item>
           </div>
 

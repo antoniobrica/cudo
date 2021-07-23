@@ -12,16 +12,19 @@
     "milestone": "Milestone",
     "calendar": "Calendar",
     "notification": "Notification",
-    "profile": "Profile",
+    "profile": {
+      "title": "Profile",
+      "user_profile": "User Profile",
+      "change_picture": "Change Picture",
+      "old_password": "Old Password",
+      "new_password": "New Password"
+    },
     "configuration": "Configuration",
-    "user_profile": "User Profile",
     "logout": "Logout"
   },
   "messages": {
     "test": "Ups ~ Etwas ist schief gelaufen. Bitte aktualisieren Sie die Seite."
   },
-  "user_profile": "user profile",
-  "first_name": "First Name",
   "add_cost": {
     "add_new_item": "Add new items",
     "add_new": "Add New",
@@ -172,7 +175,7 @@
       "are_you_sure": "Are you sure you want to delete the milestone"
     },
     "cost": {
-      "title":"Cost",
+      "title": "Cost",
       "cost_management": "Cost Management",
       "manage_cost_for": "Please manage cost for",
       "estimated_cost": "Estimated Cost",
@@ -184,8 +187,8 @@
       "item_quantity": "Item Quantity",
       "item_price": "Item Price"
     },
-    "tender":{
-      "title":  "Tender"
+    "tender": {
+      "title": "Tender"
     },
     "meeting": "Meetings",
     "files": {
@@ -203,7 +206,7 @@
       "generate_file_number_check": "Enable the option to generate file numbering",
       "file_type": "File type",
       "file_structure": "File Structure",
-      "completed":"Completed",
+      "completed": "Completed",
       "add_new_folder": "Add new Folder",
       "folder_name": "Folder name",
       "folder_name_placeholder": "Enter folder name here",
