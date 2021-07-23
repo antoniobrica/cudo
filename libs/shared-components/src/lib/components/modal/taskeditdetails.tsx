@@ -172,6 +172,8 @@ export const ModalTaskEdit = (props: AlertProps) => {
     }
   }, [workTypes]);
   const onMworkType = (event, data) => {
+    console.log('workTypes[i]', data);
+
     const workT = {
       worktypeID: '',
       worktypeName: ''
@@ -377,7 +379,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         <span className="danger">*</span>
                       </label>
                       <Select
-                       clearable
+                        clearable
                         placeholder="Select"
                         className="small"
                         value={workTypeData}

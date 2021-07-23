@@ -6,8 +6,9 @@ export const GET_TOKEN = gql`
 `;
 
 export const GET_COST = gql`
+query Costs($referenceID: String!) 
 {
-  costs(referenceFilter: { referenceID: "dapr", referenceType: PROJECTTYPE }) { 
+  costs(referenceFilter: {referenceID: $referenceID, referenceType: PROJECTTYPE }) { 
     id 
     costID 
     structureID
@@ -40,10 +41,12 @@ mutation CreateCost(
   $BKPTitle: String!,
   $BKPID: String!,
   $itemPrice: Float!,
-  $itemQuantity: Float!
+  $itemQuantity: Float!,
+  $referenceID: String!,
+
   ){ 
     createCost( 
-      referenceFilter: { referenceID: "dapr", referenceType: PROJECTTYPE } 
+      referenceFilter: {  referenceID: $referenceID, referenceType: PROJECTTYPE } 
       costDetails: { 
         costBasicInfo: { structureID: "1", structureName: "New" } 
         BKPCosts: { 
