@@ -6,8 +6,10 @@ import {
   Input,
   Form,
   Grid,
+  Dropdown,
   Select,
   TextArea,
+  FormButton,
 } from 'semantic-ui-react';
 import LoaderPage from '../loader/loader';
 // import SampleModal from './sample-modal';
@@ -41,20 +43,33 @@ export function ModalViewPlanning(props: PlanningProps) {
   if (props.loading) return <LoaderPage />;
   return (
     <div id="navbar">
-      <Modal style={{height:'650px'}}
-        className="modal_media"
+      <Modal className="modal_media right-side--fixed-modal view-milestone-modal"
+        closeIcon
         onClose={() => setOpen(false)}
         onOpen={openf}
         open={open}
-        trigger={
-          <Button size="mini" className="grey-btn">
-            View Milestone
-          </Button>
-        }
-        closeOnDimmerClick={false}
-      >
+        // trigger={
+        //   <Button size="mini" className="grey-btn">
+        //     View Milestone
+        //   </Button>
+        // }
+        closeOnDimmerClick={false}>
         <Modal.Header>
-          <h3>View Milestone Details </h3>
+          <h3 className="header-w-icon d-flex align-item-center"><i className="ms-Icon ms-Icon--Completed" aria-hidden="true"></i> Milestone Details
+            <div className="symbol symbol-30 d-flex">
+              <span className="dropdown-action">
+                <Dropdown icon='ellipsis horizontal' floating labeled>
+                  <Dropdown.Menu className="dropdowncomplete">
+                    <Dropdown.Item
+                      icon="pencil" text="Edit" />
+                    <Dropdown.Item
+                      icon="trash alternate outline"
+                      text="Delete" />
+                  </Dropdown.Menu>
+                </Dropdown>
+              </span>
+            </div>
+          </h3>
         </Modal.Header>
         <Modal.Content body>
           <div>
@@ -62,13 +77,13 @@ export function ModalViewPlanning(props: PlanningProps) {
               <Grid columns={2}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
+                    <Form.Field className="filled-fields">
                       <label>Milestone Title</label>
                       <span>{props?.milestoneDataById?.MileStoneByID.milestoneTitle}</span>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
-                    <Form.Field>
+                    <Form.Field className="filled-fields">
                       <label>Due Date</label>
                       <span>{props?.milestoneDataById?.MileStoneByID.dueDate}</span>
                     </Form.Field>
@@ -79,7 +94,7 @@ export function ModalViewPlanning(props: PlanningProps) {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
+                    <Form.Field className="filled-fields">
                       <label>Description </label>
                       <span>{props?.milestoneDataById?.MileStoneByID.description}
                       </span>
@@ -90,7 +105,7 @@ export function ModalViewPlanning(props: PlanningProps) {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
+                    <Form.Field className="filled-fields">
                       <label>Associate with work type</label>
                       <span>{props?.milestoneDataById?.MileStoneByID.worktypeName} </span>
                     </Form.Field>
@@ -100,7 +115,7 @@ export function ModalViewPlanning(props: PlanningProps) {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
+                    <Form.Field className="filled-fields">
                       <label>Phase type</label>
                       <span>{props?.milestoneDataById?.MileStoneByID.phaseName} </span>
                     </Form.Field>
@@ -110,7 +125,7 @@ export function ModalViewPlanning(props: PlanningProps) {
             </Form>
           </div>
         </Modal.Content>
-        <Modal.Actions>
+        {/* <Modal.Actions>
           <Button
             content="Ok"
             onClick={cancel}
@@ -125,7 +140,7 @@ export function ModalViewPlanning(props: PlanningProps) {
           >
             <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> Cancel
           </Button>
-        </Modal.Actions>
+        </Modal.Actions> */}
       </Modal>
     </div>
   );

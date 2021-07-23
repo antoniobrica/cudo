@@ -91,10 +91,10 @@ export function ProjectInfo(props: ProjectInfoProps) {
         <div className="dashboard-header">
           <h3>All Projects <span className="total">Total {data.projects.length} project added</span></h3>
 
-          <div>
+          {/* <div>
             <button onClick={notify}>Notify!</button>
-            <ToastContainer className="success" position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
-          </div>
+            <ToastContainer className="success" position="top-right" autoClose={5000} hideProgressBar={false} closeOnClick pauseOnFocusLoss pauseOnHover />
+          </div> */}
 
           <ModalExampleModal onSuccess={refresh}></ModalExampleModal>
         </div>

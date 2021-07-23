@@ -28,6 +28,33 @@ export const GET_SESSIONS = gql`
   }
 `;
 
+export const GET_SESSION_DETAIL = gql`
+query SessionByID(
+  $sessionID: String!
+){
+  SessionByID (
+    sessionFilter: { 
+      sessionID: $sessionID # "06963320-de0d-11eb-9098-778d331f71cd" 
+      }
+  ) {
+    sessionID
+    sessionTitle
+    worktypeID
+    worktypeTitle
+    meetingCategoryTitle
+    admins {
+      adminID
+      adminName
+      image
+    }
+    members {
+      memberID
+      memberName
+      image
+    }
+  }
+}
+`
 
 export const ADD_SESSION = gql`
 mutation CreateSession(
@@ -80,65 +107,111 @@ mutation CreateSession(
     }
 }`;
 
-
-
-export const UPDATE_TASK = gql`
-mutation UpdateTask(
-  $taskID: String!,    
-  $status: TASKSTATUS!,
-  $taskTitle: String!,
-  $startDate: DateTime!,
-  $endDate: DateTime!,
-  $estimatedDays: String!,
-  $sendNotification: Boolean!,
-  $BKPID: String!,
-  $BKPTitle: String!,
-  $saveTaskAsTemplate: String!,
-  $phaseID: String!
-  $phaseName: String!
-  $description: String!
-  $files: [TaskFileParams!]!
-  ){ 
-    updateTask(
-        taskDetailsUpdate: {
-        taskBasics:{
-          taskID: $taskID,
-          status: $status,
-          taskTitle: $taskTitle,
-          startDate: $startDate, 
-          endDate: $endDate,
-          estimatedDays: $estimatedDays,
-          sendNotification: $sendNotification,
-          BKPID: $BKPID,
-          BKPTitle: $BKPTitle,
-          saveTaskAsTemplate: $saveTaskAsTemplate,
-          phaseID: $phaseID,
-          phaseName: $phaseName,
-          description: $description
+export const UPDATE_SESSION = gql`
+mutation {
+  updateSession(
+    sessionUpdateInput: {
+      sessionBasics: {
+        sessionID: "06963320-de0d-11eb-9098-778d331f71cd"
+        sessionTitle: "Test session update"
+        # worktypeID: "96b3b610-b6c3-11eb-a720-7feeb9ce9ad0"
+        # worktypeTitle: "WorkType8"
+        # meetingCategoryID: "eeb1b5a0-b6e2-11eb-a9bc-d140afe4ba5e"
+        # meetingCategoryTitle: "Test4"
+        # invitationID: "25f5dab0-aca6-11eb-afc2-ed1fc0cfaa43"
+        # invitationTitle: "Invitation One"
+        # protocolID: "a0651e90-d4b6-11eb-8f15-fb86beaf9d47"
+        # protocolTitle: "Protocol A"
+      }
+      admins: [
+        {
+          adminID: "ashutosh.mishra@softobiz.com"
+          adminName: "Ashutosh Mishra12"
+          image: "image12.com"
         }
-      assignees:[{userID:"2",userName:"Ashutosh"},{userID:"3",userName:"Ashutosh"}]
-      followers:[{userID:"1",userName:"Ashutosh"}]
-      files: $files
-      subtasks: []
-
-   }){
-    taskID
-    status    
+        {
+          adminID: "vipin11july1995@gmail.com"
+          adminName: "Vipin Kumar"
+          image: "image123.com"
+        }
+      ]
+      members: [
+        {
+          memberID: "vipin11july1995@gmail.com"
+          memberName: "Vipin Kumar"
+          image: "image123.com"
+        }
+        {
+          memberID: "Mukut.Kandar@softobiz.com"
+          memberName: "Mukut Kandar"
+          image: "image of SK"
+        }
+      ]
+    }
+  ) {
+    sessionID
+    sessionTitle
+    worktypeID
+    worktypeTitle
+    meetingCategoryID
+    meetingCategoryTitle
+    invitationID
+    invitationTitle
+    protocolID
+    protocolTitle
+    admins {
+      adminID
+      adminName
+      image
+    }
+    members {
+      memberID
+      memberName
+      image
+    }
+    createdBy
+    createdAt
+    updatedBy
+    updatedAt
+    isDeleted
   }
 }`;
-export const DELETE_TASK = gql`
-mutation DeleteTask(
-  $taskID: String!,    
-  ){ 
-    deleteTask(taskDeleteInput:
-      {
-        taskID:$taskID
-      }
-  ){
-      taskID
+
+export const DELETE_SESSION = gql`
+mutation {
+  deleteSession(
+    sessionFilter: { sessionID: "35177970-de21-11eb-8f91-c79e422f8e29" }
+  ) {
+    sessionID
+    sessionTitle
+    worktypeID
+    worktypeTitle
+    meetingCategoryID
+    meetingCategoryTitle
+    invitationID
+    invitationTitle
+    protocolID
+    protocolTitle
+    admins {
+      adminID
+      adminName
+      image
     }
+    members {
+      memberID
+      memberName
+      image
+    }
+    createdBy
+    createdAt
+    updatedBy
+    updatedAt
+    isDeleted
+  }
 }`;
-//dummy data
+
+
+
 
 export const GET_INVITATIONS = gql`
 query GetMeetingList(
@@ -198,9 +271,44 @@ query GetMeetingList(
     page_total
     # hasNextPage
   }
-}
-`;
-
+}`;
+// "7bf4bf20-e39d-11eb-b6f1-b9564249267a" 
+export const GET_INVITATION_DETAIL = gql`
+query getMeetingById(
+  $meetingId: String!
+){
+  getMeetingById(meetingDetailFilter: { 
+   meetingId: $meetingId 
+  }) {
+    companyId
+    projectTypeId
+    workTypeId
+    sessionId
+    meetingId
+    meetingTitle
+    meetingDate
+    meetingStartTime
+    meetingEndTime
+    inviteGuests
+    meetingDescription
+    protocolId
+    protocolTitle
+    members {
+      memberID
+      memberName
+      image
+    }
+    meetingFiles {
+      fileId
+      meetingFileId
+      meetingFileTitle
+    }
+    # createdAt
+    createdBy
+    # updatedAt
+    updatedBy
+  }
+}`;
 
 export const ADD_INVITATION = gql`
 mutation CreateMeeting(
@@ -274,30 +382,106 @@ mutation CreateMeeting(
     }
 }`;
 
-export const GET_SESSION_DETAIL = gql`
-query SessionByID(
-  $sessionID: String!
-){
-  SessionByID (
-    sessionFilter: { 
-      sessionID: $sessionID # "06963320-de0d-11eb-9098-778d331f71cd" 
+export const UPDATE_INVITATION = gql`
+mutation {
+  updateMeeting(
+    meetingUpdateInput: {
+      meetingBasics: {
+        meetingId: "7bf4bf20-e39d-11eb-b6f1-b9564249267a"
+        # companyId: "Sftobiz_123"
+        # projectTypeId: "88807ca0-b6e5-11eb-a720-7feeb9ce9ad0"
+        # workTypeId: "96b3b610-b6c3-11eb-a720-7feeb9ce9ad0"
+        # sessionId: "session_1"
+        meetingTitle: "Test meeting update testing"
+        # meetingDate: "2021-07-23"
+        # meetingStartTime: "2021-07-23 10:00:00"
+        # meetingEndTime: "2021-07-23 11:30:00"
+        # meetingDuration: "1 hr 30 min"
+        # inviteGuests: "testa1@mail.com,testc3@mail.com"
+        # meetingDescription: "test meeting description for update"
+        # protocolId: "a0651e90-d4b6-11eb-8f15-fb86beaf9d47"
+        # protocolTitle: "Test Protocol Title another update"
       }
-  ) {
-    sessionID
-    sessionTitle
-    worktypeID
-    worktypeTitle
-    meetingCategoryTitle
-    admins {
-      adminID
-      adminName
-      image
+      members: [
+        {
+          memberID: "mkandar81@gmail.com"
+          memberName: "Mukut Kumar Kandar"
+          image: "image of MKK"
+        }       
+      ]
+      meetingFiles: [
+        {
+          fileId:"mk_doc_11"
+          meetingFileId: "meeting_file_11"
+          meetingFileTitle: "Meeting file title 11"
+        }
+        {
+          fileId:"mk_doc_12"
+          meetingFileId: "meeting_file_12"
+          meetingFileTitle: "Meeting file title 12"
+        }
+        {
+          fileId:"mk_doc_123"
+          meetingFileId: "meeting_file_123"
+          meetingFileTitle: "Meeting file title 123"
+        }
+      ]
     }
+  ) {
+    companyId
+    projectTypeId
+    workTypeId
+    sessionId
+    meetingTitle
+    meetingDate
+    meetingStartTime
+    meetingEndTime
+    meetingDuration
+    meetingDescription
+    meetingId
     members {
       memberID
       memberName
       image
     }
+    meetingFiles {
+      fileId
+      meetingFileId
+      meetingFileTitle
+    }
+    createdBy
+    createdAt
+    updatedBy
+    updatedAt
+    isDeleted
+    status
   }
-}
-`
+}`;
+
+export const DELETE_INVITATION = gql`mutation {
+  deleteMeeting(
+    meetingDeleteInput: { meetingId: "7bf4bf20-e39d-11eb-b6f1-b9564249267a" }
+  ) {
+    companyId
+    projectTypeId
+    workTypeId
+    sessionId
+    meetingTitle
+    meetingDate
+    meetingStartTime
+    meetingEndTime
+    meetingDuration
+    meetingDescription
+    meetingId
+    members {
+      memberID
+      memberName
+      image
+    }
+    meetingFiles {
+      meetingFileId
+      meetingFileTitle
+    }
+    isDeleted
+  }
+}`;
