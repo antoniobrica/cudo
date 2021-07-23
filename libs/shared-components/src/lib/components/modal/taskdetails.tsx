@@ -22,6 +22,7 @@ interface AlertProps {
   cancel?,
   taskStatus?
   id?
+  editTask?
 }
 
 export const ModalViewTask = (props: AlertProps) => {
@@ -60,15 +61,15 @@ export const ModalViewTask = (props: AlertProps) => {
             Task Details
           </Button>
         }
+        closeOnDimmerClick={false}
       >
         <Modal.Header>
           <h3 className="d-flex align-items-center">
-            {' '}
             <span className="material-icons check-grey">
               check_circle_outline
             </span>
             Task Details <span className="textt task-s-number">T-00{props.id} </span>
-            <span className="edit-task-link"><Icon name="edit" /> Edit</span>
+            <span onClick={() => props.editTask(props.taskData)} className="edit-task-link"><Icon name="edit" /> Edit</span>
           </h3>
           <span className="task-created-date">
             Created on:{Moment(props?.taskData?.createdAt).format('DD-MM-YYYY')} - Created by: {props?.taskData?.createdBy}

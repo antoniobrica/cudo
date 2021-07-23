@@ -21,6 +21,7 @@ function ModalDelete() {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={<Button size='mini' className="grey-btn">  Remove people</Button>}
+        closeOnDimmerClick={false}
       >
 
         <Modal.Content body>

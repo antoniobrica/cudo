@@ -19,7 +19,7 @@ export function LoginSelect(props: LoginSelectProps) {
   const handleLogin = () => {
     if (selectedCompany) {
       localStorage.setItem('selectedCompany', selectedCompany);
-      history.push('/home');
+      history.push('/home/project');
     }
   };
   useEffect(() => {
@@ -53,7 +53,11 @@ export function LoginSelect(props: LoginSelectProps) {
         console.log(result.data?.data?.userByEmail);
         if (result.data?.data?.userByEmail?.length) {
           if (result.data?.data?.userByEmail?.length == 1) {
-            history.push('/home');
+            const element = result.data?.data?.userByEmail[0];
+            const { imageUrl: image, referenceID: key, name: value } = element.references[0]
+            setselectedCompany(key);
+            localStorage.setItem('selectedCompany', key);
+            history.push('/home/project');
             return;
           }
           const companiesList = []
@@ -74,7 +78,7 @@ export function LoginSelect(props: LoginSelectProps) {
             const { imageUrl: image, referenceID: key, name: value } = element.references[0]
             setselectedCompany(key);
             localStorage.setItem('selectedCompany', key);
-            history.push('/home');
+            history.push('/home/project');
           }
         }
       });

@@ -31,6 +31,7 @@ function ModalAddProtocol() {
             + Add Protocol
           </Button>
         }
+        closeOnDimmerClick={false}
       >
         <Modal.Header>
           <h3>Add Protocol </h3>

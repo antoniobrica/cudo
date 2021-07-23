@@ -54,7 +54,7 @@ export function SessionListing() {
       projectNum
       client
       buildingType
-      printingCom
+      printingCompany
       projectWorkTypes{
         workTypeName
         projectWorkTypeID

@@ -18,46 +18,44 @@ export class SessionResolver {
     constructor(
         private readonly sessionService: SessionService) { }
 
-        @Mutation(() => SessionModel)
-        async createSession(
-            @Args('sessionDetails') createInput: SessionDetailsInput,
-            @Args("referenceFilter") getTasksArgs: ReferenceFilterParams,
-        ) {
-            return this.sessionService.create(createInput, getTasksArgs);
-        }
+    @Mutation(() => SessionModel)
+    async createSession(
+        @Args('sessionDetails') createInput: SessionDetailsInput,
+        @Args("referenceFilter") getTasksArgs: ReferenceFilterParams,
+    ) {
+        return this.sessionService.create(createInput, getTasksArgs);
+    }
 
-        @Query(() => SessionModel)
-        async SessionByID(@Args("sessionFilter") sessionFilter?: SessionFilterParam
-        ) {
-            const session = await this.sessionService.getSessionID(sessionFilter);
-            return session;
-        }
+    @Query(() => SessionModel)
+    async SessionByID(@Args("sessionFilter") sessionFilter?: SessionFilterParam
+    ) {
+        const session = await this.sessionService.getSessionID(sessionFilter);
+        return session;
+    }
 
-        @Query(() => PaginationModel, { nullable: true })
-        async paginatedSession(@Args('options',)options:pageParams,
-        @Args("referenceFilter") getTasksArgs: ReferenceFilterParams): Promise<Pagination<SessionEntity>>  {
-            return await this.sessionService.paginate(options,getTasksArgs
-              )
-        }
+    @Query(() => PaginationModel, { nullable: true })
+    async paginatedSession(@Args('options',) options: pageParams,
+        @Args("referenceFilter") getTasksArgs: ReferenceFilterParams): Promise<Pagination<SessionEntity>> {
+        return await this.sessionService.paginate(options, getTasksArgs
+        )
+    }
 
-        @Query(() => [SessionModel], { nullable: true })
-        async findAllSessions(): Promise<SessionEntity[]> {
-          return await this.sessionService.findAllSessions()
-        }
+    @Query(() => [SessionModel], { nullable: true })
+    async findAllSessions(): Promise<SessionEntity[]> {
+        return await this.sessionService.findAllSessions()
+    }
 
+    @Mutation(() => SessionModel)
+    async updateSession(
+        @Args('sessionUpdateInput') sessionUpdateInput: SessionDetailsUpdateInput
+    ) {
+        return this.sessionService.updateSessionById(sessionUpdateInput);
+    }
 
-
-        @Mutation(() => [SessionModel])
-        async updateSession(
-            @Args('sessionDetailsUpdate') createInput: SessionDetailsUpdateInput
-        ) {
-            return this.sessionService.updateSessionByID(createInput);
-        }
-
-        @Mutation(() => SessionModel)
-        async deleteSession(
-            @Args('sessionFilter') sessionDeleteInput: SessionDeleteInput
-        ) {
-            return this.sessionService.deleteSession(sessionDeleteInput);
-        }
+    @Mutation(() => SessionModel)
+    async deleteSession(
+        @Args('sessionFilter') sessionDeleteInput: SessionDeleteInput
+    ) {
+        return this.sessionService.deleteSession(sessionDeleteInput);
+    }
 }

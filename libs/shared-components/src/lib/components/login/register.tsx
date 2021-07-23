@@ -138,7 +138,7 @@ export function RegisterPage(props: RegisterProps) {
                                       <Select placeholder='Select' className="small" options={countryOptions} type={country_code?.type}
                                         name={country_code?.name}
                                         defaultValue={country_code?.value as any}
-                                        {...country_code?.required} />
+                                        {...country_code?.required}  clearable />
                                     </Form.Field>
                                   </Grid.Column>
                                   <Grid.Column>
@@ -244,7 +244,7 @@ export function RegisterPage(props: RegisterProps) {
                               <Select placeholder='Select' className="small" options={countryOptions} type={state_pin?.type}
                                 name={state_pin?.name}
                                 defaultValue={state_pin?.value as any}
-                                {...state_pin?.required} />
+                                {...state_pin?.required} clearable />
                             </Form.Field>
                           </Grid.Column>
                         </Grid.Row>

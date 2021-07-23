@@ -50,6 +50,7 @@ export function ConfirmSubTaskStatus(props: ConfirmSubTaskStatusProps) {
       onClose={() => setOpen(false)}
       onOpen={openf}
       open={open} className="mini"
+      closeOnDimmerClick={false}
     >
       {/* <Modal.Header>Update your Task</Modal.Header> */}
       <Modal.Header>Update {props.name} Status

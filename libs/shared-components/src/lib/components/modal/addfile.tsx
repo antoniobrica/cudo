@@ -38,6 +38,7 @@ export function ModalAddPrint(props: FileProps) {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={<Button size='small' className="primary">+ Add  File</Button>}
+        closeOnDimmerClick={false}
       >
         <Modal.Header><h3>Add File </h3></Modal.Header>
         <Modal.Content body>

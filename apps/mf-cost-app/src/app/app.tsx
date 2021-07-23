@@ -9,6 +9,7 @@ import { LoaderPage } from "@cudo/shared-components"
 import CostDelete from './delete-cost';
 import { useMutation } from '@apollo/client';
 import { ICosts } from './interfaces/cost';
+import { useHistory } from 'react-router-dom';
 
 const defaultLanguage = 'de-DE';
 const supportedLanguages = [defaultLanguage, 'en-GB'];
@@ -18,10 +19,13 @@ export function App() {
   const [openCost, setOpenCost] = React.useState(false)
   const [openCostDelete, setOpenCostDelete] = React.useState(false)
   const [costId, setCostId] = React.useState('')
+  const history = useHistory();
+  const res = history.location.pathname.split("/");
+  const referenceID = res[3].toString();
   const [costDelete, { data: deleteCostData }] = useMutation(DELETE_COST,
     {
       refetchQueries: [
-        { query: GET_COST }
+        { query: GET_COST, variables: { referenceID } }
       ]
     }
   )
@@ -29,20 +33,30 @@ export function App() {
   const [editbkpCost, { data: updatedCostData }] = useMutation(EDIT_COST,
     {
       refetchQueries: [
-        { query: GET_COST }
+        { query: GET_COST, variables: { referenceID } }
       ]
     }
   )
 
-  const { loading, error, data } = useCostQuery(GET_COST);
+  const { loading, error, data } = useCostQuery(GET_COST, {
+    variables: { referenceID },
+  });
   if (loading) {
     return <LoaderPage />
   }
-  if (data) {
-    console.log('====================================');
-    console.log('data-cost', data.costs);
-    console.log('====================================');
-  }
+
+  // if (error) {
+  //   const cancel = () => {
+  //     setOpenCost(false)
+  //   }
+  //   return (
+  //     <Suspense fallback={<div>Loading...</div>}>
+  //       <div>
+  //         <AddNewItem openCost={openCost} cancel={cancel}></AddNewItem>
+  //       </div>
+  //     </Suspense>
+  //   )
+  // }
   const addNew = () => {
     console.log('add new')
     setOpenCost(true);
@@ -75,7 +89,7 @@ export function App() {
         cache,
         data
       ) => {
-        const cacheData = cache.readQuery({ query: GET_COST }) as ICosts;
+        const cacheData = cache.readQuery({ query: GET_COST, variables: { referenceID } }) as ICosts;
         cache.writeQuery({
           query: GET_COST,
           data: {
@@ -98,7 +112,7 @@ export function App() {
         cache,
         data
       ) => {
-        const cacheData = cache.readQuery({ query: GET_COST }) as ICosts;
+        const cacheData = cache.readQuery({ query: GET_COST, variables: { referenceID } }) as ICosts;
         cache.writeQuery({
           query: GET_COST,
           data: {
@@ -108,6 +122,7 @@ export function App() {
       }
     });
   }
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div>
@@ -115,7 +130,7 @@ export function App() {
           <AddNewItem openCost={openCost} cancel={cancel}></AddNewItem>
         </div>
         {openCostDelete && <CostDelete costId={costId} openAlertF={openCostDelete} cancel={closeDelete} confirm={confirmDeleteCost} />}
-        <CostList addNew={addNew} costs={data.costs} delete={deleteCost} updateBkpCost={updateBkpCost}></CostList>
+        <CostList addNew={addNew} costs={data?.costs} delete={deleteCost} updateBkpCost={updateBkpCost}></CostList>
         {/* <Button onClick={() => changeLanguage('en-GB')}>EN</Button>
         <Button onClick={() => changeLanguage('de-DE')}>DE</Button> */}
       </div>

@@ -88,7 +88,7 @@ export function Tasks(props: TasksProps) {
       projectNum
       client
       buildingType
-      printingCom
+      printingCompany
       projectWorkTypes{
         workTypeName
         projectWorkTypeID
@@ -625,6 +625,7 @@ export function Tasks(props: TasksProps) {
             taskStatus={taskStatus}
             cancel={cancel}
             id={idx}
+            editTask={editTask}
           ></ModalViewTask>
         </div>
       ) : null}

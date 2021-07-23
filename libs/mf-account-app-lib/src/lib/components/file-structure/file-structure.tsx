@@ -47,6 +47,7 @@ export function FileStructure(props: FileStructureProps) {
         options={items}
         value={fileStructure}
         onChange={onFile}
+        clearable
       />
 
     </Form.Field>

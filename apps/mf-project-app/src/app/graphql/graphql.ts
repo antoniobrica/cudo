@@ -12,10 +12,12 @@ export const GET_TODOS = gql`
 `;
 
 export const GET_PROJECTS = gql`
-  {
+  query Projects(
+    $companyId:String!
+  ){
     projects(referenceFilter:{
       referenceType:COMPANY,
-      referenceID:"Sftobiz_1234"
+      referenceID:$companyId
       })
     {
       projectId
