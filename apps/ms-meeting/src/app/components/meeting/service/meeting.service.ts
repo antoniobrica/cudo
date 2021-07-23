@@ -12,11 +12,11 @@ import { Pagination, PaginationOptionsInterface } from "../../paginate";
 import { ReferenceService } from "../../reference/service/reference.service";
 import MeetingFilterParam from "../dto/args/meeting.filter";
 import MeetingDetailFilterParam from "../dto/args/meeting.detail.filter";
-// import { SessionDeleteInput } from "../dto/input/session-delete.input";
-// import { SessionDetailsUpdateInput } from "../dto/input/session-details-update.input";
+import { MeetingDeleteInput } from "../dto/input/meeting-delete.input";
+import { MeetingDetailsUpdateInput } from "../dto/input/meeting-details-update.input";
 import { MeetingDetailsInput } from "../dto/input/meeting-details.input";
 import MeetingNotFoundException from "../exceptions/meetingNotFound.exception";
-
+// import { MeetingsBySessionInput } from "../dto/input/meetings-find-by-session.input"
 
 @Injectable()
 export class MeetingService {
@@ -26,41 +26,52 @@ export class MeetingService {
     @InjectRepository(MeetingFilesEntity)
     private meetingFilesRepository: Repository<MeetingFilesEntity>,
     @InjectRepository(MembersEntity)
-    private membersRepo: Repository<MembersEntity>,
-    // private referenceService: ReferenceService
+    private membersRepository: Repository<MembersEntity>,
+
   ) { }
 
-  // public async create(createInput: MeetingDetailsInput, referenceFilter: ReferenceFilterParams): Promise<MeetingEntity> {
   public async addMeeting(createInput: MeetingDetailsInput): Promise<MeetingEntity> {
     try {
       const { meetingBasics, members, meetingFiles } = createInput;
       const meetingDetails = new MeetingEntity({ ...meetingBasics });
-      meetingDetails.members = [];
-      meetingDetails.meetingFiles = [];
-
-
+     
       if (members) {
         for (let index = 0; index < members.length; index++) {
-          const membersentity = new MembersEntity(members[index])
-          const newMembers = await this.membersRepo.create({ ...membersentity });
-          const savedFollower = await this.membersRepo.save(newMembers);
-          meetingDetails.members.push(savedFollower)
+          let relationAddMember = await this.membersRepository.findOne({ where: { memberID: members[index].memberID } });
+          if (!relationAddMember) {
+            const membersEntity = new MembersEntity(members[index])
+            const newMember = await this.membersRepository.create({ ...membersEntity });
+            relationAddMember = await this.membersRepository.save(newMember);
+          }
+
+          if (index === 0) {
+            meetingDetails.members = [relationAddMember]
+          } else {
+            meetingDetails.members.push(relationAddMember)
+          }
         }
       }
 
       if (meetingFiles) {
+        if (meetingDetails.meetingFiles.length > 0) {
+          const previousMeetingFileIds = meetingDetails.meetingFiles.map((item) => item.id)
+          await this.meetingFilesRepository.delete(previousMeetingFileIds);
+        }
         for (let index = 0; index < meetingFiles.length; index++) {
-          const meetingFilesntity = new MeetingFilesEntity(meetingFiles[index])
-          const newMeetingFiles = await this.meetingFilesRepository.create({ ...meetingFilesntity });
-          const savedMeetingFiles = await this.meetingFilesRepository.save(newMeetingFiles);
-          meetingDetails.meetingFiles.push(savedMeetingFiles)
+          const meetingFileEntity = new MeetingFilesEntity(meetingFiles[index])
+          const newMeetingFile = await this.meetingFilesRepository.create({ ...meetingFileEntity });
+          const savedMeetingFile = await this.meetingFilesRepository.save(newMeetingFile);
+
+          if (index === 0) {
+            meetingDetails.meetingFiles = [savedMeetingFile]
+          } else {
+            meetingDetails.meetingFiles.push(savedMeetingFile)
+          }
         }
       }
-
-      // const selectedReference = await this.referenceService.getReferenceById(referenceFilter)
+      
       const newMeeting = await this.meetingRepository.create({
         ...meetingDetails,
-        // reference: { id: selectedReference.id }
       });
       await this.meetingRepository.save(newMeeting);
       return newMeeting;
@@ -69,109 +80,11 @@ export class MeetingService {
     }
   }
 
-  // async findAllMeetingList(meetingFilter: MeetingFilterParam) {
-  //   const meetings = await this.meetingRepository.find({ where: { ...meetingFilter }, relations: ['members', 'meetingFiles'] });
-  //   return meetings;
-  // }
-
   async findMeetingList(
-    // refFilter: ReferenceFilterParams,
     options?: PaginationOptionsInterface,
     meetingFilter?: MeetingFilterParam,
     statusFilter?: StatusFilterParam,
     sortFilter?: SortFilterParam): Promise<Pagination<MeetingEntity>> {
-
-    // const selectedReference = await this.referenceService.getReferenceById(refFilter)
-
-    // #region commented code
-    // if (options) {
-    //   if (options && statusFilter) {
-    //     const [results, total] = await this.meetingRepository.findAndCount({
-    //       where: {
-    //         ...meetingFilter,
-    //         isDeleted: false,
-    //         status: statusFilter.status,
-    //         // "reference": {
-    //         //   id: selectedReference.id
-    //         // }
-    //       },
-    //       relations: ['members', 'meetingFiles'],
-    //       take: options.limit,
-    //       skip: options.page * options.limit,
-    //     }
-    //     );
-    //     const pagination = new Pagination({
-    //       results,
-    //       total,
-    //     });
-    //     return pagination
-    //   }
-    //   if (options && statusFilter && sortFilter) {
-    //     if (sortFilter.sortBy == "DESC") {
-    //       const [results, total] = await this.meetingRepository.findAndCount({
-    //         where: {
-    //           ...meetingFilter,
-    //           isDeleted: false,
-    //           status: statusFilter.status,
-    //           // "reference": {
-    //           //   id: selectedReference.id
-    //           // }
-    //         },
-    //         relations: ['members', 'meetingFiles'],
-    //         take: options.limit,
-    //         skip: options.page * options.limit,
-    //       }
-    //       );
-    //       const pagination = new Pagination({
-    //         results,
-    //         total,
-    //       });
-    //       return pagination
-    //     }
-    //   }
-    // }
-    // if (statusFilter) {
-    //   const [results, total] = await this.meetingRepository.findAndCount({
-    //     where: {
-    //       ...meetingFilter,
-    //       isDeleted: false,
-    //       status: statusFilter.status,
-    //       // "reference": {
-    //       //   id: selectedReference.id
-    //       // }
-    //     },
-    //     relations: ['members', 'meetingFiles'],
-    //   }
-    //   );
-    //   const pagination = new Pagination({
-    //     results,
-    //     total,
-    //   });
-    //   return pagination
-    // }
-    // if (sortFilter) {
-    //   if (sortFilter.sortBy == "DESC") {
-    //     const [results, total] = await this.meetingRepository.findAndCount({
-    //       where: {
-    //         ...meetingFilter,
-    //         isDeleted: false,
-    //         // "reference": {
-    //         //   id: selectedReference.id
-    //         // }, 
-    //         order: { createdAt: "DESC" }
-    //       },
-    //       relations: ['members', 'meetingFiles'],
-    //     }
-    //     );
-    //     const pagination = new Pagination({
-    //       results,
-    //       total,
-    //     });
-    //     return pagination
-    //   }
-    // }
-    // else {
-    // #endregion
 
     const filterByStatus = statusFilter ? { status: statusFilter.status } : {}
     const sorting = sortFilter?.sortBy === 'DESC' ? { order: { createdAt: "DESC" } } : {}
@@ -182,9 +95,6 @@ export class MeetingService {
         ...meetingFilter,
         isDeleted: false,
         ...filterByStatus,
-        // "reference": {
-        //   id: selectedReference.id
-        // }
         status: statusFilter.status,
         ...sorting
       },
@@ -198,10 +108,9 @@ export class MeetingService {
       total,
     });
     return pagination
-    // }
   }
 
-  async findMeetingByID(meetingDetailFilter: MeetingDetailFilterParam) {
+  async findMeetingById(meetingDetailFilter: MeetingDetailFilterParam) {
     const meeting = await this.meetingRepository.findOne({ where: { ...meetingDetailFilter }, relations: ['members', 'meetingFiles'] });
     if (meeting) {
       return meeting;
@@ -209,63 +118,91 @@ export class MeetingService {
     throw new MeetingNotFoundException(meeting.meetingId);
   }
 
-  // #region Commented Session Code
+  public async updateMeetingById(meetingUpdateInput: MeetingDetailsUpdateInput): Promise<MeetingEntity> {
+    try {
+      const { meetingBasics, members, meetingFiles } = meetingUpdateInput;
+      const meetingDetail = await this.meetingRepository.findOne({
+        where: { meetingId: meetingBasics.meetingId },
+        relations: ['members', 'meetingFiles']
+      });
+      if (!meetingDetail) {
+        throw new HttpException('Meeting with the meetingId not found', HttpStatus.NOT_FOUND);
+      }
 
-  // public async updateSessionByID(createInput: SessionDetailsUpdateInput): Promise<SessionEntity[]> {
-  //     const { sessionBasics, admins, members } = createInput;
-  //     const sessionDetails = await this.sessionRepository.find({
-  //         where: { sessionID: sessionBasics.sessionID },
-  //         relations: ['reference', 'admins', 'members']
-  //     });
-  //     if (sessionDetails.length <= 0)
-  //         throw new HttpException('Session Not Found', HttpStatus.NOT_FOUND);
-  //     const sessionDetail = sessionDetails[0];
-  //     sessionDetail.admins = [];
-  //     sessionDetail.members = [];
+      if (members) {
+        for (let index = 0; index < members.length; index++) {
+          let relationAddMember = await this.membersRepository.findOne({ where: { memberID: members[index].memberID } });
+          if (!relationAddMember) {
+            const membersEntity = new MembersEntity(members[index])
+            const newMember = await this.membersRepository.create({ ...membersEntity });
+            relationAddMember = await this.membersRepository.save(newMember);
+          }
 
-  //     if (admins)
-  //         for (let index = 0; index < admins.length; index++) {
-  //             const adminsentity = new AdminEntity(admins[index])
-  //             const newAdmin = await this.adminRepository.create({ ...adminsentity });
-  //             const savedAdmin = await this.adminRepository.save(newAdmin);
-  //             sessionDetail.admins.push(savedAdmin)
-  //         }
-  //     if (members)
-  //         for (let index = 0; index < members.length; index++) {
-  //             const membersentity = new MembersEntity(members[index])
-  //             const newmembers = await this.membersRepo.create({ ...membersentity });
-  //             const savedFollower = await this.membersRepo.save(newmembers);
-  //             sessionDetail.members.push(savedFollower)
-  //         }
+          if (index === 0) {
+            meetingDetail.members = [relationAddMember]
+          } else {
+            meetingDetail.members.push(relationAddMember)
+          }
+        }
+      }
 
-  //     sessionBasics.sessionTitle ? sessionDetail.sessionTitle = sessionBasics.sessionTitle : null;
-  //     sessionBasics.worktypeID ? sessionDetail.worktypeID = sessionBasics.worktypeID : null;
-  //     sessionBasics.worktypeTitle ? sessionDetail.worktypeTitle = sessionBasics.worktypeTitle : null;
-  //     sessionBasics.meetingCategoryID ? sessionDetail.meetingCategoryID = sessionBasics.meetingCategoryID : null;
-  //     sessionBasics.meetingCategoryTitle ? sessionDetail.meetingCategoryTitle = sessionBasics.meetingCategoryTitle : null;
-  //     sessionBasics.invitationID ? sessionDetail.invitationID = sessionBasics.invitationID : null;
-  //     sessionBasics.invitationTitle ? sessionDetail.invitationTitle = sessionBasics.invitationTitle : null;
-  //     sessionBasics.protocolID ? sessionDetail.protocolID = sessionBasics.protocolID : null;
-  //     sessionBasics.protocolTitle ? sessionDetail.protocolTitle = sessionBasics.protocolTitle : null;
-  //     sessionBasics.sessionID ? sessionDetail.sessionID = sessionBasics.sessionID : null;
-  //     await this.sessionRepository.save(sessionDetail);
-  //     const sessions = await this.sessionRepository.find({
-  //         where: { sessionID: sessionBasics.sessionID },
-  //         relations: ['reference', 'admins', 'members']
-  //     });
-  //     return sessions;
-  // }
+      if (meetingFiles) {
+        if (meetingDetail.meetingFiles.length > 0) {
+          const previousMeetingFileIds = meetingDetail.meetingFiles.map((item) => item.id)
+          await this.meetingFilesRepository.delete(previousMeetingFileIds);
+        }
+        for (let index = 0; index < meetingFiles.length; index++) {
+          const meetingFileEntity = new MeetingFilesEntity(meetingFiles[index])
+          const newMeetingFile = await this.meetingFilesRepository.create({ ...meetingFileEntity });
+          const savedMeetingFile = await this.meetingFilesRepository.save(newMeetingFile);
 
-  // public async deleteSessionByID(sessionDeleteInput: SessionDeleteInput): Promise<SessionEntity[]> {
-  //     const { sessionID } = sessionDeleteInput;
-  //     const sessioneDetails = await this.sessionRepository.delete({ sessionID: sessionID });
-  //     console.log(sessioneDetails)
-  //     const sessions = await this.sessionRepository.find({
-  //         where: { sessionID: sessionID },
-  //         relations: ['reference', 'admins', 'members']
-  //     });
-  //     return sessions;
-  // }
-  //#endregion
+          if (index === 0) {
+            meetingDetail.meetingFiles = [savedMeetingFile]
+          } else {
+            meetingDetail.meetingFiles.push(savedMeetingFile)
+          }
+        }
+      }
+
+      meetingBasics.companyId ? meetingDetail.companyId = meetingBasics.companyId : null;
+      meetingBasics.projectTypeId ? meetingDetail.projectTypeId = meetingBasics.projectTypeId : null;
+      meetingBasics.workTypeId ? meetingDetail.workTypeId = meetingBasics.workTypeId : null;
+      meetingBasics.sessionId ? meetingDetail.sessionId = meetingBasics.sessionId : null;
+      meetingBasics.meetingId ? meetingDetail.meetingId = meetingBasics.meetingId : null;
+      meetingBasics.meetingTitle ? meetingDetail.meetingTitle = meetingBasics.meetingTitle : null;
+      meetingBasics.meetingDate ? meetingDetail.meetingDate = meetingBasics.meetingDate : null;
+      meetingBasics.meetingStartTime ? meetingDetail.meetingStartTime = meetingBasics.meetingStartTime : null;
+      meetingBasics.meetingEndTime ? meetingDetail.meetingEndTime = meetingBasics.meetingEndTime : null;
+      meetingBasics.meetingDuration ? meetingDetail.meetingDuration = meetingBasics.meetingDuration : null;
+      meetingBasics.inviteGuests ? meetingDetail.inviteGuests = meetingBasics.inviteGuests : null;
+      meetingBasics.meetingDescription ? meetingDetail.meetingDescription = meetingBasics.meetingDescription : null;
+      meetingBasics.protocolId ? meetingDetail.protocolId = meetingBasics.protocolId : null;
+      meetingBasics.protocolTitle ? meetingDetail.protocolTitle = meetingBasics.protocolTitle : null;
+      meetingBasics.status ? meetingDetail.status = meetingBasics.status : null;
+      // meetingBasics.updatedBy ? meetingDetail.updatedBy = meetingBasics.updatedBy : null;
+      // meetingBasics.updatedAt ? meetingDetail.updatedAt = meetingBasics.updatedAt : null;
+      await this.meetingRepository.save(meetingDetail);
+      const meetingUpdatedDetail = await this.meetingRepository.findOne({
+        where: { meetingId: meetingBasics.meetingId },
+        relations: ['members', 'meetingFiles']
+      });
+      return meetingUpdatedDetail;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  public async deleteMeetingById(meetingDeleteInput: MeetingDeleteInput): Promise<MeetingEntity> {
+    const meetingDetail = await this.meetingRepository.findOne({
+      where: { meetingId: meetingDeleteInput.meetingId },
+      relations: ['members', 'meetingFiles']
+    });
+    if (meetingDetail) {
+      meetingDetail.isDeleted = !(meetingDetail.isDeleted)
+      const updatedMeetingDetail = await meetingDetail.save()
+      return updatedMeetingDetail
+    }
+    throw new HttpException('Meeting with the meetingId not found', HttpStatus.NOT_FOUND);
+  }
 
 }
