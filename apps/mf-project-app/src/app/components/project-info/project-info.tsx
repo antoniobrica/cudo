@@ -93,7 +93,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
 
           <div>
             <button onClick={notify}>Notify!</button>
-            <ToastContainer className="success" position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
+            <ToastContainer className="success" position="top-right" autoClose={5000} hideProgressBar={false} closeOnClick pauseOnFocusLoss pauseOnHover />
           </div>
 
           <ModalExampleModal onSuccess={refresh}></ModalExampleModal>
