@@ -49,3 +49,7 @@ export interface IInvitationMutation {
   addInvitation: IInvitation;
 }
 
+export interface IGetMeetingById {
+  getMeetingById:IInvitation
+}
+
