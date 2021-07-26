@@ -8,6 +8,7 @@ import { BlobItemUpload } from 'libs/mf-document-lib/src/azure-storage/types/azu
 import { BlobItem, ContainerItem } from '@azure/storage-blob';
 import { tap } from 'rxjs/operators';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { useTranslation } from 'react-i18next';
 // import { BlobItemUpload } from 'libs/mf-document-lib/src/azure-storage/types/azure-storage';
 
 interface AlertProps {
@@ -45,6 +46,7 @@ export function UploadNewVersion(props: AlertProps) {
   const [parentUploadedFileID, setparentUploadedFileID] = React.useState('');
   const [files, setFileList] = React.useState<any>([]);
   const [people, setAsignis] = React.useState([]);
+  const {t} = useTranslation()
   const projectOptions = [
     { key: 'ew', value: 'ew', text: 'Electrical Work' },
     { key: 'hv', value: 'hv', text: 'HVAC Work' },
@@ -183,10 +185,10 @@ export function UploadNewVersion(props: AlertProps) {
         onClose={cancel}
         onOpen={openf}
         open={open}
-        trigger={<Button size='mini' className="grey-btn"> New version</Button>}
+        trigger={<Button size='mini' className="grey-btn"> {t("project_tab_menu.files.new_version")}</Button>}
         closeOnDimmerClick={false}
       >
-        <Modal.Header><h3>Upload new version </h3></Modal.Header>
+        <Modal.Header><h3>{t("project_tab_menu.files.upload_new_version")} </h3></Modal.Header>
         <Modal.Content body>
 
           <div>
@@ -198,7 +200,7 @@ export function UploadNewVersion(props: AlertProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>File to replace:</label>
+                      <label>{t("project_tab_menu.files.file_to_replace")}:</label>
 
                       <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/default.png`} className="mr-10 " /> {props?.file?.fileTitle}
                     </Form.Field>
@@ -215,7 +217,7 @@ export function UploadNewVersion(props: AlertProps) {
                       <div className="dashed_area">
                         <div className="file-upload-message">
                           <p className="file-upload-default-message">
-                            <i className="ms-Icon ms-Icon--Upload" aria-hidden="true"></i>  Click to upload new file</p>
+                            <i className="ms-Icon ms-Icon--Upload" aria-hidden="true"></i>  {t("project_tab_menu.files.click_to_upload")}</p>
 
                         </div>
                         <Input type="file" className="file-upload-input"
@@ -230,7 +232,7 @@ export function UploadNewVersion(props: AlertProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>File settings</label>
+                      <label>{t("project_tab_menu.files.file_settings")}</label>
                     </Form.Field>
                   </Grid.Column>
 
@@ -242,8 +244,8 @@ export function UploadNewVersion(props: AlertProps) {
                   <Grid.Column>
                     <Form.Field>
                       <div className="content">
-                        <div className="description">Generate file number
-                          <p className="enable">Enable this option to generate file numbering</p>
+                        <div className="description">{t("project_tab_menu.files.generate_file_number")}
+                          <p className="enable">{t("project_tab_menu.files.generate_file_number_check")}</p>
                           <Checkbox toggle className="toggle_area" />
 
                         </div>
@@ -259,15 +261,15 @@ export function UploadNewVersion(props: AlertProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Project</label>
-                      <Select clearable placeholder='Select' className="small" options={projectOptions} />
+                      <label>{t("menu.project")}</label>
+                      <Select clearable placeholder={t("common.select")} className="small" options={projectOptions} />
 
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Work type</label>
-                      <Select clearable placeholder='Select' className="small" options={projectOptions} />
+                      <label>{t("project_list.add_new_project.worktype")}</label>
+                      <Select clearable placeholder={t("common.select")} className="small" options={projectOptions} />
 
                     </Form.Field>
                   </Grid.Column>
@@ -316,7 +318,7 @@ export function UploadNewVersion(props: AlertProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Who can access</label>
+                      <label>{t("common.who_can_access")}</label>
 
                     </Form.Field>
 
@@ -330,14 +332,14 @@ export function UploadNewVersion(props: AlertProps) {
 
                   <Grid.Column>
                     <Form.Field>
-                      <Checkbox label='Everyone in the Project/Subproject' className="small" />
+                      <Checkbox label={t("common.everyone_in_subproject")} className="small" />
                     </Form.Field>
 
                   </Grid.Column>
 
                   <Grid.Column>
                     <Form.Field>
-                      <Checkbox label='Specific People only' className="small" />
+                      <Checkbox label={t("common.specific_access")}  className="small" />
 
                     </Form.Field>
                   </Grid.Column>
@@ -352,13 +354,13 @@ export function UploadNewVersion(props: AlertProps) {
         </Modal.Content>
         <Modal.Actions>
           <Button
-            content="Submit"
+            content={t("common.submit")} 
             onClick={submit}
             positive
             size='small' className="primary"
           />
           <Button size='small' className="icon-border" onClick={cancel}>
-            X  Cancel
+            X  {t("common.cancel")} 
           </Button>
 
         </Modal.Actions>

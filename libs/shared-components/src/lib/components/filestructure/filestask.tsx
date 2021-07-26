@@ -5,6 +5,7 @@ import { Tab, Accordion, Dropdown } from 'semantic-ui-react'
 import ViewFileDetail from '../modal/viewdetailsfile';
 import AddPinFile from '../modal/pinaddfile';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { useTranslation } from 'react-i18next';
 /* eslint-disable-next-line */
 export interface FileStructureProps {
 	files?,
@@ -24,6 +25,7 @@ export function FileStructure(props: FileStructureProps) {
 	const [imgUrl, setimgUrl] = React.useState('');
 	const [fname, setFname] = React.useState('');
 	const [fType, setFtype] = React.useState('');
+	const {t} = useTranslation()
 
 	const [openPinFile, setOpenPinFile] = React.useState(false)
 
@@ -124,10 +126,10 @@ export function FileStructure(props: FileStructureProps) {
 								<span className="mr-2"  >
 									<Dropdown text='...' pointing='right'>
 										<Dropdown.Menu>
-											<Dropdown.Item icon='pencil' text='Edit file detail' />
-											<Dropdown.Item onClick={() => uploadNewVersion(data)} icon='eye' text='Upload new version' />
-											<Dropdown.Item onClick={() => addPinTask(data)} icon='check circle outline' text='Add task to this file' />
-											<Dropdown.Item icon='trash alternate outline' text='Delete' />
+											<Dropdown.Item icon='pencil' text={t("project_tab_menu.files.edit_file_details")} />
+											<Dropdown.Item onClick={() => uploadNewVersion(data)} icon='eye' text={t("project_tab_menu.files.upload_new_version")} />
+											<Dropdown.Item onClick={() => addPinTask(data)} icon='check circle outline' text={t("project_tab_menu.files.add_task_to_file")} />
+											<Dropdown.Item icon='trash alternate outline' text={t("common.delete")} />
 										</Dropdown.Menu>
 									</Dropdown>
 								</span>
@@ -148,7 +150,7 @@ export function FileStructure(props: FileStructureProps) {
 	]
 	const panes = [
 		{
-			menuItem: { key: 'Overview', icon: 'images', content: 'All files', className: 'files-tab-inner' },
+			menuItem: { key: 'Overview', icon: 'images', content: t("project_tab_menu.files.all_files"), className: 'files-tab-inner' },
 			render: () => <Tab.Pane attached={false}>
 				<div className="ui-tabs">
 					{/* <div className="card1 card-custom gutter-b width_card">
@@ -326,7 +328,7 @@ export function FileStructure(props: FileStructureProps) {
 			</Tab.Pane>,
 		},
 		{
-			menuItem: { key: 'Task', icon: 'print', content: 'Send to print' },
+			menuItem: { key: 'Task', icon: 'print', content: t("project_tab_menu.files.send_to_print") },
 			render: () => <Tab.Pane attached={false}>  Task</Tab.Pane>,
 		},
 

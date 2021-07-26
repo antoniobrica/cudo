@@ -7,6 +7,7 @@ import {
 } from 'semantic-ui-react';
 import { useMeetingCatagoriesQuery } from '../../services/useRequest';
 import { GET_CATAGORIES } from '../../graphql/graphql';
+import { useTranslation } from 'react-i18next';
 /* eslint-disable-next-line */
 export interface MeetingCategoryProps {
   parentCatagorySelect
@@ -15,7 +16,7 @@ export interface MeetingCategoryProps {
 export function MeetingCategory(props: MeetingCategoryProps) {
   const [items, setItems] = React.useState([])
   const [catagory, setCatagory] = React.useState("")
-
+  const {t} = useTranslation()
 
   const { loading, error, data } = useMeetingCatagoriesQuery(GET_CATAGORIES);
   React.useEffect(() => {
@@ -38,9 +39,9 @@ export function MeetingCategory(props: MeetingCategoryProps) {
   }
   return (
     <Form.Field>
-      <label>Category</label>
+      <label>{t("project_tab_menu.meeting.category")}</label>
       <Select
-        placeholder="Select"
+        placeholder={t("common.select")}
         className="small"
         options={items}
         value={catagory}

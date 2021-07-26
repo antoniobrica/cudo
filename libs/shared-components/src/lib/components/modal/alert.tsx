@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button, Icon, Modal } from 'semantic-ui-react'
 
 function exampleReducer(state, action) {
@@ -26,6 +27,7 @@ export const ModalAlert = (props: AlertProps) => {
     size: undefined,
   })
   const [open, setOpen] = React.useState(false)
+  const {t} = useTranslation()
   React.useEffect(() => {
     if (props.openAlertF) {
       setOpen(props.openAlertF);
@@ -52,19 +54,19 @@ export const ModalAlert = (props: AlertProps) => {
       closeOnDimmerClick={false}
     >
       {/* <Modal.Header>Update your Task</Modal.Header> */}
-      <Modal.Header>Update {props.name} Status
+      <Modal.Header>{t("project_tab_menu.task.update")} {props.name} {t("common.status")}
         <a className="float_right" onClick={cancel}>  <i className="ms-Icon ms-Icon--CalculatorMultiply mr-10" aria-hidden="true"></i></a>
 
       </Modal.Header>
       <Modal.Content>
-        <p className="text-center" style={{ color: "black" }}>Are you sure you want to {props.taskStatus} the  {props.name}? </p>
+        <p className="text-center" style={{ color: "black" }}>{t("project_tab_menu.task.are_you_sure")} {props.taskStatus} {t("project_tab_menu.task.the")}  {props.name}? </p>
       </Modal.Content>
       <Modal.Actions className="float_right">
         <Button positive onClick={yes}>
-          Yes
+          {t("common.yes")}
         </Button>
         <Button negative onClick={cancel}>
-          No
+        {t("common.no")}
         </Button>
       </Modal.Actions>
     </Modal>

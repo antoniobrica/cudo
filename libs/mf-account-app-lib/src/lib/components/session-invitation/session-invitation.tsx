@@ -7,6 +7,7 @@ import {
 } from 'semantic-ui-react';
 import { useInvitationQuery } from '../../services/useRequest';
 import { GET_CATAGORIES, GET_INVITATION, GET_PROTOCOL } from '../../graphql/graphql';
+import { useTranslation } from 'react-i18next';
 /* eslint-disable-next-line */
 export interface SessionInvitationProps {
   parentInvitationSelect
@@ -15,7 +16,7 @@ export interface SessionInvitationProps {
 export function SessionInvitation(props: SessionInvitationProps) {
   const [items, setItems] = React.useState([])
   const [protocol, setProtocol] = React.useState("")
-
+  const {t} = useTranslation()
 
   const { loading, error, data } = useInvitationQuery(GET_INVITATION);
   React.useEffect(() => {
@@ -37,9 +38,9 @@ export function SessionInvitation(props: SessionInvitationProps) {
   }
   return (
     <Form.Field>
-      <label>Template for invitation</label>
+      <label>{t("project_tab_menu.meeting.template_for_invitation")}</label>
       <Select
-        placeholder="Select"
+        placeholder={t("common.select")}
         className="small"
         options={items}
         value={protocol}

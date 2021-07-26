@@ -7,6 +7,7 @@ import {
 } from 'semantic-ui-react';
 import { useProtocolQuery } from '../../services/useRequest';
 import { GET_CATAGORIES, GET_PROTOCOL } from '../../graphql/graphql';
+import { useTranslation } from 'react-i18next';
 /* eslint-disable-next-line */
 export interface SessionProtocolProps {
   parentSessionSelect
@@ -15,7 +16,7 @@ export interface SessionProtocolProps {
 export function SessionProtocol(props: SessionProtocolProps) {
   const [items, setItems] = React.useState([])
   const [protocol, setProtocol] = React.useState("")
-
+  const {t} = useTranslation()
 
   const { loading, error, data } = useProtocolQuery(GET_PROTOCOL);
   React.useEffect(() => {
@@ -38,9 +39,9 @@ export function SessionProtocol(props: SessionProtocolProps) {
   }
   return (
     <Form.Field>
-      <label>Template for protocol</label>
+      <label>{t("project_tab_menu.meeting.template_for_protocol")}</label>
       <Select
-        placeholder="Select"
+        placeholder={t("common.select")}
         className="small"
         options={items}
         value={protocol}

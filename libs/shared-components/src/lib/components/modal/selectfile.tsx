@@ -17,6 +17,7 @@ import AddPinFile from './pinaddfile';
 import FilterPopup from './fliter';
 import { relative } from 'path';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { useTranslation } from 'react-i18next';
 export interface FileStructureProps {
   // files?,
   downloadFiles?,
@@ -41,6 +42,7 @@ export function SelectFilePopup(props: FileStructureProps) {
   const [imgUrl, setimgUrl] = React.useState('');
   const [fType, setFtype] = React.useState('');
   const [view, setView] = React.useState(false);
+  const {t} = useTranslation()
 
 
 
@@ -116,7 +118,7 @@ export function SelectFilePopup(props: FileStructureProps) {
       closeOnDimmerClick={false}
       >
         <Modal.Header>
-          <h3>Select file</h3>
+          <h3>{t("project_tab_menu.files.select_file")}</h3>
         </Modal.Header>
         <Modal.Content body>
           <div>
@@ -126,7 +128,7 @@ export function SelectFilePopup(props: FileStructureProps) {
                   <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/search_white.png`} style={{ position: 'relative', top: '11px' }}></img>
 
                   <Input
-                    placeholder="search.."
+                    placeholder={t("common.search")}
                     size="small"
                     className="full-width inputfieldarea bordernone"
                     type="search" style={{ marginLeft: '5px' }}
@@ -137,7 +139,7 @@ export function SelectFilePopup(props: FileStructureProps) {
                   <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/filter.png`} style={{ position: 'relative', left: '30px', top: '6px' }}></img>
                   {/* <FilterPopup /> */}
                   <Button size="small" className="primary" style={{ marginLeft: '50', }}>
-                    <Icon name='add' /> Add New
+                    <Icon name='add' /> {t("common.add_new_button")}
                   </Button>
                 </Form.Field>
               </div>
@@ -222,7 +224,7 @@ export function SelectFilePopup(props: FileStructureProps) {
         </Modal.Content>
         <Modal.Actions>
           <Button
-            content="Continue"
+            content={t("common.continue")}
             onClick={goToAddPin}
             positive
             size="small"
@@ -233,7 +235,7 @@ export function SelectFilePopup(props: FileStructureProps) {
             className="icon-border"
             onClick={cancel}
           >
-            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> {t("common.cancel")}
           </Button>
         </Modal.Actions>
       </Modal>

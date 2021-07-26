@@ -135,7 +135,6 @@ export function Tasks(props: TasksProps) {
   if (loading)
     return (
       <h1>
-        {' '}
         <LoaderPage />
       </h1>
     );
@@ -668,7 +667,7 @@ export function Tasks(props: TasksProps) {
       }
 
       <div className="TaskApp-container">
-        <h3 className="alltask" style={{ marginBottom: '20px;' }}>All Tasks</h3>
+        <h3 className="alltask" style={{ marginBottom: '20px;' }}>{t("project_tab_menu.task.heading")}</h3>
         {data?.tasks?.results?.map((task, id) => {
           return (
             <div key={id} >
@@ -693,8 +692,7 @@ export function Tasks(props: TasksProps) {
         onClick={clickBottomAddTask}
         className="ui large button btn-dashed  btn-large"
       >
-        <i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> Add new
-        task{' '}
+        <i className="ms-Icon ms-Icon--AddTo" aria-hidden="true"></i> {t("project_tab_menu.task.add_new")}
       </button>
     </div>
   );

@@ -5,6 +5,7 @@ import { Select, Input, Segment, Form, Grid, Image, Checkbox, Button, Icon } fro
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { FormField } from '@oryd/kratos-client';
 import Messagebar from '../messages/messages';
+import { useTranslation } from 'react-i18next';
 /* eslint-disable-next-line */
 export interface LoginPasswordProps {
   action?
@@ -18,6 +19,7 @@ export function Loginpassword(props: LoginPasswordProps) {
   const [csrf_token, setcsrf_token] = useState({} as FormField);
   const [email, setEmail] = useState({} as FormField);
   const [password, setPassword] = useState({} as FormField);
+  const {t} = useTranslation()
   useEffect(() => {
     props?.fields?.map(field => {
       switch (field.name) {
@@ -47,8 +49,8 @@ export function Loginpassword(props: LoginPasswordProps) {
                 <div className="ln-form-outer">
                   <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/Shape 2.png`} />
                   <div className="form-header">
-                    <span className="welcome">Welcome Back</span>
-                    <h2 className="login">Login to your account</h2>
+                    <span className="welcome">{t("login.greet")}</span>
+                    <h2 className="login">{t("login.form_title")}</h2>
                     {/* {props.messages && <Messagebar error={props.messages} />} */}
                   </div>
                   <div className="form-inner">
@@ -60,7 +62,7 @@ export function Loginpassword(props: LoginPasswordProps) {
                         <i className="ms-Icon ms-Icon--Accounts" aria-hidden="true"></i>
                       </Form.Field>
                       <Form.Field key={password?.name} className="login-password">
-                        <Input placeholder='Enter Password' className="full-width" icon='lock' type={password?.type}
+                        <Input placeholder={t("login.password_placeholder")} className="full-width" icon='lock' type={password?.type}
                           name={password?.name}
                           defaultValue={password?.value as any}
                           {...password?.required} />
@@ -71,10 +73,10 @@ export function Loginpassword(props: LoginPasswordProps) {
                           defaultValue={csrf_token?.value as any}
                           {...csrf_token?.required} />
                       </Form.Field>
-                      <Button size='large' className="primary btn-large" type="submit">Login <Icon name='arrow right' /></Button>
+                      <Button size='large' className="primary btn-large" type="submit">{t("login.submit_login")} <Icon name='arrow right' /></Button>
 
-                      <span> <br /> <a href="/auth/registration" className="blue_color form-link"> Register with us</a>  </span>
-                      <span className="float_right ">   <a href="/recovery" className="blue_color form-link"> Forgot Password ?</a>  </span>
+                      <span> <br /> <a href="/auth/registration" className="blue_color form-link"> {t("login.register_link")}</a>  </span>
+                      <span className="float_right ">   <a href="/recovery" className="blue_color form-link"> {t("login.forgot_password_link")} ?</a>  </span>
                     </Form>
 
                   </div>

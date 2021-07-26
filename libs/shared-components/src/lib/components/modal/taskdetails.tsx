@@ -5,6 +5,7 @@ import { Button, Modal, Form, Grid, TextArea, Icon, Divider } from 'semantic-ui-
 // import SampleModal from './sample-modal';
 import Moment from 'moment';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { useTranslation } from 'react-i18next';
 function exampleReducer(state, action) {
   switch (action.type) {
     case 'close':
@@ -32,6 +33,7 @@ export const ModalViewTask = (props: AlertProps) => {
   ];
 
   const [open, setOpen] = React.useState(false)
+  const {t} = useTranslation()
   React.useEffect(() => {
     if (props.openAlertF) {
       setOpen(props.openAlertF);
@@ -58,7 +60,7 @@ export const ModalViewTask = (props: AlertProps) => {
         open={open}
         trigger={
           <Button size="small" className="primary">
-            Task Details
+            {t("project_tab_menu.task.task_details")}
           </Button>
         }
         closeOnDimmerClick={false}
@@ -68,11 +70,11 @@ export const ModalViewTask = (props: AlertProps) => {
             <span className="material-icons check-grey">
               check_circle_outline
             </span>
-            Task Details <span className="textt task-s-number">T-00{props.id} </span>
-            <span onClick={() => props.editTask(props.taskData)} className="edit-task-link"><Icon name="edit" /> Edit</span>
+            {t("project_tab_menu.task.task_details")} <span className="textt task-s-number">T-00{props.id} </span>
+            <span onClick={() => props.editTask(props.taskData)} className="edit-task-link"><Icon name="edit" /> {t("common.edit")}</span>
           </h3>
           <span className="task-created-date">
-            Created on:{Moment(props?.taskData?.createdAt).format('DD-MM-YYYY')} - Created by: {props?.taskData?.createdBy}
+          {t("common.created_on")}:{Moment(props?.taskData?.createdAt).format('DD-MM-YYYY')} - {t("common.created_by")}: {props?.taskData?.createdBy}
           </span>
         </Modal.Header>
         <Modal.Content body>
@@ -82,19 +84,19 @@ export const ModalViewTask = (props: AlertProps) => {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field className="filled-fields">
-                      <label>Task Title</label>
+                      <label>{t("project_tab_menu.task.task_title")}</label>
                       <span>{props?.taskData?.taskTitle}</span>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field className="filled-fields">
-                      <label>Project/Work Type</label>
+                      <label>{t("project_tab_menu.task.project_worktype")}</label>
                       <span>{props?.taskData?.workTypeName}</span>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field className="filled-fields">
-                      <label>Phase</label>
+                      <label>{t("common.phase")}</label>
                       <span>{props?.taskData?.phaseName}</span>
                     </Form.Field>
                   </Grid.Column>
@@ -105,7 +107,7 @@ export const ModalViewTask = (props: AlertProps) => {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field className="filled-fields">
-                      <label>Description </label>
+                      <label>{t("common.desc")} </label>
                       {/* <span>
                         {props?.taskData?.description}
                       </span> */}
@@ -125,7 +127,7 @@ export const ModalViewTask = (props: AlertProps) => {
                             ],
                           }
                         }}
-                        placeholder="Add a description"
+                        placeholder={t("common.desc_placeholder")}
                         id="txtDescription"
                       />
                     </Form.Field>
@@ -136,13 +138,13 @@ export const ModalViewTask = (props: AlertProps) => {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field className="filled-fields">
-                      <label>BKP</label>
+                      <label>{t("common.bkp")}</label>
                       <span>{props?.taskData?.BKPTitle} </span>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field className="filled-fields">
-                      <label>Assignee</label>
+                      <label>{t("common.assignee")}</label>
                       <div className="event">
                         {(props?.taskData?.assignees || []).map((as, i) => {
                           const name = as.userName.split(" ").map((n) => n[0]).join("");
@@ -158,7 +160,7 @@ export const ModalViewTask = (props: AlertProps) => {
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field className="filled-fields">
-                      <label>Followers</label>
+                      <label>{t("common.followers")}</label>
                       <div className="event">
                         {(props?.taskData?.followers || []).map((p, id) => {
                           const name = p.userName.split(" ").map((n) => n[0]).join("");
@@ -185,19 +187,19 @@ export const ModalViewTask = (props: AlertProps) => {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field className="filled-fields">
-                      <label>Start date</label>
+                      <label>{t("common.start_date")}</label>
                       <span>{new Date(props?.taskData?.startDate).toDateString()}</span>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field className="filled-fields">
-                      <label>End date</label>
+                      <label>{t("common.end_date")}</label>
                       <span>{new Date(props?.taskData?.endDate).toDateString()}</span>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field className="filled-fields">
-                      <label>Estimated days</label>
+                      <label>{t("common.estimated_days")}</label>
                       <span>{props?.taskData?.estimatedDays}</span>
                     </Form.Field>
                   </Grid.Column>
@@ -209,8 +211,8 @@ export const ModalViewTask = (props: AlertProps) => {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field className="filled-fields">
-                      <label>Write an update </label>
-                      <TextArea placeholder="Tell us more" />
+                      <label>{t("project_tab_menu.task.write_update")} </label>
+                      <TextArea placeholder={t("common.tell_us_more")} />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -221,30 +223,30 @@ export const ModalViewTask = (props: AlertProps) => {
                     <Form.Field className="filled-fields">
                       <label>
                         <a href="">
-                          {' '}
+                          
                           <i
                             className="ms-Icon ms-Icon--Attach"
                             aria-hidden="true"
-                          ></i>{' '}
-                          Add file
+                          ></i>
+                          {t("project_tab_menu.add_file")}
                         </a>
-                        {' '}
+                        
                         <a href="">
-                          {' '}
+                          
                           <i
                             className="ms-Icon ms-Icon--Emoji"
                             aria-hidden="true"
-                          ></i>{' '}
-                          Emoji
+                          ></i>
+                          {t("project_tab_menu.task.emoji")}
                         </a>
-                        {' '}
+                        
                         <a href="">
-                          {' '}
+                          
                           <i
                             className="ms-Icon ms-Icon--Accounts"
                             aria-hidden="true"
-                          ></i>{' '}
-                          Mention
+                          ></i>
+                          {t("project_tab_menu.task.mention")}
                         </a>
                       </label>
                     </Form.Field>
@@ -254,7 +256,7 @@ export const ModalViewTask = (props: AlertProps) => {
                     <Form.Field>
                       <Button
                         style={{ float: 'right' }}
-                        content="Update"
+                        content={t("project_tab_menu.task.update")}
                         onClick={cancel}
                         positive
                         size="small"
@@ -273,8 +275,8 @@ export const ModalViewTask = (props: AlertProps) => {
                         <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/default_area.png`} className="image_center"></img>
                       </div>
                       <div className="text-center margin-top no-update-message">
-                        <span>No update yet</span>
-                        <p>We are not able to see any update here.</p>
+                        <span>{t("project_tab_menu.task.no_update_yet")}</span>
+                        <p>{t("project_tab_menu.task.no_update_yet_para")}</p>
                       </div>
                     </Form.Field>
                   </Grid.Column>

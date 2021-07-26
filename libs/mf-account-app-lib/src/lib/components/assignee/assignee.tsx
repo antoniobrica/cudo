@@ -5,12 +5,14 @@ import { GET_REFERENCES } from '../../graphql/graphql';
 
 import './assignee.module.scss';
 import { useQuery } from '@apollo/client';
+import { useTranslation } from 'react-i18next';
 
 /* eslint-disable-next-line */
 export interface AssigneeProps {
   parentAsigneeSelect,
   name?,
   assignees?,
+  error?
 }
 enum ReferenceType {
   COMPANY = "COMPANY"
@@ -18,6 +20,7 @@ enum ReferenceType {
 export function Assignee(props: AssigneeProps) {
   const [items, setItems] = React.useState([])
   const [assignee, setAssignee] = React.useState("")
+  const {t} = useTranslation()
 
   const { loading, error, data } = useQuery(GET_REFERENCES, {
     variables: {
@@ -66,12 +69,13 @@ export function Assignee(props: AssigneeProps) {
   // }
   return (
     <Form.Field>
-      <label>Assignee  </label>
-      <Select placeholder='Select' className="small"
+      <label>{t("common.assignee")} <span className="danger">*</span> </label>
+      <Select placeholder={t("common.select")} className="small"
         options={items}
         value={assignee}
         onChange={onAssignee}
         clearable
+        error={props.error}
       />
       {/* <label>{props.name}</label>
 

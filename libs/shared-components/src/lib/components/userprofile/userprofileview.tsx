@@ -22,14 +22,14 @@ export function UserProfileView(props: UserProfileEditProps) {
   return (
     <div className="app-content-body-dash dash_area navbar-collapse box-shadow bg-white-only" style={{ background: '#e6e6e6' }}>
       <div style={{ background: '#fff', padding: '10px' }}>
-        <span className="preliminary-font">{t('user_profile')}</span>
+        <span className="preliminary-font">{t('menu.profile.user_profile')}</span>
       </div>
       <Grid columns={2}>
         <Grid.Column style={{ height: '243px;' }}>
           <div className="card card-custom gutter-b">
             <div className="card-body">
               <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user_profile.png`} /><br />
-              <label className="text-center">Change Picture</label>
+              <label className="text-center">{t("menu.profile.change_picture")}</label>
               <Input type="file" className="file-upload-input" placeholder='Firstname' />
             </div>
           </div>
@@ -42,13 +42,13 @@ export function UserProfileView(props: UserProfileEditProps) {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <label>{t('first_name')} </label>
+                        <label>{t('register.first_name')} </label>
                         <label>John  </label>
                       </Form.Field>
                     </Grid.Column>
                     <Grid.Column>
                       <Form.Field>
-                        <label>Last Name </label>
+                        <label>{t('register.last_name')} </label>
                         <label>  Smith  </label>
                       </Form.Field>
                     </Grid.Column>
@@ -58,13 +58,13 @@ export function UserProfileView(props: UserProfileEditProps) {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <label>Email Address</label>
+                        <label>{t('register.email')}</label>
                         <label>johnsmith@gmail.com </label>
                       </Form.Field>
                     </Grid.Column>
                     <Grid.Column>
                       <Form.Field>
-                        <label>Phone Number </label>
+                        <label>{t('register.phone')} </label>
                         <label>+1 987 325 9875 </label>
                       </Form.Field>
                     </Grid.Column>
@@ -74,13 +74,13 @@ export function UserProfileView(props: UserProfileEditProps) {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <label>Old Passord</label>
+                        <label>{t("menu.profile.old_password")}</label>
                         <label>1111d</label>
                       </Form.Field>
                     </Grid.Column>
                     <Grid.Column>
                       <Form.Field>
-                        <label>New Passord</label>
+                        <label>{t("menu.profile.new_password")}</label>
                         <label>1111d</label>
                       </Form.Field>
                     </Grid.Column>
@@ -90,7 +90,7 @@ export function UserProfileView(props: UserProfileEditProps) {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <label>Company Name</label>
+                        <label>{t("register.company_name")}</label>
                         <label>Kiran Construction Co</label>
                       </Form.Field>
                     </Grid.Column>
@@ -100,13 +100,13 @@ export function UserProfileView(props: UserProfileEditProps) {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <label>Address Line 1</label>
+                        <label>{t("register.address1")}</label>
                         <label> 532 68th Street</label>
                       </Form.Field>
                     </Grid.Column>
                     <Grid.Column>
                       <Form.Field>
-                        <label>Address Line 2</label>
+                        <label>{t("register.address2")}</label>
                         <label> </label>
                       </Form.Field>
                     </Grid.Column>
@@ -116,25 +116,25 @@ export function UserProfileView(props: UserProfileEditProps) {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <label>City</label>
+                        <label>{t("register.city")}</label>
                         <label>New York</label>
                       </Form.Field>
                     </Grid.Column>
                     <Grid.Column>
                       <Form.Field>
-                        <label>State</label>
+                        <label>{t("project_list.add_new_project.state")}</label>
                         <label>NY</label>
                       </Form.Field>
                     </Grid.Column>
                     <Grid.Column>
                       <Form.Field>
-                        <label>Zip</label>
+                        <label>{t("register.zip")}</label>
                         <label>10605-78 156 </label>
                       </Form.Field>
                     </Grid.Column>
                     <Grid.Column>
                       <Form.Field>
-                        <label>Country</label>
+                        <label>{t("register.country")}</label>
                         <label>USA</label>
                       </Form.Field>
                     </Grid.Column>

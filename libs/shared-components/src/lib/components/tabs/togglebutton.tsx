@@ -1,11 +1,12 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, Icon, Dropdown } from 'semantic-ui-react'
 interface BtnProps {
   changeAdd?
 }
 
 export function ToggleButton(props: BtnProps) {
-
+  const {t} = useTranslation()
   // const options = [
   //   { key: 'add', icon: 'add', text: 'Task', value: 'add' },
   //   { key: 'file', icon: 'pin', text: 'Task from file', value: 'file' },
@@ -35,7 +36,7 @@ export function ToggleButton(props: BtnProps) {
 
 
       <Dropdown
-        text='Add New'
+        text={t("common.add_new_button")}
         icon='add'
         floating
         labeled
@@ -45,11 +46,11 @@ export function ToggleButton(props: BtnProps) {
         <Dropdown.Menu>
           <Dropdown.Item key="add" onClick={changeAdd}>
             <Icon name='add' className='left floated' />
-            Task
+            {t("project_tab_menu.task.title")}
           </Dropdown.Item>
           <Dropdown.Item key="pin" onClick={changePin}>
             <Icon name='pin' className='left floated' />
-            Task From File
+            {t("project_tab_menu.task.task_from_file")}
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

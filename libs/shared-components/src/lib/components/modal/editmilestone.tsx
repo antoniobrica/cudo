@@ -14,6 +14,7 @@ import {
 // import SampleModal from './sample-modal';
 import moment, { calendarFormat } from 'moment';
 import { PhaseIndex } from "@cudo/mf-account-app-lib"
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -24,6 +25,12 @@ export interface PlanningProps {
   confirm?,
   cancel?,
   worktypes?
+}
+interface PlanningErrors {
+  titleError?:string,
+  dateError?:string,
+  workTypeError?:string,
+  phaseError?:string
 }
 export function EditMileStonePopup(props: PlanningProps) {
   const countryOptions = [
@@ -49,6 +56,8 @@ export function EditMileStonePopup(props: PlanningProps) {
   const [workTypeData, setworkTypeData]= React.useState('')
   const [workType, setworkType] = React.useState(null) 
   const [workTypeD, setworkTypeD] = React.useState(null) 
+  const {t} = useTranslation()
+  const [errors, setErrors] = React.useState<PlanningErrors>({})
   React.useEffect(() => {
     if (props.openEdit) {
       setOpen(props.openEdit);
@@ -115,19 +124,44 @@ export function EditMileStonePopup(props: PlanningProps) {
   const onDescriptionChange = e=>{
     setDescription(e.target.value);
   }
-const updateMilestone=()=>{
-   const data ={
-    milestoneID: milestoneID,
-    milestoneTitle: milestone,
-    dueDate: dueDate,
-    description: description,
-    phaseName: phaseName,
-    // worktypeID: workTypeD.worktypeID,
-    // worktypeName: workTypeD.worktypeName
+  const validation = () => {
+    const foundErrors:PlanningErrors= {}
+    if (!milestone) {
+     foundErrors.titleError = t("common.errors.title_error")
+    }
+    if (!dueDate) {
+      foundErrors.dateError = t("common.errors.due_date_error")
+     }
+    if (!workTypeD) {
+      foundErrors.workTypeError= t("common.errors.worktype_error")
+     }
+    if (!phaseID) {
+      foundErrors.phaseError =  t("common.errors.phase_error") 
+    }
+    return foundErrors
+  }
+
+  const updateMilestone=()=>{
+    const validationResult = validation()
+    if (Object.keys(validationResult).length > 0) {
+      setErrors(validationResult)
+      return false
+    }
+      const data ={
+       milestoneID: milestoneID,
+       milestoneTitle: milestone,
+       dueDate: dueDate,
+       description: description,
+       phaseName: phaseName,
+       // worktypeID: workTypeD.worktypeID,
+       // worktypeName: workTypeD.worktypeName
+      }
+      props.getMilestoneData(data);
+      setOpen(false)
    }
-   props.getMilestoneData(data);
-   setOpen(false)
-}
+   
+
+
 
   return (
     <div id="navbar">
@@ -139,13 +173,13 @@ const updateMilestone=()=>{
         open={open}
         trigger={
           <Button size="mini" className="grey-btn">
-            edit Milestone   
+            {t("project_tab_menu.planning.edit_milestone")}   
           </Button>
         }
         closeOnDimmerClick={false}
       >
         <Modal.Header>
-          <h3>Edit Milestone </h3>
+          <h3>{t("project_tab_menu.planning.edit_milestone")}  </h3>
         </Modal.Header>
         <Modal.Content body>
           <div>
@@ -155,21 +189,23 @@ const updateMilestone=()=>{
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                        Milestone Title <span className="danger">*</span>
+                      {t("project_tab_menu.planning.milestone_title")} <span className="danger">*</span>
                       </label>
                       <Input
-                        placeholder="Swtichboard fitting"
+                        placeholder={t("project_tab_menu.planning.milestone_title")}
                         size="small"
                         className="full-width"
                         type="text"
                         value={milestone}
                         onChange={onMilestoneChange}
+                        error={errors?.titleError && !milestone}
                       />
+                       {errors?.titleError && !milestone ? <span className="error-message">{errors.titleError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Due Date <span className="danger">*</span></label>
+                      <label>{t("common.due_date")} <span className="danger">*</span></label>
 
                       <Input
                         placeholder="Default"
@@ -178,7 +214,9 @@ const updateMilestone=()=>{
                         type="date"
                         value={dueDate}
                         onChange={onDueDateChange}
+                        error={errors?.dateError && !dueDate}
                       />
+                      {errors?.dateError && !dueDate ? <span className="error-message">{errors.dateError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -188,8 +226,8 @@ const updateMilestone=()=>{
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Description </label>
-                      <TextArea placeholder="Tell us more" 
+                      <label>{t("common.desc")} </label>
+                      <TextArea placeholder={t("common.tell_us_more")} 
                        value={description}
                        onChange={onDescriptionChange}
                       />
@@ -202,17 +240,19 @@ const updateMilestone=()=>{
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                        Associate with work type 
+                      {t("project_tab_menu.task.work_type")} 
                         
                       </label>
                       <Select
                         clearable
-                        placeholder="Select"
+                        placeholder={t("common.select")}
                         className="small"
                         value={workTypeData}
                         options={workType}
                         onChange={onMworkType}     
+                        error={errors?.workTypeError && !workTypeData}
                       />
+                      {errors?.workTypeError && !workTypeData ? <span className="error-message">{errors.workTypeError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -229,7 +269,8 @@ const updateMilestone=()=>{
                         options={countryOptions}
                       />
                     </Form.Field> */}
-                <PhaseIndex phaseName={phaseName} parentPhaseSelect={onsetPhasesID} />
+                <PhaseIndex phaseName={phaseName} parentPhaseSelect={onsetPhasesID} error={errors?.phaseError && !phaseID} />
+                {errors?.phaseError && !phaseID ? <span className="error-message">{errors.phaseError}</span> : null}
                   </Grid.Column>
  
                 </Grid.Row>
@@ -239,7 +280,7 @@ const updateMilestone=()=>{
         </Modal.Content>
         <Modal.Actions>
           <Button
-            content="Submit"
+            content={t("common.submit")}
             onClick={updateMilestone}
             positive
             size="small"
@@ -250,7 +291,7 @@ const updateMilestone=()=>{
             className="icon-border"
             onClick={cancel}
           >
-            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> {t("common.cancel")}
           </Button>
         </Modal.Actions>
       </Modal>
