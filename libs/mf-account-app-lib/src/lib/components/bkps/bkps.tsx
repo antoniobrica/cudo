@@ -3,6 +3,7 @@ import { GET_BKP, GET_FOLDER } from '../../graphql/graphql';
 import { Form, Select } from 'semantic-ui-react';
 
 import { useBkpQuery, useFolderQuery } from '../../services/useRequest';
+import { useTranslation } from 'react-i18next';
 
 
 /* eslint-disable-next-line */
@@ -16,6 +17,7 @@ export function Bkps(props: BkpsProps) {
   const [BKPID, setBKPID] = React.useState("")
 
   const { loading, error, data } = useBkpQuery(GET_BKP);
+  const {t} = useTranslation()
   const { loading: folderL, error: folderE, data: FolderD } = useFolderQuery(GET_FOLDER)
   React.useEffect(() => {
     if (data) {
@@ -60,8 +62,8 @@ export function Bkps(props: BkpsProps) {
 
   return (
     <Form.Field>
-      <label>Select BKP   </label>
-      <Select name='bkp' placeholder='Select' className="small"
+      <label>{t("common.select_bkp")}  </label>
+      <Select name='bkp' placeholder={t("common.select")} className="small"
         options={items}
         value={BKPID}
         onChange={onBkp}

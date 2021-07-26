@@ -12,6 +12,7 @@ import InvitationListing from "../invitation-listing/invitation-listing";
 import {
   Image, Button
 } from 'semantic-ui-react';
+import { useTranslation } from "react-i18next";
 
 
 export function SessionListing() {
@@ -25,7 +26,7 @@ export function SessionListing() {
   const history = useHistory();
   const pathNames = history.location.pathname.split("/");
   const projectId = pathNames[3].toString();
-
+  const {t} = useTranslation()
 
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
@@ -115,10 +116,10 @@ export function SessionListing() {
         {/* <img src={img8} className="image_center"></img> */}
         <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/default_area.png`} />
 
-        <h3>No Data Found</h3>
-        <p>Hey User, you don't have any active session on this project. Click the button below to create a session list.</p>
+        <h3>{t("common.data_not_found")}</h3>
+        <p>{t("project_tab_menu.meeting.no_data_found_desc")}</p>
         <Button size="small" className="primary" onClick={addNew}>
-          + Add New Session
+          + {t("project_tab_menu.meeting.add_new_session")}
         </Button>
         <AddSession cancel={cancel} openAddSession={openAddSession} />
       </div>
@@ -145,10 +146,10 @@ export function SessionListing() {
                 {/* <img src={img8} className="image_center"></img> */}
                 <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/default_area.png`} />
 
-                <h3>No Data Found</h3>
-                <p>Hey User, you don't have any active session on this project. Click the button below to create a session list.</p>
+                <h3>{t("common.data_not_found")}</h3>
+                <p>{t("project_tab_menu.meeting.no_data_found_desc")}</p>
                 <Button size="small" className="primary" onClick={addNew}>
-                  + Add New Session
+                  + {t("project_tab_menu.meeting.add_new_session")}
                 </Button>
                 <AddSession cancel={cancel} openAddSession={openAddSession} />
               </div>

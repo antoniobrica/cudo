@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { ModalEditInvitation } from "@cudo/shared-components";
-import axios from 'axios';
-import { useHistory } from 'react-router';
 import { useMutation } from '@apollo/client';
 import { useInvitationDetailQuery } from '../../services/useRequest';
 import { UPDATE_INVITATION, GET_INVITATION_DETAIL, GET_INVITATIONS } from '../../graphql/graphql'
@@ -26,20 +24,21 @@ export function InvitationEdit(props: InvitationEditProps) {
             refetchQueries: [
                 {
                     query: GET_INVITATIONS,
-                    variables: { sessionID: props?.sessionId }
+                    variables: { sessionId: props?.sessionId }
                 }
             ]
         }
     )
 
     const editInvitation = (data) => {
-
+console.log('-----page edit meeting----data', data)
         editMeeting({
             variables: {
-                companyId: data.companyId,
-                projectTypeId: data.projectTypeId,
-                workTypeId: data.workTypeId,
+                // companyId: data.companyId,
+                // projectTypeId: data.projectTypeId,
+                // workTypeId: data.workTypeId,
                 sessionId: data.sessionId,
+                meetingId: data.meetingId,
                 meetingTitle: data.meetingTitle,
                 meetingDate: data.meetingDate,
                 meetingStartTime: data.meetingStartTime,
@@ -61,7 +60,7 @@ export function InvitationEdit(props: InvitationEditProps) {
                     query: GET_INVITATIONS,
                     variables: { sessionId: props?.sessionId }
                 }) as IInvitations;
-
+console.log('----update ---data----', data, props?.sessionId)
                 cache.writeQuery({
                     query: GET_INVITATIONS,
                     data: {
@@ -76,12 +75,13 @@ export function InvitationEdit(props: InvitationEditProps) {
 
     return (
         <div>
-            <ModalEditInvitation
-                meetingDetail={invitationDetailData}
-                editInvitation={editInvitation}
-                openEditInvitation={props.openEditInvitation}
-                cancel={props.cancel}
-            />
+            {invitationDetailData?.getMeetingById ?
+                <ModalEditInvitation
+                    meetingDetail={invitationDetailData?.getMeetingById}
+                    editInvitation={editInvitation}
+                    openEditInvitation={props.openEditInvitation}
+                    cancel={props.cancel}
+                /> : null}
         </div>
     )
 }

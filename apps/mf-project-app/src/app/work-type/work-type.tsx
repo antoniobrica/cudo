@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Select, TextArea } from 'semantic-ui-react';
 import WorkTypeDropdown from './work-type-dropdown';
 
@@ -11,7 +12,7 @@ export interface WorkTypeProps {
 
 export function WorkType(props: WorkTypeProps) {
   const [fields, setFields] = React.useState([{ workTypeName: null, estimatedCost: null ,workTypeID:null}])
-
+  const {t} = useTranslation()
 
   function handleChangeInput(i, event, field) {
     const values = [...fields];
@@ -49,8 +50,8 @@ export function WorkType(props: WorkTypeProps) {
     <Table className="manage-work-table" celled>
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell width={12}>Work Type</Table.HeaderCell>
-          <Table.HeaderCell width={4}>Estimate Cost</Table.HeaderCell>
+          <Table.HeaderCell width={12}>{t("project_list.add_new_project.worktype")}</Table.HeaderCell>
+          <Table.HeaderCell width={4}>{t("project_list.add_new_project.estimate_cost")}</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
 
@@ -89,7 +90,7 @@ export function WorkType(props: WorkTypeProps) {
           }
           <Table.Row>
             <Table.Cell colspan="2" className="add-more-work">
-              <a onClick={() => handleAddInput()}><i className="ms-Icon ms-font-xl ms-Icon--Add ms-fontColor-themePrimary"></i> Add more </a>
+              <a onClick={() => handleAddInput()}><i className="ms-Icon ms-font-xl ms-Icon--Add ms-fontColor-themePrimary"></i> {t("project_list.add_new_project.add_more_button")} </a>
             </Table.Cell>
           </Table.Row>
         </Table.Body>

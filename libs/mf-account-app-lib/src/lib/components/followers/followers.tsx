@@ -4,6 +4,7 @@ import { Form, Select, Dropdown } from 'semantic-ui-react';
 import { useUsersQuery } from '../../services/useRequest';
 import { GET_REFERENCES, GET_USERS } from '../../graphql/graphql';
 import { useQuery } from '@apollo/client';
+import { useTranslation } from 'react-i18next';
 
 /* eslint-disable-next-line */
 export interface FollowersProps {
@@ -16,6 +17,7 @@ enum ReferenceType {
 export function Followers(props: FollowersProps) {
   const [items, setItems] = React.useState([])
   const [followers, setFollowers] = React.useState(null)
+  const {t} = useTranslation()
 
   const { loading, error, data } = useQuery(GET_REFERENCES, {
     variables: {
@@ -77,7 +79,7 @@ export function Followers(props: FollowersProps) {
         onChange={onFollowers}
       /> */}
 
-      <label>Followers</label>
+      <label>{t("common.followers")}</label>
 
       <Dropdown className="small_drop follower-select"
         clearable
@@ -88,7 +90,7 @@ export function Followers(props: FollowersProps) {
         options={items}
         value={followers}
         onChange={onFollowers}
-        placeholder='Select'
+        placeholder={t("common.select")}
       />
 
     </Form.Field>

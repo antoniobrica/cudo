@@ -27,14 +27,18 @@ export interface AddInvitationProps {
   companyId?
 }
 
+interface AddInvitationErrors {
+  titleError?: string,
+  dateError?: string,
+  startTimeError?: string,
+  endTimeError?: string,
+  startEndTimeError?: string,
+  membersError?: string
+}
+
 export function ModalAddInvitation(props: AddInvitationProps) {
 
   const { t } = useTranslation();
-  const countryOptions = [
-    { key: 'af', value: 'af', text: 'Afghanistan' },
-    { key: 'ax', value: 'ax', text: 'Aland Islands' },
-  ];
-
   const [open, setOpen] = useState(false);
   const [invitationTitle, setInvitationTitle] = useState("");
   const [meetingDate, setMeetingDate] = useState("");
@@ -46,23 +50,13 @@ export function ModalAddInvitation(props: AddInvitationProps) {
   // const [protocolTitle, setProtocolTitle] = useState("");
   const [members, setMembers] = React.useState<any>([]);
 
-  const [errors, setErrors] = useState({
-    titleError: null,
-    dateError: null,
-    startTimeError: null,
-    endTimeError: null,
-    startEndTimeError: null,
-    membersError: null
-  })
+  const [errors, setErrors] = useState<AddInvitationErrors>({})
 
   useEffect(() => {
     if (props.openAddInvitation) {
       setOpen(true);
     }
-
   }, [props.openAddInvitation])
-
-
 
   const openInvitationAddPopup = () => {
     setOpen(true)
@@ -71,10 +65,12 @@ export function ModalAddInvitation(props: AddInvitationProps) {
 
   const onInvitationTitleChange = (e) => {
     setInvitationTitle(e.target.value)
+    setErrors({ ...errors, titleError: "" })
   }
 
   const onMembers = (data) => {
     setMembers(data)
+    setErrors({ ...errors, membersError: "" })
   }
 
   const onDescription = (html) => {
@@ -108,7 +104,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
       setErrors({ ...errors, dateError: t('invitation_add.error_date') })
       return false
     } else {
-      setErrors({ ...errors, dateError: null })
+      setErrors({ ...errors, dateError: "" })
     }
 
     const startMeetingDateTime = getDateTime(meetingDate, startTime)
@@ -118,51 +114,8 @@ export function ModalAddInvitation(props: AddInvitationProps) {
       setErrors({ ...errors, startEndTimeError: t('invitation_add.error_start_end_time') })
       return false
     } else {
-      setErrors({ ...errors, startEndTimeError: null })
+      setErrors({ ...errors, startEndTimeError: "" })
     }
-  }
-
-  const validation = () => {
-    let response = true
-
-    if (!invitationTitle) {
-      response = false
-      // errorMessages.push("Please provide Title")
-      setErrors({ ...errors, titleError: t('invitation_add.error_title') })
-      return false
-    }
-    else if (errors.titleError) {
-      setErrors({ ...errors, titleError: null })
-    }
-    if (!meetingDate) {
-      response = false
-      setErrors({ ...errors, dateError: t('invitation_add.error_date') })
-      return false
-    }
-
-    if (!meetingStartTime) {
-      response = false
-      setErrors({ ...errors, startTimeError: t('invitation_add.error_start_time') })
-      return false
-    }
-
-    if (!meetingEndTime) {
-      response = false
-      setErrors({ ...errors, endTimeError: t('invitation_add.error_end_time') })
-      return false
-    }
-
-    if (!members.length) {
-      response = false
-      setErrors({ ...errors, membersError: t('invitation_add.error_members') })
-      return false
-    }
-
-
-    if (!response) {
-      return false
-    }
-    return true
   }
 
   const getDateTime = (selectedDate, selectedTime) => {
@@ -173,9 +126,32 @@ export function ModalAddInvitation(props: AddInvitationProps) {
     return new Date(finalDateTime)
   }
 
-  const createInvitation = () => {
+  const validation = () => {
+    let errorResponse: AddInvitationErrors = {}
 
-    if (!validation()) {
+    if (!invitationTitle) {
+      errorResponse.titleError = t('invitation_add.error_title')
+    }
+    if (!meetingDate) {
+      errorResponse.dateError = t('invitation_add.error_date')
+    }
+    if (!meetingStartTime) {
+      errorResponse.startTimeError = t('invitation_add.error_start_time')
+    }
+    if (!meetingEndTime) {
+      errorResponse.endTimeError = t('invitation_add.error_end_time')
+    }
+    if (!members.length) {
+      errorResponse.membersError = t('invitation_add.error_members')
+    }
+
+    return errorResponse
+  }
+
+  const createInvitation = () => {
+    const validationResult = validation()
+    if (Object.keys(validationResult).length > 0) {
+      setErrors(validationResult)
       return false
     }
 
@@ -218,11 +194,10 @@ export function ModalAddInvitation(props: AddInvitationProps) {
     props.createInvitation(data);
 
     setOpen(false);
-    props.openAddInvitation(false)
+    // props.openAddInvitation(false)
     resetAddData();
     props.cancel(true)
   }
-
 
   const cancel = () => {
     setOpen(false)
@@ -238,16 +213,8 @@ export function ModalAddInvitation(props: AddInvitationProps) {
     setInviteGuests("")
     setMembers([])
     setMeetingDescription("")
-    setErrors({
-      titleError: null,
-      dateError: null,
-      startTimeError: null,
-      endTimeError: null,
-      startEndTimeError: null,
-      membersError: null
-    })
+    setErrors({})
   }
-
 
   return (
     <div id="navbar">
@@ -257,12 +224,12 @@ export function ModalAddInvitation(props: AddInvitationProps) {
         onOpen={openInvitationAddPopup}
         // onOpen={() => setOpen(true)}
         open={open}
-      // trigger={
-      //   <Button size="mini" className="grey-btn">
-      //     Add Invitation
-      //   </Button>
-      // }
-      closeOnDimmerClick={false}
+        // trigger={
+        //   <Button size="mini" className="grey-btn">
+        //     Add Invitation
+        //   </Button>
+        // }
+        closeOnDimmerClick={false}
       >
         <Modal.Header>
           <h3>Add Invitation </h3>
@@ -284,7 +251,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
                         type="text"
                         value={invitationTitle}
                         onChange={onInvitationTitleChange}
-                        error={errors.titleError !== null && !invitationTitle}
+                        error={errors.titleError && !invitationTitle}
                       />
                       {errors?.titleError && !invitationTitle ? <span className="error-message">{errors.titleError}</span> : null}
                     </Form.Field>
@@ -304,7 +271,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
                         type="date"
                         value={meetingDate}
                         onChange={(e) => setMeetingDate(e.target.value)}
-                        error={errors.dateError !== null && !meetingDate}
+                        error={errors.dateError && !meetingDate}
                       />
                       {errors?.dateError && !meetingDate ? <span className="error-message">{errors.dateError}</span> : null}
                     </Form.Field>
@@ -320,7 +287,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
                         name="time"
                         value={meetingStartTime}
                         onChange={onClickStartTime}
-                        error={errors.startTimeError !== null && !meetingStartTime}
+                        error={errors.startTimeError && !meetingStartTime}
                       />
                       {errors?.startTimeError && !meetingStartTime ? <span className="error-message">{errors.startTimeError}</span> : null}
                     </Form.Field>
@@ -335,7 +302,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
                         type="time"
                         value={meetingEndTime}
                         onChange={onClickEndTime}
-                        error={errors.endTimeError !== null && !meetingEndTime}
+                        error={errors.endTimeError && !meetingEndTime}
                       />
                       {errors?.endTimeError && !meetingEndTime ? <span className="error-message">{errors.endTimeError}</span> : null}
                       {errors?.startEndTimeError ? <span className="error-message">{errors.startEndTimeError}</span> : null}
@@ -347,9 +314,9 @@ export function ModalAddInvitation(props: AddInvitationProps) {
                 <Grid.Row>
                   <Grid.Column>
                     {/* <Form.Field> */}
-                      {/* <label>Members</label> */}
-                      <MembersIndex members={[]} parentMembersSelect={onMembers} />
-                      {errors?.membersError && !members.length ? <span className="error-message">{errors.membersError}</span> : null}
+                    <label>Members<span className="danger">*</span></label>
+                    <MembersIndex members={[]} parentMembersSelect={onMembers} error={errors?.membersError && !members.length} />
+                    {errors?.membersError && !members.length ? <span className="error-message">{errors.membersError}</span> : null}
                     {/* </Form.Field> */}
                   </Grid.Column>
                 </Grid.Row>

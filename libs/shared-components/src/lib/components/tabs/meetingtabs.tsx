@@ -6,6 +6,7 @@ import { Segment, Dropdown, Input, Grid, Form, Button } from 'semantic-ui-react'
 // import { InvitationTab, ModalAddInvitation } from '@cudo/shared-components'
 
 import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { useTranslation } from 'react-i18next';
 
 // import ModalSession from 'libs/shared-components/src/lib/components/modal/addsession'
 //  /add-session/add-session';
@@ -23,7 +24,7 @@ export function MeetingTab(props: MeetingTab) {
   const [categoryItems, setCategoryItems] = useState([])
   const [sessionList, setSessionList] = useState([])
   // const [openSessionDetail, setOpenSessionDetail] = useState(false)
-
+  const {t} = useTranslation()
   useEffect(() => {
     if (props?.sessionListData?.paginatedSession?.results) {
       const resultList = props.sessionListData.paginatedSession.results
@@ -104,11 +105,11 @@ export function MeetingTab(props: MeetingTab) {
                     <span className="dropdown-action">
                       <Dropdown icon='ellipsis horizontal' pointing='right'>
                         <Dropdown.Menu>
-                          <Dropdown.Item icon="eye" text="View detail" onClick={() => viewSessionDetail(sessionID)} />
-                          <Dropdown.Item icon="pencil" text="Edit" onClick={() => editSessionDetail(sessionID)} />
+                          <Dropdown.Item icon="eye" text={t("common.view_details")} onClick={() => viewSessionDetail(sessionID)} />
+                          <Dropdown.Item icon="pencil" text={t("common.edit")} onClick={() => editSessionDetail(sessionID)} />
                           <Dropdown.Item
                             icon="trash alternate outline"
-                            text="Delete"
+                            text={t("common.delete")}
                             onClick={() => deleteSessionDetail(sessionID)}
                           />
                         </Dropdown.Menu>
@@ -188,9 +189,9 @@ export function MeetingTab(props: MeetingTab) {
       } */}
       <div className="tabs-main-info-container meetings-outer-con">
 
-        <h3>Meetings
+        <h3>{t("project_tab_menu.meeting.title")}
           <Button onClick={clickAddSession} size="small" className="primary">
-            <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> Add New Session
+            <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> {t("project_tab_menu.meeting.add_new_session")}
           </Button>
 
         </h3>
@@ -200,9 +201,8 @@ export function MeetingTab(props: MeetingTab) {
           <span className="preliminary-font">
             <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/yellow_calendar.png`} />
             <h3>
-              {' '}
-              Upcoming meetings{' '}
-            </h3>{' '}
+            {t("project_tab_menu.meeting.upcoming_session")}
+            </h3>
           </span>
 
           <div className="card1 card-custom">
@@ -215,11 +215,10 @@ export function MeetingTab(props: MeetingTab) {
                     <div className="navi-item mr-2">
                       <div className="navi-link active">
                         <span className="navi-text">
-                          {' '}
                           <i
                             className="ms-Icon ms-Icon--Clock"
                             aria-hidden="true"
-                          ></i>{' '}
+                          ></i>
                           11:00 AM-11:45 AM
                         </span>
                       </div>
@@ -252,11 +251,11 @@ export function MeetingTab(props: MeetingTab) {
                       <span className="dropdown-action">
                         <Dropdown icon='ellipsis horizontal' pointing='right'>
                           <Dropdown.Menu>
-                            <Dropdown.Item icon="eye" text="View detail" />
-                            <Dropdown.Item icon="pencil" text="Edit" />
+                            <Dropdown.Item icon="eye" text={t("common.view_details")} />
+                            <Dropdown.Item icon="pencil" text={t("common.edit")} />
                             <Dropdown.Item
                               icon="trash alternate outline"
-                              text="Delete"
+                              text={t("common.delete")}
                             />
                           </Dropdown.Menu>
                         </Dropdown>
@@ -278,11 +277,11 @@ export function MeetingTab(props: MeetingTab) {
                     <div className="navi-item mr-2">
                       <div className="navi-link active">
                         <span className="navi-text">
-                          {' '}
+                          
                           <i
                             className="ms-Icon ms-Icon--Clock"
                             aria-hidden="true"
-                          ></i>{' '}
+                          ></i>
                           11:00 AM-11:45 AM
                         </span>
                       </div>
@@ -315,11 +314,11 @@ export function MeetingTab(props: MeetingTab) {
                       <span className="dropdown-action">
                         <Dropdown icon='ellipsis horizontal' pointing='right'>
                           <Dropdown.Menu>
-                            <Dropdown.Item icon="eye" text="View detail" />
-                            <Dropdown.Item icon="pencil" text="Edit" />
+                            <Dropdown.Item icon="eye" text={t("common.view_details")} />
+                            <Dropdown.Item icon="pencil" text={t("common.edit")} />
                             <Dropdown.Item
                               icon="trash alternate outline"
-                              text="Delete"
+                              text={t("common.delete")}
                             />
                           </Dropdown.Menu>
                         </Dropdown>
@@ -348,9 +347,9 @@ export function MeetingTab(props: MeetingTab) {
               marginBottom: '22px',
             }}
           >
-            {' '}
-            Upcoming meetings{' '}
-          </div>{' '}
+            
+            Upcoming meetings
+          </div>
         </span>
 
         <div className="card1 card-custom gutter-b">
@@ -363,11 +362,11 @@ export function MeetingTab(props: MeetingTab) {
                   <div className="navi-item mr-2">
                     <a href=" " className="navi-link active">
                       <span className="navi-text">
-                        {' '}
+                        
                         <i
                           className="ms-Icon ms-Icon--Clock"
                           aria-hidden="true"
-                        ></i>{' '}
+                        ></i>
                         11:00 AM-11:45 AM
                       </span>
                     </a>
@@ -398,11 +397,11 @@ export function MeetingTab(props: MeetingTab) {
                 <span className="mr-2">
                   <Dropdown text="...">
                     <Dropdown.Menu>
-                      <Dropdown.Item icon="eye" text="View detail" />
-                      <Dropdown.Item icon="pencil" text="Edit" />
+                      <Dropdown.Item icon="eye" text={t("common.view_details")} />
+                      <Dropdown.Item icon="pencil" text={t("common.edit")} />
                       <Dropdown.Item
                         icon="trash alternate outline"
-                        text="Delete"
+                        text={t("common.delete")}
                       />
                     </Dropdown.Menu>
                   </Dropdown>
@@ -422,11 +421,11 @@ export function MeetingTab(props: MeetingTab) {
                   <div className="navi-item mr-2">
                     <a href=" " className="navi-link active">
                       <span className="navi-text">
-                        {' '}
+                        
                         <i
                           className="ms-Icon ms-Icon--Clock"
                           aria-hidden="true"
-                        ></i>{' '}
+                        ></i>
                         11:00 AM-11:45 AM
                       </span>
                     </a>
@@ -457,11 +456,11 @@ export function MeetingTab(props: MeetingTab) {
                 <span className="mr-2">
                   <Dropdown text="...">
                     <Dropdown.Menu>
-                      <Dropdown.Item icon="eye" text="View detail" />
-                      <Dropdown.Item icon="pencil" text="Edit" />
+                      <Dropdown.Item icon="eye" text={t("common.view_details")} />
+                      <Dropdown.Item icon="pencil" text={t("common.edit")} />
                       <Dropdown.Item
                         icon="trash alternate outline"
-                        text="Delete"
+                        text={t("common.delete")}
                       />
                     </Dropdown.Menu>
                   </Dropdown>
@@ -520,11 +519,11 @@ export function MeetingTab(props: MeetingTab) {
                 <span className="mr-2">
                   <Dropdown text="...">
                     <Dropdown.Menu>
-                      <Dropdown.Item icon="eye" text="View detail" />
-                      <Dropdown.Item icon="pencil" text="Edit" />
+                      <Dropdown.Item icon="eye" text={t("common.view_details")} />
+                      <Dropdown.Item icon="pencil" text={t("common.edit")} />
                       <Dropdown.Item
                         icon="trash alternate outline"
-                        text="Delete"
+                        text={t("common.delete")}
                       />
                     </Dropdown.Menu>
                   </Dropdown>
@@ -583,11 +582,11 @@ export function MeetingTab(props: MeetingTab) {
                 <span className="mr-2">
                   <Dropdown text="...">
                     <Dropdown.Menu>
-                      <Dropdown.Item icon="eye" text="View detail" />
-                      <Dropdown.Item icon="pencil" text="Edit" />
+                      <Dropdown.Item icon="eye" text={t("common.view_details")} />
+                      <Dropdown.Item icon="pencil" text={t("common.edit")} />
                       <Dropdown.Item
                         icon="trash alternate outline"
-                        text="Delete"
+                        text={t("common.delete")}
                       />
                     </Dropdown.Menu>
                   </Dropdown>
@@ -646,11 +645,11 @@ export function MeetingTab(props: MeetingTab) {
                 <span className="mr-2">
                   <Dropdown text="...">
                     <Dropdown.Menu>
-                      <Dropdown.Item icon="eye" text="View detail" />
-                      <Dropdown.Item icon="pencil" text="Edit" />
+                      <Dropdown.Item icon="eye" text={t("common.view_details")} />
+                      <Dropdown.Item icon="pencil" text={t("common.edit")} />
                       <Dropdown.Item
                         icon="trash alternate outline"
-                        text="Delete"
+                        text={t("common.delete")}
                       />
                     </Dropdown.Menu>
                   </Dropdown>

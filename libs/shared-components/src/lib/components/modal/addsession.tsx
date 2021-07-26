@@ -16,6 +16,7 @@ import {
 import { Dropdown } from 'semantic-ui-react';
 import { MeetingCategoryIndex, SessionInvitationIndex, SessionProtocolIndex, FollowersIndex, AssigneeIndex, AdminsIndex, MembersIndex } from '@cudo/mf-account-app-lib';
 import { ValidationError } from '@hapi/joi';
+import { useTranslation } from 'react-i18next';
 
 export interface SessionProps {
   workTypes?
@@ -38,9 +39,9 @@ export function ModalSession(props: SessionProps) {
   const [invitation, setInvitation] = React.useState(null);
   const [admins, setAdmins] = React.useState<any>([]);
   const [members, setMembers] = React.useState<any>([]);
-
+  
   const [validationErrors, setValidationErrors] = React.useState(null)
-
+  const {t} = useTranslation()
 
   const onSessionTitleChange = (e) => {
     setSessionTitle(e.target.value)
@@ -97,22 +98,22 @@ export function ModalSession(props: SessionProps) {
     let errorMessages = []
     if (!sessionTitle) {
       response = false
-      errorMessages.push("Please provide session title")
+      errorMessages.push(t("project_tab_menu.meeting.errors.title_error"))
     }
     if (!catagory) {
       response = false
-      errorMessages.push("Please provide meeting category")
+      errorMessages.push(t("project_tab_menu.meeting.errors.category_error"))
     }
     if (!protocol) {
       response = false
-      errorMessages.push("Please provide protocol")
+      errorMessages.push(t("project_tab_menu.meeting.errors.protoclo_error"))
     }
     if (!invitation) {
-      errorMessages.push("Please provide invitation")
+      errorMessages.push(t("project_tab_menu.meeting.errors.invitation_error"))
     }
     if (!workTypeD) {
       response = false
-      errorMessages.push("Please provide workType")
+      errorMessages.push(t("common.errors.worktype_error"))
     }
     if (!response) {
       return errorMessages
@@ -204,7 +205,7 @@ export function ModalSession(props: SessionProps) {
       closeOnDimmerClick={false}
       >
         <Modal.Header>
-          <h3>Add sessions </h3>
+          <h3>{t("project_tab_menu.meeting.add_session")} </h3>
         </Modal.Header>
         <Modal.Content body>
           <div>
@@ -214,10 +215,10 @@ export function ModalSession(props: SessionProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                        Name <span className="danger">*</span>
+                      {t("project_tab_menu.meeting.name")} <span className="danger">*</span>
                       </label>
                       <Input
-                        placeholder="Session Title"
+                        placeholder={t("project_tab_menu.meeting.session_title")}
                         size="small"
                         className="full-width"
                         type="text"
@@ -232,10 +233,10 @@ export function ModalSession(props: SessionProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Work Type</label>
+                      <label>{t("project_list.add_new_project.worktype")}</label>
                       <Select
                         clearable
-                        placeholder="Select"
+                        placeholder={t("common.select")}
                         className="small"
                         value={workTypeData}
                         options={workType}
@@ -354,8 +355,9 @@ export function ModalSession(props: SessionProps) {
                         options={countryOptions}
                         placeholder="Select Country"
                       />
-                    </Form.Field> */}
-                    <MembersIndex members={[]} parentMembersSelect={onMembers} />
+                    </Form.Field> errors?.membersError && !members.length */}
+                    <label>Members<span className="danger">*</span></label>
+                    <MembersIndex members={[]} parentMembersSelect={onMembers} error={false}/>
                   </Grid.Column>
                 </Grid.Row>
                 <div className="followers-label-area">
@@ -449,7 +451,7 @@ export function ModalSession(props: SessionProps) {
         </Modal.Content>
         <Modal.Actions>
           <Button
-            content="Submit"
+            content={t("common.submit")}
             onClick={createSession}
             positive
             size="small"
@@ -461,7 +463,7 @@ export function ModalSession(props: SessionProps) {
             // onClick={() => setOpen(false)}
             onClick={cancel}
           >
-            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> {t("common.cancel")}
           </Button>
         </Modal.Actions>
       </Modal>

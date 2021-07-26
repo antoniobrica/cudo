@@ -18,6 +18,7 @@ export interface AssigneeIndexProps {
   parentAsigneeSelect,
   name?,
   assignees?
+  error?
 }
 
 export function AssigneeIndex(props: AssigneeIndexProps) {
@@ -27,7 +28,7 @@ export function AssigneeIndex(props: AssigneeIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <Assignee assignees={props.assignees} parentAsigneeSelect={onSelectAsignee} name={props.name} />
+        <Assignee assignees={props.assignees} parentAsigneeSelect={onSelectAsignee} name={props.name} error={props.error} />
       </ApolloHooksProvider>
     </ApolloProvider>
   );

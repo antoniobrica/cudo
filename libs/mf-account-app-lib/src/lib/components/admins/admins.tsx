@@ -4,6 +4,7 @@ import { Form, Select, Dropdown } from 'semantic-ui-react';
 import { useUsersQuery } from '../../services/useRequest';
 import { GET_REFERENCES, GET_USERS } from '../../graphql/graphql';
 import { useQuery } from '@apollo/client';
+import { useTranslation } from 'react-i18next';
 
 /* eslint-disable-next-line */
 export interface AdminsProps {
@@ -16,7 +17,7 @@ enum ReferenceType {
 export function Admins(props: AdminsProps) {
   const [items, setItems] = React.useState([])
   const [admins, setAdmins] = React.useState(null)
-
+  const {t} = useTranslation()
   const { loading, error, data } = useQuery(GET_REFERENCES, {
     variables: {
       referenceType: ReferenceType.COMPANY,
@@ -48,7 +49,7 @@ export function Admins(props: AdminsProps) {
   return (
     <Form.Field>
      
-      <label>Admin</label>
+      <label>{t("project_tab_menu.meeting.admin")}</label>
 
       <Dropdown className="small_drop follower-select"
         clearable
@@ -59,7 +60,7 @@ export function Admins(props: AdminsProps) {
         options={items}
         value={admins}
         onChange={onAdmins}
-        placeholder='Select'
+        placeholder={t("common.select")}
       />
 
     </Form.Field>
