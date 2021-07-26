@@ -48,7 +48,8 @@ import InvitationTab from 'libs/shared-components/src/lib/components/invitation/
 import EditMileStonePopup from 'libs/shared-components/src/lib/components/modal/editmilestone';
 import ModalEditViewMilestone from 'libs/shared-components/src/lib/components/modal/viewmilestone';
 import ModalAddProtocol from 'libs/shared-components/src/lib/components/modal/addprotocol';
-import ModalEditInvitation from 'libs/shared-components/src/lib/components/modal/editInvitation';
+import ModalOldEditInvitation from 'libs/shared-components/src/lib/components/modal/editOldInvitation';
+// import ModalEditInvitation from 'libs/shared-components/src/lib/components/modal/editinvitation';
 
 import ModalAddInvitation from 'libs/shared-components/src/lib/components/modal/addinvitaton';
 
@@ -114,7 +115,8 @@ export function App() {
         <EditMileStonePopup></EditMileStonePopup><br />
         <ModalEditViewMilestone></ModalEditViewMilestone><br />
         <ModalAddProtocol></ModalAddProtocol><br />
-        <ModalEditInvitation></ModalEditInvitation><br />
+        <ModalOldEditInvitation></ModalOldEditInvitation><br />
+        {/* <ModalEditInvitation></ModalEditInvitation><br /> */}
         <ModalAddInvitation></ModalAddInvitation><br />
         <MeetingTab></MeetingTab><br />
         <FilterPopup></FilterPopup><br />
