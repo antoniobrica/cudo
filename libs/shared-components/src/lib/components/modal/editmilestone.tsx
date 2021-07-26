@@ -165,8 +165,9 @@ export function EditMileStonePopup(props: PlanningProps) {
 
   return (
     <div id="navbar">
-      <Modal  style={{height:'650px'}}
-        className="modal_media"
+      <Modal 
+        className="modal_media right-side--fixed-modal edit-milestone-modal"
+        closeIcon
         onClose={cancel}
         onOpen={openf}
         open={open}

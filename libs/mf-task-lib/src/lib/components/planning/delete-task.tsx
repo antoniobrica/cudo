@@ -29,7 +29,6 @@ import { Button, Icon, Modal } from 'semantic-ui-react'
   }
 const size = undefined
   return (
-    <>
 
       <Modal
         closeIcon
@@ -40,25 +39,19 @@ const size = undefined
         className="delete-confiramtion-popup"
         closeOnDimmerClick={false}
       >
-        {/* <Modal.Header>Update your Task</Modal.Header> */}
-        <Modal.Header>{t("project_tab_menu.planning.delete_milestone")} 
-        <a className="float_right" onClick={cancel}>  <i className="ms-Icon ms-Icon--CalculatorMultiply mr-10" aria-hidden="true"></i></a> 
-          
-          </Modal.Header>
-        <Modal.Content>
-          <p className="text-center" style={{color: "black"}}>{t("project_tab_menu.planning.are_you_sure")} </p>
-        </Modal.Content>
-        <Modal.Actions className="float_right">
-        <Button positive onClick={yes}>
-            {t("common.yes")}
-          </Button>
-          <Button negative  onClick={cancel}>
-          {t("common.no")}
-          </Button>
-       
-        </Modal.Actions>
+        <div className="delete-confirmation-con">
+          <Modal.Content>
+            {/* <i className="ms-Icon ms-Icon--ShieldAlert" aria-hidden="true"></i> */}
+            <Icon name="shield alternate"></Icon>
+            <h3>{t("common.please_confirm")}</h3>
+            <p>{t("project_tab_menu.planning.are_you_sure")}</p>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button basic onClick={cancel}>{t("common.cancel")}</Button>
+            <Button className="primary" positive onClick={yes}>{t("common.confirm")}</Button>
+          </Modal.Actions>
+        </div>
       </Modal>
-    </>
   )
 }
 
