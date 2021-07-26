@@ -480,7 +480,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         type="text"
                       />
                     </Form.Field> */}
-                    <AssigneeIndex assignees={props?.taskData?.assignees} parentAsigneeSelect={setAsignee} name="Assignee" />
+                    <AssigneeIndex assignees={props?.taskData?.assignees} parentAsigneeSelect={setAsignee} name="Assignee" error={errors?.assigneeError && !assignees.length} />
                     {errors?.assigneeError && !assignees.length ? <span className="error-message">{errors.assigneeError}</span> : null}
                   </Grid.Column>
                 </Grid.Row>
@@ -530,7 +530,10 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         className="full-width"
                         type="date"
                         value={startDate}
-                        onChange={onStartDateChange} />
+                        onChange={onStartDateChange}
+                        error={errors?.dateError && (startDate>endDate)}
+                        />
+                        
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
@@ -542,7 +545,10 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         className="full-width"
                         type="date"
                         value={endDate}
-                        onChange={onEndDateChange} />
+                        onChange={onEndDateChange}
+                        error={errors?.dateError && (startDate>endDate)}
+                        />
+                        
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
@@ -551,6 +557,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                       <Input placeholder={t("project_tab_menu.task.enter_days")} className="small"
                         value={estimatedDays}
                         onChange={onsetEstimatedDays}
+                        error={errors?.dateError && (startDate>endDate)}
                       />
                     </Form.Field>
                   </Grid.Column>

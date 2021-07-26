@@ -12,6 +12,7 @@ export interface AssigneeProps {
   parentAsigneeSelect,
   name?,
   assignees?,
+  error?
 }
 enum ReferenceType {
   COMPANY = "COMPANY"
@@ -68,12 +69,13 @@ export function Assignee(props: AssigneeProps) {
   // }
   return (
     <Form.Field>
-      <label>{t("common.assignee")}  </label>
+      <label>{t("common.assignee")} <span className="danger">*</span> </label>
       <Select placeholder={t("common.select")} className="small"
         options={items}
         value={assignee}
         onChange={onAssignee}
         clearable
+        error={props.error}
       />
       {/* <label>{props.name}</label>
 

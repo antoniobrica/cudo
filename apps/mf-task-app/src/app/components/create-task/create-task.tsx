@@ -406,7 +406,7 @@ export function CreateTask(props: CreateTaskProps) {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Assignee" />
+                    <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Assignee" error={errors?.assigneeError && !assignees.length} />
                     {errors?.assigneeError && !assignees.length ? <span className="error-message">{errors.assigneeError}</span> : null}
                   </Grid.Column>
                 </Grid.Row>
