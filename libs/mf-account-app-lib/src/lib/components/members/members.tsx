@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 export interface MembersProps {
   parentMembersSelect,
   members?,
+  error?
 }
 enum ReferenceType {
   COMPANY = "COMPANY"
@@ -49,7 +50,7 @@ export function Members(props: MembersProps) {
   return (
     <Form.Field>
      
-      <label>{t("project_tab_menu.meeting.members")}</label>
+      {/* <label>{t("project_tab_menu.meeting.members")}</label> */}
 
       <Dropdown className="small_drop follower-select"
         clearable
@@ -61,6 +62,7 @@ export function Members(props: MembersProps) {
         value={members}
         onChange={onMembers}
         placeholder={t("common.select")}
+        error={props.error}
       />
 
     </Form.Field>

@@ -383,49 +383,46 @@ mutation CreateMeeting(
 }`;
 
 export const UPDATE_INVITATION = gql`
-mutation {
+mutation UpdateMeeting(
+#   $companyId: String!, 
+#   $projectTypeId: String!,
+#   $workTypeId: String!,
+#   $sessionId: String!,
+  $meetingId:String!
+  $meetingTitle: String!,
+  $meetingDate: DateTime!,
+  $meetingStartTime: DateTime!,
+  $meetingEndTime: DateTime!,
+  $inviteGuests: String!,
+  $meetingDescription: String!,
+  $protocolId: String!,
+  $protocolTitle: String!,
+  $members: [MemberParams!]!,
+  $meetingFiles: [MeetingFilesParams!]!,  
+  $meetingDuration: String!,
+  $status: String
+){
   updateMeeting(
     meetingUpdateInput: {
       meetingBasics: {
-        meetingId: "7bf4bf20-e39d-11eb-b6f1-b9564249267a"
-        # companyId: "Sftobiz_123"
-        # projectTypeId: "88807ca0-b6e5-11eb-a720-7feeb9ce9ad0"
-        # workTypeId: "96b3b610-b6c3-11eb-a720-7feeb9ce9ad0"
-        # sessionId: "session_1"
-        meetingTitle: "Test meeting update testing"
-        # meetingDate: "2021-07-23"
-        # meetingStartTime: "2021-07-23 10:00:00"
-        # meetingEndTime: "2021-07-23 11:30:00"
-        # meetingDuration: "1 hr 30 min"
-        # inviteGuests: "testa1@mail.com,testc3@mail.com"
-        # meetingDescription: "test meeting description for update"
-        # protocolId: "a0651e90-d4b6-11eb-8f15-fb86beaf9d47"
-        # protocolTitle: "Test Protocol Title another update"
+        # companyId: $companyId               
+        # projectTypeId: $projectTypeId       
+        # workTypeId: $workTypeId              
+        # sessionId: $sessionId               
+        meetingId: $meetingId
+        meetingTitle: $meetingTitle          
+        meetingDate: $meetingDate           
+        meetingStartTime: $meetingStartTime 
+        meetingEndTime: $meetingEndTime      
+        inviteGuests: $inviteGuests          
+        meetingDescription: $meetingDescription  
+        protocolId: $protocolId              
+        protocolTitle: $protocolTitle        
+        meetingDuration: $meetingDuration
+        status: $status
       }
-      members: [
-        {
-          memberID: "mkandar81@gmail.com"
-          memberName: "Mukut Kumar Kandar"
-          image: "image of MKK"
-        }       
-      ]
-      meetingFiles: [
-        {
-          fileId:"mk_doc_11"
-          meetingFileId: "meeting_file_11"
-          meetingFileTitle: "Meeting file title 11"
-        }
-        {
-          fileId:"mk_doc_12"
-          meetingFileId: "meeting_file_12"
-          meetingFileTitle: "Meeting file title 12"
-        }
-        {
-          fileId:"mk_doc_123"
-          meetingFileId: "meeting_file_123"
-          meetingFileTitle: "Meeting file title 123"
-        }
-      ]
+      members: $members 
+      meetingFiles: $meetingFiles, 
     }
   ) {
     companyId
