@@ -259,7 +259,8 @@ export function CostList(props: CostListProps) {
                                     return (
                                       isBkpEdited && (cost?.BKPCosts[0]?.bkpCostID === editBkpData?.bkpCostID) ?
                                         <Table.Row>
-
+                                          <Table.Cell><img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} alt='' /></Table.Cell>
+                                          <Table.Cell>{cost?.BKPCosts[0]?.BKPID}</Table.Cell>
                                           <Table.Cell>
                                             <div className="edit-estimated-price" >
                                               <Form.Field className="fillarea">
@@ -282,6 +283,8 @@ export function CostList(props: CostListProps) {
                                               </Form.Field>
                                             </div>
                                           </Table.Cell>
+                                          <Table.Cell className="file-attached"><i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <Label horizontal> 2</Label></Table.Cell>
+
                                           <Table.Cell>
                                             <div className="edit-estimated-price" >
                                               <Form.Field className="fillarea">
@@ -303,6 +306,7 @@ export function CostList(props: CostListProps) {
                                                 />
                                               </Form.Field>
                                             </div>
+
                                           </Table.Cell>
                                           <Table.Cell>
                                             <div className="edit-estimated-price" >

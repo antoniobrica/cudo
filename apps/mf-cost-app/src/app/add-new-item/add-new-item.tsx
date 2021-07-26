@@ -4,6 +4,7 @@ import './add-new-item.module.scss';
 import { useMutation } from '@apollo/client';
 import { CREATE_COST, GET_COST } from '../graphql/graphql';
 import { ICosts } from '../interfaces/cost';
+import { useHistory } from 'react-router-dom';
 
 /* eslint-disable-next-line */
 export interface AddNewItemProps {
@@ -19,10 +20,13 @@ type User = {
 export function AddNewItem(props: AddNewItemProps) {
   const [user, setUser] = useState<User | null>(null);
   const [val, toggle] = React.useState(false);
+  const history = useHistory();
+  const res = history.location.pathname.split("/");
+  const referenceID = res[3].toString();
   const [addCost, { data }] = useMutation(CREATE_COST,
     {
       refetchQueries: [
-        { query: GET_COST }
+        { query: GET_COST, variables: { referenceID } }
       ]
     }
   )
@@ -38,13 +42,14 @@ export function AddNewItem(props: AddNewItemProps) {
           itemPrice: Number(data.itemPrice),
           itemQuantity: Number(data.itemQuantity),
           uploadedFileID: data.uploadedFileID || '',
-          uploadedFileTitle: data.uploadedFileTitle || ''
+          uploadedFileTitle: data.uploadedFileTitle || '',
+          referenceID,
         },
         update: (
           cache,
           data
         ) => {
-          const cacheData = cache.readQuery({ query: GET_COST }) as ICosts;
+          const cacheData = cache.readQuery({ query: GET_COST, variables: { referenceID } }) as ICosts;
           cache.writeQuery({
             query: GET_COST,
             data: {
