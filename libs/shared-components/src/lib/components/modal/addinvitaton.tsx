@@ -39,11 +39,6 @@ interface AddInvitationErrors {
 export function ModalAddInvitation(props: AddInvitationProps) {
 
   const { t } = useTranslation();
-  const countryOptions = [
-    { key: 'af', value: 'af', text: 'Afghanistan' },
-    { key: 'ax', value: 'ax', text: 'Aland Islands' },
-  ];
-
   const [open, setOpen] = useState(false);
   const [invitationTitle, setInvitationTitle] = useState("");
   const [meetingDate, setMeetingDate] = useState("");
@@ -61,10 +56,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
     if (props.openAddInvitation) {
       setOpen(true);
     }
-
   }, [props.openAddInvitation])
-
-
 
   const openInvitationAddPopup = () => {
     setOpen(true)
@@ -73,11 +65,12 @@ export function ModalAddInvitation(props: AddInvitationProps) {
 
   const onInvitationTitleChange = (e) => {
     setInvitationTitle(e.target.value)
-    setErrors({...errors, titleError:""})
+    setErrors({ ...errors, titleError: "" })
   }
 
   const onMembers = (data) => {
     setMembers(data)
+    setErrors({ ...errors, membersError: "" })
   }
 
   const onDescription = (html) => {
@@ -111,7 +104,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
       setErrors({ ...errors, dateError: t('invitation_add.error_date') })
       return false
     } else {
-      setErrors({ ...errors, dateError: null })
+      setErrors({ ...errors, dateError: "" })
     }
 
     const startMeetingDateTime = getDateTime(meetingDate, startTime)
@@ -121,7 +114,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
       setErrors({ ...errors, startEndTimeError: t('invitation_add.error_start_end_time') })
       return false
     } else {
-      setErrors({ ...errors, startEndTimeError: null })
+      setErrors({ ...errors, startEndTimeError: "" })
     }
   }
 
@@ -201,7 +194,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
     props.createInvitation(data);
 
     setOpen(false);
-    props.openAddInvitation(false)
+    // props.openAddInvitation(false)
     resetAddData();
     props.cancel(true)
   }
@@ -222,7 +215,6 @@ export function ModalAddInvitation(props: AddInvitationProps) {
     setMeetingDescription("")
     setErrors({})
   }
-
 
   return (
     <div id="navbar">

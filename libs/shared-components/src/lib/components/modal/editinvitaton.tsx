@@ -16,7 +16,7 @@ import {
 
 import moment from 'moment'
 import { MembersIndex } from '@cudo/mf-account-app-lib';
-import { showToastMessage } from '@cudo/mf-core';
+// import { showToastMessage } from '@cudo/mf-core';
 import { useTranslation } from 'react-i18next';
 
 export interface EditInvitationProps {
@@ -24,6 +24,15 @@ export interface EditInvitationProps {
   editInvitation?
   openEditInvitation?
   cancel?
+}
+
+interface EditInvitationErrors {
+  titleError?: string,
+  dateError?: string,
+  startTimeError?: string,
+  endTimeError?: string,
+  startEndTimeError?: string,
+  membersError?: string
 }
 
 export function ModalEditInvitation(props: EditInvitationProps) {
@@ -42,14 +51,7 @@ export function ModalEditInvitation(props: EditInvitationProps) {
   // const [protocolTitle, setProtocolTitle] = useState("");
   const [members, setMembers] = React.useState<any>([]);
 
-  const [errors, setErrors] = useState({
-    titleError: null,
-    dateError: null,
-    startTimeError: null,
-    endTimeError: null,
-    startEndTimeError: null,
-    membersError: null
-  })
+  const [errors, setErrors] = useState<EditInvitationErrors>({})
 
   useEffect(() => {
     if (props.openEditInvitation) {
@@ -132,11 +134,13 @@ export function ModalEditInvitation(props: EditInvitationProps) {
 
   const onInvitationTitleChange = (e) => {
     setInvitationTitle(e.target.value)
+    setErrors({ ...errors, titleError: "" })
   }
 
   const onMembers = (data) => {
     console.log('----errors.memberError----', errors.membersError)
     setMembers(data)
+    setErrors({ ...errors, membersError: "" })
   }
 
   const onDescription = (html) => {
@@ -165,7 +169,7 @@ export function ModalEditInvitation(props: EditInvitationProps) {
       setErrors({ ...errors, dateError: t('invitation_add.error_date') })
       return false
     } else {
-      setErrors({ ...errors, dateError: null })
+      setErrors({ ...errors, dateError: "" })
     }
 
     const startMeetingDateTime = getDateTime(meetingDate, startTime)
@@ -175,52 +179,30 @@ export function ModalEditInvitation(props: EditInvitationProps) {
       setErrors({ ...errors, startEndTimeError: t('invitation_add.error_start_end_time') })
       return false
     } else {
-      setErrors({ ...errors, startEndTimeError: null })
+      setErrors({ ...errors, startEndTimeError: "" })
     }
   }
 
   const validation = () => {
-    let response = true
+    let errorResponse: EditInvitationErrors = {}
 
     if (!invitationTitle) {
-      response = false
-      // errorMessages.push("Please provide Title")
-      setErrors({ ...errors, titleError: t('invitation_add.error_title') })
-      // showToastMessage('Please provide invitation title', 'error')
-      // return false
-    }
-    else if (errors.titleError) {
-      setErrors({ ...errors, titleError: null })
+      errorResponse.titleError = t('invitation_add.error_title')
     }
     if (!meetingDate) {
-      response = false
-      setErrors({ ...errors, dateError: t('invitation_add.error_date') })
-      // return false
+      errorResponse.dateError = t('invitation_add.error_date')
     }
-
     if (!meetingStartTime) {
-      response = false
-      setErrors({ ...errors, startTimeError: t('invitation_add.error_start_time') })
-      // return false
+      errorResponse.startTimeError = t('invitation_add.error_start_time')
     }
-
     if (!meetingEndTime) {
-      response = false
-      setErrors({ ...errors, endTimeError: t('invitation_add.error_end_time') })
-      // return false
+      errorResponse.endTimeError = t('invitation_add.error_end_time')
     }
-
     if (!members.length) {
-      response = false
-      setErrors({ ...errors, membersError: t('invitation_add.error_members') })
-      // return false
+      errorResponse.membersError = t('invitation_add.error_members')
     }
 
-
-    if (!response) {
-      return false
-    }
-    return true
+    return errorResponse
   }
 
   const getDateTime = (selectedDate, selectedTime) => {
@@ -233,7 +215,9 @@ export function ModalEditInvitation(props: EditInvitationProps) {
 
   const updateInvitation = () => {
 
-    if (!validation()) {
+    const validationResult = validation()
+    if (Object.keys(validationResult).length > 0) {
+      setErrors(validationResult)
       return false
     }
 
