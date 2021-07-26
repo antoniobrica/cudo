@@ -38,6 +38,14 @@ interface AlertProps {
   taskStatus?,
   editTaskData?
 }
+
+interface TaskErrors {
+  titleError?:string,
+  workTypeError?:string,
+  assigneeError?:string,
+  dateError?:string
+}
+
 export const ModalTaskEdit = (props: AlertProps) => {
 
   const [open, setOpen] = React.useState(false);
@@ -65,12 +73,8 @@ export const ModalTaskEdit = (props: AlertProps) => {
   const [workTypeName, setworktypeName] = React.useState("")
   const [assignees, setAssignees] = React.useState<any>([]);
   const [followers, setfollowers] = React.useState<any>([]);
-  const [errors, setErrors] = React.useState({
-    titleError: '',
-    dateError: '',
-    assigneeError: '',
-    workTypeError: ''
-  })
+  const [errors, setErrors] = React.useState<TaskErrors>({})
+  const [isSubmited, setIsSubmited] = React.useState(false)
   const { t } = useTranslation()
   const history = useHistory();
   const res = history.location.pathname.split("/");
@@ -270,76 +274,71 @@ export const ModalTaskEdit = (props: AlertProps) => {
     console.log('des=>', e);
     setDescription(e);
   }
+
+  // validate errors
   const validation = () => {
-    let response = true
-
+    const foundErrors:TaskErrors= {}
     if(!taskTitle){
-      response=false
-      setErrors({...errors,titleError:t("common.errors.title_error")})
-      return false
+      foundErrors.titleError=t("common.errors.title_error")
     }
-
     if(!workTypeID){
-      response=false
-      setErrors({...errors,workTypeError:t("common.errors.worktype_error")})
-      return false
+      foundErrors.workTypeError=t("common.errors.worktype_error")
     }
-
     if(!assignees.length){
-      response=false
-      setErrors({...errors,assigneeError:t("common.errors.assignee_error")})
-      return false
+      foundErrors.assigneeError=t("common.errors.assignee_error")
     }
-
     if(startDate>endDate){
-      response=false
-      setErrors({...errors,dateError:t("common.errors.date_error")})
-      return false
+      foundErrors.dateError=t("common.errors.date_error")
     }
-
-    if(!response){
-      return false
-    }
-    return true
+    return foundErrors
   }
 
-  const editTask = () => {
-    if(!validation()){
-      return false
-    }
-    // const assignees = [];
-    // props.taskData.assignees.map((data, i) => {
-    //   assignees.push({ userID: data.userID, userName: data.userName })
-    // })
-    // const followers = [];
-    // props.taskData.followers.map((data, i) => {
-    //   followers.push({ userID: data.userID, userName: data.userName })
-    // })
-    const editTaskData = {
-      taskID: props.taskData.taskID,
-      taskTitle: taskTitle,
-      startDate: startDate,
-      endDate: endDate,
-      description: description,
-      estimatedDays: estimatedDays,
-      BKPID: BKPID,
-      BKPTitle: BKPTitle,
-      phaseID: phaseID,
-      phaseName: phaseName,
-      sendNotification: false,
-      status: props.taskData.status,
-      files: [],
-      assignees: assignees,
-      followers: followers,
-      workTypeName: workTypeName,
-      workTypeID: workTypeID,
-      saveTaskAsTemplate: props.taskData.saveTaskAsTemplate,
-    }
-    props.editTaskData(editTaskData);
-    setOpen(false)
-    props.cancel()
+  const handleFormSubmit = () => {
+    setErrors(validation())
+    setIsSubmited(true)
   }
 
+  React.useEffect(()=>{
+    if(Object.keys(errors).length === 0 && isSubmited){
+      const editTask = () => {
+        if(!validation()){
+          return false
+        }
+        // const assignees = [];
+        // props.taskData.assignees.map((data, i) => {
+        //   assignees.push({ userID: data.userID, userName: data.userName })
+        // })
+        // const followers = [];
+        // props.taskData.followers.map((data, i) => {
+        //   followers.push({ userID: data.userID, userName: data.userName })
+        // })
+        const editTaskData = {
+          taskID: props.taskData.taskID,
+          taskTitle: taskTitle,
+          startDate: startDate,
+          endDate: endDate,
+          description: description,
+          estimatedDays: estimatedDays,
+          BKPID: BKPID,
+          BKPTitle: BKPTitle,
+          phaseID: phaseID,
+          phaseName: phaseName,
+          sendNotification: false,
+          status: props.taskData.status,
+          files: [],
+          assignees: assignees,
+          followers: followers,
+          workTypeName: workTypeName,
+          workTypeID: workTypeID,
+          saveTaskAsTemplate: props.taskData.saveTaskAsTemplate,
+        }
+        props.editTaskData(editTaskData);
+        setOpen(false)
+        props.cancel()
+      }
+      editTask()
+    }
+  },[errors,isSubmited])
 
   return (
     <div id="navbar">
@@ -574,7 +573,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
         <Modal.Actions>
           <Button
             content={t("common.submit")}
-            onClick={editTask}
+            onClick={handleFormSubmit}
             positive
             size="small"
             className="primary"

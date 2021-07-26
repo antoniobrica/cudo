@@ -127,7 +127,6 @@
     "realization": "Realization",
     "overview": {
       "title": "Overview",
-      "data_not_found": "No Data Found",
       "desc_line1": "Hey User, you don't have any active sub project lists on this project. Click the button",
       "desc_line2": "below to create a sub project list."
     },
@@ -190,7 +189,26 @@
     "tender": {
       "title": "Tender"
     },
-    "meeting": "Meetings",
+    "meeting": {
+      "title": "Meetings",
+      "no_data_found_desc": "Hey User, you don't have any active session on this project. Click the button below to create a session list.",
+      "add_new_session": "Add New Session",
+      "add_session": "Add Session",
+      "name": "Name",
+      "session_title": "Session Title",
+      "category": "Category",
+      "admin": "Admin",
+      "members": "Members",
+      "template_for_invitation": "Template for invitation",
+      "template_for_protocol": "Template for protocol",
+      "upcoming_session": "Upcoming meetings",
+      "errors": {
+        "title_error": "Please provide session title",
+        "category_error": "Please provide meeting category",
+        "protocol_error": "Please provide protocol",
+        "invitation_error": "Please provide invitaion"
+      }
+    },
     "files": {
       "title": "Files",
       "select_file": "Select file",
@@ -278,6 +296,7 @@
     "everyone_in_worktype": "Everyone in Project/Work type",
     "everyone_in_subproject": "Everyone in Project/Subproject",
     "specific_access": "Specify People only",
+    "data_not_found": "No Data Found",
     "errors": {
       "title_error": "Please provide title",
       "worktype_error": "Please provide work-type",

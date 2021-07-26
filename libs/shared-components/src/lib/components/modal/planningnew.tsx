@@ -16,6 +16,7 @@ import { PhaseIndex } from "@cudo/mf-account-app-lib"
 import moment, { calendarFormat } from 'moment';
 import ReactQuill, { Quill } from 'react-quill';
 import { useTranslation } from 'react-i18next';
+import { object } from '@hapi/joi';
 
 // import SampleModal from './sample-modal';
 
@@ -25,6 +26,12 @@ export interface PlanningProps {
   openNew?
   cancel?
 
+}
+interface PlanningErrors {
+  titleError?:string,
+  dateError?:string,
+  workTypeError?:string,
+  phaseError?:string
 }
 export function ModalPlanningNew(props: PlanningProps) {
   const countryOptions = [
@@ -52,13 +59,9 @@ export function ModalPlanningNew(props: PlanningProps) {
   const [workTypeD, setworkTypeD] = React.useState(null)
   
   const {t} = useTranslation()
-  const [errors, setErrors] = React.useState({
-    titleError: '',
-    dateError: '',
-    phaseError: '',
-    workTypeError: ''
-  })
   const [open, setOpen] = React.useState(false);
+  const [errors, setErrors] = React.useState<PlanningErrors>({})
+  const [isSubmited, setIsSubmited] = React.useState(false)
   React.useEffect(() => {
     if (props.openNew) {
       setOpen(props.openNew)
@@ -112,56 +115,27 @@ export function ModalPlanningNew(props: PlanningProps) {
   }
 
   const validation = () => {
-    let response = true
-
+    const foundErrors:PlanningErrors= {}
     if (!milestone) {
-      response = false
-      setErrors({ ...errors, titleError: t("common.errors.title_error") })
-      return false
+     foundErrors.titleError = t("common.errors.title_error")
     }
-
     if (!dueDate) {
-      response = false
-      setErrors({ ...errors, dateError: t("common.errors.due_date_error") })
-      return false
-    }
-
-    if (!worktypeID) {
-      response = false
-      setErrors({ ...errors, workTypeError: t("common.errors.worktype_error") })
-      return false
-    }
-
+      foundErrors.dateError = t("common.errors.due_date_error")
+     }
+    if (!workTypeD) {
+      foundErrors.workTypeError= t("common.errors.worktype_error")
+     }
     if (!phaseID) {
-      response = false
-      setErrors({ ...errors, phaseError: t("common.errors.phase_error") })
-      return false
+      foundErrors.phaseError =  t("common.errors.phase_error") 
     }
-
-    if (!response) {
-      return false
-    }
-    return true
+    return foundErrors
   }
 
-  const createMilestone = () => {
-    if (!validation()) {
-      return false
-    }
-    resetAddData()
-    const data = {
-      milestoneTitle: milestone,
-      dueDate: dueDate,
-      description: description,
-      phaseID: phaseID,
-      phaseName: phaseName,
-      worktypeID: workTypeD.worktypeID,
-      worktypeName: workTypeD.worktypeName
-    }
-    props.getMilestoneData(data);
-    props.cancel()
-    //setOpen(false)
+  const handleFormSubmit = () => {
+    setErrors(validation())
+    setIsSubmited(true)
   }
+
   const cancel = () => {
     setOpen(false)
     props.cancel()
@@ -178,13 +152,27 @@ export function ModalPlanningNew(props: PlanningProps) {
     setworkTypeData("")
     setworkType(null)
     setworkTypeD(null)
-    setErrors({
-      titleError: '',
-      dateError: '',
-      phaseError: '',
-      workTypeError: ''
-    })
+    setErrors({})
   }
+
+  React.useEffect(()=>{
+    if(Object.keys(errors).length === 0 && isSubmited){
+     const createMilestone = () =>{ const data = {
+        milestoneTitle: milestone,
+        dueDate: dueDate,
+        description: description,
+        phaseID: phaseID,
+        phaseName: phaseName,
+        worktypeID: workTypeD.worktypeID,
+        worktypeName: workTypeD.worktypeName
+      }
+      props.getMilestoneData(data);
+      props.cancel()
+      resetAddData()
+    }
+    createMilestone()
+    }
+  },[errors,isSubmited])
 
   return (
     <div style={{ marginLeft: 900 }} >
@@ -291,9 +279,9 @@ export function ModalPlanningNew(props: PlanningProps) {
                         value={workTypeData}
                         options={workType}
                         onChange={onMworkType}
-                        error={errors?.workTypeError && !worktypeName}
+                        error={errors?.workTypeError && !workTypeD}
                       />
-                      {errors?.workTypeError && !worktypeName ? <span className="error-message">{errors.workTypeError}</span> : null}
+                      {errors?.workTypeError && !workTypeD ? <span className="error-message">{errors.workTypeError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -321,7 +309,7 @@ export function ModalPlanningNew(props: PlanningProps) {
         <Modal.Actions>
           <Button
             content={t("common.submit")}
-            onClick={createMilestone}
+            onClick={handleFormSubmit}
             positive
             size="small"
             className="primary"

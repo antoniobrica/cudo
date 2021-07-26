@@ -26,6 +26,12 @@ export interface PlanningProps {
   cancel?,
   worktypes?
 }
+interface PlanningErrors {
+  titleError?:string,
+  dateError?:string,
+  workTypeError?:string,
+  phaseError?:string
+}
 export function EditMileStonePopup(props: PlanningProps) {
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
@@ -51,12 +57,8 @@ export function EditMileStonePopup(props: PlanningProps) {
   const [workType, setworkType] = React.useState(null) 
   const [workTypeD, setworkTypeD] = React.useState(null) 
   const {t} = useTranslation()
-  const [errors, setErrors] = React.useState({
-    titleError: '',
-    dateError: '',
-    phaseError: '',
-    workTypeError: ''
-  })
+  const [isSubmited, setIsSubmited] = React.useState(false)
+  const [errors, setErrors] = React.useState<PlanningErrors>({})
   React.useEffect(() => {
     if (props.openEdit) {
       setOpen(props.openEdit);
@@ -124,53 +126,47 @@ export function EditMileStonePopup(props: PlanningProps) {
     setDescription(e.target.value);
   }
   const validation = () => {
-    let response = true
-
+    const foundErrors:PlanningErrors= {}
     if (!milestone) {
-      response = false
-      setErrors({ ...errors, titleError: t("common.errors.title_error") })
-      return false
+     foundErrors.titleError = t("common.errors.title_error")
     }
-
     if (!dueDate) {
-      response = false
-      setErrors({ ...errors, dateError: t("common.errors.due_date_error") })
-      return false
-    }
-
-    if (!workTypeData) {
-      response = false
-      setErrors({ ...errors, workTypeError: t("common.errors.worktype_error") })
-      return false
-    }
-
+      foundErrors.dateError = t("common.errors.due_date_error")
+     }
+    if (!workTypeD) {
+      foundErrors.workTypeError= t("common.errors.worktype_error")
+     }
     if (!phaseID) {
-      response = false
-      setErrors({ ...errors, phaseError: t("common.errors.phase_error") })
-      return false
+      foundErrors.phaseError =  t("common.errors.phase_error") 
     }
+    return foundErrors
+  }
 
-    if (!response) {
-      return false
-    }
-    return true
+  const handleFormSubmit = () => {
+    setErrors(validation())
+    setIsSubmited(true)
   }
-const updateMilestone=()=>{
-  if (!validation()) {
-    return false
-  }
-   const data ={
-    milestoneID: milestoneID,
-    milestoneTitle: milestone,
-    dueDate: dueDate,
-    description: description,
-    phaseName: phaseName,
-    // worktypeID: workTypeD.worktypeID,
-    // worktypeName: workTypeD.worktypeName
+
+
+
+React.useEffect(()=>{
+  if(Object.keys(errors).length === 0 && isSubmited){
+    const updateMilestone=()=>{
+      const data ={
+       milestoneID: milestoneID,
+       milestoneTitle: milestone,
+       dueDate: dueDate,
+       description: description,
+       phaseName: phaseName,
+       // worktypeID: workTypeD.worktypeID,
+       // worktypeName: workTypeD.worktypeName
+      }
+      props.getMilestoneData(data);
+      setOpen(false)
    }
-   props.getMilestoneData(data);
-   setOpen(false)
-}
+   updateMilestone()
+  }
+},[errors,isSubmited])
 
   return (
     <div id="navbar">
@@ -289,7 +285,7 @@ const updateMilestone=()=>{
         <Modal.Actions>
           <Button
             content={t("common.submit")}
-            onClick={updateMilestone}
+            onClick={handleFormSubmit}
             positive
             size="small"
             className="primary"

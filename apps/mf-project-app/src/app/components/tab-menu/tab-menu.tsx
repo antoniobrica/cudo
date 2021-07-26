@@ -117,7 +117,7 @@ function TabMenu(props: TabMenuProps) {
                 </div>
                 <div className="text-center margin-top">
 
-                  <span className="found">{t("project_tab_menu.overview.data_not_found")}</span>
+                  <span className="found">{t("common.data_not_found")}</span>
                   <p className="project-sub" style={{ color: '#9A9EA1' }}>{t("project_tab_menu.overview.desc_line1")} <br /> {t("project_tab_menu.overview.desc_line2")}</p>
                 </div>
               </div>
@@ -179,7 +179,7 @@ function TabMenu(props: TabMenuProps) {
       },
       {
 
-        menuItem: { key: 'Meetings', icon: 'calendar outline', content:t("project_tab_menu.meeting"), to: `${url}/meetings`, as: NavLink, exact: true },
+        menuItem: { key: 'Meetings', icon: 'calendar outline', content:t("project_tab_menu.meeting.title"), to: `${url}/meetings`, as: NavLink, exact: true },
         render: () => <Route
           path={`${url}/meetings`}
           exact

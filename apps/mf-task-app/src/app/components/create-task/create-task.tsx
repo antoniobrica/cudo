@@ -22,6 +22,13 @@ export interface CreateTaskProps {
 
 }
 
+interface TaskErrors {
+  titleError?:string,
+  workTypeError?:string,
+  assigneeError?:string,
+  dateError?:string
+}
+
 export function CreateTask(props: CreateTaskProps) {
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
@@ -73,12 +80,8 @@ export function CreateTask(props: CreateTaskProps) {
   // const [addTask] = useTaskMutation(ADD_TASK, {
   //   variables: { referenceID },
   // });
-  const [errors, setErrors] = React.useState({
-    titleError: '',
-    dateError: '',
-    assigneeError: '',
-    workTypeError: ''
-  })
+  const [errors, setErrors] = React.useState<TaskErrors>({})
+  const [isSubmited, setIsSubmited] = React.useState(false)
 
   React.useEffect(() => {
     if (props.isNewTask) {
@@ -195,88 +198,7 @@ export function CreateTask(props: CreateTaskProps) {
     console.log('worktypeName-', workTypeD);
   }
 
-  const validation = () => {
-    let response = true
-
-    if(!taskTitle){
-      response=false
-      setErrors({...errors,titleError:t("common.errors.title_error")})
-      return false
-    }
-
-    if(!workTypeID){
-      response=false
-      setErrors({...errors,workTypeError:t("common.errors.worktype_error")})
-      return false
-    }
-
-    if(!assignees.length){
-      response=false
-      setErrors({...errors,assigneeError:t("common.errors.assignee_error")})
-      return false
-    }
-
-    if(startDate>endDate){
-      response=false
-      setErrors({...errors,dateError:t("common.errors.date_error")})
-      return false
-    }
-
-    if(!response){
-      return false
-    }
-    return true
-  }
-
-  const handleSaveTask = () => {
-    if(!validation()){
-      return false
-    }
-    // setOpen(false);
-    console.log('====================================');
-    console.log('assignee', assignees);
-    console.log('followes', followers);
-    console.log('====================================');
-    cancel();
-      const variables = {
-        taskTitle, estimatedDays,
-        sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
-        fileID: "",
-        fileName: "$fileName",
-        taskTypeID: "$taskTypeID",
-        files,
-        assignees,
-        followers,
-        description,
-        subtasks: [],
-        referenceID,
-        workTypeID,
-        workTypeName
-      }
-      if(startDate){
-        variables['startDate']=startDate
-      }
-      if(startDate){
-        variables['endDate']=endDate
-      }
-    addTask({
-      variables,
-      update: (
-        cache,
-        { data: { addTask } }: FetchResult<TaskMutation>
-      ) => {
-        const cacheData = cache.readQuery({ query: GET_TASKS, variables: { referenceID }, }) as ITasks;
-        cache.writeQuery({
-          query: GET_TASKS,
-          data: {
-            tasksD: [...cacheData.tasks.results, addTask]
-          },
-          variables: { referenceID },
-        });
-      }
-    });
-
-  };
+  
   const onDescriptionChange = (e) => {
     console.log('des=>', e);
     setDescription(e);
@@ -309,14 +231,86 @@ export function CreateTask(props: CreateTaskProps) {
     setworkType(null)
     setworkTypeData('')
     setDate(null)
-    setErrors({
-      titleError:'',
-      dateError:'',
-      assigneeError:'',
-      workTypeError:''
-    })
+    setErrors({})
 
   }
+
+  const validation = () => {
+    const foundErrors:TaskErrors= {}
+    if(!taskTitle){
+      foundErrors.titleError=t("common.errors.title_error")
+    }
+    if(!workTypeID){
+      foundErrors.workTypeError=t("common.errors.worktype_error")
+    }
+    if(!assignees.length){
+      foundErrors.assigneeError=t("common.errors.assignee_error")
+    }
+    if(startDate>endDate){
+      foundErrors.dateError=t("common.errors.date_error")
+    }
+    return foundErrors
+  }
+
+  const handleFormSubmit = () => {
+    setErrors(validation())
+    setIsSubmited(true)
+  }
+
+  React.useEffect(()=>{
+    if(Object.keys(errors).length === 0 && isSubmited){
+      const handleSaveTask = () => {
+        if(!validation()){
+          return false
+        }
+        // setOpen(false);
+        console.log('====================================');
+        console.log('assignee', assignees);
+        console.log('followes', followers);
+        console.log('====================================');
+        cancel();
+          const variables = {
+            taskTitle, estimatedDays,
+            sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
+            fileID: "",
+            fileName: "$fileName",
+            taskTypeID: "$taskTypeID",
+            files,
+            assignees,
+            followers,
+            description,
+            subtasks: [],
+            referenceID,
+            workTypeID,
+            workTypeName
+          }
+          if(startDate){
+            variables['startDate']=startDate
+          }
+          if(startDate){
+            variables['endDate']=endDate
+          }
+        addTask({
+          variables,
+          update: (
+            cache,
+            { data: { addTask } }: FetchResult<TaskMutation>
+          ) => {
+            const cacheData = cache.readQuery({ query: GET_TASKS, variables: { referenceID }, }) as ITasks;
+            cache.writeQuery({
+              query: GET_TASKS,
+              data: {
+                tasksD: [...cacheData.tasks.results, addTask]
+              },
+              variables: { referenceID },
+            });
+          }
+        });
+    
+      };
+      handleSaveTask()
+    }
+  },[errors,isSubmited])
 
   return (
     <div >
@@ -501,7 +495,7 @@ export function CreateTask(props: CreateTaskProps) {
             <Modal.Actions>
               <Button
                 content={t("common.submit")}
-                onClick={handleSaveTask}
+                onClick={handleFormSubmit}
                 positive
                 size='small' className="primary"
               />
