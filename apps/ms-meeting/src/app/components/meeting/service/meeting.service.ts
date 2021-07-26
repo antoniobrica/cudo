@@ -53,7 +53,7 @@ export class MeetingService {
       }
 
       if (meetingFiles) {
-        if (meetingDetails.meetingFiles.length > 0) {
+        if (meetingDetails?.meetingFiles?.length > 0) {
           const previousMeetingFileIds = meetingDetails.meetingFiles.map((item) => item.id)
           await this.meetingFilesRepository.delete(previousMeetingFileIds);
         }

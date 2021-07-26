@@ -15,6 +15,7 @@ const client = new ApolloClient({
 export interface MembersIndexProps {
   parentMembersSelect,
   members?,
+  error?
 }
 
 export function MembersIndex(props: MembersIndexProps) {
@@ -24,7 +25,7 @@ export function MembersIndex(props: MembersIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <Members members={props.members} parentMembersSelect={onSelectF} />
+        <Members members={props.members} parentMembersSelect={onSelectF} error={props?.error} />
       </ApolloHooksProvider>
     </ApolloProvider>
   );
