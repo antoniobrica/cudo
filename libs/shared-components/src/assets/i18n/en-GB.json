@@ -297,6 +297,7 @@
     "everyone_in_subproject": "Everyone in Project/Subproject****",
     "specific_access": "Specify People ,only****",
     "data_not_found": "No Data Found****",
+    "please_confirm": "Please Confirm****",
     "errors": {
       "title_error": "Please provide title****",
       "worktype_error": "Please provide work-type****",

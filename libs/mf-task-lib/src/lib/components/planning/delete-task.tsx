@@ -32,10 +32,12 @@ const size = undefined
     <>
 
       <Modal
+        closeIcon
         size={size}
         onClose={() => setOpen(false)}
         onOpen={openf}
-        open={open} className="mini"
+        open={open} 
+        className="delete-confiramtion-popup"
         closeOnDimmerClick={false}
       >
         {/* <Modal.Header>Update your Task</Modal.Header> */}
