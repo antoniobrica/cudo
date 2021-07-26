@@ -9,6 +9,7 @@ import { useQuery } from '@apollo/client';
 export interface MembersProps {
   parentMembersSelect,
   members?,
+  error?
 }
 enum ReferenceType {
   COMPANY = "COMPANY"
@@ -48,7 +49,7 @@ export function Members(props: MembersProps) {
   return (
     <Form.Field>
      
-      <label>Members</label>
+      {/* <label>Members</label> */}
 
       <Dropdown className="small_drop follower-select"
         clearable
@@ -60,6 +61,7 @@ export function Members(props: MembersProps) {
         value={members}
         onChange={onMembers}
         placeholder='Select'
+        error={props.error}
       />
 
     </Form.Field>

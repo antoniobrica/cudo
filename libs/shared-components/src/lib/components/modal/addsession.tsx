@@ -354,8 +354,9 @@ export function ModalSession(props: SessionProps) {
                         options={countryOptions}
                         placeholder="Select Country"
                       />
-                    </Form.Field> */}
-                    <MembersIndex members={[]} parentMembersSelect={onMembers} />
+                    </Form.Field> errors?.membersError && !members.length */}
+                    <label>Members<span className="danger">*</span></label>
+                    <MembersIndex members={[]} parentMembersSelect={onMembers} error={false}/>
                   </Grid.Column>
                 </Grid.Row>
                 <div className="followers-label-area">

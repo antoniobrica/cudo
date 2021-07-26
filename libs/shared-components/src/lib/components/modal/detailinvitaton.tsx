@@ -26,20 +26,13 @@ export function ModalDetailInvitation(props: DetailInvitationProps) {
   const { t } = useTranslation();
 
   const [openViewModal, setOpenViewModal] = useState(false)
-  // const [meetingDetail, setMeetingDetail] = useState(null)
 
   useEffect(() => {
     if (props?.openDetailInvitation) {
       setOpenViewModal(true);
     }
-    // if (props?.meetingDetail) {
-    //   setMeetingDetail(props.meetingDetail)
-    // }
 
-  }, [
-    props?.openDetailInvitation,
-    // props?.meetingDetail
-  ])
+  }, [props?.openDetailInvitation])
 
   const openInvitationViewDetailPopup = () => {
     setOpenViewModal(true)
@@ -48,9 +41,7 @@ export function ModalDetailInvitation(props: DetailInvitationProps) {
   const cancel = () => {
     setOpenViewModal(false)
     props.cancel(true)
-  }
-
-  console.log('---detail component---meetingDetail--', props?.meetingDetail)
+  }  
 
   const { meetingTitle, meetingDate, meetingStartTime, meetingEndTime, members, meetingDescription, inviteGuests } = props?.meetingDetail
   const formattedMeetingDate = moment(meetingDate).format('DD MMM, YYYY')

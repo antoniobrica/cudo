@@ -109,8 +109,9 @@ export function InvitationListing(props: InvitationListingProps) {
 
                     {openMeetingEdit ?
                         <div>
-                            <InvitationEdit sessionId={sessionId}
+                            <InvitationEdit
                                 meetingId={selectedMeetingId}
+                                sessionId={sessionId}
                                 openEditInvitation={openMeetingEdit}
                                 cancel={cancel} />
                         </div> : null}
