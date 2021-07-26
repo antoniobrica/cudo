@@ -57,7 +57,6 @@ export function EditMileStonePopup(props: PlanningProps) {
   const [workType, setworkType] = React.useState(null) 
   const [workTypeD, setworkTypeD] = React.useState(null) 
   const {t} = useTranslation()
-  const [isSubmited, setIsSubmited] = React.useState(false)
   const [errors, setErrors] = React.useState<PlanningErrors>({})
   React.useEffect(() => {
     if (props.openEdit) {
@@ -142,16 +141,12 @@ export function EditMileStonePopup(props: PlanningProps) {
     return foundErrors
   }
 
-  const handleFormSubmit = () => {
-    setErrors(validation())
-    setIsSubmited(true)
-  }
-
-
-
-React.useEffect(()=>{
-  if(Object.keys(errors).length === 0 && isSubmited){
-    const updateMilestone=()=>{
+  const updateMilestone=()=>{
+    const validationResult = validation()
+    if (Object.keys(validationResult).length > 0) {
+      setErrors(validationResult)
+      return false
+    }
       const data ={
        milestoneID: milestoneID,
        milestoneTitle: milestone,
@@ -164,9 +159,9 @@ React.useEffect(()=>{
       props.getMilestoneData(data);
       setOpen(false)
    }
-   updateMilestone()
-  }
-},[errors,isSubmited])
+   
+
+
 
   return (
     <div id="navbar">
@@ -285,7 +280,7 @@ React.useEffect(()=>{
         <Modal.Actions>
           <Button
             content={t("common.submit")}
-            onClick={handleFormSubmit}
+            onClick={updateMilestone}
             positive
             size="small"
             className="primary"

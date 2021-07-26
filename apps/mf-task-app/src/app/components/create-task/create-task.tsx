@@ -22,11 +22,11 @@ export interface CreateTaskProps {
 
 }
 
-interface TaskErrors {
-  titleError?:string,
-  workTypeError?:string,
-  assigneeError?:string,
-  dateError?:string
+interface AddTaskErrors {
+  titleError?: string,
+  workTypeError?: string,
+  assigneeError?: string,
+  dateError?: string
 }
 
 export function CreateTask(props: CreateTaskProps) {
@@ -73,15 +73,14 @@ export function CreateTask(props: CreateTaskProps) {
   const [assignees, setAssignees] = React.useState<any>([]);
   const [followers, setfollowers] = React.useState<any>([]);
   const [date, setDate] = React.useState(null)
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
   // const [addTask] = useTaskMutation(ADD_TASK, {
   //   variables: { referenceID },
   // });
-  const [errors, setErrors] = React.useState<TaskErrors>({})
-  const [isSubmited, setIsSubmited] = React.useState(false)
+  const [errors, setErrors] = React.useState<AddTaskErrors>({})
 
   React.useEffect(() => {
     if (props.isNewTask) {
@@ -198,7 +197,7 @@ export function CreateTask(props: CreateTaskProps) {
     console.log('worktypeName-', workTypeD);
   }
 
-  
+
   const onDescriptionChange = (e) => {
     console.log('des=>', e);
     setDescription(e);
@@ -236,82 +235,74 @@ export function CreateTask(props: CreateTaskProps) {
   }
 
   const validation = () => {
-    const foundErrors:TaskErrors= {}
-    if(!taskTitle){
-      foundErrors.titleError=t("common.errors.title_error")
+    const foundErrors: AddTaskErrors = {}
+    if (!taskTitle) {
+      foundErrors.titleError = t("common.errors.title_error")
     }
-    if(!workTypeID){
-      foundErrors.workTypeError=t("common.errors.worktype_error")
+    if (!workTypeID) {
+      foundErrors.workTypeError = t("common.errors.worktype_error")
     }
-    if(!assignees.length){
-      foundErrors.assigneeError=t("common.errors.assignee_error")
+    if (!assignees.length) {
+      foundErrors.assigneeError = t("common.errors.assignee_error")
     }
-    if(startDate>endDate){
-      foundErrors.dateError=t("common.errors.date_error")
+    if (startDate > endDate) {
+      foundErrors.dateError = t("common.errors.date_error")
     }
     return foundErrors
   }
 
-  const handleFormSubmit = () => {
-    setErrors(validation())
-    setIsSubmited(true)
-  }
-
-  React.useEffect(()=>{
-    if(Object.keys(errors).length === 0 && isSubmited){
-      const handleSaveTask = () => {
-        if(!validation()){
-          return false
-        }
-        // setOpen(false);
-        console.log('====================================');
-        console.log('assignee', assignees);
-        console.log('followes', followers);
-        console.log('====================================');
-        cancel();
-          const variables = {
-            taskTitle, estimatedDays,
-            sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
-            fileID: "",
-            fileName: "$fileName",
-            taskTypeID: "$taskTypeID",
-            files,
-            assignees,
-            followers,
-            description,
-            subtasks: [],
-            referenceID,
-            workTypeID,
-            workTypeName
-          }
-          if(startDate){
-            variables['startDate']=startDate
-          }
-          if(startDate){
-            variables['endDate']=endDate
-          }
-        addTask({
-          variables,
-          update: (
-            cache,
-            { data: { addTask } }: FetchResult<TaskMutation>
-          ) => {
-            const cacheData = cache.readQuery({ query: GET_TASKS, variables: { referenceID }, }) as ITasks;
-            cache.writeQuery({
-              query: GET_TASKS,
-              data: {
-                tasksD: [...cacheData.tasks.results, addTask]
-              },
-              variables: { referenceID },
-            });
-          }
-        });
-    
-      };
-      handleSaveTask()
+  const handleSaveTask = () => {
+    const validationResult = validation()
+    if (Object.keys(validationResult).length > 0) {
+      setErrors(validationResult)
+      return false
     }
-  },[errors,isSubmited])
+    // setOpen(false);
+    console.log('====================================');
+    console.log('assignee', assignees);
+    console.log('followes', followers);
+    console.log('====================================');
+    cancel();
+      const variables = {
+        taskTitle, estimatedDays,
+        sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
+        fileID: "",
+        fileName: "$fileName",
+        taskTypeID: "$taskTypeID",
+        files,
+        assignees,
+        followers,
+        description,
+        subtasks: [],
+        referenceID,
+        workTypeID,
+        workTypeName
+      }
+      if(startDate){
+        variables['startDate']=startDate
+      }
+      if(startDate){
+        variables['endDate']=endDate
+      }
+    addTask({
+      variables,
+      update: (
+        cache,
+        { data: { addTask } }: FetchResult<TaskMutation>
+      ) => {
+        const cacheData = cache.readQuery({ query: GET_TASKS, variables: { referenceID }, }) as ITasks;
+        cache.writeQuery({
+          query: GET_TASKS,
+          data: {
+            tasksD: [...cacheData.tasks.results, addTask]
+          },
+          variables: { referenceID },
+        });
+      }
+    });
 
+  };
+ 
   return (
     <div >
       <Modal className="modal_media right-side--fixed-modal add-new-task-modal"
@@ -319,8 +310,8 @@ export function CreateTask(props: CreateTaskProps) {
         onClose={cancel}
         onOpen={() => setOpen(true)}
         open={open}
-      // trigger={<Button size='mini' className="grey-btn taskmargin">+ Add  New Task</Button>} 
-      closeOnDimmerClick={false}
+        // trigger={<Button size='mini' className="grey-btn taskmargin">+ Add  New Task</Button>} 
+        closeOnDimmerClick={false}
       >
         <Modal.Header><h3>{t("project_tab_menu.task.add_new_task")} </h3></Modal.Header>
         <Modal.Content body>
@@ -335,8 +326,8 @@ export function CreateTask(props: CreateTaskProps) {
                         value={taskTitle}
                         onChange={onTaskTitleChange}
                         error={errors?.titleError && !taskTitle}
-                        />
-                         {errors?.titleError && !taskTitle ? <span className="error-message">{errors.titleError}</span> : null}
+                      />
+                      {errors?.titleError && !taskTitle ? <span className="error-message">{errors.titleError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -385,8 +376,8 @@ export function CreateTask(props: CreateTaskProps) {
                         options={workType}
                         onChange={onMworkType}
                         selection
-                        clearable 
-                        error={errors?.workTypeError && !workTypeID }
+                        clearable
+                        error={errors?.workTypeError && !workTypeID}
                       />
                       {errors?.workTypeError && !workTypeID ? <span className="error-message">{errors.workTypeError}</span> : null}
                     </Form.Field>
@@ -475,7 +466,7 @@ export function CreateTask(props: CreateTaskProps) {
                       />
                     </Form.Field>
                   </Grid.Column>
-                {errors?.dateError && (startDate>endDate) ? <span className="error-message">{errors.dateError}</span> : null}
+                  {errors?.dateError && (startDate > endDate) ? <span className="error-message">{errors.dateError}</span> : null}
                 </Grid.Row>
                 <Grid.Row>
                 </Grid.Row>
@@ -495,7 +486,7 @@ export function CreateTask(props: CreateTaskProps) {
             <Modal.Actions>
               <Button
                 content={t("common.submit")}
-                onClick={handleFormSubmit}
+                onClick={handleSaveTask}
                 positive
                 size='small' className="primary"
               />

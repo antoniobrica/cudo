@@ -74,7 +74,6 @@ export const ModalTaskEdit = (props: AlertProps) => {
   const [assignees, setAssignees] = React.useState<any>([]);
   const [followers, setfollowers] = React.useState<any>([]);
   const [errors, setErrors] = React.useState<TaskErrors>({})
-  const [isSubmited, setIsSubmited] = React.useState(false)
   const { t } = useTranslation()
   const history = useHistory();
   const res = history.location.pathname.split("/");
@@ -293,52 +292,44 @@ export const ModalTaskEdit = (props: AlertProps) => {
     return foundErrors
   }
 
-  const handleFormSubmit = () => {
-    setErrors(validation())
-    setIsSubmited(true)
-  }
-
-  React.useEffect(()=>{
-    if(Object.keys(errors).length === 0 && isSubmited){
-      const editTask = () => {
-        if(!validation()){
-          return false
-        }
-        // const assignees = [];
-        // props.taskData.assignees.map((data, i) => {
-        //   assignees.push({ userID: data.userID, userName: data.userName })
-        // })
-        // const followers = [];
-        // props.taskData.followers.map((data, i) => {
-        //   followers.push({ userID: data.userID, userName: data.userName })
-        // })
-        const editTaskData = {
-          taskID: props.taskData.taskID,
-          taskTitle: taskTitle,
-          startDate: startDate,
-          endDate: endDate,
-          description: description,
-          estimatedDays: estimatedDays,
-          BKPID: BKPID,
-          BKPTitle: BKPTitle,
-          phaseID: phaseID,
-          phaseName: phaseName,
-          sendNotification: false,
-          status: props.taskData.status,
-          files: [],
-          assignees: assignees,
-          followers: followers,
-          workTypeName: workTypeName,
-          workTypeID: workTypeID,
-          saveTaskAsTemplate: props.taskData.saveTaskAsTemplate,
-        }
-        props.editTaskData(editTaskData);
-        setOpen(false)
-        props.cancel()
-      }
-      editTask()
+  const editTask = () => {
+    const validationResult = validation()
+    if (Object.keys(validationResult).length > 0) {
+      setErrors(validationResult)
+      return false
     }
-  },[errors,isSubmited])
+    // const assignees = [];
+    // props.taskData.assignees.map((data, i) => {
+    //   assignees.push({ userID: data.userID, userName: data.userName })
+    // })
+    // const followers = [];
+    // props.taskData.followers.map((data, i) => {
+    //   followers.push({ userID: data.userID, userName: data.userName })
+    // })
+    const editTaskData = {
+      taskID: props.taskData.taskID,
+      taskTitle: taskTitle,
+      startDate: startDate,
+      endDate: endDate,
+      description: description,
+      estimatedDays: estimatedDays,
+      BKPID: BKPID,
+      BKPTitle: BKPTitle,
+      phaseID: phaseID,
+      phaseName: phaseName,
+      sendNotification: false,
+      status: props.taskData.status,
+      files: [],
+      assignees: assignees,
+      followers: followers,
+      workTypeName: workTypeName,
+      workTypeID: workTypeID,
+      saveTaskAsTemplate: props.taskData.saveTaskAsTemplate,
+    }
+    props.editTaskData(editTaskData);
+    setOpen(false)
+    props.cancel()
+  }
 
   return (
     <div id="navbar">
@@ -580,7 +571,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
         <Modal.Actions>
           <Button
             content={t("common.submit")}
-            onClick={handleFormSubmit}
+            onClick={editTask}
             positive
             size="small"
             className="primary"

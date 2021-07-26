@@ -61,7 +61,6 @@ export function ModalPlanningNew(props: PlanningProps) {
   const {t} = useTranslation()
   const [open, setOpen] = React.useState(false);
   const [errors, setErrors] = React.useState<PlanningErrors>({})
-  const [isSubmited, setIsSubmited] = React.useState(false)
   React.useEffect(() => {
     if (props.openNew) {
       setOpen(props.openNew)
@@ -131,11 +130,6 @@ export function ModalPlanningNew(props: PlanningProps) {
     return foundErrors
   }
 
-  const handleFormSubmit = () => {
-    setErrors(validation())
-    setIsSubmited(true)
-  }
-
   const cancel = () => {
     setOpen(false)
     props.cancel()
@@ -155,9 +149,14 @@ export function ModalPlanningNew(props: PlanningProps) {
     setErrors({})
   }
 
-  React.useEffect(()=>{
-    if(Object.keys(errors).length === 0 && isSubmited){
-     const createMilestone = () =>{ const data = {
+
+  const createMilestone = () =>{ 
+    const validationResult = validation()
+    if (Object.keys(validationResult).length > 0) {
+      setErrors(validationResult)
+      return false
+    }
+    const data = {
         milestoneTitle: milestone,
         dueDate: dueDate,
         description: description,
@@ -170,9 +169,6 @@ export function ModalPlanningNew(props: PlanningProps) {
       props.cancel()
       resetAddData()
     }
-    createMilestone()
-    }
-  },[errors,isSubmited])
 
   return (
     <div style={{ marginLeft: 900 }} >
@@ -309,7 +305,7 @@ export function ModalPlanningNew(props: PlanningProps) {
         <Modal.Actions>
           <Button
             content={t("common.submit")}
-            onClick={handleFormSubmit}
+            onClick={createMilestone}
             positive
             size="small"
             className="primary"
