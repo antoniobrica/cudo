@@ -32,7 +32,6 @@ export interface IMembers {
 export interface ISessions {
   sessions: ISession[];
   paginatedSession: IPaginatedSession;  
-  // results: ISession[]
 }
 
 export interface SessionMutation {

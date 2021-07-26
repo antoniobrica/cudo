@@ -30,29 +30,26 @@ const size = undefined
     <>
 
       <Modal
+        closeIcon
         size={size}
         onClose={() => setOpen(false)}
         onOpen={openf}
-        open={open} className="mini"
+        open={open} 
+        className="delete-confiramtion-popup"
         closeOnDimmerClick={false}
       >
-        {/* <Modal.Header>Update your Task</Modal.Header> */}
-        <Modal.Header>Delete Milestone 
-        <a className="float_right" onClick={cancel}>  <i className="ms-Icon ms-Icon--CalculatorMultiply mr-10" aria-hidden="true"></i></a> 
-          
-          </Modal.Header>
-        <Modal.Content>
-          <p className="text-center" style={{color: "black"}}>Are you sure you want to delete the milestone? </p>
-        </Modal.Content>
-        <Modal.Actions className="float_right">
-        <Button positive onClick={yes}>
-            Yes
-          </Button>
-          <Button negative  onClick={cancel}>
-            No
-          </Button>
-       
-        </Modal.Actions>
+        <div className="delete-confirmation-con">
+          <Modal.Content>
+            {/* <i className="ms-Icon ms-Icon--ShieldAlert" aria-hidden="true"></i> */}
+            <Icon name="shield alternate"></Icon>
+            <h3>Please confirm</h3>
+            <p>Are you sure you want to delete the milestone?</p>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button basic onClick={cancel}>Cancel</Button>
+            <Button className="primary" positive onClick={yes}>Confirm</Button>
+          </Modal.Actions>
+        </div>
       </Modal>
     </>
   )

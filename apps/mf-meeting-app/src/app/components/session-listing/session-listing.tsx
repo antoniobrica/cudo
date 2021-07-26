@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import axios from 'axios';
 import { GET_SESSIONS } from '../../graphql/graphql'
 import { useSessionQuery } from '../../services/useRequest';
-import AddSession from '../../add-session/add-session';
+import AddSession from '../session-add/session-add';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 import InvitationListing from "../invitation-listing/invitation-listing";

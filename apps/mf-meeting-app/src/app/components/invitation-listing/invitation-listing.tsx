@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { InvitationTab } from "@cudo/shared-components";
-import InvitationAdd from "../invitation-add/invitation-add";
 import { LoaderPage } from '@cudo/shared-components';
 import { useInvitationQuery, useSessionDetailQuery } from '../../services/useRequest';
 import { GET_INVITATIONS, GET_SESSION_DETAIL } from '../../graphql/graphql'
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { Button } from 'semantic-ui-react';
+
+import InvitationAdd from "../invitation-add/invitation-add";
+import InvitationDetail from "../invitation-detail/invitation-detail";
+import InvitationEdit from "../invitation-edit/invitation-edit";
 
 export interface InvitationListingProps {
     sessionId?
@@ -15,6 +18,10 @@ export function InvitationListing(props: InvitationListingProps) {
     const [openPageAddInvitation, setOpenPageAddInvitation] = useState(false)
     const [openAddInvitationFromTab, setOpenAddInvitationFromTab] = useState(false)
     const [sessionId, setSessionId] = useState(null)
+
+    const [selectedMeetingId, setSelectedMeetingId] = useState(null)
+    const [openMeetingDetail, setOpenMeetingDetail] = useState(false)
+    const [openMeetingEdit, setOpenMeetingEdit] = useState(false)
 
     const { loading: sessionDetailLoading, error: sessionDetailError, data: sessionDetailData } = useSessionDetailQuery(GET_SESSION_DETAIL, {
         variables: { sessionID: props?.sessionId },
@@ -49,7 +56,18 @@ export function InvitationListing(props: InvitationListingProps) {
     }
     const cancel = () => {
         setOpenPageAddInvitation(false)
+        setOpenMeetingDetail(false)
+        setOpenMeetingEdit(false)
+    }
 
+    const onClickViewInvitation = (meetingId) => {
+        setSelectedMeetingId(meetingId)
+        setOpenMeetingDetail(true)
+    }
+
+    const onClickEditInvitation = (meetingId) => {
+        setSelectedMeetingId(meetingId)
+        setOpenMeetingEdit(true)
     }
 
     if (loading)
@@ -80,7 +98,32 @@ export function InvitationListing(props: InvitationListingProps) {
             <InvitationAdd sessionId={props.sessionId} openAddInvitation={openPageAddInvitation} cancel={cancel} />
 
             {data?.getMeetingList?.results?.length > 0 ?
-                <InvitationTab sessionId={props?.sessionId} invitations={data?.getMeetingList?.results} addInvitationClick={onTabInvitationAddClick} sessionDetail={sessionDetailData} />
+                <div>
+                    {openMeetingDetail ?
+                        <div>
+                            <InvitationDetail meetingId={selectedMeetingId}
+                                sessionDetail={sessionDetailData}
+                                openDetailInvitation={openMeetingDetail}
+                                cancel={cancel} />
+                        </div> : null}
+
+                    {openMeetingEdit ?
+                        <div>
+                            <InvitationEdit sessionId={sessionId}
+                                meetingId={selectedMeetingId}
+                                openEditInvitation={openMeetingEdit}
+                                cancel={cancel} />
+                        </div> : null}
+
+                    <InvitationTab
+                        sessionId={props?.sessionId}
+                        invitations={data?.getMeetingList?.results}
+                        addInvitationClick={onTabInvitationAddClick}
+                        sessionDetail={sessionDetailData}
+                        viewInvitation={onClickViewInvitation}
+                        editInvitation={onClickEditInvitation}
+                    />
+                </div>
                 : null
             }
         </div>

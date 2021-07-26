@@ -1,11 +1,11 @@
 import React from 'react';
 import ModalSession from 'libs/shared-components/src/lib/components/modal/addsession';
-import './add-session.module.scss';
+import './session-add.module.scss';
 import { useHistory } from 'react-router';
 import axios from 'axios';
 import { useMutation } from '@apollo/client';
-import { ADD_SESSION, GET_SESSIONS } from '../graphql/graphql'
-import { ISessions } from '../interfaces/session';
+import { ADD_SESSION, GET_SESSIONS } from '../../graphql/graphql'
+import { ISessions } from '../../interfaces/session';
 import { ProjectWorktypes } from '@cudo/mf-project-lib';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 

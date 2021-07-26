@@ -619,8 +619,9 @@ span.strategic_plan {
     		max-width: 200px;
 			.sidebar.menu {
 				a.item {
-					display: flex;
-					flex-direction: row;
+					@include flex(flex);
+					@include flex-direction(row);
+					@include align-items(center);
 					width: 100%;
 					span {
 						position: relative;
