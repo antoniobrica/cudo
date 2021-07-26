@@ -297,7 +297,7 @@ export function ModalPlanningNew(props: PlanningProps) {
                         options={countryOptions}
                       />
                     </Form.Field> */}
-                    <PhaseIndex parentPhaseSelect={onsetPhasesID} />
+                    <PhaseIndex parentPhaseSelect={onsetPhasesID} error={errors?.phaseError && !phaseID}/>
                     {errors?.phaseError && !phaseID ? <span className="error-message">{errors.phaseError}</span> : null}
                   </Grid.Column>
 

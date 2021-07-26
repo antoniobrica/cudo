@@ -273,7 +273,7 @@ React.useEffect(()=>{
                         options={countryOptions}
                       />
                     </Form.Field> */}
-                <PhaseIndex phaseName={phaseName} parentPhaseSelect={onsetPhasesID} />
+                <PhaseIndex phaseName={phaseName} parentPhaseSelect={onsetPhasesID} error={errors?.phaseError && !phaseID} />
                 {errors?.phaseError && !phaseID ? <span className="error-message">{errors.phaseError}</span> : null}
                   </Grid.Column>
  

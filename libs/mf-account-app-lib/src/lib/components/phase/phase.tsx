@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 export interface PhaseProps {
   parentPhaseSelect,
   phaseName
+  error?
 }
 
 export function Phase(props: PhaseProps) {
@@ -50,6 +51,7 @@ export function Phase(props: PhaseProps) {
         value={phase}
         onChange={onPhase}
         clearable
+        error={props.error}
       />
 
     </Form.Field>
