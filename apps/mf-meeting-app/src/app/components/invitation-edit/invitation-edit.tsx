@@ -31,7 +31,7 @@ export function InvitationEdit(props: InvitationEditProps) {
     )
 
     const editInvitation = (data) => {
-console.log('-----page edit meeting----data', data)
+ 
         editMeeting({
             variables: {
                 // companyId: data.companyId,
@@ -60,7 +60,7 @@ console.log('-----page edit meeting----data', data)
                     query: GET_INVITATIONS,
                     variables: { sessionId: props?.sessionId }
                 }) as IInvitations;
-console.log('----update ---data----', data, props?.sessionId)
+ 
                 cache.writeQuery({
                     query: GET_INVITATIONS,
                     data: {
