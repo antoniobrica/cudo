@@ -10,7 +10,9 @@ import { GET_CATAGORIES, GET_INVITATION, GET_PROTOCOL } from '../../graphql/grap
 import { useTranslation } from 'react-i18next';
 /* eslint-disable-next-line */
 export interface SessionInvitationProps {
-  parentInvitationSelect
+  parentInvitationSelect?
+  editInvitationTemplateIdSelect?
+  error?
 }
 
 export function SessionInvitation(props: SessionInvitationProps) {
@@ -25,6 +27,22 @@ export function SessionInvitation(props: SessionInvitationProps) {
     }
   }, [data]);
 
+  React.useEffect(()=>{
+    if(props?.editInvitationTemplateIdSelect){
+      if(items){
+        const invitationTemplate = { invitationTemplateID: '', invitationTemplateTitle: '' };
+        for (let i = 0; i <= items.length; i++) {
+          if (items[i]?.key === props.editInvitationTemplateIdSelect) {
+            invitationTemplate.invitationTemplateID = items[i].key;
+            invitationTemplate.invitationTemplateTitle = items[i].value;
+          }
+        }
+        setProtocol(invitationTemplate.invitationTemplateTitle)
+        props.parentInvitationSelect(invitationTemplate)
+      }
+    }
+  },[items, props?.editInvitationTemplateIdSelect])
+
   const onCatogory = (event, data) => {
     const protocol = { invitationTemplateID: '', invitationTemplateTitle: '' };
     for (let i = 0; i <= items.length; i++) {
@@ -38,7 +56,7 @@ export function SessionInvitation(props: SessionInvitationProps) {
   }
   return (
     <Form.Field>
-      <label>{t("project_tab_menu.meeting.template_for_invitation")}</label>
+      <label>{t("project_tab_menu.meeting.template_for_invitation")}<span className="danger">*</span></label>
       <Select
         placeholder={t("common.select")}
         className="small"
@@ -46,6 +64,7 @@ export function SessionInvitation(props: SessionInvitationProps) {
         value={protocol}
         onChange={onCatogory}
         clearable
+        error={props?.error}
       />
     </Form.Field>
   );

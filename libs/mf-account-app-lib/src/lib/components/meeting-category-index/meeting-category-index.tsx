@@ -12,14 +12,16 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 export interface MeetingCategoryIndexProps {
-  parentCatagorySelect
+  parentCatagorySelect?
+  editCategoryIdSelect?
+  error?
 }
 
 export function MeetingCategoryIndex(props: MeetingCategoryIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <MeetingCategory parentCatagorySelect={props.parentCatagorySelect}></MeetingCategory>
+        <MeetingCategory parentCatagorySelect={props.parentCatagorySelect} editCategoryIdSelect={props?.editCategoryIdSelect} error={props?.error}></MeetingCategory>
       </ApolloHooksProvider>
     </ApolloProvider>
   );

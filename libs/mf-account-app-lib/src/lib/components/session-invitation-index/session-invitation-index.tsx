@@ -8,7 +8,9 @@ import SessionInvitation from '../session-invitation/session-invitation';
 import { MS_SERVICE_URL } from '@cudo/mf-core'
 /* eslint-disable-next-line */
 export interface SessionInvitationIndexProps {
-  parentInvitationSelect
+  parentInvitationSelect?
+  editInvitationTemplateIdSelect?
+  error?
 }
 const client = new ApolloClient({
   uri: MS_SERVICE_URL['ms_account'].url,
@@ -19,7 +21,8 @@ export function SessionInvitationIndex(props: SessionInvitationIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <SessionInvitation parentInvitationSelect={props.parentInvitationSelect}></SessionInvitation>
+        <SessionInvitation parentInvitationSelect={props.parentInvitationSelect} editInvitationTemplateIdSelect={props?.editInvitationTemplateIdSelect}
+        error={props?.error}></SessionInvitation>
       </ApolloHooksProvider>
     </ApolloProvider>
   );

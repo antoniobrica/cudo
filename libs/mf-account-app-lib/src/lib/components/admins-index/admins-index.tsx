@@ -15,6 +15,7 @@ const client = new ApolloClient({
 export interface AdminsIndexProps {
   parentAdminsSelect,
   admins?,
+  error?
 }
 
 export function AdminsIndex(props: AdminsIndexProps) {
@@ -24,7 +25,7 @@ export function AdminsIndex(props: AdminsIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <Admins admins={props.admins} parentAdminsSelect={onSelectF} />
+        <Admins admins={props.admins} parentAdminsSelect={onSelectF} error={props?.error} />
       </ApolloHooksProvider>
     </ApolloProvider>
   );

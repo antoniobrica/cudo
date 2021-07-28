@@ -10,7 +10,9 @@ import { GET_CATAGORIES } from '../../graphql/graphql';
 import { useTranslation } from 'react-i18next';
 /* eslint-disable-next-line */
 export interface MeetingCategoryProps {
-  parentCatagorySelect
+  parentCatagorySelect?
+  editCategoryIdSelect?
+  error?
 }
 
 export function MeetingCategory(props: MeetingCategoryProps) {
@@ -26,6 +28,22 @@ export function MeetingCategory(props: MeetingCategoryProps) {
     }
   }, [data]);
 
+  React.useEffect(()=>{
+    if(props?.editCategoryIdSelect){
+      if(items){
+        const catagory = { meetingCatagoryID: '', meetingCatagoryTitle: '' };
+        for (let i = 0; i <= items.length; i++) {
+          if (items[i]?.key === props.editCategoryIdSelect) {
+            catagory.meetingCatagoryID = items[i].key;
+            catagory.meetingCatagoryTitle = items[i].value;
+          }
+        }
+        setCatagory(catagory.meetingCatagoryTitle)
+        props.parentCatagorySelect(catagory)
+      }
+    }
+  },[items, props?.editCategoryIdSelect])
+
   const onCatogory = (event, data) => {
     const catagory = { meetingCatagoryID: '', meetingCatagoryTitle: '' };
     for (let i = 0; i <= items.length; i++) {
@@ -39,7 +57,7 @@ export function MeetingCategory(props: MeetingCategoryProps) {
   }
   return (
     <Form.Field>
-      <label>{t("project_tab_menu.meeting.category")}</label>
+      <label>{t("project_tab_menu.meeting.category")}<span className="danger">*</span></label>
       <Select
         placeholder={t("common.select")}
         className="small"
@@ -47,6 +65,7 @@ export function MeetingCategory(props: MeetingCategoryProps) {
         value={catagory}
         onChange={onCatogory}
         clearable
+        error={props?.error}
       />
     </Form.Field>
   );
