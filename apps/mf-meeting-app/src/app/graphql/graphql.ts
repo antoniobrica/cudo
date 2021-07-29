@@ -8,7 +8,7 @@ export const GET_SESSIONS = gql`query GET_SESSIONS($projectId:String!)
       referenceID: $projectId, 
       referenceType: PROJECTTYPE 
     } 
-    options: { limit: 10, page: 0 } 
+    options: { limit: 20, page: 0 } 
   ) { 
     results { 
       sessionID 
@@ -73,6 +73,7 @@ query SessionByID(
 
 export const ADD_SESSION = gql`
 mutation CreateSession(
+  $projectId:String!,
   $sessionTitle: String!, 
   $worktypeID: String!,
   $worktypeTitle: String!,
@@ -86,7 +87,7 @@ mutation CreateSession(
   $members: [MemberParams!]!
   ){ 
     createSession( 
-      referenceFilter: { referenceID: "Sftobiz_1234", referenceType: PROJECTTYPE } 
+      referenceFilter: { referenceID: $projectId, referenceType: PROJECTTYPE } 
       sessionDetails: { 
         sessionBasics: { 
           sessionTitle: $sessionTitle 

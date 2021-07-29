@@ -18,6 +18,7 @@ export interface MeetingTab {
   // viewSession?
   selectedSessionId?
   editSession?
+  deleteSession?
 }
 
 export function MeetingTab(props: MeetingTab) {
@@ -166,7 +167,7 @@ export function MeetingTab(props: MeetingTab) {
   }
 
   const deleteSessionDetail = (sessionID) => {
-
+    props.deleteSession(sessionID)
   }
 
   const clickAddSession = () => {

@@ -1,5 +1,5 @@
 import { DocumentNode, useQuery, useMutation } from "@apollo/react-hooks";
-import { SessionMutation, ISession, ISessions } from "../interfaces/session";
+import { SessionMutation, ISession, ISessions, ISessionByID } from "../interfaces/session";
 import { IInvitationMutation, IInvitation, IInvitations , IGetMeetingById } from "../interfaces/invitation";
 
 // #region Session related
@@ -14,7 +14,7 @@ export function useSessionMutation(gqlQuery: DocumentNode, variable) {
 }
 
 export function useSessionDetailQuery(gqlQuery: DocumentNode, variable) {
-  const { loading, error, data } = useQuery<ISession>(gqlQuery, variable);
+  const { loading, error, data } = useQuery<ISessionByID>(gqlQuery, variable);
   return { loading, error, data };
 }
 // #endregion

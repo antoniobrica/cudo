@@ -10,6 +10,7 @@ import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 /* eslint-disable-next-line */
 export interface EditSessionProps {
+  projectId?
   sessionId?
   openEditSession?
   cancel?
@@ -34,7 +35,7 @@ export function EditSession(props: EditSessionProps) {
   const [editSession, { data }] = useMutation(UPDATE_SESSION,
     {
       refetchQueries: [
-        { query: GET_SESSIONS }
+        { query: GET_SESSIONS, variables: { projectId: props.projectId } }
       ]
     }
   )
@@ -95,10 +96,11 @@ export function EditSession(props: EditSessionProps) {
         cache,
         data
       ) => {
-        const cacheData = cache.readQuery({ query: GET_SESSIONS }) as ISessions;
+        const cacheData = cache.readQuery({ query: GET_SESSIONS, variables: { projectId: props.projectId } }) as ISessions;
 
         cache.writeQuery({
           query: GET_SESSIONS,
+          variables: {projectId: props?.projectId},
           data: {
             getSessions: [...cacheData.paginatedSession.results, data]
           }
