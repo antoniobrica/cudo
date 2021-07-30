@@ -151,9 +151,9 @@ export function FileStructure(props: FileStructureProps) {
 			menuItem: { key: 'Overview', icon: 'images', content: 'All files test', className: 'files-tab-inner' },
 			render: () => <Tab.Pane attached={false}>
 				<div className="ui-tabs">
-					
+
 				</div>
-				
+
 				<div className="ui card " style={{ width: '100%' }}>
 					<Accordion className="widtharea" defaultActiveIndex={0} panels={items} styled  >
 
@@ -346,8 +346,8 @@ export function FileStructure(props: FileStructureProps) {
 		<div className=" navbar-collapse files-tab-outer">
 			{view && imgUrl.length > 0 ?
 				<div>
-					{/* <ViewFileDetail open={view} fType={fType} filesData={filesData} dowloadFilesData={props.downloadedImg} ></ViewFileDetail> */}
-					<AddPinFile isOpen={view} filesData={filesData} dowloadFilesData={props.downloadedImg} savePin={savePins} onSuccess={""} />
+					<ViewFileDetail open={view} fType={fType} filesData={filesData} dowloadFilesData={props.downloadedImg} ></ViewFileDetail>
+					{/* <AddPinFile isOpen={view} filesData={filesData} dowloadFilesData={props.downloadedImg} savePin={savePins} onSuccess={""} /> */}
 				</div> : null}
 			{openPinFile && imgUrl.length > 0 ?
 				<div>
