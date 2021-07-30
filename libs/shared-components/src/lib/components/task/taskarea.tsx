@@ -148,8 +148,10 @@ export function TaskArea(props: Tasks) {
         </span>
         <span className="task-checklisting-text">{index + 1}. {subTaskTitle}</span>
 
-        <span className="anchor_complete" onClick={() => onClickEditSubTask(taskId, subTaskId, subTaskTitle)}>{t("common.edit")}</span>
-        <span className="anchor_complete" onClick={() => onClickDeleteSubTask(taskId, subTaskId)}>{t("common.delete")}</span>
+        
+        <span className="anchor_complete" onClick={() => onClickEditSubTask(taskId, subTaskId, subTaskTitle)}> <Icon  name="pencil"/></span>
+        <span className="anchor_complete" onClick={() => onClickDeleteSubTask(taskId, subTaskId)}>< Icon name="trash alternate outline" /> </span>
+        
       </div>
 
     return renderSubtaskItems

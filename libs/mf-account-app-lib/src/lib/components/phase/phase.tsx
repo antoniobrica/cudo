@@ -16,6 +16,7 @@ export interface PhaseProps {
 export function Phase(props: PhaseProps) {
   const [items, setItems] = React.useState([])
   const [phase, setPhase] = React.useState("")
+  console.log("%%%%%%%%%%%%%%%",props.error)
 
   const { loading, error, data } = usePhaseQuery(GET_PHASE);
   const {t} = useTranslation()
@@ -45,7 +46,7 @@ export function Phase(props: PhaseProps) {
   }
   return (
     <Form.Field>
-      <label>{t("common.select_phase")} <span className="danger">*</span>  </label>
+      {/* <label>{t("common.select_phase")} </label> */}
       <Select placeholder={t("common.select")} className="small"
         options={items}
         value={phase}
@@ -53,6 +54,7 @@ export function Phase(props: PhaseProps) {
         clearable
         error={props.error}
       />
+      {props.error && <span className="error-message">{t("common.errors.phase_error")}</span>}
 
     </Form.Field>
   );

@@ -387,7 +387,10 @@ export function CreateTask(props: CreateTaskProps) {
               <Grid columns={2}>
                 <Grid.Row>
                   <Grid.Column>
+                  <Form.Field>
+                  <label>{t("common.select_phase")} </label>
                     <PhaseIndex parentPhaseSelect={onsetPhasesID} />
+                    </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <BkpsIndex bkp={''} parentBKPSelect={setBKPIDChange} />

@@ -293,8 +293,10 @@ export function ModalPlanningNew(props: PlanningProps) {
                         options={countryOptions}
                       />
                     </Form.Field> */}
+                    <Form.Field>
+                    <label>{t("common.select_phase")} <span className="danger">*</span></label>
                     <PhaseIndex parentPhaseSelect={onsetPhasesID} error={errors?.phaseError && !phaseID}/>
-                    {errors?.phaseError && !phaseID ? <span className="error-message">{errors.phaseError}</span> : null}
+                    </Form.Field>
                   </Grid.Column>
 
                 </Grid.Row>

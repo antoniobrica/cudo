@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button, Icon, Modal } from 'semantic-ui-react'
 
 // function exampleReducer(state, action) {
@@ -26,6 +27,7 @@ export const ConfirmSubTaskStatus = (props: ConfirmSubTaskStatusProps) => {
   //   open: false,
   //   size: undefined,
   // })
+  const {t} = useTranslation()
   const [open, setOpen] = React.useState(false)
   React.useEffect(() => {
     if (props.openAlertSTF) {
@@ -46,14 +48,16 @@ export const ConfirmSubTaskStatus = (props: ConfirmSubTaskStatusProps) => {
   const size = undefined
   return (
     <Modal
+      closeIcon
       size={size}
       onClose={() => setOpen(false)}
       onOpen={openf}
-      open={open} className="mini"
+      open={open} 
+      className="delete-confiramtion-popup"
       closeOnDimmerClick={false}
     >
       {/* <Modal.Header>Update your Task</Modal.Header> */}
-      <Modal.Header>Update {props.name} Status
+      {/* <Modal.Header>Update {props.name} Status
         <a className="float_right" onClick={clickCancel}>  <i className="ms-Icon ms-Icon--CalculatorMultiply mr-10" aria-hidden="true"></i></a>
       </Modal.Header>
       <Modal.Content>
@@ -67,7 +71,20 @@ export const ConfirmSubTaskStatus = (props: ConfirmSubTaskStatusProps) => {
           No
         </Button>
       </Modal.Actions>
-    </Modal>
+    </Modal> */}
+    <div className="delete-confirmation-con">
+          <Modal.Content>
+            {/* <i className="ms-Icon ms-Icon--ShieldAlert" aria-hidden="true"></i> */}
+            <Icon name="shield alternate"></Icon>
+            <h3>{t("common.please_confirm")}</h3>
+            <p>{t("project_tab_menu.task.are_you_sure")} {props.subTaskStatus} {t("project_tab_menu.task.the")} {props.name}? </p>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button basic onClick={clickCancel}>{t("common.cancel")}</Button>
+            <Button className="primary" positive onClick={clickConfirm}>{t("common.confirm")}</Button>
+          </Modal.Actions>
+        </div>
+      </Modal>
   )
 }
 

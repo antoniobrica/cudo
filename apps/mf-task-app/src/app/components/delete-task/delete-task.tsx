@@ -33,13 +33,15 @@ const size = undefined
     <>
 
       <Modal
+        closeIcon
         size={size}
         onClose={() => setOpen(false)}
         onOpen={openf}
-        open={open} className="mini"
+        open={open} 
+        className="delete-confiramtion-popup"
         closeOnDimmerClick={false}
       >
-        {/* <Modal.Header>Update your Task</Modal.Header> */}
+        {/* <Modal.Header>Update your Task</Modal.Header>
         <Modal.Header>{t("project_tab_menu.task.delete_task")} 
         <a className="float_right" onClick={cancel}>  <i className="ms-Icon ms-Icon--CalculatorMultiply mr-10" aria-hidden="true"></i></a> 
           
@@ -56,6 +58,19 @@ const size = undefined
           </Button>
        
         </Modal.Actions>
+      </Modal> */}
+      <div className="delete-confirmation-con">
+          <Modal.Content>
+            {/* <i className="ms-Icon ms-Icon--ShieldAlert" aria-hidden="true"></i> */}
+            <Icon name="shield alternate"></Icon>
+            <h3>{t("common.please_confirm")}</h3>
+            <p>{t("project_tab_menu.task.delete_task_confirm")}</p>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button basic onClick={cancel}>{t("common.cancel")}</Button>
+            <Button className="primary" positive onClick={yes}>{t("common.confirm")}</Button>
+          </Modal.Actions>
+        </div>
       </Modal>
     </>
   )
