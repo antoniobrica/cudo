@@ -101,9 +101,9 @@ export function Planning(props: PlanningProps) {
   const update = (data) => {
     setPlanData(data)
     if (data.status === 'COMPLETED') {
-      setMilestoneStatus('Re-open');
+      setMilestoneStatus(t("project_tab_menu.task.re_open"));
     } else {
-      setMilestoneStatus('Mark as Complete');
+      setMilestoneStatus(t("project_tab_menu.mark_completed"));
     }
     setUpdateStatus(data.milestoneID)
     setOpenUpdate(true)
