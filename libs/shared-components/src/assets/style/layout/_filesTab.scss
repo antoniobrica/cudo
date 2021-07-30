@@ -312,3 +312,165 @@
     }
   }
 }
+
+// view file detail popup
+.ui.modals .ui.modal.view-pin-detail-popup {
+  margin: 0;
+  width: 100% !important;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  height: 100%;
+  background: none;
+  overflow: hidden;
+  i.close.icon {
+    right: 475px;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    line-height: 20px;
+  }
+  .content {
+    height: 100%;
+    background: none;
+    form {
+      height: 100%;
+      .view-pin-detail-popup {
+        width: calc(100% - 460px);
+        background: none;
+        height: 100%;
+        .left-side-detail-file {
+          height: 100%;
+          @include flex(flex);
+          @include align-items(center);
+          @include flex-direction(column);
+          @include justify-content(center);
+        }
+      }
+    }
+  }
+  .right-side-file-information {
+    position: fixed;
+    right: 0;
+    background: #fff;
+    top: 0;
+    width: 460px;
+    padding: 20px;
+    height: 100%;
+    overflow-y: auto;
+    .header {
+      > h3 {
+        font-size: 20px;
+        border-bottom: 1px solid #0000001A;
+        margin: 0 -20px 15px;
+        padding: 0 20px 15px;
+      }
+    }
+    .file-versioning-box {
+      label {
+        font-weight: 600;
+      }
+      .file-version-list {
+        @include flex(flex);
+        @include align-items(center);
+        @include justify-content(space-between);
+        border-bottom: 1px solid #F1F5F8;
+        padding: 15px 0;
+        &:last-child {
+          border-bottom: none;
+        }
+        .version-wise-files {
+          @include flex(flex);
+          span {
+            font-size: 13px;
+            color: #718898;
+            margin-right: 5px;
+          }
+          h3 {
+            font-size: 13px;
+            font-weight: 500;
+            @include flex(flex);
+            @include  flex-direction(column);
+            margin: 0;
+            span {
+              color: #9FB5C5;
+              font-size: 12px;
+              font-weight: 400;
+              margin-top: 5px;
+            }
+          }
+        }
+        i {
+          font-size: 18px;
+          color: #718898;
+        }
+      }
+    }
+    .completed-task-list {
+      .pin-task-completed-card {
+        margin: 0 0 7px;
+        &:last-child {
+          border-bottom: none;
+        }
+        .pin-task-description-box {
+          .added-task-listing {
+            p {
+              font-size: 13px;
+              margin: 2px 0 0 0;
+              color: #718898;
+            }
+          }
+          a.add-new-task-link {
+            color: #718898;
+            font-size: 13px;
+            margin-top: 15px;
+            display: inline-block;
+          }
+        }
+      }
+    }
+    .comments-con {
+      .comments-section {
+        display: flex;
+        border-bottom: 1px solid #F1F5F8;
+        padding: 15px 0;
+        &:last-child {
+          border-bottom: none;
+        }
+        .comment-user-img {
+          margin-right: 15px;
+          img {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            overflow: hidden;
+            min-width: 38px;
+            min-height: 38px;
+          }
+        }
+        .comment-info {
+          h3 {
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            span {
+              color: #718898;
+              font-weight: 400;
+            }
+          }
+          p {
+            font-size: 13px;
+          }
+        }
+      }
+    }
+  }
+}
+
