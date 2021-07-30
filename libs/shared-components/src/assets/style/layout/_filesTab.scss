@@ -212,6 +212,8 @@
             @include flex(flex);
             @include align-items(center);
             @include justify-content(center);
+            position: relative;
+            overflow: hidden;
           }
         }
       }
