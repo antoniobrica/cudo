@@ -10,8 +10,9 @@ import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 /* eslint-disable-next-line */
 export interface AddSessionProps {
-  openAddSession
-  cancel
+  projectId?
+  openAddSession?
+  cancel?
 }
 
 export function AddSession(props: AddSessionProps) {
@@ -29,7 +30,7 @@ export function AddSession(props: AddSessionProps) {
   const [addSession, { data }] = useMutation(ADD_SESSION,
     {
       refetchQueries: [
-        { query: GET_SESSIONS }
+        { query: GET_SESSIONS, variables: { projectId: props.projectId } }
       ]
     }
   )
@@ -74,6 +75,7 @@ export function AddSession(props: AddSessionProps) {
 
     addSession({
       variables: {
+        projectId: props?.projectId,
         sessionTitle: data.sessionTitle,
         worktypeID: data.worktypeID,
         worktypeTitle: data.worktypeTitle,
@@ -90,10 +92,11 @@ export function AddSession(props: AddSessionProps) {
         cache,
         data
       ) => {
-        const cacheData = cache.readQuery({ query: GET_SESSIONS }) as ISessions;
+        const cacheData = cache.readQuery({ query: GET_SESSIONS, variables: { projectId: props.projectId } }) as ISessions;
 
         cache.writeQuery({
           query: GET_SESSIONS,
+          variables: { projectId: props.projectId },
           data: {
             getSessions: [...cacheData.paginatedSession.results, data]
           }

@@ -213,7 +213,8 @@
         "admins_error": "Please select admins",
         "members_error": "Please select members"
       },
-      "are_you_sure": "Are you sure you want to delete the invitation?"
+      "session_are_you_sure": "Are you sure you want to delete the session?",
+      "invitation_are_you_sure": "Are you sure you want to delete the invitation?"
     },
     "files": {
       "title": "Files",

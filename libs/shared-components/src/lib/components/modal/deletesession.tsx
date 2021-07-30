@@ -2,28 +2,28 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button, Icon, Modal } from 'semantic-ui-react'
 
-export interface DeleteInvitationProps {
-  meetingId,
-  deleteInvitation,
-  openDeleteInvitation,
+export interface DeleteSessionProps {
+  sessionId,
+  deleteSession,
+  openDeleteSession,
   cancel,
 }
 
-export const ModalDeleteInvitation = (props: DeleteInvitationProps) => {
+export const ModalDeleteSession = (props: DeleteSessionProps) => {
   const [open, setOpen] = React.useState(false)
   const { t } = useTranslation()
   React.useEffect(() => {
-    if (props.openDeleteInvitation) {
-      setOpen(props.openDeleteInvitation);
+    if (props.openDeleteSession) {
+      setOpen(props.openDeleteSession);
     }
-  }, [props.openDeleteInvitation]);
+  }, [props.openDeleteSession]);
 
-  const onClickOpenDeleteInvitation = () => {
+  const onClickOpenDeleteSession = () => {
     setOpen(true)
   }
   const yes = () => {
     setOpen(false)
-    props.deleteInvitation(props.meetingId)
+    props.deleteSession(props.sessionId)
   }
   const cancel = () => {
     setOpen(false)
@@ -36,7 +36,7 @@ export const ModalDeleteInvitation = (props: DeleteInvitationProps) => {
       closeIcon
       size={size}
       onClose={() => setOpen(false)}
-      onOpen={onClickOpenDeleteInvitation}
+      onOpen={onClickOpenDeleteSession}
       open={open}
       className="delete-confiramtion-popup"
       closeOnDimmerClick={false}
@@ -46,7 +46,7 @@ export const ModalDeleteInvitation = (props: DeleteInvitationProps) => {
           {/* <i className="ms-Icon ms-Icon--ShieldAlert" aria-hidden="true"></i> */}
           <Icon name="shield alternate"></Icon>
           <h3>{t("common.please_confirm")}</h3>
-          <p>{t("project_tab_menu.meeting.invitation_are_you_sure")}</p>
+          <p>{t("project_tab_menu.meeting.session_are_you_sure")}</p>
         </Modal.Content>
         <Modal.Actions>
           <Button basic onClick={cancel}>{t("common.cancel")}</Button>
@@ -57,4 +57,4 @@ export const ModalDeleteInvitation = (props: DeleteInvitationProps) => {
   )
 }
 
-export default ModalDeleteInvitation
+export default ModalDeleteSession

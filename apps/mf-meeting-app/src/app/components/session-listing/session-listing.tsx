@@ -7,6 +7,7 @@ import { GET_SESSIONS } from '../../graphql/graphql'
 import { useSessionQuery } from '../../services/useRequest';
 import AddSession from '../session-add/session-add';
 import EditSession from '../session-edit/session-edit';
+import DeleteSession from '../session-delete/session-delete';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 import InvitationListing from "../invitation-listing/invitation-listing";
@@ -23,6 +24,7 @@ export function SessionListing() {
   const [workTypes, setWorkTypes] = useState([]);
   const [openAddSession, setOpenAddSession] = useState(false)
   const [openEditSession, setOpenEditSession] = useState(false)
+  const [openDeleteSession, setOpenDeleteSession] = useState(false)
   const [openViewInvitationList, setOpenViewInvitationList] = useState(false)
 
 
@@ -112,7 +114,10 @@ export function SessionListing() {
     setOpenEditSession(true)
   }
 
-
+  const onClickDeleteSession = (sessionId) => {
+    setSessionId(sessionId)
+    setOpenDeleteSession(true)
+  }
 
   if (loading)
     return (
@@ -133,13 +138,13 @@ export function SessionListing() {
         <Button size="small" className="primary" onClick={addNew}>
           + {t("project_tab_menu.meeting.add_new_session")}
         </Button>
-        <AddSession cancel={cancel} openAddSession={openAddSession} />
+        <AddSession projectId={projectId} cancel={cancel} openAddSession={openAddSession} />
       </div>
     )
   }
 
   //  const emptyData = {paginatedSession:{results:[]}}
-  
+
   return (
 
     <div>
@@ -149,7 +154,7 @@ export function SessionListing() {
           <InvitationListing sessionId={sessionId} />
           :
           <div>
-            <AddSession cancel={cancel} openAddSession={openAddSession} />
+            <AddSession projectId={projectId} cancel={cancel} openAddSession={openAddSession} />
 
             {data?.paginatedSession?.results?.length > 0 ?
 
@@ -157,8 +162,17 @@ export function SessionListing() {
 
                 {openEditSession ?
                   <EditSession
+                    projectId={projectId}
                     sessionId={sessionId}
                     openEditSession={openEditSession}
+                    cancel={cancel}
+                  /> : null}
+
+                {openDeleteSession ?
+                  <DeleteSession
+                    projectId={projectId}
+                    sessionId={sessionId}
+                    openDeleteSession={openDeleteSession}
                     cancel={cancel}
                   /> : null}
 
@@ -167,6 +181,7 @@ export function SessionListing() {
                   addSession={onClickOpenAddSession}
                   selectedSessionId={onClickOpenMeetings}
                   editSession={onClickEditSession}
+                  deleteSession={onClickDeleteSession}
                 />
               </div>
               :
@@ -179,7 +194,7 @@ export function SessionListing() {
                 <Button size="small" className="primary" onClick={addNew}>
                   + {t("project_tab_menu.meeting.add_new_session")}
                 </Button>
-                <AddSession cancel={cancel} openAddSession={openAddSession} />
+                <AddSession projectId={projectId} cancel={cancel} openAddSession={openAddSession} />
               </div>
             }
           </div>

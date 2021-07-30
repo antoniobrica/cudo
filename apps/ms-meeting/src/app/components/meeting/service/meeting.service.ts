@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { BadRequestException, HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 // import AdminEntity from "../../../entities/admin.entity";
@@ -16,7 +16,7 @@ import { MeetingDeleteInput } from "../dto/input/meeting-delete.input";
 import { MeetingDetailsUpdateInput } from "../dto/input/meeting-details-update.input";
 import { MeetingDetailsInput } from "../dto/input/meeting-details.input";
 import MeetingNotFoundException from "../exceptions/meetingNotFound.exception";
-// import { MeetingsBySessionInput } from "../dto/input/meetings-find-by-session.input"
+
 
 @Injectable()
 export class MeetingService {
@@ -31,10 +31,19 @@ export class MeetingService {
   ) { }
 
   public async addMeeting(createInput: MeetingDetailsInput): Promise<MeetingEntity> {
+    // console.log('---check custom validation message--addMeeting--')
+
     try {
       const { meetingBasics, members, meetingFiles } = createInput;
       const meetingDetails = new MeetingEntity({ ...meetingBasics });
-     
+      // const isExist = await this.meetingRepository.count({ where: { meetingTitle: meetingBasics.meetingTitle } })
+      // if (isExist > 0) {
+      //   throw new HttpException("Record already exist with this title", HttpStatus.FOUND)
+      //   // throw new BadRequestException("Record already exist with this title")
+
+      // }
+      // console.log('--after-check custom validation message--')
+
       if (members) {
         for (let index = 0; index < members.length; index++) {
           let relationAddMember = await this.membersRepository.findOne({ where: { memberID: members[index].memberID } });
@@ -69,13 +78,14 @@ export class MeetingService {
           }
         }
       }
-      
+
       const newMeeting = await this.meetingRepository.create({
         ...meetingDetails,
       });
       await this.meetingRepository.save(newMeeting);
       return newMeeting;
     } catch (error) {
+      // console.log('---- error----', error)
       return error;
     }
   }
