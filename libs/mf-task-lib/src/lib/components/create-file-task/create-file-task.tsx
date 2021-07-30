@@ -264,7 +264,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
 
 
   return (
-    <div >
+    <div className="add-pin-area-form">
       {/* <Modal className="modal_media" style={{ width: '800px', marginLeft: '155px' }}
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
@@ -325,13 +325,17 @@ export function CreateFileTask(props: CreateFileTaskProps) {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-          <Grid columns={2}>
+          <Grid columns={1}>
             <Grid.Row>
               <Grid.Column>
                 <PhaseIndex parentPhaseSelect={onsetPhasesID} />
               </Grid.Column>
+            </Grid.Row>
+          </Grid>
+          <Grid columns={1}>
+            <Grid.Row>
               <Grid.Column>
-                <BkpsIndex bkp={BKPID} parentBKPSelect={setBKPIDChange} />
+              <BkpsIndex bkp={BKPID} parentBKPSelect={setBKPIDChange} />
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -342,11 +346,13 @@ export function CreateFileTask(props: CreateFileTaskProps) {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-          <Grid columns={2}>
+          <Grid columns={1}>
             <Grid.Row>
               <Grid.Column>
                 <FollowersIndex followers={[]} parentFollowersSelect={onFollowers} />
               </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
               <Grid.Column>
                 <Form.Field>
                   <div className="event top-event">
@@ -414,27 +420,17 @@ export function CreateFileTask(props: CreateFileTaskProps) {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-          <Grid columns={1}>
-            <Grid.Row>
-              <Grid.Column>
-                <Form.Field>
-                  <label>Task Configuration  </label>
-                  <div className="content configuration-toggle">
-                    <p className="paragraph task-configuration">Send notification to assignee/followers for the task  <Checkbox toggle className="task-toggle" /></p></div>
-                </Form.Field>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
         </Form>
-        <Modal.Actions>
+        <Modal.Actions className="d-flex">
           <Button
             content="Submit"
             onClick={handleSaveTask}
             positive
             size='small' className="primary"
+            style={{ margin: 0}}
           />
           <Button size='small' className="icon-border" onClick={cancel}>
-          <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i>  Cancel
+          <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> Cancel
           </Button>
         </Modal.Actions>
       </div>

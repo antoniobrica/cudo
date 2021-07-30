@@ -496,20 +496,19 @@ export function CreateTask(props: CreateTaskProps) {
                 </Grid.Row>
               </Grid>
             </Form>
-            <Modal.Actions>
-              <Button
-                content="Submit"
-                onClick={handleSaveTask}
-                positive
-                size='small' className="primary"
-              />
-              <Button size='small' className="icon-border" onClick={cancel}>
-                <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i>  Cancel
-              </Button>
-            </Modal.Actions>
+            
           </div>
         </Modal.Content>
         <Modal.Actions>
+          <Button
+            content="Submit"
+            onClick={handleSaveTask}
+            positive
+            size='small' className="primary"
+          />
+          <Button size='small' className="icon-border" onClick={cancel}>
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i>  Cancel
+          </Button>
         </Modal.Actions>
       </Modal>
     </div>
