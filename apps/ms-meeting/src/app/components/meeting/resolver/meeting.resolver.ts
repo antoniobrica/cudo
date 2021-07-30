@@ -1,6 +1,5 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import MeetingEntity from '../../../entities/meeting.entity';
-// import ReferenceFilterParams from '../../../utils/types/referenceFilterParams'; 
 
 import { Pagination } from '../../paginate';
 import { PaginationMeetingModel } from '../../paginate/pagination.meeting.model'
@@ -27,9 +26,7 @@ export class MeetingResolver {
     @Mutation(() => MeetingModel)
     async createMeeting(
         @Args('meetingDetails') createInput: MeetingDetailsInput,
-        // @Args("referenceFilter") getReferenceArgs: ReferenceFilterParams,
     ) {
-        // return this.meetingService.create(createInput, getTasksArgs);
         return this.meetingService.addMeeting(createInput);
     }
 
