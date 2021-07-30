@@ -13,6 +13,7 @@ export interface TaskListOnFilePinsProps {
 
 export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
   const updateStatus = (task) => {
+    console.log('updateTask', task)
     props.updateTask(task)
   }
   const deleteTaskbyId = (task) => {

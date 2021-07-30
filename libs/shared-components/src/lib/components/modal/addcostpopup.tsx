@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import './../../../assets/style/index.scss'
 import { options, types } from '@hapi/joi';
 import { BkpsIndex, HouseStructureIndex } from '@cudo/mf-account-app-lib';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { FileUpload } from '@cudo/mf-document-lib';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 export interface IHouse {
@@ -28,12 +29,17 @@ type Iitem = {
   itemPrice?: number;
   uploadedFileID?: string;
   uploadedFileTitle?: string;
+  isValid: false;
 }
 export function ModalCost(props: ModalCostProps) {
   const { t } = useTranslation();
   const [open, setOpen] = React.useState(false)
+  const [isValidBkp, setIsValidBkp] = React.useState(false)
+  const [isApi, setIsApi] = React.useState(false)
+  const [isValidDescription, setIsValidDescription] = React.useState(false)
+  const [isValidItemQuantity, setIsValidItemQuantity] = React.useState(false)
+  const [isValidItemPrice, setIsValidItemPrice] = React.useState(false)
   const [idx, setIdx] = React.useState(0)
-
   const [openFile, setOpenFile] = React.useState(false)
   const [files, setFileList] = React.useState<any>([]);
   const [items, setItems] = React.useState<Iitem[]>([])
@@ -93,10 +99,49 @@ export function ModalCost(props: ModalCostProps) {
   }
   const createCost = () => {
     console.log('cost-items==>', items);
-    props.createCost(items)
+    items.map((data) => {
+      if (!data.BKPTitle) {
+        setIsValidBkp(true)
+        console.log('BKPTitle is missing')
+      }
+      if (data.BKPTitle) {
+        setIsValidBkp(false)
+      }
+      if (!data.description) {
+        setIsValidDescription(true)
+      }
+      if (data.description) {
+        setIsValidDescription(false)
+      }
+      if (!data.itemQuantity) {
+        setIsValidItemQuantity(true)
+      }
+      if (data.itemQuantity) {
+        setIsValidItemQuantity(false)
+      }
+      if (!data.itemPrice) {
+        setIsValidItemPrice(true)
+      }
+      if (data.itemPrice) {
+        setIsValidItemPrice(false)
+      }
+      if (data.BKPTitle && data.description && data.itemQuantity && data.itemPrice) {
+        setIsApi(true)
+      }
+      else {
+        setIsApi(false)
+      }
+    })
+    if (isApi) {
+      console.log('isApi', isApi)
+      props.createCost(items)
+      cancel();
+    }
+    // props.createCost(items)
     // setOpen(false);
-    cancel();
+    // cancel();
   }
+
   function CostItem() {
     return items.map((item, index) =>
       <Table.Row>
@@ -108,18 +153,23 @@ export function ModalCost(props: ModalCostProps) {
         </Table.Cell>
         <Table.Cell className="cost-bkp-field">
           <BkpsIndex bkp={''} parentBKPSelect={e => handleChange(e, index)} ></BkpsIndex>
+          {isValidBkp && <span>Please enter valid bkp</span>}
         </Table.Cell>
         <Table.Cell>
           <Input name='description' size='small' className="full-width" onChange={e => handleChange(e, index)} value={item.description || ''} />
+          {isValidDescription && <span>Please enter valid description</span>}
         </Table.Cell>
         <Table.Cell collapsing className="cost-files">
           <span onClick={() => uploadFile(index)} className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <Label horizontal>{files.length}</Label>  </span>
         </Table.Cell>
         <Table.Cell className="width100">
           <Input name='itemQuantity' type='number' size='small' className="full-width" onChange={e => handleChange(e, index)} value={item.itemQuantity || 0} />
+          {isValidItemQuantity && <span>Please enter valid description</span>}
         </Table.Cell>
         <Table.Cell className="width100">
           <Input type='number' name='itemPrice' size='small' className="full-width" onChange={e => handleChange(e, index)} value={item.itemPrice || 0} />
+          {isValidItemPrice && <span>Please enter valid itemPrice</span>}
+
         </Table.Cell>
         <Table.Cell collapsing>
           <a onClick={() => removeItem(index)} >X</a>
@@ -146,8 +196,8 @@ export function ModalCost(props: ModalCostProps) {
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-      // trigger={<Button size='mini' className="grey-btn">+ {t('add_cost.add_new')} </Button>}
-      closeOnDimmerClick={false}
+        // trigger={<Button size='mini' className="grey-btn">+ {t('add_cost.add_new')} </Button>}
+        closeOnDimmerClick={false}
       >
         <Modal.Header><h3>{t('add_cost.add_new_item')} </h3></Modal.Header>
         <Modal.Content body>

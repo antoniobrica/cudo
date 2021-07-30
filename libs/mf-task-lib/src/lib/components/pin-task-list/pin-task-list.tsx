@@ -68,6 +68,7 @@ export function PinTaskList(props: PinTaskListProps) {
     } 
    }`;
   const getPins = async () => {
+    console.log('new-task fetch')
     setLoading(true);
     return axios.post(
       MS_SERVICE_URL['ms_task'].url,
@@ -235,6 +236,7 @@ export function PinTaskList(props: PinTaskListProps) {
           query: GET_TASKS,
           variables: { referenceID },
         }) as ITasks;
+        getPins();
         cache.writeQuery({
           query: GET_TASKS,
           data: {
