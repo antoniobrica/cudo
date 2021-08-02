@@ -47,14 +47,16 @@ export function Canvas(props: CanvasProps) {
     // canvasToDrawImageEle.height = canvasToDrawImageEle.clientHeight;
     setCtxToDrawCircle(canvasToDrawCircleEle.getContext("2d"));
     // setCtxToDrawImage(canvasToDrawImageEle.getContext("2d"));
+
     getPins().then(() => {
-      console.log("getPins Done", props.allowToCreateNewPin)
+      console.log("--canvas-0-getPins Done", props.allowToCreateNewPin)
     })
+    
   }, []);
   useEffect(() => {
     if (!props.isPinCreated)
       getPins().then(() => {
-        console.log("getPins Done", props.allowToCreateNewPin);
+        console.log("--canvas-1-getPins Done", props.allowToCreateNewPin);
       })
   }, [props.isPinCreated]);
 
@@ -111,7 +113,7 @@ export function Canvas(props: CanvasProps) {
 
 
   useEffect(() => {
-    console.log("On useeffect ", dragTarget, isCircleSelectedOnMouseDown, isCircleSelectedOnMouseHover);
+    console.log("--canvas-2-On useeffect ", dragTarget, isCircleSelectedOnMouseDown, isCircleSelectedOnMouseHover);
     let lastBoxes = [...pinList];
     lastBoxes = lastBoxes.map((box) => {
       if (box.pinsID == dragTarget.pinsID) {
@@ -137,7 +139,7 @@ export function Canvas(props: CanvasProps) {
   }, [dragTarget, isCircleSelectedOnMouseDown, isCircleSelectedOnMouseHover]);
 
   useEffect(() => {
-    console.log("Pin Save flag recieved in canvas component ", props.savePin)
+    console.log("--canvas-3-Pin Save flag recieved in canvas component ", props.savePin)
     if (!props.savePin) { props.pinSaved(false); return; }
     saveNewPin(dragTarget);
   }, [props.savePin]);
@@ -146,7 +148,7 @@ export function Canvas(props: CanvasProps) {
     try {
       if (dragTargetTemp?.pinsID == '') {
 
-        console.log("Save Pin call", dragTargetTemp)
+        console.log("--canvas-4-Save Pin call", dragTargetTemp)
         const res = await axios.post(
           MS_SERVICE_URL['ms_document'].url,
           {
@@ -239,6 +241,7 @@ export function Canvas(props: CanvasProps) {
       });
       props.coardinates(lastBoxes[lastBoxes.length - 1])
       setpinList([...lastBoxes])
+      console.log('--canvas-5---getPins---lastBoxes--', lastBoxes)
       return lastBoxes;
     } catch (error) {
       console.log(error)
@@ -436,7 +439,7 @@ export function Canvas(props: CanvasProps) {
       hitCircleOnMouseHover(startX, startY);
     }
     if (!isCircleSelectedOnMouseDown) return;
-    console.log("isCircleSelectedOnMouseDown on mouse move", isCircleSelectedOnMouseDown)
+    console.log("--canvas-6-isCircleSelectedOnMouseDown on mouse move", isCircleSelectedOnMouseDown)
     const mouseX = e.nativeEvent.offsetX - canvasToDrawCircle.current.clientLeft;
     const mouseY = e.nativeEvent.offsetY - canvasToDrawCircle.current.clientTop;
     startX = mouseX;
