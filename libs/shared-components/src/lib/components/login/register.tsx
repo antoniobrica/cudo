@@ -167,12 +167,12 @@ export function RegisterPage(props: RegisterProps) {
                                 defaultValue={password?.value as any}
                                 {...password?.required} />
                             </Form.Field>
-                            {/* <Form.Field key={csrf_token?.name}>
+                            <Form.Field key={csrf_token?.name}>
                               <Input placeholder='Email Address' size='small' className="full-width  " type={csrf_token?.type}
                                 name={csrf_token?.name}
                                 defaultValue={csrf_token?.value as any}
                                 {...csrf_token?.required} />
-                            </Form.Field> */}
+                            </Form.Field>
                           </Grid.Column>
                         </Grid.Row>
                       </Grid>

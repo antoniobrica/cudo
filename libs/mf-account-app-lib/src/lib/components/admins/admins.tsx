@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 export interface AdminsProps {
   parentAdminsSelect,
   admins?,
+  error?
 }
 enum ReferenceType {
   COMPANY = "COMPANY"
@@ -31,8 +32,16 @@ export function Admins(props: AdminsProps) {
     }
   }, [data]);
 
+  // React.useEffect(() => {
+  //   if (props?.admins) {
+  //     if (items) {
+  //       setAdmins(props?.admins)
+  //     }
+  //   }
+  // }, [items, props?.admins])
+
   const onAdmins = (event, data) => {
-    console.log('admins--', data.value)
+    
     const peopleArr = [];
     for (let i = 0; i < data.value.length; i++) {
       items.map(d => {
@@ -49,7 +58,7 @@ export function Admins(props: AdminsProps) {
   return (
     <Form.Field>
      
-      <label>{t("project_tab_menu.meeting.admin")}</label>
+      <label>{t("project_tab_menu.meeting.admin")}<span className="danger">*</span></label>
 
       <Dropdown className="small_drop follower-select"
         clearable
@@ -61,6 +70,7 @@ export function Admins(props: AdminsProps) {
         value={admins}
         onChange={onAdmins}
         placeholder={t("common.select")}
+        error={props.error}
       />
 
     </Form.Field>

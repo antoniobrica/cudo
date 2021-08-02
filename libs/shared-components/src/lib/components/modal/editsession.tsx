@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Modal, Input, Form, Grid, Select, Dropdown } from 'semantic-ui-react';
+import { Button, Modal, Input, Form, Grid, Select } from 'semantic-ui-react';
 import { MeetingCategoryIndex, SessionInvitationIndex, SessionProtocolIndex, FollowersIndex, AssigneeIndex, AdminsIndex, MembersIndex } from '@cudo/mf-account-app-lib';
 import { useTranslation } from 'react-i18next';
 
-export interface SessionProps {
+export interface EditSessionProps {
   workTypes?
-  createSession?
-  openAddSession?
+  sessionDetail?
+  openEditSession?
   cancel?
+  editSession?
 }
 
-interface AddSessionErrors {
+interface EditSessionErrors {
   workTypeError?: string,
   titleError?: string,
   categoryError?: string,
@@ -20,10 +21,11 @@ interface AddSessionErrors {
   protocolTemplateError?: string,
 }
 
-export function ModalAddSession(props: SessionProps) {
+export function ModalEditSession(props: EditSessionProps) {
 
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
+  const [detail, setDetail] = useState(null)
   const [sessionTitle, setSessionTitle] = useState("");
   const [workType, setworkType] = useState(null)
   const [workTypeD, setworkTypeD] = useState(null)
@@ -36,24 +38,67 @@ export function ModalAddSession(props: SessionProps) {
   const [admins, setAdmins] = useState<any>([]);
   const [members, setMembers] = useState<any>([]);
 
-  const [errors, setErrors] = useState<AddSessionErrors>({})
+  const [errors, setErrors] = useState<EditSessionErrors>({})
 
   useEffect(() => {
     if (props.workTypes) {
-      setworkType(props.workTypes.map(({ workTypeName, projectWorkTypeID }) => ({ key: projectWorkTypeID, value: workTypeName, text: workTypeName, id: projectWorkTypeID })));
-
+      setworkType(props.workTypes.map(({ workTypeName, projectWorkTypeID }) => (
+        { key: projectWorkTypeID, value: workTypeName, text: workTypeName, id: projectWorkTypeID }
+      )));
     }
   }, [props.workTypes]);
 
   useEffect(() => {
-    if (props.openAddSession) {
+    if (props.openEditSession) {
       setOpen(true);
     }
-  }, [props.openAddSession])
+  }, [props.openEditSession])
 
-  const openSessionAddPopup = () => {
+  useEffect(() => {
+    if (props?.sessionDetail?.SessionByID) {
+      setDetail(props?.sessionDetail?.SessionByID)
+    }
+  }, [props?.sessionDetail?.SessionByID])
+
+  useEffect(() => {
+    if (detail) {
+      setSessionTitle(detail?.sessionTitle)
+
+      if (workType) {
+        const workTypeItem = { worktypeID: '', worktypeName: '' };
+        for (let i = 0; i < workType?.length; i++) {
+          if (workType[i]?.key === detail?.worktypeID) {
+            workTypeItem.worktypeID = workType[i].key;
+            workTypeItem.worktypeName = workType[i].value;
+            setworktypeName(workTypeItem.worktypeName);
+            setworktypeID(workTypeItem.worktypeID);
+            setworkTypeD(workTypeItem)
+          }
+        }
+
+        setworkTypeData(workTypeItem.worktypeName)
+      }
+
+      if (detail?.admins) {
+        const editAdminsData = detail?.admins?.map((item) => {
+          return { userID: item.adminID, userName: item.adminName }
+        })
+        setAdmins(editAdminsData)
+      }
+
+      if (detail?.members) {
+        const editMemberData = detail?.members?.map((item) => {
+          return { userID: item.memberID, userName: item.memberName }
+        })
+        setMembers(editMemberData)
+      }
+
+    }
+  }, [detail, workType])
+
+  const openSessionEditPopup = () => {
     setOpen(true)
-    props.openAddSession(true)
+    props.openEditSession(true)
   }
 
   const onSessionTitleChange = (e) => {
@@ -61,11 +106,12 @@ export function ModalAddSession(props: SessionProps) {
     setErrors({ ...errors, titleError: "" })
   }
   const onMworkType = (event, data) => {
+
     const workT = {
       worktypeID: '',
       worktypeName: ''
     };
-    for (let i = 0; i < props?.workTypes?.length; i++) {
+    for (let i = 0; i < props.workTypes?.length; i++) {
       if (props.workTypes[i]?.workTypeName === data.value) {
         workT.worktypeID = props.workTypes[i].projectWorkTypeID;
         workT.worktypeName = data.value;
@@ -74,6 +120,7 @@ export function ModalAddSession(props: SessionProps) {
         setworkTypeD(workT)
       }
     }
+
     setworkTypeData(data.value)
     setErrors({ ...errors, workTypeError: "" })
   }
@@ -98,7 +145,7 @@ export function ModalAddSession(props: SessionProps) {
     setErrors({ ...errors, membersError: "" })
   }
   const validation = () => {
-    let errorResponse: AddSessionErrors = {}
+    let errorResponse: EditSessionErrors = {}
 
     if (!workTypeD) {
       errorResponse.workTypeError = t('common.errors.worktype_error')
@@ -124,7 +171,7 @@ export function ModalAddSession(props: SessionProps) {
 
     return errorResponse
   }
-  const createSession = () => {
+  const editSession = () => {
     const validationResult = validation()
     if (Object.keys(validationResult).length > 0) {
       setErrors(validationResult)
@@ -140,6 +187,7 @@ export function ModalAddSession(props: SessionProps) {
     })
 
     const data = {
+      sessionID: detail?.sessionID,
       sessionTitle: sessionTitle,
       meetingCategoryID: catagory.meetingCatagoryID,
       meetingCategoryTitle: catagory.meetingCatagoryTitle,
@@ -153,10 +201,10 @@ export function ModalAddSession(props: SessionProps) {
       members: memberList
     }
 
-    props.createSession(data);
+    props.editSession(data);
 
     setOpen(false);
-    resetAddData();
+    // resetAddData();
     props.cancel(true)
   }
 
@@ -182,8 +230,10 @@ export function ModalAddSession(props: SessionProps) {
       <Modal
         className="modal_media right-side--fixed-modal add-session-modal"
         closeIcon
-        onClose={cancel}
-        onOpen={openSessionAddPopup}
+        onClose={() => setOpen(false)}
+        // onOpen={() => setOpen(true)}
+        // onClose={cancel}
+        onOpen={openSessionEditPopup}
         open={open}
         // trigger={
         //   <Button size="small" className="primary">
@@ -193,7 +243,7 @@ export function ModalAddSession(props: SessionProps) {
         closeOnDimmerClick={false}
       >
         <Modal.Header>
-          <h3>{t("project_tab_menu.meeting.add_session")} </h3>
+          <h3>Edit sessions </h3>
         </Modal.Header>
         <Modal.Content body>
           <div>
@@ -203,10 +253,10 @@ export function ModalAddSession(props: SessionProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                        {t("project_tab_menu.meeting.name")} <span className="danger">*</span>
+                        Name <span className="danger">*</span>
                       </label>
                       <Input
-                        placeholder={t("project_tab_menu.meeting.session_title")}
+                        placeholder="Session Title"
                         size="small"
                         className="full-width"
                         type="text"
@@ -223,10 +273,10 @@ export function ModalAddSession(props: SessionProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>{t("project_list.add_new_project.worktype")}<span className="danger">*</span></label>
+                      <label>Work Type<span className="danger">*</span></label>
                       <Select
                         clearable
-                        placeholder={t("common.select")}
+                        placeholder="Select"
                         className="small"
                         value={workTypeData}
                         options={workType}
@@ -238,7 +288,7 @@ export function ModalAddSession(props: SessionProps) {
                   </Grid.Column>
 
                   <Grid.Column>
-                    <MeetingCategoryIndex parentCatagorySelect={parentCatagorySelect} error={errors?.categoryError && !catagory?.length}></MeetingCategoryIndex>
+                    <MeetingCategoryIndex parentCatagorySelect={parentCatagorySelect} editCategoryIdSelect={detail?.meetingCategoryID} error={errors?.categoryError && !catagory?.length}></MeetingCategoryIndex>
                     {errors?.categoryError && !catagory?.length ? <span className="error-message">{errors.categoryError}</span> : null}
                   </Grid.Column>
                 </Grid.Row>
@@ -247,7 +297,7 @@ export function ModalAddSession(props: SessionProps) {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <AdminsIndex admins={[]} parentAdminsSelect={onAdmins} error={errors?.adminsError && !admins?.length} />
+                    <AdminsIndex admins={admins} parentAdminsSelect={onAdmins} error={errors?.adminsError && !admins?.length} />
                     {errors?.adminsError && !admins?.length ? <span className="error-message">{errors.adminsError}</span> : null}
                   </Grid.Column>
                 </Grid.Row>
@@ -255,10 +305,10 @@ export function ModalAddSession(props: SessionProps) {
                   <Form.Field>
                     <div className="event top-event follower-listing-labels">
                       {admins?.map((p, id) => {
-                        const name = p.userName.split(" ").map((n) => n[0]).join("");
+                        const adminName = p?.userName?.split(" ").map((n) => n[0]).join("");
                         return (
                           <div className="label-light-purple-circle label-spacer" key={id}>
-                            <span className="white-text">{name}</span>
+                            <span className="white-text">{adminName}</span>
                           </div>
                         )
                       })
@@ -273,8 +323,8 @@ export function ModalAddSession(props: SessionProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>Members<span className="danger">*</span></label>
-                      <MembersIndex members={[]} parentMembersSelect={onMembers} error={errors?.membersError && !members.length} />
-                      {errors?.membersError && !members.length ? <span className="error-message">{errors.membersError}</span> : null}
+                      <MembersIndex members={members} parentMembersSelect={onMembers} error={errors?.membersError && !members?.length} />
+                      {errors?.membersError && !members?.length ? <span className="error-message">{errors.membersError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -282,7 +332,7 @@ export function ModalAddSession(props: SessionProps) {
                   <Form.Field>
                     <div className="event top-event follower-listing-labels">
                       {members?.map((p, id) => {
-                        const name = p.userName.split(" ").map((n) => n[0]).join("");
+                        const name = p?.userName?.split(" ").map((n) => n[0]).join("");
                         return (
                           <div className="label-light-purple-circle label-spacer" key={id}>
                             <span className="white-text">{name}</span>
@@ -295,15 +345,18 @@ export function ModalAddSession(props: SessionProps) {
                 </div>
               </Grid>
 
+
               <Grid columns={2}>
                 <Grid.Row>
                   <Grid.Column>
-                    <SessionInvitationIndex parentInvitationSelect={parentInvitationSelect} error={errors?.invitationTemplateError && !invitation?.length} />
+                    <SessionInvitationIndex parentInvitationSelect={parentInvitationSelect} editInvitationTemplateIdSelect={detail?.invitationID}
+                      error={errors?.invitationTemplateError && !invitation?.length} />
                     {errors?.invitationTemplateError && !invitation?.length ? <span className="error-message">{errors.invitationTemplateError}</span> : null}
                   </Grid.Column>
 
                   <Grid.Column>
-                    <SessionProtocolIndex parentSessionSelect={parentSessionSelect} error={errors?.protocolTemplateError && !protocol?.length} />
+                    <SessionProtocolIndex parentSessionSelect={parentSessionSelect} editProtocolTemplateIdSelect={detail?.protocolID}
+                      error={errors?.protocolTemplateError && !protocol?.length} />
                     {errors?.protocolTemplateError && !protocol?.length ? <span className="error-message">{errors.protocolTemplateError}</span> : null}
                   </Grid.Column>
                 </Grid.Row>
@@ -313,8 +366,8 @@ export function ModalAddSession(props: SessionProps) {
         </Modal.Content>
         <Modal.Actions>
           <Button
-            content={t("common.submit")}
-            onClick={createSession}
+            content="Submit"
+            onClick={editSession}
             positive
             size="small"
             className="primary"
@@ -322,9 +375,10 @@ export function ModalAddSession(props: SessionProps) {
           <Button
             size="small"
             className="icon-border"
+            // onClick={() => setOpen(false)}
             onClick={cancel}
           >
-            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> {t("common.cancel")}
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> Cancel
           </Button>
         </Modal.Actions>
       </Modal>
@@ -332,4 +386,4 @@ export function ModalAddSession(props: SessionProps) {
   );
 }
 
-export default ModalAddSession;
+export default ModalEditSession;

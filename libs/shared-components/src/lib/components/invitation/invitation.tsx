@@ -13,6 +13,7 @@ export interface InvitationTabProps {
   selectedInvitationId?
   viewInvitation?
   editInvitation?
+  deleteInvitation?
 }
 
 export function InvitationTab(props: InvitationTabProps) {
@@ -27,6 +28,10 @@ export function InvitationTab(props: InvitationTabProps) {
   
   const onClickEditInvitation = (meetingId) => {
     props.editInvitation(meetingId)
+  }
+
+  const onClickDeleteInvitation = (meetingId) => {
+    props.deleteInvitation(meetingId)
   }
 
   const panes = [
@@ -98,10 +103,7 @@ export function InvitationTab(props: InvitationTabProps) {
                                 <Dropdown.Menu>
                                   <Dropdown.Item icon="eye" text="View detail" onClick={() => onClickViewInvitation(meetingId)} />
                                   <Dropdown.Item icon="pencil" text="Edit" onClick={() => onClickEditInvitation(meetingId)} />
-                                  <Dropdown.Item
-                                    icon="trash alternate outline"
-                                    text="Delete"
-                                  />
+                                  <Dropdown.Item icon="trash alternate outline" text="Delete" onClick={() => onClickDeleteInvitation(meetingId)} />
                                 </Dropdown.Menu>
                               </Dropdown>
                             </span>

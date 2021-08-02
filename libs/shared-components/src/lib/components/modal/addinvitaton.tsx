@@ -313,11 +313,11 @@ export function ModalAddInvitation(props: AddInvitationProps) {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    {/* <Form.Field> */}
+                    <Form.Field>
                     <label>Members<span className="danger">*</span></label>
                     <MembersIndex members={[]} parentMembersSelect={onMembers} error={errors?.membersError && !members.length} />
                     {errors?.membersError && !members.length ? <span className="error-message">{errors.membersError}</span> : null}
-                    {/* </Form.Field> */}
+                    </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>

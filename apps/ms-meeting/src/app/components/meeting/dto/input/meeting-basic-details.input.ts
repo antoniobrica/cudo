@@ -1,20 +1,30 @@
 import { Field, InputType } from "@nestjs/graphql";
+// import { IsString, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
  
 @InputType()
 export class MeetingBasicDetailsInput {
 
+  // @IsString()
+  // @IsNotEmpty()
   @Field({ description: `This is for company Id`, nullable: true })
   companyId?: string;
 
+  // @IsString()
+  // @IsNotEmpty()
   @Field({ description: `This is for project Type Id`, nullable: true })
   projectTypeId?: string;
 
+  
   @Field({ description: `This is for work Type Id`, nullable: true })
   workTypeId?: string;
 
+  // @IsString()
+  // @IsNotEmpty()
   @Field({ description: `This is for session Id`, nullable: true })
   sessionId?: string;
 
+  // @IsString()
+  // @IsNotEmpty()
   @Field({ description: `This is for meeting title`  })
   meetingTitle: string;
   

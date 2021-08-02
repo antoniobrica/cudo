@@ -42,6 +42,7 @@ import ModalAlert from 'libs/shared-components/src/lib/components/modal/alert';
 import ModalPlanningNew from 'libs/shared-components/src/lib/components/modal/planningnew';
 import ModalViewPlanning from 'libs/shared-components/src/lib/components/modal/viewdetailsplanning';
 import ModalSession from 'libs/shared-components/src/lib/components/modal/addsession';
+import ModalEditSession from 'libs/shared-components/src/lib/components/modal/editsession';
 import ModalViewTask from 'libs/shared-components/src/lib/components/modal/taskdetails';
 import ModalTaskEdit from 'libs/shared-components/src/lib/components/modal/taskeditdetails';
 import InvitationTab from 'libs/shared-components/src/lib/components/invitation/invitation';
@@ -109,6 +110,7 @@ export function App() {
         <ModalPlanningNew></ModalPlanningNew><br />
         <ModalViewPlanning></ModalViewPlanning><br />
         <ModalSession></ModalSession><br />
+        <ModalEditSession></ModalEditSession><br />
         <ModalViewTask></ModalViewTask><br />
         <ModalTaskEdit></ModalTaskEdit><br />
         <InvitationTab></InvitationTab><br />

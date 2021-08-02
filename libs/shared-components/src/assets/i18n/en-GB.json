@@ -191,9 +191,12 @@
     },
     "meeting": {
       "title": "Meetings",
-      "no_data_found_desc": "Hey User, you don't have any active session on this project. Click the button below to create a session list.",
+      "no_session_data_found_desc": "Hey User, you don't have any active session on this project. Click the button below to create a session list.",
+      "no_invitation_data_found_desc": "Hey User, you don't have any active invitation on this session. Click the button below to create an invitation list.",
       "add_new_session": "Add New Session",
       "add_session": "Add Session",
+      "add_new_invitation": "Add New Invitation",
+      "add_invitation": "Add  Invitation",      
       "name": "Name",
       "session_title": "Session Title",
       "category": "Category",
@@ -204,10 +207,14 @@
       "upcoming_session": "Upcoming meetings",
       "errors": {
         "title_error": "Please provide session title",
-        "category_error": "Please provide meeting category",
-        "protocol_error": "Please provide protocol",
-        "invitation_error": "Please provide invitaion"
-      }
+        "category_error": "Please select meeting category",
+        "protocol_template_error": "Please select protocol template",
+        "invitation_template_error": "Please select invitaion template",
+        "admins_error": "Please select admins",
+        "members_error": "Please select members"
+      },
+      "session_are_you_sure": "Are you sure you want to delete the session?",
+      "invitation_are_you_sure": "Are you sure you want to delete the invitation?"
     },
     "files": {
       "title": "Files",
@@ -259,6 +266,7 @@
   "common": {
     "select": "Select",
     "add_new_button": "Add New",
+    "confirm":"Confirm",
     "cancel": "Cancel",
     "submit": "Submit",
     "ok": "Ok",

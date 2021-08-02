@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { initI18n } from '@cudo/mf-core';
-
+import { LazyLoading } from '@cudo/shared-components'
+// import styles from './app.module.scss';
 // import AddSession from './add-session/add-session';
 import SessionList from './components/session-listing/session-listing'
 
@@ -10,10 +11,11 @@ initI18n('/assets/i18n/{{lng}}.json', defaultLanguage);
 
 export function App() {
   return (
-    <div>
-      {/* <AddSession /> */}
-      <SessionList />
-    </div>
+    <Suspense fallback={<LazyLoading />}>
+      <div>
+        <SessionList />
+      </div>
+    </Suspense>
   );
 }
 
