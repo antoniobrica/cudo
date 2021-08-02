@@ -447,6 +447,7 @@ export function CreateTask(props: CreateTaskProps) {
                         onChange={onStartDateChange}
                       />
                     </Form.Field>
+                    {errors?.dateError && (startDate > endDate) ? <span className="error-message">{errors.dateError}</span> : null}
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
@@ -467,8 +468,8 @@ export function CreateTask(props: CreateTaskProps) {
                         onChange={onsetEstimatedDays}
                       />
                     </Form.Field>
+                  
                   </Grid.Column>
-                  {errors?.dateError && (startDate > endDate) ? <span className="error-message">{errors.dateError}</span> : null}
                 </Grid.Row>
                 <Grid.Row>
                 </Grid.Row>
