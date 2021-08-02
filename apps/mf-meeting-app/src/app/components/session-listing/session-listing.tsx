@@ -93,6 +93,7 @@ export function SessionListing() {
     setOpenAddSession(false)
     setSessionId(null)
     setOpenEditSession(false)
+    setOpenDeleteSession(false)
   }
   const addNew = () => {
     setOpenAddSession(true);

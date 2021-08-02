@@ -109,10 +109,10 @@ export function ModalAddSession(props: SessionProps) {
     if (!catagory) {
       errorResponse.categoryError = t('project_tab_menu.meeting.errors.category_error')
     }
-    if (!admins) {
+    if (!admins.length) {
       errorResponse.adminsError = t('project_tab_menu.meeting.errors.admins_error')
     }
-    if (!members) {
+    if (!members.length) {
       errorResponse.membersError = t('project_tab_menu.meeting.errors.members_error')
     }
     if (!invitation) {
