@@ -25,7 +25,7 @@ export function FileStructure(props: FileStructureProps) {
 	const [imgUrl, setimgUrl] = React.useState('');
 	const [fname, setFname] = React.useState('');
 	const [fType, setFtype] = React.useState('');
-	const {t} = useTranslation()
+	const { t } = useTranslation()
 
 	const [openPinFile, setOpenPinFile] = React.useState(false)
 
@@ -163,12 +163,43 @@ export function FileStructure(props: FileStructureProps) {
 								<span className="font-weight-bold mb-0 mr-10">Information Data</span>
 								<div className="d-flex mr-3">
 
-									<div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
+					<div className="all-files-con">
+						<div className="multiple-files-box expand">
+							<div className="multiple-files-header">
+								<div className="files-left-area">
+									<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
+									<h3 className="files-name">Information Data (2)</h3>
+									<span className="no-of-files">( 5 files )</span>
+								</div>
+								<div className="files-arrows">
+									<i className="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i>
+								</div>
+							</div>
+							<div className="multiple-files-listing">
+								<div className="single-files-list">
+									<div className="files-left-area">
+										<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
+										<h3 className="files-name">file_name.pdf</h3>
+										<span className="no-of-files"><i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i> 2 comments</span>
+										<span className="no-of-files"><i className="ms-Icon ms-Icon--CheckboxComposite" aria-hidden="true"></i> 2 tasks</span>
+									</div>
+									<div className="files-right-area">
+										<div className="symbol-group symbol-hover">
+											<div className="symbol symbol-30">
+												<a href=""> <i className="ms-Icon ms-Icon--Download" aria-hidden="true"></i></a>
+												<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
 
-										<div className="navi-item mr-2">
-											<a href=" " className="navi-link active">
-												<span className="navi-text">( 5 files )</span>
-											</a>
+												<span >
+													<Dropdown icon='ellipsis horizontal' pointing='right'>
+														<Dropdown.Menu>
+															<Dropdown.Item icon='pencil' text='Edit file detail' />
+															<Dropdown.Item icon='eye' text='Upload new version' />
+															<Dropdown.Item icon='check circle outline' text='Add task to this file' />
+															<Dropdown.Item icon='trash alternate outline' text='Delete' />
+														</Dropdown.Menu>
+													</Dropdown>
+												</span>
+											</div>
 										</div>
 
 									</div>
@@ -316,14 +347,184 @@ export function FileStructure(props: FileStructureProps) {
 					})
 
 					: null} */}
+
 				<div className="ui card " style={{ width: '100%' }}>
 					<Accordion className="widtharea" defaultActiveIndex={0} panels={items} styled  >
 
-
 					</Accordion>
 
+					<div className="all-files-con">
+						<div className="multiple-files-box expand">
+							<div className="multiple-files-header">
+								<div className="files-left-area">
+									<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
+									<h3 className="files-name">Information Data (2)</h3>
+									<span className="no-of-files">( 5 files )</span>
+								</div>
+								<div className="files-arrows">
+									<i className="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i>
+								</div>
+							</div>
+							<div className="multiple-files-listing">
+								<div className="single-files-list">
+									<div className="files-left-area">
+										<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
+										<h3 className="files-name">file_name.pdf</h3>
+										<span className="no-of-files"><i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i> 2 comments</span>
+										<span className="no-of-files"><i className="ms-Icon ms-Icon--CheckboxComposite" aria-hidden="true"></i> 2 tasks</span>
+									</div>
+									<div className="files-right-area">
+										<div className="symbol-group symbol-hover">
+											<div className="symbol symbol-30">
+												<a href=""> <i className="ms-Icon ms-Icon--Download" aria-hidden="true"></i></a>
+												<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
 
+												<span >
+													<Dropdown icon='ellipsis horizontal' pointing='right'>
+														<Dropdown.Menu>
+															<Dropdown.Item icon='pencil' text='Edit file detail' />
+															<Dropdown.Item icon='eye' text='Upload new version' />
+															<Dropdown.Item icon='check circle outline' text='Add task to this file' />
+															<Dropdown.Item icon='trash alternate outline' text='Delete' />
+														</Dropdown.Menu>
+													</Dropdown>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
 
+								<div className="single-files-list">
+									<div className="files-left-area">
+										<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
+										<h3 className="files-name">file_name.pdf</h3>
+										<span className="no-of-files"><i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i> 2 comments</span>
+										<span className="no-of-files"><i className="ms-Icon ms-Icon--CheckboxComposite" aria-hidden="true"></i> 2 tasks</span>
+									</div>
+									<div className="files-right-area">
+										<div className="symbol-group symbol-hover">
+											<div className="symbol symbol-30">
+												<a href=""> <i className="ms-Icon ms-Icon--Download" aria-hidden="true"></i></a>
+												<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
+
+												<span >
+													<Dropdown icon='ellipsis horizontal' pointing='right'>
+														<Dropdown.Menu>
+															<Dropdown.Item icon='pencil' text='Edit file detail' />
+															<Dropdown.Item icon='eye' text='Upload new version' />
+															<Dropdown.Item icon='check circle outline' text='Add task to this file' />
+															<Dropdown.Item icon='trash alternate outline' text='Delete' />
+														</Dropdown.Menu>
+													</Dropdown>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div className="multiple-files-box">
+							<div className="multiple-files-header">
+								<div className="files-left-area">
+									<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
+									<h3 className="files-name">Information Data</h3>
+									<span className="no-of-files">( 5 files )</span>
+								</div>
+								<div className="files-arrows">
+									<i className="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i>
+								</div>
+							</div>
+							<div className="multiple-files-listing">
+								<div className="single-files-list">
+									<div className="files-left-area">
+										<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
+										<h3 className="files-name">file_name.pdf</h3>
+										<span className="no-of-files"><i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i> 2 comments</span>
+										<span className="no-of-files"><i className="ms-Icon ms-Icon--CheckboxComposite" aria-hidden="true"></i> 2 tasks</span>
+									</div>
+									<div className="files-right-area">
+										<div className="symbol-group symbol-hover">
+											<div className="symbol symbol-30">
+												<a href=""> <i className="ms-Icon ms-Icon--Download" aria-hidden="true"></i></a>
+												<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
+
+												<span>
+													<Dropdown icon='ellipsis horizontal' pointing='right'>
+														<Dropdown.Menu>
+															<Dropdown.Item icon='pencil' text='Edit file detail' />
+															<Dropdown.Item icon='eye' text='Upload new version' />
+															<Dropdown.Item icon='check circle outline' text='Add task to this file' />
+															<Dropdown.Item icon='trash alternate outline' text='Delete' />
+														</Dropdown.Menu>
+													</Dropdown>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div className="single-files-list">
+									<div className="files-left-area">
+										<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
+										<h3 className="files-name">file_name.pdf</h3>
+										<span className="no-of-files"><i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i> 2 comments</span>
+										<span className="no-of-files"><i className="ms-Icon ms-Icon--CheckboxComposite" aria-hidden="true"></i> 2 tasks</span>
+									</div>
+									<div className="files-right-area">
+										<div className="symbol-group symbol-hover">
+											<div className="symbol symbol-30">
+												<a href=""> <i className="ms-Icon ms-Icon--Download" aria-hidden="true"></i></a>
+												<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
+
+												<span >
+													<Dropdown icon='ellipsis horizontal' pointing='right'>
+														<Dropdown.Menu>
+															<Dropdown.Item icon='pencil' text='Edit file detail' />
+															<Dropdown.Item icon='eye' text='Upload new version' />
+															<Dropdown.Item icon='check circle outline' text='Add task to this file' />
+															<Dropdown.Item icon='trash alternate outline' text='Delete' />
+														</Dropdown.Menu>
+													</Dropdown>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div className="single-file-box">
+							<div className="single-files-list">
+								<div className="files-left-area">
+									<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
+									<h3 className="files-name">file_name.pdf</h3>
+									<span className="no-of-files"><i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i> 2 comments</span>
+									<span className="no-of-files"><i className="ms-Icon ms-Icon--CheckboxComposite" aria-hidden="true"></i> 2 tasks</span>
+								</div>
+								<div className="files-right-area">
+									<div className="symbol-group symbol-hover">
+										<div className="symbol symbol-30">
+											<a href=""> <i className="ms-Icon ms-Icon--Download" aria-hidden="true"></i></a>
+											<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
+
+											<span >
+												<Dropdown icon='ellipsis horizontal' pointing='right'>
+													<Dropdown.Menu>
+														<Dropdown.Item icon='pencil' text='Edit file detail' />
+														<Dropdown.Item icon='eye' text='Upload new version' />
+														<Dropdown.Item icon='check circle outline' text='Add task to this file' />
+														<Dropdown.Item icon='trash alternate outline' text='Delete' />
+													</Dropdown.Menu>
+												</Dropdown>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
 				</div>
 			</Tab.Pane>,
 		},
