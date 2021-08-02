@@ -164,7 +164,7 @@ export function FileStructure(props: FileStructureProps) {
 							<div className="multiple-files-header">
 								<div className="files-left-area">
 									<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
-									<h3 className="files-name">Information Data</h3>
+									<h3 className="files-name">Information Data (2)</h3>
 									<span className="no-of-files">( 5 files )</span>
 								</div>
 								<div className="files-arrows">
