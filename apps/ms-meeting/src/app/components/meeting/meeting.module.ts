@@ -11,7 +11,6 @@ import { InvitationMiddleware } from './middleware/invitation.middleware'
 @Module({
   imports: [TypeOrmModule.forFeature([MeetingEntity, MeetingFilesEntity, MembersEntity])],
   providers: [MeetingResolver, MeetingService],
-  exports: [MeetingService,MeetingModule]
 })
 export class MeetingModule {} // implements NestModule {
   // configure(meetingContext: MiddlewareConsumer) {
