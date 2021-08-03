@@ -227,6 +227,23 @@
   background-color: #2d62ed;
   padding: 0 0 0 3px;
 }
+.field.filled-fields {
+  .event {
+    margin-top: 7px;
+    .label-spacer {
+      width: 24px;
+      height: 24px;
+      padding: 0;
+      @include flex(flex);
+      @include align-items(center);
+      @include justify-content(center);
+      span {
+        font-size: 11px;
+        font-weight: 500;
+      }
+    }
+  }
+}
 
 .planningbelow {
   margin-bottom: 25px;
@@ -585,4 +602,17 @@ button.anchor_complete i {
 }
 h3.alltask {
   margin-bottom: 15px;
+}
+i.circle-checkmark {
+  border-radius: 50%;
+  border: 1px solid #9FB5C5;
+  width: 24px;
+  height: 24px;
+  color: #9FB5C5;
+  line-height: 1;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px 0 0;
 }

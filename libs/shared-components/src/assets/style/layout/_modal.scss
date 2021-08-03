@@ -76,6 +76,10 @@ span.danger {
   border: 1px solid #d0d8df;
   border-radius: 3px;
 }
+.field .ui.selection.dropdown.error {
+  border: 1px solid #F96666;
+  background: none;
+}
 .modal_media {
   top: -10px;
   transform: translateX(25%);
@@ -285,6 +289,9 @@ div.add-files-modal button {
     span.task-s-number {
       font-weight: 400;
       margin: 0 10px;
+      height: 20px;
+      line-height: 20px;
+      padding: 0 7px;
     }
     span.edit-task-link {
       position: absolute;
@@ -296,8 +303,8 @@ div.add-files-modal button {
     }
   }
   span.task-created-date {
-    color: #9FB5C5;
-    font-size: 12px;
+    color: #718898;
+    font-size: 13px;
     font-weight: 500;
     margin-left: 35px;
   }
@@ -370,6 +377,11 @@ img.filter-icon {
       @include justify-content(center);
       &:before {
         content: "\E711";
+      }
+    }
+    &.task-details-modal {
+      i.close.icon {
+        top: 23px !important;
       }
     }
   }
