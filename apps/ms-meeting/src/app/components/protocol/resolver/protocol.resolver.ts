@@ -1,4 +1,5 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
+import ProtocolEntity from "../../../entities/protocol.entity";
 import { ProtocolDeatilsInput } from "../dto/input/protocol-details.input";
 import { ProtocolModel } from "../model/protocol.model";
 import { ProtocolService } from "../service/protocol.service";
@@ -12,9 +13,9 @@ export class ProtocolResolver {
         return this.protocolService.addProtocol(createInput)
     }
 
-    @Query(() => ProtocolModel)
-    public async getProtocolList(){
-        return this.protocolService.findProtocolList()
+    @Query(() => [ProtocolModel])
+    public async getProtocolList():Promise<ProtocolEntity[]>{
+        return await this.protocolService.findProtocolList()
     }
 
     @Query(() => ProtocolModel)

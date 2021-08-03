@@ -56,8 +56,10 @@ export class ProtocolService {
   }
 
   // find all created Protcols
-  public async findProtocolList() {
-    //
+  public async findProtocolList():Promise<ProtocolEntity[]> {
+    const result = await this.protocolRepository.find()
+    console.log(result)
+    return result
   }
 
   // get protocol by ID
