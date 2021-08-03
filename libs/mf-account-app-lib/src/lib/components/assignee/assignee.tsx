@@ -77,6 +77,7 @@ export function Assignee(props: AssigneeProps) {
         clearable
         error={props.error}
       />
+      {props.error && <span className="error-message">{t("common.errors.assignee_error")}</span>}
       {/* <label>{props.name}</label>
 
       <Dropdown className="small_drop"

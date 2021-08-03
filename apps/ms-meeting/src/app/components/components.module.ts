@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MeetingModule } from './meeting/meeting.module';
+import { ProtocolModule } from './protocol/protocol.module';
 import { ReferenceModule } from './reference/reference.module';
 import { SessionModule } from './session/session.module';
 
@@ -8,7 +9,8 @@ import { SessionModule } from './session/session.module';
   imports: [
     ReferenceModule,
     SessionModule,
-    MeetingModule
+    MeetingModule,
+    ProtocolModule
   ],
   providers: []
 })

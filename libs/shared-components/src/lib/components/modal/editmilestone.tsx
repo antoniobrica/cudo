@@ -3,11 +3,11 @@ import {
   Button,
   Header,
   Modal,
-  
+
   Input,
   Form,
   Grid,
-  
+
   Select,
   TextArea,
 } from 'semantic-ui-react';
@@ -27,10 +27,10 @@ export interface PlanningProps {
   worktypes?
 }
 interface PlanningErrors {
-  titleError?:string,
-  dateError?:string,
-  workTypeError?:string,
-  phaseError?:string
+  titleError?: string,
+  dateError?: string,
+  workTypeError?: string,
+  phaseError?: string
 }
 export function EditMileStonePopup(props: PlanningProps) {
   const countryOptions = [
@@ -52,11 +52,11 @@ export function EditMileStonePopup(props: PlanningProps) {
   const [dueDate, setDueDate] = React.useState("")
   const [description, setDescription] = React.useState("")
   const [open, setOpen] = React.useState(false);
-  const [milestoneID, setmilestoneID]= React.useState('');
-  const [workTypeData, setworkTypeData]= React.useState('')
-  const [workType, setworkType] = React.useState(null) 
-  const [workTypeD, setworkTypeD] = React.useState(null) 
-  const {t} = useTranslation()
+  const [milestoneID, setmilestoneID] = React.useState('');
+  const [workTypeData, setworkTypeData] = React.useState('')
+  const [workType, setworkType] = React.useState(null)
+  const [workTypeD, setworkTypeD] = React.useState(null)
+  const { t } = useTranslation()
   const [errors, setErrors] = React.useState<PlanningErrors>({})
   React.useEffect(() => {
     if (props.openEdit) {
@@ -72,10 +72,10 @@ export function EditMileStonePopup(props: PlanningProps) {
   }, [props.worktypes]);
 
   const onMworkType = (event, data) => {
-    const workT = { 
+    const workT = {
       worktypeID: '',
       worktypeName: ''
-     };
+    };
     for (let i = 0; i < props.worktypes.length; i++) {
       if (props.worktypes[i]?.workTypeName === data.value) {
         console.log('props.worktypes[i]', props.worktypes[i]);
@@ -91,19 +91,19 @@ export function EditMileStonePopup(props: PlanningProps) {
 
   React.useEffect(() => {
     if (props.planData) {
-     console.log('plan-edit-data', props.planData);
-     setMilestoneName(props.planData.milestoneTitle);
-     setDueDate(props.planData.dueDate);
-     setDescription(props.planData.description);
-     setmilestoneID(props.planData.milestoneID);
-     setPhasesName(props.planData.phaseName);
+      console.log('plan-edit-data', props.planData);
+      setMilestoneName(props.planData.milestoneTitle);
+      setDueDate(props.planData.dueDate);
+      setDescription(props.planData.description);
+      setmilestoneID(props.planData.milestoneID);
+      setPhasesName(props.planData.phaseName);
     }
 
   }, [props.planData]);
   const openf = () => {
     setOpen(true)
   }
-  const cancel =()=>{
+  const cancel = () => {
     setOpen(false)
     props.cancel()
   }
@@ -112,60 +112,60 @@ export function EditMileStonePopup(props: PlanningProps) {
     setPhasesName(data.phaseName)
   }
 
-   const onMilestoneChange=(e)=>{
-     setMilestoneName(e.target.value);
-   }
+  const onMilestoneChange = (e) => {
+    setMilestoneName(e.target.value);
+  }
 
-   const onDueDateChange = e => {
-    const date= moment.utc(moment(e.target.value).utc()).format();
+  const onDueDateChange = e => {
+    const date = moment.utc(moment(e.target.value).utc()).format();
     setDueDate(e.target.value)
   }
 
-  const onDescriptionChange = e=>{
+  const onDescriptionChange = e => {
     setDescription(e.target.value);
   }
   const validation = () => {
-    const foundErrors:PlanningErrors= {}
+    const foundErrors: PlanningErrors = {}
     if (!milestone) {
-     foundErrors.titleError = t("common.errors.title_error")
+      foundErrors.titleError = t("common.errors.title_error")
     }
     if (!dueDate) {
       foundErrors.dateError = t("common.errors.due_date_error")
-     }
+    }
     if (!workTypeD) {
-      foundErrors.workTypeError= t("common.errors.worktype_error")
-     }
+      foundErrors.workTypeError = t("common.errors.worktype_error")
+    }
     if (!phaseID) {
-      foundErrors.phaseError =  t("common.errors.phase_error") 
+      foundErrors.phaseError = t("common.errors.phase_error")
     }
     return foundErrors
   }
 
-  const updateMilestone=()=>{
+  const updateMilestone = () => {
     const validationResult = validation()
     if (Object.keys(validationResult).length > 0) {
       setErrors(validationResult)
       return false
     }
-      const data ={
-       milestoneID: milestoneID,
-       milestoneTitle: milestone,
-       dueDate: dueDate,
-       description: description,
-       phaseName: phaseName,
-       // worktypeID: workTypeD.worktypeID,
-       // worktypeName: workTypeD.worktypeName
-      }
-      props.getMilestoneData(data);
-      setOpen(false)
-   }
-   
+    const data = {
+      milestoneID: milestoneID,
+      milestoneTitle: milestone,
+      dueDate: dueDate,
+      description: description,
+      phaseName: phaseName,
+      // worktypeID: workTypeD.worktypeID,
+      // worktypeName: workTypeD.worktypeName
+    }
+    props.getMilestoneData(data);
+    setOpen(false)
+  }
+
 
 
 
   return (
     <div id="navbar">
-      <Modal 
+      <Modal
         className="modal_media right-side--fixed-modal edit-milestone-modal"
         closeIcon
         onClose={cancel}
@@ -173,7 +173,7 @@ export function EditMileStonePopup(props: PlanningProps) {
         open={open}
         trigger={
           <Button size="mini" className="grey-btn">
-            {t("project_tab_menu.planning.edit_milestone")}   
+            {t("project_tab_menu.planning.edit_milestone")}
           </Button>
         }
         closeOnDimmerClick={false}
@@ -189,7 +189,7 @@ export function EditMileStonePopup(props: PlanningProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                      {t("project_tab_menu.planning.milestone_title")} <span className="danger">*</span>
+                        {t("project_tab_menu.planning.milestone_title")} <span className="danger">*</span>
                       </label>
                       <Input
                         placeholder={t("project_tab_menu.planning.milestone_title")}
@@ -200,7 +200,7 @@ export function EditMileStonePopup(props: PlanningProps) {
                         onChange={onMilestoneChange}
                         error={errors?.titleError && !milestone}
                       />
-                       {errors?.titleError && !milestone ? <span className="error-message">{errors.titleError}</span> : null}
+                      {errors?.titleError && !milestone ? <span className="error-message">{errors.titleError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
@@ -227,9 +227,9 @@ export function EditMileStonePopup(props: PlanningProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>{t("common.desc")} </label>
-                      <TextArea placeholder={t("common.tell_us_more")} 
-                       value={description}
-                       onChange={onDescriptionChange}
+                      <TextArea placeholder={t("common.tell_us_more")}
+                        value={description}
+                        onChange={onDescriptionChange}
                       />
                     </Form.Field>
                   </Grid.Column>
@@ -240,8 +240,8 @@ export function EditMileStonePopup(props: PlanningProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                      {t("project_tab_menu.task.work_type")} 
-                        
+                        {t("project_tab_menu.task.work_type")}
+
                       </label>
                       <Select
                         clearable
@@ -249,7 +249,7 @@ export function EditMileStonePopup(props: PlanningProps) {
                         className="small"
                         value={workTypeData}
                         options={workType}
-                        onChange={onMworkType}     
+                        onChange={onMworkType}
                         error={errors?.workTypeError && !workTypeData}
                       />
                       {errors?.workTypeError && !workTypeData ? <span className="error-message">{errors.workTypeError}</span> : null}
@@ -269,10 +269,12 @@ export function EditMileStonePopup(props: PlanningProps) {
                         options={countryOptions}
                       />
                     </Form.Field> */}
-                <PhaseIndex phaseName={phaseName} parentPhaseSelect={onsetPhasesID} error={errors?.phaseError && !phaseID} />
-                {errors?.phaseError && !phaseID ? <span className="error-message">{errors.phaseError}</span> : null}
+                    <Form.Field>
+                      <label>{t("common.select_phase")} <span className="danger">*</span></label>
+                      <PhaseIndex phaseName={phaseName} parentPhaseSelect={onsetPhasesID} error={errors?.phaseError && !phaseID} />
+                    </Form.Field>
                   </Grid.Column>
- 
+
                 </Grid.Row>
               </Grid>
             </Form>
