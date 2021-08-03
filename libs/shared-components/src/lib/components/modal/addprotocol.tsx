@@ -88,7 +88,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
     const endMeetingDateTime = getDateTime(protocolDate, endTime)
 
     if (startMeetingDateTime > endMeetingDateTime) {
-      setErrors({ ...errors, startEndTimeError: "please provide start time" })
+      setErrors({ ...errors, startEndTimeError: "End time must be greater than start time" })
       return false
     } else {
       setErrors({ ...errors, startEndTimeError: "" })
@@ -141,7 +141,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
     const endProtocolDateTime = getDateTime(protocolDate, protocolEndTime)
 
     if (startProtocolDateTime > endProtocolDateTime) {
-      setErrors({ ...errors, startEndTimeError: "Start time must be smaller than end time" })
+      setErrors({ ...errors, startEndTimeError: "End time must be greater than start time" })
       return false
     } else {
       setErrors({ ...errors, startEndTimeError: null })
@@ -149,8 +149,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
 
     const protocolDurationSeconds = (endProtocolDateTime.getTime() - startProtocolDateTime.getTime()) / 1000
     const protocolDurationMinutes = `${protocolDurationSeconds / 60} min`
-    alert(protocolDurationMinutes)
-
+    
     const data = {
       companyId:props.companyId,
       projectTypeId: props.projectTypeId,
