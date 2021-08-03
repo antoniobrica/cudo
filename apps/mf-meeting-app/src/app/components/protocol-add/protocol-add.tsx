@@ -19,7 +19,7 @@ export function ProtocolAdd(props: ProtocolAddProps) {
     const history = useHistory();
     const res = history.location.pathname.split("/");
     const projectId = res[3].toString();
-    const companyId = "company_1" // "Sftobiz_1234"
+    const companyId = localStorage.getItem('selectedCompany')
 
     const { loading: sessionDetailLoading, error: sessionDetailError, data: sessionDetailData } = useSessionDetailQuery(GET_SESSION_DETAIL, {
         variables: { sessionID: props?.sessionId },
