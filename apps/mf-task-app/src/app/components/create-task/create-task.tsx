@@ -401,7 +401,6 @@ export function CreateTask(props: CreateTaskProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Assignee" error={errors?.assigneeError && !assignees.length} />
-                    {errors?.assigneeError && !assignees.length ? <span className="error-message">{errors.assigneeError}</span> : null}
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
@@ -448,6 +447,7 @@ export function CreateTask(props: CreateTaskProps) {
                         onChange={onStartDateChange}
                       />
                     </Form.Field>
+                    {errors?.dateError && (startDate > endDate) ? <span className="error-message">{errors.dateError}</span> : null}
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
@@ -468,8 +468,8 @@ export function CreateTask(props: CreateTaskProps) {
                         onChange={onsetEstimatedDays}
                       />
                     </Form.Field>
+                  
                   </Grid.Column>
-                  {errors?.dateError && (startDate > endDate) ? <span className="error-message">{errors.dateError}</span> : null}
                 </Grid.Row>
                 <Grid.Row>
                 </Grid.Row>
