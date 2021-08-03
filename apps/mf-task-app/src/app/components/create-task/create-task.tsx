@@ -73,7 +73,7 @@ export function CreateTask(props: CreateTaskProps) {
   const [assignees, setAssignees] = React.useState<any>([]);
   const [followers, setfollowers] = React.useState<any>([]);
   const [date, setDate] = React.useState(null)
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
@@ -263,27 +263,27 @@ export function CreateTask(props: CreateTaskProps) {
     console.log('followes', followers);
     console.log('====================================');
     cancel();
-      const variables = {
-        taskTitle, estimatedDays,
-        sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
-        fileID: "",
-        fileName: "$fileName",
-        taskTypeID: "$taskTypeID",
-        files,
-        assignees,
-        followers,
-        description,
-        subtasks: [],
-        referenceID,
-        workTypeID,
-        workTypeName
-      }
-      if(startDate){
-        variables['startDate']=startDate
-      }
-      if(startDate){
-        variables['endDate']=endDate
-      }
+    const variables = {
+      taskTitle, estimatedDays,
+      sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
+      fileID: "",
+      fileName: "$fileName",
+      taskTypeID: "$taskTypeID",
+      files,
+      assignees,
+      followers,
+      description,
+      subtasks: [],
+      referenceID,
+      workTypeID,
+      workTypeName
+    }
+    if (startDate) {
+      variables['startDate'] = startDate
+    }
+    if (startDate) {
+      variables['endDate'] = endDate
+    }
     addTask({
       variables,
       update: (
@@ -302,7 +302,7 @@ export function CreateTask(props: CreateTaskProps) {
     });
 
   };
- 
+
   return (
     <div >
       <Modal className="modal_media right-side--fixed-modal add-new-task-modal"
@@ -387,9 +387,9 @@ export function CreateTask(props: CreateTaskProps) {
               <Grid columns={2}>
                 <Grid.Row>
                   <Grid.Column>
-                  <Form.Field>
-                  <label>{t("common.select_phase")} </label>
-                    <PhaseIndex parentPhaseSelect={onsetPhasesID} />
+                    <Form.Field>
+                      <label>{t("common.select_phase")} </label>
+                      <PhaseIndex parentPhaseSelect={onsetPhasesID} />
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
@@ -486,20 +486,19 @@ export function CreateTask(props: CreateTaskProps) {
                 </Grid.Row>
               </Grid>
             </Form>
-            <Modal.Actions>
-              <Button
-                content={t("common.submit")}
-                onClick={handleSaveTask}
-                positive
-                size='small' className="primary"
-              />
-              <Button size='small' className="icon-border" onClick={cancel}>
-                <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i>  {t("common.cancel")}
-              </Button>
-            </Modal.Actions>
+
           </div>
         </Modal.Content>
         <Modal.Actions>
+          <Button
+            content={t("common.submit")}
+            onClick={handleSaveTask}
+            positive
+            size='small' className="primary"
+          />
+          <Button size='small' className="icon-border" onClick={cancel}>
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i>  {t("common.cancel")}
+          </Button>
         </Modal.Actions>
       </Modal>
     </div>
