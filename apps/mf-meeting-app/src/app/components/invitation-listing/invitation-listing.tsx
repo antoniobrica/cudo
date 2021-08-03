@@ -42,7 +42,7 @@ export function InvitationListing(props: InvitationListingProps) {
     }, [props.sessionId])
 
     useEffect(() => {
-         if (openAddInvitationFromTab) {
+        if (openAddInvitationFromTab) {
             setOpenPageAddInvitation(true);
         }
     }, [openAddInvitationFromTab])
@@ -52,13 +52,14 @@ export function InvitationListing(props: InvitationListingProps) {
         setOpenPageAddInvitation(true);
     }
 
-    const addNew = () => {  
-         setOpenPageAddInvitation(true);
+    const addNew = () => {
+        setOpenPageAddInvitation(true);
     }
     const cancel = () => {
-         setOpenPageAddInvitation(false)
+        setOpenPageAddInvitation(false)
         setOpenMeetingDetail(false)
         setOpenMeetingEdit(false)
+        setOpenMeetingDelete(false)
     }
 
     const onClickViewInvitation = (meetingId) => {
@@ -152,7 +153,7 @@ export function InvitationListing(props: InvitationListingProps) {
                     <Button size="small" className="primary" onClick={addNew}>
                         + {t("project_tab_menu.meeting.add_new_invitation")}
                     </Button>
-                    
+
                 </div>
 
             }
