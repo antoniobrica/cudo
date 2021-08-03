@@ -7,15 +7,18 @@ import {
 } from 'semantic-ui-react';
 import { useInvitationQuery } from '../../services/useRequest';
 import { GET_CATAGORIES, GET_INVITATION, GET_PROTOCOL } from '../../graphql/graphql';
+import { useTranslation } from 'react-i18next';
 /* eslint-disable-next-line */
 export interface SessionInvitationProps {
-  parentInvitationSelect
+  parentInvitationSelect?
+  editInvitationTemplateIdSelect?
+  error?
 }
 
 export function SessionInvitation(props: SessionInvitationProps) {
   const [items, setItems] = React.useState([])
   const [protocol, setProtocol] = React.useState("")
-
+  const {t} = useTranslation()
 
   const { loading, error, data } = useInvitationQuery(GET_INVITATION);
   React.useEffect(() => {
@@ -23,6 +26,22 @@ export function SessionInvitation(props: SessionInvitationProps) {
       setItems(data.invitationTemplates.map(({ invitationTemplateID, invitationTemplateTitle }) => ({ key: invitationTemplateID, value: invitationTemplateTitle, text: invitationTemplateTitle })));
     }
   }, [data]);
+
+  React.useEffect(()=>{
+    if(props?.editInvitationTemplateIdSelect){
+      if(items){
+        const invitationTemplate = { invitationTemplateID: '', invitationTemplateTitle: '' };
+        for (let i = 0; i <= items.length; i++) {
+          if (items[i]?.key === props.editInvitationTemplateIdSelect) {
+            invitationTemplate.invitationTemplateID = items[i].key;
+            invitationTemplate.invitationTemplateTitle = items[i].value;
+          }
+        }
+        setProtocol(invitationTemplate.invitationTemplateTitle)
+        props.parentInvitationSelect(invitationTemplate)
+      }
+    }
+  },[items, props?.editInvitationTemplateIdSelect])
 
   const onCatogory = (event, data) => {
     const protocol = { invitationTemplateID: '', invitationTemplateTitle: '' };
@@ -37,14 +56,15 @@ export function SessionInvitation(props: SessionInvitationProps) {
   }
   return (
     <Form.Field>
-      <label>Template for invitation</label>
+      <label>{t("project_tab_menu.meeting.template_for_invitation")}<span className="danger">*</span></label>
       <Select
-        placeholder="Select"
+        placeholder={t("common.select")}
         className="small"
         options={items}
         value={protocol}
         onChange={onCatogory}
         clearable
+        error={props?.error}
       />
     </Form.Field>
   );

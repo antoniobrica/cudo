@@ -13,14 +13,16 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 export interface SessionProtocolIndexProps {
-  parentSessionSelect
+  parentSessionSelect?
+  editProtocolTemplateIdSelect?
+  error?
 }
 
 export function SessionProtocolIndex(props: SessionProtocolIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <SessionProtocol parentSessionSelect={props.parentSessionSelect}></SessionProtocol>
+        <SessionProtocol parentSessionSelect={props.parentSessionSelect} editProtocolTemplateIdSelect={props?.editProtocolTemplateIdSelect} error={props?.error} ></SessionProtocol>
       </ApolloHooksProvider>
     </ApolloProvider>
   );

@@ -75,12 +75,12 @@
 				@include flex(flex);
 				@include align-items(center);
 				max-width: 238px;
-				height: 40px;
+				height: 30px;
 			}
 		}
 		button {
-			height: 40px;
-			width: 40px;
+			height: 30px;
+			width: 30px;
 			border: none;
 			margin-left: 10px;
 		}
@@ -448,6 +448,7 @@
 
 .treeview-cost-table {
 	padding: 0 10px;
+	overflow-y: auto;
 	table.ui.table {
 		border: none;
 		thead {

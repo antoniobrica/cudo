@@ -11,7 +11,7 @@ import {
   TextArea,
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
-function ModalEditInvitation() {
+function ModalOldEditInvitation() {
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
@@ -367,4 +367,4 @@ function ModalEditInvitation() {
   );
 }
 
-export default ModalEditInvitation;
+export default ModalOldEditInvitation;

@@ -129,6 +129,21 @@ input,
             &:before {
                 content: 'keyboard_arrow_down';
             }
+            &.clear.icon{
+                display: inline-block;
+                -webkit-font-smoothing: antialiased;
+                font-style: normal;
+                font-weight: normal;
+                font-family: FabricMDL2Icons;
+                font-size: 12px;
+                top: 9px;
+                font-weight: 600;
+                right: 16px;
+                opacity: 1;
+                &:before {
+                    content: "\E711";
+                }
+            }
         }
         &:focus {
             border-color: color("blue", "base");

@@ -102,7 +102,8 @@ export class SessionService {
             where: {
                 "reference": {
                     id: selectedReference.id
-                }
+                },
+                isDeleted:false
             },
             relations: ['reference', 'admins', 'members'],
             take: options.limit,
@@ -189,7 +190,7 @@ export class SessionService {
         if (session) {
             // #region session wise meetings delete            
             const meetingList = await this.meetingRepository.find({ where: { sessionId: session.sessionID } })
-            if (meetingList) {
+            if (meetingList?.length) {
                 const meetingIds = meetingList.map(({ id }) => id)
                 if (meetingIds) {
                     const meetingIsDeleted = !(session.isDeleted)

@@ -11,6 +11,7 @@ import WorkType from '../../work-type/work-type';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
 import ReactQuill, { Quill } from 'react-quill';
 import { TEXT_MAXLENGTHS } from '@cudo/mf-core'
+import { useTranslation } from 'react-i18next';
 
 export interface ProjectInfoProps {
   onSuccess
@@ -94,6 +95,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
   const [projectWorkEstimates, setProjectWorkEstimates] = React.useState(null)
 
   const [companyCountry, setCompanyCountry] = React.useState(null)
+  const {t} = useTranslation()
 
   // const [addProject] = useProjectMutation(ADD_PROJECT);
 
@@ -253,21 +255,21 @@ export function ModalExampleModal(props: ProjectInfoProps) {
 
   const validation = () => {
     let response = true
-    let errorMessages = []
+    const errorMessages = []
     if (!projectName) {
       response = false
-      errorMessages.push("Please provide project name")
+      errorMessages.push(t("common.errors.no_project_name"))
     }
     if (!projectNum) {
       response = false
-      errorMessages.push("Please provide project number")
+      errorMessages.push(t("common.errors.no_project_number"))
     }
     if (!client) {
-      errorMessages.push("Please provide client company")
+      errorMessages.push(t("common.errors.no_client_company"))
     }
     if (!buildingType) {
       response = false
-      errorMessages.push("Please provide building type")
+      errorMessages.push(t("common.errors.no_building_type"))
     }
 
     if (!response) {
@@ -326,24 +328,24 @@ export function ModalExampleModal(props: ProjectInfoProps) {
 
   const panes = [
     {
-      menuItem: 'Information',
+      menuItem: t("project_list.add_new_project.info"),
       render: () => <Tab.Pane attached={false}>
         {/* <SampleModal/> */}
         <div className="content upload-client-logo">
-          <div className="description">Upload Client logo <span>Click the upload button to upload the client logo</span></div>
-          <Button className="secondary_btn" size='small' primary>Click to upload</Button>
+          <div className="description">{t("project_list.add_new_project.upload_logo_title")} <span>{t("project_list.add_new_project.upload_logo_line")}</span></div>
+          <Button className="secondary_btn" size='small' primary>{t("project_list.add_new_project.upload_logo_button")}</Button>
         </div>
 
-        <Header className="header">Project Information</Header>
+        <Header className="header">{t("project_list.add_new_project.projet_info")}</Header>
         <Form >
           <Grid columns={2}>
             <Grid.Row>
               <Grid.Column>
                 {/* <Form.Field error> */}
                 <Form.Field>
-                  <label>What's the Project Name? <span className="danger">*</span></label>
+                  <label>{t("project_list.add_new_project.project_name_label")}? <span className="danger">*</span></label>
                   <Input
-                    placeholder='Default'
+                    placeholder={t("project_list.add_new_project.default")}
                     size='small' className="full-width"
                     type="text" id="projectName"
                     value={projectName}
@@ -356,7 +358,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
 
               <Grid.Column>
                 <Form.Field>
-                  <label>Internal Project Number  <span className="danger">*</span></label>
+                  <label>{t("project_list.add_new_project.project_number_label")}  <span className="danger">*</span></label>
                   <Input
                     placeholder='Default' size='small'
                     className="full-width" type="number"
@@ -372,8 +374,8 @@ export function ModalExampleModal(props: ProjectInfoProps) {
             <Grid.Row>
               <Grid.Column>
                 <Form.Field>
-                  <label>Client <span className="danger">*</span></label>
-                  <Select placeholder='Select' className="small"
+                  <label>{t("project_list.add_new_project.client_label")} <span className="danger">*</span></label>
+                  <Select placeholder={t("common.select")} className="small"
                     options={clientCompanies}
                     value={client}
                     onChange={onprojectClient}
@@ -381,14 +383,14 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                   />
                 </Form.Field>
                 <Form.Field>
-                  <a className="anchor-color" onClick={() => setSecondOpen(true)}>+ Add New</a>
+                  <a className="anchor-color" onClick={() => setSecondOpen(true)}>+ {t("common.add_new_button")}</a>
                 </Form.Field>
               </Grid.Column>
 
               <Grid.Column>
                 <Form.Field>
-                  <label>Type of building <span className="danger">*</span></label>
-                  <Select placeholder='Select' className="small" options={buildingTypes}
+                  <label>{t("project_list.add_new_project.building_type_lable")} <span className="danger">*</span></label>
+                  <Select placeholder={t("common.select")} className="small" options={buildingTypes}
                     value={buildingType}
                     onChange={onBuildingType}
                     clearable
@@ -401,22 +403,22 @@ export function ModalExampleModal(props: ProjectInfoProps) {
             <Grid.Row>
               <Grid.Column>
                 <Form.Field>
-                  <label>Printing Company </label>
-                  <Select placeholder='Select' className="small" options={printingCompanies}
+                  <label>{t("project_list.add_new_project.printing_company")} </label>
+                  <Select placeholder={t("common.select")} className="small" options={printingCompanies}
                     value={printing}
                     onChange={onProjectPrinting}
                     clearable
                   />
                 </Form.Field>
                 <Form.Field>
-                  <a className="anchor-color" onClick={() => setSecondOpen(true)}>+ Add New</a>
+                  <a className="anchor-color" onClick={() => setSecondOpen(true)}>+ {t("common.add_new_button")}</a>
                 </Form.Field>
               </Grid.Column>
             </Grid.Row>
           </Grid>
         </Form>
 
-        <Header className="header" >Manage work type and estimated cost</Header>
+        <Header className="header" >{t("project_list.add_new_project.worktype_header")}</Header>
         <WorkType worktypes={items} workTypeData={moreWorkTypes} />
         {/*  <Table>
           <Table.Header>
@@ -436,7 +438,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <Select placeholder='Select' className="small" options={items}
+                          <Select placeholder={t("common.select")} className="small" options={items}
                             value={workType}
                             onChange={onWorkType}
                           />
@@ -489,16 +491,16 @@ export function ModalExampleModal(props: ProjectInfoProps) {
         </Table> */}
 
         <div>
-          <Header className="header" >Address Information</Header>
+          <Header className="header" >{t("project_list.add_new_project.address_info")}</Header>
         </div>
         <Form>
           <Grid columns={2}>
             <Grid.Row>
               <Grid.Column>
                 <Form.Field>
-                  <label>Address Line 1  </label>
+                  <label>{t("register.address1")}  </label>
                   <Input
-                    placeholder='Default' size='small' className="full-width" type="text"
+                    placeholder={t("project_list.add_new_project.default")} size='small' className="full-width" type="text"
                     value={adressLine1}
                     onChange={onAdressLine1}
                     maxLength={TEXT_MAXLENGTHS["address_line_1"]?.maxLength}
@@ -507,9 +509,9 @@ export function ModalExampleModal(props: ProjectInfoProps) {
               </Grid.Column>
               <Grid.Column>
                 <Form.Field>
-                  <label>Address Line 2   </label>
+                  <label>{t("register.address2")}   </label>
                   <Input
-                    placeholder='Default' size='small' className="full-width" type="text"
+                    placeholder={t("project_list.add_new_project.default")} size='small' className="full-width" type="text"
                     value={adressLine2}
                     onChange={onAdressLine2}
                     maxLength={TEXT_MAXLENGTHS["address_line_2"]?.maxLength}
@@ -522,9 +524,9 @@ export function ModalExampleModal(props: ProjectInfoProps) {
             <Grid.Row>
               <Grid.Column>
                 <Form.Field>
-                  <label>City</label>
+                  <label>{t("register.city")}</label>
                   <Input
-                    placeholder='Default' size='small' className="full-width" type="text"
+                    placeholder={t("project_list.add_new_project.default")} size='small' className="full-width" type="text"
                     value={city}
                     onChange={onCity}
                     maxLength={TEXT_MAXLENGTHS["city"]?.maxLength}
@@ -534,9 +536,9 @@ export function ModalExampleModal(props: ProjectInfoProps) {
 
               <Grid.Column>
                 <Form.Field>
-                  <label>State</label>
+                  <label>{t("project_list.add_new_project.state")}</label>
                   <Input
-                    placeholder='Default' size='small' className="full-width" type="text"
+                    placeholder={t("project_list.add_new_project.default")} size='small' className="full-width" type="text"
                     value={state}
                     onChange={onState}
                     maxLength={TEXT_MAXLENGTHS["state"]?.maxLength}
@@ -545,9 +547,9 @@ export function ModalExampleModal(props: ProjectInfoProps) {
               </Grid.Column>
               <Grid.Column>
                 <Form.Field>
-                  <label>Zip</label>
+                  <label>{t("register.zip")}</label>
                   <Input
-                    placeholder='Default' size='small' className="full-width" type="text"
+                    placeholder={t("project_list.add_new_project.default")} size='small' className="full-width" type="text"
                     value={zip}
                     onChange={onZip}
                     maxLength={TEXT_MAXLENGTHS["zip"]?.maxLength}
@@ -558,7 +560,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                 {/* <Form.Field>
                   <label>Country</label>
                   <Select
-                    placeholder='Select' className="small" options={countryOptions}
+                    placeholder={t("common.select")} className="small" options={countryOptions}
                     value={country}
                     onChange={onCountry}
                   />
@@ -571,7 +573,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
             <Grid.Row>
               <Grid.Column>
                 <Form.Field>
-                  <label>Description </label>
+                  <label>{t("common.desc")} </label>
                   {/* <TextArea placeholder='Tell us more'
                     value={description}
                     onChange={onDescription}
@@ -591,7 +593,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                         ]
                       }
                     }}
-                    placeholder="Tell us more"
+                    placeholder={t("common.tell_us_more")}
                     onChange={(content, delta, source, editor) => onDescription(content)}
                     // onKeyDown={onKeyPresDescription}
                     id="txtDescription"
@@ -611,7 +613,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
       </Tab.Pane>,
     },
     {
-      menuItem: 'People',
+      menuItem: t("project_list.add_new_project.people"),
       render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane>
     }
 
@@ -630,10 +632,10 @@ export function ModalExampleModal(props: ProjectInfoProps) {
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button size='small' className="primary"><i className="ms-Icon ms-font-xl ms-Icon--Add ms-fontColor-themePrimary"></i> Add New</Button>}
+        trigger={<Button size='small' className="primary"><i className="ms-Icon ms-font-xl ms-Icon--Add ms-fontColor-themePrimary"></i> {t("common.add_new_button")}</Button>}
         closeOnDimmerClick={false}
       >
-        <Modal.Header><h3>Add New Project </h3></Modal.Header>
+        <Modal.Header><h3>{t("project_list.add_new_project.title")} </h3></Modal.Header>
         <Modal.Content body>
 
           <div>
@@ -668,14 +670,14 @@ export function ModalExampleModal(props: ProjectInfoProps) {
           closeOnDimmerClick={false}
         >
 
-          <Modal.Header><h3>Add Company</h3></Modal.Header>
+          <Modal.Header><h3>{t("project_list.add_new_project.add_company_title")}</h3></Modal.Header>
           <Modal.Content body>
 
             <div>
               <div className="content">
-                <div className="description">Upload Client logo  <span className="danger">*</span></div>
-                <Button className="secondary_btn" size='mini' primary>Click to upload</Button>
-                <p className="paragraph">Click the upload button to upload the client logo</p>
+                <div className="description">{t("project_list.add_new_project.upload_logo_title")}  <span className="danger">*</span></div>
+                <Button className="secondary_btn" size='mini' primary>{t("project_list.add_new_project.upload_logo_button")} </Button>
+                <p className="paragraph">{t("project_list.add_new_project.upload_logo_line")}</p>
               </div>
 
               <Form>
@@ -683,7 +685,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <label>What's the Company name? <span className="danger">*</span></label>
+                        <label>{t("project_list.add_new_project.company_name_label")}? <span className="danger">*</span></label>
                         <Input placeholder='Al Hamra Company' size='small' className="full-width" type="text" />
                       </Form.Field>
                     </Grid.Column>
@@ -695,8 +697,8 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <label>Company Type </label>
-                        <Select placeholder='Select' className="small" options={companyTypeOptions}  clearable />
+                        <label>{t("project_list.add_new_project.company_type_label")} </label>
+                        <Select placeholder={t("common.select")} className="small" options={companyTypeOptions}  clearable />
 
                       </Form.Field>
                     </Grid.Column>
@@ -708,15 +710,15 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <label>Email </label>
-                        <Input placeholder='Email' size='small' className="full-width" type="text" />
+                        <label>{t("project_list.add_new_project.email")} </label>
+                        <Input placeholder={t("project_list.add_new_project.email")} size='small' className="full-width" type="text" />
                       </Form.Field>
                     </Grid.Column>
 
                     <Grid.Column>
                       <Form.Field>
-                        <label>Type  </label>
-                        <Select placeholder='Select' className="small" options={emailTypeOptions} clearable />
+                        <label>{t("common.type")}  </label>
+                        <Select placeholder={t("common.select")} className="small" options={emailTypeOptions} clearable />
 
                       </Form.Field>
                     </Grid.Column>
@@ -726,7 +728,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <a href="" className="anchor-color">+ Add New</a>
+                        <a href="" className="anchor-color">+ {t("common.add_new_button")}</a>
                       </Form.Field>
                     </Grid.Column>
 
@@ -739,20 +741,20 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                   <Grid.Row>
                     <Grid.Column >
                       <Form.Field >
-                        <label>Phone </label>
+                        <label>{t("project_list.add_new_project.phone")} </label>
                         <Grid columns={2} className="form-field">
                           <Grid.Row>
                             <Grid.Column>
                               <Form.Field>
-                                <Select placeholder='Select' className="small" options={countryOptions} clearable />
+                                <Select placeholder={t("common.select")} className="small" options={countryOptions} clearable />
                               </Form.Field>
                               <Form.Field>
-                                <a href="" className="anchor-color">+ Add New</a>
+                                <a href="" className="anchor-color">+ {t("common.add_new_button")}</a>
                               </Form.Field>
                             </Grid.Column>
                             <Grid.Column>
                               <Form.Field>
-                                <Select placeholder='Select' className="small" options={countryOptions} clearable />
+                                <Select placeholder={t("common.select")} className="small" options={countryOptions} clearable />
                               </Form.Field>
 
                             </Grid.Column>
@@ -764,8 +766,8 @@ export function ModalExampleModal(props: ProjectInfoProps) {
 
                     <Grid.Column  >
                       <Form.Field>
-                        <label>Type  </label>
-                        <Select placeholder='Select' className="small" options={phoneTypeOptions} clearable />
+                        <label>{t("common.type")}  </label>
+                        <Select placeholder={t("common.select")} className="small" options={phoneTypeOptions} clearable />
                       </Form.Field>
                     </Grid.Column>
                   </Grid.Row>
@@ -774,8 +776,8 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <label>Address Line 1</label>
-                        <Input placeholder='Address Line 1' size='small' className="full-width" type="text" />
+                        <label>{t("register.address1")}</label>
+                        <Input placeholder={t("register.address1")} size='small' className="full-width" type="text" />
                       </Form.Field>
                     </Grid.Column>
 
@@ -786,8 +788,8 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <label>Address Line 2</label>
-                        <Input placeholder='Address Line 2' size='small' className="full-width" type="text" />
+                        <label>{t("register.address2")} </label>
+                        <Input placeholder={t("register.address2")} size='small' className="full-width" type="text" />
                       </Form.Field>
                     </Grid.Column>
 
@@ -799,22 +801,22 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <label>City  </label>
-                        <Input placeholder='City' size='small' className="full-width" type="text" />
+                        <label>{t("register.city")}  </label>
+                        <Input placeholder={t("register.city")} size='small' className="full-width" type="text" />
 
                       </Form.Field>
                     </Grid.Column>
                     <Grid.Column>
                       <Form.Field>
-                        <label>State Pin </label>
-                        <Input placeholder='State Pin' size='small' className="full-width" type="text" />
+                        <label>{t("project_list.add_new_project.state_pin")} </label>
+                        <Input placeholder={t("project_list.add_new_project.state_pin")} size='small' className="full-width" type="text" />
 
                       </Form.Field>
                     </Grid.Column>
                     <Grid.Column>
                       <Form.Field>
                         {/*<label>Country  </label>
-                         <Select placeholder='Select' className="small" 
+                         <Select placeholder={t("common.select")} className="small" 
                             options={countryOptions}  
                             value={client}
                             onChange={onprojectClient}/> */}
@@ -829,13 +831,13 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                 </Grid>
               </Form>
               <Button
-                content="Add Company mk"
+                content={t("project_list.add_new_project.add_comapany_button")}
                 onClick={() => setOpen(false)}
                 positive
                 size='small' className="primary"
               />
               <Button size='small' className="icon-border" onClick={() => setSecondOpen(false)}>
-                <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply ms-fontColor-themePrimary"></i> Cancel
+                <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply ms-fontColor-themePrimary"></i> {t("common.cancel")}
               </Button>
 
 
@@ -854,13 +856,13 @@ export function ModalExampleModal(props: ProjectInfoProps) {
         </Modal>
         <Modal.Actions>
           <Button
-            content="Click to continue"
+            content={t("project_list.add_new_project.submit")}
             onClick={handleSaveProject}
             positive
             size='small' className="primary"
           />
           <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
-            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply ms-fontColor-themePrimary"></i>  Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply ms-fontColor-themePrimary"></i>  {t("common.cancel")}
           </Button>
 
         </Modal.Actions>

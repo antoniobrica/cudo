@@ -42,13 +42,15 @@ import ModalAlert from 'libs/shared-components/src/lib/components/modal/alert';
 import ModalPlanningNew from 'libs/shared-components/src/lib/components/modal/planningnew';
 import ModalViewPlanning from 'libs/shared-components/src/lib/components/modal/viewdetailsplanning';
 import ModalSession from 'libs/shared-components/src/lib/components/modal/addsession';
+import ModalEditSession from 'libs/shared-components/src/lib/components/modal/editsession';
 import ModalViewTask from 'libs/shared-components/src/lib/components/modal/taskdetails';
 import ModalTaskEdit from 'libs/shared-components/src/lib/components/modal/taskeditdetails';
 import InvitationTab from 'libs/shared-components/src/lib/components/invitation/invitation';
 import EditMileStonePopup from 'libs/shared-components/src/lib/components/modal/editmilestone';
 import ModalEditViewMilestone from 'libs/shared-components/src/lib/components/modal/viewmilestone';
 import ModalAddProtocol from 'libs/shared-components/src/lib/components/modal/addprotocol';
-import ModalEditInvitation from 'libs/shared-components/src/lib/components/modal/editInvitation';
+import ModalOldEditInvitation from 'libs/shared-components/src/lib/components/modal/editOldInvitation';
+// import ModalEditInvitation from 'libs/shared-components/src/lib/components/modal/editinvitation';
 
 import ModalAddInvitation from 'libs/shared-components/src/lib/components/modal/addinvitaton';
 
@@ -108,13 +110,15 @@ export function App() {
         <ModalPlanningNew></ModalPlanningNew><br />
         <ModalViewPlanning></ModalViewPlanning><br />
         <ModalSession></ModalSession><br />
+        <ModalEditSession></ModalEditSession><br />
         <ModalViewTask></ModalViewTask><br />
         <ModalTaskEdit></ModalTaskEdit><br />
         <InvitationTab></InvitationTab><br />
         <EditMileStonePopup></EditMileStonePopup><br />
         <ModalEditViewMilestone></ModalEditViewMilestone><br />
         <ModalAddProtocol></ModalAddProtocol><br />
-        <ModalEditInvitation></ModalEditInvitation><br />
+        <ModalOldEditInvitation></ModalOldEditInvitation><br />
+        {/* <ModalEditInvitation></ModalEditInvitation><br /> */}
         <ModalAddInvitation></ModalAddInvitation><br />
         <MeetingTab></MeetingTab><br />
         <FilterPopup></FilterPopup><br />

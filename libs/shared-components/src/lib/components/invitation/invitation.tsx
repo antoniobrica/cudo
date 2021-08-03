@@ -1,21 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import moment from 'moment'
 import './../../../assets/style/index.scss'
-import { Tab, Dropdown, Button, Icon } from 'semantic-ui-react';
+import { Tab, Dropdown, Button, Icon, Modal, Grid, Form} from 'semantic-ui-react';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 /* eslint-disable-next-line */
-export interface ViewInvitationProps {
+export interface InvitationTabProps {
   sessionId?
   invitations?
   addInvitationClick?
   sessionDetail?
+  selectedInvitationId?
+  viewInvitation?
+  editInvitation?
+  deleteInvitation?
 }
 
-export function InvitationTab(props: ViewInvitationProps) {
-
+export function InvitationTab(props: InvitationTabProps) {
+  
   const onClickAddInvitation = () => {
     props.addInvitationClick(true)
+  }
+  
+  const onClickViewInvitation = (meetingId) => {
+    props.viewInvitation(meetingId)
+  }
+  
+  const onClickEditInvitation = (meetingId) => {
+    props.editInvitation(meetingId)
+  }
+
+  const onClickDeleteInvitation = (meetingId) => {
+    props.deleteInvitation(meetingId)
   }
 
   const panes = [
@@ -85,12 +101,9 @@ export function InvitationTab(props: ViewInvitationProps) {
                             <span className="dropdown-action">
                               <Dropdown icon='ellipsis horizontal' pointing='right'>
                                 <Dropdown.Menu>
-                                  <Dropdown.Item icon="eye" text="View detail" />
-                                  <Dropdown.Item icon="pencil" text="Edit" />
-                                  <Dropdown.Item
-                                    icon="trash alternate outline"
-                                    text="Delete"
-                                  />
+                                  <Dropdown.Item icon="eye" text="View detail" onClick={() => onClickViewInvitation(meetingId)} />
+                                  <Dropdown.Item icon="pencil" text="Edit" onClick={() => onClickEditInvitation(meetingId)} />
+                                  <Dropdown.Item icon="trash alternate outline" text="Delete" onClick={() => onClickDeleteInvitation(meetingId)} />
                                 </Dropdown.Menu>
                               </Dropdown>
                             </span>
@@ -102,63 +115,7 @@ export function InvitationTab(props: ViewInvitationProps) {
                 </div>
               )
             })
-            }
-            {/* <div className="card1 card-custom gutter-b">
-              <div
-                className="card-body d-flex align-items-center justify-content-between flex-wrap invitation-list-card">
-                <div className="d-flex align-items-center invitaiton-info-left">
-                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/calendar.png`}  />
-                  <div className="invitation-date-time">
-                    <div className="timing-details">
-                      <span className="invitation-date-time">
-                        10 Aug, 2020
-                      </span>
-                      <span className="invitaiton-time-left">
-                        <i className="ms-Icon ms-Icon--Clock" aria-hidden="true"></i>
-                        11:00 AM - 11:45 AM
-                      </span>
-                      <span className="invitation-minutes">
-                        45 min
-                      </span>
-                      <a href="" className="protocol-text">
-                        {' '}
-                        <i className="ms-Icon ms-Icon--Link" aria-hidden="true"></i>
-                        Protocol here{' '}
-                      </a>
-                    </div>
-                    <div className="invitation-title">
-                      This is Invitation title
-                    </div>
-                  </div>
-                </div>
-
-                <div className="session-actions-con">
-                  <div className="session-attach-dropdown tasks-action-area">
-                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />
-                    <span className="session-attachements">
-                      <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>
-                      3
-                    </span>
-                    <div className="symbol-group symbol-hover py-2" >
-                      <div className="symbol symbol-30 d-flex">
-                        <span className="dropdown-action">
-                          <Dropdown icon='ellipsis horizontal' pointing='right'>
-                            <Dropdown.Menu>
-                              <Dropdown.Item icon="eye" text="View detail" />
-                              <Dropdown.Item icon="pencil" text="Edit" />
-                              <Dropdown.Item
-                                icon="trash alternate outline"
-                                text="Delete"
-                              />
-                            </Dropdown.Menu>
-                          </Dropdown>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> */}
+            }          
 
           </div>
         </Tab.Pane>
@@ -180,8 +137,7 @@ export function InvitationTab(props: ViewInvitationProps) {
               <div
                 className="card-body d-flex align-items-center justify-content-between flex-wrap invitation-list-card">
                 <div className="d-flex align-items-center invitaiton-info-left">
-                  {/* <Icon name="newspaper outline" /> */}
-                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/calendar.png`} />
+                  <Icon name="newspaper outline" />
                   <div className="invitation-date-time">
                     <div className="timing-details">
                       <span className="invitation-date-time">
@@ -239,9 +195,7 @@ export function InvitationTab(props: ViewInvitationProps) {
               <div
                 className="card-body d-flex align-items-center justify-content-between flex-wrap invitation-list-card">
                 <div className="d-flex align-items-center invitaiton-info-left">
-                  {/* <Icon name="newspaper outline" /> */}
-                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/calendar.png`} />
-
+                  <Icon name="newspaper outline" />
                   <div className="invitation-date-time">
                     <div className="timing-details">
                       <span className="invitation-date-time">
@@ -301,25 +255,25 @@ export function InvitationTab(props: ViewInvitationProps) {
   ];
 
   return (
-    <div className="tabs-main-info-container invitation-tab">
-      <div className="invitation-header">
-        <i className="ms-Icon ms-Icon--Back" aria-hidden="true"></i>{' '}
-        <span className="">Invitation</span> /{' '}
-        <span className="preliminary-font">Protocol</span>
-        <br />{' '}
-        <span className="invitation-sub-heading">
-          {/* <strong>Bulider Meeting -</strong>Project begining sessions */}
-          <strong>{props?.sessionDetail?.SessionByID?.meetingCategoryTitle} - </strong>{props?.sessionDetail?.SessionByID?.sessionTitle}
-        </span>
+    <div>      
+      <div className="tabs-main-info-container invitation-tab">
+        <div className="invitation-header">
+          <i className="ms-Icon ms-Icon--Back" aria-hidden="true"></i>{' '}
+          <span className="">Invitation</span> /{' '}
+          <span className="preliminary-font">Protocol</span>
+          <br />{' '}
+          <span className="invitation-sub-heading">
+            {/* <strong>Bulider Meeting -</strong>Project begining sessions */}
+            <strong>{props?.sessionDetail?.SessionByID?.meetingCategoryTitle} - </strong>{props?.sessionDetail?.SessionByID?.sessionTitle}
+          </span>
+        </div>
 
-
+        <Tab
+          className="ui-tabs work-tabs invitation-listing"
+          menu={{ secondary: true, pointing: true }}
+          panes={panes}
+        />
       </div>
-
-      <Tab
-        className="ui-tabs work-tabs invitation-listing"
-        menu={{ secondary: true, pointing: true }}
-        panes={panes}
-      />
     </div>
   );
 }

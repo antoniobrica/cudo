@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Button,
   Header,
@@ -6,8 +7,10 @@ import {
   Input,
   Form,
   Grid,
+  Dropdown,
   Select,
   TextArea,
+  FormButton,
 } from 'semantic-ui-react';
 import LoaderPage from '../loader/loader';
 // import SampleModal from './sample-modal';
@@ -25,6 +28,7 @@ export function ModalViewPlanning(props: PlanningProps) {
   ];
 
   const [open, setOpen] = React.useState(false);
+  const {t} = useTranslation()
   React.useEffect(() => {
     console.log('loading', props.loading);
     if (props.openPlanningDetail) {
@@ -41,20 +45,33 @@ export function ModalViewPlanning(props: PlanningProps) {
   if (props.loading) return <LoaderPage />;
   return (
     <div id="navbar">
-      <Modal style={{height:'650px'}}
-        className="modal_media"
+      <Modal className="modal_media right-side--fixed-modal view-milestone-modal"
+        closeIcon
         onClose={() => setOpen(false)}
         onOpen={openf}
         open={open}
-        trigger={
-          <Button size="mini" className="grey-btn">
-            View Milestone
-          </Button>
-        }
-        closeOnDimmerClick={false}
-      >
+        // trigger={
+        //   <Button size="mini" className="grey-btn">
+        //     {t("project_tab_menu.planning.view_milestone")}
+        //   </Button>
+        // }
+        closeOnDimmerClick={false}>
         <Modal.Header>
-          <h3>View Milestone Details </h3>
+          <h3 className="header-w-icon d-flex align-item-center"><i className="ms-Icon ms-Icon--Completed" aria-hidden="true"></i> {t("project_tab_menu.planning.view_milestone_details")}
+            <div className="symbol symbol-30 d-flex">
+              <span className="dropdown-action">
+                <Dropdown icon='ellipsis horizontal' floating labeled>
+                  <Dropdown.Menu className="dropdowncomplete">
+                    <Dropdown.Item
+                      icon="pencil" text="Edit" />
+                    <Dropdown.Item
+                      icon="trash alternate outline"
+                      text="Delete" />
+                  </Dropdown.Menu>
+                </Dropdown>
+              </span>
+            </div>
+          </h3>
         </Modal.Header>
         <Modal.Content body>
           <div>
@@ -62,14 +79,14 @@ export function ModalViewPlanning(props: PlanningProps) {
               <Grid columns={2}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
-                      <label>Milestone Title</label>
+                    <Form.Field className="filled-fields">
+                      <label>{t("project_tab_menu.planning.milestone_title")}</label>
                       <span>{props?.milestoneDataById?.MileStoneByID.milestoneTitle}</span>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
-                    <Form.Field>
-                      <label>Due Date</label>
+                    <Form.Field className="filled-fields">
+                      <label>{t("common.due_date")}</label>
                       <span>{props?.milestoneDataById?.MileStoneByID.dueDate}</span>
                     </Form.Field>
                   </Grid.Column>
@@ -79,8 +96,8 @@ export function ModalViewPlanning(props: PlanningProps) {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
-                      <label>Description </label>
+                    <Form.Field className="filled-fields">
+                      <label>{t("common.desc")} </label>
                       <span>{props?.milestoneDataById?.MileStoneByID.description}
                       </span>
                     </Form.Field>
@@ -90,8 +107,8 @@ export function ModalViewPlanning(props: PlanningProps) {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
-                      <label>Associate with work type</label>
+                    <Form.Field className="filled-fields">
+                      <label>{t("project_tab_menu.task.work_type")}</label>
                       <span>{props?.milestoneDataById?.MileStoneByID.worktypeName} </span>
                     </Form.Field>
                   </Grid.Column>
@@ -100,8 +117,8 @@ export function ModalViewPlanning(props: PlanningProps) {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
-                      <label>Phase type</label>
+                    <Form.Field className="filled-fields">
+                      <label>{t("project_tab_menu.planning.phase_type")}</label>
                       <span>{props?.milestoneDataById?.MileStoneByID.phaseName} </span>
                     </Form.Field>
                   </Grid.Column>
@@ -110,9 +127,9 @@ export function ModalViewPlanning(props: PlanningProps) {
             </Form>
           </div>
         </Modal.Content>
-        <Modal.Actions>
+        {/* <Modal.Actions>
           <Button
-            content="Ok"
+            content={t("common.ok")}
             onClick={cancel}
             positive
             size="small"
@@ -123,9 +140,9 @@ export function ModalViewPlanning(props: PlanningProps) {
             className="icon-border"
             onClick={cancel}
           >
-            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> {t("common.cancel")}
           </Button>
-        </Modal.Actions>
+        </Modal.Actions> */}
       </Modal>
     </div>
   );

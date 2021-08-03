@@ -20,6 +20,7 @@ import { MilestoneMutation, IMileStones } from '../../interfaces/task'
 import PlanDelete from './delete-task';
 import moment, { calendarFormat } from 'moment';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { useTranslation } from 'react-i18next';
 
 
 export interface PlanningProps {
@@ -41,6 +42,7 @@ export function Planning(props: PlanningProps) {
   const [milestoneByID, setmilestoneByID] = React.useState({});
   const { loading, error, data } = useMilestonesQuery(GET_MILESTONES);
   // const [addPlan] = useMilestoneMutation(ADD_MILESTONE);
+  const {t} = useTranslation()
   enum Status {
     INPROGRESS = 'INPROGRESS',
     COMPLETED = 'COMPLETED',
@@ -99,9 +101,9 @@ export function Planning(props: PlanningProps) {
   const update = (data) => {
     setPlanData(data)
     if (data.status === 'COMPLETED') {
-      setMilestoneStatus('Re-open');
+      setMilestoneStatus(t("project_tab_menu.task.re_open"));
     } else {
-      setMilestoneStatus('Mark as Complete');
+      setMilestoneStatus(t("project_tab_menu.mark_completed"));
     }
     setUpdateStatus(data.milestoneID)
     setOpenUpdate(true)
@@ -278,15 +280,15 @@ export function Planning(props: PlanningProps) {
         </div>
         : null}
       <div className="tabs-main-info-container planning-outer-con">
-        <h3>Planning
+        <h3>{t("project_tab_menu.planning.title")}
           <Button size="small" className="primary" onClick={openAdd}>
-            <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> Add New
+            <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> {t("common.add_new_button")}
           </Button>
         </h3>
 
         <div className="active-milestone">
           <h4 className="headingactive">
-            Active Milestone{' '}
+          {t("project_tab_menu.planning.active_milestone")}
           </h4>
           <Form>
             {/* <Grid columns={4}>
@@ -300,9 +302,9 @@ export function Planning(props: PlanningProps) {
                             <div className="description">
                               <span className="time">{new Date(plan.dueDate).toDateString()}</span>
                               <span className="summary">
-                                {' '}
+                                
                                 <a onClick={() => update(plan)}>
-                                  {' '}
+                                  
                                   {plan.status == "INPROGRESS" ?
                                     <i
                                       className="ms-Icon ms-Icon--Completed mr-10"
@@ -324,7 +326,7 @@ export function Planning(props: PlanningProps) {
                           <div className="content">
                             <div className="data-built">
                               <p>
-                                {' '}
+                                
                                 {plan.description}
                               </p>
                             </div>
@@ -387,7 +389,7 @@ export function Planning(props: PlanningProps) {
                       <div className="date-status">
                         <label>{new Date(plan.dueDate).toDateString()}</label>
                         <a onClick={() => update(plan)}>
-                          {' '}
+                          
                           {plan.status == "INPROGRESS" ?
                             <i className="ms-Icon ms-Icon--Completed" aria-hidden="true"></i>
                             : <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/green_tick.png`} className=" mr-2 mr-10 " />
@@ -402,8 +404,8 @@ export function Planning(props: PlanningProps) {
                       </div>
 
                       <div className="milestone-details">
-                        <p>Project/Work type <span>{plan.worktypeName}</span></p>
-                        <p>Phase <span>{plan.phaseName}</span></p>
+                        <p>{t("project_tab_menu.task.project_worktype")} <span>{plan.worktypeName}</span></p>
+                        <p>{t("common.phase")} <span>{plan.phaseName}</span></p>
                       </div>
 
                       <div className="how-many-days">
@@ -416,15 +418,15 @@ export function Planning(props: PlanningProps) {
                                   <Dropdown.Item
                                     onClick={() => viewDetail(plan.milestoneID)}
                                     icon="eye"
-                                    text="View detail"
+                                    text={t("common.view_details")}
                                   />
                                   <Dropdown.Item
                                     onClick={() => edittPlan(plan)}
-                                    icon="pencil" text="Edit" />
+                                    icon="pencil" text={t("common.edit")} />
                                   <Dropdown.Item
                                     onClick={() => deletePlan(plan)}
                                     icon="trash alternate outline"
-                                    text="Delete"
+                                    text={t("common.delete")}
                                   />
                                 </Dropdown.Menu>
                               </Dropdown>
@@ -523,6 +525,10 @@ export function Planning(props: PlanningProps) {
                   </div>
                 </li> */}
               </ul>
+
+              <div className="compltete-phase">
+                <a href=""><i className="ms-Icon ms-Icon--Completed" aria-hidden="true"></i> <span>Complete this phase</span></a>
+              </div>
             </div>
 
 

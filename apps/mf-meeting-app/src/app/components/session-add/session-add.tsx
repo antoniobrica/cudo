@@ -1,18 +1,18 @@
-import React from 'react';
-import ModalSession from 'libs/shared-components/src/lib/components/modal/addsession';
-import './add-session.module.scss';
+import React, { useEffect } from 'react';
+import './session-add.module.scss';
 import { useHistory } from 'react-router';
 import axios from 'axios';
 import { useMutation } from '@apollo/client';
-import { ADD_SESSION, GET_SESSIONS } from '../graphql/graphql'
-import { ISessions } from '../interfaces/session';
-import { ProjectWorktypes } from '@cudo/mf-project-lib';
+import { ADD_SESSION, GET_SESSIONS } from '../../graphql/graphql'
+import { ISessions } from '../../interfaces/session';
+import { ModalAddSession } from '@cudo/shared-components'
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 /* eslint-disable-next-line */
 export interface AddSessionProps {
-  openAddSession
-  cancel
+  projectId?
+  openAddSession?
+  cancel?
 }
 
 export function AddSession(props: AddSessionProps) {
@@ -20,8 +20,8 @@ export function AddSession(props: AddSessionProps) {
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
-  
-  React.useEffect(() => {
+
+  useEffect(() => {
     if (referenceID) {
       getWorkType(referenceID)
     }
@@ -30,7 +30,7 @@ export function AddSession(props: AddSessionProps) {
   const [addSession, { data }] = useMutation(ADD_SESSION,
     {
       refetchQueries: [
-        { query: GET_SESSIONS }
+        { query: GET_SESSIONS, variables: { projectId: props.projectId } }
       ]
     }
   )
@@ -55,7 +55,7 @@ export function AddSession(props: AddSessionProps) {
  }`;
 
   const getWorkType = (referenceID) => {
-    
+
     return axios.post(
       MS_SERVICE_URL['ms_project'].url,
       {
@@ -72,9 +72,10 @@ export function AddSession(props: AddSessionProps) {
   }
 
   const createSession = (data) => {
-    
+
     addSession({
       variables: {
+        projectId: props?.projectId,
         sessionTitle: data.sessionTitle,
         worktypeID: data.worktypeID,
         worktypeTitle: data.worktypeTitle,
@@ -91,22 +92,23 @@ export function AddSession(props: AddSessionProps) {
         cache,
         data
       ) => {
-        const cacheData = cache.readQuery({ query: GET_SESSIONS }) as ISessions;
-        
+        const cacheData = cache.readQuery({ query: GET_SESSIONS, variables: { projectId: props.projectId } }) as ISessions;
+
         cache.writeQuery({
           query: GET_SESSIONS,
+          variables: { projectId: props.projectId },
           data: {
-             getSessions: [...cacheData.paginatedSession.results, data]
+            getSessions: [...cacheData.paginatedSession.results, data]
           }
         });
-        
+
       }
     });
 
   }
   return (
     <div>
-      <ModalSession openAddSession={props.openAddSession} cancel={props.cancel} workTypes={workTypes} createSession={createSession} />
+      <ModalAddSession openAddSession={props.openAddSession} cancel={props.cancel} workTypes={workTypes} createSession={createSession} />
     </div>
   );
 }

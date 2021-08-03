@@ -4,6 +4,7 @@ import './file-structure.module.scss';
 import { Form, Select } from 'semantic-ui-react';
 import { GET_FILE_STRUCTURE } from '../../graphql/graphql';
 import { useFileStructureQuery } from '../../services/useRequest';
+import { useTranslation } from 'react-i18next';
 
 /* eslint-disable-next-line */
 export interface FileStructureProps {
@@ -14,7 +15,7 @@ export interface FileStructureProps {
 export function FileStructure(props: FileStructureProps) {
   const [items, setItems] = React.useState([])
   const [fileStructure, setFileStructureTitle] = React.useState("")
-
+  const {t} = useTranslation()
   const { loading, error, data } = useFileStructureQuery(GET_FILE_STRUCTURE);
   React.useEffect(() => {
     if (props.structureTitle) {
@@ -42,8 +43,8 @@ export function FileStructure(props: FileStructureProps) {
 
   return (
     <Form.Field>
-      <label>File Structure</label>
-      <Select placeholder='Select' className="small"
+      <label>{t("project_tab_menu.files.file_structure")}</label>
+      <Select placeholder={t("common.select")} className="small"
         options={items}
         value={fileStructure}
         onChange={onFile}
