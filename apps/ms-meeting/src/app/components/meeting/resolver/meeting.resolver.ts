@@ -27,7 +27,12 @@ export class MeetingResolver {
     async createMeeting(
         @Args('meetingDetails') createInput: MeetingDetailsInput,
     ) {
-        return this.meetingService.addMeeting(createInput);
+        console.log('---resolver addMeeting custom message----')
+        try {
+            return this.meetingService.addMeeting(createInput);
+        } catch (error) {
+            return { error }
+        }
     }
 
     @Query(() => PaginationMeetingModel, { nullable: true })

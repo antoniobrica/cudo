@@ -31,17 +31,18 @@ export class MeetingService {
   ) { }
 
   public async addMeeting(createInput: MeetingDetailsInput): Promise<MeetingEntity> {
-    // console.log('---check custom validation message--addMeeting--')
-
+    console.log('---service addMeeting custom message----')
+    throw new HttpException('test custom error', HttpStatus.INTERNAL_SERVER_ERROR)
+    console.log('---check custom validation message--addMeeting--')
     try {
       const { meetingBasics, members, meetingFiles } = createInput;
       const meetingDetails = new MeetingEntity({ ...meetingBasics });
-      // const isExist = await this.meetingRepository.count({ where: { meetingTitle: meetingBasics.meetingTitle } })
-      // if (isExist > 0) {
-      //   throw new HttpException("Record already exist with this title", HttpStatus.FOUND)
-      //   // throw new BadRequestException("Record already exist with this title")
+      const isExist = await this.meetingRepository.count({ where: { meetingTitle: meetingBasics.meetingTitle } })
+      if (isExist > 0) {
+        throw new HttpException("Record already exist with this title", HttpStatus.FOUND)
+        // throw new BadRequestException("Record already exist with this title")
 
-      // }
+      }
       // console.log('--after-check custom validation message--')
 
       if (members) {
