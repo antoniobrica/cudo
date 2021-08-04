@@ -56,7 +56,7 @@ export function Admins(props: AdminsProps) {
     props.parentAdminsSelect(peopleArr)
   }
   return (
-    <Form.Field>
+    <>
      
       <label>{t("project_tab_menu.meeting.admin")}<span className="danger">*</span></label>
 
@@ -73,7 +73,7 @@ export function Admins(props: AdminsProps) {
         error={props.error}
       />
 
-    </Form.Field>
+    </>
   );
 }
 

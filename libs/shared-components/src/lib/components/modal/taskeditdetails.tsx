@@ -40,10 +40,10 @@ interface AlertProps {
 }
 
 interface TaskErrors {
-  titleError?:string,
-  workTypeError?:string,
-  assigneeError?:string,
-  dateError?:string
+  titleError?: string,
+  workTypeError?: string,
+  assigneeError?: string,
+  dateError?: string
 }
 
 export const ModalTaskEdit = (props: AlertProps) => {
@@ -276,18 +276,18 @@ export const ModalTaskEdit = (props: AlertProps) => {
 
   // validate errors
   const validation = () => {
-    const foundErrors:TaskErrors= {}
-    if(!taskTitle){
-      foundErrors.titleError=t("common.errors.title_error")
+    const foundErrors: TaskErrors = {}
+    if (!taskTitle) {
+      foundErrors.titleError = t("common.errors.title_error")
     }
-    if(!workTypeID){
-      foundErrors.workTypeError=t("common.errors.worktype_error")
+    if (!workTypeID) {
+      foundErrors.workTypeError = t("common.errors.worktype_error")
     }
-    if(!assignees.length){
-      foundErrors.assigneeError=t("common.errors.assignee_error")
+    if (!assignees.length) {
+      foundErrors.assigneeError = t("common.errors.assignee_error")
     }
-    if(startDate>endDate){
-      foundErrors.dateError=t("common.errors.date_error")
+    if (startDate > endDate) {
+      foundErrors.dateError = t("common.errors.date_error")
     }
     return foundErrors
   }
@@ -420,7 +420,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         value={workTypeData}
                         options={workType}
                         onChange={onMworkType}
-                        error={errors?.workTypeError && !workTypeID }
+                        error={errors?.workTypeError && !workTypeID}
                       />
                       {errors?.workTypeError && !workTypeID ? <span className="error-message">{errors.workTypeError}</span> : null}
                     </Form.Field>
@@ -439,7 +439,10 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         options={countryOptions}
                       />
                     </Form.Field> */}
-                    <PhaseIndex phaseName={phaseName} parentPhaseSelect={onsetPhasesID} />
+                    <Form.Field>
+                      <label>{t("common.select_phase")} </label>
+                      <PhaseIndex phaseName={phaseName} parentPhaseSelect={onsetPhasesID} />
+                    </Form.Field>
                   </Grid.Column>
 
                   <Grid.Column>
@@ -522,9 +525,9 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         type="date"
                         value={startDate}
                         onChange={onStartDateChange}
-                        error={errors?.dateError && (startDate>endDate)}
-                        />
-                        
+                        error={errors?.dateError && (startDate > endDate)}
+                      />
+
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
@@ -537,9 +540,9 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         type="date"
                         value={endDate}
                         onChange={onEndDateChange}
-                        error={errors?.dateError && (startDate>endDate)}
-                        />
-                        
+                        error={errors?.dateError && (startDate > endDate)}
+                      />
+
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
@@ -548,11 +551,11 @@ export const ModalTaskEdit = (props: AlertProps) => {
                       <Input placeholder={t("project_tab_menu.task.enter_days")} className="small"
                         value={estimatedDays}
                         onChange={onsetEstimatedDays}
-                        error={errors?.dateError && (startDate>endDate)}
+                        error={errors?.dateError && (startDate > endDate)}
                       />
                     </Form.Field>
                   </Grid.Column>
-                  {errors?.dateError && (startDate>endDate) ? <span className="error-message">{errors.dateError}</span> : null}
+                  {errors?.dateError && (startDate > endDate) ? <span className="error-message">{errors.dateError}</span> : null}
                 </Grid.Row>
                 <Grid.Row></Grid.Row>
               </Grid>
