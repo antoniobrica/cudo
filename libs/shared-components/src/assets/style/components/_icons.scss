@@ -1,0 +1,17 @@
+// semantic icons to fabric icons
+i.icon.add {
+  display: inline-block;
+  font-family: FabricMDL2Icons;
+  font-style: normal;
+  &:before {
+    content: "\E710";
+  }
+}
+i.icon.ellipsis.horizontal {
+  display: inline-block;
+  font-family: FabricMDL2Icons;
+  font-style: normal;
+  &:before {
+    content: "\E712";
+  }
+}

@@ -45,11 +45,11 @@ export function ToggleButton(props: BtnProps) {
       >
         <Dropdown.Menu>
           <Dropdown.Item key="add" onClick={changeAdd}>
-            <Icon name='add' className='left floated' />
+            <i className="ms-Icon ms-Icon--Add" aria-hidden="true"></i>
             {t("project_tab_menu.task.title")}
           </Dropdown.Item>
           <Dropdown.Item key="pin" onClick={changePin}>
-            <Icon name='pin' className='left floated' />
+          <i className="ms-Icon ms-Icon--Pinned" aria-hidden="true"></i>
             {t("project_tab_menu.task.task_from_file")}
           </Dropdown.Item>
         </Dropdown.Menu>
