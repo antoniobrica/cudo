@@ -16,7 +16,6 @@ export interface PhaseProps {
 export function Phase(props: PhaseProps) {
   const [items, setItems] = React.useState([])
   const [phase, setPhase] = React.useState("")
-  console.log("%%%%%%%%%%%%%%%",props.error)
 
   const { loading, error, data } = usePhaseQuery(GET_PHASE);
   const {t} = useTranslation()
@@ -52,7 +51,7 @@ export function Phase(props: PhaseProps) {
         value={phase}
         onChange={onPhase}
         clearable
-        error={props.error}
+        error={props.error} 
       />
       {props.error && <span className="error-message">{t("common.errors.phase_error")}</span>}
 
