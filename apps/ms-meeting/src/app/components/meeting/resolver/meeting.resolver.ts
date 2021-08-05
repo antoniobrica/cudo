@@ -16,7 +16,6 @@ import { MeetingDetailsInput } from '../dto/input/meeting-details.input';
 import { MeetingModel } from '../model/meeting.model';
 import { MeetingService } from '../service/meeting.service';
 
-
 @Resolver(() => MeetingModel)
 export class MeetingResolver {
 
@@ -27,12 +26,7 @@ export class MeetingResolver {
     async createMeeting(
         @Args('meetingDetails') createInput: MeetingDetailsInput,
     ) {
-        console.log('---resolver addMeeting custom message----')
-        try {
-            return this.meetingService.addMeeting(createInput);
-        } catch (error) {
-            return { error }
-        }
+        return this.meetingService.addMeeting(createInput);        
     }
 
     @Query(() => PaginationMeetingModel, { nullable: true })
