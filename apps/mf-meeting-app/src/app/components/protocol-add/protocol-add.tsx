@@ -29,7 +29,8 @@ export function ProtocolAdd(props: ProtocolAddProps) {
         {
             refetchQueries: [
                 {
-                    query: GET_PROTOCOLS
+                    query: GET_PROTOCOLS,
+                    variables: { sessionId: props?.sessionId }
                 }
             ]
         }
@@ -57,14 +58,16 @@ export function ProtocolAdd(props: ProtocolAddProps) {
                 data
             ) => {
                 const cacheData = cache.readQuery({
-                    query: GET_PROTOCOLS
+                    query: GET_PROTOCOLS,
+                    variables: { sessionId: props?.sessionId }
                 }) as IProtocols;
 
                 cache.writeQuery({
                     query: GET_PROTOCOLS,
                     data: {
                         getProtocols:[...cacheData.getProtocolList.results,data]
-                    }
+                    },
+                    variables: { sessionId: props?.sessionId }
                 })
             }
         })

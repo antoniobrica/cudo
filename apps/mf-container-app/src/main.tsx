@@ -29,7 +29,7 @@ const store = configureStore({
 ReactDOM.render(
   <Suspense fallback={<LazyLoading />}>
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter forceRefresh={true} >
         <App />
       </BrowserRouter>
     </Provider>

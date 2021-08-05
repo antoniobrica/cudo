@@ -4,7 +4,10 @@ import { Repository } from "typeorm";
 import MeetingEntity from "../../../entities/meeting.entity";
 import ProtocolFileEntity from "../../../entities/protocol-file.entity";
 import ProtocolEntity from "../../../entities/protocol.entity";
-import { MeetingService } from "../../meeting/service/meeting.service";
+import SortFilterParam from "../../../utils/types/sortParam";
+import StatusFilterParam from "../../../utils/types/status.filter";
+import { Pagination, PaginationOptionsInterface } from "../../paginate";
+import ProtocolFilterParam from "../dto/args/protocol.filter";
 import { ProtocolDeatilsInput } from "../dto/input/protocol-details.input";
 
 @Injectable()
@@ -56,10 +59,35 @@ export class ProtocolService {
   }
 
   // find all created Protcols
-  public async findProtocolList():Promise<ProtocolEntity[]> {
-    const result = await this.protocolRepository.find()
-    console.log(result)
-    return result
+  public async findProtocolList(
+    options?: PaginationOptionsInterface,
+    protocolFilter?: ProtocolFilterParam,
+    statusFilter?:StatusFilterParam,
+    sortFilter?:SortFilterParam
+  ):Promise<Pagination<ProtocolEntity>> {
+
+    const filterByStatus = statusFilter ? {status: statusFilter.status} : {}
+    const sorting = sortFilter?.sortBy === "DESC" ? {order: {createdAt: "DESC"}} : {}
+    const paginationLimitSkip = {take: options.limit, skip: options.page * options.limit}
+
+    const [results, total] = await this.protocolRepository.findAndCount({
+      where: {
+        ...protocolFilter,
+        isDeleted: false,
+        ...filterByStatus,
+        status: statusFilter.status,
+        ...sorting
+      },
+      ...paginationLimitSkip,
+      relations: ['protocolFiles','meetings']
+    }
+    );
+    
+    const pagination = new Pagination({
+      results,
+      total
+    })
+    return pagination
   }
 
   // get protocol by ID

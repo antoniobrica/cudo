@@ -46,7 +46,7 @@ export function UploadNewVersion(props: AlertProps) {
   const [parentUploadedFileID, setparentUploadedFileID] = React.useState('');
   const [files, setFileList] = React.useState<any>([]);
   const [people, setAsignis] = React.useState([]);
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const projectOptions = [
     { key: 'ew', value: 'ew', text: 'Electrical Work' },
     { key: 'hv', value: 'hv', text: 'HVAC Work' },
@@ -274,12 +274,10 @@ export function UploadNewVersion(props: AlertProps) {
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
-                    {/* <Form.Field>
-                      <label>Phase</label>
-                      <Select clearable placeholder='Select' className="small" options={countryOptions} />
-
-                    </Form.Field> */}
-                    <PhaseIndex phaseName={phaseName} parentPhaseSelect={onsetPhasesID} />
+                    <Form.Field>
+                      <label>{t("common.phase")} </label>
+                      <PhaseIndex phaseName={phaseName} parentPhaseSelect={onsetPhasesID} />
+                    </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
@@ -339,7 +337,7 @@ export function UploadNewVersion(props: AlertProps) {
 
                   <Grid.Column>
                     <Form.Field>
-                      <Checkbox label={t("common.specific_access")}  className="small" />
+                      <Checkbox label={t("common.specific_access")} className="small" />
 
                     </Form.Field>
                   </Grid.Column>
@@ -354,13 +352,13 @@ export function UploadNewVersion(props: AlertProps) {
         </Modal.Content>
         <Modal.Actions>
           <Button
-            content={t("common.submit")} 
+            content={t("common.submit")}
             onClick={submit}
             positive
             size='small' className="primary"
           />
           <Button size='small' className="icon-border" onClick={cancel}>
-            X  {t("common.cancel")} 
+            X  {t("common.cancel")}
           </Button>
 
         </Modal.Actions>
