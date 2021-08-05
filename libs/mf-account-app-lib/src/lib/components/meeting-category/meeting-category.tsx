@@ -56,7 +56,7 @@ export function MeetingCategory(props: MeetingCategoryProps) {
     props.parentCatagorySelect(catagory)
   }
   return (
-    <Form.Field>
+    <>
       <label>{t("project_tab_menu.meeting.category")}<span className="danger">*</span></label>
       <Select
         placeholder={t("common.select")}
@@ -67,7 +67,7 @@ export function MeetingCategory(props: MeetingCategoryProps) {
         clearable
         error={props?.error}
       />
-    </Form.Field>
+    </>
   );
 }
 

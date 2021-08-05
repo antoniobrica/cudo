@@ -55,7 +55,7 @@ export function SessionInvitation(props: SessionInvitationProps) {
     props.parentInvitationSelect(protocol)
   }
   return (
-    <Form.Field>
+    <>
       <label>{t("project_tab_menu.meeting.template_for_invitation")}<span className="danger">*</span></label>
       <Select
         placeholder={t("common.select")}
@@ -66,7 +66,7 @@ export function SessionInvitation(props: SessionInvitationProps) {
         clearable
         error={props?.error}
       />
-    </Form.Field>
+    </>
   );
 }
 

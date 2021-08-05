@@ -356,7 +356,10 @@ export function FileUpload(props: FileProps) {
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
+                  <Form.Field>
+                      <label>{t("common.phase")} </label>
                     <PhaseIndex parentPhaseSelect={onsetPhasesID} />
+                    </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
               </Grid> */}

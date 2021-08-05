@@ -51,7 +51,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   const [assignees, setAssignees] = React.useState<any>([]);
   const [followers, setfollowers] = React.useState<any>([]);
   const history = useHistory();
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
 
@@ -330,7 +330,10 @@ export function CreateFileTask(props: CreateFileTaskProps) {
           <Grid columns={2}>
             <Grid.Row>
               <Grid.Column>
-                <PhaseIndex parentPhaseSelect={onsetPhasesID} />
+                <Form.Field>
+                  <label>{t("common.phase")} </label>
+                  <PhaseIndex parentPhaseSelect={onsetPhasesID} />
+                </Form.Field>
               </Grid.Column>
               <Grid.Column>
                 <BkpsIndex bkp={BKPID} parentBKPSelect={setBKPIDChange} />
@@ -436,7 +439,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
             size='small' className="primary"
           />
           <Button size='small' className="icon-border" onClick={cancel}>
-          <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i>  {t("common.cancel")}
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i>  {t("common.cancel")}
           </Button>
         </Modal.Actions>
       </div>

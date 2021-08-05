@@ -288,8 +288,10 @@ export function ModalEditSession(props: EditSessionProps) {
                   </Grid.Column>
 
                   <Grid.Column>
-                    <MeetingCategoryIndex parentCatagorySelect={parentCatagorySelect} editCategoryIdSelect={detail?.meetingCategoryID} error={errors?.categoryError && !catagory?.length}></MeetingCategoryIndex>
-                    {errors?.categoryError && !catagory?.length ? <span className="error-message">{errors.categoryError}</span> : null}
+                    <Form.Field>
+                      <MeetingCategoryIndex parentCatagorySelect={parentCatagorySelect} editCategoryIdSelect={detail?.meetingCategoryID} error={errors?.categoryError && !catagory?.length}></MeetingCategoryIndex>
+                      {errors?.categoryError && !catagory?.length ? <span className="error-message">{errors.categoryError}</span> : null}
+                    </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
@@ -297,8 +299,10 @@ export function ModalEditSession(props: EditSessionProps) {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <AdminsIndex admins={admins} parentAdminsSelect={onAdmins} error={errors?.adminsError && !admins?.length} />
-                    {errors?.adminsError && !admins?.length ? <span className="error-message">{errors.adminsError}</span> : null}
+                    <Form.Field>
+                      <AdminsIndex admins={admins} parentAdminsSelect={onAdmins} error={errors?.adminsError && !admins?.length} />
+                      {errors?.adminsError && !admins?.length ? <span className="error-message">{errors.adminsError}</span> : null}
+                    </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
                 <div className="followers-label-area">
@@ -349,15 +353,19 @@ export function ModalEditSession(props: EditSessionProps) {
               <Grid columns={2}>
                 <Grid.Row>
                   <Grid.Column>
-                    <SessionInvitationIndex parentInvitationSelect={parentInvitationSelect} editInvitationTemplateIdSelect={detail?.invitationID}
-                      error={errors?.invitationTemplateError && !invitation?.length} />
-                    {errors?.invitationTemplateError && !invitation?.length ? <span className="error-message">{errors.invitationTemplateError}</span> : null}
+                    <Form.Field>
+                      <SessionInvitationIndex parentInvitationSelect={parentInvitationSelect} editInvitationTemplateIdSelect={detail?.invitationID}
+                        error={errors?.invitationTemplateError && !invitation?.length} />
+                      {errors?.invitationTemplateError && !invitation?.length ? <span className="error-message">{errors.invitationTemplateError}</span> : null}
+                    </Form.Field>
                   </Grid.Column>
 
                   <Grid.Column>
-                    <SessionProtocolIndex parentSessionSelect={parentSessionSelect} editProtocolTemplateIdSelect={detail?.protocolID}
-                      error={errors?.protocolTemplateError && !protocol?.length} />
-                    {errors?.protocolTemplateError && !protocol?.length ? <span className="error-message">{errors.protocolTemplateError}</span> : null}
+                    <Form.Field>
+                      <SessionProtocolIndex parentSessionSelect={parentSessionSelect} editProtocolTemplateIdSelect={detail?.protocolID}
+                        error={errors?.protocolTemplateError && !protocol?.length} />
+                      {errors?.protocolTemplateError && !protocol?.length ? <span className="error-message">{errors.protocolTemplateError}</span> : null}
+                    </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>

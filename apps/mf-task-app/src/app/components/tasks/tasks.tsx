@@ -29,7 +29,7 @@ export function Tasks(props: TasksProps) {
   const history = useHistory();
   const { t } = useTranslation();
   const [referenceID, setReferenceID] = React.useState<string>('')
-  const { loading, error, data } = useTaskQuery(GET_TASKS, {
+  const { loading, error, data:taskListData } = useTaskQuery(GET_TASKS, {
     variables: { referenceID },
   });
 
@@ -76,9 +76,10 @@ export function Tasks(props: TasksProps) {
     variables: { referenceID },
   });
 
-  const [editTaskApi, { data: editData }] = useMutation(UPDATE_TASK, {
-    refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
-  });
+  const [editTaskApi, { data: editData }] = useMutation(UPDATE_TASK);
+  //   , {
+  //   refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
+  // }
 
   const query = `query ProjectById($projectId: String!) {
     projectById( projectId: $projectId)
@@ -330,7 +331,7 @@ export function Tasks(props: TasksProps) {
     });
   };
   const subTask = (data, title) => {
-    console.log('data-sub task', data)
+   
     const subtask = [];
     const createSt = {
       subtaskTitle: title,
@@ -345,7 +346,7 @@ export function Tasks(props: TasksProps) {
       followers.push({ userID: data.userID, userName: data.userName })
     })
     subtask.push(createSt);
-    console.log('subtask', subtask);
+    
     editTaskApi({
       variables: {
         taskID: data.taskID,
@@ -369,19 +370,49 @@ export function Tasks(props: TasksProps) {
         workTypeName: data.workTypeName,
         workTypeID: data.workTypeID,
       },
+      
       update: (cache, data) => {
         const cacheData = cache.readQuery({
           query: GET_TASKS,
           variables: { referenceID },
         }) as ITasks;
+        
         cache.writeQuery({
           query: GET_TASKS,
           data: {
-            tasksD: [...cacheData.tasks.results, data],
+            tasks: [...cacheData.tasks.results, data],
           },
           variables: { referenceID },
         });
       },
+      // update: (cache, updatedTaskData) => {
+      //   console.log('--1-subtask data--after update--', "----cache-->", cache, "-----updatedTaskData-->",updatedTaskData)
+      //   // const cacheData = cache.readQuery({
+      //   //   query: GET_TASKS,
+      //   //   variables: { referenceID },
+      //   // }) as ITasks;
+      //   // console.log('--2-subtask data--after update cachedata--', cacheData)
+
+      //   console.log('----updatedTaskData?.data?.updateTask[0]?.subtasks--', updatedTaskData?.data?.updateTask[0]?.subtasks)
+      //   const newTaskList = taskListData?.tasks?.results?.map((task) => {
+      //     if (task.taskID === data.taskID) {
+      //       const subTaskList = updatedTaskData?.data?.updateTask[0]?.subtasks
+      //       return { ...task, subtasks: subTaskList }
+      //     } else {
+      //       return task;
+      //     }
+      //   });
+      //   console.log('--3 newTaskList--', newTaskList)
+      //   cache.writeQuery({
+      //     // query: GET_TASKS,
+      //     data: {
+      //       // tasksD: [...cacheData.tasks.results, data],
+      //       tasks: newTaskList
+      //     },
+      //     // variables: { referenceID },
+      //   });
+      //   console.log('--4 after writeQuery--')
+      // },
     });
   };
   const changeAdd = (data) => {
@@ -668,7 +699,7 @@ export function Tasks(props: TasksProps) {
 
       <div className="TaskApp-container">
         <h3 className="alltask" style={{ marginBottom: '20px;' }}>{t("project_tab_menu.task.heading")}</h3>
-        {data?.tasks?.results?.map((task, id) => {
+        {taskListData?.tasks?.results?.map((task, id) => {
           return (
             <div key={id} >
               <TaskArea
