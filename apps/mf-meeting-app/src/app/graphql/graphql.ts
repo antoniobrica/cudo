@@ -550,20 +550,42 @@ query GetProtocolList(
   # $workTypeId?: String!
   $sessionId: String!
 ){
-  getProtocolList{
+  getProtocolList(
+    sortFilter: { sortBy: ASC }
+    statusFilter: { status: SCHEDULED }
+    protocolFilter: {  
+      # companyId: $companyId
+      # projectTypeId: $projectTypeId
+      # workTypeId: $workTypeId
+      sessionId: $sessionId
+    }
+    options: { limit: 10, page: 0 }
+  ) {
     results {
       companyId
-    workTypeId
-    protocolId
-    protocolTitle
-    protocolDate
-    protocolStartTime
-    protocolEndTime
-    protocolDuration
-    protocolDescription
-    createdBy
-    updatedBy
-    status
+      projectTypeId
+      workTypeId
+      sessionId
+      protocolId
+      protocolTitle
+      protocolDate
+      protocolStartTime
+      protocolEndTime
+      protocolDescription
+      protocolFiles {
+        fileId
+        protocolFileId
+        protocolFileTitle
+      }
+      # createdAt
+      createdBy
+      # updatedAt
+      updatedBy
+      protocolDuration
+      status
     }
+    total
+    page_total
+    # hasNextPage
   }
 }`;

@@ -51,7 +51,7 @@ export function Phase(props: PhaseProps) {
         value={phase}
         onChange={onPhase}
         clearable
-        error={props.error}
+        error={props.error} 
       />
     </>
   );
