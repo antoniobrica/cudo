@@ -224,6 +224,7 @@ export function FileUpload(props: FileProps) {
         onClose={close}
         onOpen={openf}
         open={open}
+        size= 'small'
         trigger={<Button size='mini' className="grey-btn">Uploaded File</Button>}
         closeOnDimmerClick={false}
       >

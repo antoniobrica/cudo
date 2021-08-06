@@ -274,7 +274,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
         trigger={<Button size='mini' className="grey-btn taskmargin">+ Add  New Task</Button>}      >
         <Modal.Header><h3>Add New Task </h3></Modal.Header>
         <Modal.Content body> */}
-      <div>
+      <div className="added-pin-number-con">
         <Form>
           <Grid columns={1}>
             <Grid.Row>
@@ -344,11 +344,14 @@ export function CreateFileTask(props: CreateFileTaskProps) {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-          <Grid columns={2}>
+          <Grid columns={1}>
             <Grid.Row>
               <Grid.Column>
                 <FollowersIndex followers={[]} parentFollowersSelect={onFollowers} />
               </Grid.Column>
+            </Grid.Row>
+
+            <Grid.Row>
               <Grid.Column>
                 <Form.Field>
                   <div className="event top-event">
@@ -362,25 +365,16 @@ export function CreateFileTask(props: CreateFileTaskProps) {
                       )
                     })
                     }
-
-                    {/* <div className="label-light-black-circle label-spacer">
-                          <span className="white-text ">RJ</span>
-                        </div>
-                        <div className="label-light-blue-circle label-spacer">
-                          <span className="white-text">JB</span>
-                        </div> */}
                   </div>
                 </Form.Field>
               </Grid.Column>
             </Grid.Row>
-
           </Grid>
           <Grid columns={2}>
             <Grid.Row>
               <Grid.Column>
                 <Form.Field>
                   <label>{t("common.start_date")}  </label>
-                  {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
                   <Input placeholder='Default' size='small' className="full-width"
                     type="date"
                     value={startDate}
@@ -391,16 +385,12 @@ export function CreateFileTask(props: CreateFileTaskProps) {
               <Grid.Column>
                 <Form.Field>
                   <label>{t("common.end_date")} </label>
-                  {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
                   <Input placeholder='Default' size='small' className="full-width" type="date"
                     value={endDate}
                     onChange={onEndDateChange}
                   />
                 </Form.Field>
               </Grid.Column>
-
-            </Grid.Row>
-            <Grid.Row>
             </Grid.Row>
           </Grid>
           <Grid columns={1}>

@@ -144,7 +144,7 @@ export function FileStructure(props: FileStructureProps) {
 	}
 	const rootPanels = [
 		{ key: 'panel-1', title: 'General', content: { content: <a href=''>+ Add item</a> }, },
-		{ key: 'panel-2', title: 'Freehold Two Solar LLC', content: { content: <a href=''>+ Add item</a> } },
+		{ key: 'panel-2', title: 'Freehold Two Solar LLC', content: { content: <a href=''><i className="ms-Icon ms-font-xl ms-Icon--Add"></i> Add item</a> } },
 	]
 	const panes = [
 		{
@@ -178,6 +178,7 @@ export function FileStructure(props: FileStructureProps) {
 										<h3 className="files-name">file_name.pdf</h3>
 										<span className="no-of-files"><i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i> 2 comments</span>
 										<span className="no-of-files"><i className="ms-Icon ms-Icon--CheckboxComposite" aria-hidden="true"></i> 2 tasks</span>
+										<span className="version-files"><a href="">Ver 2</a></span>
 									</div>
 									<div className="files-right-area">
 										<div className="symbol-group symbol-hover">
@@ -185,7 +186,7 @@ export function FileStructure(props: FileStructureProps) {
 												<a href=""> <i className="ms-Icon ms-Icon--Download" aria-hidden="true"></i></a>
 												<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
 
-												<span >
+												<span>
 													<Dropdown icon='ellipsis horizontal' pointing='right'>
 														<Dropdown.Menu>
 															<Dropdown.Item icon='pencil' text='Edit file detail' />
@@ -195,6 +196,23 @@ export function FileStructure(props: FileStructureProps) {
 														</Dropdown.Menu>
 													</Dropdown>
 												</span>
+											</div>
+										</div>
+									</div>
+
+									<div className="break"></div>
+
+									<div className="version-file-con">
+										<div className="files-versioning-list">
+											<p>Version 2 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
+											<div className="files-right-area">
+												<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
+											</div>
+										</div>
+										<div className="files-versioning-list">
+											<p>Version 2 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
+											<div className="files-right-area">
+												<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
 											</div>
 										</div>
 									</div>
@@ -325,6 +343,50 @@ export function FileStructure(props: FileStructureProps) {
 												</Dropdown>
 											</span>
 										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div className="single-file-box">
+							<div className="single-files-list">
+								<div className="files-left-area">
+									<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
+									<h3 className="files-name">file_name.pdf</h3>
+									<span className="version-files"><a href="">Ver 2</a></span>
+								</div>
+								<div className="files-right-area">
+									<div className="symbol-group symbol-hover">
+										<div className="symbol symbol-30">
+											<a href=""> <i className="ms-Icon ms-Icon--Download" aria-hidden="true"></i></a>
+											<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
+
+											<span >
+												<Dropdown icon='ellipsis horizontal' pointing='right'>
+													<Dropdown.Menu>
+														<Dropdown.Item icon='pencil' text='Edit file detail' />
+														<Dropdown.Item icon='eye' text='Upload new version' />
+														<Dropdown.Item icon='check circle outline' text='Add task to this file' />
+														<Dropdown.Item icon='trash alternate outline' text='Delete' />
+													</Dropdown.Menu>
+												</Dropdown>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div className="version-file-con">
+								<div className="files-versioning-list">
+									<p>Version 2 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
+									<div className="files-right-area">
+										<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
+									</div>
+								</div>
+								<div className="files-versioning-list">
+									<p>Version 2 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
+									<div className="files-right-area">
+										<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
 									</div>
 								</div>
 							</div>
