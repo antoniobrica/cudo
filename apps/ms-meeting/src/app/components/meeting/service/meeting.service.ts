@@ -16,7 +16,7 @@ import { MeetingDeleteInput } from "../dto/input/meeting-delete.input";
 import { MeetingDetailsUpdateInput } from "../dto/input/meeting-details-update.input";
 import { MeetingDetailsInput } from "../dto/input/meeting-details.input";
 import MeetingNotFoundException from "../exceptions/meetingNotFound.exception";
-
+import MeetingCustomError from "../../../meetingCustomError.exception";
 
 @Injectable()
 export class MeetingService {
@@ -31,18 +31,17 @@ export class MeetingService {
   ) { }
 
   public async addMeeting(createInput: MeetingDetailsInput): Promise<MeetingEntity> {
-    // console.log('---check custom validation message--addMeeting--')
-
+    console.log('---service addMeeting custom message----')
+  
     try {
-      const { meetingBasics, members, meetingFiles } = createInput;
+       const { meetingBasics, members, meetingFiles } = createInput;
       const meetingDetails = new MeetingEntity({ ...meetingBasics });
-      // const isExist = await this.meetingRepository.count({ where: { meetingTitle: meetingBasics.meetingTitle } })
-      // if (isExist > 0) {
-      //   throw new HttpException("Record already exist with this title", HttpStatus.FOUND)
-      //   // throw new BadRequestException("Record already exist with this title")
-
-      // }
-      // console.log('--after-check custom validation message--')
+      const isExist = await this.meetingRepository.count({ where: { meetingTitle: meetingBasics.meetingTitle } })
+      if (isExist > 0) {
+        // throw new HttpException("Record already exist with this title", HttpStatus.FOUND)        
+        throw new MeetingCustomError('record_already_exist')       
+      }
+      console.log('--after-check custom validation message--')
 
       if (members) {
         for (let index = 0; index < members.length; index++) {
