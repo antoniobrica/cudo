@@ -354,10 +354,9 @@ export function CreateFileTask(props: CreateFileTaskProps) {
               </Grid.Column>
             </Grid.Row>
 
-            <Grid.Row>
-              <Grid.Column>
+            <div className="followers-label-area">            
                 <Form.Field>
-                  <div className="event top-event">
+                  <div className="event top-event follower-listing-labels">
                     {followers.map((p, id) => {
                       const name = p.userName.split(" ").map((n) => n[0]).join("");
                       //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
@@ -370,8 +369,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
                     }
                   </div>
                 </Form.Field>
-              </Grid.Column>
-            </Grid.Row>
+              </div>           
           </Grid>
           <Grid columns={2}>
             <Grid.Row>
