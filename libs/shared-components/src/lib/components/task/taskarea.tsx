@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import './../../../assets/style/index.scss'
-import { Segment, Dropdown, Input, Grid, Form, Icon } from 'semantic-ui-react';
+import { Segment, Dropdown, Input, Grid, Form, Icon, Popup, Button } from 'semantic-ui-react';
 
 import { useTranslation } from 'react-i18next';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
@@ -114,7 +114,7 @@ export function TaskArea(props: Tasks) {
 
       renderSubTaskEditForm =
         <div key={`edit-form-${subTaskId}`} className="add-new-task-con">
-          <span className="anchor_complete checklist-complete-box"><a title={t("project_tab_menu.task.completed")}> <span className="material-icons check-grey">check_circle_outline</span> </a> </span>
+          <span className="anchor_complete checklist-complete-box"><a title={t("project_tab_menu.task.completed")}> <span><i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></span> </a> </span>
           <div className="classtop add-new-task-field">
             <Form.Field className="fillarea">
               <Input placeholder='Enter your text here....' size='small' className="full-width "
@@ -141,16 +141,16 @@ export function TaskArea(props: Tasks) {
       <div className="d-flex align-items-center checklist-listing-main" key={subTaskId}>
         <span className="anchor_complete" onClick={() => onClickSubTaskStatusUpdate(taskId, subTaskId, subtaskStatus === 'INPROGRESS' ? 'COMPLETED' : 'INPROGRESS')}>
           {subtaskStatus === 'INPROGRESS' ?
-            <a title={t("project_tab_menu.task.completed")}><span className="material-icons check-grey">check_circle_outline</span> </a>
+            <a title={t("project_tab_menu.task.completed")}><i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i> </a>
             :
-            <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/green_tick.png`} className=" mr-2 mr-10 " />
+            <i className="ms-Icon ms-Icon--Accept completed" aria-hidden="true"></i>
           }
         </span>
         <span className="task-checklisting-text">{index + 1}. {subTaskTitle}</span>
 
         
-        <span className="anchor_complete" onClick={() => onClickEditSubTask(taskId, subTaskId, subTaskTitle)}> <Icon  name="pencil"/></span>
-        <span className="anchor_complete" onClick={() => onClickDeleteSubTask(taskId, subTaskId)}>< Icon name="trash alternate outline" /> </span>
+        <span className="checklist-actions" onClick={() => onClickEditSubTask(taskId, subTaskId, subTaskTitle)}> <Icon  name="pencil"/></span>
+        <span className="checklist-actions" onClick={() => onClickDeleteSubTask(taskId, subTaskId)}>< Icon name="trash alternate outline" /> </span>
         
       </div>
 
@@ -170,7 +170,7 @@ export function TaskArea(props: Tasks) {
               <div className="d-flex align-items-center py-2">
                 <span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} className="  mr-10 " />  </span>
                 <span className="textt">T-{props?.task?.sequenceNumber}</span>
-                <span onClick={() => updateStatus(props.task, props.id)} className="anchor_complete">  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/green_tick.png`} className=" mr-2 mr-10 " />   </span>
+                <span onClick={() => updateStatus(props.task, props.id)} className="anchor_complete">  <span className="check-it-complete task-completed mr-2 mr-10"><i className="ms-Icon ms-font-xl ms-Icon--Accept"></i></span>   </span>
                 <span className="completed-task-list-text line-through">{props?.task?.taskTitle}</span>
                 <div className="d-flex mr-3">
 
@@ -264,10 +264,38 @@ export function TaskArea(props: Tasks) {
                 })} */}
                 {props.task?.assignees.length > 0 ?
 
-                  <div className="navi-item ">
+                  <div className="navi-item d-flex">
                     <a className="navi-link">
                       <span className="navi-text pin-action"> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} /> </span>
                     </a>
+                    <Popup trigger={<Button className="more-user-listing">3+</Button>} flowing hoverable>
+                      <Grid>
+                        <Grid.Column textAlign='center'>
+                          <div className="user-tooltip-listing">
+                            <Popup className="user-tooltip-name"
+                              trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                              content='Mike'
+                              size='mini'
+                            />
+                            <Popup className="user-tooltip-name"
+                              trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                              content='John'
+                              size='mini'
+                            />
+                            <Popup className="user-tooltip-name"
+                              trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                              content='Hussy'
+                              size='mini'
+                            />
+                            <Popup className="user-tooltip-name"
+                              trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                              content='Kevin'
+                              size='mini'
+                            />
+                          </div>
+                        </Grid.Column>
+                      </Grid>
+                    </Popup>
                   </div> : null
                 }
 
@@ -297,15 +325,13 @@ export function TaskArea(props: Tasks) {
         </div>
         :
 
-        <div className="card1 card-custom gutter-b task-main-con" >
-          {/* <div className="card1 card-custom gutter-b task-main-con" onClick={() => openSubTask(props.task, props.id) }> */}
-
+        <div className={props?.task?.taskType && props?.task?.taskType == 'PIN' ? "card1 card-custom gutter-b task-main-con pinned-box" : "card1 card-custom gutter-b task-main-con"} >
           <div className="card-body">
             <div className="task-upper-con d-flex justify-content-between">
               <div className="d-flex align-items-center py-2">
                 <span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} className="  mr-10 " />  </span>
                 <span className="textt">T-{props?.task?.sequenceNumber}</span>
-                <span onClick={() => updateStatus(props.task, props.id)}><span className="anchor_complete"><a title={t("project_tab_menu.task.completed")}> <span className="material-icons mr-2 mr-10 check-grey">check_circle_outline</span> </a> </span></span>
+                <span onClick={() => updateStatus(props.task, props.id)}><span className="anchor_complete"><a title={t("project_tab_menu.task.completed")}> <span className="check-it-complete mr-2 mr-10"><i className="ms-Icon ms-font-xl ms-Icon--Accept"></i></span></a> </span></span>
                 <span className="task-heading">{props?.task?.taskTitle}</span>
                 <div className="d-flex mr-3">
 
@@ -376,10 +402,38 @@ export function TaskArea(props: Tasks) {
                 }
                 {props.task?.assignees.length > 0 ?
 
-                  <div className="navi-item ">
+                  <div className="navi-item d-flex">
                     <a className="navi-link">
                       <span className="navi-text"> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} /> </span>
                     </a>
+                    <Popup trigger={<Button className="more-user-listing">3+</Button>} flowing hoverable>
+                      <Grid>
+                        <Grid.Column textAlign='center'>
+                          <div className="user-tooltip-listing">
+                            <Popup className="user-tooltip-name"
+                              trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                              content='Mike'
+                              size='mini'
+                            />
+                            <Popup className="user-tooltip-name"
+                              trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                              content='John'
+                              size='mini'
+                            />
+                            <Popup className="user-tooltip-name"
+                              trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                              content='Hussy'
+                              size='mini'
+                            />
+                            <Popup className="user-tooltip-name"
+                              trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                              content='Kevin'
+                              size='mini'
+                            />
+                          </div>
+                        </Grid.Column>
+                      </Grid>
+                    </Popup>
                   </div> : null
                 }
                 <div className="symbol-group symbol-hover py-2">
@@ -422,7 +476,7 @@ export function TaskArea(props: Tasks) {
                       {
                         openSubTaskEdit === false && viewSubTaskAdd ?
                           <div className="add-new-task-con">
-                            <span className="anchor_complete checklist-complete-box"><a title={t("project_tab_menu.task.completed")}> <span className="material-icons check-grey">check_circle_outline</span> </a> </span>
+                            <span className="anchor_complete checklist-complete-box"><a title={t("project_tab_menu.task.completed")}> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i> </a> </span>
                             <div className="classtop add-new-task-field">
                               <Form.Field className="fillarea">
                                 <Input placeholder='Enter your text here....' size='small' className="full-width "
@@ -440,7 +494,7 @@ export function TaskArea(props: Tasks) {
                             </div>
                           </div>
                           :
-                          <div onClick={addNewSubTask} className="add-new-link"> <span className="anchor_complete"><Icon name="plus"></Icon> {t("common.add_new_button")}</span></div>
+                          <div onClick={addNewSubTask} className="add-new-link"> <span className="anchor_complete"><i className="ms-Icon ms-Icon--Add" aria-hidden="true"></i> {t("common.add_new_button")}</span></div>
 
                       }
 

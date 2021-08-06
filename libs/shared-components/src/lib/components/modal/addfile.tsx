@@ -34,36 +34,30 @@ export function ModalAddPrint(props: FileProps) {
   }
   return (
     <div id=" " className="add-files-modal" >
-      <Modal className="modal_media modal_center modal_media_1"
+      <Modal className="modal_media modal_center add-file-setting-popup"
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button size='small' className="primary">+ {t("project_tab_menu.add_file")}</Button>}
+        trigger={<Button size='small' className="primary"><i className="ms-Icon ms-font-xl ms-Icon--Add"></i> {t("project_tab_menu.add_file")}</Button>}
         closeOnDimmerClick={false}
       >
-        <Modal.Header><h3>{t("project_tab_menu.add_file")} </h3></Modal.Header>
+        <Modal.Header><h3>{t("project_tab_menu.add_file")}</h3></Modal.Header>
         <Modal.Content body>
-
           <div>
-
-
             <Form>
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <div className="dashed_area" style={{ paddingTop: 15 }}>
+                      <div className="dashed_area">
                         <div className="file-upload-message">
                           <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/upload.png`} className="mr-10 " />
                           <p className="file-upload-default-message">{t("common.drag_and_drop")}</p>
-
                         </div>
                         <Input type="file" className="file-upload-input" multiple={true} onChange={onFileChange} />
                       </div>
-
                     </Form.Field>
                   </Grid.Column>
-
                 </Grid.Row>
               </Grid>
               <br /><br />
@@ -75,18 +69,13 @@ export function ModalAddPrint(props: FileProps) {
                         <div className="description">{t("project_tab_menu.files.file_settings")}
                           <span className="float_right"><i className="ms-Icon ms-Icon--ChevronRightMed" aria-hidden="true"></i> </span>
                         </div>
-
                       </div>
                     </Form.Field>
                   </Grid.Column>
-
-
                 </Grid.Row>
               </Grid>
             </Form>
           </div>
-
-
         </Modal.Content>
         <Modal.Actions>
           <Button
@@ -96,11 +85,8 @@ export function ModalAddPrint(props: FileProps) {
             size='small' className="primary"
           />
           <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
-            X  {t("common.cancel")}
+          <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i>  {t("common.cancel")}
           </Button>
-
-
-
         </Modal.Actions>
       </Modal>
     </div>

@@ -9,7 +9,8 @@ import {
   Button
 } from 'semantic-ui-react';
 import EditMileStonePopup from 'libs/shared-components/src/lib/components/modal/editmilestone';
-import ModalViewPlanning from '../../../../../shared-components/src/lib/components/modal/viewdetailsplanning'
+import ModalViewPlanning from '../../../../../shared-components/src/lib/components/modal/viewdetailsplanning';
+import SelectDropdown from '../../../../../shared-components/src/lib/components/select_dropdown/select_dropdown';
 import { useMilestonesQuery, useMilestoneMutation, useIMileStoneQuery, useMilestoneDeleteMutation, useMilestoneUpdateMutation } from '../../services/useRequest';
 import { GET_MILESTONES, ADD_MILESTONE, GET_MILESTONES_BY_ID, DELETE_MILESTONE, UPDATE_MILESTONE } from '../../graphql/graphql';
 import { LoaderPage } from "@cudo/shared-components";
@@ -289,6 +290,7 @@ export function Planning(props: PlanningProps) {
         <div className="active-milestone">
           <h4 className="headingactive">
           {t("project_tab_menu.planning.active_milestone")}
+          <SelectDropdown />          
           </h4>
           <Form>
             {/* <Grid columns={4}>
