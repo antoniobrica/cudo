@@ -106,35 +106,52 @@ export function ModalEditSession(props: EditSessionProps) {
     setErrors({ ...errors, titleError: "" })
   }
   const onMworkType = (event, data) => {
-
     const workT = {
       worktypeID: '',
       worktypeName: ''
     };
-    for (let i = 0; i < props.workTypes?.length; i++) {
-      if (props.workTypes[i]?.workTypeName === data.value) {
-        workT.worktypeID = props.workTypes[i].projectWorkTypeID;
-        workT.worktypeName = data.value;
-        setworktypeName(workT.worktypeName);
-        setworktypeID(workT.worktypeID);
-        setworkTypeD(workT)
+    if(data.value){
+      for (let i = 0; i < props?.workTypes?.length; i++) {
+        if (props.workTypes[i]?.workTypeName === data.value) {
+          workT.worktypeID = props.workTypes[i].projectWorkTypeID;
+          workT.worktypeName = data.value;
+          setworktypeName(workT.worktypeName);
+          setworktypeID(workT.worktypeID);
+          setworkTypeD(workT)
+        }
       }
+    } else {
+      setworktypeName("")
+      setworktypeID("")
+      setworkTypeD(null)
     }
-
     setworkTypeData(data.value)
     setErrors({ ...errors, workTypeError: "" })
   }
-  const parentCatagorySelect = (data) => {
-    setCatagory(data)
-    setErrors({ ...errors, categoryError: "" })
+const parentCatagorySelect = (data) => {
+    if(data.meetingCatagoryID){
+      setCatagory(data)
+      setErrors({ ...errors, categoryError: "" })
+    }else{
+      setCatagory(null)
+    }
   }
   const parentSessionSelect = (data) => {
-    setProtocol(data)
-    setErrors({ ...errors, protocolTemplateError: "" })
+    if(data.protocolTemplateID){
+      setProtocol(data)
+      setErrors({ ...errors, protocolTemplateError: "" })
+    }else{
+      setProtocol(null)
+    }
   }
   const parentInvitationSelect = (data) => {
-    setInvitation(data)
-    setErrors({ ...errors, invitationTemplateError: "" })
+    if(data.invitationTemplateID){
+      setInvitation(data)
+      setErrors({ ...errors, invitationTemplateError: "" })
+    } else {
+      setInvitation(null)
+    }
+
   }
   const onAdmins = (data) => {
     setAdmins(data);
