@@ -77,9 +77,9 @@ mutation CreateMileStone(
           status: INPROGRESS,
         }
         files: [
-          {  fileUrl: "Pull.comm", fileName: "requeest" }
+          {  fileID: "swsd", fileUrl: "Pull.comm", fileName: "requeest" }
         ]
-        fileID: "swsd"
+        
       }
     ) {
       milestoneID

@@ -352,31 +352,30 @@ export function CreateFileTask(props: CreateFileTaskProps) {
               <Grid.Column>
                 <FollowersIndex followers={[]} parentFollowersSelect={onFollowers} />
               </Grid.Column>
-              <Grid.Column>
-                <Form.Field>
-                  <div className="event top-event">
-                    {followers.map((p, id) => {
-                      const name = p.userName.split(" ").map((n) => n[0]).join("");
-                      //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
-                      return (
-                        <div className="label-light-purple-circle label-spacer" key={id}>
-                          <span className="white-text">{name}</span>
-                        </div>
-                      )
-                    })
-                    }
+            </Grid.Row>
+            <div className="followers-label-area">
+              <Form.Field>
+                <div className="event top-event follower-listing-labels">
+                  {followers.map((p, id) => {
+                    const name = p.userName.split(" ").map((n) => n[0]).join("");
+                    //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
+                    return (
+                      <div className="label-light-purple-circle label-spacer" key={id}>
+                        <span className="white-text">{name}</span>
+                      </div>
+                    )
+                  })
+                  }
 
-                    {/* <div className="label-light-black-circle label-spacer">
+                  {/* <div className="label-light-black-circle label-spacer">
                           <span className="white-text ">RJ</span>
                         </div>
                         <div className="label-light-blue-circle label-spacer">
                           <span className="white-text">JB</span>
                         </div> */}
-                  </div>
-                </Form.Field>
-              </Grid.Column>
-            </Grid.Row>
-
+                </div>
+              </Form.Field>
+            </div>
           </Grid>
           <Grid columns={2}>
             <Grid.Row>
