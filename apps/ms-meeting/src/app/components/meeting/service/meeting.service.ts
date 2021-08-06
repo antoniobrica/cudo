@@ -112,7 +112,6 @@ export class MeetingService {
       relations: ['members', 'meetingFiles'],
     }
     );
-
     const pagination = new Pagination({
       results,
       total,

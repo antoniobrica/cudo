@@ -1,5 +1,5 @@
 export interface IProtocol {
-    companyId: string
+  companyId: string
   projectTypeId: string
   workTypeId: string
   sessionId: string
@@ -17,11 +17,25 @@ export interface IProtocol {
   protocolDuration: string
 }
 
+export interface IProtocolFiles {
+  fileId: string
+  protocolFileId: string
+  protocolFileTitle: string
+}
+
 export interface IProtocolResults {
-    results: IProtocol[];
-  }
+  results: IProtocol[];
+}
 
 export interface IProtocols {
-    invitations: IProtocol[];
-    getProtocolList: IProtocolResults;
-  }
+  protocols: IProtocol[];
+  getProtocolList: IProtocolResults;
+}
+
+export interface IProtocolMutation {
+  addProtocol: IProtocol;
+}
+
+export interface IGetProtocolById {
+  getProtocolById: IProtocol
+}

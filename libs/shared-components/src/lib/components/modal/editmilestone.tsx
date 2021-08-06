@@ -272,6 +272,7 @@ export function EditMileStonePopup(props: PlanningProps) {
                     <Form.Field>
                       <label>{t("common.select_phase")} <span className="danger">*</span></label>
                       <PhaseIndex phaseName={phaseName} parentPhaseSelect={onsetPhasesID} error={errors?.phaseError && !phaseID} />
+                      {errors?.phaseError && !phaseID ? <span className="error-message">{t("common.errors.phase_error")}</span> : null}
                     </Form.Field>
                   </Grid.Column>
 

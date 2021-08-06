@@ -163,7 +163,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
       meetings:[],
       protocolFiles:[],
       protocolDuration:protocolDurationMinutes,
-      status: 'SHEDULED'
+      status: 'SCHEDULED'
     }
 
     props.createProtocol(data)

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { InvitationTab } from "@cudo/shared-components";
 import { LazyLoading } from '@cudo/shared-components';
-import { useInvitationQuery, useSessionDetailQuery } from '../../services/useRequest';
-import { GET_INVITATIONS, GET_SESSION_DETAIL } from '../../graphql/graphql'
+import { useInvitationQuery, useProtocolQuery, useSessionDetailQuery } from '../../services/useRequest';
+import { GET_INVITATIONS, GET_PROTOCOLS, GET_SESSION_DETAIL } from '../../graphql/graphql'
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { Button } from 'semantic-ui-react';
 import { useTranslation } from "react-i18next";
@@ -37,6 +37,10 @@ export function InvitationListing(props: InvitationListingProps) {
     const { loading, error, data } = useInvitationQuery(GET_INVITATIONS, {
         variables: { sessionId },
     });
+
+    const { loading: protocolLoading, error: protocolError, data: protocolData } = useProtocolQuery(GET_PROTOCOLS, {
+        variables: {sessionId},
+    }); 
 
     useEffect(() => {
         if (props.sessionId) {
@@ -152,6 +156,7 @@ export function InvitationListing(props: InvitationListingProps) {
                     <InvitationTab
                         sessionId={props?.sessionId}
                         invitations={data?.getMeetingList?.results}
+                        protocols = {protocolData?.getProtocolList?.results}
                         addInvitationClick={onTabInvitationAddClick}
                         addProtocolClick={onTabProtocolAddClick}
                         sessionDetail={sessionDetailData}
