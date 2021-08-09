@@ -135,6 +135,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
       setPhasesName(props.taskData.phaseName);
       setworktypeName(props?.taskData?.workTypeName);
       setworkTypeData(props?.taskData?.workTypeName)
+      setworktypeID(props?.taskData?.workTypeID)
 
     }
   }, [props.taskData]);
@@ -189,16 +190,23 @@ export const ModalTaskEdit = (props: AlertProps) => {
       worktypeID: '',
       worktypeName: ''
     };
-    for (let i = 0; i < workTypes.length; i++) {
-      if (workTypes[i]?.workTypeName === data.value) {
-        console.log('workTypes[i]', workTypes[i]);
-        workT.worktypeID = workTypes[i].projectWorkTypeID;
-        workT.worktypeName = data.value;
-        setworktypeName(workT.worktypeName);
-        setworktypeID(workT.worktypeID);
-        setworkTypeD(workT)
+    if(data.value){
+      for (let i = 0; i < workTypes.length; i++) {
+        if (workTypes[i]?.workTypeName === data.value) {
+          console.log('workTypes[i]', workTypes[i]);
+          workT.worktypeID = workTypes[i].projectWorkTypeID;
+          workT.worktypeName = data.value;
+          setworktypeName(workT.worktypeName);
+          setworktypeID(workT.worktypeID);
+          setworkTypeD(workT)
+        }
       }
+    } else {
+      setworktypeName("")
+      setworktypeID("")
+      setworkTypeD("")
     }
+    
     setworkTypeData(data.value);
     console.log('worktypeName-', workTypeD);
   }
@@ -247,12 +255,16 @@ export const ModalTaskEdit = (props: AlertProps) => {
     console.log('bkp==>', data);
   }
   const setAsignee = (data) => {
-    console.log('assignee', data)
+    // console.log('assignee', data)
 
-    const ppl = []
-    ppl.push(data)
-    setAssignees(ppl)
-    // setAsignis(data)
+    if(data.userID){
+      const ppl = []
+      ppl.push(data)
+      setAssignees(ppl)
+      // setAsignis(data)
+    }else{
+      setAssignees([])
+    }
   }
   const onFollowers = (data) => {
     console.log('====================================');
@@ -280,7 +292,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
     if (!taskTitle) {
       foundErrors.titleError = t("common.errors.title_error")
     }
-    if (!workTypeID) {
+    if (!workTypeName) {
       foundErrors.workTypeError = t("common.errors.worktype_error")
     }
     if (!assignees.length) {
@@ -475,7 +487,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                       />
                     </Form.Field> */}
                     <AssigneeIndex assignees={props?.taskData?.assignees} parentAsigneeSelect={setAsignee} name="Assignee" error={errors?.assigneeError && !assignees.length} />
-                    {errors?.assigneeError && !assignees.length ? <span className="error-message">{errors.assigneeError}</span> : null}
+                    {/* {errors?.assigneeError && !assignees.length ? <span className="error-message">{errors.assigneeError}</span> : null} */}
                   </Grid.Column>
                 </Grid.Row>
               </Grid>

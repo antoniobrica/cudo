@@ -78,16 +78,23 @@ export function ModalPlanningNew(props: PlanningProps) {
       worktypeID: '',
       worktypeName: ''
     };
-    for (let i = 0; i < props.worktypes.length; i++) {
-      if (props.worktypes[i]?.workTypeName === data.value) {
-        console.log('props.worktypes[i]', props.worktypes[i]);
-        workT.worktypeID = props.worktypes[i].projectWorkTypeID;
-        workT.worktypeName = data.value;
-        setworktypeName(workT.worktypeName);
-        setworktypeID(workT.worktypeID);
-        setworkTypeD(workT)
-      }
+    if(data.value){
+      for (let i = 0; i < props.worktypes.length; i++) {
+        if (props.worktypes[i]?.workTypeName === data.value) {
+          console.log('props.worktypes[i]', props.worktypes[i]);
+          workT.worktypeID = props.worktypes[i].projectWorkTypeID;
+          workT.worktypeName = data.value;
+          setworktypeName(workT.worktypeName);
+          setworktypeID(workT.worktypeID);
+          setworkTypeD(workT)
+        }
+      } 
+    } else {
+      setworktypeName("")
+      setworktypeID("")
+      setworkTypeD("")
     }
+    
     setworkTypeData(data.value)
 
     console.log('worktypeName-', workTypeD);

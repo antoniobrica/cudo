@@ -184,7 +184,11 @@
       "sub_total": "Sub Total",
       "print": "Print",
       "item_quantity": "Item Quantity",
-      "item_price": "Item Price"
+      "item_price": "Item Price",
+      "add_house": "Add House",
+      "select_house": "Select house",
+      "this_house_contain": "This house will contain all the BKP",
+      "item_quality": "Item quality"
     },
     "tender": {
       "title": "Tender"
@@ -309,6 +313,7 @@
     "specific_access": "Specify People ,only",
     "data_not_found": "No Data Found",
     "please_confirm": "Please Confirm",
+    "add_more": "Add more",
     "errors": {
       "title_error": "Please provide title",
       "worktype_error": "Please provide work-type",
