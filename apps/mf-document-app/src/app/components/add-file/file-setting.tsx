@@ -52,7 +52,7 @@ export function FileSetting(props: FileProps) {
 
   const [items, setItems] = React.useState<BlobItemUpload[]>([]);
   const [download, setDownload] = React.useState<BlobItemDownload[]>([]);
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const sharedContext = React.useContext(SharedViewStateContext);
 
   const getContainerItemsEffect = () => {
@@ -342,7 +342,10 @@ export function FileSetting(props: FileProps) {
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
-                    <PhaseIndex parentPhaseSelect={onsetPhasesID} />
+                    <Form.Field>
+                      <label>{t("common.phase")} </label>
+                      <PhaseIndex parentPhaseSelect={onsetPhasesID} />
+                    </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>

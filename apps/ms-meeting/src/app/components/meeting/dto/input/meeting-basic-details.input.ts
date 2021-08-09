@@ -1,16 +1,11 @@
 import { Field, InputType } from "@nestjs/graphql";
-// import { IsString, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
- 
+
 @InputType()
 export class MeetingBasicDetailsInput {
 
-  // @IsString()
-  // @IsNotEmpty()
-  @Field({ description: `This is for company Id`, nullable: true })
+  @Field({ description: `This is for company Id` })
   companyId?: string;
 
-  // @IsString()
-  // @IsNotEmpty()
   @Field({ description: `This is for project Type Id`, nullable: true })
   projectTypeId?: string;
 
@@ -18,13 +13,9 @@ export class MeetingBasicDetailsInput {
   @Field({ description: `This is for work Type Id`, nullable: true })
   workTypeId?: string;
 
-  // @IsString()
-  // @IsNotEmpty()
   @Field({ description: `This is for session Id`, nullable: true })
   sessionId?: string;
 
-  // @IsString()
-  // @IsNotEmpty()
   @Field({ description: `This is for meeting title`  })
   meetingTitle: string;
   

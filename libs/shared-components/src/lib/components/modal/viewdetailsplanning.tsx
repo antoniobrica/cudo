@@ -19,6 +19,8 @@ export interface PlanningProps {
   cancel?,
   milestoneDataById?,
   loading?
+  edit?
+  delete?
 }
 export function ModalViewPlanning(props: PlanningProps) {
 
@@ -30,7 +32,7 @@ export function ModalViewPlanning(props: PlanningProps) {
   const [open, setOpen] = React.useState(false);
   const {t} = useTranslation()
   React.useEffect(() => {
-    console.log('loading', props.loading);
+    // console.log('loading', props.loading);
     if (props.openPlanningDetail) {
       setOpen(props.openPlanningDetail);
     }
@@ -47,7 +49,7 @@ export function ModalViewPlanning(props: PlanningProps) {
     <div id="navbar">
       <Modal className="modal_media right-side--fixed-modal view-milestone-modal"
         closeIcon
-        onClose={() => setOpen(false)}
+        onClose={cancel}
         onOpen={openf}
         open={open}
         // trigger={
@@ -63,8 +65,10 @@ export function ModalViewPlanning(props: PlanningProps) {
                 <Dropdown icon='ellipsis horizontal' floating labeled>
                   <Dropdown.Menu className="dropdowncomplete">
                     <Dropdown.Item
+                      onClick={() => props.edit(props.milestoneDataById)}
                       icon="pencil" text="Edit" />
                     <Dropdown.Item
+                      onClick={() => props.delete(props.milestoneDataById)}
                       icon="trash alternate outline"
                       text="Delete" />
                   </Dropdown.Menu>
@@ -81,13 +85,13 @@ export function ModalViewPlanning(props: PlanningProps) {
                   <Grid.Column>
                     <Form.Field className="filled-fields">
                       <label>{t("project_tab_menu.planning.milestone_title")}</label>
-                      <span>{props?.milestoneDataById?.MileStoneByID.milestoneTitle}</span>
+                      <span>{props?.milestoneDataById?.milestoneTitle}</span>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field className="filled-fields">
                       <label>{t("common.due_date")}</label>
-                      <span>{props?.milestoneDataById?.MileStoneByID.dueDate}</span>
+                      <span>{props?.milestoneDataById?.dueDate}</span>
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -98,7 +102,7 @@ export function ModalViewPlanning(props: PlanningProps) {
                   <Grid.Column>
                     <Form.Field className="filled-fields">
                       <label>{t("common.desc")} </label>
-                      <span>{props?.milestoneDataById?.MileStoneByID.description}
+                      <span>{props?.milestoneDataById?.description}
                       </span>
                     </Form.Field>
                   </Grid.Column>
@@ -109,7 +113,7 @@ export function ModalViewPlanning(props: PlanningProps) {
                   <Grid.Column>
                     <Form.Field className="filled-fields">
                       <label>{t("project_tab_menu.task.work_type")}</label>
-                      <span>{props?.milestoneDataById?.MileStoneByID.worktypeName} </span>
+                      <span>{props?.milestoneDataById?.worktypeName} </span>
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -119,7 +123,7 @@ export function ModalViewPlanning(props: PlanningProps) {
                   <Grid.Column>
                     <Form.Field className="filled-fields">
                       <label>{t("project_tab_menu.planning.phase_type")}</label>
-                      <span>{props?.milestoneDataById?.MileStoneByID.phaseName} </span>
+                      <span>{props?.milestoneDataById?.phaseName} </span>
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>

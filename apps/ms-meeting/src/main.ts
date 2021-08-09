@@ -7,14 +7,14 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
-import {AllExceptionsFilter} from '../src/app/AllExceptionFilter'
+import { AllExceptionsFilter } from '../src/app/AllExceptionFilter'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api/ms-meeting';
   app.setGlobalPrefix(globalPrefix);
-   app.useGlobalPipes(new ValidationPipe({ skipMissingProperties: true }));
-   
+  app.useGlobalPipes(new ValidationPipe({ skipMissingProperties: true }));
+
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
   const port = process.env.PORT || 3333;

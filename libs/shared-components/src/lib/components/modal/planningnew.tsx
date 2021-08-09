@@ -28,10 +28,10 @@ export interface PlanningProps {
 
 }
 interface PlanningErrors {
-  titleError?:string,
-  dateError?:string,
-  workTypeError?:string,
-  phaseError?:string
+  titleError?: string,
+  dateError?: string,
+  workTypeError?: string,
+  phaseError?: string
 }
 export function ModalPlanningNew(props: PlanningProps) {
   const countryOptions = [
@@ -57,8 +57,8 @@ export function ModalPlanningNew(props: PlanningProps) {
   const [workTypeData, setworkTypeData] = React.useState('')
   const [workType, setworkType] = React.useState(null)
   const [workTypeD, setworkTypeD] = React.useState(null)
-  
-  const {t} = useTranslation()
+
+  const { t } = useTranslation()
   const [open, setOpen] = React.useState(false);
   const [errors, setErrors] = React.useState<PlanningErrors>({})
   React.useEffect(() => {
@@ -78,16 +78,23 @@ export function ModalPlanningNew(props: PlanningProps) {
       worktypeID: '',
       worktypeName: ''
     };
-    for (let i = 0; i < props.worktypes.length; i++) {
-      if (props.worktypes[i]?.workTypeName === data.value) {
-        console.log('props.worktypes[i]', props.worktypes[i]);
-        workT.worktypeID = props.worktypes[i].projectWorkTypeID;
-        workT.worktypeName = data.value;
-        setworktypeName(workT.worktypeName);
-        setworktypeID(workT.worktypeID);
-        setworkTypeD(workT)
-      }
+    if(data.value){
+      for (let i = 0; i < props.worktypes.length; i++) {
+        if (props.worktypes[i]?.workTypeName === data.value) {
+          console.log('props.worktypes[i]', props.worktypes[i]);
+          workT.worktypeID = props.worktypes[i].projectWorkTypeID;
+          workT.worktypeName = data.value;
+          setworktypeName(workT.worktypeName);
+          setworktypeID(workT.worktypeID);
+          setworkTypeD(workT)
+        }
+      } 
+    } else {
+      setworktypeName("")
+      setworktypeID("")
+      setworkTypeD("")
     }
+    
     setworkTypeData(data.value)
 
     console.log('worktypeName-', workTypeD);
@@ -114,18 +121,18 @@ export function ModalPlanningNew(props: PlanningProps) {
   }
 
   const validation = () => {
-    const foundErrors:PlanningErrors= {}
+    const foundErrors: PlanningErrors = {}
     if (!milestone) {
-     foundErrors.titleError = t("common.errors.title_error")
+      foundErrors.titleError = t("common.errors.title_error")
     }
     if (!dueDate) {
       foundErrors.dateError = t("common.errors.due_date_error")
-     }
+    }
     if (!workTypeD) {
-      foundErrors.workTypeError= t("common.errors.worktype_error")
-     }
+      foundErrors.workTypeError = t("common.errors.worktype_error")
+    }
     if (!phaseID) {
-      foundErrors.phaseError =  t("common.errors.phase_error") 
+      foundErrors.phaseError = t("common.errors.phase_error")
     }
     return foundErrors
   }
@@ -150,25 +157,25 @@ export function ModalPlanningNew(props: PlanningProps) {
   }
 
 
-  const createMilestone = () =>{ 
+  const createMilestone = () => {
     const validationResult = validation()
     if (Object.keys(validationResult).length > 0) {
       setErrors(validationResult)
       return false
     }
     const data = {
-        milestoneTitle: milestone,
-        dueDate: dueDate,
-        description: description,
-        phaseID: phaseID,
-        phaseName: phaseName,
-        worktypeID: workTypeD.worktypeID,
-        worktypeName: workTypeD.worktypeName
-      }
-      props.getMilestoneData(data);
-      props.cancel()
-      resetAddData()
+      milestoneTitle: milestone,
+      dueDate: dueDate,
+      description: description,
+      phaseID: phaseID,
+      phaseName: phaseName,
+      worktypeID: workTypeD.worktypeID,
+      worktypeName: workTypeD.worktypeName
     }
+    props.getMilestoneData(data);
+    props.cancel()
+    resetAddData()
+  }
 
   return (
     <div>
@@ -177,12 +184,12 @@ export function ModalPlanningNew(props: PlanningProps) {
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-      // trigger={
-      //   <Button size="small" className="primary">
-      //     + Add New
-      //   </Button>
-      // }
-      closeOnDimmerClick={false}
+        // trigger={
+        //   <Button size="small" className="primary">
+        //     + Add New
+        //   </Button>
+        // }
+        closeOnDimmerClick={false}
       >
         <Modal.Header>
           <h3>{t("project_tab_menu.planning.add_milestone")} </h3>
@@ -195,7 +202,7 @@ export function ModalPlanningNew(props: PlanningProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                      {t("project_tab_menu.planning.milestone_title")} <span className="danger">*</span>
+                        {t("project_tab_menu.planning.milestone_title")} <span className="danger">*</span>
                       </label>
                       <Input
                         placeholder={t("project_tab_menu.planning.milestone_title")}
@@ -265,7 +272,7 @@ export function ModalPlanningNew(props: PlanningProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                      {t("project_tab_menu.task.work_type")} <span className="danger">*</span>
+                        {t("project_tab_menu.task.work_type")} <span className="danger">*</span>
 
                       </label>
                       <Select
@@ -294,8 +301,9 @@ export function ModalPlanningNew(props: PlanningProps) {
                       />
                     </Form.Field> */}
                     <Form.Field>
-                    <label>{t("common.select_phase")} <span className="danger">*</span></label>
-                    <PhaseIndex parentPhaseSelect={onsetPhasesID} error={errors?.phaseError && !phaseID}/>
+                      <label>{t("common.select_phase")} <span className="danger">*</span></label>
+                      <PhaseIndex parentPhaseSelect={onsetPhasesID} error={errors?.phaseError && !phaseID} />
+                      {errors?.phaseError && !phaseID ? <span className="error-message">{t("common.errors.phase_error")}</span> : null}
                     </Form.Field>
                   </Grid.Column>
 

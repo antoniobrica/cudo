@@ -67,9 +67,7 @@ export const ModalViewTask = (props: AlertProps) => {
       >
         <Modal.Header>
           <h3 className="d-flex align-items-center">
-            <span className="material-icons check-grey">
-              check_circle_outline
-            </span>
+            <i className="ms-Icon ms-Icon--CheckMark circle-checkmark" aria-hidden="true"></i>
             {t("project_tab_menu.task.task_details")} <span className="textt task-s-number">T-00{props.id} </span>
             <span onClick={() => props.editTask(props.taskData)} className="edit-task-link"><Icon name="edit" /> {t("common.edit")}</span>
           </h3>

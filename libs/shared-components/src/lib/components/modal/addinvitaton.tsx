@@ -48,7 +48,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
   const [meetingDescription, setMeetingDescription] = useState("");
   // const [protocolId, setProtocolID] = useState("");
   // const [protocolTitle, setProtocolTitle] = useState("");
-  const [members, setMembers] = React.useState<any>([]);
+  const [members, setMembers] = useState<any>([]);
 
   const [errors, setErrors] = useState<AddInvitationErrors>({})
 

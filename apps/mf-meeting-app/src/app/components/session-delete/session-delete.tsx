@@ -50,6 +50,8 @@ export function SessionDelete(props: SessionDeleteProps) {
 
             }
         });
+
+        props.cancel(true)
     }
 
     return (
