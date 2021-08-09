@@ -74,25 +74,33 @@ export function Planning(props: PlanningProps) {
   //   variables: { milestoneID: milestoneIDd },
   // });
 
-  React.useEffect(() => {
-    if (MilestoneData) {
-      setmilestoneByID(MilestoneData)
-      setOpen(true)
-      console.log('MilestoneData', MilestoneData);
-    }
-  }, [MilestoneData])
-  React.useEffect(() => {
-    if (props.worktypes) {
-      console.log('worktypes-planning', props.worktypes);
-    }
-  }, [props.worktypes])
+  // React.useEffect(() => {
+  //   if (MilestoneData) {
+  //     setmilestoneByID(MilestoneData)
+  //     setOpen(true)
+  //     console.log('MilestoneData', MilestoneData);
+  //   }
+  // }, [MilestoneData])
+  // React.useEffect(() => {
+  //   if (props.worktypes) {
+  //     console.log('worktypes-planning', props.worktypes);
+  //   }
+  // }, [props.worktypes])
 
   const cancel = () => {
     setOpen(false)
+    setOpenUpdate(false)
+  }
+  const closeDeletePopup = () =>{
+    setOpenD(false)
+  }
+  const closeEditPopup = () => {
+    setOpenEdit(false)
   }
 
-  const viewDetail = (id) => {
-    setmilestoneID(id);
+  const viewDetail = (data) => {
+    setmilestoneByID(data)
+    setOpen(true)
   }
   const deletePlan = (data) => {
     setPlanData(data)
@@ -111,7 +119,7 @@ export function Planning(props: PlanningProps) {
   }
 
   const confirmation = (data, task) => {
-    console.log('data', task);
+    // console.log('data', task);
     setOpenUpdate(false);
     let status;
     if (task.status === 'COMPLETED') {
@@ -132,7 +140,7 @@ export function Planning(props: PlanningProps) {
     milestoneUpdate({
       variables: updatedMilestone,
       update: (cache) => {
-        console.log('updatedMilestone', updatedMilestone)
+        // console.log('updatedMilestone', updatedMilestone)
         const cacheData = cache.readQuery({ query: GET_MILESTONES }) as IMileStones;
         cache.writeQuery({
           query: GET_MILESTONES,
@@ -144,9 +152,6 @@ export function Planning(props: PlanningProps) {
 
     });
   };
-  const cancelUpdate = () => {
-    setOpenUpdate(false);
-  }
   const edittPlan = (data) => {
     setPlanData(data)
     setmilestoneIDE(data.milestoneID);
@@ -154,7 +159,7 @@ export function Planning(props: PlanningProps) {
   }
 
   const getMilestoneData = (data) => {
-    console.log('getMilestoneData', data);
+    // console.log('getMilestoneData', data);
     addPlan({
       variables: data,
       update: (
@@ -172,13 +177,13 @@ export function Planning(props: PlanningProps) {
     });
   }
 
-  const confirmationUpdate = (data) => {
-
+  const confirmationUpdate = (plan) => {
+    closeEditPopup()
   }
   const confirmationDelete = (plan) => {
-    setOpenD(false)
+    closeDeletePopup()
     const milestoneID = plan.milestoneID;
-    console.log('plan=milestoneID', milestoneID);
+    // console.log('plan=milestoneID', milestoneID);
     planDelete({
       variables: {
         milestoneID
@@ -212,7 +217,7 @@ export function Planning(props: PlanningProps) {
 
   // }
   const editMilestoneData = (data) => {
-    console.log('edited-data', data);
+    // console.log('edited-data', data);
     milestoneUpdate({
       variables: data,
       update: (
@@ -237,7 +242,7 @@ export function Planning(props: PlanningProps) {
     </div>
   );
   if (data) {
-    console.log('milestone-data', data.MileStones);
+    // console.log('milestone-data', data.MileStones);
   }
   const openAdd = () => {
     setIsOpen(true)
@@ -255,6 +260,8 @@ export function Planning(props: PlanningProps) {
             cancel={cancel}
             milestoneDataById={milestoneByID}
             loading={milLoading}
+            edit={edittPlan}
+            delete={deletePlan}
           ></ModalViewPlanning>
         </div>
         : null}
@@ -266,18 +273,18 @@ export function Planning(props: PlanningProps) {
             confirm={confirmation}
             taskData={planData}
             taskStatus={milestoneStatus}
-            cancel={cancelUpdate}
+            cancel={cancel}
           ></ModalAlert>
         </div>
       ) : null}
       {openD ?
         <div style={{ marginLeft: 900 }} >
-          <PlanDelete openAlertF={openD} confirm={confirmationDelete} planData={planData} cancel={cancel}></PlanDelete>
+          <PlanDelete openAlertF={openD} confirm={confirmationDelete} planData={planData} cancel={closeDeletePopup}></PlanDelete>
         </div>
         : null}
       {openEdit ?
         <div style={{ marginLeft: 900 }} >
-          <EditMileStonePopup worktypes={props.worktypes} openEdit={openEdit} confirm={confirmationUpdate} getMilestoneData={editMilestoneData} planData={planData} cancel={cancel}></EditMileStonePopup>
+          <EditMileStonePopup worktypes={props.worktypes} openEdit={openEdit} confirm={confirmationUpdate} getMilestoneData={editMilestoneData} planData={planData} cancel={closeEditPopup}></EditMileStonePopup>
         </div>
         : null}
       <div className="tabs-main-info-container planning-outer-con">
@@ -418,7 +425,7 @@ export function Planning(props: PlanningProps) {
                               <Dropdown icon='ellipsis horizontal' floating labeled>
                                 <Dropdown.Menu className="dropdowncomplete">
                                   <Dropdown.Item
-                                    onClick={() => viewDetail(plan.milestoneID)}
+                                    onClick={() => viewDetail(plan)}
                                     icon="eye"
                                     text={t("common.view_details")}
                                   />

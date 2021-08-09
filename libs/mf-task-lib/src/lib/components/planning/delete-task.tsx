@@ -33,7 +33,7 @@ const size = undefined
       <Modal
         closeIcon
         size={size}
-        onClose={() => setOpen(false)}
+        onClose={cancel}
         onOpen={openf}
         open={open} 
         className="delete-confiramtion-popup"

@@ -454,9 +454,10 @@ export function CreateTask(props: CreateTaskProps) {
                         type="date"
                         value={startDate}
                         onChange={onStartDateChange}
+                        error={errors?.dateError && (startDate > endDate)}
                       />
-                    </Form.Field>
                     {errors?.dateError && (startDate > endDate) ? <span className="error-message">{errors.dateError}</span> : null}
+                    </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
