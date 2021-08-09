@@ -3,6 +3,7 @@ import React from 'react';
 import './tasks.module.scss';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
 import { LoaderPage, ModalTaskEdit, TaskArea } from '@cudo/shared-components';
+import { Dropdown, Grid, Popup, Button, Icon } from 'semantic-ui-react';
 import axios from 'axios';
 import {
   ApolloCache,
@@ -718,6 +719,121 @@ export function Tasks(props: TasksProps) {
             </div>
           );
         })}
+
+        <div className="completed-task-con">
+          <h3 className="alltask">Completed Tasks</h3>
+          <div className="tasks-completed-listing">
+            <div className="card1 card-custom gutter-b card-complete">
+              <div className="card-body">
+                <div className="task-upper-con d-flex justify-content-between">
+                  <div className="d-flex align-items-center py-2">
+                    <span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} className="  mr-10 " />  </span>
+                    <span className="textt">T-001</span>
+                    <span className="anchor_complete">  <span className="check-it-complete task-completed mr-2 mr-10"><i className="ms-Icon ms-font-xl ms-Icon--Accept"></i></span>   </span>
+                    <span className="completed-task-list-text line-through">Task title</span>
+                    <div className="d-flex mr-3">
+                      <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row task-listing-desc">
+                        ( Fri Jul 30 2021 ↦ Due Sat Aug 07 2021)
+                          <div className="navi-item">
+                            <a className="navi-link">
+                              <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>2 files  -  </span>
+                            </a>
+                          </div>
+                        <div className="navi-item">
+                          <a className="navi-link">
+                            <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> 5 days <span className="dash-seperator">-</span> </span>
+                          </a>
+                        </div>
+                        <div className="navi-item">
+                          <a className="navi-link">
+                            <span className="navi-text">Realization  <span className="dash-seperator">-</span>  </span>
+                          </a>
+                        </div>
+                          <div className="navi-item">
+                            <a className="navi-link">
+                              <span className="navi-text">Work Type 9   <span className="dash-seperator">-</span> </span>
+                            </a>
+                          </div>
+                            <div className="navi-item">
+                              <a className="navi-link">
+                                <span className="navi-text"> 3 Check points  </span>
+                              </a>
+                            </div>
+                      </div>
+
+                    </div>
+
+                    <div className="sub-task-list-toggle">
+                      <Icon name='tasks' />
+                    </div>
+
+                  </div>
+
+                  <div className="tasks-action-area">
+                      <div className="navi-item  ">
+                        <a className="navi-link">
+                          <span className="navi-text">
+                              <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pin_blue.png`} />
+                          </span>
+                        </a>
+                      </div>
+
+                      <div className="navi-item d-flex">
+                        <a className="navi-link">
+                          <span className="navi-text pin-action"> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} /> </span>
+                        </a>
+                        <Popup trigger={<Button className="more-user-listing">3+</Button>} flowing hoverable>
+                          <Grid>
+                            <Grid.Column textAlign='center'>
+                              <div className="user-tooltip-listing">
+                                <Popup className="user-tooltip-name"
+                                  trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                  content='Mike'
+                                  size='mini'
+                                />
+                                <Popup className="user-tooltip-name"
+                                  trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                  content='John'
+                                  size='mini'
+                                />
+                                <Popup className="user-tooltip-name"
+                                  trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                  content='Hussy'
+                                  size='mini'
+                                />
+                                <Popup className="user-tooltip-name"
+                                  trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                  content='Kevin'
+                                  size='mini'
+                                />
+                              </div>
+                            </Grid.Column>
+                          </Grid>
+                        </Popup>
+                      </div>
+
+
+                    <div className="symbol-group symbol-hover py-2" >
+                      <div className="symbol symbol-30 d-flex">
+                        <span>
+                          <Dropdown icon='ellipsis horizontal' pointing='right'>
+                            <Dropdown.Menu>
+                              <Dropdown.Item icon='eye' text={t("common.view_details")} />
+                              <Dropdown.Item icon='pencil' text={t("common.edit")} />
+                              <Dropdown.Item icon='check circle outline' text={t("project_tab_menu.task.re_open")} />
+                              <Dropdown.Item icon='trash alternate outline' text={t("common.delete")} />
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+            
+        </div>
       </div>
       <button
         onClick={clickBottomAddTask}
