@@ -86,12 +86,15 @@ input,
             display: none;
         }
         &.small {
-            min-height: 4rem;
+            min-height: 4.3rem !important;
             @media (max-width:#{$large-desktop-up}) {
                 min-height: 4rem;
             }
             .text {
                 padding-top: 0.5rem;
+                min-height: 1.7rem !important;
+                height: auto !important;
+                margin: 0.65rem 0;
                 @media (max-width:#{$large-desktop-up}) {
                     padding-top: 0.2rem;
                 }
@@ -553,4 +556,10 @@ span.error-message {
 .ui.form .field .ui.error input[type=url] {
     background: #fff !important;
     border-color: #F96666;
+}
+
+.ui.form .ui.small input[type=time], 
+.ui.form .ui.small input[type=date] {
+    height: 4.3rem;
+    line-height: 1.814286rem;
 }
