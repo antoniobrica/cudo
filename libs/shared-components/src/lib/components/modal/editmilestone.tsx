@@ -179,7 +179,7 @@ export function EditMileStonePopup(props: PlanningProps) {
       // worktypeName: workTypeD.worktypeName
     }
     props.getMilestoneData(data);
-    setOpen(false)
+    cancel()
   }
 
 

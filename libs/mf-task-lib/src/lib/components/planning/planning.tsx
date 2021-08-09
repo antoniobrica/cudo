@@ -177,11 +177,11 @@ export function Planning(props: PlanningProps) {
     });
   }
 
-  const confirmationUpdate = (data) => {
-
+  const confirmationUpdate = (plan) => {
+    closeEditPopup()
   }
   const confirmationDelete = (plan) => {
-    cancel()
+    closeDeletePopup()
     const milestoneID = plan.milestoneID;
     // console.log('plan=milestoneID', milestoneID);
     planDelete({
