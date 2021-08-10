@@ -131,6 +131,7 @@ export function Planning(props: PlanningProps) {
       milestoneID: task.milestoneID,
       description: task.description,
       worktypeName: task.worktypeName,
+      worktypeID:task.worktypeID,
       milestoneTitle: task.milestoneTitle,
       phaseName: task.phaseName,
       dueDate: task.dueDate,
@@ -218,6 +219,7 @@ export function Planning(props: PlanningProps) {
   // }
   const editMilestoneData = (data) => {
     // console.log('edited-data', data);
+    setOpen(false)
     milestoneUpdate({
       variables: data,
       update: (

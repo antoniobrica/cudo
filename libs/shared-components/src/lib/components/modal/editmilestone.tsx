@@ -56,6 +56,10 @@ export function EditMileStonePopup(props: PlanningProps) {
   const [workTypeData, setworkTypeData] = React.useState('')
   const [workType, setworkType] = React.useState(null)
   const [workTypeD, setworkTypeD] = React.useState(null)
+  const [worktypeID, setworktypeID] = React.useState("")
+  const [worktypeName, setWorktypeName] = React.useState("")
+  const [status, setStatus] = React.useState("null")
+  
   const { t } = useTranslation()
   const [errors, setErrors] = React.useState<PlanningErrors>({})
   React.useEffect(() => {
@@ -82,10 +86,14 @@ export function EditMileStonePopup(props: PlanningProps) {
           console.log('props.worktypes[i]', props.worktypes[i]);
           workT.worktypeID = props.worktypes[i].projectWorkTypeID;
           workT.worktypeName = data.value;
+          setWorktypeName(workT.worktypeName)
+          setworktypeID(workT.worktypeID)
           setworkTypeD(workT)
         }
       }
     } else {
+      setWorktypeName("")
+      setworktypeID("")
       setworkTypeD(null)
     }
     
@@ -110,7 +118,7 @@ export function EditMileStonePopup(props: PlanningProps) {
 
   React.useEffect(() => {
     if (props.planData) {
-      var d = props.planData.dueDate;
+      const d = props.planData.dueDate;
 
       console.log('plan-edit-data', props.planData);
       setMilestoneName(props.planData.milestoneTitle);
@@ -119,6 +127,10 @@ export function EditMileStonePopup(props: PlanningProps) {
       setDescription(props.planData.description);
       setmilestoneID(props.planData.milestoneID);
       setPhasesName(props.planData.phaseName);
+      setStatus(props.planData.status)
+      setWorktypeName(props.planData.worktypeName)
+      setworktypeID(props.planData.worktypeID)
+      setworkTypeData(props.planData.worktypeName)
     }
 
   }, [props.planData]);
@@ -154,10 +166,10 @@ export function EditMileStonePopup(props: PlanningProps) {
     if (!dueDate) {
       foundErrors.dateError = t("common.errors.due_date_error")
     }
-    if (!workTypeD) {
+    if (!worktypeID) {
       foundErrors.workTypeError = t("common.errors.worktype_error")
     }
-    if (!phaseID) {
+    if (!phaseName) {
       foundErrors.phaseError = t("common.errors.phase_error")
     }
     return foundErrors
@@ -175,8 +187,9 @@ export function EditMileStonePopup(props: PlanningProps) {
       dueDate: dueDate,
       description: description,
       phaseName: phaseName,
-      // worktypeID: workTypeD.worktypeID,
-      // worktypeName: workTypeD.worktypeName
+      status:status,
+      worktypeID: worktypeID,
+      worktypeName: worktypeName
     }
     props.getMilestoneData(data);
     cancel()
@@ -271,9 +284,9 @@ export function EditMileStonePopup(props: PlanningProps) {
                         value={workTypeData}
                         options={workType}
                         onChange={onMworkType}
-                        error={errors?.workTypeError && !workTypeData}
+                        error={errors?.workTypeError && !worktypeID}
                       />
-                      {errors?.workTypeError && !workTypeData ? <span className="error-message">{errors.workTypeError}</span> : null}
+                      {errors?.workTypeError && !worktypeID ? <span className="error-message">{errors.workTypeError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -292,8 +305,8 @@ export function EditMileStonePopup(props: PlanningProps) {
                     </Form.Field> */}
                     <Form.Field>
                       <label>{t("common.select_phase")} <span className="danger">*</span></label>
-                      <PhaseIndex phaseName={phaseName} parentPhaseSelect={onsetPhasesID} error={errors?.phaseError && !phaseID} />
-                      {errors?.phaseError && !phaseID ? <span className="error-message">{t("common.errors.phase_error")}</span> : null}
+                      <PhaseIndex phaseName={phaseName} parentPhaseSelect={onsetPhasesID} error={errors?.phaseError && !phaseName} />
+                      {errors?.phaseError && !phaseName ? <span className="error-message">{t("common.errors.phase_error")}</span> : null}
                     </Form.Field>
                   </Grid.Column>
 
