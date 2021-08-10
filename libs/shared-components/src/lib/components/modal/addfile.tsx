@@ -1,7 +1,7 @@
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
+import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea, Checkbox, Radio } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 export interface FileProps {
   fileData?
@@ -10,6 +10,7 @@ export interface FileProps {
 }
 
 export function ModalAddPrint(props: FileProps) {
+  
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
@@ -35,6 +36,8 @@ export function ModalAddPrint(props: FileProps) {
   return (
     <div id=" " className="add-files-modal" >
       <Modal className="modal_media modal_center add-file-setting-popup"
+        closeIcon
+        size="small"
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
@@ -60,8 +63,7 @@ export function ModalAddPrint(props: FileProps) {
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
-              <br /><br />
-              <Grid columns={1}>
+              {/* <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
@@ -73,7 +75,116 @@ export function ModalAddPrint(props: FileProps) {
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
+              </Grid> */}
+
+              <Grid columns={1}>
+                <Grid.Row>
+                  <Grid.Column>
+                    <div className="uploaded-files">
+                      <h3>Uploade files</h3>
+                      <ul>
+                        <li>
+                          <p>
+                            <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/powerpoint.png`} alt="" />
+                            file_name.cad
+                          </p>
+                          <i className="ms-Icon ms-Icon--CalculatorMultiply" aria-hidden="true"></i>
+                        </li>
+                        <li>
+                          <p>
+                            <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/powerpoint.png`} alt="" />
+                            file_name.cad
+                          </p>
+                          <i className="ms-Icon ms-Icon--CalculatorMultiply" aria-hidden="true"></i>
+                        </li>
+                        <li>
+                          <p>
+                            <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/powerpoint.png`} alt="" />
+                            file_name.cad
+                          </p>
+                          <i className="ms-Icon ms-Icon--CalculatorMultiply" aria-hidden="true"></i>
+                        </li>
+                      </ul>
+                    </div>
+                  </Grid.Column>
+                </Grid.Row>
+
+                <Grid.Row>
+                  <Grid.Column>
+                    <div className="file-setting-option">
+                      <h3>File Settings</h3>
+                      <div className="generate-file-number">
+                        <p>Generate file number <span>Enable this option to generate file numbering</span></p>
+                        <Checkbox toggle className="toggle_area" />
+                      </div>
+                    </div>
+                    <Grid columns={2}>
+                      <Grid.Row>
+                        <Grid.Column>
+                          <Form.Field>
+                            <label>Project</label>
+                            <Select placeholder='Select' className="small" options={countryOptions} clearable />
+                          </Form.Field>
+                        </Grid.Column>
+                        <Grid.Column>
+                          <Form.Field>
+                            <label>Phase</label>
+                            <Select placeholder='Select' className="small" options={countryOptions} clearable />
+                          </Form.Field>
+                        </Grid.Column>
+                      </Grid.Row>
+                    </Grid>
+
+                    <Grid columns={3}>
+                      <Grid.Row>
+                        <Grid.Column>
+                          <Form.Field>
+                            <label>BKP/Folder</label>
+                            <Select placeholder='Select' className="small" options={countryOptions} clearable />
+                          </Form.Field>
+                        </Grid.Column>
+                        <Grid.Column>
+                          <Form.Field>
+                            <label>File type</label>
+                            <Select placeholder='Select' className="small" options={countryOptions} clearable />
+                          </Form.Field>
+                        </Grid.Column>
+                        <Grid.Column>
+                          <Form.Field>
+                            <label>File Structure</label>
+                            <Select placeholder='Select' className="small" options={countryOptions} clearable />
+                          </Form.Field>
+                        </Grid.Column>
+                      </Grid.Row>
+                    </Grid>
+
+                    <Grid columns={1} className="select-access">
+                      <Grid.Row>
+                        <Grid.Column>
+                          <Form.Field>
+                            <label>Who can access</label>
+                          </Form.Field>
+                          <div className="access-radio">
+                            <div className="radio">
+                              <label>
+                                <input type="radio" value="option1" checked={true} />
+                                Everyone in the Project/Subproject
+                              </label>
+                            </div>
+                            <div className="radio">
+                              <label>
+                                <input type="radio" value="option2" />
+                                Specific People only
+                              </label>
+                            </div>
+                          </div>
+                        </Grid.Column>
+                      </Grid.Row>
+                    </Grid>
+                  </Grid.Column>
+                </Grid.Row>
               </Grid>
+
             </Form>
           </div>
         </Modal.Content>
@@ -85,7 +196,7 @@ export function ModalAddPrint(props: FileProps) {
             size='small' className="primary"
           />
           <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
-          <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i>  {t("common.cancel")}
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i>  {t("common.cancel")}
           </Button>
         </Modal.Actions>
       </Modal>

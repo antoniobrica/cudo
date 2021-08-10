@@ -76,24 +76,46 @@ export function EditMileStonePopup(props: PlanningProps) {
       worktypeID: '',
       worktypeName: ''
     };
-    for (let i = 0; i < props.worktypes.length; i++) {
-      if (props.worktypes[i]?.workTypeName === data.value) {
-        console.log('props.worktypes[i]', props.worktypes[i]);
-        workT.worktypeID = props.worktypes[i].projectWorkTypeID;
-        workT.worktypeName = data.value;
-        setworkTypeD(workT)
+    if(data.value){
+      for (let i = 0; i < props.worktypes.length; i++) {
+        if (props.worktypes[i]?.workTypeName === data.value) {
+          console.log('props.worktypes[i]', props.worktypes[i]);
+          workT.worktypeID = props.worktypes[i].projectWorkTypeID;
+          workT.worktypeName = data.value;
+          setworkTypeD(workT)
+        }
       }
+    } else {
+      setworkTypeD(null)
     }
+    
     setworkTypeData(data.value)
 
     console.log('worktypeName-', workTypeD);
   }
 
+  function formatDate(date) {
+    var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2)
+      month = '0' + month;
+    if (day.length < 2)
+      day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+
   React.useEffect(() => {
     if (props.planData) {
+      var d = props.planData.dueDate;
+
       console.log('plan-edit-data', props.planData);
       setMilestoneName(props.planData.milestoneTitle);
-      setDueDate(props.planData.dueDate);
+      const date = moment.utc(moment(props.planData.dueDate).utc()).format();
+      setDueDate(formatDate(d));
       setDescription(props.planData.description);
       setmilestoneID(props.planData.milestoneID);
       setPhasesName(props.planData.phaseName);
@@ -120,7 +142,7 @@ export function EditMileStonePopup(props: PlanningProps) {
     const date = moment.utc(moment(e.target.value).utc()).format();
     setDueDate(e.target.value)
   }
-
+  
   const onDescriptionChange = e => {
     setDescription(e.target.value);
   }
@@ -157,7 +179,7 @@ export function EditMileStonePopup(props: PlanningProps) {
       // worktypeName: workTypeD.worktypeName
     }
     props.getMilestoneData(data);
-    setOpen(false)
+    cancel()
   }
 
 
@@ -240,8 +262,7 @@ export function EditMileStonePopup(props: PlanningProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                        {t("project_tab_menu.task.work_type")}
-
+                        {t("project_tab_menu.task.work_type")} <span className="danger">*</span>
                       </label>
                       <Select
                         clearable

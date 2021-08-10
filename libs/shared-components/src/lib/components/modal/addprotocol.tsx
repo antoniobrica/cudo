@@ -1,6 +1,7 @@
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import moment from 'moment';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import ReactQuill from 'react-quill';
 import {
   Button,
@@ -46,6 +47,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
   const [protocolEndTime, setProtocolEndTime] = React.useState("");
   const [protocolDescription, setProtocolDescription] = React.useState("");
   const [errors, setErrors] = React.useState<AddProtocolErrors>({});
+  const {t} = useTranslation()
 
   React.useEffect(() => {
     if (props.openAddProtocol) {
@@ -88,7 +90,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
     const endMeetingDateTime = getDateTime(protocolDate, endTime)
 
     if (startMeetingDateTime > endMeetingDateTime) {
-      setErrors({ ...errors, startEndTimeError: "End time must be greater than start time" })
+      setErrors({ ...errors, startEndTimeError: t("common.errors.start_end_time") })
       return false
     } else {
       setErrors({ ...errors, startEndTimeError: "" })
@@ -113,19 +115,22 @@ export function ModalAddProtocol(props: AddProtocolProps) {
   }
 
   const validation = () => {
-    let errorResponse: AddProtocolErrors = {}
+    const errorResponse: AddProtocolErrors = {}
 
     if (!protocolTitle) {
-      errorResponse.titleError = "please add title"
+      errorResponse.titleError = t("project_tab_menu.meeting.errors.title_error")
     }
     if (!protocolDate) {
-      errorResponse.dateError = "plese provide date"
+      errorResponse.dateError = t("project_tab_menu.meeting.errors.date_error")
     }
     if (!protocolStartTime) {
-      errorResponse.startTimeError = "please provide start time"
+      errorResponse.startTimeError = t("common.errors.start_time")
     }
     if (!protocolEndTime) {
-      errorResponse.endTimeError = "please provide end time"
+      errorResponse.endTimeError = t("common.errors.end_time")
+    }
+    if(protocolStartTime > protocolEndTime) {
+      errorResponse.startEndTimeError = t("common.errors.start_end_time")
     }
     return errorResponse
   }
@@ -141,7 +146,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
     const endProtocolDateTime = getDateTime(protocolDate, protocolEndTime)
 
     if (startProtocolDateTime > endProtocolDateTime) {
-      setErrors({ ...errors, startEndTimeError: "End time must be greater than start time" })
+      setErrors({ ...errors, startEndTimeError: "must be greater than start time" })
       return false
     } else {
       setErrors({ ...errors, startEndTimeError: null })
@@ -204,7 +209,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
         closeOnDimmerClick={false}
       >
         <Modal.Header>
-          <h3>Add Protocol </h3>
+          <h3>{t("project_tab_menu.meeting.add_protocol")} </h3>
         </Modal.Header>
         <Modal.Content body>
           <div>
@@ -214,7 +219,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                        Title <span className="danger">*</span>
+                      {t("common.title")} <span className="danger">*</span>
                       </label>
                       <Input
                         placeholder="Team onboarding"
@@ -235,7 +240,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Date <span className="danger">*</span></label>
+                      <label>{t("common.date")} <span className="danger">*</span></label>
                       <Input
                         placeholder="Default"
                         size="small"
@@ -250,7 +255,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Start time <span className="danger">*</span></label>
+                      <label>{t("common.start_time")} <span className="danger">*</span></label>
                       <Input
                         placeholder="Default"
                         size="small"
@@ -265,7 +270,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
-                      <label>End time <span className="danger">*</span></label>
+                      <label>{t("common.end_time")} <span className="danger">*</span></label>
                       <Input
                         placeholder="Default"
                         size="small"
@@ -285,7 +290,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Description</label>
+                      <label>{t("common.desc")}</label>
                       {/* <TextArea placeholder="Tell us more" /> */}
                       <ReactQuill
                         value={protocolDescription}
@@ -302,7 +307,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
                             ]
                           }
                         }}
-                        placeholder="Tell us more"
+                        placeholder={t("common.tell_us_more")}
                         onChange={(content, delta, source, editor) => onDescription(content)}
                         // onKeyDown={onKeyPresDescription}
                         id="txtDescription"
@@ -316,12 +321,12 @@ export function ModalAddProtocol(props: AddProtocolProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Add Files</label>
+                      <label>{t("common.add_files")}</label>
                       <div className="dashed_area md_upload">
                         <div className="file-upload-message">
                           <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/upload.png`} className="mr-10 " />
                           <p className="file-upload-default-message">
-                            Drag & drop or click here to upload file
+                            {t("common.drag_and_drop")}
                           </p>
                         </div>
                         {/* <Input type="file" className="file-upload-input" /> */}
@@ -351,7 +356,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
                       <Grid.Column>
                         <Form.Field>
                           <label>
-                            Title <span className="danger">*</span>
+                            {t("common.title")} <span className="danger">*</span>
                           </label>
                           <Input
                             placeholder="Team onboarding"
@@ -367,7 +372,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <label>Date </label>
+                          <label>{t("common.date")} </label>
                           <Input
                             placeholder="Default"
                             size="small"
@@ -378,7 +383,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
                       </Grid.Column>
                       <Grid.Column>
                         <Form.Field>
-                          <label>Start time </label>
+                          <label>{t("common.start_time")} </label>
                           <Input
                             placeholder="Default"
                             size="small"
@@ -389,7 +394,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
                       </Grid.Column>
                       <Grid.Column>
                         <Form.Field>
-                          <label>End time </label>
+                          <label>{t("common.end_time")} </label>
                           <Input
                             placeholder="Default"
                             size="small"
@@ -404,7 +409,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <label>Members</label>
+                          <label>{t("project_tab_menu.meeting.members")}</label>
 
                           <Dropdown
                             className="small_drop"
@@ -414,7 +419,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
                             search
                             selection
                             options={countryOptions}
-                            placeholder="Select Country"
+                            placeholder={t("common.select")}
                           />
                         </Form.Field>
                       </Grid.Column>
@@ -467,7 +472,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <label>Invite Guests</label>
+                          <label>{t("project_tab_menu.meeting.invite_guest")}</label>
 
                           <Dropdown
                             className="small_drop"
@@ -487,9 +492,9 @@ export function ModalAddProtocol(props: AddProtocolProps) {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <label>Description</label>
+                          <label>{t("common.desc")}</label>
 
-                          <TextArea placeholder="Tell us more" />
+                          <TextArea placeholder={t("common.tell_us_more")} />
                         </Form.Field>
                       </Grid.Column>
                     </Grid.Row>
@@ -500,7 +505,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
         </Modal.Content>
         <Modal.Actions>
           <Button
-            content="Save and Continue"
+            content={t("project_tab_menu.meeting.save_and_cont")}
             onClick={createProtocol}
             positive
             size="small"
@@ -511,7 +516,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
             className="icon-border"
             onClick={cancel}
           >
-            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> {t("common.cancel")}
           </Button>
         </Modal.Actions>
       </Modal>
