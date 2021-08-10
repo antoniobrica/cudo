@@ -44,11 +44,7 @@ export function Phase(props: PhaseProps) {
     props.parentPhaseSelect(phase)
   }
   return (
-<<<<<<< HEAD
     <>
-=======
-    <Form.Field>
->>>>>>> 62676fb941fcbf51a8546e4906b787deb0a9e4a8
       {/* <label>{t("common.select_phase")} </label> */}
       <Select placeholder={t("common.select")} className="small"
         options={items}
