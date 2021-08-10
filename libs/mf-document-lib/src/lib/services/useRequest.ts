@@ -6,8 +6,8 @@ export function useTokenQuery(gqlQuery: DocumentNode) {
   return { loading, error, data };
 }
 
-export function useFileQuery(gqlQuery: DocumentNode) {
-  const { loading, error, data } = useQuery<IFiles>(gqlQuery);
+export function useFileQuery(gqlQuery: DocumentNode, variable) {
+  const { loading, error, data } = useQuery<IFiles>(gqlQuery, variable);
   return { loading, error, data };
 }
 
