@@ -27,7 +27,7 @@ export function FileStructure(props: FileStructureProps) {
 	const [expand, setExpand] = useState(false);
 	const [selectedExpandId, setSelectedExpandId] = useState(null);
 
-	const [fileVersionDetail, setFileVersionDetail] = useState(null);
+	const [selectedFileVersionDetail, setSelectedFileVersionDetail] = useState(null);
 	const [expandVersion, setExpandVersion] = useState(false);
 	const [selectedExpandVersionId, setSelectedExpandVersionId] = useState(null);
 
@@ -37,20 +37,23 @@ export function FileStructure(props: FileStructureProps) {
 	useEffect(() => {
 		if (props.files) {
 			setFileFoldersList(props.files)
-			// console.log('files==', props.files);
 			// setItems(props.files.map((file, i) => ({ key: i, title: file.directory ? file.directory : file.BKPIDTitle, content: { content: (renderItems(file.children)) } })));
 		}
 	}, [props.files]);
 
 	useEffect(() => {
 		if (props.fileVersionDetail) {
-			setFileVersionDetail(props.fileVersionDetail)
+			console.log('---useEffect--fileVersionDetail--', props.fileVersionDetail)
+			setSelectedFileVersionDetail(props.fileVersionDetail)
+
+			setExpandVersion(true)
+
 		}
 	}, [props.fileVersionDetail]);
 
 	useEffect(() => {
 		if (props.downloadedImg) {
-			console.log('downloadedImg', props.downloadedImg);
+
 			for (let i = 0; i < props.downloadedImg.length; i++) {
 				if (props.downloadedImg[i].filename == filesData['fileTitle']) {
 					setimgUrl(props.downloadedImg[i].url);
@@ -58,10 +61,9 @@ export function FileStructure(props: FileStructureProps) {
 			}
 
 		}
-	})
+	}, [props.downloadedImg])
 
 	const onClickViewFileDetail = (data) => {
-		console.log('viewfile', data);
 		setFtype(data.fileType);
 		setView(true);
 		setFilesData(data);
@@ -70,12 +72,10 @@ export function FileStructure(props: FileStructureProps) {
 	}
 
 	const onClickFileDownload = (data) => {
-		console.log('onClickFileDownload');
 		props.downloadFiles(data)
 	}
 
 	const uploadNewVersion = (file) => {
-		console.log('file', file);
 		props.uploadNewVersion(file);
 
 	}
@@ -103,6 +103,7 @@ export function FileStructure(props: FileStructureProps) {
 	}
 
 	const onClickFileVersion = (uploadedFileVersionId) => {
+		console.log('--111--onClickFileVersion---uploadedFileVersionId---', uploadedFileVersionId, selectedExpandVersionId)
 		if (uploadedFileVersionId === selectedExpandVersionId) {
 			setExpandVersion(!expandVersion)
 		} else {
@@ -124,7 +125,7 @@ export function FileStructure(props: FileStructureProps) {
 	// ]
 
 	// const renderItems = (data) => {
-	// 	console.log("files==>", data);
+
 
 	// 	const files = data.map((data) => {
 	// 		return (
@@ -187,50 +188,60 @@ export function FileStructure(props: FileStructureProps) {
 	// 	return files;
 	// }
 	// #endregion
-
+	console.log('-222-selectedFileVersionDetail---', selectedFileVersionDetail)
 	let fileVersionItem = null
 	const renderChildrenSingleFilesVersion = (fileVersions) => {
+		console.log('---renderChildrenSingleFilesVersion--fileVersions--', fileVersions)
 		fileVersionItem = fileVersions.map((item) => {
 
 			const { uploadedFileID, fileType, fileTitle, fileVersion } = item
 			return (
-				<div className="files-versioning-list">
+				<div key={uploadedFileID} className="files-versioning-list">
 					<p>Version {fileVersion} - <span>{fileTitle}</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
 					<div className="files-right-area">
 						<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
 					</div>
 				</div>)
 		})
+		console.log('---fileVersionItem---', fileVersionItem)
 		return fileVersionItem
 	}
 
+
 	const renderFileVersions = () => {
-
-		if (fileVersionDetail) {
-
+		console.log('---333-renderFileVersions----')
+		if (selectedFileVersionDetail) {
+			console.log('--renderFileVersions--fileTask-get --selectedFileVersionDetail-', selectedFileVersionDetail)
 			return (
 				<>
 					<div className="break"></div>
 
-					<div key={fileVersionDetail?.uploadedFileID} className={selectedExpandVersionId === fileVersionDetail?.uploadedFileID && expandVersion ? "version-file-con expand" : "version-file-con"}>
-						{renderChildrenSingleFilesVersion(fileVersionDetail.children)}
-						{/* <div className="files-versioning-list">
-						<p>Version {fileVersion} - <span>{fileTitle}</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
-						<div className="files-right-area">
-							<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
-						</div>
-					</div> */}
-						{/* <div className="files-versioning-list">
-						<p>Version 2 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
-						<div className="files-right-area">
-							<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
-						</div>
-					</div> */}
+					{/* <div key={selectedFileVersionDetail?.uploadedFileID} className={selectedExpandVersionId === selectedFileVersionDetail?.uploadedFileID && expandVersion ? "version-file-con expand" : "version-file-con"}> */}
+					<div key={selectedFileVersionDetail?.uploadedFileID} className={selectedExpandVersionId === selectedFileVersionDetail?.uploadedFileID && expandVersion ? "multiple-files-box expand" : "multiple-files-box"}>
+										{renderChildrenSingleFilesVersion(selectedFileVersionDetail.children)}
 					</div>
+					{/* <div className="break"></div>
+						<div className="version-file-con expand">
+							<div className="files-versioning-list">
+								<p>Version 1 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
+								<div className="files-right-area">
+									<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
+								</div>
+							</div>
+							<div className="files-versioning-list">
+								<p>Version 2 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
+								<div className="files-right-area">
+									<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
+								</div>
+							</div>
+						</div> */}
 				</>
 			)
 		}
 	}
+	useEffect(() => {
+		renderFileVersions()
+	}, [selectedFileVersionDetail])
 
 	const renderChildrenSingleFile = (singleFileItem) => {
 		const { uploadedFileID, fileType, fileTitle, fileVersion } = singleFileItem
@@ -264,6 +275,22 @@ export function FileStructure(props: FileStructureProps) {
 				</div>
 
 				{renderFileVersions}
+
+				{/* <div className="break"></div>
+				<div className="version-file-con expand">
+					<div className="files-versioning-list">
+						<p>Version 1 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
+						<div className="files-right-area">
+							<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
+						</div>
+					</div>
+					<div className="files-versioning-list">
+						<p>Version 2 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
+						<div className="files-right-area">
+							<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
+						</div>
+					</div>
+				</div> */}
 
 			</div>
 		)
@@ -323,8 +350,8 @@ export function FileStructure(props: FileStructureProps) {
 
 					<div className="all-files-con">
 						{renderedFileFoldersList}
-
-						{/* <div className="multiple-files-box expand">
+						<div>--------------------------------------</div>
+						<div className="multiple-files-box expand">
 							<div className="multiple-files-header">
 								<div className="files-left-area">
 									<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
@@ -554,7 +581,7 @@ export function FileStructure(props: FileStructureProps) {
 									</div>
 								</div>
 							</div>
-						</div> */}
+						</div>
 					</div>
 
 

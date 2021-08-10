@@ -96,21 +96,15 @@ export function FileListing(props: FileListingProps) {
     return
   };
   React.useEffect(getContainersEffect, []);
-console.log('---selectedFileId---',selectedFileId)
-  // if (selectedFileId) {
-    const { loading:fileVersionLoading, error:fileVersionError, data:fileVersionData } = useFileVersionQuery(GET_FILE_VERSIONS, {
-      variables: { projectId, fileId: selectedFileId },
-    });
-  // }
+    
+  const { loading: fileVersionLoading, error: fileVersionError, data: fileVersionData } = useFileVersionQuery(GET_FILE_VERSIONS, {
+    variables: { projectId, fileId: selectedFileId },
+  }); 
+
   React.useEffect(() => {
-    // if (selectedFileId) {
-    //   const { loading:fileVersionLoading, error:fileVersionError, data:fileVersionData } = useFileVersionQuery(GET_FILE_VERSIONS, {
-    //     variables: { projectId, fileId: selectedFileId },
-    //   });
-      if(fileVersionData){
-        setSelectedFileVersions(fileVersionData)
-      }
-    // }
+    if (fileVersionData) {
+      setSelectedFileVersions(fileVersionData)
+    }
   }, [fileVersionData]);
 
   const downloadFiles = (data) => {
@@ -124,7 +118,7 @@ console.log('---selectedFileId---',selectedFileId)
   }
 
   const uploadNewVersion = (data) => {
-    console.log('data', data);
+
     setFileVersion(data);
     setOpenNew(true)
   }
@@ -137,7 +131,7 @@ console.log('---selectedFileId---',selectedFileId)
   }
 
   const uploadNewVersionFile = (data) => {
-    console.log('data-==>', data);
+
     setOpenNew(false)
     addFile({
       variables: {
@@ -181,13 +175,8 @@ console.log('---selectedFileId---',selectedFileId)
 
   const getSelectedFileId = (fileId) => {
     setSelectedFileId(fileId)
-    console.log('---fileId--', fileId)
-    // const { loading:fileVersionLoading, error:fileVersionError, data:fileVersionData } = useFileVersionQuery(GET_FILE_VERSIONS, {
-    //       variables: { projectId, fileId },
-    //     });
   }
 
-  // console.log('isLOading', isLoading);
 
   // const getContainerItemsEffect = () => {
   //    setLoader(true);
@@ -203,7 +192,6 @@ console.log('---selectedFileId---',selectedFileId)
   // };
   // React.useEffect(getContainerItemsEffect, []);
 
-  console.log('-----file listing-----')
 
   return (
     <div>
@@ -221,7 +209,7 @@ console.log('---selectedFileId---',selectedFileId)
             addPinTask={addPinTask}
             downloadedImg={itemsd}
             selectedFileId={getSelectedFileId}
-            fileVersionDetail={selectedFileVersions}
+            fileVersionDetail={selectedFileVersions?.fileVersions}
           ></FileStructure>
           {/* {itemsd.map((item, i) => (
             <div key={i}>
