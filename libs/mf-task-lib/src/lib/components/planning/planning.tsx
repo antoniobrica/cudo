@@ -290,17 +290,17 @@ export function Planning(props: PlanningProps) {
         </div>
         : null}
       <div className="tabs-main-info-container planning-outer-con">
-        {/* <h3>{t("project_tab_menu.planning.title")}
+        <h3>{t("project_tab_menu.planning.title")}
           <Button size="small" className="primary" onClick={openAdd}>
             <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> {t("common.add_new_button")}
           </Button>
-        </h3> */}
+        </h3>
 
         <div className="active-milestone">
-          {/* <h4 className="headingactive">
+          <h4 className="headingactive">
           {t("project_tab_menu.planning.active_milestone")}
           <SelectDropdown />          
-          </h4> */}
+          </h4>
           <Form>
             {/* <Grid columns={4}>
               <Grid.Row>
