@@ -4,6 +4,8 @@ import { Repository } from 'typeorm';
 import { MileStoneEntity } from '../../../entities/milestone.entity';
 import TaskFileEntity from '../../../entities/task-file.entity';
 import { WorkTypeEntity } from '../../../entities/workType.entity';
+import { TaskErrorTypeEnum } from '../../../enums/task-error-type.enum';
+import TaskCustomError from '../../../taskCustomError.execption';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { Pagination, PaginationOptionsInterface } from '../../paginate';
 import { ReferenceService } from '../../reference/service/reference.service';
@@ -65,7 +67,7 @@ export class MileStoneService {
         if (milestone) {
             return milestone;
         }
-        throw new MileStoneNotFoundException(milestone.milestoneID);
+        throw new TaskCustomError(TaskErrorTypeEnum.RECORD_NOT_EXIST);
     }
 
     async deleteMileStone(mileFilter: MileStoneFilterParam) {
@@ -74,7 +76,7 @@ export class MileStoneService {
         if (deleteResponse) {
             return deleteResponse;
         }
-        throw new MileStoneNotFoundException(mileFilter.milestoneID);
+        throw new TaskCustomError(TaskErrorTypeEnum.RECORD_NOT_EXIST);
     }
 
     public async updateMileStoneByID(createMileStoneInput: MileStoneDetailsUpdateInput): Promise<MileStoneEntity[]> {
@@ -84,7 +86,7 @@ export class MileStoneService {
             relations: ['reference', 'files']
         });
         if (milestoneDetails.length <= 0)
-            throw new HttpException('MileStone Not Found', HttpStatus.NOT_FOUND);
+        throw new TaskCustomError(TaskErrorTypeEnum.RECORD_NOT_EXIST);
         const milestoneDetail = milestoneDetails[0];
         milestoneDetail.files = [];
        

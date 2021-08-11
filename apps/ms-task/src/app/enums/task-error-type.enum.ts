@@ -1,0 +1,6 @@
+export enum TaskErrorTypeEnum {
+    RECORD_ALREADY_EXIST ,
+    RECORD_NOT_EXIST ,
+    RECORD_NOT_ADDED ,
+    INTERNAL_SERVER_ERROR 
+}

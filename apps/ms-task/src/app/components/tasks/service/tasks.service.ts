@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SubTaskEntity } from '../../../entities/subtask.entity';
@@ -6,6 +6,7 @@ import TaskAssigneessEntity from '../../../entities/task-assignees.entity';
 import TaskFileEntity from '../../../entities/task-file.entity';
 import TaskFllowersEntity from '../../../entities/task-followers.entity';
 import { TasksEntity } from '../../../entities/tasks.entity';
+import TaskCustomError from '../../../taskCustomError.execption';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import SortFilterParam from '../../../utils/types/sortParam';
 import StatusFilterParam from '../../../utils/types/status.filter';
@@ -13,13 +14,13 @@ import TaskFilterParams from '../../../utils/types/taskFilterParams';
 import taskTypeFilterParam from '../../../utils/types/taskType.filter';
 import { Pagination, PaginationOptionsInterface } from '../../paginate';
 import { ReferenceService } from '../../reference/service/reference.service';
-import SubTaskNotFoundException from '../dto/args/subTaskNotFound';
 import SubTaskInput from '../dto/input/create-subtask.input';
 import { FileFilterInput } from '../dto/input/file-delete.input ';
 import { SubTaskFilterInput } from '../dto/input/subtask-delete.input';
 import { TaskDeleteInput } from '../dto/input/task-delete.input';
 import { TaskDetailsUpdateInput } from '../dto/input/task-details-update.input';
 import { TaskDetailsInput } from '../dto/input/task-details.input';
+import {  TaskErrorTypeEnum } from '../../../enums/task-error-type.enum';
 
 @Injectable()
 export class TasksService {
@@ -231,12 +232,18 @@ export class TasksService {
     }
 
     public async findTaskById(taskFilterParams: TaskFilterParams): Promise<TasksEntity[]> {
-        return await this.projectTasksRepository.find({
+        const foundTask = await this.projectTasksRepository.find({
             where: {
                 taskID: taskFilterParams.taskID
             },
             relations: ['reference', 'assignees', 'followers', 'files', 'subtasks']
         });
+        if(!foundTask.length){
+            // throw task not found exeption
+            throw new TaskCustomError(TaskErrorTypeEnum.RECORD_NOT_EXIST)
+        }
+        return foundTask
+
     }
 
     public async updateTaskByID(createProjectTaskInput: TaskDetailsUpdateInput): Promise<TasksEntity[]> {
@@ -246,9 +253,12 @@ export class TasksService {
             where: { taskID: taskBasics.taskID },
             relations: ['reference', 'assignees', 'followers', 'files', 'subtasks']
         });
+        console.log(taskeDetails)
 
-        if (taskeDetails.length <= 0)
-            throw new HttpException('Task Not Found', HttpStatus.NOT_FOUND);
+        if (taskeDetails.length <= 0){
+            // throw task not found exeption
+            throw new TaskCustomError(TaskErrorTypeEnum.RECORD_NOT_EXIST)
+        }
         const taskeDetail = taskeDetails[0];
 
         if (assignees) {
@@ -358,7 +368,11 @@ export class TasksService {
 
     public async updateSubTask(updateSubTask: SubTaskFilterInput, createinput: SubTaskInput): Promise<SubTaskEntity> {
         const subtask = await this.subTaskRepository.findOne({ where: { subtaskID: updateSubTask.subtaskID } });
-        if (subtask) {
+        console.log(subtask)
+        if (!subtask) {
+            // throw subtask not found exeption
+            throw new TaskCustomError(TaskErrorTypeEnum.RECORD_NOT_EXIST)
+        }
             await this.subTaskRepository.update(subtask.Id, { ...createinput });
             const updatedPost = await this.subTaskRepository.findOne(subtask.Id);
             // #region Check all subtask status are completed then task also be completed
@@ -378,8 +392,7 @@ export class TasksService {
             // #endregion
 
             return updatedPost;
-        }
-        throw new SubTaskNotFoundException(subtask.subtaskID);
+        
     }
 
     public async deletesubTaskByID(subtaskDeleteInput: SubTaskFilterInput): Promise<SubTaskEntity> {
@@ -389,7 +402,8 @@ export class TasksService {
             const updatedPost = await subtask.save()
             return updatedPost
         }
-        throw new HttpException('Task Not Found', HttpStatus.NOT_FOUND);
+        // throw subtask not found exeption
+        throw new TaskCustomError(TaskErrorTypeEnum.RECORD_NOT_EXIST)
     }
 
     public async findAlltasksBYTaskTypes(refFilter: ReferenceFilterParams, taskTypeFilter: taskTypeFilterParam): Promise<TasksEntity[]> {
@@ -412,11 +426,15 @@ export class TasksService {
 
     public async deleteFileByID(fileDeleteInput: FileFilterInput): Promise<TaskFileEntity[]> {
         const { taskFileID } = fileDeleteInput;
-        const fileDetails = await this.taskFileRepository.delete({ taskFileID: taskFileID });
+        // const fileDetails = await this.taskFileRepository.delete({ taskFileID: taskFileID });
         const files = await this.taskFileRepository.find({
             where: { taskFileID: taskFileID },
         });
-        return files;
+        if(files.length){
+            return files;
+        }
+        // throw file not found exeption
+        throw new TaskCustomError(TaskErrorTypeEnum.RECORD_NOT_EXIST)
     }
 
     public async deleteTask(taskDeleteInput: TaskDeleteInput): Promise<TasksEntity> {
@@ -426,6 +444,7 @@ export class TasksService {
             const updatedPost = await task.save()
             return updatedPost
         }
-        throw new HttpException('Task Not Found', HttpStatus.NOT_FOUND);
+        // else throw task not found error
+        throw new TaskCustomError(TaskErrorTypeEnum.RECORD_NOT_EXIST)
     }
 }
