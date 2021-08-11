@@ -1,10 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import {  Repository } from "typeorm";
-import { v4 as uuidv4 } from 'uuid';
 import { Phases } from "../../../entities/phases.entity";
 import { TaskErrorTypeEnum } from "../../../enums/task-error-type.enum";
-import TaskCustomError from "../../../taskCustomError.execption";
+import TaskCustomError from "../../../exceptions/taskCustomError.execption";
 import { CreatePhaseInput } from "../dto/input/create-phases.input";
 
 

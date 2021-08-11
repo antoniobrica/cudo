@@ -1,11 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { PrimaryGeneratedColumn, Repository } from "typeorm";
 import { BKP } from "../../../entities/bkp.entity";
 import { CreateBkpInput } from "../dto/input/create-bkp.input";
-import { v4 as uuidv4 } from 'uuid';
-import TaskCustomError from "../../../taskCustomError.execption";
 import { TaskErrorTypeEnum } from "../../../enums/task-error-type.enum";
+import { Repository } from "typeorm";
+import TaskCustomError from "../../../exceptions/taskCustomError.execption";
 
 
 

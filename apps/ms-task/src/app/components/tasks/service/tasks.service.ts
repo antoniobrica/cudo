@@ -6,7 +6,6 @@ import TaskAssigneessEntity from '../../../entities/task-assignees.entity';
 import TaskFileEntity from '../../../entities/task-file.entity';
 import TaskFllowersEntity from '../../../entities/task-followers.entity';
 import { TasksEntity } from '../../../entities/tasks.entity';
-import TaskCustomError from '../../../taskCustomError.execption';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import SortFilterParam from '../../../utils/types/sortParam';
 import StatusFilterParam from '../../../utils/types/status.filter';
@@ -21,6 +20,7 @@ import { TaskDeleteInput } from '../dto/input/task-delete.input';
 import { TaskDetailsUpdateInput } from '../dto/input/task-details-update.input';
 import { TaskDetailsInput } from '../dto/input/task-details.input';
 import {  TaskErrorTypeEnum } from '../../../enums/task-error-type.enum';
+import TaskCustomError from '../../../exceptions/taskCustomError.execption';
 
 @Injectable()
 export class TasksService {
@@ -41,6 +41,27 @@ export class TasksService {
     public async create(createProjectTaskInput: TaskDetailsInput, referenceFilter: ReferenceFilterParams): Promise<TasksEntity> {
         try {
             const { assignees, followers, files, taskBasics, subtasks } = createProjectTaskInput;
+            
+            // handling client input errors
+            let errorType:number;
+            
+            if(taskBasics.startDate > taskBasics.endDate){
+                errorType = TaskErrorTypeEnum.WRONG_DATE
+            }
+            if(!assignees.length){
+                errorType = TaskErrorTypeEnum.NO_ASSIGNEE
+            }
+            if(!taskBasics.workTypeID){
+                errorType= TaskErrorTypeEnum.NO_WORKTYPE
+            }
+            if(!taskBasics.taskTitle){
+                errorType = TaskErrorTypeEnum.NO_TITLE
+            }
+            
+            if(errorType){
+                throw new TaskCustomError(errorType)
+            }
+
             const taskeDetails = new TasksEntity({ ...taskBasics });
             taskeDetails.assignees = [];
             taskeDetails.followers = [];
@@ -259,6 +280,26 @@ export class TasksService {
             // throw task not found exeption
             throw new TaskCustomError(TaskErrorTypeEnum.RECORD_NOT_EXIST)
         }
+
+         // handling client input errors
+         let errorType:number;
+            
+         if(taskBasics.startDate > taskBasics.endDate){
+             errorType = TaskErrorTypeEnum.WRONG_DATE
+         }
+         if(!assignees.length){
+             errorType = TaskErrorTypeEnum.NO_ASSIGNEE
+         }
+         if(!taskBasics.workTypeID){
+             errorType= TaskErrorTypeEnum.NO_WORKTYPE
+         }
+         if(!taskBasics.taskTitle){
+             errorType = TaskErrorTypeEnum.NO_TITLE
+         }
+         
+         if(errorType){
+             throw new TaskCustomError(errorType)
+         }
         const taskeDetail = taskeDetails[0];
 
         if (assignees) {
