@@ -486,3 +486,106 @@ export const DELETE_INVITATION = gql`mutation DeleteMeeting(
       isDeleted
     }
 }`;
+
+export const ADD_PROTOCOL = gql`
+mutation CreateProtocol(
+  $companyId: String!, 
+  $projectTypeId: String!,
+  $workTypeId: String!,
+  $sessionId: String!,
+  $protocolTitle: String!,
+  $protocolDate: DateTime!,
+  $protocolStartTime: DateTime!,
+  $protocolEndTime: DateTime!,
+  $protocolDescription: String!,
+  $protocolFiles: [ProtocolFilesParam!]!,  
+  $protocolDuration: String!,
+  $status: String
+  ){ 
+    createProtocol( 
+       protocolDetails: { 
+        protocolBasics: { 
+          companyId: $companyId               
+          projectTypeId: $projectTypeId       
+          workTypeId: $workTypeId             
+          sessionId: $sessionId               
+          protocolTitle: $protocolTitle         
+          protocolDate: $protocolDate           
+          protocolStartTime: $protocolStartTime 
+          protocolEndTime: $protocolEndTime     
+          protocolDescription: $protocolDescription             
+          protocolDuration: $protocolDuration
+          status: $status
+        },
+        protocolFiles:  $protocolFiles, 
+      }  
+    ){      
+      companyId
+      projectTypeId
+      workTypeId
+      sessionId
+      protocolTitle
+      protocolDate
+      protocolStartTime
+      protocolEndTime
+      protocolId
+      protocolFiles{
+        fileId
+        protocolFileId
+        protocolFileTitle
+      }
+      # createdAt
+      createdBy
+      # updatedAt
+      updatedBy
+      protocolDuration
+      status   
+    }
+}`;
+
+export const GET_PROTOCOLS = gql`
+query GetProtocolList(
+  # $companyId?: String!
+  # $projectTypeId?: String!
+  # $workTypeId?: String!
+  $sessionId: String!
+){
+  getProtocolList(
+    sortFilter: { sortBy: ASC }
+    statusFilter: { status: SCHEDULED }
+    protocolFilter: {  
+      # companyId: $companyId
+      # projectTypeId: $projectTypeId
+      # workTypeId: $workTypeId
+      sessionId: $sessionId
+    }
+    options: { limit: 10, page: 0 }
+  ) {
+    results {
+      companyId
+      projectTypeId
+      workTypeId
+      sessionId
+      protocolId
+      protocolTitle
+      protocolDate
+      protocolStartTime
+      protocolEndTime
+      protocolDescription
+      protocolFiles {
+        fileId
+        protocolFileId
+        protocolFileTitle
+      }
+      # createdAt
+      createdBy
+      # updatedAt
+      updatedBy
+      protocolDuration
+      status
+    }
+    total
+    page_total
+    # hasNextPage
+  }
+}`;

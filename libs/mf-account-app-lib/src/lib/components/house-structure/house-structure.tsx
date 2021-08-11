@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Dropdown, Form, Segment, Select } from 'semantic-ui-react';
 import { GET_STRUCTURE } from '../../graphql/graphql';
 import { useStructureQuery } from '../../services/useRequest';
@@ -11,6 +12,7 @@ export interface HouseStructureProps {
 
 export function HouseStructure(props: HouseStructureProps) {
   const [items, setItems] = React.useState([])
+  const {t} = useTranslation()
 
   const { loading, error, data } = useStructureQuery(GET_STRUCTURE);
   React.useEffect(() => {
@@ -26,10 +28,11 @@ export function HouseStructure(props: HouseStructureProps) {
       <Segment>
         <Dropdown
           options={items}
-          placeholder="Select House"
+          placeholder={t("project_tab_menu.cost.add_house")}
           search
           // searchInput={{ autoFocus: true }}
           selection
+          clearable
         />
       </Segment>
     </Form.Field>

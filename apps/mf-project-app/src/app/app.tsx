@@ -98,7 +98,6 @@ function App() {
   const location = useLocation();
   const { url, path } = useRouteMatch();
   // console.log('---Project--app--history---', history)
-
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>

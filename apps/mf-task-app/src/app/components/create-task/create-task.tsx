@@ -149,12 +149,15 @@ export function CreateTask(props: CreateTaskProps) {
     console.log('bkp==>', data);
   }
   const setAsignee = (data) => {
-    console.log('assignee', data)
-
-    const ppl = []
-    ppl.push(data)
-    setAssignees(ppl)
-    // setAsignis(data)
+    // console.log('assignee', data)
+    if(data.userID){
+      const ppl = []
+      ppl.push(data)
+      setAssignees(ppl)
+      // setAsignis(data)
+    }else{
+      setAssignees([])
+    }
   }
 
 
@@ -182,19 +185,25 @@ export function CreateTask(props: CreateTaskProps) {
       worktypeID: '',
       worktypeName: ''
     };
-    for (let i = 0; i < props.workTypes.length; i++) {
-      if (props.workTypes[i]?.workTypeName === data.value) {
-        console.log('props.worktypes[i]', props.workTypes[i]);
-        workT.worktypeID = props.workTypes[i].projectWorkTypeID;
-        workT.worktypeName = data.value;
-        setworktypeName(workT.worktypeName);
-        setworktypeID(workT.worktypeID);
-        setworkTypeD(workT)
+    if(data.value){
+      for (let i = 0; i < props.workTypes.length; i++) {
+        if (props.workTypes[i]?.workTypeName === data.value) {
+          // console.log('props.worktypes[i]', props.workTypes[i]);
+          workT.worktypeID = props.workTypes[i].projectWorkTypeID;
+          workT.worktypeName = data.value;
+          setworktypeName(workT.worktypeName);
+          setworktypeID(workT.worktypeID);
+          setworkTypeD(workT)
+        }
       }
+    } else {
+      setworktypeName("")
+      setworktypeID("")
+      setworkTypeD("")
     }
     setworkTypeData(data.value)
 
-    console.log('worktypeName-', workTypeD);
+    // console.log('worktypeName-', workTypeD, setworkTypeData);
   }
 
 
@@ -401,7 +410,6 @@ export function CreateTask(props: CreateTaskProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Assignee" error={errors?.assigneeError && !assignees.length} />
-                    {errors?.assigneeError && !assignees.length ? <span className="error-message">{errors.assigneeError}</span> : null}
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
@@ -446,7 +454,9 @@ export function CreateTask(props: CreateTaskProps) {
                         type="date"
                         value={startDate}
                         onChange={onStartDateChange}
+                        error={errors?.dateError && (startDate > endDate)}
                       />
+                    {errors?.dateError && (startDate > endDate) ? <span className="error-message">{errors.dateError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
@@ -468,8 +478,8 @@ export function CreateTask(props: CreateTaskProps) {
                         onChange={onsetEstimatedDays}
                       />
                     </Form.Field>
+                  
                   </Grid.Column>
-                  {errors?.dateError && (startDate > endDate) ? <span className="error-message">{errors.dateError}</span> : null}
                 </Grid.Row>
                 <Grid.Row>
                 </Grid.Row>

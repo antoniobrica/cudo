@@ -79,9 +79,11 @@
   border: 1px solid #ebedf3;
 }
 .card1.card-custom {
-  -webkit-box-shadow: 0 0 30px 0 rgb(82 63 105 / 5%);
-  box-shadow: 0 0 30px 0 rgb(82 63 105 / 5%);
+  box-shadow: 0 1px 2px #0000001a;
   border: 0;
+  &.task-main-con {
+    box-shadow: 0 1px 2px #0000001a;
+  }
 }
 
 .gutter-b {
@@ -226,6 +228,23 @@
   border-radius: 500rem;
   background-color: #2d62ed;
   padding: 0 0 0 3px;
+}
+.field.filled-fields {
+  .event {
+    margin-top: 7px;
+    .label-spacer {
+      width: 24px;
+      height: 24px;
+      padding: 0;
+      @include flex(flex);
+      @include align-items(center);
+      @include justify-content(center);
+      span {
+        font-size: 11px;
+        font-weight: 500;
+      }
+    }
+  }
 }
 
 .planningbelow {
@@ -381,7 +400,7 @@ canvas.coveringCanvas{
   display: none;
 }
 .task-listing-desc {
-  font-weight: $font-medium;
+  font-weight: $font-regular;
   .navi-item {
     margin: 0 5px;
     @include flex(flex);
@@ -404,7 +423,11 @@ canvas.coveringCanvas{
   padding: 0.55rem 1.5rem;
 }
 .task-upper-con .textt {
-  min-width: 48px;
+  min-width: 46px;
+  height: 20px;
+  @include flex(flex);
+  @include align-items(center);
+  @include justify-content(center);
 }
 span.completed-task-list-text.line-through {
   font-size: 1.3rem;
@@ -419,12 +442,12 @@ span.completed-task-list-text.line-through {
 }
 .card1.card-custom.gutter-b.checklist-main-con {
   box-shadow: none;
-  margin-top: 10px;
+  margin-top: 5px;
   border-top: 1px solid #0000000d;
   padding-top: 0;
 }
 .card1.card-custom.gutter-b.task-main-con > .card-body {
-  padding: .55rem 0;
+  padding: .60rem 0;
 }
 .task-upper-con {
   padding: 2px 1.5rem;
@@ -434,12 +457,46 @@ span.completed-task-list-text.line-through {
   @include transition(all .25s);
   .anchor_complete {
     padding: 0 15px 0 0;
+    a {
+      i {
+        border: 1px solid #9FB5C5;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        color: #9FB5C5;
+        &.completed {
+          background: #2D62ED;
+          color: #fff;
+        }
+      }
+    }
+    i {
+      border: 1px solid #9FB5C5;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #9FB5C5;
+      &.completed {
+        background: #2D62ED;
+        color: #fff;
+        border: none;
+      }
+    }
   }
   span.checklist-actions {
-    margin: 0 0 0 10px;
+    margin: 0 0 0 15px;
     opacity: 0;
+    @include transition(all .25s);
     i {
-      margin: 0 8px;
+      margin: 0;
       font-size: 14px;
       color: #718898;
       font-weight: 400;
@@ -504,9 +561,33 @@ span.anchor_complete.checklist-complete-box span.material-icons.check-grey {
 }
 .add-new-task-con {
   margin-top: 15px;
+  .anchor_complete {
+    display: inline-block;
+    a {
+      i {
+        border: 1px solid #9FB5C5;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        color: #9FB5C5;
+        opacity: .7;
+      }
+    }
+  }
 }
 .add-new-link {
   padding: 15px 15px 0;
+  span.anchor_complete {
+    display: flex;
+    align-items: center;
+    i {
+      margin-right: 8px;
+    }
+  }
 }
 .add-task-dropdown .ui.dropdown {
   background: #2d62ed;
@@ -520,6 +601,7 @@ span.anchor_complete.checklist-complete-box span.material-icons.check-grey {
     color: #fff;
     background: #2d62ed !important;
     left: 6px !important;
+    font-weight: 600;
   }
   .menu {
     min-width: 190px !important;
@@ -528,6 +610,7 @@ span.anchor_complete.checklist-complete-box span.material-icons.check-grey {
     .item {
       font-size: 13px;
       font-weight: 500;
+      @include flex(flex);
       i {
         color: #262B43;
         min-width: 22px;
@@ -585,4 +668,121 @@ button.anchor_complete i {
 }
 h3.alltask {
   margin-bottom: 15px;
+}
+i.circle-checkmark {
+  border-radius: 50%;
+  border: 1px solid #9FB5C5;
+  width: 24px;
+  height: 24px;
+  color: #9FB5C5;
+  line-height: 1;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px 0 0;
+}
+.card-custom.task-main-con.pinned-box::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 3px;
+  background: #2d62ed;
+  height: 50px;
+}
+span.check-it-complete {
+  i {
+    border: 1px solid #9FB5C5;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1.5rem;
+    color: #9FB5C5;
+    font-weight: 600;
+  }
+  &.task-completed {
+    i {
+      background: #37BA77;
+      color: #fff;
+      border: none;
+    }
+  }
+}
+button.ui.button.more-user-listing {
+  background: #dadada;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 12px;
+  margin: 0 0 0 10px;
+  color: #1b1b40;
+  font-weight: 600;
+}
+
+.ui.flowing.popup {
+  background-color: #fff;
+  border: none;
+  box-shadow: 0 1px 2px #0000001a;
+  &:before {
+    display: none;
+  }
+  .user-tooltip-listing {
+    img {
+      margin: 5px;
+      background: #e6e6e6;
+      border-radius: 50%;
+    }
+  }
+}
+.ui.mini.popup {
+  background-color: #fff;
+  border: none;
+  &:before {
+    display: none;
+  }
+  &.user-tooltip-name {
+    .content {
+      color: #1B1B40;
+      background-color: #fff;
+      border: none;
+      font-size: 14px;
+      font-weight: 500;
+      @include flex(flex);
+      @include align-items(center);
+      @include justify-content(center);
+    }
+  }
+}
+
+.completed-task-con {
+  margin-top: 40px;
+}
+
+.task-action-area {
+  margin-top: 15px;
+  @include flex(flex);
+  @include align-items(center);
+  .add-new-task-btn.ui.small.button {
+    margin-right: 15px;
+    font-size: 1.4rem;
+    padding: 0 1.8rem;
+    height: 3.3rem;
+    line-height: 3.3rem;
+    i {
+      font-size: 12px;
+      font-weight: 600;
+    }
+  }
+  a {
+    font-size: 14px;
+    font-weight: 500;
+    &:hover {
+      color: #2D62ED;
+    }
+  }
 }

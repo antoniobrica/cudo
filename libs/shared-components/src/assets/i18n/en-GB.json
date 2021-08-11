@@ -184,7 +184,11 @@
       "sub_total": "Sub Total",
       "print": "Print",
       "item_quantity": "Item Quantity",
-      "item_price": "Item Price"
+      "item_price": "Item Price",
+      "add_house": "Add House",
+      "select_house": "Select house",
+      "this_house_contain": "This house will contain all the BKP",
+      "item_quality": "Item quality"
     },
     "tender": {
       "title": "Tender"
@@ -193,10 +197,13 @@
       "title": "Meetings",
       "no_session_data_found_desc": "Hey User, you don't have any active session on this project. Click the button below to create a session list.",
       "no_invitation_data_found_desc": "Hey User, you don't have any active invitation on this session. Click the button below to create an invitation list.",
+      "no_protocol_data_found_desc": "Hey User, you don't have any active protocol on this session. Click the button below to create a protocol list.",
       "add_new_session": "Add New Session",
       "add_session": "Add Session",
       "add_new_invitation": "Add New Invitation",
-      "add_invitation": "Add  Invitation",      
+      "add_invitation": "Add  Invitation",
+      "add_protocol": "Add Protocol",
+      "add_new_protocol": "Add New Protocol",
       "name": "Name",
       "session_title": "Session Title",
       "category": "Category",
@@ -205,13 +212,16 @@
       "template_for_invitation": "Template for invitation",
       "template_for_protocol": "Template for protocol",
       "upcoming_session": "Upcoming meetings",
+      "save_and_cont": "Save and Continue",
+      "invite_guest": "Invite Guests",
       "errors": {
-        "title_error": "Please provide session title",
+        "title_error": "Please provide title",
         "category_error": "Please select meeting category",
         "protocol_template_error": "Please select protocol template",
         "invitation_template_error": "Please select invitaion template",
         "admins_error": "Please select admins",
-        "members_error": "Please select members"
+        "members_error": "Please select members",
+        "date_error": "Please provide date"
       },
       "session_are_you_sure": "Are you sure you want to delete the session?",
       "invitation_are_you_sure": "Are you sure you want to delete the invitation?"
@@ -264,9 +274,10 @@
     "messages": "messages"
   },
   "common": {
+    "title": "Title",
     "select": "Select",
     "add_new_button": "Add New",
-    "confirm":"Confirm",
+    "confirm": "Confirm",
     "cancel": "Cancel",
     "submit": "Submit",
     "ok": "Ok",
@@ -279,6 +290,7 @@
     "continue": "Continue",
     "tell_us_more": "Tell us more",
     "status": "Status",
+    "date": "Date",
     "start_date": "Start Date",
     "end_date": "End Date",
     "due_date": "Due Date",
@@ -306,19 +318,26 @@
     "specific_access": "Specify People ,only",
     "data_not_found": "No Data Found",
     "please_confirm": "Please Confirm",
+    "add_more": "Add more",
+    "add_files": "Add Files",
+    "start_time": "Start Time",
+    "end_time": "End Time",
     "errors": {
       "title_error": "Please provide title",
       "worktype_error": "Please provide work-type",
       "assignee_error": "Please provide Assignee",
       "start_date_error": "Please provide start date",
       "end_date_error": "Please provide end date",
-      "date_error": " Start Date must be less than End Date",
+      "date_error": " Must be smaller than end date",
       "phase_error": " Please provide Phase",
       "due_date_error": " Please provide due date",
       "no_project_name": "Please provide a project name",
       "no_project_number": "Please provide project number",
       "no_client_company": "Please provide client company",
-      "no_building_type": "Please provide a building type"
+      "no_building_type": "Please provide a building type",
+      "start_end_time": "Must be greater than start time",
+      "start_time": "Please provide start time",
+      "end_time": "Please Provide end time"
     }
   },
   "language": {

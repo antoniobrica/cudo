@@ -11,7 +11,7 @@ import { MS_SERVICE_URL } from '@cudo/mf-core';
 export interface InvitationAddProps {
     sessionId?
     openAddInvitation?
-    cancel
+    cancel?
 }
 
 export function InvitationAdd(props: InvitationAddProps) {
@@ -21,7 +21,7 @@ export function InvitationAdd(props: InvitationAddProps) {
     const history = useHistory();
     const res = history.location.pathname.split("/");
     const projectId = res[3].toString();
-    const companyId = "company_1" // "Sftobiz_1234"
+    const companyId=localStorage.getItem('selectedCompany')
 
     const { loading: sessionDetailLoading, error: sessionDetailError, data: sessionDetailData } = useSessionDetailQuery(GET_SESSION_DETAIL, {
         variables: { sessionID: props?.sessionId },
@@ -79,7 +79,7 @@ export function InvitationAdd(props: InvitationAddProps) {
             }
         });
     }
-
+console.log('----companyId----', companyId)
     return (
         <div>
             <ModalAddInvitation
@@ -95,4 +95,5 @@ export function InvitationAdd(props: InvitationAddProps) {
     )
 }
 
-export default InvitationAdd
+  
+  export default InvitationAdd

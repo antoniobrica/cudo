@@ -164,8 +164,42 @@ mutation UpdateTask(
       subtasks: $subtasks
 
    }){
-    taskID
-    status    
+      taskID
+      taskTitle
+      startDate
+      endDate
+      estimatedDays
+      sendNotification
+      saveTaskAsTemplate
+      BKPID
+      BKPTitle
+      phaseID
+      description
+      phaseName
+      status
+      updatedAt
+      createdAt
+      updatedBy
+      createdBy
+      taskTypeID
+      fileID
+      taskType
+      workTypeID
+      workTypeName
+      sequenceNumber
+      reference{
+        referenceID
+      }
+      assignees{
+        userID
+        userName
+      }
+      files{fileID,fileName,fileUrl} 
+      followers{
+        userID
+        userName
+      }
+      subtasks{subtaskID, subtaskTitle, status,isDeleted}
   }
 }`;
 

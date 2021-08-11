@@ -57,6 +57,8 @@ export function InvitationDelete(props: InvitationDeleteProps) {
 
             }
         });
+
+        props.cancel(true)
     }
 
     return (

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { InvitationTab } from "@cudo/shared-components";
 import { LazyLoading } from '@cudo/shared-components';
-import { useInvitationQuery, useSessionDetailQuery } from '../../services/useRequest';
-import { GET_INVITATIONS, GET_SESSION_DETAIL } from '../../graphql/graphql'
+import { useInvitationQuery, useProtocolQuery, useSessionDetailQuery } from '../../services/useRequest';
+import { GET_INVITATIONS, GET_PROTOCOLS, GET_SESSION_DETAIL } from '../../graphql/graphql'
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { Button } from 'semantic-ui-react';
 import { useTranslation } from "react-i18next";
@@ -11,6 +11,7 @@ import InvitationAdd from "../invitation-add/invitation-add";
 import InvitationDetail from "../invitation-detail/invitation-detail";
 import InvitationEdit from "../invitation-edit/invitation-edit";
 import InvitationDelete from "../invitation-delete/invitation-delete";
+import { ProtocolAdd } from "../protocol-add/protocol-add";
 export interface InvitationListingProps {
     sessionId?
 }
@@ -19,7 +20,9 @@ export function InvitationListing(props: InvitationListingProps) {
 
     const { t } = useTranslation()
     const [openPageAddInvitation, setOpenPageAddInvitation] = useState(false)
+    const [openPageAddProtocol, setOpenPageAddProtocol] = useState(false)
     const [openAddInvitationFromTab, setOpenAddInvitationFromTab] = useState(false)
+    const [openAddProtocolFromTab, setOpenAddProtocolFromTab] = useState(false)
     const [sessionId, setSessionId] = useState(null)
 
     const [selectedMeetingId, setSelectedMeetingId] = useState(null)
@@ -35,6 +38,10 @@ export function InvitationListing(props: InvitationListingProps) {
         variables: { sessionId },
     });
 
+    const { loading: protocolLoading, error: protocolError, data: protocolData } = useProtocolQuery(GET_PROTOCOLS, {
+        variables: {sessionId},
+    }); 
+
     useEffect(() => {
         if (props.sessionId) {
             setSessionId(props.sessionId)
@@ -42,23 +49,36 @@ export function InvitationListing(props: InvitationListingProps) {
     }, [props.sessionId])
 
     useEffect(() => {
-         if (openAddInvitationFromTab) {
+        if (openAddInvitationFromTab) {
             setOpenPageAddInvitation(true);
         }
     }, [openAddInvitationFromTab])
+
+    useEffect(() => {
+        if(openAddProtocolFromTab){
+            setOpenPageAddProtocol(true)
+        }
+    },[openAddProtocolFromTab])
 
     const onTabInvitationAddClick = () => {
         setOpenAddInvitationFromTab(true)
         setOpenPageAddInvitation(true);
     }
 
+    const onTabProtocolAddClick = () => {
+        setOpenAddProtocolFromTab(true)
+        setOpenPageAddProtocol(true)
+    }
+
     const addNew = () => {  
          setOpenPageAddInvitation(true);
     }
     const cancel = () => {
-         setOpenPageAddInvitation(false)
+        setOpenPageAddInvitation(false)
         setOpenMeetingDetail(false)
         setOpenMeetingEdit(false)
+        setOpenPageAddProtocol(false)
+        setOpenMeetingDelete(false)
     }
 
     const onClickViewInvitation = (meetingId) => {
@@ -102,6 +122,8 @@ export function InvitationListing(props: InvitationListingProps) {
     return (
         <div>
             <InvitationAdd sessionId={props.sessionId} openAddInvitation={openPageAddInvitation} cancel={cancel} />
+            <ProtocolAdd sessionId={props.sessionId} openAddProtocol= {openPageAddProtocol} cancel={cancel} />
+
 
             {data?.getMeetingList?.results?.length > 0 ?
                 <div>
@@ -134,7 +156,9 @@ export function InvitationListing(props: InvitationListingProps) {
                     <InvitationTab
                         sessionId={props?.sessionId}
                         invitations={data?.getMeetingList?.results}
+                        protocols = {protocolData?.getProtocolList?.results}
                         addInvitationClick={onTabInvitationAddClick}
+                        addProtocolClick={onTabProtocolAddClick}
                         sessionDetail={sessionDetailData}
                         viewInvitation={onClickViewInvitation}
                         editInvitation={onClickEditInvitation}
@@ -152,7 +176,7 @@ export function InvitationListing(props: InvitationListingProps) {
                     <Button size="small" className="primary" onClick={addNew}>
                         + {t("project_tab_menu.meeting.add_new_invitation")}
                     </Button>
-                    
+
                 </div>
 
             }

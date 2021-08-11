@@ -80,3 +80,8 @@ export interface ISubTaskUpdate {
 export interface SubTaskUpdateMutation {
   updateSubTask: ISubTaskUpdate;
 }
+
+
+export interface IUpdateTask {
+  updateTask: ITask[];
+}

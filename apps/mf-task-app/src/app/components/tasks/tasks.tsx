@@ -3,6 +3,7 @@ import React from 'react';
 import './tasks.module.scss';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
 import { LoaderPage, ModalTaskEdit, TaskArea } from '@cudo/shared-components';
+import { Dropdown, Grid, Popup, Button, Icon } from 'semantic-ui-react';
 import axios from 'axios';
 import {
   ApolloCache,
@@ -32,7 +33,7 @@ export function Tasks(props: TasksProps) {
   const history = useHistory();
   const { t } = useTranslation();
   const [referenceID, setReferenceID] = React.useState<string>('')
-  const { loading, error, data } = useTaskQuery(GET_TASKS, {
+  const { loading, error, data: taskListData } = useTaskQuery(GET_TASKS, {
     variables: { referenceID },
   });
 
@@ -70,12 +71,12 @@ export function Tasks(props: TasksProps) {
   const PER_PAGE = 10;
   const offset = currentPage * PER_PAGE;
   React.useEffect(() => {
-    setTotalTaskData(data?.tasks?.results)
-  }, [data])
+    setTotalTaskData(taskListData?.tasks?.results)
+  }, [taskListData])
 
-  const currentPageData = data?.tasks?.results
+  const currentPageData = taskListData?.tasks?.results
     .slice(offset, offset + PER_PAGE).map((data) => data);
-  const pageCount = Math.ceil(data?.tasks?.results.length / PER_PAGE);
+  const pageCount = Math.ceil(taskListData?.tasks?.results.length / PER_PAGE);
   console.log(currentPageData, 'currentPageData', pageCount)
   function handlePageClick({ selected: selectedPage }) {
     setCurrentPage(selectedPage);
@@ -94,9 +95,10 @@ export function Tasks(props: TasksProps) {
     variables: { referenceID },
   });
 
-  const [editTaskApi, { data: editData }] = useMutation(UPDATE_TASK, {
-    refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
-  });
+  const [editTaskApi, { data: editData }] = useMutation(UPDATE_TASK);
+  //   , {
+  //   refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
+  // }
 
   const query = `query ProjectById($projectId: String!) {
     projectById( projectId: $projectId)
@@ -348,7 +350,7 @@ export function Tasks(props: TasksProps) {
     });
   };
   const subTask = (data, title) => {
-    console.log('data-sub task', data)
+
     const subtask = [];
     const createSt = {
       subtaskTitle: title,
@@ -363,7 +365,7 @@ export function Tasks(props: TasksProps) {
       followers.push({ userID: data.userID, userName: data.userName })
     })
     subtask.push(createSt);
-    console.log('subtask', subtask);
+
     editTaskApi({
       variables: {
         taskID: data.taskID,
@@ -387,19 +389,49 @@ export function Tasks(props: TasksProps) {
         workTypeName: data.workTypeName,
         workTypeID: data.workTypeID,
       },
+
       update: (cache, data) => {
         const cacheData = cache.readQuery({
           query: GET_TASKS,
           variables: { referenceID },
         }) as ITasks;
+
         cache.writeQuery({
           query: GET_TASKS,
           data: {
-            tasksD: [...cacheData.tasks.results, data],
+            tasks: [...cacheData.tasks.results, data],
           },
           variables: { referenceID },
         });
       },
+      // update: (cache, updatedTaskData) => {
+      //   console.log('--1-subtask data--after update--', "----cache-->", cache, "-----updatedTaskData-->",updatedTaskData)
+      //   // const cacheData = cache.readQuery({
+      //   //   query: GET_TASKS,
+      //   //   variables: { referenceID },
+      //   // }) as ITasks;
+      //   // console.log('--2-subtask data--after update cachedata--', cacheData)
+
+      //   console.log('----updatedTaskData?.data?.updateTask[0]?.subtasks--', updatedTaskData?.data?.updateTask[0]?.subtasks)
+      //   const newTaskList = taskListData?.tasks?.results?.map((task) => {
+      //     if (task.taskID === data.taskID) {
+      //       const subTaskList = updatedTaskData?.data?.updateTask[0]?.subtasks
+      //       return { ...task, subtasks: subTaskList }
+      //     } else {
+      //       return task;
+      //     }
+      //   });
+      //   console.log('--3 newTaskList--', newTaskList)
+      //   cache.writeQuery({
+      //     // query: GET_TASKS,
+      //     data: {
+      //       // tasksD: [...cacheData.tasks.results, data],
+      //       tasks: newTaskList
+      //     },
+      //     // variables: { referenceID },
+      //   });
+      //   console.log('--4 after writeQuery--')
+      // },
     });
   };
   const changeAdd = (data) => {
@@ -697,8 +729,7 @@ export function Tasks(props: TasksProps) {
 
       <div className="TaskApp-container">
         <h3 className="alltask" style={{ marginBottom: '20px;' }}>{t("project_tab_menu.task.heading")}</h3>
-        {data?.tasks?.results?.map((task, id) => {
-          console.log('data?.tasks?', data)
+        {taskListData?.tasks?.results?.map((task, id) => {
           return (
             <div key={id} >
               <TaskArea
@@ -717,6 +748,132 @@ export function Tasks(props: TasksProps) {
             </div>
           );
         })}
+
+        <div className="task-action-area">
+          <button
+            onClick={clickBottomAddTask}
+            // className="ui large button btn-dashed  btn-large"
+            className="ui small button primary add-new-task-btn">
+            <i className="ms-Icon ms-Icon--Add" aria-hidden="true"></i> {t("project_tab_menu.task.add_new")}
+          </button>
+          <a href="">4 Completed Tasks</a>
+        </div>
+
+
+        <div className="completed-task-con">
+          <h3 className="alltask">Completed Tasks</h3>
+          <div className="tasks-completed-listing">
+            <div className="card1 card-custom gutter-b card-complete">
+              <div className="card-body">
+                <div className="task-upper-con d-flex justify-content-between">
+                  <div className="d-flex align-items-center py-2">
+                    <span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} className="  mr-10 " />  </span>
+                    <span className="textt">T-001</span>
+                    <span className="anchor_complete">  <span className="check-it-complete task-completed mr-2 mr-10"><i className="ms-Icon ms-font-xl ms-Icon--Accept"></i></span>   </span>
+                    <span className="completed-task-list-text line-through">Task title</span>
+                    <div className="d-flex mr-3">
+                      <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row task-listing-desc">
+                        ( Fri Jul 30 2021 ↦ Due Sat Aug 07 2021)
+                        <div className="navi-item">
+                          <a className="navi-link">
+                            <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>2 files  -  </span>
+                          </a>
+                        </div>
+                        <div className="navi-item">
+                          <a className="navi-link">
+                            <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> 5 days <span className="dash-seperator">-</span> </span>
+                          </a>
+                        </div>
+                        <div className="navi-item">
+                          <a className="navi-link">
+                            <span className="navi-text">Realization  <span className="dash-seperator">-</span>  </span>
+                          </a>
+                        </div>
+                        <div className="navi-item">
+                          <a className="navi-link">
+                            <span className="navi-text">Work Type 9   <span className="dash-seperator">-</span> </span>
+                          </a>
+                        </div>
+                        <div className="navi-item">
+                          <a className="navi-link">
+                            <span className="navi-text"> 3 Check points  </span>
+                          </a>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div className="sub-task-list-toggle">
+                      <Icon name='tasks' />
+                    </div>
+
+                  </div>
+
+                  <div className="tasks-action-area">
+                    <div className="navi-item  ">
+                      <a className="navi-link">
+                        <span className="navi-text">
+                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pin_blue.png`} />
+                        </span>
+                      </a>
+                    </div>
+
+                    <div className="navi-item d-flex">
+                      <a className="navi-link">
+                        <span className="navi-text pin-action"> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} /> </span>
+                      </a>
+                      <Popup trigger={<Button className="more-user-listing">3+</Button>} flowing hoverable>
+                        <Grid>
+                          <Grid.Column textAlign='center'>
+                            <div className="user-tooltip-listing">
+                              <Popup className="user-tooltip-name"
+                                trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                content='Mike'
+                                size='mini'
+                              />
+                              <Popup className="user-tooltip-name"
+                                trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                content='John'
+                                size='mini'
+                              />
+                              <Popup className="user-tooltip-name"
+                                trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                content='Hussy'
+                                size='mini'
+                              />
+                              <Popup className="user-tooltip-name"
+                                trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                content='Kevin'
+                                size='mini'
+                              />
+                            </div>
+                          </Grid.Column>
+                        </Grid>
+                      </Popup>
+                    </div>
+
+
+                    <div className="symbol-group symbol-hover py-2" >
+                      <div className="symbol symbol-30 d-flex">
+                        <span>
+                          <Dropdown icon='ellipsis horizontal' pointing='right'>
+                            <Dropdown.Menu>
+                              <Dropdown.Item icon='eye' text={t("common.view_details")} />
+                              <Dropdown.Item icon='pencil' text={t("common.edit")} />
+                              <Dropdown.Item icon='check circle outline' text={t("project_tab_menu.task.re_open")} />
+                              <Dropdown.Item icon='trash alternate outline' text={t("common.delete")} />
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
       <button
         onClick={clickBottomAddTask}

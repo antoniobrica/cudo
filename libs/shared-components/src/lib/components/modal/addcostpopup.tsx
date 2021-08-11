@@ -199,11 +199,11 @@ export function ModalCost(props: ModalCostProps) {
         // trigger={<Button size='mini' className="grey-btn">+ {t('add_cost.add_new')} </Button>}
         closeOnDimmerClick={false}
       >
-        <Modal.Header><h3>{t('add_cost.add_new_item')} </h3></Modal.Header>
+        <Modal.Header><h3>{t('project_tab_menu.cost.add_new_item')} </h3></Modal.Header>
         <Modal.Content body>
           <div>
             <Modal.Header className="cost-modal-header">
-              <h3 className="">{t('add_cost.select_house')} <span>(This house will contain all the BKP)</span></h3>
+              <h3 className="">{t('project_tab_menu.cost.select_house')} <span>({t('project_tab_menu.cost.this_house_contain')})</span></h3>
               <HouseStructureIndex></HouseStructureIndex>
             </Modal.Header>
             {/* <Form>
@@ -223,18 +223,18 @@ export function ModalCost(props: ModalCostProps) {
               </Grid>
             </Form> */}
             <div className="cost-modal-content">
-              <Header className="header" >Items</Header>
+              <Header className="header" >{t('project_tab_menu.cost.items')}</Header>
 
               <Table>
                 <Table.Header>
                   <Table.Row>
                     <Table.HeaderCell></Table.HeaderCell>
                     <Table.HeaderCell># </Table.HeaderCell>
-                    <Table.HeaderCell width={4}>BKP</Table.HeaderCell>
-                    <Table.HeaderCell width={6}>Description</Table.HeaderCell>
+                    <Table.HeaderCell width={4}>{t('common.bkp')}</Table.HeaderCell>
+                    <Table.HeaderCell width={6}>{t('common.desc')}</Table.HeaderCell>
                     <Table.HeaderCell>Files</Table.HeaderCell>
-                    <Table.HeaderCell width={1}>Item quality</Table.HeaderCell>
-                    <Table.HeaderCell width={1}>Item price</Table.HeaderCell>
+                    <Table.HeaderCell width={1}>{t('project_tab_menu.cost.item_quality')}</Table.HeaderCell>
+                    <Table.HeaderCell width={1}>{t('project_tab_menu.cost.item_price')}</Table.HeaderCell>
                     <Table.HeaderCell></Table.HeaderCell>
                   </Table.Row>
                 </Table.Header>
@@ -244,19 +244,19 @@ export function ModalCost(props: ModalCostProps) {
                 </Table.Body>
               </Table>
 
-              <div className="add-more-cost"><a onClick={() => addItem()}><Icon name='add' /> Add more </a></div>
+              <div className="add-more-cost"><a onClick={() => addItem()}><Icon name='add' /> {t("common.add_more")} </a></div>
             </div>
           </div>
         </Modal.Content>
         <Modal.Actions>
           <Button
-            content="Submit"
+            content={t("common.submit")}
             onClick={createCost}
             positive
             size='small' className="primary"
           />
           <Button size='small' className="icon-border" onClick={cancel}>
-            X  Cancel
+            X  {t("common.cancel")}
           </Button>
         </Modal.Actions>
       </Modal>

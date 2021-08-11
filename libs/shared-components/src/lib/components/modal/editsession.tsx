@@ -106,35 +106,52 @@ export function ModalEditSession(props: EditSessionProps) {
     setErrors({ ...errors, titleError: "" })
   }
   const onMworkType = (event, data) => {
-
     const workT = {
       worktypeID: '',
       worktypeName: ''
     };
-    for (let i = 0; i < props.workTypes?.length; i++) {
-      if (props.workTypes[i]?.workTypeName === data.value) {
-        workT.worktypeID = props.workTypes[i].projectWorkTypeID;
-        workT.worktypeName = data.value;
-        setworktypeName(workT.worktypeName);
-        setworktypeID(workT.worktypeID);
-        setworkTypeD(workT)
+    if(data.value){
+      for (let i = 0; i < props?.workTypes?.length; i++) {
+        if (props.workTypes[i]?.workTypeName === data.value) {
+          workT.worktypeID = props.workTypes[i].projectWorkTypeID;
+          workT.worktypeName = data.value;
+          setworktypeName(workT.worktypeName);
+          setworktypeID(workT.worktypeID);
+          setworkTypeD(workT)
+        }
       }
+    } else {
+      setworktypeName("")
+      setworktypeID("")
+      setworkTypeD(null)
     }
-
     setworkTypeData(data.value)
     setErrors({ ...errors, workTypeError: "" })
   }
-  const parentCatagorySelect = (data) => {
-    setCatagory(data)
-    setErrors({ ...errors, categoryError: "" })
+const parentCatagorySelect = (data) => {
+    if(data.meetingCatagoryID){
+      setCatagory(data)
+      setErrors({ ...errors, categoryError: "" })
+    }else{
+      setCatagory(null)
+    }
   }
   const parentSessionSelect = (data) => {
-    setProtocol(data)
-    setErrors({ ...errors, protocolTemplateError: "" })
+    if(data.protocolTemplateID){
+      setProtocol(data)
+      setErrors({ ...errors, protocolTemplateError: "" })
+    }else{
+      setProtocol(null)
+    }
   }
   const parentInvitationSelect = (data) => {
-    setInvitation(data)
-    setErrors({ ...errors, invitationTemplateError: "" })
+    if(data.invitationTemplateID){
+      setInvitation(data)
+      setErrors({ ...errors, invitationTemplateError: "" })
+    } else {
+      setInvitation(null)
+    }
+
   }
   const onAdmins = (data) => {
     setAdmins(data);
@@ -156,10 +173,10 @@ export function ModalEditSession(props: EditSessionProps) {
     if (!catagory) {
       errorResponse.categoryError = t('project_tab_menu.meeting.errors.category_error')
     }
-    if (!admins) {
+    if (!admins.length) {
       errorResponse.adminsError = t('project_tab_menu.meeting.errors.admins_error')
     }
-    if (!members) {
+    if (!members.length) {
       errorResponse.membersError = t('project_tab_menu.meeting.errors.members_error')
     }
     if (!invitation) {
@@ -288,8 +305,10 @@ export function ModalEditSession(props: EditSessionProps) {
                   </Grid.Column>
 
                   <Grid.Column>
-                    <MeetingCategoryIndex parentCatagorySelect={parentCatagorySelect} editCategoryIdSelect={detail?.meetingCategoryID} error={errors?.categoryError && !catagory?.length}></MeetingCategoryIndex>
-                    {errors?.categoryError && !catagory?.length ? <span className="error-message">{errors.categoryError}</span> : null}
+                    <Form.Field>
+                      <MeetingCategoryIndex parentCatagorySelect={parentCatagorySelect} editCategoryIdSelect={detail?.meetingCategoryID} error={errors?.categoryError && !catagory?.length}></MeetingCategoryIndex>
+                      {errors?.categoryError && !catagory?.length ? <span className="error-message">{errors.categoryError}</span> : null}
+                    </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
@@ -297,8 +316,10 @@ export function ModalEditSession(props: EditSessionProps) {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <AdminsIndex admins={admins} parentAdminsSelect={onAdmins} error={errors?.adminsError && !admins?.length} />
-                    {errors?.adminsError && !admins?.length ? <span className="error-message">{errors.adminsError}</span> : null}
+                    <Form.Field>
+                      <AdminsIndex admins={admins} parentAdminsSelect={onAdmins} error={errors?.adminsError && !admins?.length} />
+                      {errors?.adminsError && !admins?.length ? <span className="error-message">{errors.adminsError}</span> : null}
+                    </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
                 <div className="followers-label-area">
@@ -349,15 +370,19 @@ export function ModalEditSession(props: EditSessionProps) {
               <Grid columns={2}>
                 <Grid.Row>
                   <Grid.Column>
-                    <SessionInvitationIndex parentInvitationSelect={parentInvitationSelect} editInvitationTemplateIdSelect={detail?.invitationID}
-                      error={errors?.invitationTemplateError && !invitation?.length} />
-                    {errors?.invitationTemplateError && !invitation?.length ? <span className="error-message">{errors.invitationTemplateError}</span> : null}
+                    <Form.Field>
+                      <SessionInvitationIndex parentInvitationSelect={parentInvitationSelect} editInvitationTemplateIdSelect={detail?.invitationID}
+                        error={errors?.invitationTemplateError && !invitation?.length} />
+                      {errors?.invitationTemplateError && !invitation?.length ? <span className="error-message">{errors.invitationTemplateError}</span> : null}
+                    </Form.Field>
                   </Grid.Column>
 
                   <Grid.Column>
-                    <SessionProtocolIndex parentSessionSelect={parentSessionSelect} editProtocolTemplateIdSelect={detail?.protocolID}
-                      error={errors?.protocolTemplateError && !protocol?.length} />
-                    {errors?.protocolTemplateError && !protocol?.length ? <span className="error-message">{errors.protocolTemplateError}</span> : null}
+                    <Form.Field>
+                      <SessionProtocolIndex parentSessionSelect={parentSessionSelect} editProtocolTemplateIdSelect={detail?.protocolID}
+                        error={errors?.protocolTemplateError && !protocol?.length} />
+                      {errors?.protocolTemplateError && !protocol?.length ? <span className="error-message">{errors.protocolTemplateError}</span> : null}
+                    </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
