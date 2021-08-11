@@ -1,4 +1,6 @@
 import React from 'react';
+import { useHistory } from 'react-router';
+
 import { GET_FILES } from '../../graphql/graphql';
 import { useFileQuery } from '../../services/useRequest';
 import { LoaderPage } from "@cudo/shared-components";
@@ -27,7 +29,12 @@ export function FileList(props: FileListProps) {
   const [items, setItems] = React.useState<ContainerItem[]>([]);
   const [itemsd, setItemsd] = React.useState<BlobItemDownload[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
-  const { loading, error, data } = useFileQuery(GET_FILES);
+
+  const history = useHistory();
+  const pathNames = history.location.pathname.split("/");
+  const projectId = pathNames[3].toString();
+
+  const { loading, error, data } = useFileQuery(GET_FILES, { variables: { projectId } });
 
   if (data) {
     console.log('files', data);

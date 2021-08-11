@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 
 import './file-listing.module.scss';
 import { FileStructure } from '@cudo/shared-components';
@@ -7,8 +8,8 @@ import { BlobItemDownload, BlobItemUpload } from './../../../azure-storage/types
 import { tap } from 'rxjs/operators';
 import { BlobItem, ContainerItem } from '@azure/storage-blob';
 import { LoaderPage, UploadNewVersion } from "@cudo/shared-components"
-import { useFileQuery } from '../../services/useRequest';
-import { GET_FILES, UPLOAD_FILE_VERSION } from '../../graphql/graphql';
+import { useFileQuery, useFileVersionQuery } from '../../services/useRequest';
+import { GET_FILES, UPLOAD_FILE_VERSION, GET_FILE_VERSIONS } from '../../graphql/graphql';
 import ItemsDownloaded from './../../../azure-storage/components/ItemsDownloaded';
 import { useMutation } from '@apollo/react-hooks';
 import { IFiles } from '../../interfaces/document';
@@ -23,12 +24,23 @@ export function FileListing(props: FileListingProps) {
   const [openNew, setOpenNew] = React.useState(false);
   const [fileName, setFileName] = React.useState('');
   const [fileVersion, setFileVersion] = React.useState(null);
+
+
+  const [selectedFileId, setSelectedFileId] = React.useState(null)
+  const [selectedFileVersions, setSelectedFileVersions] = React.useState(null)
+
+  const history = useHistory();
+  const pathNames = history.location.pathname.split("/");
+  const projectId = pathNames[3].toString();
+
   const sharedContext = React.useContext(SharedViewStateContext);
   const downloadsContext = React.useContext(DownloadsViewStateContext);
   // const viewContext = React.useContext(DownloadsViewStateContext);
   const deletesContext = React.useContext(DeletesViewStateContext);
   const [fileData, setFileData] = React.useState<BlobItem[]>([]);
-  const { loading, error, data } = useFileQuery(GET_FILES);
+  const { loading, error, data } = useFileQuery(GET_FILES, {
+    variables: { projectId },
+  });
   const [items, setItems] = React.useState<ContainerItem[]>([]);
   const [itemsd, setItemsd] = React.useState<BlobItemDownload[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -38,7 +50,10 @@ export function FileListing(props: FileListingProps) {
   const [addFile, { data: neVersionDta }] = useMutation(UPLOAD_FILE_VERSION,
     {
       refetchQueries: [
-        { query: GET_FILES }
+        {
+          query: GET_FILES,
+          variables: { projectId },
+        }
       ]
     }
   )
@@ -81,6 +96,16 @@ export function FileListing(props: FileListingProps) {
     return
   };
   React.useEffect(getContainersEffect, []);
+    
+  const { loading: fileVersionLoading, error: fileVersionError, data: fileVersionData } = useFileVersionQuery(GET_FILE_VERSIONS, {
+    variables: { projectId, fileId: selectedFileId },
+  }); 
+
+  React.useEffect(() => {
+    if (fileVersionData) {
+      setSelectedFileVersions(fileVersionData)
+    }
+  }, [fileVersionData]);
 
   const downloadFiles = (data) => {
     setFileName(data);
@@ -93,7 +118,7 @@ export function FileListing(props: FileListingProps) {
   }
 
   const uploadNewVersion = (data) => {
-    console.log('data', data);
+
     setFileVersion(data);
     setOpenNew(true)
   }
@@ -106,11 +131,13 @@ export function FileListing(props: FileListingProps) {
   }
 
   const uploadNewVersionFile = (data) => {
-    console.log('data-==>', data);
+
     setOpenNew(false)
     addFile({
       variables: {
-        parentUploadedFileID: data.parentUploadedFileID,
+        projectId,
+        projectTitle: "Test project title for file version",
+        parentUploadedFileID: data.uploadedFileID,
         structureID: data.structureID,
         structureTitle: data.structureTitle,
         BKPID: data.BKPID,
@@ -136,6 +163,7 @@ export function FileListing(props: FileListingProps) {
         const cacheData = cache.readQuery({ query: GET_FILES }) as IFiles;
         cache.writeQuery({
           query: GET_FILES,
+          variables: { projectId },
           data: {
             tasks: [...cacheData.uploadedFiles, data['createFile']]
           }
@@ -144,7 +172,11 @@ export function FileListing(props: FileListingProps) {
     });
 
   }
-  // console.log('isLOading', isLoading);
+
+  const getSelectedFileId = (fileId) => {
+    setSelectedFileId(fileId)
+  }
+
 
   // const getContainerItemsEffect = () => {
   //    setLoader(true);
@@ -161,7 +193,6 @@ export function FileListing(props: FileListingProps) {
   // React.useEffect(getContainerItemsEffect, []);
 
 
-
   return (
     <div>
       {loading ?
@@ -176,7 +207,10 @@ export function FileListing(props: FileListingProps) {
           <FileStructure files={data?.uploadedFiles} downloadFiles={downloadFiles} viewFiles={viewFiles}
             uploadNewVersion={uploadNewVersion}
             addPinTask={addPinTask}
-            downloadedImg={itemsd}></FileStructure>
+            downloadedImg={itemsd}
+            selectedFileId={getSelectedFileId}
+            fileVersionDetail={selectedFileVersions?.fileVersions}
+          ></FileStructure>
           {/* {itemsd.map((item, i) => (
             <div key={i}>
               {item.containerName}:

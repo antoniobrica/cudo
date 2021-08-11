@@ -252,6 +252,18 @@ export function Planning(props: PlanningProps) {
   const cancelAdd = () => {
     setIsOpen(false)
   }
+const getAddLinkSelect = (selectedValue)=>{
+  console.log('---getAddLinkSelect---selectedValue--', selectedValue)
+  if(selectedValue==='addLink'){
+    console.log('---if selectedValue--', selectedValue)
+    setIsOpen(true)
+  } else {
+    console.log('---else selectedValue--', selectedValue)
+  }
+}
+
+
+
   return (
     <div>
       {openNew && <ModalPlanningNew worktypes={props.worktypes} cancel={cancelAdd} openNew={openNew} getMilestoneData={getMilestoneData}></ModalPlanningNew>}
@@ -299,7 +311,7 @@ export function Planning(props: PlanningProps) {
         <div className="active-milestone">
           <h4 className="headingactive">
           {t("project_tab_menu.planning.active_milestone")}
-          <SelectDropdown />          
+          <SelectDropdown selectedValue={getAddLinkSelect}/>          
           </h4>
           <Form>
             {/* <Grid columns={4}>
