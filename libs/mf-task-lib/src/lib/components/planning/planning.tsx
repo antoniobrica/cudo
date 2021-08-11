@@ -32,7 +32,7 @@ export function Planning(props: PlanningProps) {
   const [openNew, setIsOpen] = React.useState(false);
   const [openD, setOpenD] = React.useState(false);
   const [openUpdate, setOpenUpdate] = React.useState(false);
-
+  const [milestoneLoading, setMilestoneLoading] = React.useState(false)
   const [openEdit, setOpenEdit] = React.useState(false);
   const [milestoneID, setmilestoneID] = React.useState('');
   const [milestoneIDd, setmilestoneIDd] = React.useState('');
@@ -42,7 +42,7 @@ export function Planning(props: PlanningProps) {
   const [milestoneByID, setmilestoneByID] = React.useState({});
   const { loading, error, data } = useMilestonesQuery(GET_MILESTONES);
   // const [addPlan] = useMilestoneMutation(ADD_MILESTONE);
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   enum Status {
     INPROGRESS = 'INPROGRESS',
     COMPLETED = 'COMPLETED',
@@ -154,6 +154,8 @@ export function Planning(props: PlanningProps) {
 
   const getMilestoneData = (data) => {
     console.log('getMilestoneData', data);
+    setMilestoneLoading(true);
+    console.log('  setMilestoneLoading(true);', milestoneLoading)
     addPlan({
       variables: data,
       update: (
@@ -167,8 +169,13 @@ export function Planning(props: PlanningProps) {
             getMileStones: [...cacheData.MileStones, data['createMileStone']]
           },
         });
+        setMilestoneLoading(false);
+        console.log('  setMilestoneLoading(11);', milestoneLoading)
+
       }
     });
+
+
   }
 
   const confirmationUpdate = (data) => {
@@ -246,6 +253,9 @@ export function Planning(props: PlanningProps) {
   }
   return (
     <div>
+      {
+        milestoneLoading && <LoaderPage />
+      }
       {openNew && <ModalPlanningNew worktypes={props.worktypes} cancel={cancelAdd} openNew={openNew} getMilestoneData={getMilestoneData}></ModalPlanningNew>}
       {open ?
         <div style={{ marginLeft: 900 }} >
@@ -279,6 +289,8 @@ export function Planning(props: PlanningProps) {
           <EditMileStonePopup worktypes={props.worktypes} openEdit={openEdit} confirm={confirmationUpdate} getMilestoneData={editMilestoneData} planData={planData} cancel={cancel}></EditMileStonePopup>
         </div>
         : null}
+
+
       <div className="tabs-main-info-container planning-outer-con">
         <h3>{t("project_tab_menu.planning.title")}
           <Button size="small" className="primary" onClick={openAdd}>
@@ -288,7 +300,7 @@ export function Planning(props: PlanningProps) {
 
         <div className="active-milestone">
           <h4 className="headingactive">
-          {t("project_tab_menu.planning.active_milestone")}
+            {t("project_tab_menu.planning.active_milestone")}
           </h4>
           <Form>
             {/* <Grid columns={4}>
@@ -389,7 +401,7 @@ export function Planning(props: PlanningProps) {
                       <div className="date-status">
                         <label>{new Date(plan.dueDate).toDateString()}</label>
                         <a onClick={() => update(plan)}>
-                          
+
                           {plan.status == "INPROGRESS" ?
                             <i className="ms-Icon ms-Icon--Completed" aria-hidden="true"></i>
                             : <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/green_tick.png`} className=" mr-2 mr-10 " />

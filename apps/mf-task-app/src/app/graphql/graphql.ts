@@ -45,6 +45,11 @@ query Tasks($referenceID: String!)
       }
       subtasks{subtaskID, subtaskTitle, status,isDeleted}
   }
+  total
+next
+previous
+page_total
+hasNextPage
     } 
   }
 `;

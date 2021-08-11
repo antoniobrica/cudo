@@ -23,6 +23,9 @@ import TaskDelete from '../delete-task/delete-task';
 import SubTaskDelete from '../delete-subtask/delete-subtask';
 import { FilterPopup, ToggleButton } from '@cudo/shared-components';
 import { FileListIndex } from '@cudo/mf-document-lib';
+import { ReactPaginate } from 'react-paginate';
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface TasksProps { }
 
 export function Tasks(props: TasksProps) {
@@ -62,6 +65,21 @@ export function Tasks(props: TasksProps) {
   const [taskId, setTaskId] = React.useState();
   const [subTaskId, setSubTaskId] = React.useState();
   const [subTaskStatus, setSubTaskStatus] = React.useState('');
+  const [currentPage, setCurrentPage] = React.useState(0);
+  const [totaltaskdata, setTotalTaskData] = React.useState([]);
+  const PER_PAGE = 10;
+  const offset = currentPage * PER_PAGE;
+  React.useEffect(() => {
+    setTotalTaskData(data?.tasks?.results)
+  }, [data])
+
+  const currentPageData = data?.tasks?.results
+    .slice(offset, offset + PER_PAGE).map((data) => data);
+  const pageCount = Math.ceil(data?.tasks?.results.length / PER_PAGE);
+  console.log(currentPageData, 'currentPageData', pageCount)
+  function handlePageClick({ selected: selectedPage }) {
+    setCurrentPage(selectedPage);
+  }
 
   const [idx, setId] = React.useState('');
   const [addTask] = useTaskUpdateMutation(UPDATE_TASK, {
@@ -665,10 +683,22 @@ export function Tasks(props: TasksProps) {
           ></SubTaskDelete>
         </div>) : null
       }
+      {/* <ReactPaginate
+        previousLabel={"← Previous"}
+        nextLabel={"Next →"}
+        pageCount={pageCount}
+        onPageChange={handlePageClick}
+        containerClassName={"pagination"}
+        previousLinkClassName={"pagination__link"}
+        nextLinkClassName={"pagination__link"}
+        disabledClassName={"pagination__link--disabled"}
+        activeClassName={"pagination__link--active"}
+      /> */}
 
       <div className="TaskApp-container">
         <h3 className="alltask" style={{ marginBottom: '20px;' }}>{t("project_tab_menu.task.heading")}</h3>
         {data?.tasks?.results?.map((task, id) => {
+          console.log('data?.tasks?', data)
           return (
             <div key={id} >
               <TaskArea

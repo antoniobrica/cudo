@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { TaskDelete } from '@cudo/mf-task-lib';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { LoaderPage, ModalAlert, ModalTaskEdit, ModalViewTask, TaskListOnFilePins } from '@cudo/shared-components';
 import axios from 'axios';
 import React from 'react';
