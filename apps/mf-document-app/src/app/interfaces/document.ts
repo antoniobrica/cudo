@@ -61,3 +61,36 @@ export interface IFiles {
 export interface FileMutation {
   createFile: IFile;
 }
+
+export interface IFileVersion {
+   uploadedFileID: string
+  parentUploadedFileID: string
+  directory: string
+  structureID: string
+  structureTitle: string
+  BKPID: string
+  BKPIDTitle: string
+  phaseID: string
+  phaseName: string
+  generateFileName: string
+  fileTypeID: string
+  fileTypeName: string
+  isEveryOneAllowed: Boolean
+  fileURL: string
+  fileTitle: string
+  fileType: string
+  fileVersion: number
+  updatedAt: string
+  createdAt: string
+  updatedBy: string
+  createdBy: string
+  referenceID: string
+  referenceTitle: string
+  referenceType: string
+  people: [IPeople]
+  children: [IFileParam]
+}
+
+// export interface IFileVersion {
+//   fileVersions: IFileVersion;
+// }
