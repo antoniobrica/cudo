@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea, Checkbox } from 'semantic-ui-react';
+import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea, Checkbox, Loader, Dimmer } from 'semantic-ui-react';
 import { radios } from '@storybook/addon-knobs';
 import { IPeople, IPeoples, ITask, ITasks, TaskMutation } from "../../interfaces/task";
 import { useTaskMutation } from '../../services/useRequest';
@@ -328,6 +328,10 @@ export function CreateTask(props: CreateTaskProps) {
         // trigger={<Button size='mini' className="grey-btn taskmargin">+ Add  New Task</Button>} 
         closeOnDimmerClick={false}
       >
+
+      <Dimmer active inverted Center inline>
+        <Loader size='big'>Loading</Loader>
+      </Dimmer>
         <Modal.Header><h3>{t("project_tab_menu.task.add_new_task")} </h3></Modal.Header>
         <Modal.Content body>
           <div>

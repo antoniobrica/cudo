@@ -540,3 +540,14 @@ img.filter-icon {
     }
   }
 }
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.ui.inverted.dimmer {
+  z-index: 99999;
+  .content {
+    background: none;
+  }
+}
