@@ -101,21 +101,18 @@ export function CreateTask(props: CreateTaskProps) {
     }
   )
 
-  // useEffect(() => {
-  //   if (!loading && data) {
-  //     cancel()
-  //   }
-  // }, [loading])
+  useEffect(() => {
+    if (!loading && data) {
+      cancel()
+    }
+  }, [loading])
 
   const onTaskTitleChange = e => {
     setTaskTitle(e.target.value)
   }
   const onStartDateChange = e => {
     setDate(e.target.value)
-    const date = moment.utc(moment(e.target.value).utc()).format();
-    console.log('====================================');
-    console.log('date', date);
-    console.log('====================================');
+    const date = moment.utc(moment(e.target.value).utc()).format();   
     setStartDate(e.target.value)
   }
   const onEndDateChange = e => {
@@ -139,19 +136,15 @@ export function CreateTask(props: CreateTaskProps) {
     setEendNotification(event.target.value)
   }
 
-  const onFollowers = (data) => {
-    console.log('====================================');
-    console.log('followers', data);
-    console.log('====================================');
+  const onFollowers = (data) => {   
     setfollowers(data)
   }
   const setBKPIDChange = (data) => {
     setBKPIDTitle(data.BKPIDTitle)
-    setBKPID(data.BKPID)
-    console.log('bkp==>', data);
+    setBKPID(data.BKPID)   
   }
   const setAsignee = (data) => {
-    // console.log('assignee', data)
+  
     if (data.userID) {
       const ppl = []
       ppl.push(data)
@@ -175,10 +168,8 @@ export function CreateTask(props: CreateTaskProps) {
   }
 
   React.useEffect(() => {
-    if (props.workTypes) {
-      console.log('worktypes', props.workTypes);
+    if (props.workTypes) {    
       setworkType(props.workTypes.map(({ workTypeName, projectWorkTypeID }) => ({ key: projectWorkTypeID, value: workTypeName, text: workTypeName, id: projectWorkTypeID })));
-
     }
   }, [props.workTypes]);
   const onMworkType = (event, data) => {
@@ -189,7 +180,7 @@ export function CreateTask(props: CreateTaskProps) {
     if (data.value) {
       for (let i = 0; i < props.workTypes.length; i++) {
         if (props.workTypes[i]?.workTypeName === data.value) {
-          // console.log('props.worktypes[i]', props.workTypes[i]);
+        
           workT.worktypeID = props.workTypes[i].projectWorkTypeID;
           workT.worktypeName = data.value;
           setworktypeName(workT.worktypeName);
@@ -203,13 +194,10 @@ export function CreateTask(props: CreateTaskProps) {
       setworkTypeD("")
     }
     setworkTypeData(data.value)
-
-    // console.log('worktypeName-', workTypeD, setworkTypeData);
   }
 
 
-  const onDescriptionChange = (e) => {
-    console.log('des=>', e);
+  const onDescriptionChange = (e) => {   
     setDescription(e);
   }
   const cancel = () => {
@@ -305,17 +293,13 @@ export function CreateTask(props: CreateTaskProps) {
             taskD: [...cacheData.tasks.results, addTask]
           },
           variables: { referenceID },
-        });
+        });        
       }
     });
-
-    // setIsLoading(false);
-    // console.log('---loader--after response api---', isLoading)
-    // cancel();
   };
 
 
-  if (loading) return (<LazyLoading />);
+  // if (loading) return (<LazyLoading />);
   if (error) return <p>Tasks not added. An error occured</p>;
 
   return (
@@ -331,179 +315,179 @@ export function CreateTask(props: CreateTaskProps) {
         <Modal.Header><h3>{t("project_tab_menu.task.add_new_task")} </h3></Modal.Header>
         <Modal.Content body>
           <div>
-            <Form>
-              
-                  <Grid columns={1}>
-                    <Grid.Row>
-                      <Grid.Column>
-                        <Form.Field>
-                          <label>{t("project_tab_menu.task.task_title")} <span className="danger">*</span></label>
-                          <Input placeholder={t("project_tab_menu.task.task_title")} size='small' className="full-width" type="text"
-                            value={taskTitle}
-                            onChange={onTaskTitleChange}
-                            error={errors?.titleError && !taskTitle}
-                          />
-                          {errors?.titleError && !taskTitle ? <span className="error-message">{errors.titleError}</span> : null}
-                        </Form.Field>
-                      </Grid.Column>
-                    </Grid.Row>
-                  </Grid>
-                  <Grid columns={1}>
-                    <Grid.Row>
-                      <Grid.Column>
-                        <Form.Field>
-                          <label>{t("common.desc")} </label>
-                          {/* <TextArea placeholder='Tell us more'
+            {loading ? (<LazyLoading />) :
+              <Form>
+                <Grid columns={1}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>{t("project_tab_menu.task.task_title")} <span className="danger">*</span></label>
+                        <Input placeholder={t("project_tab_menu.task.task_title")} size='small' className="full-width" type="text"
+                          value={taskTitle}
+                          onChange={onTaskTitleChange}
+                          error={errors?.titleError && !taskTitle}
+                        />
+                        {errors?.titleError && !taskTitle ? <span className="error-message">{errors.titleError}</span> : null}
+                      </Form.Field>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+                <Grid columns={1}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>{t("common.desc")} </label>
+                        {/* <TextArea placeholder='Tell us more'
                         value={description}
                         onChange={onDescriptionChange} /> */}
-                          <ReactQuill
-                            value={description}
-                            modules={{
-                              toolbar: {
-                                container: [
-                                  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                                  ['bold', 'italic', 'underline'],
-                                  [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                                  [{ 'align': [] }],
-                                  ['link', 'image'],
-                                  ['clean'],
-                                  [{ 'color': [] }]
-                                ]
-                              }
-                            }}
-                            placeholder={t("common.desc_placeholder")}
-                            onChange={(content, delta, source, editor) => onDescriptionChange(content)}
-                            id="txtDescription"
-                          />
-                        </Form.Field>
-                      </Grid.Column>
-                    </Grid.Row>
-                  </Grid>
-                  <Grid columns={1}>
-                    <Grid.Row>
-                      <Grid.Column>
-                        <Form.Field>
-                          <label>{t("project_tab_menu.task.work_type")} <span className="danger">*</span></label>
-                          {/* <Select placeholder='Select' className="small" options={workTypes} /> */}
-                          <Select
-                            placeholder={t("common.select")}
-                            className="small"
-                            value={workTypeData}
-                            options={workType}
-                            onChange={onMworkType}
-                            selection
-                            clearable
-                            error={errors?.workTypeError && !workTypeID}
-                          />
-                          {errors?.workTypeError && !workTypeID ? <span className="error-message">{errors.workTypeError}</span> : null}
-                        </Form.Field>
-                      </Grid.Column>
-                    </Grid.Row>
-                  </Grid>
-                  <Grid columns={2}>
-                    <Grid.Row>
-                      <Grid.Column>
-                        <Form.Field>
-                          <label>{t("common.select_phase")} </label>
-                          <PhaseIndex parentPhaseSelect={onsetPhasesID} />
-                        </Form.Field>
-                      </Grid.Column>
-                      <Grid.Column>
-                        <BkpsIndex bkp={''} parentBKPSelect={setBKPIDChange} />
-                      </Grid.Column>
-                    </Grid.Row>
-                  </Grid>
-                  <Grid columns={1}>
-                    <Grid.Row>
-                      <Grid.Column>
-                        <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Assignee" error={errors?.assigneeError && !assignees.length} />
-                      </Grid.Column>
-                    </Grid.Row>
-                  </Grid>
-                  <Grid>
-                    <Grid.Row>
-                      <Grid.Column>
-                        <FollowersIndex followers={[]} parentFollowersSelect={onFollowers} />
-                      </Grid.Column>
-                    </Grid.Row>
-                    <div className="followers-label-area">
+                        <ReactQuill
+                          value={description}
+                          modules={{
+                            toolbar: {
+                              container: [
+                                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                                ['bold', 'italic', 'underline'],
+                                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                [{ 'align': [] }],
+                                ['link', 'image'],
+                                ['clean'],
+                                [{ 'color': [] }]
+                              ]
+                            }
+                          }}
+                          placeholder={t("common.desc_placeholder")}
+                          onChange={(content, delta, source, editor) => onDescriptionChange(content)}
+                          id="txtDescription"
+                        />
+                      </Form.Field>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+                <Grid columns={1}>
+                  <Grid.Row>
+                    <Grid.Column>
                       <Form.Field>
-                        <div className="event top-event follower-listing-labels">
-                          {followers.map((p, id) => {
-                            const name = p.userName.split(" ").map((n) => n[0]).join("");
-                            //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
-                            return (
-                              <div className="label-light-purple-circle label-spacer" key={id}>
-                                <span className="white-text">{name}</span>
-                              </div>
-                            )
-                          })
-                          }
+                        <label>{t("project_tab_menu.task.work_type")} <span className="danger">*</span></label>
+                        {/* <Select placeholder='Select' className="small" options={workTypes} /> */}
+                        <Select
+                          placeholder={t("common.select")}
+                          className="small"
+                          value={workTypeData}
+                          options={workType}
+                          onChange={onMworkType}
+                          selection
+                          clearable
+                          error={errors?.workTypeError && !workTypeID}
+                        />
+                        {errors?.workTypeError && !workTypeID ? <span className="error-message">{errors.workTypeError}</span> : null}
+                      </Form.Field>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+                <Grid columns={2}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>{t("common.select_phase")} </label>
+                        <PhaseIndex parentPhaseSelect={onsetPhasesID} />
+                      </Form.Field>
+                    </Grid.Column>
+                    <Grid.Column>
+                      <BkpsIndex bkp={''} parentBKPSelect={setBKPIDChange} />
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+                <Grid columns={1}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Assignee" error={errors?.assigneeError && !assignees.length} />
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+                <Grid>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <FollowersIndex followers={[]} parentFollowersSelect={onFollowers} />
+                    </Grid.Column>
+                  </Grid.Row>
+                  <div className="followers-label-area">
+                    <Form.Field>
+                      <div className="event top-event follower-listing-labels">
+                        {followers.map((p, id) => {
+                          const name = p.userName.split(" ").map((n) => n[0]).join("");
+                          //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
+                          return (
+                            <div className="label-light-purple-circle label-spacer" key={id}>
+                              <span className="white-text">{name}</span>
+                            </div>
+                          )
+                        })
+                        }
 
-                          {/* <div className="label-light-black-circle label-spacer">
+                        {/* <div className="label-light-black-circle label-spacer">
                         <span className="white-text ">RJ</span>
                       </div>
                       <div className="label-light-blue-circle label-spacer">
                         <span className="white-text">JB</span>
                       </div> */}
-                        </div>
+                      </div>
+                    </Form.Field>
+                  </div>
+                </Grid>
+
+                <Grid columns={3}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>{t("common.start_date")} </label>
+                        {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
+                        <Input placeholder='Default' size='small' className="full-width"
+                          type="date"
+                          value={startDate}
+                          onChange={onStartDateChange}
+                          error={errors?.dateError && (startDate > endDate)}
+                        />
+                        {errors?.dateError && (startDate > endDate) ? <span className="error-message">{errors.dateError}</span> : null}
                       </Form.Field>
-                    </div>
-                  </Grid>
+                    </Grid.Column>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>{t("common.end_date")} </label>
+                        {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
+                        <Input placeholder='Default' size='small' className="full-width" type="date"
+                          defaultValue={startDate}
+                          value={endDate}
+                          onChange={onEndDateChange}
+                        />
+                      </Form.Field>
+                    </Grid.Column>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>{t("common.estimated_days")}  </label>
+                        <Input placeholder={t("project_tab_menu.task.enter_days")} className="small"
+                          value={estimatedDays}
+                          onChange={onsetEstimatedDays}
+                        />
+                      </Form.Field>
 
-                  <Grid columns={3}>
-                    <Grid.Row>
-                      <Grid.Column>
-                        <Form.Field>
-                          <label>{t("common.start_date")} </label>
-                          {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
-                          <Input placeholder='Default' size='small' className="full-width"
-                            type="date"
-                            value={startDate}
-                            onChange={onStartDateChange}
-                            error={errors?.dateError && (startDate > endDate)}
-                          />
-                          {errors?.dateError && (startDate > endDate) ? <span className="error-message">{errors.dateError}</span> : null}
-                        </Form.Field>
-                      </Grid.Column>
-                      <Grid.Column>
-                        <Form.Field>
-                          <label>{t("common.end_date")} </label>
-                          {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
-                          <Input placeholder='Default' size='small' className="full-width" type="date"
-                            defaultValue={startDate}
-                            value={endDate}
-                            onChange={onEndDateChange}
-                          />
-                        </Form.Field>
-                      </Grid.Column>
-                      <Grid.Column>
-                        <Form.Field>
-                          <label>{t("common.estimated_days")}  </label>
-                          <Input placeholder={t("project_tab_menu.task.enter_days")} className="small"
-                            value={estimatedDays}
-                            onChange={onsetEstimatedDays}
-                          />
-                        </Form.Field>
-
-                      </Grid.Column>
-                    </Grid.Row>
-                    <Grid.Row>
-                    </Grid.Row>
-                  </Grid>
-                  <Grid columns={1}>
-                    <Grid.Row>
-                      <Grid.Column>
-                        <Form.Field>
-                          <label>{t("common.task_configuration")}   </label>
-                          <div className="content configuration-toggle">
-                            <p className="paragraph task-configuration">{t("common.notification_for_task")} <Checkbox toggle className="task-toggle" /></p></div>
-                        </Form.Field>
-                      </Grid.Column>
-                    </Grid.Row>
-                  </Grid>
-               
-            </Form>
+                    </Grid.Column>
+                  </Grid.Row>
+                  <Grid.Row>
+                  </Grid.Row>
+                </Grid>
+                <Grid columns={1}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>{t("common.task_configuration")}   </label>
+                        <div className="content configuration-toggle">
+                          <p className="paragraph task-configuration">{t("common.notification_for_task")} <Checkbox toggle className="task-toggle" /></p></div>
+                      </Form.Field>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+              </Form>
+            }
           </div>
         </Modal.Content>
         <Modal.Actions>

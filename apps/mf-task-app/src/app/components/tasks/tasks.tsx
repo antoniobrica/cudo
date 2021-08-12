@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import './tasks.module.scss';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
-import { LoaderPage, ModalTaskEdit, TaskArea } from '@cudo/shared-components';
+import { LazyLoading, LoaderPage, ModalTaskEdit, TaskArea } from '@cudo/shared-components';
 import { Dropdown, Grid, Popup, Button, Icon } from 'semantic-ui-react';
 import axios from 'axios';
 import {
@@ -30,17 +30,15 @@ export function Tasks(props: TasksProps) {
   const history = useHistory();
   const { t } = useTranslation();
   const [referenceID, setReferenceID] = React.useState<string>('')
-  const { loading, error, data: taskListData } = useTaskQuery(GET_TASKS, {
+  const { loading: taskListLoading, error: taskListError, data: taskListData } = useTaskQuery(GET_TASKS, {
     variables: { referenceID },
   });
 
   React.useEffect(() => {
-    const res = history.location.pathname.split('/');
-    console.log("URL Path", res);
+    const res = history.location.pathname.split('/');   
     setReferenceID(res[3].toString());
   }, [history]);
-  React.useEffect(() => {
-    console.log("Refernce ID", referenceID);
+  React.useEffect(() => {  
     if (referenceID) {
       getWorkType(referenceID);
     }
@@ -53,7 +51,7 @@ export function Tasks(props: TasksProps) {
   const [workTypes, setWorkTypes] = React.useState([]);
   const [taskData, setTaskData] = React.useState();
   const [projectId, setProjectId] = React.useState('');
-  const [isUpdate, setIsUpdate] = React.useState(false);
+  // const [isUpdate, setIsUpdate] = React.useState(false);
   const [isTaskFile, setIsTaskFile] = React.useState(false);
   const [isNewTask, setIsNewTask] = React.useState(false);
   const [taskStatus, settaskStatus] = React.useState('');
@@ -64,7 +62,6 @@ export function Tasks(props: TasksProps) {
   const [subTaskId, setSubTaskId] = React.useState();
   const [subTaskStatus, setSubTaskStatus] = React.useState('');
 
-  const [isTaskDeleted, setIsTaskDeleted] = useState(false)
 
   const [idx, setId] = React.useState('');
   const [addTask] = useTaskUpdateMutation(UPDATE_TASK, {
@@ -75,12 +72,10 @@ export function Tasks(props: TasksProps) {
     variables: { referenceID },
   });
 
-  const [taskDelete] = useTaskDeleteMutation(DELETE_TASK, {
-  // const [taskDelete, { loading: deleteLoading, error: deleteError, data: deleteData }] = useMutation(DELETE_TASK, {
-    variables: { referenceID },
-  });
+  //  const [taskDelete] = useTaskDeleteMutation(DELETE_TASK, {
+  const [taskDelete, { loading: deleteTaskLoading, error: deleteTaskError, data: deleteTaskData }] = useMutation(DELETE_TASK);
 
-  const [editTaskApi, { data: editData }] = useMutation(UPDATE_TASK);
+  const [editTaskApi, { loading: editTaskLoading, error: editTaskError, data: editData }] = useMutation(UPDATE_TASK);
   //   , {
   //   refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
   // }
@@ -105,7 +100,7 @@ export function Tasks(props: TasksProps) {
  }`;
 
   const getWorkType = (referenceID) => {
-    console.log('sasstoken', referenceID);
+   
     return axios
       .post(MS_SERVICE_URL['ms_project'].url, {
         query,
@@ -114,7 +109,7 @@ export function Tasks(props: TasksProps) {
         },
       })
       .then((res) => {
-        console.log("Value of project query", res);
+      
         const wt = res.data.data.projectById[0].projectWorkTypes;
         setWorkTypes(wt);
       })
@@ -137,19 +132,24 @@ export function Tasks(props: TasksProps) {
     INPROGRESS = 'INPROGRESS',
     COMPLETED = 'COMPLETED',
   }
-  if (loading)
-    return (
-      <h1>
-        <LoaderPage />
-      </h1>
-    );
+  if (taskListLoading) return (<LazyLoading />)
+  if (taskListError) return (<div>Tasks not fetched. An error occured</div>)
+  // return (
+  //   <h1>
+  //     <LoaderPage />
+  //   </h1>
+  // );
 
-  // if (deleteLoading)
-  //   return (
-  //     <h1>
-  //       <LoaderPage />
-  //     </h1>
-  //   );
+  if (deleteTaskLoading) return (<LazyLoading />)
+  if (deleteTaskError) return (<div>Task not deleted. An error occured</div>)
+  // return (
+  //   <h1>
+  //     <LoaderPage />
+  //   </h1>
+  // );
+
+  if (editTaskLoading) return (<LazyLoading />)
+  if (editTaskError) return (<div>Task not updated. An error occured</div>)
 
   const cancel = () => {
     setOpen(false);
@@ -158,8 +158,8 @@ export function Tasks(props: TasksProps) {
     setEditTaskOpen(false);
   };
   const confirmation = (data, task) => {
-    console.log('data', task);
-    setIsUpdate(data);
+   
+    // setIsUpdate(data);
     setOpen(false);
     // updateTask(taskData);
 
@@ -229,9 +229,8 @@ export function Tasks(props: TasksProps) {
     });
   };
   const confirmationDelete = (data, task) => {
-    setIsUpdate(data);
+    // setIsUpdate(data);
 
-    // updateTask(taskData);
     const taskID = task.taskID;
     taskDelete({
       variables: {
@@ -267,9 +266,8 @@ export function Tasks(props: TasksProps) {
         });
       },
     });
-    console.log('----before-stop loader set state---')
-    setIsTaskDeleted(true)
-    // setOpenD(false);
+
+    setOpenD(false);
   };
   const updateTask = (task) => {
     setTaskData(task);
@@ -296,54 +294,64 @@ export function Tasks(props: TasksProps) {
   const refresh = (data) => {
     console.log('refresh is called', data);
   };
-  const editTaskData = (data) => {
-    console.log('editTaskData', data);
+
+  const editTaskData = (updateTaskData) => {
     const assignees = [];
-    data.assignees.map((data, i) => {
+    updateTaskData.assignees.map((data, i) => {
       assignees.push({ userID: data.userID, userName: data.userName })
     })
     const followers = [];
-    data.followers.map((data, i) => {
+    updateTaskData.followers.map((data, i) => {
       followers.push({ userID: data.userID, userName: data.userName })
     })
     editTaskApi({
       variables: {
-        taskID: data.taskID,
-        status: data.status,
+        taskID: updateTaskData.taskID,
+        status: updateTaskData.status,
         files: [],
-        taskTitle: data.taskTitle,
-        startDate: data.startDate,
-        endDate: data.endDate,
-        estimatedDays: data.estimatedDays,
+        taskTitle: updateTaskData.taskTitle,
+        startDate: updateTaskData.startDate,
+        endDate: updateTaskData.endDate,
+        estimatedDays: updateTaskData.estimatedDays,
         sendNotification: false,
-        BKPID: data.BKPID,
-        BKPTitle: data.BKPTitle,
-        saveTaskAsTemplate: data.saveTaskAsTemplate,
-        phaseID: data.phaseID,
-        phaseName: data.phaseName,
-        referenceID: data.referenceID,
-        description: data.description,
+        BKPID: updateTaskData.BKPID,
+        BKPTitle: updateTaskData.BKPTitle,
+        saveTaskAsTemplate: updateTaskData.saveTaskAsTemplate,
+        phaseID: updateTaskData.phaseID,
+        phaseName: updateTaskData.phaseName,
+        referenceID: updateTaskData.referenceID,
+        description: updateTaskData.description,
         subtasks: [],
         assignees: assignees,
         followers: followers,
-        workTypeName: data.workTypeName,
-        workTypeID: data.workTypeID,
+        workTypeName: updateTaskData.workTypeName,
+        workTypeID: updateTaskData.workTypeID,
       },
-      update: (cache, data) => {
+      update: (cache, updatedTaskData) => {
         const cacheData = cache.readQuery({
           query: GET_TASKS,
           variables: { referenceID },
         }) as ITasks;
+
+        const updatedTaskList = cacheData?.tasks?.results?.map((item) => {
+
+          if (item.taskID === updatedTaskData?.data?.updateTask[0].taskID) {
+            item = updatedTaskData?.data?.updateTask[0]
+          }
+          return item
+        });
+       
         cache.writeQuery({
           query: GET_TASKS,
-          data: {
-            tasksD: [...cacheData.tasks.results, data],
-          },
           variables: { referenceID },
+          data: {
+            tasks: updatedTaskList, // [...cacheData.tasks.results, data],
+          },
         });
       },
     });
   };
+
   const subTask = (data, title) => {
 
     const subtask = [];
@@ -430,7 +438,7 @@ export function Tasks(props: TasksProps) {
     });
   };
   const changeAdd = (data) => {
-    console.log('changeTask', data);
+  
     if (data === 'add') {
       setIsTaskFile(false);
       setIsNewTask(true);
@@ -576,15 +584,12 @@ export function Tasks(props: TasksProps) {
     setTaskId(taskId);
     setSubTaskId(subtaskId);
 
-    console.log('--Tasks-updateSubTask--subtaskId, subtaskTitle-', subtaskId, title)
-
     subTaskUpdateApi({
       variables: {
         subtaskID: subtaskId,
         subtaskTitle: title
       },
-      update: (cache, data) => {
-        console.log('----updated subtask  catch--data--', data)
+      update: (cache, data) => {      
         const cacheData = cache.readQuery({
           query: GET_TASKS,
           variables: { referenceID },
@@ -601,13 +606,13 @@ export function Tasks(props: TasksProps) {
                 return subTask
               }
             })
-            console.log('----after updated--subTaskList----', subTaskList)
+          
             return { ...task, subtasks: subTaskList }
           } else {
             return task;
           }
         });
-        console.log('--updated--subtask-newTaskList--', newTaskList)
+        
         cache.writeQuery({
           query: GET_TASKS,
           data: {
@@ -658,7 +663,6 @@ export function Tasks(props: TasksProps) {
             taskData={taskData}
             taskStatus={taskStatus}
             cancel={cancel}
-            isStopTaskDeleteLoader={isTaskDeleted}
           ></TaskDelete>
         </div>
       ) : null}
@@ -729,7 +733,6 @@ export function Tasks(props: TasksProps) {
                 updateSubTask={updateSubTask}
                 deleteSubTask={deleteSubTask}
               />
-              {/* </TaskArea> */}
             </div>
           );
         })}

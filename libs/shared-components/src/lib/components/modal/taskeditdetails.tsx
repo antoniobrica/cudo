@@ -78,6 +78,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3]?.toString();
+  
   React.useEffect(() => {
     if (referenceID) {
       getWorkType(referenceID)
@@ -91,20 +92,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
   }, [props.openAlertF]);
 
 
-  function formatDate(date) {
-    var d = new Date(date),
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
-
-    if (month.length < 2)
-      month = '0' + month;
-    if (day.length < 2)
-      day = '0' + day;
-
-    return [year, month, day].join('-');
-  }
-  React.useEffect(() => {
+ React.useEffect(() => {
     if (props.taskData) {
       var d = props.taskData.startDate;
       var de = props.taskData.endDate
@@ -140,6 +128,12 @@ export const ModalTaskEdit = (props: AlertProps) => {
     }
   }, [props.taskData]);
 
+  React.useEffect(() => {
+    if (workTypes) {
+       setworkType(workTypes.map(({ workTypeName, projectWorkTypeID }) => ({ key: projectWorkTypeID, value: workTypeName, text: workTypeName, id: projectWorkTypeID })));
+    }
+  }, [workTypes]);
+  
   const query = `query Game($projectId: String!) {
     projectById( projectId: $projectId)
     {
@@ -160,7 +154,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
  }`;
 
   const getWorkType = (referenceID) => {
-    console.log('sasstoken');
+    
     return axios.post(
       MS_SERVICE_URL['ms_project'].url,
       {
@@ -176,16 +170,22 @@ export const ModalTaskEdit = (props: AlertProps) => {
       .catch(err => console.log(err))
   }
 
+  function formatDate(date) {
+    var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
 
-  React.useEffect(() => {
-    if (workTypes) {
-      console.log('worktypes', workTypes);
-      setworkType(workTypes.map(({ workTypeName, projectWorkTypeID }) => ({ key: projectWorkTypeID, value: workTypeName, text: workTypeName, id: projectWorkTypeID })));
-    }
-  }, [workTypes]);
+    if (month.length < 2)
+      month = '0' + month;
+    if (day.length < 2)
+      day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+  
   const onMworkType = (event, data) => {
-    console.log('workTypes[i]', data);
-
+  
     const workT = {
       worktypeID: '',
       worktypeName: ''
@@ -193,7 +193,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
     if(data.value){
       for (let i = 0; i < workTypes.length; i++) {
         if (workTypes[i]?.workTypeName === data.value) {
-          console.log('workTypes[i]', workTypes[i]);
+         
           workT.worktypeID = workTypes[i].projectWorkTypeID;
           workT.worktypeName = data.value;
           setworktypeName(workT.worktypeName);
@@ -207,12 +207,13 @@ export const ModalTaskEdit = (props: AlertProps) => {
       setworkTypeD("")
     }
     
-    setworkTypeData(data.value);
-    console.log('worktypeName-', workTypeD);
+    setworkTypeData(data.value);    
   }
+  
   const openf = () => {
     setOpen(true)
   }
+
   const cancel = () => {
     setOpen(false)
     props.cancel()
@@ -222,7 +223,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
     setTaskTitle(e.target.value)
   }
   const onStartDateChange = e => {
-    console.log('startdate>', e.target.value);
+  
     const date1 = new Date(e.target.value)
     const date2 = new Date(endDate)
     const Difference_In_Time = date2.getTime() - date1.getTime();
@@ -248,15 +249,12 @@ export const ModalTaskEdit = (props: AlertProps) => {
     setEendNotification(event.target.value)
   }
 
-
   const setBKPIDChange = (data) => {
     setBKPIDTitle(data.BKPIDTitle)
-    setBKPID(data.BKPID)
-    console.log('bkp==>', data);
+    setBKPID(data.BKPID)   
   }
   const setAsignee = (data) => {
-    // console.log('assignee', data)
-
+    
     if(data.userID){
       const ppl = []
       ppl.push(data)
@@ -267,10 +265,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
     }
   }
   const onFollowers = (data) => {
-    console.log('====================================');
-    console.log('followers', data);
-    console.log('====================================');
-    setfollowers(data)
+     setfollowers(data)
   }
 
   const setSaveTaskAsTemplateChange = (event, data) => {
@@ -282,11 +277,9 @@ export const ModalTaskEdit = (props: AlertProps) => {
     setPhasesName(data.phaseName)
   }
   const onDescriptionChange = e => {
-    console.log('des=>', e);
-    setDescription(e);
+     setDescription(e);
   }
 
-  // validate errors
   const validation = () => {
     const foundErrors: TaskErrors = {}
     if (!taskTitle) {
@@ -310,14 +303,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
       setErrors(validationResult)
       return false
     }
-    // const assignees = [];
-    // props.taskData.assignees.map((data, i) => {
-    //   assignees.push({ userID: data.userID, userName: data.userName })
-    // })
-    // const followers = [];
-    // props.taskData.followers.map((data, i) => {
-    //   followers.push({ userID: data.userID, userName: data.userName })
-    // })
+    
     const editTaskData = {
       taskID: props.taskData.taskID,
       taskTitle: taskTitle,
