@@ -34,6 +34,8 @@ export function FileStructure(props: FileStructureProps) {
 	const [view, setView] = useState(false);
 	const [openPinFile, setOpenPinFile] = useState(false)
 
+	const [designVersionExpand, setDesignVersionExpand] = useState(false)
+
 	useEffect(() => {
 		if (props.files) {
 			setFileFoldersList(props.files)
@@ -111,6 +113,11 @@ export function FileStructure(props: FileStructureProps) {
 		}
 		setSelectedExpandVersionId(uploadedFileVersionId)
 		props.selectedFileId(uploadedFileVersionId)
+	}
+
+
+	const onClickDesignVersionExpand = () => {
+		setDesignVersionExpand(!designVersionExpand)
 	}
 
 	// #region commented Old code
@@ -203,7 +210,7 @@ export function FileStructure(props: FileStructureProps) {
 					</div>
 				</div>)
 		})
-		console.log('---fileVersionItem---', fileVersionItem)
+		console.log('---fileVersionItem--aaa-', fileVersionItem)
 		return fileVersionItem
 	}
 
@@ -216,9 +223,8 @@ export function FileStructure(props: FileStructureProps) {
 				<>
 					<div className="break"></div>
 
-					{/* <div key={selectedFileVersionDetail?.uploadedFileID} className={selectedExpandVersionId === selectedFileVersionDetail?.uploadedFileID && expandVersion ? "version-file-con expand" : "version-file-con"}> */}
-					<div key={selectedFileVersionDetail?.uploadedFileID} className={selectedExpandVersionId === selectedFileVersionDetail?.uploadedFileID && expandVersion ? "multiple-files-box expand" : "multiple-files-box"}>
-										{renderChildrenSingleFilesVersion(selectedFileVersionDetail.children)}
+					<div key={selectedFileVersionDetail?.uploadedFileID} className="version-file-con">
+						{renderChildrenSingleFilesVersion(selectedFileVersionDetail.children)}
 					</div>
 					{/* <div className="break"></div>
 						<div className="version-file-con expand">
@@ -246,7 +252,7 @@ export function FileStructure(props: FileStructureProps) {
 	const renderChildrenSingleFile = (singleFileItem) => {
 		const { uploadedFileID, fileType, fileTitle, fileVersion } = singleFileItem
 		return (
-			<div key={uploadedFileID} className="single-files-list">
+			<div key={uploadedFileID} className={selectedExpandVersionId === uploadedFileID && expandVersion ? "single-files-list expand" : "single-files-list"}>
 				<div className="files-left-area">
 					<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
 					<h3 className="files-name">{fileTitle}</h3>
@@ -334,7 +340,7 @@ export function FileStructure(props: FileStructureProps) {
 			)
 		})
 	}
-
+console.log('-----mk---renderedFileFoldersList----', renderedFileFoldersList)
 	const panes = [
 		{
 			menuItem: { key: 'Overview', icon: 'images', content: 'All files test', className: 'files-tab-inner' },
@@ -363,13 +369,13 @@ export function FileStructure(props: FileStructureProps) {
 								</div>
 							</div>
 							<div className="multiple-files-listing">
-								<div className="single-files-list">
+								<div className={designVersionExpand ? "single-files-list expand" : "single-files-list"}>
 									<div className="files-left-area">
 										<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
 										<h3 className="files-name">file_name.pdf</h3>
 										<span className="no-of-files"><i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i> 2 comments</span>
 										<span className="no-of-files"><i className="ms-Icon ms-Icon--CheckboxComposite" aria-hidden="true"></i> 2 tasks</span>
-										<span className="version-files"><a href="">Ver 2</a></span>
+										<span className="version-files"><a onClick={onClickDesignVersionExpand}>Ver 2</a></span>
 									</div>
 									<div className="files-right-area">
 										<div className="symbol-group symbol-hover">
