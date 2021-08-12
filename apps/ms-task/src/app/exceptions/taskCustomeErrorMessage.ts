@@ -10,34 +10,34 @@ const port = process.env.PORT || 3333;
 export const TaskErrorData = (errorCode: number): ITaskErrorCode => {
     switch (errorCode) {
         case TaskErrorTypeEnum.RECORD_ALREADY_EXIST:
-            return { message: "Record already exists", code: +(port + "1") }
+            return { message: "Record already exists", code: 7001 }
 
         case TaskErrorTypeEnum.RECORD_NOT_EXIST:
-            return { message: "Record not exist", code: +(port + "2") }
+            return { message: "Record not exist", code: 7002 }
 
         case TaskErrorTypeEnum.RECORD_NOT_ADDED:
-            return { message: "Record not_added", code: +(port + "3") }
+            return { message: "Record not_added", code: 7003 }
 
         case TaskErrorTypeEnum.NO_TITLE:
-            return { message: "Can't pass empty Title", code: +(port + "4") }
+            return { message: "Can't pass empty Title", code: 7004 }
 
         case TaskErrorTypeEnum.NO_WORKTYPE:
-            return { message: "Can't pass empty Worktype", code: +(port + "5") }
+            return { message: "Can't pass empty Worktype", code: 7005 }
 
         case TaskErrorTypeEnum.NO_PHASE:
-            return { message: "Can't pass empty Phase", code: +(port + "6") }
+            return { message: "Can't pass empty Phase", code: 7006 }
 
         case TaskErrorTypeEnum.NO_ASSIGNEE:
-            return { message: "Can't pass empty Assignee", code: +(port + "7") }
+            return { message: "Can't pass empty Assignee", code: 7007 }
 
         case TaskErrorTypeEnum.WRONG_DATE:
-            return { message: "Can't pass smaller End Date", code: +(port + "8") }
+            return { message: "Can't pass smaller End Date", code: 7008 }
         case TaskErrorTypeEnum.NO_DATE:
-            return { message: "Can't pass empty Date", code: +(port + "9") }
+            return { message: "Can't pass empty Date", code: 7009 }
         case TaskErrorTypeEnum.PROJECT_NOT_FOUND:
-            return { message: "Project not found", code: +(port + "10") }
+            return { message: "Project not found", code: 7010 }
         case TaskErrorTypeEnum.NO_REFERANCE_TYPE:
-            return { message: "Reference type does not exists", code: +(port + "11") }
+            return { message: "Reference type does not exists", code: 7011 }
         default:
             return { message: "An internal server error occurred", code: 500 }
     }
