@@ -117,6 +117,7 @@ export function ModalPlanningNew(props: PlanningProps) {
   }
 
   const onDescriptionChange = e => {
+    console.log("$$$$$$$$$$$$$$$$$$$$$$$",e.target.value)
     setDescription(e);
   }
 

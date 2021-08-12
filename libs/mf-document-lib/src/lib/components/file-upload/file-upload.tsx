@@ -1,4 +1,6 @@
 import React, { useContext, useRef } from 'react';
+import { useHistory } from 'react-router';
+
 import { Button, Checkbox, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 
@@ -41,13 +43,15 @@ export function FileUpload(props: FileProps) {
   const [folderName, setfolderName] = React.useState("");
   const [directory, setDirectory] = React.useState("");
 
-
+  const history = useHistory();
+  const pathNames = history.location.pathname.split("/");
+  const projectId = pathNames[3].toString();
 
   // const [addFile] = useFileMutation(UPLOAD_FILE);
   const [addFile, { data }] = useMutation(UPLOAD_FILE,
     {
       refetchQueries: [
-        { query: GET_FILES }
+        { query: GET_FILES, variables: { projectId } }
       ]
     }
   )
@@ -169,6 +173,9 @@ export function FileUpload(props: FileProps) {
     //   console.log('file==', file);
     //   addFile({
     //     variables: {
+      //     projectId,
+      //     projectTitle: "gamesoft",
+          
     //       directory,
     //       fileURL: file.fileURL,
     //       fileTitle: file.fileTitle,

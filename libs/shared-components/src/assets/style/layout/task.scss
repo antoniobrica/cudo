@@ -762,3 +762,27 @@ button.ui.button.more-user-listing {
 .completed-task-con {
   margin-top: 40px;
 }
+
+.task-action-area {
+  margin-top: 15px;
+  @include flex(flex);
+  @include align-items(center);
+  .add-new-task-btn.ui.small.button {
+    margin-right: 15px;
+    font-size: 1.4rem;
+    padding: 0 1.8rem;
+    height: 3.3rem;
+    line-height: 3.3rem;
+    i {
+      font-size: 12px;
+      font-weight: 600;
+    }
+  }
+  a {
+    font-size: 14px;
+    font-weight: 500;
+    &:hover {
+      color: #2D62ED;
+    }
+  }
+}

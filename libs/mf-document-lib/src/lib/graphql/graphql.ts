@@ -5,9 +5,9 @@ export const GET_TOKEN = gql`
   }
 `;
 
-export const GET_FILES = gql`
+export const GET_FILES = gql`query UploadedFiles($projectId:String!)
 {
-  uploadedFiles(referenceFilter: { referenceID: "13", referenceType:PROJECTTYPE }) { 
+  uploadedFiles(referenceFilter: { referenceID: $projectId, referenceType:PROJECTTYPE }) { 
     uploadedFileID 
     parentUploadedFileID
     fileURL 
@@ -46,6 +46,9 @@ export const GET_FILES = gql`
 
 export const UPLOAD_FILE = gql`
 mutation SaveUploadedFile(
+  $projectId:String!,
+  $projectTitle:String!,
+
   $directory: String!,
   $fileTypeID: String!, 
   $fileTypeName: String!,
@@ -66,8 +69,8 @@ mutation SaveUploadedFile(
     saveUploadedFile(
       referenceFilter:{ 
       referenceType:PROJECTTYPE
-      referenceID:"13"
-      referenceTitle:"gamesoft"
+      referenceID:$projectId
+      referenceTitle:$projectTitle
       }
       uploadedFileInfo:{
       directory:$directory
@@ -89,8 +92,8 @@ mutation SaveUploadedFile(
       updatedBy:"s2"
       isDeleted:false
       referenceType:PROJECTTYPE
-      referenceID:"13"
-      referenceTitle:"gamesoft"
+      referenceID:$projectId
+      referenceTitle:$projectTitle
       peoples:$people
       }){
       uploadedFileID

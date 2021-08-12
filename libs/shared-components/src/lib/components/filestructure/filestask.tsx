@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './../../../assets/style/index.scss'
 import { Tab, Accordion, Dropdown } from 'semantic-ui-react'
@@ -13,41 +13,47 @@ export interface FileStructureProps {
 	viewFiles?,
 	uploadNewVersion?,
 	addPinTask?
+	selectedFileId?
+	fileVersionDetail?
 }
 
 export function FileStructure(props: FileStructureProps) {
-	const [view, setView] = React.useState(false);
-	const [expand, setExpand] = React.useState(false);
-	const [isLoading, setIsLoading] = React.useState(false);
-	const [filesData, setFilesData] = React.useState([]);
-	const [items, setItems] = React.useState([]);
-	const [imgUrl, setimgUrl] = React.useState('');
-	const [fname, setFname] = React.useState('');
-	const [fType, setFtype] = React.useState('');
+	const [filesData, setFilesData] = useState([]);
+	const [items, setItems] = useState([]);
+	const [imgUrl, setimgUrl] = useState('');
+	const [fType, setFtype] = useState('');
 
-	const [openPinFile, setOpenPinFile] = React.useState(false)
+	const [fileFoldersList, setFileFoldersList] = useState([])
+	const [expand, setExpand] = useState(false);
+	const [selectedExpandId, setSelectedExpandId] = useState(null);
 
+	const [selectedFileVersionDetail, setSelectedFileVersionDetail] = useState(null);
+	const [expandVersion, setExpandVersion] = useState(false);
+	const [selectedExpandVersionId, setSelectedExpandVersionId] = useState(null);
 
-	const viewFile = (data) => {
-		console.log('viewfile', data);
-		setFtype(data.fileType);
-		setView(true);
-		setFilesData(data);
+	const [view, setView] = useState(false);
+	const [openPinFile, setOpenPinFile] = useState(false)
 
-		props.viewFiles(data.fileTitle)
-	}
+	useEffect(() => {
+		if (props.files) {
+			setFileFoldersList(props.files)
+			// setItems(props.files.map((file, i) => ({ key: i, title: file.directory ? file.directory : file.BKPIDTitle, content: { content: (renderItems(file.children)) } })));
+		}
+	}, [props.files]);
 
-	const download = (data) => {
-		console.log('download');
-		props.downloadFiles(data)
-	}
-	const expandFolder = (data) => {
-		setExpand(true);
-		setFilesData(data)
-	}
-	React.useEffect(() => {
+	useEffect(() => {
+		if (props.fileVersionDetail) {
+			console.log('---useEffect--fileVersionDetail--', props.fileVersionDetail)
+			setSelectedFileVersionDetail(props.fileVersionDetail)
+
+			setExpandVersion(true)
+
+		}
+	}, [props.fileVersionDetail]);
+
+	useEffect(() => {
 		if (props.downloadedImg) {
-			console.log('downloadedImg', props.downloadedImg);
+
 			for (let i = 0; i < props.downloadedImg.length; i++) {
 				if (props.downloadedImg[i].filename == filesData['fileTitle']) {
 					setimgUrl(props.downloadedImg[i].url);
@@ -55,12 +61,25 @@ export function FileStructure(props: FileStructureProps) {
 			}
 
 		}
-	})
+	}, [props.downloadedImg])
+
+	const onClickViewFileDetail = (data) => {
+		setFtype(data.fileType);
+		setView(true);
+		setFilesData(data);
+
+		props.viewFiles(data.fileTitle)
+	}
+
+	const onClickFileDownload = (data) => {
+		props.downloadFiles(data)
+	}
+
 	const uploadNewVersion = (file) => {
-		console.log('file', file);
 		props.uploadNewVersion(file);
 
 	}
+
 	const addPinTask = (data) => {
 
 		setFilesData(data)
@@ -68,84 +87,254 @@ export function FileStructure(props: FileStructureProps) {
 		setOpenPinFile(true)
 		props.addPinTask(data.fileTitle)
 	}
+
 	const savePins = (data) => {
 		console.log('savePins==>', data);
 
 	}
-	React.useEffect(() => {
-		if (props.files) {
-			console.log('files==', props.files);
 
-			setItems(props.files.map((file, i) => ({ key: i, title: file.directory ? file.directory : file.BKPIDTitle, content: { content: (renderItems(file.children)) } })));
+	const onClickExpand = (uploadedFileId) => {
+		if (uploadedFileId === selectedExpandId) {
+			setExpand(!expand)
+		} else {
+			setExpand(true)
 		}
-	}, [props.files]);
-	const renderItems = (data) => {
-		console.log("files==>", data);
+		setSelectedExpandId(uploadedFileId)
+	}
 
-		const files = data.map((data) => {
+	const onClickFileVersion = (uploadedFileVersionId) => {
+		console.log('--111--onClickFileVersion---uploadedFileVersionId---', uploadedFileVersionId, selectedExpandVersionId)
+		if (uploadedFileVersionId === selectedExpandVersionId) {
+			setExpandVersion(!expandVersion)
+		} else {
+			setExpandVersion(true)
+		}
+		setSelectedExpandVersionId(uploadedFileVersionId)
+		props.selectedFileId(uploadedFileVersionId)
+	}
+
+	// #region commented Old code
+	// const expandFolder = (data) => {
+	// 	setExpand(true);
+	// 	setFilesData(data)
+	// }
+
+	// const rootPanels = [
+	// 	{ key: 'panel-1', title: 'General', content: { content: <a href=''>+ Add item</a> }, },
+	// 	{ key: 'panel-2', title: 'Freehold Two Solar LLC', content: { content: <a href=''><i className="ms-Icon ms-font-xl ms-Icon--Add"></i> Add item</a> } },
+	// ]
+
+	// const renderItems = (data) => {
+
+
+	// 	const files = data.map((data) => {
+	// 		return (
+	// 			<div className="card1 card-custom gutter-b width_card">
+
+	// 				<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
+
+	// 					<div className="d-flex align-items-center py-2">
+	// 						<span>
+	// 							{data.fileType == ("image/jpeg" || "image/png")
+	// 								?
+	// 								<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} className="  mr-10 " /> :
+	// 								<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} className="  mr-10 " />
+	// 							}
+
+	// 						</span>
+
+	// 						<span className="mb-0 mr-10 file-name-extension">{data.fileTitle}</span>
+	// 						{data.fileVersion > 0 ?
+	// 							<div className="d-flex mr-3">
+
+	// 								<div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
+
+	// 									<div className="navi-item mr-2">
+	// 										<button className="ui mini button primary">Ver {data.fileVersion}</button>
+	// 									</div>
+
+	// 								</div>
+
+	// 							</div> :
+	// 							null
+	// 						}
+
+	// 					</div>
+
+	// 					<div className="symbol-group symbol-hover py-2">
+	// 						<div className="symbol symbol-30">
+	// 							<a onClick={() => onClickFileDownload(data.fileTitle)}>  <i className="ms-Icon ms-Icon--Download mr-10" aria-hidden="true"></i></a>
+	// 							<a onClick={() => onClickViewFileDetail(data)}> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a>
+
+	// 							<span className="mr-2"  >
+	// 								<Dropdown text='...' pointing='right'>
+	// 									<Dropdown.Menu>
+	// 										<Dropdown.Item icon='pencil' text='Edit file detail' />
+	// 										<Dropdown.Item onClick={() => uploadNewVersion(data)} icon='eye' text='Upload new version' />
+	// 										<Dropdown.Item onClick={() => addPinTask(data)} icon='check circle outline' text='Add task to this file' />
+	// 										<Dropdown.Item icon='trash alternate outline' text='Delete' />
+	// 									</Dropdown.Menu>
+	// 								</Dropdown>
+	// 							</span>
+
+	// 						</div>
+
+	// 					</div>
+
+	// 				</div>
+	// 			</div>
+	// 		)
+	// 	})
+	// 	return files;
+	// }
+	// #endregion
+	console.log('-222-selectedFileVersionDetail---', selectedFileVersionDetail)
+	let fileVersionItem = null
+	const renderChildrenSingleFilesVersion = (fileVersions) => {
+		console.log('---renderChildrenSingleFilesVersion--fileVersions--', fileVersions)
+		fileVersionItem = fileVersions.map((item) => {
+
+			const { uploadedFileID, fileType, fileTitle, fileVersion } = item
 			return (
-				<div className="card1 card-custom gutter-b width_card">
+				<div key={uploadedFileID} className="files-versioning-list">
+					<p>Version {fileVersion} - <span>{fileTitle}</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
+					<div className="files-right-area">
+						<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
+					</div>
+				</div>)
+		})
+		console.log('---fileVersionItem---', fileVersionItem)
+		return fileVersionItem
+	}
 
-					<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
 
-						<div className="d-flex align-items-center py-2">
-							<span>
-								{data.fileType == ("image/jpeg" || "image/png")
-									?
-									<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} className="  mr-10 " /> :
-									<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} className="  mr-10 " />
-								}
+	const renderFileVersions = () => {
+		console.log('---333-renderFileVersions----')
+		if (selectedFileVersionDetail) {
+			console.log('--renderFileVersions--fileTask-get --selectedFileVersionDetail-', selectedFileVersionDetail)
+			return (
+				<>
+					<div className="break"></div>
 
-							</span>
-
-							<span className="mb-0 mr-10 file-name-extension">{data.fileTitle}</span>
-							{data.fileVersion > 0 ?
-								<div className="d-flex mr-3">
-
-									<div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
-
-										<div className="navi-item mr-2">
-											<button className="ui mini button primary">Ver {data.fileVersion}</button>
-										</div>
-
-									</div>
-
-								</div> :
-								null
-							}
-
-						</div>
-
-						<div className="symbol-group symbol-hover py-2">
-							<div className="symbol symbol-30">
-								<a onClick={() => download(data.fileTitle)}>  <i className="ms-Icon ms-Icon--Download mr-10" aria-hidden="true"></i></a>
-								<a onClick={() => viewFile(data)}> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a>
-
-								<span className="mr-2"  >
-									<Dropdown text='...' pointing='right'>
-										<Dropdown.Menu>
-											<Dropdown.Item icon='pencil' text='Edit file detail' />
-											<Dropdown.Item onClick={() => uploadNewVersion(data)} icon='eye' text='Upload new version' />
-											<Dropdown.Item onClick={() => addPinTask(data)} icon='check circle outline' text='Add task to this file' />
-											<Dropdown.Item icon='trash alternate outline' text='Delete' />
-										</Dropdown.Menu>
-									</Dropdown>
-								</span>
-
+					{/* <div key={selectedFileVersionDetail?.uploadedFileID} className={selectedExpandVersionId === selectedFileVersionDetail?.uploadedFileID && expandVersion ? "version-file-con expand" : "version-file-con"}> */}
+					<div key={selectedFileVersionDetail?.uploadedFileID} className={selectedExpandVersionId === selectedFileVersionDetail?.uploadedFileID && expandVersion ? "multiple-files-box expand" : "multiple-files-box"}>
+										{renderChildrenSingleFilesVersion(selectedFileVersionDetail.children)}
+					</div>
+					{/* <div className="break"></div>
+						<div className="version-file-con expand">
+							<div className="files-versioning-list">
+								<p>Version 1 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
+								<div className="files-right-area">
+									<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
+								</div>
 							</div>
+							<div className="files-versioning-list">
+								<p>Version 2 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
+								<div className="files-right-area">
+									<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
+								</div>
+							</div>
+						</div> */}
+				</>
+			)
+		}
+	}
+	useEffect(() => {
+		renderFileVersions()
+	}, [selectedFileVersionDetail])
 
+	const renderChildrenSingleFile = (singleFileItem) => {
+		const { uploadedFileID, fileType, fileTitle, fileVersion } = singleFileItem
+		return (
+			<div key={uploadedFileID} className="single-files-list">
+				<div className="files-left-area">
+					<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
+					<h3 className="files-name">{fileTitle}</h3>
+					<span className="no-of-files"><i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i> 2 comments</span>
+					<span className="no-of-files"><i className="ms-Icon ms-Icon--CheckboxComposite" aria-hidden="true"></i> 2 tasks</span>
+					<span className="version-files"><a onClick={() => onClickFileVersion(uploadedFileID)}>Ver 2</a></span>
+				</div>
+				<div className="files-right-area">
+					<div className="symbol-group symbol-hover">
+						<div className="symbol symbol-30">
+							<a onClick={() => onClickFileDownload(fileTitle)}> <i className="ms-Icon ms-Icon--Download" aria-hidden="true"></i></a>
+							<a onClick={() => onClickViewFileDetail(singleFileItem)}> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
+
+							<span>
+								<Dropdown icon='ellipsis horizontal' pointing='right'>
+									<Dropdown.Menu>
+										<Dropdown.Item icon='pencil' text='Edit file detail' />
+										<Dropdown.Item icon='eye' text='Upload new version' onClick={() => uploadNewVersion(singleFileItem)} />
+										<Dropdown.Item icon='check circle outline' text='Add task to this file' onClick={() => addPinTask(singleFileItem)} />
+										<Dropdown.Item icon='trash alternate outline' text='Delete' />
+									</Dropdown.Menu>
+								</Dropdown>
+							</span>
 						</div>
+					</div>
+				</div>
 
+				{renderFileVersions}
+
+				{/* <div className="break"></div>
+				<div className="version-file-con expand">
+					<div className="files-versioning-list">
+						<p>Version 1 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
+						<div className="files-right-area">
+							<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
+						</div>
+					</div>
+					<div className="files-versioning-list">
+						<p>Version 2 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
+						<div className="files-right-area">
+							<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
+						</div>
+					</div>
+				</div> */}
+
+			</div>
+		)
+	}
+
+	const renderChildrenWise = (children) => {
+
+		const renderedChildrenItem = children && children.length ? children.map((item) => {
+
+			return (<>
+				{renderChildrenSingleFile(item)}
+			</>)
+		}) : null
+
+		return renderedChildrenItem
+	}
+
+	let renderedFileFoldersList = null
+	if (fileFoldersList && fileFoldersList.length) {
+		renderedFileFoldersList = fileFoldersList.map(({ parentUploadedFileID, uploadedFileID, directory, BKPIDTitle, children }) => {
+
+			return (
+				// <div key={uploadedFileID} className="multiple-files-box expand">
+				<div key={uploadedFileID} className={selectedExpandId === uploadedFileID && expand ? "multiple-files-box expand" : "multiple-files-box"}>
+					<div className="multiple-files-header">
+						<div className="files-left-area">
+							<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/folder.png`} />
+							<h3 className="files-name">{parentUploadedFileID === null && directory ? directory : BKPIDTitle} {/*(2) */}</h3>
+							{children && children?.length ? <span className="no-of-files">( {children?.length} files )</span> : null}
+						</div>
+						{children && children?.length > 0 ?
+							<div className="files-arrows" onClick={() => onClickExpand(uploadedFileID)}>
+								<i className="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i>
+							</div> :
+							null}
+					</div>
+					<div className="multiple-files-listing">
+						{renderChildrenWise(children)}
 					</div>
 				</div>
 			)
 		})
-		return files;
 	}
-	const rootPanels = [
-		{ key: 'panel-1', title: 'General', content: { content: <a href=''>+ Add item</a> }, },
-		{ key: 'panel-2', title: 'Freehold Two Solar LLC', content: { content: <a href=''><i className="ms-Icon ms-font-xl ms-Icon--Add"></i> Add item</a> } },
-	]
+
 	const panes = [
 		{
 			menuItem: { key: 'Overview', icon: 'images', content: 'All files test', className: 'files-tab-inner' },
@@ -155,11 +344,13 @@ export function FileStructure(props: FileStructureProps) {
 				</div>
 
 				<div className="ui card " style={{ width: '100%' }}>
-					<Accordion className="widtharea" defaultActiveIndex={0} panels={items} styled  >
+					{/* <Accordion className="widtharea" defaultActiveIndex={0} panels={items} styled  >
+					</Accordion> */}
 
-					</Accordion>
 
 					<div className="all-files-con">
+						{renderedFileFoldersList}
+						<div>--------------------------------------</div>
 						<div className="multiple-files-box expand">
 							<div className="multiple-files-header">
 								<div className="files-left-area">
@@ -167,7 +358,7 @@ export function FileStructure(props: FileStructureProps) {
 									<h3 className="files-name">Information Data (2)</h3>
 									<span className="no-of-files">( 5 files )</span>
 								</div>
-								<div className="files-arrows">
+								<div className="files-arrows" onClick={onClickExpand}>
 									<i className="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i>
 								</div>
 							</div>
@@ -391,8 +582,9 @@ export function FileStructure(props: FileStructureProps) {
 								</div>
 							</div>
 						</div>
-
 					</div>
+
+
 				</div>
 			</Tab.Pane>,
 		},
@@ -400,11 +592,9 @@ export function FileStructure(props: FileStructureProps) {
 			menuItem: { key: 'Task', icon: 'print', content: 'Send to print' },
 			render: () => <Tab.Pane attached={false}>  Task</Tab.Pane>,
 		},
-
 	]
 
 	return (
-
 		<div className=" navbar-collapse files-tab-outer">
 			{view && imgUrl.length > 0 ?
 				<div>

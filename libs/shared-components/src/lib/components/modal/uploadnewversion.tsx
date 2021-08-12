@@ -44,6 +44,7 @@ export function UploadNewVersion(props: AlertProps) {
   const [directory, setDirectory] = React.useState("");
   const [workTypeData, setworkTypeData] = React.useState('')
   const [parentUploadedFileID, setparentUploadedFileID] = React.useState('');
+  const [uploadedFileID, setUploadedFileID] = React.useState('');
   const [files, setFileList] = React.useState<any>([]);
   const [people, setAsignis] = React.useState([]);
   const { t } = useTranslation()
@@ -100,6 +101,7 @@ export function UploadNewVersion(props: AlertProps) {
       setfileTypeName(props.file.fileTypeName);
       setstructureTitle(props.file.structureTitle);
       setparentUploadedFileID(props.file.parentUploadedFileID)
+      setUploadedFileID(props.file.uploadedFileID)
     }
   }, [props.file]);
 
@@ -141,6 +143,7 @@ export function UploadNewVersion(props: AlertProps) {
       isFolder, isEveryOneAllowed: false,
       BKPID,
       parentUploadedFileID,
+      uploadedFileID
       // peoples: [{
       //   'userID': "1",
       //   'userName': "S1",

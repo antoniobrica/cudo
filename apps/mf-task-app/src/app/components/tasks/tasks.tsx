@@ -720,6 +720,17 @@ export function Tasks(props: TasksProps) {
           );
         })}
 
+      <div className="task-action-area">
+        <button
+          onClick={clickBottomAddTask}
+          // className="ui large button btn-dashed  btn-large"
+          className="ui small button primary add-new-task-btn">
+          <i className="ms-Icon ms-Icon--Add" aria-hidden="true"></i> {t("project_tab_menu.task.add_new")}
+        </button>
+        <a href="">4 Completed Tasks</a>
+      </div>
+
+
         <div className="completed-task-con">
           <h3 className="alltask">Completed Tasks</h3>
           <div className="tasks-completed-listing">

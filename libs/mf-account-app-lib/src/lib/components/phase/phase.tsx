@@ -44,7 +44,7 @@ export function Phase(props: PhaseProps) {
     props.parentPhaseSelect(phase)
   }
   return (
-    <Form.Field>
+    <>
       {/* <label>{t("common.select_phase")} </label> */}
       <Select placeholder={t("common.select")} className="small"
         options={items}
@@ -53,7 +53,7 @@ export function Phase(props: PhaseProps) {
         clearable
         error={props.error} 
       />
-    </Form.Field>
+    </>
   );
 }
 

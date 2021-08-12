@@ -5,9 +5,9 @@ export const GET_TOKEN = gql`
   }
 `;
 
-export const GET_FILES = gql`
+export const GET_FILES = gql`query UploadedFiles($projectId:String!)
 {
-  uploadedFiles(referenceFilter: { referenceID: "13", referenceType:PROJECTTYPE }) { 
+  uploadedFiles(referenceFilter: { referenceID: $projectId, referenceType:PROJECTTYPE }) { 
     uploadedFileID 
     parentUploadedFileID
     fileURL 
@@ -54,6 +54,9 @@ export const GET_FILES = gql`
 
 export const UPLOAD_FILE = gql`
 mutation SaveUploadedFile(
+  $projectId:String!,
+  $projectTitle:String!,
+
   $directory: String!,
   $fileTypeID: String!, 
   $fileTypeName: String!,
@@ -74,8 +77,9 @@ mutation SaveUploadedFile(
     saveUploadedFile(
       referenceFilter:{ 
       referenceType:PROJECTTYPE
-      referenceID:"13"
-      referenceTitle:"gamesoft"
+      referenceID:$projectId
+      referenceTitle:$projectTitle
+      # referenceTitle: "gamesoft"
       }
       uploadedFileInfo:{
       directory:$directory
@@ -97,8 +101,8 @@ mutation SaveUploadedFile(
       updatedBy:"s2"
       isDeleted:false
       referenceType:PROJECTTYPE
-      referenceID:"13"
-      referenceTitle:"gamesoft"
+      referenceID:$projectId
+      referenceTitle:$projectTitle
       peoples:$people
       }){
       uploadedFileID
@@ -130,6 +134,9 @@ mutation SaveUploadedFile(
 
 export const UPLOAD_FILE_VERSION = gql`
 mutation UploadNewFileVersion(
+  $projectId:String!,
+  $projectTitle:String!,
+
   $parentUploadedFileID: String!,
   $directory: String!,
   $fileTypeID: String!, 
@@ -169,8 +176,8 @@ mutation UploadNewFileVersion(
       updatedBy:"s2"
       isDeleted:false
       referenceType:PROJECTTYPE
-      referenceID:"13"
-      referenceTitle:"gamesoft"
+      referenceID:$projectId
+      referenceTitle:$projectTitle
       peoples: [{
         userID: "1",
         userName: "S1",
@@ -202,3 +209,60 @@ mutation UploadNewFileVersion(
       }
       }
 }`;
+
+export const GET_FILE_VERSIONS = gql`query FileVersions($projectId:String!,$fileId:String!,){
+  fileVersions(
+    parentFile: {
+      referenceType: PROJECTTYPE
+      referenceID: $projectId # "04b9bb40-de6b-11eb-b34f-cd1f71d8908c"
+      uploadedFileID: $fileId # "e81f3f80-f91a-11eb-8f43-87a1cb82224b"
+    }
+  ) {
+    uploadedFileID
+    parentUploadedFileID
+    directory
+    structureID
+    structureTitle
+    BKPID
+    BKPIDTitle
+    phaseID
+    phaseName
+    generateFileName
+    fileTypeID
+    fileTypeName
+    isEveryOneAllowed
+    fileURL
+    fileTitle
+    fileType
+    fileVersion
+    createdBy
+    updatedBy
+    isDeleted
+    referenceID
+    referenceTitle
+    referenceType
+    children {
+      parentUploadedFileID
+      fileURL
+      fileTitle
+      fileType
+      fileVersion
+      fileTypeName
+      isEveryOneAllowed
+      uploadedFileID
+      BKPID
+      BKPIDTitle
+      phaseID
+      phaseName
+      fileTypeID
+      structureID
+      directory
+      structureTitle
+    }
+    people {
+      userID
+      userName
+    }
+  }
+}
+`
