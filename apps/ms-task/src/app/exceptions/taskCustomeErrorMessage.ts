@@ -5,8 +5,6 @@ interface ITaskErrorCode {
     code: number
 }
 
-const port = process.env.PORT || 3333;
-
 export const TaskErrorData = (errorCode: number): ITaskErrorCode => {
     switch (errorCode) {
         case TaskErrorTypeEnum.RECORD_ALREADY_EXIST:
