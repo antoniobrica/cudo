@@ -103,6 +103,12 @@
           margin: 15px 0 0;
           padding: 10px 25px 0 25px;
           min-width: 100%;
+          display: none;
+        }
+        &.expand {
+          .version-file-con {
+            display: block;
+          }
         }
       }
     }
@@ -127,6 +133,14 @@
     .single-files-list {
       @include flex(flex);
       @include justify-content(space-between);
+    }
+    .version-file-con {
+      display: none;
+    }
+    &.expand {
+      .version-file-con {
+        display: block;
+      }
     }
   }
   .files-left-area {

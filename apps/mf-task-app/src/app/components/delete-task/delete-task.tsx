@@ -1,34 +1,52 @@
-import React from 'react'
+import { LazyLoading } from '@cudo/shared-components'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button, Icon, Modal } from 'semantic-ui-react'
 
-  export interface AlertProps {
-    openAlertF,
-    confirm,
-    taskData,
-    cancel,
-    taskStatus
-  }
-  export const TaskDelete = (props: AlertProps) => {
+export interface AlertProps {
+  openAlertF,
+  confirm,
+  taskData,
+  cancel,
+  taskStatus,
+  isStopTaskDeleteLoader?
+}
+export const TaskDelete = (props: AlertProps) => {
   const [open, setOpen] = React.useState(false)
-  const {t} = useTranslation()
+  const [isLoading, setIsLoading] = useState(false)
+
+  const { t } = useTranslation()
   React.useEffect(() => {
     if (props.openAlertF) {
       setOpen(props.openAlertF);
     }
   }, [props.openAlertF]);
+
+  useEffect(() => {
+    if (props.isStopTaskDeleteLoader) {
+      console.log('----useEffect-is loading false set here---')
+      setIsLoading(false)
+      setOpen(false)
+    }
+  }, [props.isStopTaskDeleteLoader])
   const openf = () => {
     setOpen(true)
   }
-  const yes =()=>{
-    setOpen(false)
+  const yes = () => {
+    // setOpen(false)
+    console.log('----After confirm-is loading true set here---')
+    setIsLoading(true)
     props.confirm(true, props.taskData)
   }
-  const cancel =()=>{
+  const cancel = () => {
     setOpen(false)
     props.cancel()
   }
-const size = undefined
+  const size = undefined
+
+  if (isLoading)
+    return (<LazyLoading />)
+
   return (
     <>
 
@@ -37,7 +55,7 @@ const size = undefined
         size={size}
         onClose={() => setOpen(false)}
         onOpen={openf}
-        open={open} 
+        open={open}
         className="delete-confiramtion-popup"
         closeOnDimmerClick={false}
       >
@@ -59,7 +77,7 @@ const size = undefined
        
         </Modal.Actions>
       </Modal> */}
-      <div className="delete-confirmation-con">
+        <div className="delete-confirmation-con">
           <Modal.Content>
             {/* <i className="ms-Icon ms-Icon--ShieldAlert" aria-hidden="true"></i> */}
             <Icon name="shield alternate"></Icon>
@@ -72,6 +90,7 @@ const size = undefined
           </Modal.Actions>
         </div>
       </Modal>
+
     </>
   )
 }

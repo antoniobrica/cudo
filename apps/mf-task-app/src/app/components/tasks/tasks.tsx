@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './tasks.module.scss';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
@@ -30,7 +30,7 @@ export function Tasks(props: TasksProps) {
   const history = useHistory();
   const { t } = useTranslation();
   const [referenceID, setReferenceID] = React.useState<string>('')
-  const { loading, error, data:taskListData } = useTaskQuery(GET_TASKS, {
+  const { loading, error, data: taskListData } = useTaskQuery(GET_TASKS, {
     variables: { referenceID },
   });
 
@@ -64,6 +64,8 @@ export function Tasks(props: TasksProps) {
   const [subTaskId, setSubTaskId] = React.useState();
   const [subTaskStatus, setSubTaskStatus] = React.useState('');
 
+  const [isTaskDeleted, setIsTaskDeleted] = useState(false)
+
   const [idx, setId] = React.useState('');
   const [addTask] = useTaskUpdateMutation(UPDATE_TASK, {
     variables: { referenceID },
@@ -74,6 +76,7 @@ export function Tasks(props: TasksProps) {
   });
 
   const [taskDelete] = useTaskDeleteMutation(DELETE_TASK, {
+  // const [taskDelete, { loading: deleteLoading, error: deleteError, data: deleteData }] = useMutation(DELETE_TASK, {
     variables: { referenceID },
   });
 
@@ -140,6 +143,13 @@ export function Tasks(props: TasksProps) {
         <LoaderPage />
       </h1>
     );
+
+  // if (deleteLoading)
+  //   return (
+  //     <h1>
+  //       <LoaderPage />
+  //     </h1>
+  //   );
 
   const cancel = () => {
     setOpen(false);
@@ -220,7 +230,7 @@ export function Tasks(props: TasksProps) {
   };
   const confirmationDelete = (data, task) => {
     setIsUpdate(data);
-    setOpenD(false);
+
     // updateTask(taskData);
     const taskID = task.taskID;
     taskDelete({
@@ -257,6 +267,9 @@ export function Tasks(props: TasksProps) {
         });
       },
     });
+    console.log('----before-stop loader set state---')
+    setIsTaskDeleted(true)
+    // setOpenD(false);
   };
   const updateTask = (task) => {
     setTaskData(task);
@@ -332,7 +345,7 @@ export function Tasks(props: TasksProps) {
     });
   };
   const subTask = (data, title) => {
-   
+
     const subtask = [];
     const createSt = {
       subtaskTitle: title,
@@ -347,7 +360,7 @@ export function Tasks(props: TasksProps) {
       followers.push({ userID: data.userID, userName: data.userName })
     })
     subtask.push(createSt);
-    
+
     editTaskApi({
       variables: {
         taskID: data.taskID,
@@ -371,13 +384,13 @@ export function Tasks(props: TasksProps) {
         workTypeName: data.workTypeName,
         workTypeID: data.workTypeID,
       },
-      
+
       update: (cache, data) => {
         const cacheData = cache.readQuery({
           query: GET_TASKS,
           variables: { referenceID },
         }) as ITasks;
-        
+
         cache.writeQuery({
           query: GET_TASKS,
           data: {
@@ -645,6 +658,7 @@ export function Tasks(props: TasksProps) {
             taskData={taskData}
             taskStatus={taskStatus}
             cancel={cancel}
+            isStopTaskDeleteLoader={isTaskDeleted}
           ></TaskDelete>
         </div>
       ) : null}
@@ -720,15 +734,15 @@ export function Tasks(props: TasksProps) {
           );
         })}
 
-      <div className="task-action-area">
-        <button
-          onClick={clickBottomAddTask}
-          // className="ui large button btn-dashed  btn-large"
-          className="ui small button primary add-new-task-btn">
-          <i className="ms-Icon ms-Icon--Add" aria-hidden="true"></i> {t("project_tab_menu.task.add_new")}
-        </button>
-        <a href="">4 Completed Tasks</a>
-      </div>
+        <div className="task-action-area">
+          <button
+            onClick={clickBottomAddTask}
+            // className="ui large button btn-dashed  btn-large"
+            className="ui small button primary add-new-task-btn">
+            <i className="ms-Icon ms-Icon--Add" aria-hidden="true"></i> {t("project_tab_menu.task.add_new")}
+          </button>
+          <a href="">4 Completed Tasks</a>
+        </div>
 
 
         <div className="completed-task-con">
@@ -745,11 +759,11 @@ export function Tasks(props: TasksProps) {
                     <div className="d-flex mr-3">
                       <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row task-listing-desc">
                         ( Fri Jul 30 2021 ↦ Due Sat Aug 07 2021)
-                          <div className="navi-item">
-                            <a className="navi-link">
-                              <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>2 files  -  </span>
-                            </a>
-                          </div>
+                        <div className="navi-item">
+                          <a className="navi-link">
+                            <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>2 files  -  </span>
+                          </a>
+                        </div>
                         <div className="navi-item">
                           <a className="navi-link">
                             <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> 5 days <span className="dash-seperator">-</span> </span>
@@ -760,16 +774,16 @@ export function Tasks(props: TasksProps) {
                             <span className="navi-text">Realization  <span className="dash-seperator">-</span>  </span>
                           </a>
                         </div>
-                          <div className="navi-item">
-                            <a className="navi-link">
-                              <span className="navi-text">Work Type 9   <span className="dash-seperator">-</span> </span>
-                            </a>
-                          </div>
-                            <div className="navi-item">
-                              <a className="navi-link">
-                                <span className="navi-text"> 3 Check points  </span>
-                              </a>
-                            </div>
+                        <div className="navi-item">
+                          <a className="navi-link">
+                            <span className="navi-text">Work Type 9   <span className="dash-seperator">-</span> </span>
+                          </a>
+                        </div>
+                        <div className="navi-item">
+                          <a className="navi-link">
+                            <span className="navi-text"> 3 Check points  </span>
+                          </a>
+                        </div>
                       </div>
 
                     </div>
@@ -781,47 +795,47 @@ export function Tasks(props: TasksProps) {
                   </div>
 
                   <div className="tasks-action-area">
-                      <div className="navi-item  ">
-                        <a className="navi-link">
-                          <span className="navi-text">
-                              <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pin_blue.png`} />
-                          </span>
-                        </a>
-                      </div>
+                    <div className="navi-item  ">
+                      <a className="navi-link">
+                        <span className="navi-text">
+                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pin_blue.png`} />
+                        </span>
+                      </a>
+                    </div>
 
-                      <div className="navi-item d-flex">
-                        <a className="navi-link">
-                          <span className="navi-text pin-action"> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} /> </span>
-                        </a>
-                        <Popup trigger={<Button className="more-user-listing">3+</Button>} flowing hoverable>
-                          <Grid>
-                            <Grid.Column textAlign='center'>
-                              <div className="user-tooltip-listing">
-                                <Popup className="user-tooltip-name"
-                                  trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
-                                  content='Mike'
-                                  size='mini'
-                                />
-                                <Popup className="user-tooltip-name"
-                                  trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
-                                  content='John'
-                                  size='mini'
-                                />
-                                <Popup className="user-tooltip-name"
-                                  trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
-                                  content='Hussy'
-                                  size='mini'
-                                />
-                                <Popup className="user-tooltip-name"
-                                  trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
-                                  content='Kevin'
-                                  size='mini'
-                                />
-                              </div>
-                            </Grid.Column>
-                          </Grid>
-                        </Popup>
-                      </div>
+                    <div className="navi-item d-flex">
+                      <a className="navi-link">
+                        <span className="navi-text pin-action"> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} /> </span>
+                      </a>
+                      <Popup trigger={<Button className="more-user-listing">3+</Button>} flowing hoverable>
+                        <Grid>
+                          <Grid.Column textAlign='center'>
+                            <div className="user-tooltip-listing">
+                              <Popup className="user-tooltip-name"
+                                trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                content='Mike'
+                                size='mini'
+                              />
+                              <Popup className="user-tooltip-name"
+                                trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                content='John'
+                                size='mini'
+                              />
+                              <Popup className="user-tooltip-name"
+                                trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                content='Hussy'
+                                size='mini'
+                              />
+                              <Popup className="user-tooltip-name"
+                                trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                content='Kevin'
+                                size='mini'
+                              />
+                            </div>
+                          </Grid.Column>
+                        </Grid>
+                      </Popup>
+                    </div>
 
 
                     <div className="symbol-group symbol-hover py-2" >
@@ -841,9 +855,9 @@ export function Tasks(props: TasksProps) {
                   </div>
                 </div>
               </div>
-              </div>
             </div>
-            
+          </div>
+
         </div>
       </div>
       <button

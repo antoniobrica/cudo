@@ -225,6 +225,7 @@ a {
           }
           
           .estimated-cost-field {
+            margin: 0;
             .ui.label {
               max-height: 3rem;
               padding: 0 10px;
@@ -245,13 +246,13 @@ a {
             min-height: 3rem !important;
             max-width: 300px;
             > .text {
-              margin: 0 0 0.45rem 0;
+              margin: 2px 0 0 0;
               font-size: 13px;
               font-weight: 500 !important;
               color: #1B1B40;
             }
             > .dropdown.icon {
-              margin: 0;
+              margin: 1px 0 0 0;
               color: #718898;
               opacity: 1;
             }
