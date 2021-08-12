@@ -1,11 +1,14 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { error } from "console";
 import { Session } from "inspector";
 import { Repository } from "typeorm";
 import AdminEntity from "../../../entities/admin.entity";
 import MeetingEntity from "../../../entities/meeting.entity";
 import MembersEntity from "../../../entities/members.entity";
 import SessionEntity from "../../../entities/session.entity";
+import { MeetingErrorTypeEnum } from "../../../enums/meeting-error-type.enum";
+import MeetingCustomError from "../../../exceptions/meetingCustomError.exception";
 import ReferenceFilterParams from "../../../utils/types/referenceFilterParams";
 import { Pagination, PaginationOptionsInterface } from "../../paginate";
 import { ReferenceService } from "../../reference/service/reference.service";
@@ -33,6 +36,28 @@ export class SessionService {
     public async create(createInput: SessionDetailsInput, referenceFilter: ReferenceFilterParams): Promise<SessionEntity> {
         try {
             const { admins, sessionBasics, members } = createInput;
+
+            // handling client input error
+            let errorType: number;
+            if (!members) {
+                errorType = MeetingErrorTypeEnum.NO_MEMBERS
+            }
+            if (!admins) {
+                errorType = MeetingErrorTypeEnum.NO_ADMIN
+            }
+            if (!sessionBasics.meetingCategoryID) {
+                errorType = MeetingErrorTypeEnum.NO_CATEGORY
+            }
+            if (!sessionBasics.worktypeID) {
+                errorType = MeetingErrorTypeEnum.NO_WORKTYPE
+            }
+            if (!sessionBasics.sessionTitle) {
+                errorType = MeetingErrorTypeEnum.NO_TITLE
+            }
+            if (errorType) {
+                throw new MeetingCustomError(errorType)
+            }
+
             const sessionDetails = new SessionEntity({ ...sessionBasics });
 
             if (admins) {
@@ -87,7 +112,7 @@ export class SessionService {
         if (session) {
             return session;
         }
-        throw new SessionNotFoundException(session.sessionID);
+        throw new MeetingCustomError(MeetingErrorTypeEnum.RECORD_NOT_EXIST)
     }
 
     async paginate(
@@ -103,7 +128,7 @@ export class SessionService {
                 "reference": {
                     id: selectedReference.id
                 },
-                isDeleted:false
+                isDeleted: false
             },
             relations: ['reference', 'admins', 'members'],
             take: options.limit,
@@ -128,7 +153,28 @@ export class SessionService {
             relations: ['reference', 'admins', 'members']
         });
         if (!sessionDetail) {
-            throw new HttpException('Session with the sessionID not found', HttpStatus.NOT_FOUND);
+            throw new MeetingCustomError(MeetingErrorTypeEnum.RECORD_NOT_EXIST)
+        }
+
+        // handling client input error
+        let errorType: number;
+        if (!members) {
+            errorType = MeetingErrorTypeEnum.NO_MEMBERS
+        }
+        if (!admins) {
+            errorType = MeetingErrorTypeEnum.NO_ADMIN
+        }
+        if (!sessionBasics.meetingCategoryID) {
+            errorType = MeetingErrorTypeEnum.NO_CATEGORY
+        }
+        if (!sessionBasics.worktypeID) {
+            errorType = MeetingErrorTypeEnum.NO_WORKTYPE
+        }
+        if (!sessionBasics.sessionTitle) {
+            errorType = MeetingErrorTypeEnum.NO_TITLE
+        }
+        if (errorType) {
+            throw new MeetingCustomError(errorType)
         }
 
         if (admins) {
@@ -203,6 +249,6 @@ export class SessionService {
             return updatedPost
         }
 
-        throw new HttpException('session with sessionId not found', HttpStatus.NOT_FOUND);
+        throw new MeetingCustomError(MeetingErrorTypeEnum.RECORD_NOT_EXIST)
     }
 }
