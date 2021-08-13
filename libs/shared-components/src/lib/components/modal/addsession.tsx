@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Modal, Input, Form, Grid, Select, Dropdown } from 'semantic-ui-react';
+import { Button, Modal, Input, Form, Grid, Select, Dropdown, Dimmer, Loader } from 'semantic-ui-react';
 import { MeetingCategoryIndex, SessionInvitationIndex, SessionProtocolIndex, FollowersIndex, AssigneeIndex, AdminsIndex, MembersIndex } from '@cudo/mf-account-app-lib';
 import { useTranslation } from 'react-i18next';
 
@@ -8,6 +8,8 @@ export interface SessionProps {
   createSession?
   openAddSession?
   cancel?
+  loading?
+  data?
 }
 
 interface AddSessionErrors {
@@ -56,6 +58,13 @@ export function ModalAddSession(props: SessionProps) {
     props.openAddSession(true)
   }
 
+  //on show or hide loader
+  useEffect(() => {
+    if (!props.loading && props.data) {
+      cancel()
+    }
+  }, [props.loading])
+
   const onSessionTitleChange = (e) => {
     setSessionTitle(e.target.value)
     setErrors({ ...errors, titleError: "" })
@@ -65,7 +74,7 @@ export function ModalAddSession(props: SessionProps) {
       worktypeID: '',
       worktypeName: ''
     };
-    if(data.value){
+    if (data.value) {
       for (let i = 0; i < props?.workTypes?.length; i++) {
         if (props.workTypes[i]?.workTypeName === data.value) {
           workT.worktypeID = props.workTypes[i].projectWorkTypeID;
@@ -82,28 +91,28 @@ export function ModalAddSession(props: SessionProps) {
       setworkTypeD(null)
       setworkTypeData("")
     }
-    
-    
+
+
     setErrors({ ...errors, workTypeError: "" })
   }
   const parentCatagorySelect = (data) => {
-    if(data.meetingCatagoryID){
+    if (data.meetingCatagoryID) {
       setCatagory(data)
       setErrors({ ...errors, categoryError: "" })
-    }else{
+    } else {
       setCatagory(null)
     }
   }
   const parentSessionSelect = (data) => {
-    if(data.protocolTemplateID){
+    if (data.protocolTemplateID) {
       setProtocol(data)
       setErrors({ ...errors, protocolTemplateError: "" })
-    }else{
+    } else {
       setProtocol(null)
     }
   }
   const parentInvitationSelect = (data) => {
-    if(data.invitationTemplateID){
+    if (data.invitationTemplateID) {
       setInvitation(data)
       setErrors({ ...errors, invitationTemplateError: "" })
     } else {
@@ -176,8 +185,6 @@ export function ModalAddSession(props: SessionProps) {
     }
 
     props.createSession(data);
-
-    cancel()
   }
 
   const cancel = () => {
@@ -203,7 +210,7 @@ export function ModalAddSession(props: SessionProps) {
   return (
     <div style={{ marginLeft: 900 }} >
       <Modal
-        className="modal_media right-side--fixed-modal add-session-modal"
+        className= {`modal_media right-side--fixed-modal add-session-modal${props.loading && !props.data && " overflow-hidden"}`}
         closeIcon
         onClose={cancel}
         onOpen={openSessionAddPopup}
@@ -215,6 +222,13 @@ export function ModalAddSession(props: SessionProps) {
         // }
         closeOnDimmerClick={false}
       >
+        {
+          props.loading && !props.data && (
+            <Dimmer active inverted Center inline>
+              <Loader size='big'>Loading</Loader>
+            </Dimmer>
+          )
+        }
         <Modal.Header>
           <h3>{t("project_tab_menu.meeting.add_session")} </h3>
         </Modal.Header>
