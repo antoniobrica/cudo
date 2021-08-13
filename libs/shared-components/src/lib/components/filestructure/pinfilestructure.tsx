@@ -24,8 +24,6 @@ export function PinFileStructure(props: FileStructureProps) {
     const [fType, setFtype] = React.useState('');
     const [isPinFile, setIsPinFile] = React.useState(false);
 
-    const [tick, setTick] = React.useState([[]]);
-    const [isTick, setIsTick] = React.useState('');
     const [fileId, setFileId] = React.useState('');
     const [selectedFile, setSelectedFile] = React.useState(null)
 
@@ -36,26 +34,19 @@ export function PinFileStructure(props: FileStructureProps) {
             setIsPinFile(props.isPinFile)
         }
     }, [props.isPinFile])
-    // const tick = () => {
-    //     setIsTick(t => !t)
-    //     console.log();
 
-    //     console.log('istibcj', isTick);
+    const viewFile = (data) => {
+        console.log('--viewFile--data--', data.uploadedFileID, selectedFile)
+        if (selectedFile !== data.uploadedFileID) {
+            console.log('--viewFile--not same selected--')
+            setSelectedFile(data.uploadedFileID)
+        } else {
+            console.log('--viewFile--same selected--')
+            setSelectedFile(null)
+        }
 
-    // }
-
-    const viewFile = (data, id) => {
-        setSelectedFile(data.uploadedFileID)
-        console.log('tick', isTick);
-
-        setIsTick(id)
-        console.log('tick', isTick);
-
-        console.log('viewfile', data);
         setFtype(data.fileType);
-        // setView(true);
         setFilesData(data);
-
         props.viewFiles(data)
     }
 
@@ -79,72 +70,56 @@ export function PinFileStructure(props: FileStructureProps) {
             }
 
         }
-    })
+    }, [props.downloadedImg])
+
     const uploadNewVersion = (file) => {
         console.log('file', file);
         props.uploadNewVersion(file);
-
     }
+
     React.useEffect(() => {
         if (props.files) {
             setItems(props.files.map((file, i) => ({ key: i, title: file.directory ? file.directory : file.BKPIDTitle, content: { content: (renderItems(file.children, i)) } })));
         }
-    }, [props.files, selectedFile]);
+    }, [props.files]);
 
-
-    const renderItems = (data, i) => {
-
-        const files = data.map((data, id) => {
+    const renderItems = (children, i) => {
+        const files = children.map((singleFileItem) => {
+            const { uploadedFileID, fileType, fileTitle, } = singleFileItem
             return (
                 <div className="card1 card-custom gutter-b width_card" >
-
                     <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-
                         <div className="d-flex align-items-center py-2">
                             <span>
-                                {data.fileType == ("image/jpeg" || "image/png")
+                                {fileType == ("image/jpeg" || "image/png")
                                     ?
                                     <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} className="  mr-10 " /> :
                                     <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} className="  mr-10 " />
                                 }
-
                             </span>
 
-                            <span className="font-weight-bold mb-0 mr-10">{data.fileTitle}</span>
+                            <span className="font-weight-bold mb-0 mr-10">{fileTitle}</span>
                             {/* <div className="d-flex mr-3">
-
 								<div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
-
 									<div className="navi-item mr-2">
 										<button className="ui mini button grey-btn">{file.fileVersion}</button>
 									</div>
-
 								</div>
-
 							</div> */}
-
                         </div>
-
                         <div className="symbol-group symbol-hover">
                             <div>
                                 {/* <a onClick={() => download(file.fileTitle)}>  <i className="ms-Icon ms-Icon--Download mr-10" aria-hidden="true"></i></a> */}
                                 {/* <a onClick={() => viewFile(file)}> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a> */}
-                                {isTick === i && selectedFile === data.uploadedFileID ?
+                                {selectedFile === uploadedFileID ?
                                     <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/circle_blue.png`} />
                                     :
-                                    <a
-                                        onClick={() => viewFile(data, i)}
-                                        className="navi-link active"
-
-                                    >
+                                    <a onClick={() => viewFile(singleFileItem)} className="navi-link active" >
                                         <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/grey_circle.png`} />
-
                                     </a>
                                 }
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             )
@@ -171,9 +146,6 @@ export function PinFileStructure(props: FileStructureProps) {
 
             </div>
         </div>
-
-
-
     );
 }
 
