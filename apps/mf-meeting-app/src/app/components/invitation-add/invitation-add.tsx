@@ -27,7 +27,7 @@ export function InvitationAdd(props: InvitationAddProps) {
         variables: { sessionID: props?.sessionId },
     });
 
-    const [addMeeting, { data }] = useMutation(ADD_INVITATION,
+    const [addMeeting, {loading, error, data }] = useMutation(ADD_INVITATION,
         {
             refetchQueries: [
                 {
@@ -90,6 +90,8 @@ console.log('----companyId----', companyId)
                 sessionDetail={sessionDetailData}
                 projectTypeId={projectId}
                 companyId={companyId}
+                loading={loading}
+                data={data}
             />
         </div>
     )

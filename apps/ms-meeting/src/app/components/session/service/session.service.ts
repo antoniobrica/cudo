@@ -1,7 +1,5 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { error } from "console";
-import { Session } from "inspector";
 import { Repository } from "typeorm";
 import AdminEntity from "../../../entities/admin.entity";
 import MeetingEntity from "../../../entities/meeting.entity";
@@ -16,8 +14,6 @@ import SessionFilterParam from "../dto/args/session.filter";
 import { SessionDeleteInput } from "../dto/input/session-delete.input";
 import { SessionDetailsUpdateInput } from "../dto/input/session-details-update.input";
 import { SessionDetailsInput } from "../dto/input/session-details.input";
-import SessionNotFoundException from "../exceptions/sessionNotFound.exception";
-
 
 @Injectable()
 export class SessionService {

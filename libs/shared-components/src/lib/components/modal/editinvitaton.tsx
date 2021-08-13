@@ -11,7 +11,9 @@ import {
   Grid,
   Dropdown,
   TextArea,
-  Icon // added for edit modal
+  Icon, // added for edit modal
+  Dimmer,
+  Loader
 } from 'semantic-ui-react';
 
 import moment from 'moment'
@@ -24,6 +26,8 @@ export interface EditInvitationProps {
   editInvitation?
   openEditInvitation?
   cancel?
+  loading?
+  data?
 }
 
 interface EditInvitationErrors {
@@ -58,6 +62,13 @@ export function ModalEditInvitation(props: EditInvitationProps) {
       setOpenEditModal(true);
     }
   }, [props.openEditInvitation])
+
+   //on show or hide loader
+   useEffect(() => {
+    if (!props.loading && props.data) {
+      cancel()
+    }
+  }, [props.loading])
 
   useEffect(() => {
     if (props?.meetingDetail) {
@@ -256,15 +267,15 @@ export function ModalEditInvitation(props: EditInvitationProps) {
 
     props.editInvitation(data);
 
-    setOpenEditModal(false);
+    // setOpenEditModal(false);
     // props.openEditInvitation(false)
     // resetEditData();
-    props.cancel(true)
+    // props.cancel(true)
   }
 
   return (
     <div>
-      <Modal className="modal_media right-side--fixed-modal add-new-invitation-modal"
+      <Modal className={`modal_media right-side--fixed-modal add-new-invitation-modal${props.loading && !props.data && " overflow-hidden"}`}
         closeIcon
         onClose={() => setOpenEditModal(false)}
         onOpen={openInvitationEditPopup}
@@ -277,6 +288,13 @@ export function ModalEditInvitation(props: EditInvitationProps) {
         }
         closeOnDimmerClick={false}
       >
+        {
+          props.loading && !props.data && (
+            <Dimmer active inverted Center inline>
+              <Loader size='big'>Loading</Loader>
+            </Dimmer>
+          )
+        }
         <Modal.Header>
           <h3>Edit Invitation </h3>
         </Modal.Header>
