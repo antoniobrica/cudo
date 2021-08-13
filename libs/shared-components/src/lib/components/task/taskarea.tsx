@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './../../../assets/style/index.scss'
-import { Segment, Dropdown, Input, Grid, Form, Icon, Popup, Button } from 'semantic-ui-react';
+import { Segment, Dropdown, Input, Grid, Form, Icon, Popup, Button, Dimmer, Loader } from 'semantic-ui-react';
 
 import { useTranslation } from 'react-i18next';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
+import LazyLoading from '../loader/lazyloader';
 /* eslint-disable-next-line */
 export interface Tasks {
   task?,
@@ -17,6 +18,8 @@ export interface Tasks {
   updateSubTaskStatus?
   updateSubTask?
   deleteSubTask?
+  addSubTaskLoading?
+  editSubTaskLoading?
 }
 
 export function TaskArea(props: Tasks) {
@@ -28,12 +31,27 @@ export function TaskArea(props: Tasks) {
   const [viewSubTaskAdd, setViewSubTaskAdd] = React.useState(false);
   const [isExpended, setIsExpended] = React.useState(false)
   const [openSubTaskEdit, setOpenSubTaskEdit] = React.useState(false)
+  const [subtaskAddLoading, setSubTaskAddLoading] = useState(false)
+  const [subtaskEditLoading, setSubTaskEditLoading] = useState(false)
 
   useEffect(() => {
     const filteredSubTasks = props?.task?.subtasks.filter((item) => item.isDeleted !== true)
     setSubtaskData(filteredSubTasks)
   }, [props?.task])
 
+  useEffect(() => {
+    setSubTaskAddLoading(props.addSubTaskLoading)
+    if (props.addSubTaskLoading === false && viewSubTaskAdd === true) {
+      setViewSubTaskAdd(false)
+    }
+  }, [props?.addSubTaskLoading])
+
+  useEffect(() => {
+    setSubTaskEditLoading(props.editSubTaskLoading)
+    if (props.editSubTaskLoading === false && openSubTaskEdit === true) {
+      setOpenSubTaskEdit(false)
+    }
+  }, [props?.editSubTaskLoading])
 
   const description = [
     <Segment>Pellentesque habitant morbi tristique senectus.</Segment>
@@ -65,7 +83,7 @@ export function TaskArea(props: Tasks) {
   const createSubTask = (task) => {
     const subTaskTitle = subtaskTitle;
     props.subTask(task, subTaskTitle)
-    setViewSubTaskAdd(false)
+    // setViewSubTaskAdd(false)
     setSubtaskTitle('')
   }
 
@@ -95,7 +113,7 @@ export function TaskArea(props: Tasks) {
     if (viewSubTaskAdd === true) {
       setViewSubTaskAdd(false)
     }
-    setOpenSubTaskEdit(false)
+    // setOpenSubTaskEdit(false)
     props.updateSubTask(taskId, subTaskId, subTaskTitle)
   }
   const onClickCancelEditSubTask = () => {
@@ -114,22 +132,25 @@ export function TaskArea(props: Tasks) {
 
       renderSubTaskEditForm =
         <div key={`edit-form-${subTaskId}`} className="add-new-task-con">
-          <span className="anchor_complete checklist-complete-box"><a title={t("project_tab_menu.task.completed")}> <span><i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></span> </a> </span>
-          <div className="classtop add-new-task-field">
-            <Form.Field className="fillarea">
-              <Input placeholder='Enter your text here....' size='small' className="full-width "
-                type="text"
-                value={subtaskTitle}
-                onChange={onSubtaskTitle}
-              />
-            </Form.Field>
-            <Form.Field className="d-flex">
-              <button className="greenbutton anchor_complete" onClick={() => onClickSubTaskUpdate(props.task.taskID, subTaskId, subtaskTitle)}>
-                <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
-              </button> &nbsp;  <button className="redbutton anchor_complete" onClick={onClickCancelEditSubTask}>
-                <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> </button>
-            </Form.Field>
-          </div>
+          {subtaskEditLoading ? <LazyLoading /> : <>
+            <span className="anchor_complete checklist-complete-box"><a title={t("project_tab_menu.task.completed")}> <span><i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></span> </a> </span>
+            <div className="classtop add-new-task-field">
+              <Form.Field className="fillarea">
+
+                <Input placeholder='Enter your text here....' size='small' className="full-width "
+                  type="text"
+                  value={subtaskTitle}
+                  onChange={onSubtaskTitle}
+                />
+              </Form.Field>
+              <Form.Field className="d-flex">
+                <button className="greenbutton anchor_complete" onClick={() => onClickSubTaskUpdate(props.task.taskID, subTaskId, subtaskTitle)}>
+                  <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
+                </button> &nbsp;  <button className="redbutton anchor_complete" onClick={onClickCancelEditSubTask}>
+                  <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> </button>
+              </Form.Field>
+            </div>
+          </>}
         </div>
     }
     return renderSubTaskEditForm
@@ -148,10 +169,10 @@ export function TaskArea(props: Tasks) {
         </span>
         <span className="task-checklisting-text">{index + 1}. {subTaskTitle}</span>
 
-        
-        <span className="checklist-actions" onClick={() => onClickEditSubTask(taskId, subTaskId, subTaskTitle)}> <Icon  name="pencil"/></span>
+
+        <span className="checklist-actions" onClick={() => onClickEditSubTask(taskId, subTaskId, subTaskTitle)}> <Icon name="pencil" /></span>
         <span className="checklist-actions" onClick={() => onClickDeleteSubTask(taskId, subTaskId)}>< Icon name="trash alternate outline" /> </span>
-        
+
       </div>
 
     return renderSubtaskItems
@@ -476,22 +497,24 @@ export function TaskArea(props: Tasks) {
                       {
                         openSubTaskEdit === false && viewSubTaskAdd ?
                           <div className="add-new-task-con">
-                            <span className="anchor_complete checklist-complete-box"><a title={t("project_tab_menu.task.completed")}> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i> </a> </span>
-                            <div className="classtop add-new-task-field">
-                              <Form.Field className="fillarea">
-                                <Input placeholder='Enter your text here....' size='small' className="full-width "
-                                  type="text"
-                                  value={subtaskTitle}
-                                  onChange={onSubtaskTitle}
-                                />
-                              </Form.Field>
-                              <Form.Field className="d-flex">
-                                <button className="greenbutton anchor_complete" onClick={() => createSubTask(props.task)}>
-                                  <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
-                                </button> &nbsp;  <button className="redbutton anchor_complete" onClick={cancelSubtaskAdd}>
-                                  <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> </button>
-                              </Form.Field>
-                            </div>
+                            {subtaskAddLoading ? <LazyLoading /> : <>
+                              <span className="anchor_complete checklist-complete-box"><a title={t("project_tab_menu.task.completed")}> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i> </a> </span>
+                              <div className="classtop add-new-task-field">
+                                <Form.Field className="fillarea">
+                                  <Input placeholder='Enter your text here....' size='small' className="full-width "
+                                    type="text"
+                                    value={subtaskTitle}
+                                    onChange={onSubtaskTitle}
+                                  />
+                                </Form.Field>
+                                <Form.Field className="d-flex">
+                                  <button className="greenbutton anchor_complete" onClick={() => createSubTask(props.task)}>
+                                    <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
+                                  </button> &nbsp;  <button className="redbutton anchor_complete" onClick={cancelSubtaskAdd}>
+                                    <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> </button>
+                                </Form.Field>
+                              </div>
+                            </>}
                           </div>
                           :
                           <div onClick={addNewSubTask} className="add-new-link"> <span className="anchor_complete"><i className="ms-Icon ms-Icon--Add" aria-hidden="true"></i> {t("common.add_new_button")}</span></div>

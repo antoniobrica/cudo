@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Button,
   Header,
@@ -9,6 +9,8 @@ import {
   Grid,
   Select,
   TextArea,
+  Dimmer,
+  Loader,
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 import { FollowersIndex, AssigneeIndex, BkpIndex, BkpsIndex, PhaseIndex } from "@cudo/mf-account-app-lib";
@@ -37,6 +39,8 @@ interface AlertProps {
   cancel?,
   taskStatus?,
   editTaskData?
+  editTaskLoading?
+  updatedTaskData?
 }
 
 interface TaskErrors {
@@ -78,7 +82,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3]?.toString();
-  
+
   React.useEffect(() => {
     if (referenceID) {
       getWorkType(referenceID)
@@ -92,7 +96,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
   }, [props.openAlertF]);
 
 
- React.useEffect(() => {
+  React.useEffect(() => {
     if (props.taskData) {
       var d = props.taskData.startDate;
       var de = props.taskData.endDate
@@ -130,10 +134,17 @@ export const ModalTaskEdit = (props: AlertProps) => {
 
   React.useEffect(() => {
     if (workTypes) {
-       setworkType(workTypes.map(({ workTypeName, projectWorkTypeID }) => ({ key: projectWorkTypeID, value: workTypeName, text: workTypeName, id: projectWorkTypeID })));
+      setworkType(workTypes.map(({ workTypeName, projectWorkTypeID }) => ({ key: projectWorkTypeID, value: workTypeName, text: workTypeName, id: projectWorkTypeID })));
     }
   }, [workTypes]);
-  
+
+  useEffect(() => {
+    if (!props.editTaskLoading && props.updatedTaskData) {
+      setOpen(false)
+      props.cancel()
+    }
+  }, [props.editTaskLoading, props.updatedTaskData])
+
   const query = `query Game($projectId: String!) {
     projectById( projectId: $projectId)
     {
@@ -154,7 +165,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
  }`;
 
   const getWorkType = (referenceID) => {
-    
+
     return axios.post(
       MS_SERVICE_URL['ms_project'].url,
       {
@@ -183,17 +194,17 @@ export const ModalTaskEdit = (props: AlertProps) => {
 
     return [year, month, day].join('-');
   }
-  
+
   const onMworkType = (event, data) => {
-  
+
     const workT = {
       worktypeID: '',
       worktypeName: ''
     };
-    if(data.value){
+    if (data.value) {
       for (let i = 0; i < workTypes.length; i++) {
         if (workTypes[i]?.workTypeName === data.value) {
-         
+
           workT.worktypeID = workTypes[i].projectWorkTypeID;
           workT.worktypeName = data.value;
           setworktypeName(workT.worktypeName);
@@ -206,10 +217,10 @@ export const ModalTaskEdit = (props: AlertProps) => {
       setworktypeID("")
       setworkTypeD("")
     }
-    
-    setworkTypeData(data.value);    
+
+    setworkTypeData(data.value);
   }
-  
+
   const openf = () => {
     setOpen(true)
   }
@@ -223,7 +234,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
     setTaskTitle(e.target.value)
   }
   const onStartDateChange = e => {
-  
+
     const date1 = new Date(e.target.value)
     const date2 = new Date(endDate)
     const Difference_In_Time = date2.getTime() - date1.getTime();
@@ -251,21 +262,21 @@ export const ModalTaskEdit = (props: AlertProps) => {
 
   const setBKPIDChange = (data) => {
     setBKPIDTitle(data.BKPIDTitle)
-    setBKPID(data.BKPID)   
+    setBKPID(data.BKPID)
   }
   const setAsignee = (data) => {
-    
-    if(data.userID){
+
+    if (data.userID) {
       const ppl = []
       ppl.push(data)
       setAssignees(ppl)
       // setAsignis(data)
-    }else{
+    } else {
       setAssignees([])
     }
   }
   const onFollowers = (data) => {
-     setfollowers(data)
+    setfollowers(data)
   }
 
   const setSaveTaskAsTemplateChange = (event, data) => {
@@ -277,7 +288,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
     setPhasesName(data.phaseName)
   }
   const onDescriptionChange = e => {
-     setDescription(e);
+    setDescription(e);
   }
 
   const validation = () => {
@@ -303,7 +314,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
       setErrors(validationResult)
       return false
     }
-    
+
     const editTaskData = {
       taskID: props.taskData.taskID,
       taskTitle: taskTitle,
@@ -325,14 +336,14 @@ export const ModalTaskEdit = (props: AlertProps) => {
       saveTaskAsTemplate: props.taskData.saveTaskAsTemplate,
     }
     props.editTaskData(editTaskData);
-    setOpen(false)
-    props.cancel()
+    // setOpen(false)
+    // props.cancel()
   }
 
   return (
     <div id="navbar">
       <Modal
-        className="modal_media right-side--fixed-modal edit-task-modal"
+        className={props.editTaskLoading ? "modal_media right-side--fixed-modal edit-task-modal overflow-hidden" : "modal_media right-side--fixed-modal edit-task-modal"}
         closeIcon
         onClose={cancel}
         onOpen={openf}
@@ -344,6 +355,11 @@ export const ModalTaskEdit = (props: AlertProps) => {
         }
         closeOnDimmerClick={false}
       >
+        {props.editTaskLoading ?
+          <Dimmer active inverted Center inline>
+            <Loader size='big'>Loading</Loader>
+          </Dimmer>
+          : null}
         <Modal.Header>
           <h3>{t("project_tab_menu.task.edit_task")} </h3>
         </Modal.Header>

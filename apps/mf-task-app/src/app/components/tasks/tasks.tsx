@@ -35,10 +35,10 @@ export function Tasks(props: TasksProps) {
   });
 
   React.useEffect(() => {
-    const res = history.location.pathname.split('/');   
+    const res = history.location.pathname.split('/');
     setReferenceID(res[3].toString());
   }, [history]);
-  React.useEffect(() => {  
+  React.useEffect(() => {
     if (referenceID) {
       getWorkType(referenceID);
     }
@@ -51,7 +51,7 @@ export function Tasks(props: TasksProps) {
   const [workTypes, setWorkTypes] = React.useState([]);
   const [taskData, setTaskData] = React.useState();
   const [projectId, setProjectId] = React.useState('');
-  // const [isUpdate, setIsUpdate] = React.useState(false);
+
   const [isTaskFile, setIsTaskFile] = React.useState(false);
   const [isNewTask, setIsNewTask] = React.useState(false);
   const [taskStatus, settaskStatus] = React.useState('');
@@ -62,23 +62,18 @@ export function Tasks(props: TasksProps) {
   const [subTaskId, setSubTaskId] = React.useState();
   const [subTaskStatus, setSubTaskStatus] = React.useState('');
 
-
   const [idx, setId] = React.useState('');
-  const [addTask] = useTaskUpdateMutation(UPDATE_TASK, {
-    variables: { referenceID },
-  });
-  const [addSubTask, { data: subtasks }] = useMutation(ADD_TASK, {
-    refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
-    variables: { referenceID },
-  });
 
-  //  const [taskDelete] = useTaskDeleteMutation(DELETE_TASK, {
-  const [taskDelete, { loading: deleteTaskLoading, error: deleteTaskError, data: deleteTaskData }] = useMutation(DELETE_TASK);
+  const [editTaskApi, { loading: editTaskLoading, error: editTaskError, data: updatedTaskData }] = useMutation(UPDATE_TASK);
+  const [taskDelete, { loading: deleteTaskLoading, error: deleteTaskError, data: deletedTaskData }] = useMutation(DELETE_TASK);
+  const [editTaskStatusApi, { loading: editTaskStatusLoading, error: editTaskStatusError, data: updatedTaskStatusData }] = useMutation(UPDATE_TASK);
 
-  const [editTaskApi, { loading: editTaskLoading, error: editTaskError, data: editData }] = useMutation(UPDATE_TASK);
-  //   , {
+  const [addSubTaskApi, { loading: addSubTaskLoading, error: addSubTaskError, data: addedSubTaskData }] = useMutation(UPDATE_TASK);
+  const [subTaskUpdateApi, { loading: editSubTaskLoading, error: editSubTaskError, data: editSubTaskData }] = useMutation(UPDATE_SUBTASK);
+
+  // const [subTaskUpdateApi, { data }] = useMutation(UPDATE_SUBTASK, {
   //   refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
-  // }
+  // });
 
   const query = `query ProjectById($projectId: String!) {
     projectById( projectId: $projectId)
@@ -100,7 +95,7 @@ export function Tasks(props: TasksProps) {
  }`;
 
   const getWorkType = (referenceID) => {
-   
+
     return axios
       .post(MS_SERVICE_URL['ms_project'].url, {
         query,
@@ -109,7 +104,7 @@ export function Tasks(props: TasksProps) {
         },
       })
       .then((res) => {
-      
+
         const wt = res.data.data.projectById[0].projectWorkTypes;
         setWorkTypes(wt);
       })
@@ -124,16 +119,13 @@ export function Tasks(props: TasksProps) {
     variables: { subtaskID: subTaskId },
   });
 
-  const [subTaskUpdateApi, { data: editSubTaskData }] = useMutation(UPDATE_SUBTASK, {
-    refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
-  });
 
   enum Status {
     INPROGRESS = 'INPROGRESS',
     COMPLETED = 'COMPLETED',
   }
   if (taskListLoading) return (<LazyLoading />)
-  if (taskListError) return (<div>Tasks not fetched. An error occured</div>)
+  if (taskListError) return (<div>Tasks not fetched. An internal server error occured</div>)
   // return (
   //   <h1>
   //     <LoaderPage />
@@ -141,15 +133,25 @@ export function Tasks(props: TasksProps) {
   // );
 
   if (deleteTaskLoading) return (<LazyLoading />)
-  if (deleteTaskError) return (<div>Task not deleted. An error occured</div>)
+  if (deleteTaskError) return (<div>Task not deleted. An internal server error occured</div>)
   // return (
   //   <h1>
   //     <LoaderPage />
   //   </h1>
   // );
 
-  if (editTaskLoading) return (<LazyLoading />)
-  if (editTaskError) return (<div>Task not updated. An error occured</div>)
+  // if (editTaskLoading) return (<LazyLoading />)
+  if (editTaskError) return (<div>Task not updated. An internal server error occured</div>)
+
+  if (editTaskStatusLoading) return (<LazyLoading />)
+  if (editTaskStatusError) return (<div>Task status not updated. An internal server error occured</div>)
+
+  // if (addSubTaskLoading) return (<LazyLoading />)
+  if (addSubTaskError) return (<div>Sub-task not added. An internal server error occured</div>)
+
+  // if (editSubTaskLoading) return (<LazyLoading />)
+  if (editSubTaskError) return (<div>Sub-task not updated. An internal server error occured</div>)
+
 
   const cancel = () => {
     setOpen(false);
@@ -158,10 +160,8 @@ export function Tasks(props: TasksProps) {
     setEditTaskOpen(false);
   };
   const confirmation = (data, task) => {
-   
-    // setIsUpdate(data);
+
     setOpen(false);
-    // updateTask(taskData);
 
     let status;
     if (task.status === 'COMPLETED') {
@@ -178,7 +178,7 @@ export function Tasks(props: TasksProps) {
     task.followers.map((data, i) => {
       followers.push({ userID: data.userID, userName: data.userName })
     })
-    addTask({
+    editTaskStatusApi({
       variables: {
         taskID,
         status,
@@ -206,6 +206,7 @@ export function Tasks(props: TasksProps) {
           query: GET_TASKS,
           variables: { referenceID },
         }) as ITasks;
+
         const newTask = cacheData?.tasks?.results?.map((t) => {
           if (t.taskID === taskID) {
             if (t.status === 'INPROGRESS') {
@@ -217,19 +218,19 @@ export function Tasks(props: TasksProps) {
             return t;
           }
         });
-        //    setOpen(false)
+
         cache.writeQuery({
           query: GET_TASKS,
+          variables: { referenceID },
           data: {
             tasks: newTask,
           },
-          variables: { referenceID },
         });
       },
     });
   };
+
   const confirmationDelete = (data, task) => {
-    // setIsUpdate(data);
 
     const taskID = task.taskID;
     taskDelete({
@@ -241,18 +242,6 @@ export function Tasks(props: TasksProps) {
           query: GET_TASKS,
           variables: { referenceID },
         }) as ITasks;
-        // const newTask = cacheData.tasks.map(t => {
-        //   if (t.taskID === taskID) {
-        //     if (t.status === 'INPROGRESS') {
-        //       return { ...t, status: Status.COMPLETED };
-        //     }
-        //     else {
-        //       return { ...t, status: Status.INPROGRESS };
-        //     }
-        //   } else {
-        //     return t;
-        //   }
-        // });
 
         const newTask = cacheData?.tasks?.results?.filter(
           (item) => item.taskID !== taskID
@@ -340,7 +329,7 @@ export function Tasks(props: TasksProps) {
           }
           return item
         });
-       
+
         cache.writeQuery({
           query: GET_TASKS,
           variables: { referenceID },
@@ -369,7 +358,7 @@ export function Tasks(props: TasksProps) {
     })
     subtask.push(createSt);
 
-    editTaskApi({
+    addSubTaskApi({
       variables: {
         taskID: data.taskID,
         status: data.status,
@@ -393,52 +382,51 @@ export function Tasks(props: TasksProps) {
         workTypeID: data.workTypeID,
       },
 
-      update: (cache, data) => {
+      // update: (cache, data) => {
+      //   const cacheData = cache.readQuery({
+      //     query: GET_TASKS,
+      //     variables: { referenceID },
+      //   }) as ITasks;
+
+      //   cache.writeQuery({
+      //     query: GET_TASKS,
+      //     data: {
+      //       tasks: [...cacheData.tasks.results, data],
+      //     },
+      //     variables: { referenceID },
+      //   });
+      // },
+
+
+      update: (cache, updatedTaskData) => {
+
         const cacheData = cache.readQuery({
           query: GET_TASKS,
           variables: { referenceID },
         }) as ITasks;
 
+        const newTaskList = cacheData?.tasks?.results?.map((task) => {
+          if (task.taskID === data.taskID) {
+            const subTaskList = updatedTaskData?.data?.updateTask[0]?.subtasks
+            return { ...task, subtasks: subTaskList }
+          } else {
+            return task;
+          }
+        });
+
         cache.writeQuery({
           query: GET_TASKS,
-          data: {
-            tasks: [...cacheData.tasks.results, data],
-          },
           variables: { referenceID },
+          data: {
+            tasks: newTaskList
+          },
         });
       },
-      // update: (cache, updatedTaskData) => {
-      //   console.log('--1-subtask data--after update--', "----cache-->", cache, "-----updatedTaskData-->",updatedTaskData)
-      //   // const cacheData = cache.readQuery({
-      //   //   query: GET_TASKS,
-      //   //   variables: { referenceID },
-      //   // }) as ITasks;
-      //   // console.log('--2-subtask data--after update cachedata--', cacheData)
 
-      //   console.log('----updatedTaskData?.data?.updateTask[0]?.subtasks--', updatedTaskData?.data?.updateTask[0]?.subtasks)
-      //   const newTaskList = taskListData?.tasks?.results?.map((task) => {
-      //     if (task.taskID === data.taskID) {
-      //       const subTaskList = updatedTaskData?.data?.updateTask[0]?.subtasks
-      //       return { ...task, subtasks: subTaskList }
-      //     } else {
-      //       return task;
-      //     }
-      //   });
-      //   console.log('--3 newTaskList--', newTaskList)
-      //   cache.writeQuery({
-      //     // query: GET_TASKS,
-      //     data: {
-      //       // tasksD: [...cacheData.tasks.results, data],
-      //       tasks: newTaskList
-      //     },
-      //     // variables: { referenceID },
-      //   });
-      //   console.log('--4 after writeQuery--')
-      // },
     });
   };
   const changeAdd = (data) => {
-  
+
     if (data === 'add') {
       setIsTaskFile(false);
       setIsNewTask(true);
@@ -589,7 +577,7 @@ export function Tasks(props: TasksProps) {
         subtaskID: subtaskId,
         subtaskTitle: title
       },
-      update: (cache, data) => {      
+      update: (cache, data) => {
         const cacheData = cache.readQuery({
           query: GET_TASKS,
           variables: { referenceID },
@@ -600,25 +588,24 @@ export function Tasks(props: TasksProps) {
 
             const subTaskList = task.subtasks.map((subTask) => {
               if (subTask.subtaskID === subtaskId) {
-                // return data;               
                 return { ...subTask, subtaskTitle: title };
               } else {
                 return subTask
               }
             })
-          
+
             return { ...task, subtasks: subTaskList }
           } else {
             return task;
           }
         });
-        
+
         cache.writeQuery({
           query: GET_TASKS,
+          variables: { referenceID },
           data: {
             tasks: newTaskList,
           },
-          variables: { referenceID },
         });
       },
     })
@@ -686,6 +673,8 @@ export function Tasks(props: TasksProps) {
             taskStatus={taskStatus}
             cancel={cancel}
             editTaskData={editTaskData}
+            editTaskLoading={editTaskLoading}
+            updatedTaskData={updatedTaskData}
           ></ModalTaskEdit>
         </div>
       ) : null}
@@ -732,6 +721,8 @@ export function Tasks(props: TasksProps) {
                 updateSubTaskStatus={updateSubTaskStatus}
                 updateSubTask={updateSubTask}
                 deleteSubTask={deleteSubTask}
+                addSubTaskLoading={addSubTaskLoading}
+                editSubTaskLoading={editSubTaskLoading}
               />
             </div>
           );
