@@ -1,9 +1,11 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import BKPCostFilesEntity from '../../../entities/bkp-cost-files.entity';
 import BKPCostEntity from '../../../entities/bkp-costs.entity';
 import { CostEntity } from '../../../entities/cost.entity';
+import { CostErrorTypeEnum } from '../../../enums/cost-error-type.enum';
+import CostCustomError from '../../../exceptions/costCustomError.exception';
 import CostFilterParams from '../../../utils/types/costFilterParams';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
@@ -72,7 +74,7 @@ export class CostService {
 
   public async findCostByID(refFilter: ReferenceFilterParams, costFilterParams: CostFilterParams): Promise<CostEntity[]> {
     const selectedReference = await this.referenceService.getReferenceById(refFilter);
-    return await this.costRepository.find({
+    const foundCost = await this.costRepository.find({
       where: {
         "references": {
           id: selectedReference.id
@@ -81,7 +83,10 @@ export class CostService {
       }, relations: ['BKPCosts', 'BKPCosts.bkpCostFiles']
 
     });
-
+    if (!foundCost.length) {
+      throw new CostCustomError(CostErrorTypeEnum.RECORD_NOT_EXIST)
+    }
+    return foundCost
   }
 
   public async deleteCost(costDeleteInput: CostDeleteInput): Promise<CostEntity> {
@@ -91,7 +96,7 @@ export class CostService {
       const updatedPost = await cost.save()
       return updatedPost
     }
-    throw new HttpException('cost with costId Not Found', HttpStatus.NOT_FOUND);
+    throw new CostCustomError(CostErrorTypeEnum.RECORD_NOT_EXIST)
   }
 
   public async deleteBKPCost(bkpCostDeleteInput: BKPcostDeleteInput): Promise<BKPCostEntity> {
@@ -101,7 +106,7 @@ export class CostService {
       const updatedPost = await bkpCost.save()
       return updatedPost
     }
-    throw new HttpException('cost with costId Not Found', HttpStatus.NOT_FOUND);
+    throw new CostCustomError(CostErrorTypeEnum.RECORD_NOT_EXIST)
   }
 
 
@@ -110,8 +115,9 @@ export class CostService {
       where: { bkpCostID: updateBkpCostBasicInput.bkpCostID }
       // relations: ['reference', 'files']
     });
-    if (bkpCostDetails.length <= 0)
-      throw new HttpException('bkpCostDetails Not Found', HttpStatus.NOT_FOUND);
+    if (bkpCostDetails.length <= 0) {
+      throw new CostCustomError(CostErrorTypeEnum.RECORD_NOT_EXIST);
+    }
     const bkpCostDetail = bkpCostDetails[0];
     updateBkpCostBasicInput.BKPTitle ? bkpCostDetail.BKPTitle = updateBkpCostBasicInput.BKPTitle : null;
     updateBkpCostBasicInput.description ? bkpCostDetail.description = updateBkpCostBasicInput.description : null;
@@ -125,7 +131,5 @@ export class CostService {
     });
     return bkpCostUpdated;
   }
-
-
 
 }

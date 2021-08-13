@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Modal, Input, Form, Grid, Select } from 'semantic-ui-react';
+import { Button, Modal, Input, Form, Grid, Select, Dimmer, Loader } from 'semantic-ui-react';
 import { MeetingCategoryIndex, SessionInvitationIndex, SessionProtocolIndex, FollowersIndex, AssigneeIndex, AdminsIndex, MembersIndex } from '@cudo/mf-account-app-lib';
 import { useTranslation } from 'react-i18next';
 
@@ -9,6 +9,8 @@ export interface EditSessionProps {
   openEditSession?
   cancel?
   editSession?
+  loading?
+  data?
 }
 
 interface EditSessionErrors {
@@ -53,6 +55,13 @@ export function ModalEditSession(props: EditSessionProps) {
       setOpen(true);
     }
   }, [props.openEditSession])
+
+  //on show or hide loader
+  useEffect(() => {
+    if (!props.loading && props.data) {
+      cancel()
+    }
+  }, [props.loading])
 
   useEffect(() => {
     if (props?.sessionDetail?.SessionByID) {
@@ -110,7 +119,7 @@ export function ModalEditSession(props: EditSessionProps) {
       worktypeID: '',
       worktypeName: ''
     };
-    if(data.value){
+    if (data.value) {
       for (let i = 0; i < props?.workTypes?.length; i++) {
         if (props.workTypes[i]?.workTypeName === data.value) {
           workT.worktypeID = props.workTypes[i].projectWorkTypeID;
@@ -118,34 +127,36 @@ export function ModalEditSession(props: EditSessionProps) {
           setworktypeName(workT.worktypeName);
           setworktypeID(workT.worktypeID);
           setworkTypeD(workT)
+          setworkTypeData(data.value)
         }
       }
     } else {
       setworktypeName("")
       setworktypeID("")
       setworkTypeD(null)
+      setworkTypeData("")
     }
-    setworkTypeData(data.value)
+
     setErrors({ ...errors, workTypeError: "" })
   }
-const parentCatagorySelect = (data) => {
-    if(data.meetingCatagoryID){
+  const parentCatagorySelect = (data) => {
+    if (data.meetingCatagoryID) {
       setCatagory(data)
       setErrors({ ...errors, categoryError: "" })
-    }else{
+    } else {
       setCatagory(null)
     }
   }
   const parentSessionSelect = (data) => {
-    if(data.protocolTemplateID){
+    if (data.protocolTemplateID) {
       setProtocol(data)
       setErrors({ ...errors, protocolTemplateError: "" })
-    }else{
+    } else {
       setProtocol(null)
     }
   }
   const parentInvitationSelect = (data) => {
-    if(data.invitationTemplateID){
+    if (data.invitationTemplateID) {
       setInvitation(data)
       setErrors({ ...errors, invitationTemplateError: "" })
     } else {
@@ -220,9 +231,9 @@ const parentCatagorySelect = (data) => {
 
     props.editSession(data);
 
-    setOpen(false);
+    // setOpen(false);
     // resetAddData();
-    props.cancel(true)
+    // props.cancel(true)
   }
 
   const cancel = () => {
@@ -240,12 +251,15 @@ const parentCatagorySelect = (data) => {
     setAdmins([])
     setMembers([])
     setErrors({})
+    setworktypeName("")
+    setworktypeID("")
+    setworkTypeData("")
   }
 
   return (
     <div style={{ marginLeft: 900 }} >
       <Modal
-        className="modal_media right-side--fixed-modal add-session-modal"
+        className={`modal_media right-side--fixed-modal add-session-modal${props.loading && !props.data && " overflow-hidden"}`}
         closeIcon
         onClose={() => setOpen(false)}
         // onOpen={() => setOpen(true)}
@@ -259,6 +273,13 @@ const parentCatagorySelect = (data) => {
         // }
         closeOnDimmerClick={false}
       >
+         {
+          props.loading && !props.data && (
+            <Dimmer active inverted Center inline>
+              <Loader size='big'>Loading</Loader>
+            </Dimmer>
+          )
+        }
         <Modal.Header>
           <h3>Edit sessions </h3>
         </Modal.Header>

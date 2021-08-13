@@ -127,7 +127,7 @@ export function CreateTask(props: CreateTaskProps) {
     // To calculate the no. of days between two dates
     const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
     setEndDate(e.target.value);
-    setEstimatedDays(Difference_In_Days.toString())
+    setEstimatedDays(Difference_In_Days >=0 ? Difference_In_Days.toString() : "")
   }
   const onsetEstimatedDays = (event, data) => {
     // To calculate the time difference of two dates
