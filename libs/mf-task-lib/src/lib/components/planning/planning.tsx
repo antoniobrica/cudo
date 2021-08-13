@@ -11,6 +11,7 @@ import {
 import EditMileStonePopup from 'libs/shared-components/src/lib/components/modal/editmilestone';
 import ModalViewPlanning from '../../../../../shared-components/src/lib/components/modal/viewdetailsplanning';
 import SelectDropdown from '../../../../../shared-components/src/lib/components/select_dropdown/select_dropdown';
+import {SelectSearchableDropdown} from '../../../../../shared-components/src/lib/components/select_dropdown/select_searchable';
 import { useMilestonesQuery, useMilestoneMutation, useIMileStoneQuery, useMilestoneDeleteMutation, useMilestoneUpdateMutation } from '../../services/useRequest';
 import { GET_MILESTONES, ADD_MILESTONE, GET_MILESTONES_BY_ID, DELETE_MILESTONE, UPDATE_MILESTONE } from '../../graphql/graphql';
 import { LoaderPage } from "@cudo/shared-components";
@@ -262,6 +263,17 @@ const getAddLinkSelect = (selectedValue)=>{
   }
 }
 
+const getSearchSelect = (selectedValue)=>{
+  console.log('---getAddLinkSelect---selectedValue--', selectedValue)
+  if(selectedValue==='addLink'){
+    console.log('---if selectedValue--', selectedValue)
+    setIsOpen(true)
+  } else {
+    console.log('---else selectedValue--', selectedValue)
+  }
+}
+
+
 
 
   return (
@@ -311,7 +323,9 @@ const getAddLinkSelect = (selectedValue)=>{
         <div className="active-milestone">
           <h4 className="headingactive">
           {t("project_tab_menu.planning.active_milestone")}
-          <SelectDropdown selectedValue={getAddLinkSelect}/>          
+          <SelectDropdown selectedValue={getAddLinkSelect}/>    
+
+          <SelectSearchableDropdown  selectedValue={getSearchSelect} />     
           </h4>
           <Form>
             {/* <Grid columns={4}>
