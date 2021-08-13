@@ -197,6 +197,60 @@
       }
     }
   }
+  &.select-file-popup-area {
+    .files-left-area {
+      h3 {
+        font-size: 14px;
+        margin: 0 10px;
+      }
+    }
+    .files-right-area {
+      a {
+        margin: 0;
+        i {
+          border: 1px solid #718898;
+          width: 22px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 22px;
+          background: #fff;
+          color: #718898;
+          border-radius: 50%;
+        }
+        &.selected {
+          i {
+            border: 1px solid #2D62ED;
+            width: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 22px;
+            background: #2D62EE;
+            color: #fff;
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+    .multiple-files-box {
+      .multiple-files-listing {
+        .single-files-list {
+          padding: 10px 0;
+          .version-file-con {
+            padding: 10px 0px 0 25px;
+          }
+          &.expand {
+            .files-arrows {
+              i {
+                transform: rotate(180deg);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 // View details popup
