@@ -147,13 +147,13 @@ $white: #ffffff;
 
 span.task-heading {
   font-size: 1.3rem;
-  font-weight: $font-semibold;
+  font-weight: 500;
   color: color('blue', 'dark');
   margin-right: 10px;
 }
 .task-checklisting-text {
-  font-size: 1.3rem;
-  font-weight: $font-semibold;
+  font-size: 1.4rem;
+  font-weight: $font-medium;
   color: color('blue', 'dark');
 }
 .checklist-listing-main {

@@ -76,9 +76,9 @@ span.danger {
   border: 1px solid #d0d8df;
   border-radius: 3px;
 }
-.modal_media {
-  top: -10px;
-  transform: translateX(25%);
+.field .ui.selection.dropdown.error {
+  border: 1px solid #F96666;
+  background: none;
 }
 .ui.modal h3 {
   font-size: 22px;
@@ -205,7 +205,7 @@ div.ui.toggle.checkbox label:before {
 
 // modal fixed right side
 .right-side--fixed-modal.ui.modal {
-  @include absolute(right 0);
+  @include absolute(right 0 top -10px);
   width: 700px;
   transform: translate(0);
   overflow: auto;
@@ -228,16 +228,16 @@ div.ui.toggle.checkbox label:before {
   .content {
     padding: 20px 30px;
   }
-  .actions {
-    @include flex(flex);
-    @include align-items(center);
-    padding: 0 20px 50px;
-    button.icon-border {
-      i {
-        font-size: 16px;
-        color: #9A9EA1;
-        margin-right: 7px;
-      }
+}
+.ui.modal > .actions {
+  @include flex(flex);
+  @include align-items(center);
+  padding: 0 20px 50px;
+  button.icon-border {
+    i {
+      font-size: 16px;
+      color: #9A9EA1;
+      margin-right: 7px;
     }
   }
 }
@@ -285,6 +285,9 @@ div.add-files-modal button {
     span.task-s-number {
       font-weight: 400;
       margin: 0 10px;
+      height: 20px;
+      line-height: 20px;
+      padding: 0 7px;
     }
     span.edit-task-link {
       position: absolute;
@@ -296,8 +299,8 @@ div.add-files-modal button {
     }
   }
   span.task-created-date {
-    color: #9FB5C5;
-    font-size: 12px;
+    color: #718898;
+    font-size: 13px;
     font-weight: 500;
     margin-left: 35px;
   }
@@ -372,6 +375,11 @@ img.filter-icon {
         content: "\E711";
       }
     }
+    &.task-details-modal {
+      i.close.icon {
+        top: 23px !important;
+      }
+    }
   }
 }
 
@@ -407,10 +415,139 @@ img.filter-icon {
         font-size: 14px;
         font-weight: 500;
         color: #9A9EA1;
+        width: 350px;
+        margin: 0 auto;
+        max-width: 100%;
       }
     }
     .actions {
       text-align: center;
     }
+  }
+}
+.ui.modal i.close.icoon {
+  top: 14px;
+  right: 12px;
+  z-index: 9999;
+  color: #9A9EA1;
+  border: 1px solid #9A9EA1;
+  border-radius: 50%;
+  padding: 0;
+}
+
+// add file popup
+.ui.modal.add-file-setting-popup {
+  i.close.icon {
+    @include flex(flex);
+    @include align-items(center);
+    @include justify-content(center);
+    top: 15px;
+    right: 20px;
+    z-index: 9999;
+    color: #9A9EA1;
+    border: 1px solid #9A9EA1;
+    border-radius: 50%;
+    padding: 0;
+  }
+  .header {
+    padding: 1.25rem 2.5rem;
+  }
+  >.content {
+    padding: 1.5rem 2.5rem;
+  }
+  .dashed_area {
+    height: 150px;
+    .file-upload-input {
+      input {
+        height: 100%;
+      }
+    }
+  }
+  .uploaded-files {
+    h3 {
+      font-size: 14px;
+      font-weight: 500;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      li {
+        @include flex(flex);
+        @include align-items(center);
+        @include justify-content(space-between);
+        margin: 5px 0;
+        p {
+          @include flex(flex);
+          @include align-items(center);
+          font-size: 14px;
+          font-weight: 500;
+          margin: 0;
+          img {
+            margin-right: 12px;
+          }
+        }
+        i {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .file-setting-option {
+    margin-bottom: 20px;
+    h3 {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 0;
+    }
+    .generate-file-number {
+      background: #F1F5F8;
+      border-radius: 3px;
+      padding: 15px;
+      margin-top: 10px;
+      p {
+        @include flex(flex);
+        @include flex-direction(column);
+        font-size: 16px;
+        font-weight: 500;
+        margin: 0;
+        span {
+          font-size: 12px;
+          color: #718898;
+        }
+      }
+    }
+  }
+  .select-access {
+    .field {
+      margin: 0;
+      label {
+        font-size: 16px;
+      }
+    }
+    .access-radio {
+      @include flex(flex);
+      .radio {
+        margin-right: 20px;
+        label {
+          @include flex(flex);
+          @include align-items(center);
+          font-size: 13px;
+          input {
+            margin-right: 7px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.ui.inverted.dimmer {
+  z-index: 99999;
+  .content {
+    background: none;
   }
 }

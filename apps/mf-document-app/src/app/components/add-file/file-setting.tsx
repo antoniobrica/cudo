@@ -1,4 +1,5 @@
 import React, { useContext, useRef } from 'react';
+import { useHistory } from 'react-router';
 import { Button, Checkbox, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 import ProgressBar from 'libs/shared-components/src/lib/components/progress_bar/progressbar';
@@ -39,20 +40,22 @@ export function FileSetting(props: FileProps) {
   const [folderName, setfolderName] = React.useState("");
   const [directory, setDirectory] = React.useState("");
 
-
+  const history = useHistory();
+  const pathNames = history.location.pathname.split("/");
+  const projectId = pathNames[3].toString();
 
   // const [addFile] = useFileMutation(UPLOAD_FILE);
   const [addFile, { data }] = useMutation(UPLOAD_FILE,
     {
       refetchQueries: [
-        { query: GET_FILES }
+        { query: GET_FILES, variables: { projectId } }
       ]
     }
   )
 
   const [items, setItems] = React.useState<BlobItemUpload[]>([]);
   const [download, setDownload] = React.useState<BlobItemDownload[]>([]);
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const sharedContext = React.useContext(SharedViewStateContext);
 
   const getContainerItemsEffect = () => {
@@ -158,6 +161,9 @@ export function FileSetting(props: FileProps) {
       console.log('file==', file);
       addFile({
         variables: {
+          projectId,
+          projectTitle: "gamesoft",
+          
           directory,
           fileURL: file.fileURL,
           fileTitle: file.fileTitle,
@@ -176,6 +182,7 @@ export function FileSetting(props: FileProps) {
           const cacheData = cache.readQuery({ query: GET_FILES }) as IFiles;
           cache.writeQuery({
             query: GET_FILES,
+            variables: { projectId },
             data: {
               tasks: [...cacheData.uploadedFiles, data['createFile']]
             }
@@ -342,7 +349,10 @@ export function FileSetting(props: FileProps) {
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
-                    <PhaseIndex parentPhaseSelect={onsetPhasesID} />
+                    <Form.Field>
+                      <label>{t("common.phase")} </label>
+                      <PhaseIndex parentPhaseSelect={onsetPhasesID} />
+                    </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>

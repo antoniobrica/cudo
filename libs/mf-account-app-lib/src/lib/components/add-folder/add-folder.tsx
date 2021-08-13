@@ -118,7 +118,7 @@ export function AddFolder(props: AddFolderProps) {
           size='small' className="primary"
         />
         <Button size='small' className="icon-border" onClick={cancel}>
-        X  {t("common.cancel")}
+        <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i>  {t("common.cancel")}
         </Button>
         
       </Modal.Actions>

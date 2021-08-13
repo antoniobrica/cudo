@@ -56,7 +56,7 @@ export function Members(props: MembersProps) {
     props.parentMembersSelect(peopleArr)
   }
   return (
-    <Form.Field>
+    <>
 
       {/* <label>{t("project_tab_menu.meeting.members")}</label> */}
 
@@ -73,7 +73,7 @@ export function Members(props: MembersProps) {
         error={props.error}
       />
 
-    </Form.Field>
+    </>
   );
 }
 

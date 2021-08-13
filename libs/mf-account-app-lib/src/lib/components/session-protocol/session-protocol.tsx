@@ -57,7 +57,7 @@ export function SessionProtocol(props: SessionProtocolProps) {
     props.parentSessionSelect(protocol)
   }
   return (
-    <Form.Field>
+    <>
       <label>{t("project_tab_menu.meeting.template_for_protocol")}<span className="danger">*</span></label>
       <Select
         placeholder={t("common.select")}
@@ -68,7 +68,7 @@ export function SessionProtocol(props: SessionProtocolProps) {
         clearable
         error={props?.error}
       />
-    </Form.Field>
+    </>
   );
 }
 

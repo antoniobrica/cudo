@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Button,
   Header,
@@ -9,6 +9,8 @@ import {
   Grid,
   Select,
   TextArea,
+  Dimmer,
+  Loader,
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 import { FollowersIndex, AssigneeIndex, BkpIndex, BkpsIndex, PhaseIndex } from "@cudo/mf-account-app-lib";
@@ -37,13 +39,15 @@ interface AlertProps {
   cancel?,
   taskStatus?,
   editTaskData?
+  editTaskLoading?
+  updatedTaskData?
 }
 
 interface TaskErrors {
-  titleError?:string,
-  workTypeError?:string,
-  assigneeError?:string,
-  dateError?:string
+  titleError?: string,
+  workTypeError?: string,
+  assigneeError?: string,
+  dateError?: string
 }
 
 export const ModalTaskEdit = (props: AlertProps) => {
@@ -78,6 +82,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3]?.toString();
+
   React.useEffect(() => {
     if (referenceID) {
       getWorkType(referenceID)
@@ -91,19 +96,6 @@ export const ModalTaskEdit = (props: AlertProps) => {
   }, [props.openAlertF]);
 
 
-  function formatDate(date) {
-    var d = new Date(date),
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
-
-    if (month.length < 2)
-      month = '0' + month;
-    if (day.length < 2)
-      day = '0' + day;
-
-    return [year, month, day].join('-');
-  }
   React.useEffect(() => {
     if (props.taskData) {
       var d = props.taskData.startDate;
@@ -135,9 +127,23 @@ export const ModalTaskEdit = (props: AlertProps) => {
       setPhasesName(props.taskData.phaseName);
       setworktypeName(props?.taskData?.workTypeName);
       setworkTypeData(props?.taskData?.workTypeName)
+      setworktypeID(props?.taskData?.workTypeID)
 
     }
   }, [props.taskData]);
+
+  React.useEffect(() => {
+    if (workTypes) {
+      setworkType(workTypes.map(({ workTypeName, projectWorkTypeID }) => ({ key: projectWorkTypeID, value: workTypeName, text: workTypeName, id: projectWorkTypeID })));
+    }
+  }, [workTypes]);
+
+  useEffect(() => {
+    if (!props.editTaskLoading && props.updatedTaskData) {
+      setOpen(false)
+      props.cancel()
+    }
+  }, [props.editTaskLoading, props.updatedTaskData])
 
   const query = `query Game($projectId: String!) {
     projectById( projectId: $projectId)
@@ -159,7 +165,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
  }`;
 
   const getWorkType = (referenceID) => {
-    console.log('sasstoken');
+
     return axios.post(
       MS_SERVICE_URL['ms_project'].url,
       {
@@ -175,36 +181,50 @@ export const ModalTaskEdit = (props: AlertProps) => {
       .catch(err => console.log(err))
   }
 
+  function formatDate(date) {
+    var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
 
-  React.useEffect(() => {
-    if (workTypes) {
-      console.log('worktypes', workTypes);
-      setworkType(workTypes.map(({ workTypeName, projectWorkTypeID }) => ({ key: projectWorkTypeID, value: workTypeName, text: workTypeName, id: projectWorkTypeID })));
-    }
-  }, [workTypes]);
+    if (month.length < 2)
+      month = '0' + month;
+    if (day.length < 2)
+      day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+
   const onMworkType = (event, data) => {
-    console.log('workTypes[i]', data);
 
     const workT = {
       worktypeID: '',
       worktypeName: ''
     };
-    for (let i = 0; i < workTypes.length; i++) {
-      if (workTypes[i]?.workTypeName === data.value) {
-        console.log('workTypes[i]', workTypes[i]);
-        workT.worktypeID = workTypes[i].projectWorkTypeID;
-        workT.worktypeName = data.value;
-        setworktypeName(workT.worktypeName);
-        setworktypeID(workT.worktypeID);
-        setworkTypeD(workT)
+    if (data.value) {
+      for (let i = 0; i < workTypes.length; i++) {
+        if (workTypes[i]?.workTypeName === data.value) {
+
+          workT.worktypeID = workTypes[i].projectWorkTypeID;
+          workT.worktypeName = data.value;
+          setworktypeName(workT.worktypeName);
+          setworktypeID(workT.worktypeID);
+          setworkTypeD(workT)
+        }
       }
+    } else {
+      setworktypeName("")
+      setworktypeID("")
+      setworkTypeD("")
     }
+
     setworkTypeData(data.value);
-    console.log('worktypeName-', workTypeD);
   }
+
   const openf = () => {
     setOpen(true)
   }
+
   const cancel = () => {
     setOpen(false)
     props.cancel()
@@ -214,7 +234,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
     setTaskTitle(e.target.value)
   }
   const onStartDateChange = e => {
-    console.log('startdate>', e.target.value);
+
     const date1 = new Date(e.target.value)
     const date2 = new Date(endDate)
     const Difference_In_Time = date2.getTime() - date1.getTime();
@@ -240,24 +260,22 @@ export const ModalTaskEdit = (props: AlertProps) => {
     setEendNotification(event.target.value)
   }
 
-
   const setBKPIDChange = (data) => {
     setBKPIDTitle(data.BKPIDTitle)
     setBKPID(data.BKPID)
-    console.log('bkp==>', data);
   }
   const setAsignee = (data) => {
-    console.log('assignee', data)
 
-    const ppl = []
-    ppl.push(data)
-    setAssignees(ppl)
-    // setAsignis(data)
+    if (data.userID) {
+      const ppl = []
+      ppl.push(data)
+      setAssignees(ppl)
+      // setAsignis(data)
+    } else {
+      setAssignees([])
+    }
   }
   const onFollowers = (data) => {
-    console.log('====================================');
-    console.log('followers', data);
-    console.log('====================================');
     setfollowers(data)
   }
 
@@ -270,24 +288,22 @@ export const ModalTaskEdit = (props: AlertProps) => {
     setPhasesName(data.phaseName)
   }
   const onDescriptionChange = e => {
-    console.log('des=>', e);
     setDescription(e);
   }
 
-  // validate errors
   const validation = () => {
-    const foundErrors:TaskErrors= {}
-    if(!taskTitle){
-      foundErrors.titleError=t("common.errors.title_error")
+    const foundErrors: TaskErrors = {}
+    if (!taskTitle) {
+      foundErrors.titleError = t("common.errors.title_error")
     }
-    if(!workTypeID){
-      foundErrors.workTypeError=t("common.errors.worktype_error")
+    if (!workTypeName) {
+      foundErrors.workTypeError = t("common.errors.worktype_error")
     }
-    if(!assignees.length){
-      foundErrors.assigneeError=t("common.errors.assignee_error")
+    if (!assignees.length) {
+      foundErrors.assigneeError = t("common.errors.assignee_error")
     }
-    if(startDate>endDate){
-      foundErrors.dateError=t("common.errors.date_error")
+    if (startDate > endDate) {
+      foundErrors.dateError = t("common.errors.date_error")
     }
     return foundErrors
   }
@@ -298,14 +314,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
       setErrors(validationResult)
       return false
     }
-    // const assignees = [];
-    // props.taskData.assignees.map((data, i) => {
-    //   assignees.push({ userID: data.userID, userName: data.userName })
-    // })
-    // const followers = [];
-    // props.taskData.followers.map((data, i) => {
-    //   followers.push({ userID: data.userID, userName: data.userName })
-    // })
+
     const editTaskData = {
       taskID: props.taskData.taskID,
       taskTitle: taskTitle,
@@ -327,14 +336,14 @@ export const ModalTaskEdit = (props: AlertProps) => {
       saveTaskAsTemplate: props.taskData.saveTaskAsTemplate,
     }
     props.editTaskData(editTaskData);
-    setOpen(false)
-    props.cancel()
+    // setOpen(false)
+    // props.cancel()
   }
 
   return (
     <div id="navbar">
       <Modal
-        className="modal_media right-side--fixed-modal edit-task-modal"
+        className={props.editTaskLoading ? "modal_media right-side--fixed-modal edit-task-modal overflow-hidden" : "modal_media right-side--fixed-modal edit-task-modal"}
         closeIcon
         onClose={cancel}
         onOpen={openf}
@@ -346,6 +355,11 @@ export const ModalTaskEdit = (props: AlertProps) => {
         }
         closeOnDimmerClick={false}
       >
+        {props.editTaskLoading ?
+          <Dimmer active inverted Center inline>
+            <Loader size='big'>Loading</Loader>
+          </Dimmer>
+          : null}
         <Modal.Header>
           <h3>{t("project_tab_menu.task.edit_task")} </h3>
         </Modal.Header>
@@ -420,7 +434,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         value={workTypeData}
                         options={workType}
                         onChange={onMworkType}
-                        error={errors?.workTypeError && !workTypeID }
+                        error={errors?.workTypeError && !workTypeID}
                       />
                       {errors?.workTypeError && !workTypeID ? <span className="error-message">{errors.workTypeError}</span> : null}
                     </Form.Field>
@@ -439,7 +453,10 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         options={countryOptions}
                       />
                     </Form.Field> */}
-                    <PhaseIndex phaseName={phaseName} parentPhaseSelect={onsetPhasesID} />
+                    <Form.Field>
+                      <label>{t("common.select_phase")} </label>
+                      <PhaseIndex phaseName={phaseName} parentPhaseSelect={onsetPhasesID} />
+                    </Form.Field>
                   </Grid.Column>
 
                   <Grid.Column>
@@ -472,7 +489,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                       />
                     </Form.Field> */}
                     <AssigneeIndex assignees={props?.taskData?.assignees} parentAsigneeSelect={setAsignee} name="Assignee" error={errors?.assigneeError && !assignees.length} />
-                    {errors?.assigneeError && !assignees.length ? <span className="error-message">{errors.assigneeError}</span> : null}
+                    {/* {errors?.assigneeError && !assignees.length ? <span className="error-message">{errors.assigneeError}</span> : null} */}
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
@@ -522,9 +539,9 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         type="date"
                         value={startDate}
                         onChange={onStartDateChange}
-                        error={errors?.dateError && (startDate>endDate)}
-                        />
-                        
+                        error={errors?.dateError && (startDate > endDate)}
+                      />
+
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
@@ -537,9 +554,9 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         type="date"
                         value={endDate}
                         onChange={onEndDateChange}
-                        error={errors?.dateError && (startDate>endDate)}
-                        />
-                        
+                        error={errors?.dateError && (startDate > endDate)}
+                      />
+
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
@@ -548,11 +565,11 @@ export const ModalTaskEdit = (props: AlertProps) => {
                       <Input placeholder={t("project_tab_menu.task.enter_days")} className="small"
                         value={estimatedDays}
                         onChange={onsetEstimatedDays}
-                        error={errors?.dateError && (startDate>endDate)}
+                        error={errors?.dateError && (startDate > endDate)}
                       />
                     </Form.Field>
                   </Grid.Column>
-                  {errors?.dateError && (startDate>endDate) ? <span className="error-message">{errors.dateError}</span> : null}
+                  {errors?.dateError && (startDate > endDate) ? <span className="error-message">{errors.dateError}</span> : null}
                 </Grid.Row>
                 <Grid.Row></Grid.Row>
               </Grid>

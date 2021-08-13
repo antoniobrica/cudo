@@ -9,7 +9,9 @@ import {
   Button
 } from 'semantic-ui-react';
 import EditMileStonePopup from 'libs/shared-components/src/lib/components/modal/editmilestone';
-import ModalViewPlanning from '../../../../../shared-components/src/lib/components/modal/viewdetailsplanning'
+import ModalViewPlanning from '../../../../../shared-components/src/lib/components/modal/viewdetailsplanning';
+import SelectDropdown from '../../../../../shared-components/src/lib/components/select_dropdown/select_dropdown';
+import {SelectSearchableDropdown} from '../../../../../shared-components/src/lib/components/select_dropdown/select_searchable';
 import { useMilestonesQuery, useMilestoneMutation, useIMileStoneQuery, useMilestoneDeleteMutation, useMilestoneUpdateMutation } from '../../services/useRequest';
 import { GET_MILESTONES, ADD_MILESTONE, GET_MILESTONES_BY_ID, DELETE_MILESTONE, UPDATE_MILESTONE } from '../../graphql/graphql';
 import { LoaderPage } from "@cudo/shared-components";
@@ -73,25 +75,33 @@ export function Planning(props: PlanningProps) {
   //   variables: { milestoneID: milestoneIDd },
   // });
 
-  React.useEffect(() => {
-    if (MilestoneData) {
-      setmilestoneByID(MilestoneData)
-      setOpen(true)
-      console.log('MilestoneData', MilestoneData);
-    }
-  }, [MilestoneData])
-  React.useEffect(() => {
-    if (props.worktypes) {
-      console.log('worktypes-planning', props.worktypes);
-    }
-  }, [props.worktypes])
+  // React.useEffect(() => {
+  //   if (MilestoneData) {
+  //     setmilestoneByID(MilestoneData)
+  //     setOpen(true)
+  //     console.log('MilestoneData', MilestoneData);
+  //   }
+  // }, [MilestoneData])
+  // React.useEffect(() => {
+  //   if (props.worktypes) {
+  //     console.log('worktypes-planning', props.worktypes);
+  //   }
+  // }, [props.worktypes])
 
   const cancel = () => {
     setOpen(false)
+    setOpenUpdate(false)
+  }
+  const closeDeletePopup = () =>{
+    setOpenD(false)
+  }
+  const closeEditPopup = () => {
+    setOpenEdit(false)
   }
 
-  const viewDetail = (id) => {
-    setmilestoneID(id);
+  const viewDetail = (data) => {
+    setmilestoneByID(data)
+    setOpen(true)
   }
   const deletePlan = (data) => {
     setPlanData(data)
@@ -101,16 +111,16 @@ export function Planning(props: PlanningProps) {
   const update = (data) => {
     setPlanData(data)
     if (data.status === 'COMPLETED') {
-      setMilestoneStatus('Re-open');
+      setMilestoneStatus(t("project_tab_menu.task.re_open"));
     } else {
-      setMilestoneStatus('Mark as Complete');
+      setMilestoneStatus(t("project_tab_menu.mark_completed"));
     }
     setUpdateStatus(data.milestoneID)
     setOpenUpdate(true)
   }
 
   const confirmation = (data, task) => {
-    console.log('data', task);
+    // console.log('data', task);
     setOpenUpdate(false);
     let status;
     if (task.status === 'COMPLETED') {
@@ -122,6 +132,7 @@ export function Planning(props: PlanningProps) {
       milestoneID: task.milestoneID,
       description: task.description,
       worktypeName: task.worktypeName,
+      worktypeID:task.worktypeID,
       milestoneTitle: task.milestoneTitle,
       phaseName: task.phaseName,
       dueDate: task.dueDate,
@@ -131,7 +142,7 @@ export function Planning(props: PlanningProps) {
     milestoneUpdate({
       variables: updatedMilestone,
       update: (cache) => {
-        console.log('updatedMilestone', updatedMilestone)
+        // console.log('updatedMilestone', updatedMilestone)
         const cacheData = cache.readQuery({ query: GET_MILESTONES }) as IMileStones;
         cache.writeQuery({
           query: GET_MILESTONES,
@@ -143,9 +154,6 @@ export function Planning(props: PlanningProps) {
 
     });
   };
-  const cancelUpdate = () => {
-    setOpenUpdate(false);
-  }
   const edittPlan = (data) => {
     setPlanData(data)
     setmilestoneIDE(data.milestoneID);
@@ -153,7 +161,7 @@ export function Planning(props: PlanningProps) {
   }
 
   const getMilestoneData = (data) => {
-    console.log('getMilestoneData', data);
+    // console.log('getMilestoneData', data);
     addPlan({
       variables: data,
       update: (
@@ -171,13 +179,13 @@ export function Planning(props: PlanningProps) {
     });
   }
 
-  const confirmationUpdate = (data) => {
-
+  const confirmationUpdate = (plan) => {
+    closeEditPopup()
   }
   const confirmationDelete = (plan) => {
-    setOpenD(false)
+    closeDeletePopup()
     const milestoneID = plan.milestoneID;
-    console.log('plan=milestoneID', milestoneID);
+    // console.log('plan=milestoneID', milestoneID);
     planDelete({
       variables: {
         milestoneID
@@ -211,7 +219,8 @@ export function Planning(props: PlanningProps) {
 
   // }
   const editMilestoneData = (data) => {
-    console.log('edited-data', data);
+    // console.log('edited-data', data);
+    setOpen(false)
     milestoneUpdate({
       variables: data,
       update: (
@@ -236,7 +245,7 @@ export function Planning(props: PlanningProps) {
     </div>
   );
   if (data) {
-    console.log('milestone-data', data.MileStones);
+    // console.log('milestone-data', data.MileStones);
   }
   const openAdd = () => {
     setIsOpen(true)
@@ -244,6 +253,29 @@ export function Planning(props: PlanningProps) {
   const cancelAdd = () => {
     setIsOpen(false)
   }
+const getAddLinkSelect = (selectedValue)=>{
+  console.log('---getAddLinkSelect---selectedValue--', selectedValue)
+  if(selectedValue==='addLink'){
+    console.log('---if selectedValue--', selectedValue)
+    setIsOpen(true)
+  } else {
+    console.log('---else selectedValue--', selectedValue)
+  }
+}
+
+const getSearchSelect = (selectedValue)=>{
+  console.log('---getAddLinkSelect---selectedValue--', selectedValue)
+  if(selectedValue==='addLink'){
+    console.log('---if selectedValue--', selectedValue)
+    setIsOpen(true)
+  } else {
+    console.log('---else selectedValue--', selectedValue)
+  }
+}
+
+
+
+
   return (
     <div>
       {openNew && <ModalPlanningNew worktypes={props.worktypes} cancel={cancelAdd} openNew={openNew} getMilestoneData={getMilestoneData}></ModalPlanningNew>}
@@ -254,6 +286,8 @@ export function Planning(props: PlanningProps) {
             cancel={cancel}
             milestoneDataById={milestoneByID}
             loading={milLoading}
+            edit={edittPlan}
+            delete={deletePlan}
           ></ModalViewPlanning>
         </div>
         : null}
@@ -265,18 +299,18 @@ export function Planning(props: PlanningProps) {
             confirm={confirmation}
             taskData={planData}
             taskStatus={milestoneStatus}
-            cancel={cancelUpdate}
+            cancel={cancel}
           ></ModalAlert>
         </div>
       ) : null}
       {openD ?
         <div style={{ marginLeft: 900 }} >
-          <PlanDelete openAlertF={openD} confirm={confirmationDelete} planData={planData} cancel={cancel}></PlanDelete>
+          <PlanDelete openAlertF={openD} confirm={confirmationDelete} planData={planData} cancel={closeDeletePopup}></PlanDelete>
         </div>
         : null}
       {openEdit ?
         <div style={{ marginLeft: 900 }} >
-          <EditMileStonePopup worktypes={props.worktypes} openEdit={openEdit} confirm={confirmationUpdate} getMilestoneData={editMilestoneData} planData={planData} cancel={cancel}></EditMileStonePopup>
+          <EditMileStonePopup worktypes={props.worktypes} openEdit={openEdit} confirm={confirmationUpdate} getMilestoneData={editMilestoneData} planData={planData} cancel={closeEditPopup}></EditMileStonePopup>
         </div>
         : null}
       <div className="tabs-main-info-container planning-outer-con">
@@ -289,6 +323,9 @@ export function Planning(props: PlanningProps) {
         <div className="active-milestone">
           <h4 className="headingactive">
           {t("project_tab_menu.planning.active_milestone")}
+          <SelectDropdown selectedValue={getAddLinkSelect}/>    
+
+          <SelectSearchableDropdown  selectedValue={getSearchSelect} />     
           </h4>
           <Form>
             {/* <Grid columns={4}>
@@ -416,7 +453,7 @@ export function Planning(props: PlanningProps) {
                               <Dropdown icon='ellipsis horizontal' floating labeled>
                                 <Dropdown.Menu className="dropdowncomplete">
                                   <Dropdown.Item
-                                    onClick={() => viewDetail(plan.milestoneID)}
+                                    onClick={() => viewDetail(plan)}
                                     icon="eye"
                                     text={t("common.view_details")}
                                   />

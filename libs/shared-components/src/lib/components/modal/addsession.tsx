@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Modal, Input, Form, Grid, Select, Dropdown } from 'semantic-ui-react';
+import { Button, Modal, Input, Form, Grid, Select, Dropdown, Dimmer, Loader } from 'semantic-ui-react';
 import { MeetingCategoryIndex, SessionInvitationIndex, SessionProtocolIndex, FollowersIndex, AssigneeIndex, AdminsIndex, MembersIndex } from '@cudo/mf-account-app-lib';
 import { useTranslation } from 'react-i18next';
 
@@ -8,6 +8,8 @@ export interface SessionProps {
   createSession?
   openAddSession?
   cancel?
+  loading?
+  data?
 }
 
 interface AddSessionErrors {
@@ -56,6 +58,13 @@ export function ModalAddSession(props: SessionProps) {
     props.openAddSession(true)
   }
 
+  //on show or hide loader
+  useEffect(() => {
+    if (!props.loading && props.data) {
+      cancel()
+    }
+  }, [props.loading])
+
   const onSessionTitleChange = (e) => {
     setSessionTitle(e.target.value)
     setErrors({ ...errors, titleError: "" })
@@ -65,29 +74,51 @@ export function ModalAddSession(props: SessionProps) {
       worktypeID: '',
       worktypeName: ''
     };
-    for (let i = 0; i < props?.workTypes?.length; i++) {
-      if (props.workTypes[i]?.workTypeName === data.value) {
-        workT.worktypeID = props.workTypes[i].projectWorkTypeID;
-        workT.worktypeName = data.value;
-        setworktypeName(workT.worktypeName);
-        setworktypeID(workT.worktypeID);
-        setworkTypeD(workT)
+    if (data.value) {
+      for (let i = 0; i < props?.workTypes?.length; i++) {
+        if (props.workTypes[i]?.workTypeName === data.value) {
+          workT.worktypeID = props.workTypes[i].projectWorkTypeID;
+          workT.worktypeName = data.value;
+          setworktypeName(workT.worktypeName);
+          setworktypeID(workT.worktypeID);
+          setworkTypeD(workT)
+          setworkTypeData(data.value)
+        }
       }
+    } else {
+      setworktypeName("")
+      setworktypeID("")
+      setworkTypeD(null)
+      setworkTypeData("")
     }
-    setworkTypeData(data.value)
+
+
     setErrors({ ...errors, workTypeError: "" })
   }
   const parentCatagorySelect = (data) => {
-    setCatagory(data)
-    setErrors({ ...errors, categoryError: "" })
+    if (data.meetingCatagoryID) {
+      setCatagory(data)
+      setErrors({ ...errors, categoryError: "" })
+    } else {
+      setCatagory(null)
+    }
   }
   const parentSessionSelect = (data) => {
-    setProtocol(data)
-    setErrors({ ...errors, protocolTemplateError: "" })
+    if (data.protocolTemplateID) {
+      setProtocol(data)
+      setErrors({ ...errors, protocolTemplateError: "" })
+    } else {
+      setProtocol(null)
+    }
   }
   const parentInvitationSelect = (data) => {
-    setInvitation(data)
-    setErrors({ ...errors, invitationTemplateError: "" })
+    if (data.invitationTemplateID) {
+      setInvitation(data)
+      setErrors({ ...errors, invitationTemplateError: "" })
+    } else {
+      setInvitation(null)
+    }
+
   }
   const onAdmins = (data) => {
     setAdmins(data);
@@ -109,10 +140,10 @@ export function ModalAddSession(props: SessionProps) {
     if (!catagory) {
       errorResponse.categoryError = t('project_tab_menu.meeting.errors.category_error')
     }
-    if (!admins) {
+    if (!admins.length) {
       errorResponse.adminsError = t('project_tab_menu.meeting.errors.admins_error')
     }
-    if (!members) {
+    if (!members.length) {
       errorResponse.membersError = t('project_tab_menu.meeting.errors.members_error')
     }
     if (!invitation) {
@@ -154,15 +185,11 @@ export function ModalAddSession(props: SessionProps) {
     }
 
     props.createSession(data);
-
-    setOpen(false);
-    resetAddData();
-    props.cancel(true)
   }
 
   const cancel = () => {
     setOpen(false)
-    props.cancel(true)
+    props.cancel()
     resetAddData()
   }
 
@@ -175,12 +202,15 @@ export function ModalAddSession(props: SessionProps) {
     setAdmins([])
     setMembers([])
     setErrors({})
+    setworktypeName("")
+    setworktypeID("")
+    setworkTypeData("")
   }
 
   return (
     <div style={{ marginLeft: 900 }} >
       <Modal
-        className="modal_media right-side--fixed-modal add-session-modal"
+        className= {`modal_media right-side--fixed-modal add-session-modal${props.loading && !props.data && " overflow-hidden"}`}
         closeIcon
         onClose={cancel}
         onOpen={openSessionAddPopup}
@@ -192,6 +222,13 @@ export function ModalAddSession(props: SessionProps) {
         // }
         closeOnDimmerClick={false}
       >
+        {
+          props.loading && !props.data && (
+            <Dimmer active inverted Center inline>
+              <Loader size='big'>Loading</Loader>
+            </Dimmer>
+          )
+        }
         <Modal.Header>
           <h3>{t("project_tab_menu.meeting.add_session")} </h3>
         </Modal.Header>
@@ -238,8 +275,10 @@ export function ModalAddSession(props: SessionProps) {
                   </Grid.Column>
 
                   <Grid.Column>
-                    <MeetingCategoryIndex parentCatagorySelect={parentCatagorySelect} error={errors?.categoryError && !catagory?.length}></MeetingCategoryIndex>
-                    {errors?.categoryError && !catagory?.length ? <span className="error-message">{errors.categoryError}</span> : null}
+                    <Form.Field>
+                      <MeetingCategoryIndex parentCatagorySelect={parentCatagorySelect} error={errors?.categoryError && !catagory?.length}></MeetingCategoryIndex>
+                      {errors?.categoryError && !catagory?.length ? <span className="error-message">{errors.categoryError}</span> : null}
+                    </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
@@ -247,8 +286,10 @@ export function ModalAddSession(props: SessionProps) {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <AdminsIndex admins={[]} parentAdminsSelect={onAdmins} error={errors?.adminsError && !admins?.length} />
-                    {errors?.adminsError && !admins?.length ? <span className="error-message">{errors.adminsError}</span> : null}
+                    <Form.Field>
+                      <AdminsIndex admins={[]} parentAdminsSelect={onAdmins} error={errors?.adminsError && !admins?.length} />
+                      {errors?.adminsError && !admins?.length ? <span className="error-message">{errors.adminsError}</span> : null}
+                    </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
                 <div className="followers-label-area">
@@ -298,13 +339,17 @@ export function ModalAddSession(props: SessionProps) {
               <Grid columns={2}>
                 <Grid.Row>
                   <Grid.Column>
-                    <SessionInvitationIndex parentInvitationSelect={parentInvitationSelect} error={errors?.invitationTemplateError && !invitation?.length} />
-                    {errors?.invitationTemplateError && !invitation?.length ? <span className="error-message">{errors.invitationTemplateError}</span> : null}
+                    <Form.Field>
+                      <SessionInvitationIndex parentInvitationSelect={parentInvitationSelect} error={errors?.invitationTemplateError && !invitation?.length} />
+                      {errors?.invitationTemplateError && !invitation?.length ? <span className="error-message">{errors.invitationTemplateError}</span> : null}
+                    </Form.Field>
                   </Grid.Column>
 
                   <Grid.Column>
-                    <SessionProtocolIndex parentSessionSelect={parentSessionSelect} error={errors?.protocolTemplateError && !protocol?.length} />
-                    {errors?.protocolTemplateError && !protocol?.length ? <span className="error-message">{errors.protocolTemplateError}</span> : null}
+                    <Form.Field>
+                      <SessionProtocolIndex parentSessionSelect={parentSessionSelect} error={errors?.protocolTemplateError && !protocol?.length} />
+                      {errors?.protocolTemplateError && !protocol?.length ? <span className="error-message">{errors.protocolTemplateError}</span> : null}
+                    </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>

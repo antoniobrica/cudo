@@ -77,9 +77,9 @@ mutation CreateMileStone(
           status: INPROGRESS,
         }
         files: [
-          {  fileUrl: "Pull.comm", fileName: "requeest" }
+          {  fileID: "swsd", fileUrl: "Pull.comm", fileName: "requeest" }
         ]
-        fileID: "swsd"
+        
       }
     ) {
       milestoneID
@@ -102,7 +102,9 @@ mutation UpdateMileStone(
   $dueDate: DateTime!,
   $description: String!,
   $phaseName: String!,
-  $status: TASKSTATUS!
+  $status: TASKSTATUS!,
+  $worktypeName: String!,
+  $worktypeID: String!
   ){ 
     updateMileStone(
       milestoneDetailsUpdate: {
@@ -112,11 +114,12 @@ mutation UpdateMileStone(
           dueDate: $dueDate
           description: $description
           phaseName: $phaseName
-          worktypeName: "Whateever"
+          worktypeID: $worktypeID
+          worktypeName: $worktypeName
           status: $status
         }
         files: [
-          { fileUrl: "Pull.comm", fileName: "requeest" }
+          { fileID: "swsd", fileUrl: "Pull.comm", fileName: "requeest" }
         ]
       }
     ) {

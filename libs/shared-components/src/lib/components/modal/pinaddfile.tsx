@@ -111,76 +111,45 @@ export const AddPinFile = (props: AddPinProps) => {
   }
   return (
     <div >
-      <Modal
+      <Modal className="pin-add-file"
+        closeIcon
         size={'fullscreen'}
         onClose={close}
         onOpen={openM}
         open={open}
-        style={{ marginLeft: '35px' }}
         closeOnDimmerClick={false}
       >
-        <Modal.Header>{props.filesData?.fileTitle}
-          <div style={{ textAlign: 'center', marginBottom: '-30px' }}>
-            <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/icons_top.png`} style={{ position: 'relative', top: '-17px' }} />
-
-            <a onClick={close}><img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/cross_grey.png`} style={{ position: 'relative', top: '-17px', left: '540px' }} /></a>
-          </div>
+        <Modal.Header>
+          <h3>
+            {props.filesData?.fileTitle}
+          </h3>
+          <span>
+            <a href=""><i className="ms-Icon ms-Icon--ZoomOut" aria-hidden="true"></i></a>
+            <a href=""><i className="ms-Icon ms-Icon--ZoomIn" aria-hidden="true"></i></a>
+            <a href=""><i className="ms-Icon ms-Icon--Rotate90CounterClockwise" aria-hidden="true"></i></a>
+            <a href=""><i className="ms-Icon ms-Icon--Rotate90Clockwise" aria-hidden="true"></i></a>
+          </span>
         </Modal.Header>
-        <Modal.Content style={{ marginTop: '-1px' }}>
+        <Modal.Content>
           <Form>
-            <Grid stackable columns={2}>
-              <Grid.Column className="colorback" style={{ width: '65%' }}>
-                <Segment>
-                  <Canvas
-                    pinSaved={setPinSavedOnCanvase}
-                    savePin={saveNewPinOnCanvase}
-                    imgUrl={imgUrl}
-                    coardinates={getCoardinates}
-                    fileId={fileId}
-                    allowToCreateNewPin={allowToCreateNewPin}
-                    isPinCreated={isPinCreated}
-                    setIsPinCreated={setIsPinCreated}
-                  ></Canvas>
-                  {/* <CanvasNew
-                    pinSaved={setPinSavedOnCanvase}
-                    savePin={saveNewPinOnCanvase}
-                    imgUrl={imgUrl}
-                    coardinates={getCoardinates}
-                    fileId={fileId}
-                    allowToCreateNewPin={allowToCreateNewPin}
-                    isPinCreated={isPinCreated}
-                    setIsPinCreated={setIsPinCreated}
-                  /> */}
-                  {/* <img src="../../../assets/images/sample_mk.pdf"></img>
-                  <ImageMarker
-                    src="../../../assets/images/sample_mk.pdf"
-                    // src={imgUrl}
-                    markers={markers}
-                    onAddMarker={(marker: Marker) => setMarkers([...markers, marker])}
-                  /> */}
-                </Segment>
-              </Grid.Column>
-              <Grid.Column style={{ width: '35%', marginLeft: '-9px', marginTop: '-10px' }}>
-                <div style={{ background: '#F1F5F8', padding: '10px', marginBottom: '-18px' }}>
-                  <div>
-                    {!isPinCreated ?
-                      <div style={{ background: '#F1F5F8', padding: '10px', marginBottom: '-18px' }}>
-                        <Form.Field classname="buttonbluedown">
-                          <label> </label>
-                          <button className="ui mini button pinbutton" onClick={changePinTask}>{t('pin_mask.pin_mark_task')}</button>
-                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/grey_pin.png`} className="pinadd" />
-                        </Form.Field>
-                      </div>
-                      :
-                      <CreateFileTaskIndex pinsaved={pinSavedOnCanvase} savePin={setSaveNewPinOnCanvase} close={taskClose} onSuccess={onSuccess} cord={cord} fileData={fileData}></CreateFileTaskIndex>
-                    }
-                    {!isPinCreated ?
-                      <PinTaskListIndex filesData={fileData} cord={cord}></PinTaskListIndex> : null}
-                  </div>
-                </div>
-              </Grid.Column>
+            <div className="left-side-image-canvas">
+              <Canvas pinSaved={setPinSavedOnCanvase} savePin={saveNewPinOnCanvase} imgUrl={imgUrl} coardinates={getCoardinates} fileId={fileId} allowToCreateNewPin={allowToCreateNewPin} isPinCreated={isPinCreated} setIsPinCreated={setIsPinCreated}></Canvas>
+            </div>
 
-            </Grid>
+            <div className="right-side-file-details">
+              <div className="add-pin-mark-field">
+                {!isPinCreated ?
+                    <Form.Field className="pin-add-field">
+                      <button className="ui mini button pinbutton" onClick={changePinTask}>{t('pin_mask.pin_mark_task')}</button>
+                      <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/grey_pin.png`} className="pinadd" />
+                    </Form.Field>
+                  :
+                  <CreateFileTaskIndex pinsaved={pinSavedOnCanvase} savePin={setSaveNewPinOnCanvase} close={taskClose} onSuccess={onSuccess} cord={cord} fileData={fileData}></CreateFileTaskIndex>
+                }
+                {!isPinCreated ?
+                  <PinTaskListIndex filesData={fileData} cord={cord}></PinTaskListIndex> : null}
+              </div>
+            </div>
           </Form>
         </Modal.Content>
 

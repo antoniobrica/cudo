@@ -81,6 +81,7 @@ export function WorkType(props: WorkTypeProps) {
                           onChange={e =>handleChangeInput( idx, e, 'estCost')}
                         />
                       </Form.Field>
+                      <i className="ms-Icon ms-Icon--Delete delete-row" aria-hidden="true"></i>
                     </Form>
                   </Table.Cell>
                 </Table.Row>

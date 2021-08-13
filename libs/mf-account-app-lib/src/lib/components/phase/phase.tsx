@@ -8,17 +8,17 @@ import { usePhaseQuery } from '../../services/useRequest';
 import { useTranslation } from 'react-i18next';
 /* eslint-disable-next-line */
 export interface PhaseProps {
-  parentPhaseSelect,
-  phaseName
+  parentPhaseSelect?,
+  phaseName?
   error?
 }
 
 export function Phase(props: PhaseProps) {
   const [items, setItems] = React.useState([])
   const [phase, setPhase] = React.useState("")
-
+   
   const { loading, error, data } = usePhaseQuery(GET_PHASE);
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   React.useEffect(() => {
     if (props.phaseName) {
       console.log('phaseName', props.phaseName);
@@ -44,17 +44,16 @@ export function Phase(props: PhaseProps) {
     props.parentPhaseSelect(phase)
   }
   return (
-    <Form.Field>
-      <label>{t("common.select_phase")} <span className="danger">*</span>  </label>
+    <>
+      {/* <label>{t("common.select_phase")} </label> */}
       <Select placeholder={t("common.select")} className="small"
         options={items}
         value={phase}
         onChange={onPhase}
         clearable
-        error={props.error}
+        error={props.error} 
       />
-
-    </Form.Field>
+    </>
   );
 }
 

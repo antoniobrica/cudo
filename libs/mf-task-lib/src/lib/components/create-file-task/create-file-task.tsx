@@ -51,7 +51,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   const [assignees, setAssignees] = React.useState<any>([]);
   const [followers, setfollowers] = React.useState<any>([]);
   const history = useHistory();
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
 
@@ -274,7 +274,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
         trigger={<Button size='mini' className="grey-btn taskmargin">+ Add  New Task</Button>}      >
         <Modal.Header><h3>Add New Task </h3></Modal.Header>
         <Modal.Content body> */}
-      <div>
+      <div className="added-pin-number-con">
         <Form>
           <Grid columns={1}>
             <Grid.Row>
@@ -330,7 +330,10 @@ export function CreateFileTask(props: CreateFileTaskProps) {
           <Grid columns={2}>
             <Grid.Row>
               <Grid.Column>
-                <PhaseIndex parentPhaseSelect={onsetPhasesID} />
+                <Form.Field>
+                  <label>{t("common.phase")} </label>
+                  <PhaseIndex parentPhaseSelect={onsetPhasesID} />
+                </Form.Field>
               </Grid.Column>
               <Grid.Column>
                 <BkpsIndex bkp={BKPID} parentBKPSelect={setBKPIDChange} />
@@ -344,14 +347,16 @@ export function CreateFileTask(props: CreateFileTaskProps) {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-          <Grid columns={2}>
+          <Grid columns={1}>
             <Grid.Row>
               <Grid.Column>
                 <FollowersIndex followers={[]} parentFollowersSelect={onFollowers} />
               </Grid.Column>
-              <Grid.Column>
+            </Grid.Row>
+
+            <div className="followers-label-area">            
                 <Form.Field>
-                  <div className="event top-event">
+                  <div className="event top-event follower-listing-labels">
                     {followers.map((p, id) => {
                       const name = p.userName.split(" ").map((n) => n[0]).join("");
                       //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
@@ -362,25 +367,15 @@ export function CreateFileTask(props: CreateFileTaskProps) {
                       )
                     })
                     }
-
-                    {/* <div className="label-light-black-circle label-spacer">
-                          <span className="white-text ">RJ</span>
-                        </div>
-                        <div className="label-light-blue-circle label-spacer">
-                          <span className="white-text">JB</span>
-                        </div> */}
                   </div>
                 </Form.Field>
-              </Grid.Column>
-            </Grid.Row>
-
+              </div>           
           </Grid>
           <Grid columns={2}>
             <Grid.Row>
               <Grid.Column>
                 <Form.Field>
                   <label>{t("common.start_date")}  </label>
-                  {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
                   <Input placeholder='Default' size='small' className="full-width"
                     type="date"
                     value={startDate}
@@ -391,16 +386,12 @@ export function CreateFileTask(props: CreateFileTaskProps) {
               <Grid.Column>
                 <Form.Field>
                   <label>{t("common.end_date")} </label>
-                  {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
                   <Input placeholder='Default' size='small' className="full-width" type="date"
                     value={endDate}
                     onChange={onEndDateChange}
                   />
                 </Form.Field>
               </Grid.Column>
-
-            </Grid.Row>
-            <Grid.Row>
             </Grid.Row>
           </Grid>
           <Grid columns={1}>
@@ -436,7 +427,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
             size='small' className="primary"
           />
           <Button size='small' className="icon-border" onClick={cancel}>
-          <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i>  {t("common.cancel")}
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i>  {t("common.cancel")}
           </Button>
         </Modal.Actions>
       </div>

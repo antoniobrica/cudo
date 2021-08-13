@@ -1,6 +1,7 @@
 import { DocumentNode, useQuery, useMutation } from "@apollo/react-hooks";
 import { SessionMutation, ISession, ISessions, ISessionByID } from "../interfaces/session";
 import { IInvitationMutation, IInvitation, IInvitations , IGetMeetingById } from "../interfaces/invitation";
+import { IProtocols } from "../interfaces/protocol";
 
 // #region Session related
 export function useSessionQuery(gqlQuery: DocumentNode, variable) {
@@ -35,3 +36,8 @@ export function useInvitationDetailQuery(gqlQuery: DocumentNode, variable) {
   return { loading, error, data };
 }
 // #endregion
+
+export function useProtocolQuery(gqlQuery: DocumentNode, variable) {
+  const {loading, error, data} = useQuery<IProtocols>(gqlQuery, variable)
+  return {loading, error, data}
+}
