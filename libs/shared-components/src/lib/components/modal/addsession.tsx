@@ -73,15 +73,17 @@ export function ModalAddSession(props: SessionProps) {
           setworktypeName(workT.worktypeName);
           setworktypeID(workT.worktypeID);
           setworkTypeD(workT)
+          setworkTypeData(data.value)
         }
       }
     } else {
       setworktypeName("")
       setworktypeID("")
       setworkTypeD(null)
+      setworkTypeData("")
     }
     
-    setworkTypeData(data.value)
+    
     setErrors({ ...errors, workTypeError: "" })
   }
   const parentCatagorySelect = (data) => {
@@ -175,14 +177,12 @@ export function ModalAddSession(props: SessionProps) {
 
     props.createSession(data);
 
-    setOpen(false);
-    resetAddData();
-    props.cancel(true)
+    cancel()
   }
 
   const cancel = () => {
     setOpen(false)
-    props.cancel(true)
+    props.cancel()
     resetAddData()
   }
 
@@ -195,6 +195,9 @@ export function ModalAddSession(props: SessionProps) {
     setAdmins([])
     setMembers([])
     setErrors({})
+    setworktypeName("")
+    setworktypeID("")
+    setworkTypeData("")
   }
 
   return (
