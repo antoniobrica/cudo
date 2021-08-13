@@ -14,6 +14,7 @@ export interface EditSessionProps {
   sessionId?
   openEditSession?
   cancel?
+  dataList?
 }
 
 export function EditSession(props: EditSessionProps) {
@@ -121,6 +122,7 @@ export function EditSession(props: EditSessionProps) {
         editSession={updateSession}
         loading={loading}
         data={data}
+        dataList={props.dataList}
       />
     </div>
   );

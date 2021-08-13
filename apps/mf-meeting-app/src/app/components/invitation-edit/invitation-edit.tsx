@@ -11,6 +11,7 @@ export interface InvitationEditProps {
     meetingId?
     openEditInvitation?
     cancel?
+    dataList?
 }
 
 export function InvitationEdit(props: InvitationEditProps) {
@@ -83,6 +84,7 @@ export function InvitationEdit(props: InvitationEditProps) {
                     cancel={props.cancel}
                     loading={loading}
                     data={data}
+                    dataList={props.dataList}
                 /> : null}
         </div>
     )
