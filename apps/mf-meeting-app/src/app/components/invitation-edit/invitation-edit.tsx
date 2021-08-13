@@ -19,7 +19,7 @@ export function InvitationEdit(props: InvitationEditProps) {
         variables: { meetingId: props?.meetingId },
     });
 
-    const [editMeeting, { data }] = useMutation(UPDATE_INVITATION,
+    const [editMeeting, {loading, error, data }] = useMutation(UPDATE_INVITATION,
         {
             refetchQueries: [
                 {
@@ -81,6 +81,8 @@ export function InvitationEdit(props: InvitationEditProps) {
                     editInvitation={editInvitation}
                     openEditInvitation={props.openEditInvitation}
                     cancel={props.cancel}
+                    loading={loading}
+                    data={data}
                 /> : null}
         </div>
     )
