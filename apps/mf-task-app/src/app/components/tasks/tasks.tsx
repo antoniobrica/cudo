@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './tasks.module.scss';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
@@ -63,6 +63,7 @@ export function Tasks(props: TasksProps) {
   const [subTaskId, setSubTaskId] = React.useState();
   const [subTaskStatus, setSubTaskStatus] = React.useState('');
   const [taskErrors, setTaskErrors] = useState("")
+  const [activeErrorClass, setActiveErrorClass] = useState(false)
 
   const [idx, setId] = React.useState('');
 
@@ -72,10 +73,119 @@ export function Tasks(props: TasksProps) {
 
   const [addSubTaskApi, { loading: addSubTaskLoading, error: addSubTaskError, data: addedSubTaskData }] = useMutation(UPDATE_TASK);
   const [subTaskUpdateApi, { loading: editSubTaskLoading, error: editSubTaskError, data: editSubTaskData }] = useMutation(UPDATE_SUBTASK);
-  
+
+  const [subTaskStatusUpdateApi, { loading: editSubTaskStatusLoading, error: editSubTaskStatusError, data: editSubTaskStatusData }] = useMutation(UPDATE_SUBTASK_STATUS, {
+    refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
+  });
+
+  const [subTaskDeleteApi, { loading: deleteSubTaskLoading, error: deleteSubTaskError, data: deleteSubTaskData }] = useMutation(DELETE_SUBTASK, {
+    variables: { subtaskID: subTaskId },
+  });
   // const [subTaskUpdateApi, { data }] = useMutation(UPDATE_SUBTASK, {
   //   refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
   // });
+
+  // set sucess value to toaster function
+  const getTaskToasterMessage = (data) => {
+    toast(data)
+  }
+  // set error value to task error for toaster function
+  const getTaskErrorMessage = (data) => {
+    setTaskErrors(data)
+  }
+
+  // set toaster for edit task
+  useEffect(() => {
+    if (!editTaskLoading && updatedTaskData) {
+      setActiveErrorClass(false)
+      getTaskToasterMessage(t("toaster.success.task.task_edit"))
+    }
+    if (!editTaskLoading && editSubTaskStatusError) {
+      setActiveErrorClass(true)
+      getTaskErrorMessage(editTaskError)
+    }
+  }, [editTaskLoading])
+
+  // set toaster for delete task
+  useEffect(() => {
+    if (!deleteTaskLoading && deletedTaskData) {
+      setActiveErrorClass(false)
+      getTaskToasterMessage(t("toaster.success.task.task_deleted"))
+    }
+    if (!deleteTaskLoading && deleteTaskError) {
+      setActiveErrorClass(true)
+      getTaskErrorMessage(deleteTaskError)
+    }
+  }, [deleteTaskLoading])
+
+  // set toaster for update task status
+  useEffect(() => {
+    if (!editTaskStatusLoading && updatedTaskStatusData) {
+      setActiveErrorClass(false)
+      getTaskToasterMessage(t("toaster.success.task.task_status_updated"))
+    }
+    if (!editTaskStatusLoading && editTaskStatusError) {
+      setActiveErrorClass(true)
+      getTaskErrorMessage(editTaskStatusError)
+    }
+  }, [editTaskStatusLoading])
+
+  // set toaster for add subtask
+  useEffect(() => {
+    if (!addSubTaskLoading && addedSubTaskData) {
+      setActiveErrorClass(false)
+      getTaskToasterMessage(t("toaster.success.task.subtask_created"))
+    }
+    if (!addSubTaskLoading && addSubTaskError) {
+      setActiveErrorClass(true)
+      getTaskErrorMessage(addSubTaskError)
+    }
+  }, [addSubTaskLoading])
+
+  // set toaster for edit subtask
+  useEffect(() => {
+    if (!editSubTaskLoading && editSubTaskData) {
+      setActiveErrorClass(false)
+      getTaskToasterMessage(t("toaster.success.task.subtask_edit"))
+    }
+    if (!editSubTaskLoading && editSubTaskError) {
+      setActiveErrorClass(true)
+      getTaskErrorMessage(editSubTaskError)
+    }
+  }, [editSubTaskLoading])
+
+  // set toaster for delete subtask
+  useEffect(() => {
+    if (!deleteSubTaskLoading && deleteSubTaskData) {
+      setActiveErrorClass(false)
+      getTaskToasterMessage(t("toaster.success.task.subtask_deleted"))
+    }
+    if (!deleteSubTaskLoading && deleteSubTaskError) {
+      setActiveErrorClass(true)
+      getTaskErrorMessage(deleteSubTaskError)
+    }
+  }, [deleteSubTaskLoading])
+
+
+  // set toaster for edit sub task status
+  useEffect(() => {
+    if (!editSubTaskStatusLoading && editSubTaskStatusData) {
+      setActiveErrorClass(false)
+      getTaskToasterMessage(t("toaster.success.task.subtask_status_updated"))
+    }
+    if (!editSubTaskStatusLoading && editSubTaskStatusError) {
+      setActiveErrorClass(true)
+      getTaskErrorMessage(editSubTaskStatusError)
+    }
+  }, [editSubTaskStatusLoading])
+
+  // set error message to toaster
+  useEffect(() => {
+    if (taskErrors) {
+      toast("error occured")
+    }
+  }, [taskErrors])
+
 
   const query = `query ProjectById($projectId: String!) {
     projectById( projectId: $projectId)
@@ -113,21 +223,12 @@ export function Tasks(props: TasksProps) {
       .catch((err) => console.log(err));
   };
 
-  const [subTaskStatusUpdateApi, { data: editSubTaskStatusData }] = useMutation(UPDATE_SUBTASK_STATUS, {
-    refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
-  });
-
-  const [subTaskDeleteApi] = useMutation(DELETE_SUBTASK, {
-    variables: { subtaskID: subTaskId },
-  });
-
-
   enum Status {
     INPROGRESS = 'INPROGRESS',
     COMPLETED = 'COMPLETED',
   }
   if (taskListLoading) return (<LazyLoading />)
-  if (taskListError) return (<div>Tasks not fetched. An internal server error occured</div>)
+  // if (taskListError) return (<div>Tasks not fetched. An internal server error occured</div>)
   // return (
   //   <h1>
   //     <LoaderPage />
@@ -135,24 +236,26 @@ export function Tasks(props: TasksProps) {
   // );
 
   if (deleteTaskLoading) return (<LazyLoading />)
-  if (deleteTaskError) return (<div>Task not deleted. An internal server error occured</div>)
+  // if (deleteTaskError) return (<div>Task not deleted. An internal server error occured</div>)
   // return (
   //   <h1>
   //     <LoaderPage />
   //   </h1>
   // );
 
-  // if (editTaskLoading) return (<LazyLoading />)
-  if (editTaskError) return (<div>Task not updated. An internal server error occured</div>)
+  if (editTaskLoading) return (<LazyLoading />)
+  // if (editTaskError) return (<div>Task not updated. An internal server error occured</div>)
 
   if (editTaskStatusLoading) return (<LazyLoading />)
-  if (editTaskStatusError) return (<div>Task status not updated. An internal server error occured</div>)
+  // console.log(editTaskStatusError)
+  // if (editTaskStatusError) return (<div>Task status not updated. An internal server error occured</div>)
+
 
   // if (addSubTaskLoading) return (<LazyLoading />)
-  if (addSubTaskError) return (<div>Sub-task not added. An internal server error occured</div>)
+  // if (addSubTaskError) return (<div>Sub-task not added. An internal server error occured</div>)
 
-  // if (editSubTaskLoading) return (<LazyLoading />)
-  if (editSubTaskError) return (<div>Sub-task not updated. An internal server error occured</div>)
+  // // if (editSubTaskLoading) return (<LazyLoading />)
+  // if (editSubTaskError) return (<div>Sub-task not updated. An internal server error occured</div>)
 
 
   const cancel = () => {
@@ -285,13 +388,6 @@ export function Tasks(props: TasksProps) {
   const refresh = (data) => {
     console.log('refresh is called', data);
   };
-
-  const getTaskToasterMessage = (data) => {
-    toast(data)
-  }
-  const getTaskErrorMessage = (data) => {
-    setTaskErrors(data)
-  }
 
   const editTaskData = (updateTaskData) => {
     const assignees = [];
@@ -622,7 +718,7 @@ export function Tasks(props: TasksProps) {
 
   return (
     <div>
-      <ToastContainer className="success" position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
+      <ToastContainer className={`${activeErrorClass ? "error" : "success"}`} position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
 
       <div className="pin_area">
         <FilterPopup />

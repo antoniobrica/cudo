@@ -103,7 +103,7 @@ export function CreateTask(props: CreateTaskProps) {
   useEffect(() => {
     if (!loading && data) {
       cancel()
-      props.getTaskToasterMessage("Task Created")
+      props.getTaskToasterMessage(t("toaster.success.task.task_created"))
     }
     if(!loading && error)
       cancel()
