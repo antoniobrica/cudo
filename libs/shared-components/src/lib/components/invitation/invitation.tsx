@@ -46,12 +46,12 @@ export function InvitationTab(props: InvitationTabProps) {
       menuItem: {
         key: 'Invitations',
         icon: 'calendar check outline',
-        content: 'Invitations',
+        content: t("project_tab_menu.meeting.invitations"),
       },
       render: () => (
         <Tab.Pane attached={false}>
           <Button size="small" className="primary tabs-button-right" onClick={onClickAddInvitation}>
-            <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> Add Invitation
+            <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> {t("project_tab_menu.meeting.add_invitation")}
           </Button>
           <div className="ui-tabs">
             {props?.invitations?.map((item) => {
@@ -108,9 +108,9 @@ export function InvitationTab(props: InvitationTabProps) {
                             <span className="dropdown-action">
                               <Dropdown icon='ellipsis horizontal' pointing='right'>
                                 <Dropdown.Menu>
-                                  <Dropdown.Item icon="eye" text="View detail" onClick={() => onClickViewInvitation(meetingId)} />
-                                  <Dropdown.Item icon="pencil" text="Edit" onClick={() => onClickEditInvitation(meetingId)} />
-                                  <Dropdown.Item icon="trash alternate outline" text="Delete" onClick={() => onClickDeleteInvitation(meetingId)} />
+                                  <Dropdown.Item icon="eye" text={t("common.view_details")} onClick={() => onClickViewInvitation(meetingId)} />
+                                  <Dropdown.Item icon="pencil" text={t("common.edit")} onClick={() => onClickEditInvitation(meetingId)} />
+                                  <Dropdown.Item icon="trash alternate outline" text={t("common.delete")} onClick={() => onClickDeleteInvitation(meetingId)} />
                                 </Dropdown.Menu>
                               </Dropdown>
                             </span>
@@ -132,7 +132,7 @@ export function InvitationTab(props: InvitationTabProps) {
       menuItem: {
         key: 'Protocols',
         icon: 'newspaper outline',
-        content: 'Protocols',
+        content: t("project_tab_menu.meeting.protocols"),
       },
       
       render: () => (
@@ -145,11 +145,10 @@ export function InvitationTab(props: InvitationTabProps) {
             className="primary tabs-button-right"
             onClick={onClickAddProtocol}
           >
-            <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> Add Protocol
+            <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> {t("project_tab_menu.meeting.add_protocol")}
           </Button>
           <div className="ui-tabs">
             {props?.protocols?.map((item) => {
-              console.log("%%%%%%%%%%%%%%%%%%%%%%", item)
               const { protocolId, protocolTitle, protocolDate, protocolStartTime, protocolEndTime, protocolDuration, protocolFiles } = item
 
               const formattedProtocolDate = moment(protocolDate).format('DD MMM, YYYY')
@@ -203,11 +202,11 @@ export function InvitationTab(props: InvitationTabProps) {
                             <span className="dropdown-action">
                               <Dropdown icon='ellipsis horizontal' pointing='right'>
                                 <Dropdown.Menu>
-                                  <Dropdown.Item icon="eye" text="View detail" />
-                                  <Dropdown.Item icon="pencil" text="Edit" />
+                                  <Dropdown.Item icon="eye" text={t("common.view_details")} />
+                                  <Dropdown.Item icon="pencil" text={t("common.edit")} />
                                   <Dropdown.Item
                                     icon="trash alternate outline"
-                                    text="Delete"
+                                    text={t("common.delete")}
                                   />
                                 </Dropdown.Menu>
                               </Dropdown>
@@ -242,8 +241,8 @@ export function InvitationTab(props: InvitationTabProps) {
       <div className="tabs-main-info-container invitation-tab">
         <div className="invitation-header">
           <i className="ms-Icon ms-Icon--Back" aria-hidden="true"></i>{' '}
-          <span className="">Invitation</span> /{' '}
-          <span className="preliminary-font">Protocol</span>
+          <span className="">{t("project_tab_menu.meeting.invitations")}</span> /{' '}
+          <span className="preliminary-font">{t("project_tab_menu.meeting.protocols")}</span>
           <br />{' '}
           <span className="invitation-sub-heading">
             {/* <strong>Bulider Meeting -</strong>Project begining sessions */}

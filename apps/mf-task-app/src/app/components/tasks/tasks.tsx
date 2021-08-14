@@ -24,6 +24,7 @@ import TaskDelete from '../delete-task/delete-task';
 import SubTaskDelete from '../delete-subtask/delete-subtask';
 import { FilterPopup, ToggleButton } from '@cudo/shared-components';
 import { FileListIndex } from '@cudo/mf-document-lib';
+import { toast, ToastContainer } from 'react-toastify';
 export interface TasksProps { }
 
 export function Tasks(props: TasksProps) {
@@ -61,6 +62,7 @@ export function Tasks(props: TasksProps) {
   const [taskId, setTaskId] = React.useState();
   const [subTaskId, setSubTaskId] = React.useState();
   const [subTaskStatus, setSubTaskStatus] = React.useState('');
+  const [taskErrors, setTaskErrors] = useState("")
 
   const [idx, setId] = React.useState('');
 
@@ -70,7 +72,7 @@ export function Tasks(props: TasksProps) {
 
   const [addSubTaskApi, { loading: addSubTaskLoading, error: addSubTaskError, data: addedSubTaskData }] = useMutation(UPDATE_TASK);
   const [subTaskUpdateApi, { loading: editSubTaskLoading, error: editSubTaskError, data: editSubTaskData }] = useMutation(UPDATE_SUBTASK);
-
+  
   // const [subTaskUpdateApi, { data }] = useMutation(UPDATE_SUBTASK, {
   //   refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
   // });
@@ -283,6 +285,13 @@ export function Tasks(props: TasksProps) {
   const refresh = (data) => {
     console.log('refresh is called', data);
   };
+
+  const getTaskToasterMessage = (data) => {
+    toast(data)
+  }
+  const getTaskErrorMessage = (data) => {
+    setTaskErrors(data)
+  }
 
   const editTaskData = (updateTaskData) => {
     const assignees = [];
@@ -613,6 +622,8 @@ export function Tasks(props: TasksProps) {
 
   return (
     <div>
+      <ToastContainer className="success" position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
+
       <div className="pin_area">
         <FilterPopup />
         <ToggleButton changeAdd={changeAdd}></ToggleButton>
@@ -622,6 +633,8 @@ export function Tasks(props: TasksProps) {
             onSuccess={refresh}
             cancel={cancelTask}
             isNewTask={isNewTask}
+            getTaskToasterMessage={getTaskToasterMessage}
+            getTaskErrorMessage={getTaskErrorMessage}
           />
         ) : null}
       </div>

@@ -22,6 +22,8 @@ export interface CreateTaskProps {
   workTypes?,
   isNewTask?,
   cancel?
+  getTaskToasterMessage?
+  getTaskErrorMessage?
   // stopLoading?
 }
 
@@ -101,7 +103,11 @@ export function CreateTask(props: CreateTaskProps) {
   useEffect(() => {
     if (!loading && data) {
       cancel()
+      props.getTaskToasterMessage("Task Created")
     }
+    if(!loading && error)
+      cancel()
+      props.getTaskErrorMessage(error)
   }, [loading])
 
   const onTaskTitleChange = e => {

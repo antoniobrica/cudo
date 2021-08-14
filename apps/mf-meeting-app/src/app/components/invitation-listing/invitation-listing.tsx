@@ -110,10 +110,10 @@ export function InvitationListing(props: InvitationListingProps) {
                 {/* <img src={img8} className="image_center"></img> */}
                 <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/default_area.png`} />
 
-                <h3>No Data Found</h3>
-                <p>Hey User, you don't have any active invitation on this session. Click the button below to create a invitation list.</p>
+                <h3>{t("common.data_not_found")}</h3>
+                <p>{t("project_tab_menu.meeting.no_invitation_data_found_desc")}</p>
                 <Button size="small" className="primary" onClick={addNew}>
-                    + Add New Invitation
+                    + {t("project_tab_menu.meeting.add_new_invitation")}
                 </Button>
             </div>
         )
