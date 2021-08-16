@@ -168,11 +168,11 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     </Grid.Row>
                   </Grid>
 
-                  <Grid columns={1} className="file-versioning-box">
+                  <Grid columns={1} className="file-versioning-box expand">
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <label>File versions(1)</label>
+                          <label>File versions(1) <i className="ms-Icon ms-Icon--ChevronDown right_float" aria-hidden="true"></i></label>
                           <div className="file-version-list">
                             <div className="version-wise-files">
                               <span>Version 2 -</span>
