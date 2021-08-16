@@ -82,7 +82,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
            view Files
         </Button> */}
       <Modal className="view-pin-detail-popup"
-        closeIcon
+        // closeIcon
         size={'fullscreen'}
         open={open}
         onClose={() => setOpen(false)}
@@ -122,7 +122,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
             <div className="right-side-file-information">
               <div>
                 <Form>
-                  <Modal.Header><h3>File detail</h3></Modal.Header>
+                  <Modal.Header><h3>File detail <i aria-hidden="true" className="close icon"></i></h3></Modal.Header>
                   <Grid columns={2}>
                     <Grid.Row>
                       <Grid.Column>
