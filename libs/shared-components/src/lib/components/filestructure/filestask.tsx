@@ -5,6 +5,8 @@ import { Tab, Accordion, Dropdown } from 'semantic-ui-react'
 import ViewFileDetail from '../modal/viewdetailsfile';
 import AddPinFile from '../modal/pinaddfile';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { LazyLoading } from '@cudo/shared-components';
+
 /* eslint-disable-next-line */
 export interface FileStructureProps {
 	files?,
@@ -15,6 +17,7 @@ export interface FileStructureProps {
 	addPinTask?
 	selectedFileId?
 	fileVersionDetail?
+	fileVersionLoading?
 }
 
 export function FileStructure(props: FileStructureProps) {
@@ -27,7 +30,6 @@ export function FileStructure(props: FileStructureProps) {
 	const [expand, setExpand] = useState(false);
 	const [selectedExpandId, setSelectedExpandId] = useState(null);
 
-	const [selectedFileVersionDetail, setSelectedFileVersionDetail] = useState(null);
 	const [expandVersion, setExpandVersion] = useState(false);
 	const [selectedExpandVersionId, setSelectedExpandVersionId] = useState(null);
 
@@ -44,14 +46,10 @@ export function FileStructure(props: FileStructureProps) {
 	}, [props.files]);
 
 	useEffect(() => {
-		if (props.fileVersionDetail) {
-			console.log('---useEffect--fileVersionDetail--', props.fileVersionDetail)
-			setSelectedFileVersionDetail(props.fileVersionDetail)
-
+		if (!props.fileVersionLoading && props.fileVersionDetail) {
 			setExpandVersion(true)
-
 		}
-	}, [props.fileVersionDetail]);
+	}, [props.fileVersionLoading, props.fileVersionDetail]);
 
 	useEffect(() => {
 		if (props.downloadedImg) {
@@ -105,19 +103,18 @@ export function FileStructure(props: FileStructureProps) {
 	}
 
 	const onClickFileVersion = (uploadedFileVersionId) => {
-		console.log('--111--onClickFileVersion---uploadedFileVersionId---', uploadedFileVersionId, selectedExpandVersionId)
 		if (uploadedFileVersionId === selectedExpandVersionId) {
 			setExpandVersion(!expandVersion)
 		} else {
 			setExpandVersion(true)
 		}
+		
 		setSelectedExpandVersionId(uploadedFileVersionId)
 		props.selectedFileId(uploadedFileVersionId)
 	}
 
+	const onClickVersionDetail = () => {
 
-	const onClickDesignVersionExpand = () => {
-		setDesignVersionExpand(!designVersionExpand)
 	}
 
 	// #region commented Old code
@@ -195,59 +192,6 @@ export function FileStructure(props: FileStructureProps) {
 	// 	return files;
 	// }
 	// #endregion
-	console.log('-222-selectedFileVersionDetail---', selectedFileVersionDetail)
-	let fileVersionItem = null
-	const renderChildrenSingleFilesVersion = (fileVersions) => {
-		console.log('---renderChildrenSingleFilesVersion--fileVersions--', fileVersions)
-		fileVersionItem = fileVersions.map((item) => {
-
-			const { uploadedFileID, fileType, fileTitle, fileVersion } = item
-			return (
-				<div key={uploadedFileID} className="files-versioning-list">
-					<p>Version {fileVersion} - <span>{fileTitle}</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
-					<div className="files-right-area">
-						<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
-					</div>
-				</div>)
-		})
-		console.log('---fileVersionItem--aaa-', fileVersionItem)
-		return fileVersionItem
-	}
-
-
-	const renderFileVersions = () => {
-		console.log('---333-renderFileVersions----')
-		if (selectedFileVersionDetail) {
-			console.log('--renderFileVersions--fileTask-get --selectedFileVersionDetail-', selectedFileVersionDetail)
-			return (
-				<>
-					<div className="break"></div>
-
-					<div key={selectedFileVersionDetail?.uploadedFileID} className="version-file-con">
-						{renderChildrenSingleFilesVersion(selectedFileVersionDetail.children)}
-					</div>
-					{/* <div className="break"></div>
-						<div className="version-file-con expand">
-							<div className="files-versioning-list">
-								<p>Version 1 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
-								<div className="files-right-area">
-									<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
-								</div>
-							</div>
-							<div className="files-versioning-list">
-								<p>Version 2 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
-								<div className="files-right-area">
-									<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
-								</div>
-							</div>
-						</div> */}
-				</>
-			)
-		}
-	}
-	useEffect(() => {
-		renderFileVersions()
-	}, [selectedFileVersionDetail])
 
 	const renderChildrenSingleFile = (singleFileItem) => {
 		const { uploadedFileID, fileType, fileTitle, fileVersion } = singleFileItem
@@ -280,37 +224,37 @@ export function FileStructure(props: FileStructureProps) {
 					</div>
 				</div>
 
-				{renderFileVersions}
+				{props.fileVersionLoading && selectedExpandVersionId === uploadedFileID ? (<LazyLoading />)
+					:
+					<>
+						{props?.fileVersionDetail?.children?.length ?
+							<>
+								<div className="break"></div>
+								<div className="version-file-con">
+									{props?.fileVersionDetail?.children.map((item) => {
 
-				{/* <div className="break"></div>
-				<div className="version-file-con expand">
-					<div className="files-versioning-list">
-						<p>Version 1 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
-						<div className="files-right-area">
-							<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
-						</div>
-					</div>
-					<div className="files-versioning-list">
-						<p>Version 2 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
-						<div className="files-right-area">
-							<a href=""> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
-						</div>
-					</div>
-				</div> */}
-
+										const { uploadedFileID, fileType, fileTitle, fileVersion } = item
+										return (<div key={uploadedFileID} className="files-versioning-list">
+											<p>Version {fileVersion} - <span>{fileTitle}</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
+											<div className="files-right-area">
+												<a onClick={onClickVersionDetail}> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
+											</div>
+										</div>)
+									})}
+								</div>
+							</> : null}
+					</>
+				}
 			</div>
 		)
 	}
 
 	const renderChildrenWise = (children) => {
-
 		const renderedChildrenItem = children && children.length ? children.map((item) => {
-
 			return (<>
 				{renderChildrenSingleFile(item)}
 			</>)
 		}) : null
-
 		return renderedChildrenItem
 	}
 
@@ -319,7 +263,6 @@ export function FileStructure(props: FileStructureProps) {
 		renderedFileFoldersList = fileFoldersList.map(({ parentUploadedFileID, uploadedFileID, directory, BKPIDTitle, children }) => {
 
 			return (
-				// <div key={uploadedFileID} className="multiple-files-box expand">
 				<div key={uploadedFileID} className={selectedExpandId === uploadedFileID && expand ? "multiple-files-box expand" : "multiple-files-box"}>
 					<div className="multiple-files-header">
 						<div className="files-left-area">
@@ -340,7 +283,7 @@ export function FileStructure(props: FileStructureProps) {
 			)
 		})
 	}
-console.log('-----mk---renderedFileFoldersList----', renderedFileFoldersList)
+
 	const panes = [
 		{
 			menuItem: { key: 'Overview', icon: 'images', content: 'All files test', className: 'files-tab-inner' },
@@ -356,7 +299,9 @@ console.log('-----mk---renderedFileFoldersList----', renderedFileFoldersList)
 
 					<div className="all-files-con">
 						{renderedFileFoldersList}
-						<div>--------------------------------------</div>
+
+						{/* <div>--------------------------------------</div>
+						<>
 						<div className="multiple-files-box expand">
 							<div className="multiple-files-header">
 								<div className="files-left-area">
@@ -588,6 +533,7 @@ console.log('-----mk---renderedFileFoldersList----', renderedFileFoldersList)
 								</div>
 							</div>
 						</div>
+					</> */}
 					</div>
 
 

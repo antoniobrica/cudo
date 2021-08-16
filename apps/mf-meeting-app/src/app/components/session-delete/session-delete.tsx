@@ -11,6 +11,7 @@ export interface SessionDeleteProps {
     sessionId?
     openDeleteSession?
     cancel?
+    setSessionDeleteLoading?
 }
 
 export function SessionDelete(props: SessionDeleteProps) {
@@ -19,7 +20,7 @@ export function SessionDelete(props: SessionDeleteProps) {
         variables: { sessionID: props?.sessionId },
     });
 
-    const [deleteSessionDetail, { data }] = useMutation(DELETE_SESSION,
+    const [deleteSessionDetail, { loading, error, data }] = useMutation(DELETE_SESSION,
         {
             refetchQueries: [{ query: GET_SESSIONS, variables: { projectId: props.projectId } }]
         }
@@ -62,6 +63,9 @@ export function SessionDelete(props: SessionDeleteProps) {
                     deleteSession={deleteSession}
                     openDeleteSession={props.openDeleteSession}
                     cancel={props.cancel}
+                    setSessionDeleteLoading={props.setSessionDeleteLoading}
+                    loading={loading}
+                    data={data}
                 /> : null}
         </div>
     )

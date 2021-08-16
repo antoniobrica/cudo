@@ -14,6 +14,7 @@ export interface EditSessionProps {
   sessionId?
   openEditSession?
   cancel?
+  dataList?
 }
 
 export function EditSession(props: EditSessionProps) {
@@ -32,7 +33,7 @@ export function EditSession(props: EditSessionProps) {
     variables: { sessionID: props?.sessionId },
   });
 
-  const [editSession, { data }] = useMutation(UPDATE_SESSION,
+  const [editSession, { loading, error, data }] = useMutation(UPDATE_SESSION,
     {
       refetchQueries: [
         { query: GET_SESSIONS, variables: { projectId: props.projectId } }
@@ -119,6 +120,9 @@ export function EditSession(props: EditSessionProps) {
         openEditSession={props.openEditSession}
         cancel={props.cancel}
         editSession={updateSession}
+        loading={loading}
+        data={data}
+        dataList={props.dataList}
       />
     </div>
   );
