@@ -26,7 +26,10 @@ export interface FileStructureProps {
   isTaskFile?,
   files?,
   cancel?,
-  savePins?
+  savePins?,
+  selectedFileId?,
+  fileVersionDetail?,
+  fileVersionLoading?,
 }
 export function SelectFilePopup(props: FileStructureProps) {
   const countryOptions = [
@@ -42,7 +45,7 @@ export function SelectFilePopup(props: FileStructureProps) {
   const [imgUrl, setimgUrl] = React.useState('');
   const [fType, setFtype] = React.useState('');
   const [view, setView] = React.useState(false);
-  const {t} = useTranslation()
+  const { t } = useTranslation()
 
 
 
@@ -86,7 +89,7 @@ export function SelectFilePopup(props: FileStructureProps) {
       }
 
     }
-  },[props.downloadedImg])
+  }, [props.downloadedImg])
 
   const viewFiles = (data) => {
     console.log('--selectfile--data-view', data);
@@ -111,13 +114,13 @@ export function SelectFilePopup(props: FileStructureProps) {
         onClose={cancel}
         onOpen={() => setOpen(true)}
         open={open}
-      // trigger={
-      //   <Button className="grey-btn" size="mini">
-      //     <img src={img1} className="  mr-10 " />
-      //     Task from file
-      //   </Button>
-      // }
-      closeOnDimmerClick={false}
+        // trigger={
+        //   <Button className="grey-btn" size="mini">
+        //     <img src={img1} className="  mr-10 " />
+        //     Task from file
+        //   </Button>
+        // }
+        closeOnDimmerClick={false}
       >
         <Modal.Header>
           <h3>{t("project_tab_menu.files.select_file")}</h3>
@@ -146,7 +149,17 @@ export function SelectFilePopup(props: FileStructureProps) {
                 </Form.Field>
               </div>
             </Form><br />
-            <PinFileStructure uploadNewVersion={null} files={props.files} downloadFiles={props.downloadFiles} viewFiles={viewFiles} downloadedImg={props.downloadedImg} isPinFile={isPinFile}></PinFileStructure>
+            <PinFileStructure
+              uploadNewVersion={null}
+              files={props.files}
+              downloadFiles={props.downloadFiles}
+              viewFiles={viewFiles}
+              downloadedImg={props.downloadedImg}
+              isPinFile={isPinFile}
+              selectedFileId={props.selectedFileId}
+              fileVersionDetail={props.fileVersionDetail}
+              fileVersionLoading={props.fileVersionLoading}
+            ></PinFileStructure>
 
             {/* <div className="d-flex align-items-center py-2">
               <span>

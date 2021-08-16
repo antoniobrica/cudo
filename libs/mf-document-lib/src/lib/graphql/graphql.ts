@@ -34,7 +34,15 @@ export const GET_FILES = gql`query UploadedFiles($projectId:String!)
       fileTypeName
       isEveryOneAllowed
       uploadedFileID
-      
+      uploadedFileID
+      BKPID 
+      BKPIDTitle 
+      phaseID 
+      phaseName 
+      fileTypeID  
+      structureID 
+      directory
+      structureTitle
     }
     people { 
       userID 
@@ -161,5 +169,59 @@ $isDeleted: Boolean!
 } 
 `;
 
-
-
+export const GET_FILE_VERSIONS = gql`query FileVersions($projectId:String!,$fileId:String!,){
+  fileVersions(
+    parentFile: {
+      referenceType: PROJECTTYPE
+      referenceID: $projectId # "04b9bb40-de6b-11eb-b34f-cd1f71d8908c"
+      uploadedFileID: $fileId # "e81f3f80-f91a-11eb-8f43-87a1cb82224b"
+    }
+  ) {
+    uploadedFileID
+    parentUploadedFileID
+    directory
+    structureID
+    structureTitle
+    BKPID
+    BKPIDTitle
+    phaseID
+    phaseName
+    generateFileName
+    fileTypeID
+    fileTypeName
+    isEveryOneAllowed
+    fileURL
+    fileTitle
+    fileType
+    fileVersion
+    createdBy
+    updatedBy
+    isDeleted
+    referenceID
+    referenceTitle
+    referenceType
+    children {
+      parentUploadedFileID
+      fileURL
+      fileTitle
+      fileType
+      fileVersion
+      fileTypeName
+      isEveryOneAllowed
+      uploadedFileID
+      BKPID
+      BKPIDTitle
+      phaseID
+      phaseName
+      fileTypeID
+      structureID
+      directory
+      structureTitle
+    }
+    people {
+      userID
+      userName
+    }
+  }
+}
+`

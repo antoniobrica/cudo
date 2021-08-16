@@ -204,7 +204,10 @@ export function FileListing(props: FileListingProps) {
               cancel={cancel}
               uploadNewVersion={uploadNewVersionFile}
               file={fileVersion} /> : null}
-          <FileStructure files={data?.uploadedFiles} downloadFiles={downloadFiles} viewFiles={viewFiles}
+          <FileStructure 
+            files={data?.uploadedFiles} 
+            downloadFiles={downloadFiles} 
+            viewFiles={viewFiles}
             uploadNewVersion={uploadNewVersion}
             addPinTask={addPinTask}
             downloadedImg={itemsd}

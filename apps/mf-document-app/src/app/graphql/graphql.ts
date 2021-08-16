@@ -34,14 +34,14 @@ export const GET_FILES = gql`query UploadedFiles($projectId:String!)
       fileTypeName
       isEveryOneAllowed
       uploadedFileID
-     BKPID 
-    BKPIDTitle 
-    phaseID 
-    phaseName 
-    fileTypeID  
-    structureID 
-    directory
-    structureTitle  
+      BKPID 
+      BKPIDTitle 
+      phaseID 
+      phaseName 
+      fileTypeID  
+      structureID 
+      directory
+      structureTitle  
     }
     people { 
       userID 
@@ -50,7 +50,6 @@ export const GET_FILES = gql`query UploadedFiles($projectId:String!)
   } 
   }
 `;
-
 
 export const UPLOAD_FILE = gql`
 mutation SaveUploadedFile(
@@ -130,7 +129,6 @@ mutation SaveUploadedFile(
       }
       }
 }`;
-
 
 export const UPLOAD_FILE_VERSION = gql`
 mutation UploadNewFileVersion(

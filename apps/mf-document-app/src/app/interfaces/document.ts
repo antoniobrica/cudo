@@ -90,7 +90,3 @@ export interface IFileVersion {
   people: [IPeople]
   children: [IFileParam]
 }
-
-// export interface IFileVersion {
-//   fileVersions: IFileVersion;
-// }

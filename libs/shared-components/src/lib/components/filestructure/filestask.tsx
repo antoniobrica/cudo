@@ -108,7 +108,7 @@ export function FileStructure(props: FileStructureProps) {
 		} else {
 			setExpandVersion(true)
 		}
-		
+
 		setSelectedExpandVersionId(uploadedFileVersionId)
 		props.selectedFileId(uploadedFileVersionId)
 	}
@@ -224,7 +224,13 @@ export function FileStructure(props: FileStructureProps) {
 					</div>
 				</div>
 
-				{props.fileVersionLoading && selectedExpandVersionId === uploadedFileID ? (<LazyLoading />)
+				{props.fileVersionLoading && selectedExpandVersionId === uploadedFileID ?
+					<>
+						<div className="break" />
+						<div className="version-file-con">
+							<LazyLoading />
+						</div>
+					</>
 					:
 					<>
 						{props?.fileVersionDetail?.children?.length ?
