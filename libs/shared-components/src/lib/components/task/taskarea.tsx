@@ -20,6 +20,8 @@ export interface Tasks {
   deleteSubTask?
   addSubTaskLoading?
   editSubTaskLoading?
+  taskListData?
+  taskDeleteUpdateStatusLoading?
 }
 
 export function TaskArea(props: Tasks) {
@@ -33,6 +35,7 @@ export function TaskArea(props: Tasks) {
   const [openSubTaskEdit, setOpenSubTaskEdit] = React.useState(false)
   const [subtaskAddLoading, setSubTaskAddLoading] = useState(false)
   const [subtaskEditLoading, setSubTaskEditLoading] = useState(false)
+  const [subtaskDeleteLoading, setSubTaskDeleteLoading] = useState(false)
 
   useEffect(() => {
     const filteredSubTasks = props?.task?.subtasks.filter((item) => item.isDeleted !== true)
@@ -45,6 +48,10 @@ export function TaskArea(props: Tasks) {
       setViewSubTaskAdd(false)
     }
   }, [props?.addSubTaskLoading])
+
+  useEffect(() => {
+    setSubTaskDeleteLoading(false)
+  },[props.taskListData])
 
   useEffect(() => {
     setSubTaskEditLoading(props.editSubTaskLoading)
@@ -69,7 +76,6 @@ export function TaskArea(props: Tasks) {
     props.editTask(task, id)
   }
   const openSubTask = (task, id) => {
-
     setTaskId(id)
     setIsExpended(true)
   }
@@ -100,6 +106,7 @@ export function TaskArea(props: Tasks) {
   }
 
   const onClickSubTaskStatusUpdate = (taskId, subTaskId, status) => {
+    setSubTaskDeleteLoading(true)
     props.updateSubTaskStatus(taskId, subTaskId, status)
   }
 
@@ -123,6 +130,7 @@ export function TaskArea(props: Tasks) {
   }
 
   const onClickDeleteSubTask = (taskId, subTaskId) => {
+    setSubTaskDeleteLoading(true)
     props.deleteSubTask(taskId, subTaskId)
   }
 
@@ -159,21 +167,21 @@ export function TaskArea(props: Tasks) {
   let renderSubtaskItems = null
   const showSubTaskItems = (taskId, subTaskId, subTaskTitle, subtaskStatus, index) => {
     renderSubtaskItems =
-      <div className="d-flex align-items-center checklist-listing-main" key={subTaskId}>
-        <span className="anchor_complete" onClick={() => onClickSubTaskStatusUpdate(taskId, subTaskId, subtaskStatus === 'INPROGRESS' ? 'COMPLETED' : 'INPROGRESS')}>
-          {subtaskStatus === 'INPROGRESS' ?
-            <a title={t("project_tab_menu.task.completed")}><i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i> </a>
-            :
-            <i className="ms-Icon ms-Icon--Accept completed" aria-hidden="true"></i>
-          }
-        </span>
-        <span className="task-checklisting-text">{index + 1}. {subTaskTitle}</span>
+        <div className="d-flex align-items-center checklist-listing-main" key={subTaskId}>
+          <span className="anchor_complete" onClick={() => onClickSubTaskStatusUpdate(taskId, subTaskId, subtaskStatus === 'INPROGRESS' ? 'COMPLETED' : 'INPROGRESS')}>
+            {subtaskStatus === 'INPROGRESS' ?
+              <a title={t("project_tab_menu.task.completed")}><i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i> </a>
+              :
+              <i className="ms-Icon ms-Icon--Accept completed" aria-hidden="true"></i>
+            }
+          </span>
+          <span className="task-checklisting-text">{index + 1}. {subTaskTitle}</span>
 
 
-        <span className="checklist-actions" onClick={() => onClickEditSubTask(taskId, subTaskId, subTaskTitle)}> <Icon name="pencil" /></span>
-        <span className="checklist-actions" onClick={() => onClickDeleteSubTask(taskId, subTaskId)}>< Icon name="trash alternate outline" /> </span>
+          <span className="checklist-actions" onClick={() => onClickEditSubTask(taskId, subTaskId, subTaskTitle)}> <Icon name="pencil" /></span>
+          <span className="checklist-actions" onClick={() => onClickDeleteSubTask(taskId, subTaskId)}>< Icon name="trash alternate outline" /> </span>
 
-      </div>
+        </div>
 
     return renderSubtaskItems
   }
@@ -485,6 +493,8 @@ export function TaskArea(props: Tasks) {
 
                   <div className="card-body">
 
+                    { 
+                   (subtaskDeleteLoading && props.taskDeleteUpdateStatusLoading) ? <LazyLoading /> : (
                     <div>
                       {subtaskData.map((subtask, index) => {
 
@@ -521,7 +531,8 @@ export function TaskArea(props: Tasks) {
 
                       }
 
-                    </div>
+                    </div>)
+                    }
 
                   </div>
                 </div>
