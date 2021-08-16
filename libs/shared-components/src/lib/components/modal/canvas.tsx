@@ -1,7 +1,8 @@
 
-import React, { Component, useEffect, useRef } from 'react'
+import React, { Component, useEffect, useRef, useState } from 'react'
 import axios from 'axios';
 import { MS_SERVICE_URL } from '@cudo/mf-core'
+import CanvasTransparent from './canvastransparent';
 export interface CanvasProps {
   imgUrl?,
   coardinates?,
@@ -25,6 +26,8 @@ export function Canvas(props: CanvasProps) {
   const [y_axis, sety_Axis] = React.useState<number>(0);
   let startX = null;
   let startY = null;
+
+  const [isAllPinCanvasHide, setAllPinCanvasHide] = useState(true)
 
   const getPinQuery = `query Pins($uploadedFileID: String!) {
   pins(pinsFilter:{ 
@@ -51,7 +54,7 @@ export function Canvas(props: CanvasProps) {
     getPins().then(() => {
       console.log("--canvas-0-getPins Done", props.allowToCreateNewPin)
     })
-    
+
   }, []);
   useEffect(() => {
     if (!props.isPinCreated)
@@ -431,6 +434,7 @@ export function Canvas(props: CanvasProps) {
   }
 
   const handleMouseMove = e => {
+    setAllPinCanvasHide(true)
     if (!isCircleSelectedOnMouseHover) {
       startX = e.nativeEvent.offsetX - canvasToDrawCircle.current.clientLeft;
       startY = e.nativeEvent.offsetY - canvasToDrawCircle.current.clientTop;
@@ -462,16 +466,24 @@ export function Canvas(props: CanvasProps) {
   return (
     <div className="outsideWrapper">
       <div className="insideWrapper">
-        <canvas className="coveringCanvas"
+        {/* {!isAllPinCanvasHide ? <> */}
+          <canvas className="coveringCanvas"
+            width="800" height="700"
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseOut={handleMouseOut}
+            ref={canvasToDrawCircle}></canvas>
+          {/* <canvas className="coveringCanvas"
           width="800" height="700"
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseOut={handleMouseOut}
-          ref={canvasToDrawCircle}></canvas>
-        <canvas className="coveringCanvas"
-          width="800" height="700"
-          ref={canvasToDrawImage}></canvas>
+          ref={canvasToDrawImage}></canvas> */}
+        {/* </>   : */}
+          <CanvasTransparent
+            imgUrl={props.imgUrl}
+            fileId={props.fileId}
+            allowToCreateNewPin={true}
+          ></CanvasTransparent>
+        {/* } */}
       </div>
     </div>
   );

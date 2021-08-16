@@ -28,20 +28,15 @@ export function PinFileStructure(props: FileStructureProps) {
     const [selectedFile, setSelectedFile] = React.useState(null)
 
     React.useEffect(() => {
-        if (props.isPinFile) {
-            console.log('isPinFile', props.isPinFile);
-
+        if (props.isPinFile) {            
             setIsPinFile(props.isPinFile)
         }
     }, [props.isPinFile])
 
     const viewFile = (data) => {
-        console.log('--viewFile--data--', data.uploadedFileID, selectedFile)
         if (selectedFile !== data.uploadedFileID) {
-            console.log('--viewFile--not same selected--')
             setSelectedFile(data.uploadedFileID)
         } else {
-            console.log('--viewFile--same selected--')
             setSelectedFile(null)
         }
 
@@ -51,7 +46,7 @@ export function PinFileStructure(props: FileStructureProps) {
     }
 
     const download = (data) => {
-        console.log('download');
+        console.log('--pinfilestructure--download');
         props.downloadFiles(data)
     }
     const expandFolder = (data) => {
@@ -59,35 +54,38 @@ export function PinFileStructure(props: FileStructureProps) {
         setFilesData(data)
     }
     React.useEffect(() => {
-        if (props.downloadedImg) {
-            console.log('downloadedImg', props.downloadedImg);
-            for (let i = 0; i < props.downloadedImg.length; i++) {
-                if (props.downloadedImg[i].filename == filesData['fileTitle']) {
-                    console.log('url', props.downloadedImg[i].url);
-                    setFileId(props.downloadedImg[i].url)
-                    setimgUrl(props.downloadedImg[i].url);
+       if (selectedFile) {
+            if (props.downloadedImg) {
+                console.log('--pinfilestructure--useEffect--downloadedImg', props.downloadedImg);
+                for (let i = 0; i < props.downloadedImg.length; i++) {
+                    if (props.downloadedImg[i].filename == filesData['fileTitle']) {
+                        console.log('--pinfilestructure--useEffect--url', props.downloadedImg[i].url);
+                        setFileId(props.downloadedImg[i].url)
+                        setimgUrl(props.downloadedImg[i].url);
+                    }
                 }
-            }
 
+            }
         }
-    }, [props.downloadedImg])
+    }, [selectedFile])
 
     const uploadNewVersion = (file) => {
-        console.log('file', file);
+        console.log('--pinfilestructure--uploadNewVersion--file', file);
         props.uploadNewVersion(file);
     }
 
     React.useEffect(() => {
         if (props.files) {
-            setItems(props.files.map((file, i) => ({ key: i, title: file.directory ? file.directory : file.BKPIDTitle, content: { content: (renderItems(file.children, i)) } })));
+            setItems(props.files.map((file, i) => ({ key: i, title: file.directory ? file.directory : file.BKPIDTitle, content: { content: (renderItems(file.children)) } })));
         }
-    }, [props.files]);
+    }, [props.files, selectedFile]);
 
-    const renderItems = (children, i) => {
-        const files = children.map((singleFileItem) => {
-            const { uploadedFileID, fileType, fileTitle, } = singleFileItem
+    const renderItems = (childrenFiles) => {
+        const files = childrenFiles.map((singleFileItem) => {
+            const { uploadedFileID, fileType, fileTitle } = singleFileItem
+
             return (
-                <div className="card1 card-custom gutter-b width_card" >
+                <div key={uploadedFileID} className="card1 card-custom gutter-b width_card" >
                     <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
                         <div className="d-flex align-items-center py-2">
                             <span>
@@ -111,13 +109,14 @@ export function PinFileStructure(props: FileStructureProps) {
                             <div>
                                 {/* <a onClick={() => download(file.fileTitle)}>  <i className="ms-Icon ms-Icon--Download mr-10" aria-hidden="true"></i></a> */}
                                 {/* <a onClick={() => viewFile(file)}> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a> */}
-                                {selectedFile === uploadedFileID ?
-                                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/circle_blue.png`} />
-                                    :
-                                    <a onClick={() => viewFile(singleFileItem)} className="navi-link active" >
-                                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/grey_circle.png`} />
-                                    </a>
-                                }
+
+                                <a onClick={() => viewFile(singleFileItem)} className="navi-link active" >
+                                    <img src={selectedFile === uploadedFileID ?
+                                        `${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/circle_blue.png`
+                                        :
+                                        `${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/grey_circle.png`} />
+                                </a>
+
                             </div>
                         </div>
                     </div>

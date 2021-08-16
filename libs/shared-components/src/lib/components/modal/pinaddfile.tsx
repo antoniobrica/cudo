@@ -3,6 +3,7 @@ import React from 'react';
 import { Button, Modal, Grid, Image, Segment, Form, Input, TextArea, Select, Checkbox, Dropdown } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 import Canvas from './canvas';
+import CanvasTransparent from './canvastransparent';
 // import CanvasNew from './canvasnew';
 import { useHistory } from 'react-router';
 import axios from 'axios';
@@ -11,6 +12,7 @@ import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { useTranslation } from 'react-i18next';
 
 import ImageMarker, { Marker } from 'react-image-marker';
+import CanvasMarker from './canvasmarker';
 
 
 function exampleReducer(state, action) {
@@ -47,7 +49,7 @@ export const AddPinFile = (props: AddPinProps) => {
   const [pinSavedOnCanvase, setPinSavedOnCanvase] = React.useState(false);
 
   const { t } = useTranslation();
-  
+
   const [markers, setMarkers] = React.useState<Marker[]>([{ top: 10, left: 50 }, { top: 20, left: 70 }, { top: 30, left: 75 }, { top: 35, left: 80 }])
 
   React.useEffect(() => {
@@ -55,7 +57,7 @@ export const AddPinFile = (props: AddPinProps) => {
     setAllowToCreateNewPin(false);
   }, [isPinCreated])
 
-  const close = () => {    
+  const close = () => {
     setOpen(false)
     props.cancel(false)
   }
@@ -133,16 +135,31 @@ export const AddPinFile = (props: AddPinProps) => {
         <Modal.Content>
           <Form>
             <div className="left-side-image-canvas">
-              <Canvas pinSaved={setPinSavedOnCanvase} savePin={saveNewPinOnCanvase} imgUrl={imgUrl} coardinates={getCoardinates} fileId={fileId} allowToCreateNewPin={allowToCreateNewPin} isPinCreated={isPinCreated} setIsPinCreated={setIsPinCreated}></Canvas>
+              <Canvas
+                pinSaved={setPinSavedOnCanvase}
+                savePin={saveNewPinOnCanvase}
+                imgUrl={imgUrl}
+                coardinates={getCoardinates}
+                fileId={fileId}
+                allowToCreateNewPin={false} // {allowToCreateNewPin}
+                isPinCreated={isPinCreated}
+                setIsPinCreated={setIsPinCreated}
+              ></Canvas>  
+
+              {/* <CanvasMarker
+                imgUrl={imgUrl}
+                fileId={fileId}
+                allowToCreateNewPin={true}
+              ></CanvasMarker> */}
             </div>
 
             <div className="right-side-file-details">
               <div className="add-pin-mark-field">
                 {!isPinCreated ?
-                    <Form.Field className="pin-add-field">
-                      <button className="ui mini button pinbutton" onClick={changePinTask}>{t('pin_mask.pin_mark_task')}</button>
-                      <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/grey_pin.png`} className="pinadd" />
-                    </Form.Field>
+                  <Form.Field className="pin-add-field">
+                    <button className="ui mini button pinbutton" onClick={changePinTask}>{t('pin_mask.pin_mark_task')}</button>
+                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/grey_pin.png`} className="pinadd" />
+                  </Form.Field>
                   :
                   <CreateFileTaskIndex pinsaved={pinSavedOnCanvase} savePin={setSaveNewPinOnCanvase} close={taskClose} onSuccess={onSuccess} cord={cord} fileData={fileData}></CreateFileTaskIndex>
                 }

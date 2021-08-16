@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 
 import { GET_FILES } from '../../graphql/graphql';
 import { useFileQuery } from '../../services/useRequest';
-import { LoaderPage } from "@cudo/shared-components";
+import { LazyLoading, LoaderPage } from "@cudo/shared-components";
 import SelectFilePopup from 'libs/shared-components/src/lib/components/modal/selectfile';
 
 import './file-list.module.scss';
@@ -104,7 +104,9 @@ export function FileList(props: FileListProps) {
   //   //setOpenNew(false)
   // }
 
-
+  if (isLoading) {
+    return (<LazyLoading />)
+  }
 
   return (
     <div>

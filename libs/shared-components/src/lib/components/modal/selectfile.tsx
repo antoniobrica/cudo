@@ -35,7 +35,7 @@ export function SelectFilePopup(props: FileStructureProps) {
   ];
 
   const [open, setOpen] = React.useState(false);
-  const [isTick, setIsTick] = React.useState(false);
+  // const [isTick, setIsTick] = React.useState(false);
   const [isPinFile, setIsPinFile] = React.useState(false);
   const [filesData, setFilesData] = React.useState([]);
   const [fileData, setFileData] = React.useState([]);
@@ -54,7 +54,7 @@ export function SelectFilePopup(props: FileStructureProps) {
 
   React.useEffect(() => {
     if (props.files) {
-      console.log('setFileData', props.files);
+      console.log('--selectfile--setFileData', props.files);
       setFileData(props.files)
     }
   }, [props.files])
@@ -65,9 +65,9 @@ export function SelectFilePopup(props: FileStructureProps) {
     // cancel()
     setView(true);
   }
-  const tick = () => {
-    setIsTick(isTick => !isTick)
-  }
+  // const tick = () => {
+  //   setIsTick(isTick => !isTick)
+  // }
   const cancel = () => {
     setOpen(false)
     props.cancel(false)
@@ -76,19 +76,20 @@ export function SelectFilePopup(props: FileStructureProps) {
 
   React.useEffect(() => {
     if (props.downloadedImg) {
-      console.log('downloadedImg', props.downloadedImg);
+      console.log('--111--selectfile---useeffect---downloadedImg', props.downloadedImg);
       for (let i = 0; i < props.downloadedImg.length; i++) {
         if (props.downloadedImg[i].filename == filesData['fileTitle']) {
-          console.log('url', props.downloadedImg[i].url);
+          console.log('--222--selectfile---useeffect---url', props.downloadedImg[i].url);
 
           setimgUrl(props.downloadedImg[i].url);
         }
       }
 
     }
-  })
+  },[props.downloadedImg])
+
   const viewFiles = (data) => {
-    console.log('data-view', data);
+    console.log('--selectfile--data-view', data);
 
     setFtype(data.fileType);
     // setView(true);
