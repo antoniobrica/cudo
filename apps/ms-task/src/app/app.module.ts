@@ -9,11 +9,10 @@ import { ComponentsModule } from './components/components.module';
 
 @Module({
   imports: [
-    GraphQLModule.forRootAsync({
-      useFactory: () => ({
-        autoSchemaFile: true,
-        path: "/api/ms-task/graphql"
-      }),
+    GraphQLModule.forRoot({
+      context: ({ req, connection }) => connection ? { req: connection.context } : { req },
+      autoSchemaFile: true,
+      debug: false
     }),
 
     TypeOrmModule.forRootAsync({

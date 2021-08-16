@@ -41,7 +41,7 @@
     "error_date": "Please select a date",
     "error_start_time": "Please select start time",
     "error_end_time": "Please select end time",
-    "error_start_end_time": "Start time must be smaller than end time",
+    "error_start_end_time": "Must be smaller than start time",
     "error_members": "Please select members"
   },
   "login": {
@@ -188,7 +188,8 @@
       "add_house": "Add house",
       "select_house": "Select house",
       "this_house_contain": "This house will contain all the BKP",
-      "item_quality": "Item quality"
+      "item_quality": "Item quality",
+      "add_new_item": "Add new item"
     },
     "tender": {
       "title": "Tender"

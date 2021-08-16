@@ -37,12 +37,14 @@ export function SessionListing() {
 
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
+  const [sessionDeleteLoading, setSessionDeleteLoading] = useState(false)
 
   useEffect(() => {
     if (referenceID) {
       getWorkType(referenceID)
     }
   }, [referenceID])
+
 
   // useEffect(() => {
   //   if (sessionId) {
@@ -53,6 +55,10 @@ export function SessionListing() {
   const { loading, error, data } = useSessionQuery(GET_SESSIONS, {
     variables: { projectId },
   });
+
+  useEffect(() => {
+    setSessionDeleteLoading(false)
+  },[data])
 
   const query = `query Game($projectId: String!) {
     projectById( projectId: $projectId)
@@ -88,6 +94,9 @@ export function SessionListing() {
     })
       .catch(err => console.log(err))
   }
+  const handleSessionDeleteLoading = (value) => {
+    setSessionDeleteLoading(value)
+  }
 
   const cancel = () => {
     setOpenAddSession(false)
@@ -120,7 +129,7 @@ export function SessionListing() {
     setOpenDeleteSession(true)
   }
 
-  if (loading)
+  if (loading || sessionDeleteLoading)
     return (
       <h1>
         {' '}
@@ -155,7 +164,7 @@ export function SessionListing() {
           <InvitationListing sessionId={sessionId} />
           :
           <div>
-            <AddSession projectId={projectId} cancel={cancel} openAddSession={openAddSession} />
+            <AddSession projectId={projectId} cancel={cancel} openAddSession={openAddSession} dataList={data} />
 
             {data?.paginatedSession?.results?.length > 0 ?
 
@@ -166,6 +175,7 @@ export function SessionListing() {
                     projectId={projectId}
                     sessionId={sessionId}
                     openEditSession={openEditSession}
+                    dataList={data}
                     cancel={cancel}
                   /> : null}
 
@@ -175,6 +185,7 @@ export function SessionListing() {
                     sessionId={sessionId}
                     openDeleteSession={openDeleteSession}
                     cancel={cancel}
+                    setSessionDeleteLoading={handleSessionDeleteLoading}
                   /> : null}
 
                 <MeetingTab

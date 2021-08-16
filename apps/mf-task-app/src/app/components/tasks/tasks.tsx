@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './tasks.module.scss';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
-import { LoaderPage, ModalTaskEdit, TaskArea } from '@cudo/shared-components';
+import { LazyLoading, LoaderPage, ModalTaskEdit, TaskArea } from '@cudo/shared-components';
 import { Dropdown, Grid, Popup, Button, Icon } from 'semantic-ui-react';
 import axios from 'axios';
 import {
@@ -30,17 +30,15 @@ export function Tasks(props: TasksProps) {
   const history = useHistory();
   const { t } = useTranslation();
   const [referenceID, setReferenceID] = React.useState<string>('')
-  const { loading, error, data:taskListData } = useTaskQuery(GET_TASKS, {
+  const { loading: taskListLoading, error: taskListError, data: taskListData } = useTaskQuery(GET_TASKS, {
     variables: { referenceID },
   });
 
   React.useEffect(() => {
     const res = history.location.pathname.split('/');
-    console.log("URL Path", res);
     setReferenceID(res[3].toString());
   }, [history]);
   React.useEffect(() => {
-    console.log("Refernce ID", referenceID);
     if (referenceID) {
       getWorkType(referenceID);
     }
@@ -53,7 +51,7 @@ export function Tasks(props: TasksProps) {
   const [workTypes, setWorkTypes] = React.useState([]);
   const [taskData, setTaskData] = React.useState();
   const [projectId, setProjectId] = React.useState('');
-  const [isUpdate, setIsUpdate] = React.useState(false);
+
   const [isTaskFile, setIsTaskFile] = React.useState(false);
   const [isNewTask, setIsNewTask] = React.useState(false);
   const [taskStatus, settaskStatus] = React.useState('');
@@ -63,24 +61,20 @@ export function Tasks(props: TasksProps) {
   const [taskId, setTaskId] = React.useState();
   const [subTaskId, setSubTaskId] = React.useState();
   const [subTaskStatus, setSubTaskStatus] = React.useState('');
+  const [taskDeleteUpdateStatusLoading, setTaskDeleteUpdateStatusLoading] = React.useState(false)
 
   const [idx, setId] = React.useState('');
-  const [addTask] = useTaskUpdateMutation(UPDATE_TASK, {
-    variables: { referenceID },
-  });
-  const [addSubTask, { data: subtasks }] = useMutation(ADD_TASK, {
-    refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
-    variables: { referenceID },
-  });
 
-  const [taskDelete] = useTaskDeleteMutation(DELETE_TASK, {
-    variables: { referenceID },
-  });
+  const [editTaskApi, { loading: editTaskLoading, error: editTaskError, data: updatedTaskData }] = useMutation(UPDATE_TASK);
+  const [taskDelete, { loading: deleteTaskLoading, error: deleteTaskError, data: deletedTaskData }] = useMutation(DELETE_TASK);
+  const [editTaskStatusApi, { loading: editTaskStatusLoading, error: editTaskStatusError, data: updatedTaskStatusData }] = useMutation(UPDATE_TASK);
 
-  const [editTaskApi, { data: editData }] = useMutation(UPDATE_TASK);
-  //   , {
+  const [addSubTaskApi, { loading: addSubTaskLoading, error: addSubTaskError, data: addedSubTaskData }] = useMutation(UPDATE_TASK);
+  const [subTaskUpdateApi, { loading: editSubTaskLoading, error: editSubTaskError, data: editSubTaskData }] = useMutation(UPDATE_SUBTASK);
+
+  // const [subTaskUpdateApi, { data }] = useMutation(UPDATE_SUBTASK, {
   //   refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
-  // }
+  // });
 
   const query = `query ProjectById($projectId: String!) {
     projectById( projectId: $projectId)
@@ -102,7 +96,7 @@ export function Tasks(props: TasksProps) {
  }`;
 
   const getWorkType = (referenceID) => {
-    console.log('sasstoken', referenceID);
+
     return axios
       .post(MS_SERVICE_URL['ms_project'].url, {
         query,
@@ -111,7 +105,7 @@ export function Tasks(props: TasksProps) {
         },
       })
       .then((res) => {
-        console.log("Value of project query", res);
+
         const wt = res.data.data.projectById[0].projectWorkTypes;
         setWorkTypes(wt);
       })
@@ -122,24 +116,43 @@ export function Tasks(props: TasksProps) {
     refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
   });
 
-  const [subTaskDeleteApi] = useMutation(DELETE_SUBTASK, {
+  const [subTaskDeleteApi, {loading:deleteSubtaskLoading, error:deleteSubtaskError, data:deleteSubtaskData}] = useMutation(DELETE_SUBTASK, {
     variables: { subtaskID: subTaskId },
   });
 
-  const [subTaskUpdateApi, { data: editSubTaskData }] = useMutation(UPDATE_SUBTASK, {
-    refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
-  });
 
   enum Status {
     INPROGRESS = 'INPROGRESS',
     COMPLETED = 'COMPLETED',
   }
-  if (loading)
-    return (
-      <h1>
-        <LoaderPage />
-      </h1>
-    );
+  if (taskListLoading) return (<LazyLoading />)
+  if (taskListError) return (<div>Tasks not fetched. An internal server error occured</div>)
+  // return (
+  //   <h1>
+  //     <LoaderPage />
+  //   </h1>
+  // );
+
+  if (deleteTaskLoading) return (<LazyLoading />)
+  if (deleteTaskError) return (<div>Task not deleted. An internal server error occured</div>)
+  // return (
+  //   <h1>
+  //     <LoaderPage />
+  //   </h1>
+  // );
+
+  // if (editTaskLoading) return (<LazyLoading />)
+  if (editTaskError) return (<div>Task not updated. An internal server error occured</div>)
+
+  if (editTaskStatusLoading) return (<LazyLoading />)
+  if (editTaskStatusError) return (<div>Task status not updated. An internal server error occured</div>)
+
+  // if (addSubTaskLoading) return (<LazyLoading />)
+  if (addSubTaskError) return (<div>Sub-task not added. An internal server error occured</div>)
+
+  // if (editSubTaskLoading) return (<LazyLoading />)
+  if (editSubTaskError) return (<div>Sub-task not updated. An internal server error occured</div>)
+
 
   const cancel = () => {
     setOpen(false);
@@ -148,10 +161,8 @@ export function Tasks(props: TasksProps) {
     setEditTaskOpen(false);
   };
   const confirmation = (data, task) => {
-    console.log('data', task);
-    setIsUpdate(data);
+
     setOpen(false);
-    // updateTask(taskData);
 
     let status;
     if (task.status === 'COMPLETED') {
@@ -168,7 +179,7 @@ export function Tasks(props: TasksProps) {
     task.followers.map((data, i) => {
       followers.push({ userID: data.userID, userName: data.userName })
     })
-    addTask({
+    editTaskStatusApi({
       variables: {
         taskID,
         status,
@@ -196,6 +207,7 @@ export function Tasks(props: TasksProps) {
           query: GET_TASKS,
           variables: { referenceID },
         }) as ITasks;
+
         const newTask = cacheData?.tasks?.results?.map((t) => {
           if (t.taskID === taskID) {
             if (t.status === 'INPROGRESS') {
@@ -207,21 +219,20 @@ export function Tasks(props: TasksProps) {
             return t;
           }
         });
-        //    setOpen(false)
+
         cache.writeQuery({
           query: GET_TASKS,
+          variables: { referenceID },
           data: {
             tasks: newTask,
           },
-          variables: { referenceID },
         });
       },
     });
   };
+
   const confirmationDelete = (data, task) => {
-    setIsUpdate(data);
-    setOpenD(false);
-    // updateTask(taskData);
+
     const taskID = task.taskID;
     taskDelete({
       variables: {
@@ -232,18 +243,6 @@ export function Tasks(props: TasksProps) {
           query: GET_TASKS,
           variables: { referenceID },
         }) as ITasks;
-        // const newTask = cacheData.tasks.map(t => {
-        //   if (t.taskID === taskID) {
-        //     if (t.status === 'INPROGRESS') {
-        //       return { ...t, status: Status.COMPLETED };
-        //     }
-        //     else {
-        //       return { ...t, status: Status.INPROGRESS };
-        //     }
-        //   } else {
-        //     return t;
-        //   }
-        // });
 
         const newTask = cacheData?.tasks?.results?.filter(
           (item) => item.taskID !== taskID
@@ -257,6 +256,8 @@ export function Tasks(props: TasksProps) {
         });
       },
     });
+
+    setOpenD(false);
   };
   const updateTask = (task) => {
     setTaskData(task);
@@ -283,56 +284,66 @@ export function Tasks(props: TasksProps) {
   const refresh = (data) => {
     console.log('refresh is called', data);
   };
-  const editTaskData = (data) => {
-    console.log('editTaskData', data);
+
+  const editTaskData = (updateTaskData) => {
     const assignees = [];
-    data.assignees.map((data, i) => {
+    updateTaskData.assignees.map((data, i) => {
       assignees.push({ userID: data.userID, userName: data.userName })
     })
     const followers = [];
-    data.followers.map((data, i) => {
+    updateTaskData.followers.map((data, i) => {
       followers.push({ userID: data.userID, userName: data.userName })
     })
     editTaskApi({
       variables: {
-        taskID: data.taskID,
-        status: data.status,
+        taskID: updateTaskData.taskID,
+        status: updateTaskData.status,
         files: [],
-        taskTitle: data.taskTitle,
-        startDate: data.startDate,
-        endDate: data.endDate,
-        estimatedDays: data.estimatedDays,
+        taskTitle: updateTaskData.taskTitle,
+        startDate: updateTaskData.startDate,
+        endDate: updateTaskData.endDate,
+        estimatedDays: updateTaskData.estimatedDays,
         sendNotification: false,
-        BKPID: data.BKPID,
-        BKPTitle: data.BKPTitle,
-        saveTaskAsTemplate: data.saveTaskAsTemplate,
-        phaseID: data.phaseID,
-        phaseName: data.phaseName,
-        referenceID: data.referenceID,
-        description: data.description,
+        BKPID: updateTaskData.BKPID,
+        BKPTitle: updateTaskData.BKPTitle,
+        saveTaskAsTemplate: updateTaskData.saveTaskAsTemplate,
+        phaseID: updateTaskData.phaseID,
+        phaseName: updateTaskData.phaseName,
+        referenceID: updateTaskData.referenceID,
+        description: updateTaskData.description,
         subtasks: [],
         assignees: assignees,
         followers: followers,
-        workTypeName: data.workTypeName,
-        workTypeID: data.workTypeID,
+        workTypeName: updateTaskData.workTypeName,
+        workTypeID: updateTaskData.workTypeID,
       },
-      update: (cache, data) => {
+      update: (cache, updatedTaskData) => {
         const cacheData = cache.readQuery({
           query: GET_TASKS,
           variables: { referenceID },
         }) as ITasks;
+
+        const updatedTaskList = cacheData?.tasks?.results?.map((item) => {
+
+          if (item.taskID === updatedTaskData?.data?.updateTask[0].taskID) {
+            item = updatedTaskData?.data?.updateTask[0]
+          }
+          return item
+        });
+
         cache.writeQuery({
           query: GET_TASKS,
-          data: {
-            tasksD: [...cacheData.tasks.results, data],
-          },
           variables: { referenceID },
+          data: {
+            tasks: updatedTaskList, // [...cacheData.tasks.results, data],
+          },
         });
       },
     });
   };
+
   const subTask = (data, title) => {
-   
+
     const subtask = [];
     const createSt = {
       subtaskTitle: title,
@@ -347,8 +358,8 @@ export function Tasks(props: TasksProps) {
       followers.push({ userID: data.userID, userName: data.userName })
     })
     subtask.push(createSt);
-    
-    editTaskApi({
+
+    addSubTaskApi({
       variables: {
         taskID: data.taskID,
         status: data.status,
@@ -371,53 +382,52 @@ export function Tasks(props: TasksProps) {
         workTypeName: data.workTypeName,
         workTypeID: data.workTypeID,
       },
-      
-      update: (cache, data) => {
+
+      // update: (cache, data) => {
+      //   const cacheData = cache.readQuery({
+      //     query: GET_TASKS,
+      //     variables: { referenceID },
+      //   }) as ITasks;
+
+      //   cache.writeQuery({
+      //     query: GET_TASKS,
+      //     data: {
+      //       tasks: [...cacheData.tasks.results, data],
+      //     },
+      //     variables: { referenceID },
+      //   });
+      // },
+
+
+      update: (cache, updatedTaskData) => {
+
         const cacheData = cache.readQuery({
           query: GET_TASKS,
           variables: { referenceID },
         }) as ITasks;
-        
+
+        const newTaskList = cacheData?.tasks?.results?.map((task) => {
+          if (task.taskID === data.taskID) {
+            const subTaskList = updatedTaskData?.data?.updateTask[0]?.subtasks
+            return { ...task, subtasks: subTaskList }
+          } else {
+            return task;
+          }
+        });
+
         cache.writeQuery({
           query: GET_TASKS,
-          data: {
-            tasks: [...cacheData.tasks.results, data],
-          },
           variables: { referenceID },
+          data: {
+            tasks: newTaskList
+          },
         });
       },
-      // update: (cache, updatedTaskData) => {
-      //   console.log('--1-subtask data--after update--', "----cache-->", cache, "-----updatedTaskData-->",updatedTaskData)
-      //   // const cacheData = cache.readQuery({
-      //   //   query: GET_TASKS,
-      //   //   variables: { referenceID },
-      //   // }) as ITasks;
-      //   // console.log('--2-subtask data--after update cachedata--', cacheData)
 
-      //   console.log('----updatedTaskData?.data?.updateTask[0]?.subtasks--', updatedTaskData?.data?.updateTask[0]?.subtasks)
-      //   const newTaskList = taskListData?.tasks?.results?.map((task) => {
-      //     if (task.taskID === data.taskID) {
-      //       const subTaskList = updatedTaskData?.data?.updateTask[0]?.subtasks
-      //       return { ...task, subtasks: subTaskList }
-      //     } else {
-      //       return task;
-      //     }
-      //   });
-      //   console.log('--3 newTaskList--', newTaskList)
-      //   cache.writeQuery({
-      //     // query: GET_TASKS,
-      //     data: {
-      //       // tasksD: [...cacheData.tasks.results, data],
-      //       tasks: newTaskList
-      //     },
-      //     // variables: { referenceID },
-      //   });
-      //   console.log('--4 after writeQuery--')
-      // },
     });
   };
   const changeAdd = (data) => {
-    console.log('changeTask', data);
+
     if (data === 'add') {
       setIsTaskFile(false);
       setIsNewTask(true);
@@ -451,7 +461,7 @@ export function Tasks(props: TasksProps) {
   const confirmSubTaskStatusUpdate = (taskId, subtaskId, subtaskStatus) => {
 
     setOpenSubTaskStatusConfirm(false)
-
+    setTaskDeleteUpdateStatusLoading(true)
     subTaskStatusUpdateApi({
       variables: {
         subtaskID: subtaskId,
@@ -505,6 +515,7 @@ export function Tasks(props: TasksProps) {
     setOpenD(false);
     setViewTaskOpen(false);
     setEditTaskOpen(false);
+    setTaskDeleteUpdateStatusLoading(false)
   };
 
   const deleteSubTask = (taskId, subtaskId) => {
@@ -516,7 +527,7 @@ export function Tasks(props: TasksProps) {
   const confirmSubTaskDelete = (taskId, subtaskId) => {
 
     setOpenSubTaskDeleteConfirm(false)
-
+    setTaskDeleteUpdateStatusLoading(true)
     subTaskDeleteApi({
       variables: {
         subtaskID: subtaskId
@@ -556,6 +567,7 @@ export function Tasks(props: TasksProps) {
     setOpenD(false);
     setViewTaskOpen(false);
     setEditTaskOpen(false);
+    setTaskDeleteUpdateStatusLoading(false)
   };
 
   const updateSubTask = (taskId, subtaskId, title) => {
@@ -563,15 +575,12 @@ export function Tasks(props: TasksProps) {
     setTaskId(taskId);
     setSubTaskId(subtaskId);
 
-    console.log('--Tasks-updateSubTask--subtaskId, subtaskTitle-', subtaskId, title)
-
     subTaskUpdateApi({
       variables: {
         subtaskID: subtaskId,
         subtaskTitle: title
       },
       update: (cache, data) => {
-        console.log('----updated subtask  catch--data--', data)
         const cacheData = cache.readQuery({
           query: GET_TASKS,
           variables: { referenceID },
@@ -582,25 +591,24 @@ export function Tasks(props: TasksProps) {
 
             const subTaskList = task.subtasks.map((subTask) => {
               if (subTask.subtaskID === subtaskId) {
-                // return data;               
                 return { ...subTask, subtaskTitle: title };
               } else {
                 return subTask
               }
             })
-            console.log('----after updated--subTaskList----', subTaskList)
+
             return { ...task, subtasks: subTaskList }
           } else {
             return task;
           }
         });
-        console.log('--updated--subtask-newTaskList--', newTaskList)
+
         cache.writeQuery({
           query: GET_TASKS,
+          variables: { referenceID },
           data: {
             tasks: newTaskList,
           },
-          variables: { referenceID },
         });
       },
     })
@@ -668,6 +676,8 @@ export function Tasks(props: TasksProps) {
             taskStatus={taskStatus}
             cancel={cancel}
             editTaskData={editTaskData}
+            editTaskLoading={editTaskLoading}
+            updatedTaskData={updatedTaskData}
           ></ModalTaskEdit>
         </div>
       ) : null}
@@ -714,21 +724,24 @@ export function Tasks(props: TasksProps) {
                 updateSubTaskStatus={updateSubTaskStatus}
                 updateSubTask={updateSubTask}
                 deleteSubTask={deleteSubTask}
+                addSubTaskLoading={addSubTaskLoading}
+                editSubTaskLoading={editSubTaskLoading}
+                taskListData={taskListData}
+                taskDeleteUpdateStatusLoading={taskDeleteUpdateStatusLoading}
               />
-              {/* </TaskArea> */}
             </div>
           );
         })}
 
-      <div className="task-action-area">
-        <button
-          onClick={clickBottomAddTask}
-          // className="ui large button btn-dashed  btn-large"
-          className="ui small button primary add-new-task-btn">
-          <i className="ms-Icon ms-Icon--Add" aria-hidden="true"></i> {t("project_tab_menu.task.add_new")}
-        </button>
-        <a href="">4 Completed Tasks</a>
-      </div>
+        <div className="task-action-area">
+          <button
+            onClick={clickBottomAddTask}
+            // className="ui large button btn-dashed  btn-large"
+            className="ui small button primary add-new-task-btn">
+            <i className="ms-Icon ms-Icon--Add" aria-hidden="true"></i> {t("project_tab_menu.task.add_new")}
+          </button>
+          <a href="">4 Completed Tasks</a>
+        </div>
 
 
         <div className="completed-task-con">
@@ -745,11 +758,11 @@ export function Tasks(props: TasksProps) {
                     <div className="d-flex mr-3">
                       <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row task-listing-desc">
                         ( Fri Jul 30 2021 ↦ Due Sat Aug 07 2021)
-                          <div className="navi-item">
-                            <a className="navi-link">
-                              <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>2 files  -  </span>
-                            </a>
-                          </div>
+                        <div className="navi-item">
+                          <a className="navi-link">
+                            <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>2 files  -  </span>
+                          </a>
+                        </div>
                         <div className="navi-item">
                           <a className="navi-link">
                             <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> 5 days <span className="dash-seperator">-</span> </span>
@@ -760,16 +773,16 @@ export function Tasks(props: TasksProps) {
                             <span className="navi-text">Realization  <span className="dash-seperator">-</span>  </span>
                           </a>
                         </div>
-                          <div className="navi-item">
-                            <a className="navi-link">
-                              <span className="navi-text">Work Type 9   <span className="dash-seperator">-</span> </span>
-                            </a>
-                          </div>
-                            <div className="navi-item">
-                              <a className="navi-link">
-                                <span className="navi-text"> 3 Check points  </span>
-                              </a>
-                            </div>
+                        <div className="navi-item">
+                          <a className="navi-link">
+                            <span className="navi-text">Work Type 9   <span className="dash-seperator">-</span> </span>
+                          </a>
+                        </div>
+                        <div className="navi-item">
+                          <a className="navi-link">
+                            <span className="navi-text"> 3 Check points  </span>
+                          </a>
+                        </div>
                       </div>
 
                     </div>
@@ -781,47 +794,47 @@ export function Tasks(props: TasksProps) {
                   </div>
 
                   <div className="tasks-action-area">
-                      <div className="navi-item  ">
-                        <a className="navi-link">
-                          <span className="navi-text">
-                              <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pin_blue.png`} />
-                          </span>
-                        </a>
-                      </div>
+                    <div className="navi-item  ">
+                      <a className="navi-link">
+                        <span className="navi-text">
+                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pin_blue.png`} />
+                        </span>
+                      </a>
+                    </div>
 
-                      <div className="navi-item d-flex">
-                        <a className="navi-link">
-                          <span className="navi-text pin-action"> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} /> </span>
-                        </a>
-                        <Popup trigger={<Button className="more-user-listing">3+</Button>} flowing hoverable>
-                          <Grid>
-                            <Grid.Column textAlign='center'>
-                              <div className="user-tooltip-listing">
-                                <Popup className="user-tooltip-name"
-                                  trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
-                                  content='Mike'
-                                  size='mini'
-                                />
-                                <Popup className="user-tooltip-name"
-                                  trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
-                                  content='John'
-                                  size='mini'
-                                />
-                                <Popup className="user-tooltip-name"
-                                  trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
-                                  content='Hussy'
-                                  size='mini'
-                                />
-                                <Popup className="user-tooltip-name"
-                                  trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
-                                  content='Kevin'
-                                  size='mini'
-                                />
-                              </div>
-                            </Grid.Column>
-                          </Grid>
-                        </Popup>
-                      </div>
+                    <div className="navi-item d-flex">
+                      <a className="navi-link">
+                        <span className="navi-text pin-action"> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} /> </span>
+                      </a>
+                      <Popup trigger={<Button className="more-user-listing">3+</Button>} flowing hoverable>
+                        <Grid>
+                          <Grid.Column textAlign='center'>
+                            <div className="user-tooltip-listing">
+                              <Popup className="user-tooltip-name"
+                                trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                content='Mike'
+                                size='mini'
+                              />
+                              <Popup className="user-tooltip-name"
+                                trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                content='John'
+                                size='mini'
+                              />
+                              <Popup className="user-tooltip-name"
+                                trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                content='Hussy'
+                                size='mini'
+                              />
+                              <Popup className="user-tooltip-name"
+                                trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                content='Kevin'
+                                size='mini'
+                              />
+                            </div>
+                          </Grid.Column>
+                        </Grid>
+                      </Popup>
+                    </div>
 
 
                     <div className="symbol-group symbol-hover py-2" >
@@ -841,9 +854,9 @@ export function Tasks(props: TasksProps) {
                   </div>
                 </div>
               </div>
-              </div>
             </div>
-            
+          </div>
+
         </div>
       </div>
       <button

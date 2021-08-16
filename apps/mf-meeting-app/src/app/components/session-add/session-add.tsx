@@ -13,6 +13,7 @@ export interface AddSessionProps {
   projectId?
   openAddSession?
   cancel?
+  dataList?
 }
 
 export function AddSession(props: AddSessionProps) {
@@ -27,7 +28,7 @@ export function AddSession(props: AddSessionProps) {
     }
   }, [referenceID])
 
-  const [addSession, { data }] = useMutation(ADD_SESSION,
+  const [addSession, { loading, error, data }] = useMutation(ADD_SESSION,
     {
       refetchQueries: [
         { query: GET_SESSIONS, variables: { projectId: props.projectId } }
@@ -108,7 +109,7 @@ export function AddSession(props: AddSessionProps) {
   }
   return (
     <div>
-      <ModalAddSession openAddSession={props.openAddSession} cancel={props.cancel} workTypes={workTypes} createSession={createSession} />
+      <ModalAddSession openAddSession={props.openAddSession} cancel={props.cancel} workTypes={workTypes} loading={loading} data={data} dataList={props.dataList} createSession={createSession} />
     </div>
   );
 }

@@ -121,7 +121,7 @@ export function InvitationListing(props: InvitationListingProps) {
 
     return (
         <div>
-            <InvitationAdd sessionId={props.sessionId} openAddInvitation={openPageAddInvitation} cancel={cancel} />
+            <InvitationAdd sessionId={props.sessionId} openAddInvitation={openPageAddInvitation} dataList={data} cancel={cancel} />
             <ProtocolAdd sessionId={props.sessionId} openAddProtocol= {openPageAddProtocol} cancel={cancel} />
 
 
@@ -141,6 +141,7 @@ export function InvitationListing(props: InvitationListingProps) {
                                 meetingId={selectedMeetingId}
                                 sessionId={sessionId}
                                 openEditInvitation={openMeetingEdit}
+                                dataList={data}
                                 cancel={cancel} />
                         </div> : null}
 

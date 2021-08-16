@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea, Checkbox } from 'semantic-ui-react';
+import React, { useEffect, useState } from 'react';
+import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea, Checkbox, Loader, Dimmer } from 'semantic-ui-react';
 import { radios } from '@storybook/addon-knobs';
 import { IPeople, IPeoples, ITask, ITasks, TaskMutation } from "../../interfaces/task";
 import { useTaskMutation } from '../../services/useRequest';
@@ -13,13 +13,16 @@ import { FollowersIndex, AssigneeIndex, BkpsIndex, PhaseIndex } from "@cudo/mf-a
 import { useHistory } from 'react-router';
 import { start } from 'repl';
 import { useTranslation } from 'react-i18next';
+
+import { LazyLoading } from '@cudo/shared-components'
+
 /* eslint-disable-next-line */
 export interface CreateTaskProps {
   onSuccess?,
   workTypes?,
   isNewTask?,
   cancel?
-
+  // stopLoading?
 }
 
 interface AddTaskErrors {
@@ -77,9 +80,7 @@ export function CreateTask(props: CreateTaskProps) {
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
-  // const [addTask] = useTaskMutation(ADD_TASK, {
-  //   variables: { referenceID },
-  // });
+
   const [errors, setErrors] = React.useState<AddTaskErrors>({})
 
   React.useEffect(() => {
@@ -87,23 +88,21 @@ export function CreateTask(props: CreateTaskProps) {
       setOpen(props.isNewTask)
     }
   }, [props.isNewTask])
-  const [addTask, { data }] = useMutation(ADD_TASK,
-    {
-      refetchQueries: [
-        { query: GET_TASKS, variables: { referenceID } }
-      ],
-      // variables: {
-      //   taskTitle, startDate, endDate, estimatedDays,
-      //   sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
-      //   fileID,
-      //   fileName,
-      //   taskTypeID,
-      //   files,
-      //   description, referenceID,
 
-      // },
-    }
+  const [addTask, { loading, error, data }] = useMutation(ADD_TASK //,
+    // {
+    //   refetchQueries: [
+    //     { query: GET_TASKS, variables: { referenceID } }
+    //   ],
+
+    // }
   )
+
+  useEffect(() => {
+    if (!loading && data) {
+      cancel()
+    }
+  }, [loading])
 
   const onTaskTitleChange = e => {
     setTaskTitle(e.target.value)
@@ -111,9 +110,6 @@ export function CreateTask(props: CreateTaskProps) {
   const onStartDateChange = e => {
     setDate(e.target.value)
     const date = moment.utc(moment(e.target.value).utc()).format();
-    console.log('====================================');
-    console.log('date', date);
-    console.log('====================================');
     setStartDate(e.target.value)
   }
   const onEndDateChange = e => {
@@ -125,7 +121,7 @@ export function CreateTask(props: CreateTaskProps) {
     // To calculate the no. of days between two dates
     const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
     setEndDate(e.target.value);
-    setEstimatedDays(Difference_In_Days.toString())
+    setEstimatedDays(Difference_In_Days >=0 ? Difference_In_Days.toString() : "")
   }
   const onsetEstimatedDays = (event, data) => {
     // To calculate the time difference of two dates
@@ -138,28 +134,23 @@ export function CreateTask(props: CreateTaskProps) {
   }
 
   const onFollowers = (data) => {
-    console.log('====================================');
-    console.log('followers', data);
-    console.log('====================================');
     setfollowers(data)
   }
   const setBKPIDChange = (data) => {
     setBKPIDTitle(data.BKPIDTitle)
     setBKPID(data.BKPID)
-    console.log('bkp==>', data);
   }
   const setAsignee = (data) => {
-    // console.log('assignee', data)
-    if(data.userID){
+
+    if (data.userID) {
       const ppl = []
       ppl.push(data)
       setAssignees(ppl)
       // setAsignis(data)
-    }else{
+    } else {
       setAssignees([])
     }
   }
-
 
   const setSaveTaskAsTemplateChange = (event, data) => {
     setSaveTaskAsTemplate(data.value)
@@ -175,20 +166,19 @@ export function CreateTask(props: CreateTaskProps) {
 
   React.useEffect(() => {
     if (props.workTypes) {
-      console.log('worktypes', props.workTypes);
       setworkType(props.workTypes.map(({ workTypeName, projectWorkTypeID }) => ({ key: projectWorkTypeID, value: workTypeName, text: workTypeName, id: projectWorkTypeID })));
-
     }
   }, [props.workTypes]);
+
   const onMworkType = (event, data) => {
     const workT = {
       worktypeID: '',
       worktypeName: ''
     };
-    if(data.value){
+    if (data.value) {
       for (let i = 0; i < props.workTypes.length; i++) {
         if (props.workTypes[i]?.workTypeName === data.value) {
-          // console.log('props.worktypes[i]', props.workTypes[i]);
+
           workT.worktypeID = props.workTypes[i].projectWorkTypeID;
           workT.worktypeName = data.value;
           setworktypeName(workT.worktypeName);
@@ -202,15 +192,12 @@ export function CreateTask(props: CreateTaskProps) {
       setworkTypeD("")
     }
     setworkTypeData(data.value)
-
-    // console.log('worktypeName-', workTypeD, setworkTypeData);
   }
-
 
   const onDescriptionChange = (e) => {
-    console.log('des=>', e);
     setDescription(e);
   }
+
   const cancel = () => {
     setOpen(false)
     props.cancel(false)
@@ -261,17 +248,14 @@ export function CreateTask(props: CreateTaskProps) {
   }
 
   const handleSaveTask = () => {
+    //  setIsLoading(true);
     const validationResult = validation()
     if (Object.keys(validationResult).length > 0) {
       setErrors(validationResult)
       return false
     }
-    // setOpen(false);
-    console.log('====================================');
-    console.log('assignee', assignees);
-    console.log('followes', followers);
-    console.log('====================================');
-    cancel();
+
+
     const variables = {
       taskTitle, estimatedDays,
       sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
@@ -293,28 +277,31 @@ export function CreateTask(props: CreateTaskProps) {
     if (startDate) {
       variables['endDate'] = endDate
     }
+
     addTask({
       variables,
-      update: (
-        cache,
-        { data: { addTask } }: FetchResult<TaskMutation>
-      ) => {
+      // update: ( cache, { data: { addTask } }: FetchResult<TaskMutation>
+      update: (cache, addedTaskData) => {
         const cacheData = cache.readQuery({ query: GET_TASKS, variables: { referenceID }, }) as ITasks;
         cache.writeQuery({
           query: GET_TASKS,
-          data: {
-            tasksD: [...cacheData.tasks.results, addTask]
-          },
           variables: { referenceID },
+          data: {
+            tasks: [...cacheData.tasks.results, addedTaskData?.data?.createTask]
+          },
         });
       }
     });
-
   };
+
+
+  // if (loading) return (<LazyLoading />);
+  if (error) return <p>Task not added. An internal server error occured</p>;
 
   return (
     <div >
-      <Modal className="modal_media right-side--fixed-modal add-new-task-modal"
+      {/* <Modal className= "modal_media right-side--fixed-modal add-new-task-modal overflow-hidden"  */}
+      <Modal className={loading ? "modal_media right-side--fixed-modal add-new-task-modal overflow-hidden" : "modal_media right-side--fixed-modal add-new-task-modal"}
         closeIcon
         onClose={cancel}
         onOpen={() => setOpen(true)}
@@ -322,6 +309,11 @@ export function CreateTask(props: CreateTaskProps) {
         // trigger={<Button size='mini' className="grey-btn taskmargin">+ Add  New Task</Button>} 
         closeOnDimmerClick={false}
       >
+        {loading ?
+          <Dimmer active inverted Center inline>
+            <Loader size='big'>Loading</Loader>
+          </Dimmer>
+          : null}
         <Modal.Header><h3>{t("project_tab_menu.task.add_new_task")} </h3></Modal.Header>
         <Modal.Content body>
           <div>
@@ -456,7 +448,7 @@ export function CreateTask(props: CreateTaskProps) {
                         onChange={onStartDateChange}
                         error={errors?.dateError && (startDate > endDate)}
                       />
-                    {errors?.dateError && (startDate > endDate) ? <span className="error-message">{errors.dateError}</span> : null}
+                      {errors?.dateError && (startDate > endDate) ? <span className="error-message">{errors.dateError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
@@ -478,7 +470,7 @@ export function CreateTask(props: CreateTaskProps) {
                         onChange={onsetEstimatedDays}
                       />
                     </Form.Field>
-                  
+
                   </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
@@ -496,7 +488,6 @@ export function CreateTask(props: CreateTaskProps) {
                 </Grid.Row>
               </Grid>
             </Form>
-
           </div>
         </Modal.Content>
         <Modal.Actions>
@@ -511,6 +502,7 @@ export function CreateTask(props: CreateTaskProps) {
           </Button>
         </Modal.Actions>
       </Modal>
+
     </div>
   );
 }

@@ -17,7 +17,7 @@ const options = [
 
 const formatOptionLabel = ({ value, label, addlabel }) => (
   <div style={{ display: "flex" }}>
-    <div><a >{addlabel}</a></div>
+    <div><a>{addlabel}</a></div>
     <div>{label}</div>
   </div>
 );

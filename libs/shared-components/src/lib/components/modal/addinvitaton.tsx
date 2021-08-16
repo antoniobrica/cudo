@@ -10,6 +10,8 @@ import {
   Grid,
   Dropdown,
   TextArea,
+  Dimmer,
+  Loader,
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 import moment from 'moment'
@@ -25,6 +27,9 @@ export interface AddInvitationProps {
   sessionDetail?
   projectTypeId?
   companyId?
+  loading?
+  data?
+  dataList?
 }
 
 interface AddInvitationErrors {
@@ -51,12 +56,20 @@ export function ModalAddInvitation(props: AddInvitationProps) {
   const [members, setMembers] = useState<any>([]);
 
   const [errors, setErrors] = useState<AddInvitationErrors>({})
+  const [loader, setLoader] = useState(false)
 
   useEffect(() => {
     if (props.openAddInvitation) {
       setOpen(true);
     }
   }, [props.openAddInvitation])
+
+  //on show or hide loader
+  useEffect(() => {
+    if (!props.loading && props.data) {
+      cancel()
+    }
+  }, [props.dataList])
 
   const openInvitationAddPopup = () => {
     setOpen(true)
@@ -149,11 +162,13 @@ export function ModalAddInvitation(props: AddInvitationProps) {
   }
 
   const createInvitation = () => {
+    
     const validationResult = validation()
     if (Object.keys(validationResult).length > 0) {
       setErrors(validationResult)
       return false
     }
+    setLoader(true)
 
     const memberList = members?.map((item, index) => {
       return { memberID: item.userID, memberName: item.userName, image: "" }
@@ -193,16 +208,17 @@ export function ModalAddInvitation(props: AddInvitationProps) {
 
     props.createInvitation(data);
 
-    setOpen(false);
+    // setOpen(false);
     // props.openAddInvitation(false)
-    resetAddData();
-    props.cancel(true)
+    // resetAddData();
+    // props.cancel(true)
   }
 
   const cancel = () => {
     setOpen(false)
     props.cancel(true)
     resetAddData()
+    setLoader(false)
   }
 
   const resetAddData = () => {
@@ -218,7 +234,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
 
   return (
     <div id="navbar">
-      <Modal className="modal_media right-side--fixed-modal add-new-invitation-modal"
+      <Modal className={`modal_media right-side--fixed-modal add-new-invitation-modal${loader && " overflow-hidden"}`}
         closeIcon
         onClose={() => setOpen(false)}
         onOpen={openInvitationAddPopup}
@@ -231,6 +247,13 @@ export function ModalAddInvitation(props: AddInvitationProps) {
         // }
         closeOnDimmerClick={false}
       >
+        {
+          loader && (
+            <Dimmer active inverted Center inline>
+              <Loader size='big'>Loading</Loader>
+            </Dimmer>
+          )
+        }
         <Modal.Header>
           <h3>Add Invitation </h3>
         </Modal.Header>
