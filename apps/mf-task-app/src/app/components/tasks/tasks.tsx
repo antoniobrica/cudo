@@ -111,11 +111,29 @@ export function Tasks(props: TasksProps) {
       case 7005:
         errorExeptionMessage = t("toaster.error.task.no_worktype")
         break
+      case 7006:
+        errorExeptionMessage = t("toaster.error.planning.no_phase")
+        break
       case 7007:
         errorExeptionMessage = t("toaster.error.task.no_assignee")
         break
       case 7008:
         errorExeptionMessage = t("toaster.error.task.wrong_date")
+        break
+      case 7009:
+        errorExeptionMessage = t("toaster.error.planning.due_date")
+        break
+      case 7010:
+        errorExeptionMessage = t("toaster.error.task.no_referance")
+        break
+      case 7011:
+        errorExeptionMessage = t("toaster.error.task.subtask_not_found")
+        break
+      case 7012:
+        errorExeptionMessage = t("toaster.error.task.no_subtask_title")
+        break
+      case 500:
+        errorExeptionMessage = t("toaster.error.task.internal_server_error")
         break
       default:
         errorExeptionMessage = ""
@@ -128,8 +146,8 @@ export function Tasks(props: TasksProps) {
     if (!editTaskLoading && updatedTaskData) {
       getTaskToasterMessage(t("toaster.success.task.task_edit"))
     }
-    if (!editTaskLoading && editSubTaskStatusError) {
-      getTaskErrorMessage(editTaskError)
+    if (!editTaskLoading && editTaskError) {
+      getTaskErrorMessage(editTaskError?.graphQLErrors[0]?.extensions.exception.status)
     }
   }, [editTaskLoading])
 
@@ -139,7 +157,7 @@ export function Tasks(props: TasksProps) {
       getTaskToasterMessage(t("toaster.success.task.task_deleted"))
     }
     if (!deleteTaskLoading && deleteTaskError) {
-      getTaskErrorMessage(deleteTaskError)
+      getTaskErrorMessage(deleteTaskError?.graphQLErrors[0]?.extensions.exception.status)
     }
   }, [deleteTaskLoading])
 
@@ -149,7 +167,7 @@ export function Tasks(props: TasksProps) {
       getTaskToasterMessage(t("toaster.success.task.task_status_updated"))
     }
     if (!editTaskStatusLoading && editTaskStatusError) {
-      getTaskErrorMessage(editTaskStatusError)
+      getTaskErrorMessage(editTaskStatusError?.graphQLErrors[0]?.extensions.exception.status)
     }
   }, [editTaskStatusLoading])
 
@@ -159,19 +177,17 @@ export function Tasks(props: TasksProps) {
       getTaskToasterMessage(t("toaster.success.task.subtask_created"))
     }
     if (!addSubTaskLoading && addSubTaskError) {
-      getTaskErrorMessage(addSubTaskError)
+      getTaskErrorMessage(addSubTaskError?.graphQLErrors[0]?.extensions.exception.status)
     }
   }, [addSubTaskLoading])
 
   // set toaster for edit subtask
   useEffect(() => {
     if (!editSubTaskLoading && editSubTaskData) {
-      setActiveErrorClass(false)
       getTaskToasterMessage(t("toaster.success.task.subtask_edit"))
     }
     if (!editSubTaskLoading && editSubTaskError) {
-      setActiveErrorClass(true)
-      getTaskErrorMessage(editSubTaskError)
+      getTaskErrorMessage(editSubTaskError?.graphQLErrors[0]?.extensions.exception.status)
     }
   }, [editSubTaskLoading])
 
@@ -181,7 +197,7 @@ export function Tasks(props: TasksProps) {
       getTaskToasterMessage(t("toaster.success.task.subtask_deleted"))
     }
     if (!deleteSubTaskLoading && deleteSubTaskError) {
-      getTaskErrorMessage(deleteSubTaskError)
+      getTaskErrorMessage(deleteSubTaskError?.graphQLErrors[0]?.extensions.exception.status)
     }
   }, [deleteSubTaskLoading])
 
@@ -192,7 +208,7 @@ export function Tasks(props: TasksProps) {
       getTaskToasterMessage(t("toaster.success.task.subtask_status_updated"))
     }
     if (!editSubTaskStatusLoading && editSubTaskStatusError) {
-      getTaskErrorMessage(editSubTaskStatusError)
+      getTaskErrorMessage(editSubTaskStatusError?.graphQLErrors[0]?.extensions.exception.status)
     }
   }, [editSubTaskStatusLoading])
 

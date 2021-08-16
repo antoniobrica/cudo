@@ -319,13 +319,17 @@
         "task_not_deleted": "Task not deleted",
         "no_title": "Can not create task without title",
         "no_worktype": "Can not create task without worktype",
+        "no_phase": "Can not create task without phase",
+        "no_referance": "Can not create task without referance",
+        "no_subtask_title": "Can not empty subtask",
         "no_assignee": "Can not create task without assignee",
         "wrong_date": "Start date must be smaller than end date",
         "subtask_not_found": "Subtask not found",
         "subtask_already_exists": "Subtask already exists",
         "subtask_not_created": "Subtask not created",
         "subtask_not_updated": "Subtask not updated",
-        "subtask_not_deleted": "Subtask not deleted"
+        "subtask_not_deleted": "Subtask not deleted",
+        "internal_server_error": "Internal server error occured"
       },
       "planning": {
         "planning_not_found": "Planning not found",

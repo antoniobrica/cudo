@@ -27,16 +27,16 @@ export class MileStoneService {
             let errorType:number;
             
             if(!milestoneDetailsInput.milestoneBasics.dueDate){
-                errorType = TaskErrorTypeEnum.NO_DATE
+                errorType = TaskErrorTypeEnum.NO_DUE_DATE
             }
             if(!milestoneDetailsInput.milestoneBasics.phaseID){
                 errorType = TaskErrorTypeEnum.NO_PHASE
             }
             if(!milestoneDetailsInput.milestoneBasics.worktypeID){
-                errorType= TaskErrorTypeEnum.NO_WORKTYPE
+                errorType= TaskErrorTypeEnum.NO_PLANNING_WORKTYPE
             }
             if(!milestoneDetailsInput.milestoneBasics.milestoneTitle){
-                errorType = TaskErrorTypeEnum.NO_TITLE
+                errorType = TaskErrorTypeEnum.NO_PLANNING_TITLE
             }
             
             if(errorType){
@@ -84,7 +84,7 @@ export class MileStoneService {
         if (milestone) {
             return milestone;
         }
-        throw new TaskCustomError(TaskErrorTypeEnum.RECORD_NOT_EXIST);
+        throw new TaskCustomError(TaskErrorTypeEnum.PLANNING_NOT_EXITST);
     }
 
     async deleteMileStone(mileFilter: MileStoneFilterParam) {
@@ -93,7 +93,7 @@ export class MileStoneService {
         if (deleteResponse) {
             return deleteResponse;
         }
-        throw new TaskCustomError(TaskErrorTypeEnum.RECORD_NOT_EXIST);
+        throw new TaskCustomError(TaskErrorTypeEnum.PLANNING_NOT_EXITST);
     }
 
     public async updateMileStoneByID(createMileStoneInput: MileStoneDetailsUpdateInput): Promise<MileStoneEntity[]> {
@@ -103,22 +103,22 @@ export class MileStoneService {
             relations: ['reference', 'files']
         });
         if (milestoneDetails.length <= 0)
-        throw new TaskCustomError(TaskErrorTypeEnum.RECORD_NOT_EXIST);
+        throw new TaskCustomError(TaskErrorTypeEnum.PLANNING_NOT_EXITST);
 
         // handling client input errors
         let errorType:number;
             
         if(!createMileStoneInput.milestoneBasics.dueDate){
-            errorType = TaskErrorTypeEnum.NO_DATE
+            errorType = TaskErrorTypeEnum.NO_DUE_DATE
         }
         if(!createMileStoneInput.milestoneBasics.phaseID){
             errorType = TaskErrorTypeEnum.NO_PHASE
         }
         if(!createMileStoneInput.milestoneBasics.worktypeID){
-            errorType= TaskErrorTypeEnum.NO_WORKTYPE
+            errorType= TaskErrorTypeEnum.NO_PLANNING_WORKTYPE
         }
         if(!createMileStoneInput.milestoneBasics.milestoneTitle){
-            errorType = TaskErrorTypeEnum.NO_TITLE
+            errorType = TaskErrorTypeEnum.NO_PLANNING_TITLE
         }
         
         if(errorType){

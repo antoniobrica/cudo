@@ -105,9 +105,10 @@ export function CreateTask(props: CreateTaskProps) {
       cancel()
       props.getTaskToasterMessage(t("toaster.success.task.task_created"))
     }
-    if(!loading && error)
+    if(!loading && error){
       cancel()
       props.getTaskErrorMessage(error?.graphQLErrors[0]?.extensions?.exception?.status)
+    }
   }, [loading])
 
   const onTaskTitleChange = e => {
