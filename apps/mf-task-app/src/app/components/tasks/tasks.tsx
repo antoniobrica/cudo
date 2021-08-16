@@ -598,7 +598,6 @@ export function Tasks(props: TasksProps) {
   const confirmSubTaskStatusUpdate = (taskId, subtaskId, subtaskStatus) => {
 
     setOpenSubTaskStatusConfirm(false)
-
     subTaskStatusUpdateApi({
       variables: {
         subtaskID: subtaskId,
@@ -663,7 +662,6 @@ export function Tasks(props: TasksProps) {
   const confirmSubTaskDelete = (taskId, subtaskId) => {
 
     setOpenSubTaskDeleteConfirm(false)
-
     subTaskDeleteApi({
       variables: {
         subtaskID: subtaskId
@@ -865,6 +863,7 @@ export function Tasks(props: TasksProps) {
                 deleteSubTask={deleteSubTask}
                 addSubTaskLoading={addSubTaskLoading}
                 editSubTaskLoading={editSubTaskLoading}
+                taskListData={taskListData}
               />
             </div>
           );

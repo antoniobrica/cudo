@@ -7,6 +7,9 @@ export interface DeleteSessionProps {
   deleteSession,
   openDeleteSession,
   cancel,
+  setSessionDeleteLoading?
+  loading?
+  data?
 }
 
 export const ModalDeleteSession = (props: DeleteSessionProps) => {
@@ -18,16 +21,24 @@ export const ModalDeleteSession = (props: DeleteSessionProps) => {
     }
   }, [props.openDeleteSession]);
 
+  React.useEffect(() => {
+    if (!props.loading && props.data) {
+      cancel()
+    }
+  }, [props.loading])
+
   const onClickOpenDeleteSession = () => {
     setOpen(true)
   }
   const yes = () => {
+    props.setSessionDeleteLoading(true)
     setOpen(false)
     props.deleteSession(props.sessionId)
   }
   const cancel = () => {
     setOpen(false)
     props.cancel()
+    props.setSessionDeleteLoading(false)
   }
   const size = undefined
   return (

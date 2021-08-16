@@ -11,6 +11,7 @@ export interface EditSessionProps {
   editSession?
   loading?
   data?
+  dataList?
 }
 
 interface EditSessionErrors {
@@ -41,6 +42,7 @@ export function ModalEditSession(props: EditSessionProps) {
   const [members, setMembers] = useState<any>([]);
 
   const [errors, setErrors] = useState<EditSessionErrors>({})
+  const [loader, setLoader] = useState(false)
 
   useEffect(() => {
     if (props.workTypes) {
@@ -61,7 +63,7 @@ export function ModalEditSession(props: EditSessionProps) {
     if (!props.loading && props.data) {
       cancel()
     }
-  }, [props.loading])
+  }, [props.dataList])
 
   useEffect(() => {
     if (props?.sessionDetail?.SessionByID) {
@@ -205,6 +207,7 @@ export function ModalEditSession(props: EditSessionProps) {
       setErrors(validationResult)
       return false
     }
+    setLoader(true)
 
     const adminList = admins?.map((item, index) => {
       return { adminID: item.userID, adminName: item.userName, image: "" }
@@ -240,6 +243,7 @@ export function ModalEditSession(props: EditSessionProps) {
     setOpen(false)
     props.cancel(true)
     resetAddData()
+    setLoader(false)
   }
 
   const resetAddData = () => {
@@ -254,12 +258,13 @@ export function ModalEditSession(props: EditSessionProps) {
     setworktypeName("")
     setworktypeID("")
     setworkTypeData("")
+    setDetail(null)
   }
 
   return (
     <div style={{ marginLeft: 900 }} >
       <Modal
-        className={`modal_media right-side--fixed-modal add-session-modal${props.loading && !props.data && " overflow-hidden"}`}
+        className={`modal_media right-side--fixed-modal add-session-modal${loader && " overflow-hidden"}`}
         closeIcon
         onClose={() => setOpen(false)}
         // onOpen={() => setOpen(true)}
@@ -274,7 +279,7 @@ export function ModalEditSession(props: EditSessionProps) {
         closeOnDimmerClick={false}
       >
          {
-          props.loading && !props.data && (
+          loader && (
             <Dimmer active inverted Center inline>
               <Loader size='big'>Loading</Loader>
             </Dimmer>

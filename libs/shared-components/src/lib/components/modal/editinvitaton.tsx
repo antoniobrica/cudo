@@ -28,6 +28,7 @@ export interface EditInvitationProps {
   cancel?
   loading?
   data?
+  dataList?
 }
 
 interface EditInvitationErrors {
@@ -56,6 +57,7 @@ export function ModalEditInvitation(props: EditInvitationProps) {
   const [members, setMembers] = React.useState<any>([]);
 
   const [errors, setErrors] = useState<EditInvitationErrors>({})
+  const [loader, setLoader] = useState(false)
 
   useEffect(() => {
     if (props.openEditInvitation) {
@@ -68,7 +70,7 @@ export function ModalEditInvitation(props: EditInvitationProps) {
     if (!props.loading && props.data) {
       cancel()
     }
-  }, [props.loading])
+  }, [props.dataList])
 
   useEffect(() => {
     if (props?.meetingDetail) {
@@ -123,6 +125,7 @@ export function ModalEditInvitation(props: EditInvitationProps) {
     setOpenEditModal(false)
     props.cancel(true)
     resetEditData()
+    setLoader(false)
   }
   
   const resetEditData = () => {
@@ -231,7 +234,7 @@ export function ModalEditInvitation(props: EditInvitationProps) {
       setErrors(validationResult)
       return false
     }
-
+    setLoader(true)
     const memberList = members?.map((item, index) => {
       return { memberID: item.userID, memberName: item.userName, image: "" }
     })
@@ -275,7 +278,7 @@ export function ModalEditInvitation(props: EditInvitationProps) {
 
   return (
     <div>
-      <Modal className={`modal_media right-side--fixed-modal add-new-invitation-modal${props.loading && !props.data && " overflow-hidden"}`}
+      <Modal className={`modal_media right-side--fixed-modal add-new-invitation-modal${loader && " overflow-hidden"}`}
         closeIcon
         onClose={() => setOpenEditModal(false)}
         onOpen={openInvitationEditPopup}
@@ -289,7 +292,7 @@ export function ModalEditInvitation(props: EditInvitationProps) {
         closeOnDimmerClick={false}
       >
         {
-          props.loading && !props.data && (
+          loader && (
             <Dimmer active inverted Center inline>
               <Loader size='big'>Loading</Loader>
             </Dimmer>
