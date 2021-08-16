@@ -120,6 +120,8 @@ export function Planning(props: PlanningProps) {
 
   const confirmation = (data, task) => {
     // console.log('data', task);
+    setMilestoneLoading(true);
+
     setOpenUpdate(false);
     let status;
     if (task.status === 'COMPLETED') {
@@ -149,6 +151,8 @@ export function Planning(props: PlanningProps) {
             tasks: [...cacheData.MileStones, milestoneUpdate]
           },
         });
+        setMilestoneLoading(false);
+
       }
 
     });
@@ -160,9 +164,7 @@ export function Planning(props: PlanningProps) {
   }
 
   const getMilestoneData = (data) => {
-    console.log('getMilestoneData', data);
     setMilestoneLoading(true);
-    console.log('  setMilestoneLoading(true);', milestoneLoading)
     addPlan({
       variables: data,
       update: (
@@ -177,7 +179,6 @@ export function Planning(props: PlanningProps) {
           },
         });
         setMilestoneLoading(false);
-        console.log('  setMilestoneLoading(11);', milestoneLoading)
 
       }
     });
@@ -189,6 +190,8 @@ export function Planning(props: PlanningProps) {
     closeEditPopup()
   }
   const confirmationDelete = (plan) => {
+    setMilestoneLoading(true);
+
     closeDeletePopup()
     const milestoneID = plan.milestoneID;
     // console.log('plan=milestoneID', milestoneID);
@@ -208,6 +211,8 @@ export function Planning(props: PlanningProps) {
           },
           variables: { milestoneID },
         });
+        setMilestoneLoading(false);
+
       }
 
     });
@@ -226,6 +231,8 @@ export function Planning(props: PlanningProps) {
   // }
   const editMilestoneData = (data) => {
     // console.log('edited-data', data);
+    setMilestoneLoading(true);
+
     setOpen(false)
     milestoneUpdate({
       variables: data,
@@ -240,6 +247,8 @@ export function Planning(props: PlanningProps) {
             tasks: [...cacheData.MileStones, milestoneUpdate]
           },
         });
+        setMilestoneLoading(false);
+
       }
     });
 

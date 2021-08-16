@@ -31,7 +31,8 @@ export function FileListing(props: FileListingProps) {
 
   const history = useHistory();
   const pathNames = history.location.pathname.split("/");
-  const projectId = pathNames[3].toString();
+  // const projectId = pathNames[3].toString();
+  const projectId = "13"
 
   const sharedContext = React.useContext(SharedViewStateContext);
   const downloadsContext = React.useContext(DownloadsViewStateContext);
@@ -96,10 +97,10 @@ export function FileListing(props: FileListingProps) {
     return
   };
   React.useEffect(getContainersEffect, []);
-    
+
   const { loading: fileVersionLoading, error: fileVersionError, data: fileVersionData } = useFileVersionQuery(GET_FILE_VERSIONS, {
     variables: { projectId, fileId: selectedFileId },
-  }); 
+  });
 
   React.useEffect(() => {
     if (fileVersionData) {

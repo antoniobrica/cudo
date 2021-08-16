@@ -16,7 +16,7 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
   },
 
   "ms_task": {
-    url: "http://192.168.1.5:5007/graphql"
+    url: "http://dev.cudo.ch/api/ms-task/graphql"
   },
 
   "ms_cost": {
