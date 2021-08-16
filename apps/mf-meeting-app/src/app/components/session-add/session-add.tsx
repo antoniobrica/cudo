@@ -13,6 +13,7 @@ export interface AddSessionProps {
   projectId?
   openAddSession?
   cancel?
+  dataList?
 }
 
 export function AddSession(props: AddSessionProps) {
@@ -108,7 +109,7 @@ export function AddSession(props: AddSessionProps) {
   }
   return (
     <div>
-      <ModalAddSession openAddSession={props.openAddSession} cancel={props.cancel} workTypes={workTypes} loading={loading} data={data} createSession={createSession} />
+      <ModalAddSession openAddSession={props.openAddSession} cancel={props.cancel} workTypes={workTypes} loading={loading} data={data} dataList={props.dataList} createSession={createSession} />
     </div>
   );
 }

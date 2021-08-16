@@ -64,21 +64,7 @@ export function Tasks(props: TasksProps) {
   const [taskId, setTaskId] = React.useState();
   const [subTaskId, setSubTaskId] = React.useState();
   const [subTaskStatus, setSubTaskStatus] = React.useState('');
-  const [currentPage, setCurrentPage] = React.useState(0);
-  const [totaltaskdata, setTotalTaskData] = React.useState([]);
-  const PER_PAGE = 10;
-  const offset = currentPage * PER_PAGE;
-  React.useEffect(() => {
-    setTotalTaskData(taskListData?.tasks?.results)
-  }, [taskListData])
-
-  const currentPageData = taskListData?.tasks?.results
-    .slice(offset, offset + PER_PAGE).map((data) => data);
-  const pageCount = Math.ceil(taskListData?.tasks?.results.length / PER_PAGE);
-  console.log(currentPageData, 'currentPageData', pageCount)
-  function handlePageClick({ selected: selectedPage }) {
-    setCurrentPage(selectedPage);
-  }
+  const [taskDeleteUpdateStatusLoading, setTaskDeleteUpdateStatusLoading] = React.useState(false)
 
   const [idx, setId] = React.useState('');
 
@@ -133,7 +119,7 @@ export function Tasks(props: TasksProps) {
     refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
   });
 
-  const [subTaskDeleteApi] = useMutation(DELETE_SUBTASK, {
+  const [subTaskDeleteApi, { loading: deleteSubtaskLoading, error: deleteSubtaskError, data: deleteSubtaskData }] = useMutation(DELETE_SUBTASK, {
     variables: { subtaskID: subTaskId },
   });
 
@@ -478,7 +464,7 @@ export function Tasks(props: TasksProps) {
   const confirmSubTaskStatusUpdate = (taskId, subtaskId, subtaskStatus) => {
 
     setOpenSubTaskStatusConfirm(false)
-
+    setTaskDeleteUpdateStatusLoading(true)
     subTaskStatusUpdateApi({
       variables: {
         subtaskID: subtaskId,
@@ -532,6 +518,7 @@ export function Tasks(props: TasksProps) {
     setOpenD(false);
     setViewTaskOpen(false);
     setEditTaskOpen(false);
+    setTaskDeleteUpdateStatusLoading(false)
   };
 
   const deleteSubTask = (taskId, subtaskId) => {
@@ -543,7 +530,7 @@ export function Tasks(props: TasksProps) {
   const confirmSubTaskDelete = (taskId, subtaskId) => {
 
     setOpenSubTaskDeleteConfirm(false)
-
+    setTaskDeleteUpdateStatusLoading(true)
     subTaskDeleteApi({
       variables: {
         subtaskID: subtaskId
@@ -583,6 +570,7 @@ export function Tasks(props: TasksProps) {
     setOpenD(false);
     setViewTaskOpen(false);
     setEditTaskOpen(false);
+    setTaskDeleteUpdateStatusLoading(false)
   };
 
   const updateSubTask = (taskId, subtaskId, title) => {
@@ -752,6 +740,8 @@ export function Tasks(props: TasksProps) {
                 deleteSubTask={deleteSubTask}
                 addSubTaskLoading={addSubTaskLoading}
                 editSubTaskLoading={editSubTaskLoading}
+                taskListData={taskListData}
+                taskDeleteUpdateStatusLoading={taskDeleteUpdateStatusLoading}
               />
             </div>
           );
