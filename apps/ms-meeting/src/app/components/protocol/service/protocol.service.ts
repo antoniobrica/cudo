@@ -4,6 +4,8 @@ import { Repository } from "typeorm";
 import MeetingEntity from "../../../entities/meeting.entity";
 import ProtocolFileEntity from "../../../entities/protocol-file.entity";
 import ProtocolEntity from "../../../entities/protocol.entity";
+import { MeetingErrorTypeEnum } from "../../../enums/meeting-error-type.enum";
+import MeetingCustomError from "../../../exceptions/meetingCustomError.exception";
 import SortFilterParam from "../../../utils/types/sortParam";
 import StatusFilterParam from "../../../utils/types/status.filter";
 import { Pagination, PaginationOptionsInterface } from "../../paginate";
@@ -21,6 +23,22 @@ export class ProtocolService {
   public async addProtocol(createInput: ProtocolDeatilsInput): Promise<ProtocolEntity> {
     try {
       const { protocolBasics, protocolFiles, meetings } = createInput
+
+       // handling client input error
+       let errorType:number;
+       if(!protocolBasics.protocolStartTime || !protocolBasics.protocolEndTime){
+         errorType = MeetingErrorTypeEnum.NO_TIME
+       }
+       if(!protocolBasics.protocolDate){
+         errorType = MeetingErrorTypeEnum.NO_DATE
+       }
+       if(!protocolBasics.protocolTitle){
+         errorType = MeetingErrorTypeEnum.NO_TITLE
+       }
+       if(errorType){
+         throw new MeetingCustomError(errorType)
+       }      
+
       const protocolDetails = new ProtocolEntity({ ...protocolBasics })
 
       if (protocolFiles) {

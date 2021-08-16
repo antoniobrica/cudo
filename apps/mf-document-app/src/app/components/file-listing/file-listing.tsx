@@ -211,6 +211,7 @@ export function FileListing(props: FileListingProps) {
             downloadedImg={itemsd}
             selectedFileId={getSelectedFileId}
             fileVersionDetail={selectedFileVersions?.fileVersions}
+            fileVersionLoading={fileVersionLoading}
           ></FileStructure>
           {/* {itemsd.map((item, i) => (
             <div key={i}>

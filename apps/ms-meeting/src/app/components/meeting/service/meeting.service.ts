@@ -1,22 +1,19 @@
-import { BadRequestException, HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-// import AdminEntity from "../../../entities/admin.entity";
 import MembersEntity from "../../../entities/members.entity";
 import MeetingEntity from "../../../entities/meeting.entity";
 import MeetingFilesEntity from "../../../entities/meeting-files.entity";
-import ReferenceFilterParams from "../../../utils/types/referenceFilterParams";
 import SortFilterParam from '../../../utils/types/sortParam';
 import StatusFilterParam from '../../../utils/types/status.filter';
 import { Pagination, PaginationOptionsInterface } from "../../paginate";
-import { ReferenceService } from "../../reference/service/reference.service";
 import MeetingFilterParam from "../dto/args/meeting.filter";
 import MeetingDetailFilterParam from "../dto/args/meeting.detail.filter";
 import { MeetingDeleteInput } from "../dto/input/meeting-delete.input";
 import { MeetingDetailsUpdateInput } from "../dto/input/meeting-details-update.input";
 import { MeetingDetailsInput } from "../dto/input/meeting-details.input";
-import MeetingNotFoundException from "../exceptions/meetingNotFound.exception";
-import MeetingCustomError from "../../../meetingCustomError.exception";
+import { MeetingErrorTypeEnum } from "../../../enums/meeting-error-type.enum";
+import MeetingCustomError from "../../../exceptions/meetingCustomError.exception";
 
 @Injectable()
 export class MeetingService {
@@ -39,9 +36,27 @@ export class MeetingService {
       const isExist = await this.meetingRepository.count({ where: { meetingTitle: meetingBasics.meetingTitle } })
       if (isExist > 0) {
         // throw new HttpException("Record already exist with this title", HttpStatus.FOUND)        
-        throw new MeetingCustomError('record_already_exist')       
+        throw new MeetingCustomError(MeetingErrorTypeEnum.RECORD_ALREADY_EXIST)       
       }
-      console.log('--after-check custom validation message--')
+
+      // handling client input error
+      let errorType:number;
+      if(!members){
+        errorType = MeetingErrorTypeEnum.NO_MEMBERS
+      }
+      if(!meetingBasics.meetingEndTime || !meetingBasics.meetingStartTime){
+        errorType = MeetingErrorTypeEnum.NO_TIME
+      }
+      if(!meetingBasics.meetingDate){
+        errorType = MeetingErrorTypeEnum.NO_DATE
+      }
+      if(!meetingBasics.meetingTitle){
+        errorType = MeetingErrorTypeEnum.NO_TITLE
+      }
+      if(errorType){
+        throw new MeetingCustomError(errorType)
+      }
+      // console.log('--after-check custom validation message--')
 
       if (members) {
         for (let index = 0; index < members.length; index++) {
@@ -118,12 +133,13 @@ export class MeetingService {
     return pagination
   }
 
-  async findMeetingById(meetingDetailFilter: MeetingDetailFilterParam) {
+  async findMeetingById(meetingDetailFilter: MeetingDetailFilterParam):Promise<MeetingEntity> {
     const meeting = await this.meetingRepository.findOne({ where: { ...meetingDetailFilter }, relations: ['members', 'meetingFiles'] });
-    if (meeting) {
-      return meeting;
+    if (!meeting) {
+      throw new MeetingCustomError(MeetingErrorTypeEnum.RECORD_NOT_EXIST)
     }
-    throw new MeetingNotFoundException(meeting.meetingId);
+    console.log(meeting)
+    return meeting;
   }
 
   public async updateMeetingById(meetingUpdateInput: MeetingDetailsUpdateInput): Promise<MeetingEntity> {
@@ -134,7 +150,25 @@ export class MeetingService {
         relations: ['members', 'meetingFiles']
       });
       if (!meetingDetail) {
-        throw new HttpException('Meeting with the meetingId not found', HttpStatus.NOT_FOUND);
+        throw new MeetingCustomError(MeetingErrorTypeEnum.RECORD_NOT_EXIST)
+      }
+
+      // handling client input error
+      let errorType:number;
+      if(!members){
+        errorType = MeetingErrorTypeEnum.NO_MEMBERS
+      }
+      if(!meetingBasics.meetingEndTime || !meetingBasics.meetingStartTime){
+        errorType = MeetingErrorTypeEnum.NO_TIME
+      }
+      if(!meetingBasics.meetingDate){
+        errorType = MeetingErrorTypeEnum.NO_DATE
+      }
+      if(!meetingBasics.meetingTitle){
+        errorType = MeetingErrorTypeEnum.NO_TITLE
+      }
+      if(errorType){
+        throw new MeetingCustomError(errorType)
       }
 
       if (members) {
@@ -210,7 +244,7 @@ export class MeetingService {
       const updatedMeetingDetail = await meetingDetail.save()
       return updatedMeetingDetail
     }
-    throw new HttpException('Meeting with the meetingId not found', HttpStatus.NOT_FOUND);
+    throw new MeetingCustomError(MeetingErrorTypeEnum.RECORD_NOT_EXIST)
   }
 
 }

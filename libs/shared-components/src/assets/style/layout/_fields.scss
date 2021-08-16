@@ -86,13 +86,13 @@ input,
             display: none;
         }
         &.small {
-            min-height: 4.3rem !important;
+            min-height: 4rem !important;
             @media (max-width:#{$large-desktop-up}) {
                 min-height: 4rem;
             }
             .text {
                 padding-top: 0.5rem;
-                min-height: 1.7rem !important;
+                min-height: 1.5rem !important;
                 height: auto !important;
                 margin: 0.65rem 0;
                 @media (max-width:#{$large-desktop-up}) {
@@ -562,4 +562,9 @@ span.error-message {
 .ui.form .ui.small input[type=date] {
     height: 4.3rem;
     line-height: 1.814286rem;
+}
+.ui.selection.dropdown>.delete.icon, 
+.ui.selection.dropdown>.dropdown.icon, 
+.ui.selection.dropdown>.search.icon {
+    line-height: 1.014286em; 
 }

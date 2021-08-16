@@ -10,6 +10,8 @@ import {
   Grid,
   Dropdown,
   TextArea,
+  Dimmer,
+  Loader,
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 import moment from 'moment'
@@ -25,6 +27,8 @@ export interface AddInvitationProps {
   sessionDetail?
   projectTypeId?
   companyId?
+  loading?
+  data?
 }
 
 interface AddInvitationErrors {
@@ -57,6 +61,13 @@ export function ModalAddInvitation(props: AddInvitationProps) {
       setOpen(true);
     }
   }, [props.openAddInvitation])
+
+  //on show or hide loader
+  useEffect(() => {
+    if (!props.loading && props.data) {
+      cancel()
+    }
+  }, [props.loading])
 
   const openInvitationAddPopup = () => {
     setOpen(true)
@@ -193,10 +204,10 @@ export function ModalAddInvitation(props: AddInvitationProps) {
 
     props.createInvitation(data);
 
-    setOpen(false);
+    // setOpen(false);
     // props.openAddInvitation(false)
-    resetAddData();
-    props.cancel(true)
+    // resetAddData();
+    // props.cancel(true)
   }
 
   const cancel = () => {
@@ -218,7 +229,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
 
   return (
     <div id="navbar">
-      <Modal className="modal_media right-side--fixed-modal add-new-invitation-modal"
+      <Modal className={`modal_media right-side--fixed-modal add-new-invitation-modal${props.loading && !props.data && " overflow-hidden"}`}
         closeIcon
         onClose={() => setOpen(false)}
         onOpen={openInvitationAddPopup}
@@ -231,6 +242,13 @@ export function ModalAddInvitation(props: AddInvitationProps) {
         // }
         closeOnDimmerClick={false}
       >
+        {
+          props.loading && !props.data && (
+            <Dimmer active inverted Center inline>
+              <Loader size='big'>Loading</Loader>
+            </Dimmer>
+          )
+        }
         <Modal.Header>
           <h3>Add Invitation </h3>
         </Modal.Header>
