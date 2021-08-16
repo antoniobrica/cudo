@@ -78,7 +78,7 @@ export function ModalPlanningNew(props: PlanningProps) {
       worktypeID: '',
       worktypeName: ''
     };
-    if(data.value){
+    if (data.value) {
       for (let i = 0; i < props.worktypes.length; i++) {
         if (props.worktypes[i]?.workTypeName === data.value) {
           console.log('props.worktypes[i]', props.worktypes[i]);
@@ -88,13 +88,13 @@ export function ModalPlanningNew(props: PlanningProps) {
           setworktypeID(workT.worktypeID);
           setworkTypeD(workT)
         }
-      } 
+      }
     } else {
       setworktypeName("")
       setworktypeID("")
       setworkTypeD("")
     }
-    
+
     setworkTypeData(data.value)
 
     console.log('worktypeName-', workTypeD);
@@ -117,7 +117,7 @@ export function ModalPlanningNew(props: PlanningProps) {
   }
 
   const onDescriptionChange = e => {
-    console.log("$$$$$$$$$$$$$$$$$$$$$$$",e.target.value)
+    // console.log("$$$$$$$$$$$$$$$$$$$$$$$",e.target.value)
     setDescription(e);
   }
 

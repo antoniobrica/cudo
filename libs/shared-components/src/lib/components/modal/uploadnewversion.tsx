@@ -9,6 +9,8 @@ import { BlobItem, ContainerItem } from '@azure/storage-blob';
 import { tap } from 'rxjs/operators';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { useTranslation } from 'react-i18next';
+import { LoaderPage } from "@cudo/shared-components"
+
 // import { BlobItemUpload } from 'libs/mf-document-lib/src/azure-storage/types/azure-storage';
 
 interface AlertProps {
@@ -32,6 +34,7 @@ export function UploadNewVersion(props: AlertProps) {
   const [open, setOpen] = React.useState(false)
   const [fileData, setFileData] = React.useState(null)
   const [isFolder, setisFolder] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
   const [fileTypeName, setfileTypeName] = React.useState("");
   const [fileTypeID, setfileTypeID] = React.useState("");
   const [structureTitle, setstructureTitle] = React.useState("");
@@ -102,6 +105,7 @@ export function UploadNewVersion(props: AlertProps) {
       setstructureTitle(props.file.structureTitle);
       setparentUploadedFileID(props.file.parentUploadedFileID)
       setUploadedFileID(props.file.uploadedFileID)
+      setIsLoading(false);
     }
   }, [props.file]);
 
@@ -195,7 +199,7 @@ export function UploadNewVersion(props: AlertProps) {
         <Modal.Content body>
 
           <div>
-
+            {isLoading && <div><LoaderPage /> </div>}
 
             <Form>
 
