@@ -12,6 +12,7 @@ export interface InvitationAddProps {
     sessionId?
     openAddInvitation?
     cancel?
+    dataList?
 }
 
 export function InvitationAdd(props: InvitationAddProps) {
@@ -92,6 +93,7 @@ console.log('----companyId----', companyId)
                 companyId={companyId}
                 loading={loading}
                 data={data}
+                dataList={props.dataList}
             />
         </div>
     )

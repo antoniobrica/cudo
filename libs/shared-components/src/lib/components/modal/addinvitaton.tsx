@@ -29,6 +29,7 @@ export interface AddInvitationProps {
   companyId?
   loading?
   data?
+  dataList?
 }
 
 interface AddInvitationErrors {
@@ -55,6 +56,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
   const [members, setMembers] = useState<any>([]);
 
   const [errors, setErrors] = useState<AddInvitationErrors>({})
+  const [loader, setLoader] = useState(false)
 
   useEffect(() => {
     if (props.openAddInvitation) {
@@ -67,7 +69,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
     if (!props.loading && props.data) {
       cancel()
     }
-  }, [props.loading])
+  }, [props.dataList])
 
   const openInvitationAddPopup = () => {
     setOpen(true)
@@ -160,11 +162,13 @@ export function ModalAddInvitation(props: AddInvitationProps) {
   }
 
   const createInvitation = () => {
+    
     const validationResult = validation()
     if (Object.keys(validationResult).length > 0) {
       setErrors(validationResult)
       return false
     }
+    setLoader(true)
 
     const memberList = members?.map((item, index) => {
       return { memberID: item.userID, memberName: item.userName, image: "" }
@@ -214,6 +218,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
     setOpen(false)
     props.cancel(true)
     resetAddData()
+    setLoader(false)
   }
 
   const resetAddData = () => {
@@ -229,7 +234,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
 
   return (
     <div id="navbar">
-      <Modal className={`modal_media right-side--fixed-modal add-new-invitation-modal${props.loading && !props.data && " overflow-hidden"}`}
+      <Modal className={`modal_media right-side--fixed-modal add-new-invitation-modal${loader && " overflow-hidden"}`}
         closeIcon
         onClose={() => setOpen(false)}
         onOpen={openInvitationAddPopup}
@@ -243,7 +248,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
         closeOnDimmerClick={false}
       >
         {
-          props.loading && !props.data && (
+          loader && (
             <Dimmer active inverted Center inline>
               <Loader size='big'>Loading</Loader>
             </Dimmer>
