@@ -64,6 +64,7 @@ export function Tasks(props: TasksProps) {
   const [subTaskStatus, setSubTaskStatus] = React.useState('');
   const [taskErrors, setTaskErrors] = useState("")
   const [activeErrorClass, setActiveErrorClass] = useState(false)
+  const [taskDeleteUpdateStatusLoading, setTaskDeleteUpdateStatusLoading] = React.useState(false)
 
   const [idx, setId] = React.useState('');
 
@@ -598,6 +599,7 @@ export function Tasks(props: TasksProps) {
   const confirmSubTaskStatusUpdate = (taskId, subtaskId, subtaskStatus) => {
 
     setOpenSubTaskStatusConfirm(false)
+    setTaskDeleteUpdateStatusLoading(true)
     subTaskStatusUpdateApi({
       variables: {
         subtaskID: subtaskId,
@@ -651,6 +653,7 @@ export function Tasks(props: TasksProps) {
     setOpenD(false);
     setViewTaskOpen(false);
     setEditTaskOpen(false);
+    setTaskDeleteUpdateStatusLoading(false)
   };
 
   const deleteSubTask = (taskId, subtaskId) => {
@@ -662,6 +665,7 @@ export function Tasks(props: TasksProps) {
   const confirmSubTaskDelete = (taskId, subtaskId) => {
 
     setOpenSubTaskDeleteConfirm(false)
+    setTaskDeleteUpdateStatusLoading(true)
     subTaskDeleteApi({
       variables: {
         subtaskID: subtaskId
@@ -864,6 +868,7 @@ export function Tasks(props: TasksProps) {
                 addSubTaskLoading={addSubTaskLoading}
                 editSubTaskLoading={editSubTaskLoading}
                 taskListData={taskListData}
+                taskDeleteUpdateStatusLoading={taskDeleteUpdateStatusLoading}
               />
             </div>
           );

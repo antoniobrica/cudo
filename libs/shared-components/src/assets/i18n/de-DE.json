@@ -321,7 +321,7 @@
         "no_worktype": "Can not create task without worktype",
         "no_phase": "Can not create task without phase",
         "no_referance": "Can not create task without referance",
-        "no_subtask_title": "Can not empty subtask",
+        "no_subtask_title": "Can not create empty subtask",
         "no_assignee": "Can not create task without assignee",
         "wrong_date": "Start date must be smaller than end date",
         "subtask_not_found": "Subtask not found",

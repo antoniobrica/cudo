@@ -111,16 +111,15 @@ export class MileStoneService {
         if(!createMileStoneInput.milestoneBasics.dueDate){
             errorType = TaskErrorTypeEnum.NO_DUE_DATE
         }
-        if(!createMileStoneInput.milestoneBasics.phaseID){
-            errorType = TaskErrorTypeEnum.NO_PHASE
-        }
+        // if(!createMileStoneInput.milestoneBasics.phaseID){
+        //     errorType = TaskErrorTypeEnum.NO_PHASE
+        // }
         if(!createMileStoneInput.milestoneBasics.worktypeID){
             errorType= TaskErrorTypeEnum.NO_PLANNING_WORKTYPE
         }
         if(!createMileStoneInput.milestoneBasics.milestoneTitle){
             errorType = TaskErrorTypeEnum.NO_PLANNING_TITLE
         }
-        
         if(errorType){
             throw new TaskCustomError(errorType)
         }
