@@ -107,7 +107,7 @@ export function CreateTask(props: CreateTaskProps) {
     }
     if(!loading && error)
       cancel()
-      props.getTaskErrorMessage(error)
+      props.getTaskErrorMessage(error?.graphQLErrors[0]?.extensions?.exception?.status)
   }, [loading])
 
   const onTaskTitleChange = e => {
