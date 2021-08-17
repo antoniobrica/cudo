@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './tasks.module.scss';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
@@ -24,6 +24,7 @@ import TaskDelete from '../delete-task/delete-task';
 import SubTaskDelete from '../delete-subtask/delete-subtask';
 import { FilterPopup, ToggleButton } from '@cudo/shared-components';
 import { FileListIndex } from '@cudo/mf-document-lib';
+import { toast, ToastContainer } from 'react-toastify';
 export interface TasksProps { }
 
 export function Tasks(props: TasksProps) {
@@ -61,7 +62,12 @@ export function Tasks(props: TasksProps) {
   const [taskId, setTaskId] = React.useState();
   const [subTaskId, setSubTaskId] = React.useState();
   const [subTaskStatus, setSubTaskStatus] = React.useState('');
+  const [taskErrors, setTaskErrors] = useState("")
+  const [activeErrorClass, setActiveErrorClass] = useState(false)
   const [taskDeleteUpdateStatusLoading, setTaskDeleteUpdateStatusLoading] = React.useState(false)
+  const [loadingOnDeleteTask, setLoadingOnDeleteTask] = useState(false)
+  const [loadingOnEditTask, setLoadingOnEditTask] = useState(false)
+  const [loadingOnEditTaskStatus, setLoadingOnEditTaskStatus] = useState(false)
 
   const [idx, setId] = React.useState('');
 
@@ -72,9 +78,157 @@ export function Tasks(props: TasksProps) {
   const [addSubTaskApi, { loading: addSubTaskLoading, error: addSubTaskError, data: addedSubTaskData }] = useMutation(UPDATE_TASK);
   const [subTaskUpdateApi, { loading: editSubTaskLoading, error: editSubTaskError, data: editSubTaskData }] = useMutation(UPDATE_SUBTASK);
 
+  const [subTaskStatusUpdateApi, { loading: editSubTaskStatusLoading, error: editSubTaskStatusError, data: editSubTaskStatusData }] = useMutation(UPDATE_SUBTASK_STATUS, {
+    refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
+  });
+
+  const [subTaskDeleteApi, { loading: deleteSubTaskLoading, error: deleteSubTaskError, data: deleteSubTaskData }] = useMutation(DELETE_SUBTASK, {
+    variables: { subtaskID: subTaskId },
+  });
   // const [subTaskUpdateApi, { data }] = useMutation(UPDATE_SUBTASK, {
   //   refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
   // });
+
+  // set sucess value to toaster function
+  const getTaskToasterMessage = (data) => {
+    setActiveErrorClass(false)
+    toast(data)
+  }
+  // set error value to task error for toaster function
+  const getTaskErrorMessage = (data) => {
+    setActiveErrorClass(true)
+
+    let errorExeptionMessage: string;
+    switch (data) {
+      case 7001:
+        errorExeptionMessage = t("toaster.error.task.task_already_exists")
+        break
+      case 7002:
+        errorExeptionMessage = t("toaster.error.task.task_not_found")
+        break
+      case 7003:
+        errorExeptionMessage = t("toaster.error.task.task_bot_created")
+        break
+      case 7004:
+        errorExeptionMessage = t("toaster.error.task.no_title")
+        break
+      case 7005:
+        errorExeptionMessage = t("toaster.error.task.no_worktype")
+        break
+      case 7006:
+        errorExeptionMessage = t("toaster.error.planning.no_phase")
+        break
+      case 7007:
+        errorExeptionMessage = t("toaster.error.task.no_assignee")
+        break
+      case 7008:
+        errorExeptionMessage = t("toaster.error.task.wrong_date")
+        break
+      case 7009:
+        errorExeptionMessage = t("toaster.error.planning.due_date")
+        break
+      case 7010:
+        errorExeptionMessage = t("toaster.error.task.no_referance")
+        break
+      case 7011:
+        errorExeptionMessage = t("toaster.error.task.subtask_not_found")
+        break
+      case 7012:
+        errorExeptionMessage = t("toaster.error.task.no_subtask_title")
+        break
+      case 500:
+        errorExeptionMessage = t("toaster.error.task.internal_server_error")
+        break
+      default:
+        errorExeptionMessage = ""
+    }
+    setTaskErrors(errorExeptionMessage)
+  }
+
+  // set toaster for edit task
+  useEffect(() => {
+    if (!editTaskLoading && updatedTaskData) {
+      setLoadingOnEditTask(false)
+      getTaskToasterMessage(t("toaster.success.task.task_edit"))
+    }
+    if (!editTaskLoading && editTaskError) {
+      setLoadingOnEditTask(false)
+      getTaskErrorMessage(editTaskError?.graphQLErrors[0]?.extensions.exception.status)
+    }
+  }, [editTaskLoading])
+
+  // set toaster for delete task
+  useEffect(() => {
+    if (!deleteTaskLoading && deletedTaskData) {
+      setLoadingOnDeleteTask(false)
+      getTaskToasterMessage(t("toaster.success.task.task_deleted"))
+    }
+    if (!deleteTaskLoading && deleteTaskError) {
+      setLoadingOnDeleteTask(false)
+      getTaskErrorMessage(deleteTaskError?.graphQLErrors[0]?.extensions.exception.status)
+    }
+  }, [deleteTaskLoading])
+
+  // set toaster for update task status
+  useEffect(() => {
+    if (!editTaskStatusLoading && updatedTaskStatusData) {
+      setLoadingOnEditTaskStatus(false)
+      getTaskToasterMessage(t("toaster.success.task.task_status_updated"))
+    }
+    if (!editTaskStatusLoading && editTaskStatusError) {
+      setLoadingOnEditTaskStatus(false)
+      getTaskErrorMessage(editTaskStatusError?.graphQLErrors[0]?.extensions.exception.status)
+    }
+  }, [editTaskStatusLoading])
+
+  // set toaster for add subtask
+  useEffect(() => {
+    if (!addSubTaskLoading && addedSubTaskData) {
+      getTaskToasterMessage(t("toaster.success.task.subtask_created"))
+    }
+    if (!addSubTaskLoading && addSubTaskError) {
+      getTaskErrorMessage(addSubTaskError?.graphQLErrors[0]?.extensions.exception.status)
+    }
+  }, [addSubTaskLoading])
+
+  // set toaster for edit subtask
+  useEffect(() => {
+    if (!editSubTaskLoading && editSubTaskData) {
+      getTaskToasterMessage(t("toaster.success.task.subtask_edit"))
+    }
+    if (!editSubTaskLoading && editSubTaskError) {
+      getTaskErrorMessage(editSubTaskError?.graphQLErrors[0]?.extensions.exception.status)
+    }
+  }, [editSubTaskLoading])
+
+  // set toaster for delete subtask
+  useEffect(() => {
+    if (!deleteSubTaskLoading && deleteSubTaskData) {
+      getTaskToasterMessage(t("toaster.success.task.subtask_deleted"))
+    }
+    if (!deleteSubTaskLoading && deleteSubTaskError) {
+      getTaskErrorMessage(deleteSubTaskError?.graphQLErrors[0]?.extensions.exception.status)
+    }
+  }, [deleteSubTaskLoading])
+
+
+  // set toaster for edit sub task status
+  useEffect(() => {
+    if (!editSubTaskStatusLoading && editSubTaskStatusData) {
+      getTaskToasterMessage(t("toaster.success.task.subtask_status_updated"))
+    }
+    if (!editSubTaskStatusLoading && editSubTaskStatusError) {
+      getTaskErrorMessage(editSubTaskStatusError?.graphQLErrors[0]?.extensions.exception.status)
+    }
+  }, [editSubTaskStatusLoading])
+
+  // set error message to toaster
+  useEffect(() => {
+    if (taskErrors) {
+      toast(taskErrors)
+    }
+  }, [taskErrors])
+
 
   const query = `query ProjectById($projectId: String!) {
     projectById( projectId: $projectId)
@@ -112,46 +266,39 @@ export function Tasks(props: TasksProps) {
       .catch((err) => console.log(err));
   };
 
-  const [subTaskStatusUpdateApi, { data: editSubTaskStatusData }] = useMutation(UPDATE_SUBTASK_STATUS, {
-    refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
-  });
-
-  const [subTaskDeleteApi, {loading:deleteSubtaskLoading, error:deleteSubtaskError, data:deleteSubtaskData}] = useMutation(DELETE_SUBTASK, {
-    variables: { subtaskID: subTaskId },
-  });
-
-
   enum Status {
     INPROGRESS = 'INPROGRESS',
     COMPLETED = 'COMPLETED',
   }
   if (taskListLoading) return (<LazyLoading />)
-  if (taskListError) return (<div>Tasks not fetched. An internal server error occured</div>)
+  // if (taskListError) return (<div>Tasks not fetched. An internal server error occured</div>)
   // return (
   //   <h1>
   //     <LoaderPage />
   //   </h1>
   // );
 
-  if (deleteTaskLoading) return (<LazyLoading />)
-  if (deleteTaskError) return (<div>Task not deleted. An internal server error occured</div>)
+  if (loadingOnDeleteTask) return (<LazyLoading />)
+  // if (deleteTaskError) return (<div>Task not deleted. An internal server error occured</div>)
   // return (
   //   <h1>
   //     <LoaderPage />
   //   </h1>
   // );
 
-  // if (editTaskLoading) return (<LazyLoading />)
-  if (editTaskError) return (<div>Task not updated. An internal server error occured</div>)
+  if (loadingOnEditTask) return (<LazyLoading />)
+  // if (editTaskError) return (<div>Task not updated. An internal server error occured</div>)
 
-  if (editTaskStatusLoading) return (<LazyLoading />)
-  if (editTaskStatusError) return (<div>Task status not updated. An internal server error occured</div>)
+  if (loadingOnEditTaskStatus) return (<LazyLoading />)
+  // console.log(editTaskStatusError)
+  // if (editTaskStatusError) return (<div>Task status not updated. An internal server error occured</div>)
+
 
   // if (addSubTaskLoading) return (<LazyLoading />)
-  if (addSubTaskError) return (<div>Sub-task not added. An internal server error occured</div>)
+  // if (addSubTaskError) return (<div>Sub-task not added. An internal server error occured</div>)
 
-  // if (editSubTaskLoading) return (<LazyLoading />)
-  if (editSubTaskError) return (<div>Sub-task not updated. An internal server error occured</div>)
+  // // if (editSubTaskLoading) return (<LazyLoading />)
+  // if (editSubTaskError) return (<div>Sub-task not updated. An internal server error occured</div>)
 
 
   const cancel = () => {
@@ -161,7 +308,7 @@ export function Tasks(props: TasksProps) {
     setEditTaskOpen(false);
   };
   const confirmation = (data, task) => {
-
+    setLoadingOnEditTaskStatus(true)
     setOpen(false);
 
     let status;
@@ -179,29 +326,34 @@ export function Tasks(props: TasksProps) {
     task.followers.map((data, i) => {
       followers.push({ userID: data.userID, userName: data.userName })
     })
+    const variables = {
+      taskID,
+      status,
+      files: [],
+      taskTitle: task.taskTitle,
+      estimatedDays: task.estimatedDays,
+      sendNotification: false,
+      BKPID: task.BKPID,
+      BKPTitle: task.BKPTitle,
+      saveTaskAsTemplate: task.saveTaskAsTemplate,
+      phaseID: task.phaseID,
+      phaseName: task.phaseName,
+      referenceID: task.referenceID,
+      description: task.description,
+      subtasks: [],
+      assignees: assignees,
+      followers: followers,
+      workTypeName: task.workTypeName,
+      workTypeID: task.workTypeID,
+    }
+    if(task.startDate){
+      variables['startDate'] = task.startDate
+    }
+    if(task.endDate){
+      variables['endDate'] = task.endDate
+    }
     editTaskStatusApi({
-      variables: {
-        taskID,
-        status,
-        files: [],
-        taskTitle: task.taskTitle,
-        startDate: task.startDate,
-        endDate: task.endDate,
-        estimatedDays: task.estimatedDays,
-        sendNotification: false,
-        BKPID: task.BKPID,
-        BKPTitle: task.BKPTitle,
-        saveTaskAsTemplate: task.saveTaskAsTemplate,
-        phaseID: task.phaseID,
-        phaseName: task.phaseName,
-        referenceID: task.referenceID,
-        description: task.description,
-        subtasks: [],
-        assignees: assignees,
-        followers: followers,
-        workTypeName: task.workTypeName,
-        workTypeID: task.workTypeID,
-      },
+      variables,
       update: (cache) => {
         const cacheData = cache.readQuery({
           query: GET_TASKS,
@@ -232,7 +384,7 @@ export function Tasks(props: TasksProps) {
   };
 
   const confirmationDelete = (data, task) => {
-
+    setLoadingOnDeleteTask(true)
     const taskID = task.taskID;
     taskDelete({
       variables: {
@@ -286,6 +438,7 @@ export function Tasks(props: TasksProps) {
   };
 
   const editTaskData = (updateTaskData) => {
+    setLoadingOnEditTask(true)
     const assignees = [];
     updateTaskData.assignees.map((data, i) => {
       assignees.push({ userID: data.userID, userName: data.userName })
@@ -567,7 +720,6 @@ export function Tasks(props: TasksProps) {
     setOpenD(false);
     setViewTaskOpen(false);
     setEditTaskOpen(false);
-    setTaskDeleteUpdateStatusLoading(false)
   };
 
   const updateSubTask = (taskId, subtaskId, title) => {
@@ -616,6 +768,8 @@ export function Tasks(props: TasksProps) {
 
   return (
     <div>
+      <ToastContainer className={`${activeErrorClass ? "error" : "success"}`} position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
+
       <div className="pin_area">
         <FilterPopup />
         <ToggleButton changeAdd={changeAdd}></ToggleButton>
@@ -625,6 +779,9 @@ export function Tasks(props: TasksProps) {
             onSuccess={refresh}
             cancel={cancelTask}
             isNewTask={isNewTask}
+            getTaskToasterMessage={getTaskToasterMessage}
+            getTaskErrorMessage={getTaskErrorMessage}
+            taskListData={taskListData}
           />
         ) : null}
       </div>
@@ -734,18 +891,17 @@ export function Tasks(props: TasksProps) {
         })}
 
         <div className="task-action-area">
-          {/* <button
+          <button
             onClick={clickBottomAddTask}
             // className="ui large button btn-dashed  btn-large"
             className="ui small button primary add-new-task-btn">
             <i className="ms-Icon ms-Icon--Add" aria-hidden="true"></i> {t("project_tab_menu.task.add_new")}
           </button>
-          <a href="">4 Completed Tasks</a> */}
+          <a href="">1 {t("project_tab_menu.task.completed_tasks")}</a>
         </div>
 
-
         <div className="completed-task-con">
-          <h3 className="alltask">Completed Tasks <a href="">(4 Completed Tasks)</a> <i className="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i></h3>
+          <h3 className="alltask">{t("project_tab_menu.task.completed_tasks")}</h3>
           <div className="tasks-completed-listing">
             <div className="card1 card-custom gutter-b card-complete">
               <div className="card-body">
