@@ -113,7 +113,7 @@ export function Planning(props: PlanningProps) {
     if (data.status === 'COMPLETED') {
       setMilestoneStatus(t("project_tab_menu.task.re_open"));
     } else {
-      setMilestoneStatus(t("project_tab_menu.mark_completed"));
+      setMilestoneStatus(t("project_tab_menu.mark_complete"));
     }
     setUpdateStatus(data.milestoneID)
     setOpenUpdate(true)
