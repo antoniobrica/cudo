@@ -160,7 +160,8 @@
       "no_update_yet": "No update yet",
       "no_update_yet_para": "We are not able to see any update here.",
       "pin_number": "Pin Number",
-      "completed_tasks": "Completed Tasks"
+      "completed_tasks": "Completed Task",
+      "check_points": "Check points"
     },
     "planning": {
       "title": "Planning",

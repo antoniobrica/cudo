@@ -65,6 +65,9 @@ export function Tasks(props: TasksProps) {
   const [taskErrors, setTaskErrors] = useState("")
   const [activeErrorClass, setActiveErrorClass] = useState(false)
   const [taskDeleteUpdateStatusLoading, setTaskDeleteUpdateStatusLoading] = React.useState(false)
+  const [loadingOnDeleteTask, setLoadingOnDeleteTask] = useState(false)
+  const [loadingOnEditTask, setLoadingOnEditTask] = useState(false)
+  const [loadingOnEditTaskStatus, setLoadingOnEditTaskStatus] = useState(false)
 
   const [idx, setId] = React.useState('');
 
@@ -145,9 +148,11 @@ export function Tasks(props: TasksProps) {
   // set toaster for edit task
   useEffect(() => {
     if (!editTaskLoading && updatedTaskData) {
+      setLoadingOnEditTask(false)
       getTaskToasterMessage(t("toaster.success.task.task_edit"))
     }
     if (!editTaskLoading && editTaskError) {
+      setLoadingOnEditTask(false)
       getTaskErrorMessage(editTaskError?.graphQLErrors[0]?.extensions.exception.status)
     }
   }, [editTaskLoading])
@@ -155,9 +160,11 @@ export function Tasks(props: TasksProps) {
   // set toaster for delete task
   useEffect(() => {
     if (!deleteTaskLoading && deletedTaskData) {
+      setLoadingOnDeleteTask(false)
       getTaskToasterMessage(t("toaster.success.task.task_deleted"))
     }
     if (!deleteTaskLoading && deleteTaskError) {
+      setLoadingOnDeleteTask(false)
       getTaskErrorMessage(deleteTaskError?.graphQLErrors[0]?.extensions.exception.status)
     }
   }, [deleteTaskLoading])
@@ -165,9 +172,11 @@ export function Tasks(props: TasksProps) {
   // set toaster for update task status
   useEffect(() => {
     if (!editTaskStatusLoading && updatedTaskStatusData) {
+      setLoadingOnEditTaskStatus(false)
       getTaskToasterMessage(t("toaster.success.task.task_status_updated"))
     }
     if (!editTaskStatusLoading && editTaskStatusError) {
+      setLoadingOnEditTaskStatus(false)
       getTaskErrorMessage(editTaskStatusError?.graphQLErrors[0]?.extensions.exception.status)
     }
   }, [editTaskStatusLoading])
@@ -269,7 +278,7 @@ export function Tasks(props: TasksProps) {
   //   </h1>
   // );
 
-  if (deleteTaskLoading) return (<LazyLoading />)
+  if (loadingOnDeleteTask) return (<LazyLoading />)
   // if (deleteTaskError) return (<div>Task not deleted. An internal server error occured</div>)
   // return (
   //   <h1>
@@ -277,10 +286,10 @@ export function Tasks(props: TasksProps) {
   //   </h1>
   // );
 
-  if (editTaskLoading) return (<LazyLoading />)
+  if (loadingOnEditTask) return (<LazyLoading />)
   // if (editTaskError) return (<div>Task not updated. An internal server error occured</div>)
 
-  if (editTaskStatusLoading) return (<LazyLoading />)
+  if (loadingOnEditTaskStatus) return (<LazyLoading />)
   // console.log(editTaskStatusError)
   // if (editTaskStatusError) return (<div>Task status not updated. An internal server error occured</div>)
 
@@ -299,7 +308,7 @@ export function Tasks(props: TasksProps) {
     setEditTaskOpen(false);
   };
   const confirmation = (data, task) => {
-
+    setLoadingOnEditTaskStatus(true)
     setOpen(false);
 
     let status;
@@ -317,29 +326,34 @@ export function Tasks(props: TasksProps) {
     task.followers.map((data, i) => {
       followers.push({ userID: data.userID, userName: data.userName })
     })
+    const variables = {
+      taskID,
+      status,
+      files: [],
+      taskTitle: task.taskTitle,
+      estimatedDays: task.estimatedDays,
+      sendNotification: false,
+      BKPID: task.BKPID,
+      BKPTitle: task.BKPTitle,
+      saveTaskAsTemplate: task.saveTaskAsTemplate,
+      phaseID: task.phaseID,
+      phaseName: task.phaseName,
+      referenceID: task.referenceID,
+      description: task.description,
+      subtasks: [],
+      assignees: assignees,
+      followers: followers,
+      workTypeName: task.workTypeName,
+      workTypeID: task.workTypeID,
+    }
+    if(task.startDate){
+      variables['startDate'] = task.startDate
+    }
+    if(task.endDate){
+      variables['endDate'] = task.endDate
+    }
     editTaskStatusApi({
-      variables: {
-        taskID,
-        status,
-        files: [],
-        taskTitle: task.taskTitle,
-        startDate: task.startDate,
-        endDate: task.endDate,
-        estimatedDays: task.estimatedDays,
-        sendNotification: false,
-        BKPID: task.BKPID,
-        BKPTitle: task.BKPTitle,
-        saveTaskAsTemplate: task.saveTaskAsTemplate,
-        phaseID: task.phaseID,
-        phaseName: task.phaseName,
-        referenceID: task.referenceID,
-        description: task.description,
-        subtasks: [],
-        assignees: assignees,
-        followers: followers,
-        workTypeName: task.workTypeName,
-        workTypeID: task.workTypeID,
-      },
+      variables,
       update: (cache) => {
         const cacheData = cache.readQuery({
           query: GET_TASKS,
@@ -370,7 +384,7 @@ export function Tasks(props: TasksProps) {
   };
 
   const confirmationDelete = (data, task) => {
-
+    setLoadingOnDeleteTask(true)
     const taskID = task.taskID;
     taskDelete({
       variables: {
@@ -424,6 +438,7 @@ export function Tasks(props: TasksProps) {
   };
 
   const editTaskData = (updateTaskData) => {
+    setLoadingOnEditTask(true)
     const assignees = [];
     updateTaskData.assignees.map((data, i) => {
       assignees.push({ userID: data.userID, userName: data.userName })
@@ -766,6 +781,7 @@ export function Tasks(props: TasksProps) {
             isNewTask={isNewTask}
             getTaskToasterMessage={getTaskToasterMessage}
             getTaskErrorMessage={getTaskErrorMessage}
+            taskListData={taskListData}
           />
         ) : null}
       </div>
@@ -881,7 +897,7 @@ export function Tasks(props: TasksProps) {
             className="ui small button primary add-new-task-btn">
             <i className="ms-Icon ms-Icon--Add" aria-hidden="true"></i> {t("project_tab_menu.task.add_new")}
           </button>
-          <a href="">4 {t("project_tab_menu.task.completed_tasks")}</a>
+          <a href="">1 {t("project_tab_menu.task.completed_tasks")}</a>
         </div>
 
         <div className="completed-task-con">
