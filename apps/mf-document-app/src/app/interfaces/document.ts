@@ -20,7 +20,7 @@ export interface IFile {
   createdAt: string
   updatedBy: string
   createdBy: string
-  isEveryOneAllowed: Boolean
+  isEveryOneAllowed: boolean
   fileURL: string
   fileTitle: string
   fileType: string
@@ -36,7 +36,7 @@ export interface IFileParam {
   fileTypeID: string,
   fileVersion: number,
   fileTypeName: string,
-  isEveryOneAllowed: Boolean
+  isEveryOneAllowed: boolean
   uploadedFileID: string,
   BKPID: string,
   BKPIDTitle: string,
@@ -64,7 +64,7 @@ export interface FileMutation {
 }
 
 export interface IFileVersion {
-   uploadedFileID: string
+  uploadedFileID: string
   parentUploadedFileID: string
   directory: string
   structureID: string
@@ -76,7 +76,7 @@ export interface IFileVersion {
   generateFileName: string
   fileTypeID: string
   fileTypeName: string
-  isEveryOneAllowed: Boolean
+  isEveryOneAllowed: boolean
   fileURL: string
   fileTitle: string
   fileType: string

@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, Pagination, Modal, Input, Form, Grid, Image, Comment, Dropdown, Select, TextArea } from 'semantic-ui-react'
 import Canvas from './canvas';
 // import { Document, Page } from 'react-pdf';
+import { PinTaskListIndex } from '@cudo/mf-task-lib';
 
 import { Document, Page, pdfjs } from "react-pdf";
 import { MS_SERVICE_URL } from '@cudo/mf-core';
@@ -82,7 +83,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
            view Files
         </Button> */}
       <Modal className="view-pin-detail-popup"
-        closeIcon
+        // closeIcon
         size={'fullscreen'}
         open={open}
         onClose={() => setOpen(false)}
@@ -113,7 +114,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     lastItem={null}
                     pointing
                     secondary
-                    totalPages={3}
+                    totalPages={1}
                   />
                 </div>
               </div>
@@ -122,19 +123,19 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
             <div className="right-side-file-information">
               <div>
                 <Form>
-                  <Modal.Header><h3>File detail</h3></Modal.Header>
+                  <Modal.Header><h3>File detail <i aria-hidden="true" className="close icon"></i></h3></Modal.Header>
                   <Grid columns={2}>
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
                           <label>File name</label>
-                          <p className="form_desc">cost-module</p>
+                          <p className="form_desc">{props?.filesData?.fileTitle}</p>
                         </Form.Field>
                       </Grid.Column>
                       <Grid.Column>
                         <Form.Field>
                           <label>File type</label>
-                          <p className="form_desc">File type</p>
+                          <p className="form_desc">{props?.filesData?.fileType}</p>
                         </Form.Field>
                       </Grid.Column>
                     </Grid.Row>
@@ -145,7 +146,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                       <Grid.Column>
                         <Form.Field>
                           <label>Phase</label>
-                          <p className="form_desc">phase</p>
+                          <p className="form_desc">{props?.filesData?.phaseName}</p>
                         </Form.Field>
                       </Grid.Column>
                       <Grid.Column>
@@ -175,14 +176,15 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                           <label>File versions(1) <i className="ms-Icon ms-Icon--ChevronDown right_float" aria-hidden="true"></i></label>
                           <div className="file-version-list">
                             <div className="version-wise-files">
-                              <span>Version 2 -</span>
-                              <h3>2302101_version_03647.pptx
+                              <span>Version 1 -</span>
+                              <h3>{props?.filesData?.fileTitle}
                                 <span>By: John Smith - Uploaded on: 20 Sep, 2020</span>
                               </h3>
                             </div>
                             <i className="ms-Icon ms-Icon--RedEye right_float" aria-hidden="true"></i>
+                            <i className="ms-Icon ms-Icon--Delete" aria-hidden="true"></i>
                           </div>
-                          <div className="file-version-list">
+                          {/* <div className="file-version-list">
                             <div className="version-wise-files">
                               <span>Version 1 -</span>
                               <h3>2302101_version_03647.pptx
@@ -190,7 +192,9 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                               </h3>
                             </div>
                             <i className="ms-Icon ms-Icon--RedEye right_float" aria-hidden="true"></i>
-                          </div>
+                            <i className="ms-Icon ms-Icon--Delete" aria-hidden="true"></i>
+
+                          </div> */}
                         </Form.Field>
                       </Grid.Column>
                     </Grid.Row>
@@ -201,7 +205,9 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                       <Grid.Column>
                         <Form.Field>
                           <label>Tasks (1)</label>
-                          <div className="pin-task-completed-card">
+                          {!isPinCreated ?
+                            <PinTaskListIndex filesData={props.filesData} cord={''}></PinTaskListIndex> : null}
+                          {/* <div className="pin-task-completed-card">
                             <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} />
                             <div className="pin-task-description-box">
                               <div className="task-full-details">
@@ -235,7 +241,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                               </div>
                               <a href="" className="add-new-task-link">+ Add new task</a>
                             </div>
-                          </div>
+                          </div> */}
                         </Form.Field>
                       </Grid.Column>
                     </Grid.Row>

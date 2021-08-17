@@ -8,13 +8,13 @@ interface ITaskErrorCode {
 export const TaskErrorData = (errorCode: number): ITaskErrorCode => {
     switch (errorCode) {
         case TaskErrorTypeEnum.RECORD_ALREADY_EXIST:
-            return { message: "Record already exists", code: 7001 }
+            return { message: "Task already exists", code: 7001 }
 
         case TaskErrorTypeEnum.RECORD_NOT_EXIST:
-            return { message: "Record not exist", code: 7002 }
+            return { message: "Task not exist", code: 7002 }
 
         case TaskErrorTypeEnum.RECORD_NOT_ADDED:
-            return { message: "Record not_added", code: 7003 }
+            return { message: "Task not_added", code: 7003 }
 
         case TaskErrorTypeEnum.NO_TITLE:
             return { message: "Can't pass empty Title", code: 7004 }
@@ -30,12 +30,34 @@ export const TaskErrorData = (errorCode: number): ITaskErrorCode => {
 
         case TaskErrorTypeEnum.WRONG_DATE:
             return { message: "Can't pass smaller End Date", code: 7008 }
+
         case TaskErrorTypeEnum.NO_DATE:
             return { message: "Can't pass empty Date", code: 7009 }
-        case TaskErrorTypeEnum.PROJECT_NOT_FOUND:
-            return { message: "Project not found", code: 7010 }
+
         case TaskErrorTypeEnum.NO_REFERANCE_TYPE:
-            return { message: "Reference type does not exists", code: 7011 }
+            return { message: "Reference type does not exists", code: 7010 }
+
+        case TaskErrorTypeEnum.SUBTASK_NOT_EXITST:
+            return { message: "Subtask does not exists", code: 7011 }
+
+        case TaskErrorTypeEnum.NO_SUBTASK_TITLE:
+            return { message: "Can't pass empty subtask title", code: 7012 }
+
+        case TaskErrorTypeEnum.NO_DUE_DATE:
+            return { message: "Can't pass empty due date", code: 7013 }
+
+        case TaskErrorTypeEnum.NO_PLANNING_WORKTYPE:
+            return { message: "Can't pass empty planning worktype", code: 7014 }
+
+        case TaskErrorTypeEnum.NO_PLANNING_TITLE:
+            return { message: "Can't pass empty planning title", code: 7015 }
+
+        case TaskErrorTypeEnum.PROJECT_NOT_FOUND:
+            return { message: "Project not found", code: 7016 }
+
+        case TaskErrorTypeEnum.PLANNING_NOT_EXITST:
+            return { message: "Planning not found", code: 7017 }
+
         default:
             return { message: "An internal server error occurred", code: 500 }
     }

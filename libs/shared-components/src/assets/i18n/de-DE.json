@@ -159,7 +159,9 @@
       "mention": "Mention",
       "no_update_yet": "No update yet",
       "no_update_yet_para": "We are not able to see any update here.",
-      "pin_number": "Pin Number"
+      "pin_number": "Pin Number",
+      "completed_tasks": "Completed Tasks",
+      "check_points": "Check points"
     },
     "planning": {
       "title": "Planning",
@@ -196,6 +198,8 @@
     },
     "meeting": {
       "title": "Meetings",
+      "invitations": "Invitations",
+      "protocols": "Protocols",
       "no_session_data_found_desc": "Hey User, you don't have any active session on this project. Click the button below to create a session list.",
       "no_invitation_data_found_desc": "Hey User, you don't have any active invitation on this session. Click the button below to create an invitation list.",
       "no_protocol_data_found_desc": "Hey User, you don't have any active protocol on this session. Click the button below to create aa protocol list.",
@@ -273,6 +277,114 @@
     "people": "people",
     "settings": "settings",
     "messages": "messages"
+  },
+  "toaster": {
+    "success": {
+      "task": {
+        "task_created": "Task created successfully",
+        "task_status_updated": "Task status updated",
+        "task_edit": "Task updated successfully",
+        "task_deleted": "Task deleted",
+        "subtask_created": "Subtask created successfully",
+        "subtask_status_updated": "Subtask status updated",
+        "subtask_edit": "Subtask updated successfully",
+        "subtask_deleted": "Subtask deleted"
+      },
+      "planing": {
+        "milstone_created": "Milestone created successfully",
+        "milstone_status_updated": "Milestone status updated",
+        "milstone_edit": "Milestone updated successfully",
+        "milstone_deleted": "Milestone deleted"
+      },
+      "meeting": {
+        "session_created": "Session created successfully",
+        "session_status_updated": "Session status updated",
+        "session_edit": "Session updated successfully",
+        "session_deleted": "Session deleted",
+        "meeting_created": "Meeting created successfully",
+        "meeting_status_updated": "Meeting status updated",
+        "meeting_edit": "Meeting updated successfully",
+        "meeting_deleted": "Meeting deleted",
+        "protocol_created": "Protocol created successfully",
+        "protocol_status_updated": "Protocol status updated",
+        "protocol_edit": "Protocol updated successfully",
+        "protocol_deleted": "Protocol deleted"
+      }
+    },
+    "error": {
+      "task": {
+        "task_not_found": "Task not found",
+        "task_already_exists": "Task already exists",
+        "task_not_created": "Task not created",
+        "task_not_updated": "Task not updated",
+        "task_not_deleted": "Task not deleted",
+        "no_title": "Can not create task without title",
+        "no_worktype": "Can not create task without worktype",
+        "no_phase": "Can not create task without phase",
+        "no_referance": "Can not create task without referance",
+        "no_subtask_title": "Can not create empty subtask",
+        "no_assignee": "Can not create task without assignee",
+        "wrong_date": "Start date must be smaller than end date",
+        "subtask_not_found": "Subtask not found",
+        "subtask_already_exists": "Subtask already exists",
+        "subtask_not_created": "Subtask not created",
+        "subtask_not_updated": "Subtask not updated",
+        "subtask_not_deleted": "Subtask not deleted",
+        "internal_server_error": "Internal server error occured"
+      },
+      "planning": {
+        "planning_not_found": "Planning not found",
+        "planning_already_exists": "Planning already exists",
+        "planning_not_created": "Planning not created",
+        "planning_not_updated": "Planning not updated",
+        "planning_not_deleted": "Planning not deleted",
+        "no_title": "Can not create planning without title",
+        "no_worktype": "Can not create planning without worktype",
+        "no_phase": "Can not create planning without phase",
+        "no_due_date": "Can not create planning without due date"
+      },
+      "meeting": {
+        "session": {
+          "session_not_found": "Session not found",
+          "session_already_exists": "Session already exists",
+          "session_not_created": "Session not created",
+          "session_not_updated": "Session not updated",
+          "session_not_deleted": "Session not deleted",
+          "no_title": "Can not create session without title",
+          "no_worktype": "Can not create session without worktype",
+          "no_category": "Can not create session without category",
+          "no_admin": "Can not create session without admin",
+          "no_members": "Can not create session without members",
+          "no_invitation_template": "Can not create session without invitation template",
+          "no_protocol_template": "Can not create session without protocol template"
+        },
+        "invitaion": {
+          "invitation_not_found": "Invitation not found",
+          "invitation_already_exists": "Invitation already exists",
+          "invitation_not_created": "Invitation not created",
+          "invitation_not_updated": "Invitation not updated",
+          "invitation_not_deleted": "Invitation not deleted",
+          "no_title": "Can not create invitation without title",
+          "no_date": "Can not create invitation without date",
+          "no_start_time": "Can not create invitation without start time",
+          "no_end_time": "Can not create invitation without end time",
+          "wrong_time": "Start time must be smaller than end time",
+          "no_members": "Can not create invitation without members"
+        },
+        "protocol": {
+          "protocol_not_found": "Protocol not found",
+          "protocol_already_exists": "Protocol already exists",
+          "protocol_not_created": "Protocol not created",
+          "protocol_not_updated": "Protocol not updated",
+          "protocol_not_deleted": "Protocol not deleted",
+          "no_title": "Can not create protocol without title",
+          "no_date": "Can not create protocol without date",
+          "no_start_time": "Can not create protocol without start time",
+          "no_end_time": "Can not create protocol without end time",
+          "wrong_time": "Start time must be smaller than end time"
+        }
+      }
+    }
   },
   "common": {
     "title": "Title",

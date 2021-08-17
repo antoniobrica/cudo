@@ -22,6 +22,9 @@ export interface CreateTaskProps {
   workTypes?,
   isNewTask?,
   cancel?
+  getTaskToasterMessage?
+  getTaskErrorMessage?
+  taskListData?
   // stopLoading?
 }
 
@@ -76,6 +79,7 @@ export function CreateTask(props: CreateTaskProps) {
   const [assignees, setAssignees] = React.useState<any>([]);
   const [followers, setfollowers] = React.useState<any>([]);
   const [date, setDate] = React.useState(null)
+  const [addTaskLoading, setAddTaskLoading] = useState(false)
   const { t } = useTranslation();
   const history = useHistory();
   const res = history.location.pathname.split("/");
@@ -100,28 +104,44 @@ export function CreateTask(props: CreateTaskProps) {
 
   useEffect(() => {
     if (!loading && data) {
+      setAddTaskLoading(false)
       cancel()
+      props.getTaskToasterMessage(t("toaster.success.task.task_created"))
     }
-  }, [loading])
+    if (!loading && error) {
+      setAddTaskLoading(false)
+      cancel()
+      props.getTaskErrorMessage(error?.graphQLErrors[0]?.extensions?.exception?.status)
+    }
+  }, [props.taskListData])
 
   const onTaskTitleChange = e => {
     setTaskTitle(e.target.value)
   }
   const onStartDateChange = e => {
     setDate(e.target.value)
-    const date = moment.utc(moment(e.target.value).utc()).format();
+    if (endDate) {
+      const date1 = new Date(e.target.value)
+      const date2 = new Date(endDate)
+      const Difference_In_Time = date2.getTime() - date1.getTime();
+      const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      setEstimatedDays(Difference_In_Days <= 0 ? "" : Difference_In_Days.toString())
+    }
+    // const date = moment.utc(moment(e.target.value).utc()).format();
     setStartDate(e.target.value)
   }
   const onEndDateChange = e => {
     // const date = moment.utc(moment(e.target.value).utc()).format();
-    const date1 = new Date(e.target.value)
-    const date2 = new Date(date)
-    const Difference_In_Time = date1.getTime() - date2.getTime();
+    if (startDate) {
+      const date1 = new Date(e.target.value)
+      const date2 = new Date(date)
+      const Difference_In_Time = date1.getTime() - date2.getTime();
 
-    // To calculate the no. of days between two dates
-    const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      // To calculate the no. of days between two dates
+      const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      setEstimatedDays(Difference_In_Days <= 0 ? "" : Difference_In_Days.toString())
+    }
     setEndDate(e.target.value);
-    setEstimatedDays(Difference_In_Days >=0 ? Difference_In_Days.toString() : "")
   }
   const onsetEstimatedDays = (event, data) => {
     // To calculate the time difference of two dates
@@ -200,6 +220,7 @@ export function CreateTask(props: CreateTaskProps) {
 
   const cancel = () => {
     setOpen(false)
+    setAddTaskLoading(false)
     props.cancel(false)
     resetAddData()
   }
@@ -254,6 +275,7 @@ export function CreateTask(props: CreateTaskProps) {
       setErrors(validationResult)
       return false
     }
+    setAddTaskLoading(true)
 
 
     const variables = {
@@ -287,7 +309,7 @@ export function CreateTask(props: CreateTaskProps) {
           query: GET_TASKS,
           variables: { referenceID },
           data: {
-            tasks: [...cacheData.tasks.results, addedTaskData?.data?.createTask]
+            tasks: [...cacheData?.tasks?.results, addedTaskData?.data?.createTask]
           },
         });
       }
@@ -296,7 +318,7 @@ export function CreateTask(props: CreateTaskProps) {
 
 
   // if (loading) return (<LazyLoading />);
-  if (error) return <p>Task not added. An internal server error occured</p>;
+  // if (error) return <p>Task not added. An internal server error occured</p>;
 
   return (
     <div >
@@ -309,11 +331,11 @@ export function CreateTask(props: CreateTaskProps) {
         // trigger={<Button size='mini' className="grey-btn taskmargin">+ Add  New Task</Button>} 
         closeOnDimmerClick={false}
       >
-        {loading ?
+        {addTaskLoading ?
           <Dimmer active inverted Center inline>
             <Loader size='big'>Loading</Loader>
           </Dimmer>
-          : null}
+        : null}
         <Modal.Header><h3>{t("project_tab_menu.task.add_new_task")} </h3></Modal.Header>
         <Modal.Content body>
           <div>

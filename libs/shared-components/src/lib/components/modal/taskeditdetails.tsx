@@ -98,8 +98,15 @@ export const ModalTaskEdit = (props: AlertProps) => {
 
   React.useEffect(() => {
     if (props.taskData) {
-      var d = props.taskData.startDate;
-      var de = props.taskData.endDate
+      if (props.taskData.startDate) {
+        var d = props.taskData.startDate;
+        setStartDate(formatDate(d));
+        setDate(formatDate(d))
+      }
+      if (props.taskData.endDate) {
+        var de = props.taskData.endDate
+        setEndDate(formatDate(de));
+      }
       // console.log('dateE', d);
 
       // var d2 = d.substring(5, 7) + '/' + d.substring(8, 10) + '/' + d.substring(0, 4);
@@ -114,10 +121,6 @@ export const ModalTaskEdit = (props: AlertProps) => {
       })
       setAssignees(assignees)
       setfollowers(followers)
-      setStartDate(formatDate(d));
-      setDate(formatDate(d))
-
-      setEndDate(formatDate(de));
       setTaskTitle(props.taskData.taskTitle);
       setDescription(props.taskData.description);
       setEstimatedDays(props.taskData.estimatedDays);
@@ -234,22 +237,27 @@ export const ModalTaskEdit = (props: AlertProps) => {
     setTaskTitle(e.target.value)
   }
   const onStartDateChange = e => {
-
-    const date1 = new Date(e.target.value)
-    const date2 = new Date(endDate)
-    const Difference_In_Time = date2.getTime() - date1.getTime();
-    const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-    setEstimatedDays(Difference_In_Days.toString())
+    setDate(e.target.value)
+    if (endDate) {
+      const date1 = new Date(e.target.value)
+      const date2 = new Date(endDate)
+      const Difference_In_Time = date2.getTime() - date1.getTime();
+      const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      setEstimatedDays(Difference_In_Days <= 0 ? "" : Difference_In_Days.toString())
+    }
     // const date = moment.utc(moment(e.target.value).utc()).format();
     setStartDate(e.target.value)
   }
   const onEndDateChange = e => {
-    const date1 = new Date(e.target.value)
+    if(startDate){
+      const date1 = new Date(e.target.value)
     const date2 = new Date(date)
     const Difference_In_Time = date1.getTime() - date2.getTime();
+
+    // To calculate the no. of days between two dates
     const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-    setEndDate(e.target.value);
-    setEstimatedDays(Difference_In_Days.toString())
+    setEstimatedDays(Difference_In_Days <= 0 ? "" : Difference_In_Days.toString())
+  }
     setEndDate(e.target.value);
   }
   const onsetEstimatedDays = (event, data) => {
@@ -318,8 +326,6 @@ export const ModalTaskEdit = (props: AlertProps) => {
     const editTaskData = {
       taskID: props.taskData.taskID,
       taskTitle: taskTitle,
-      startDate: startDate,
-      endDate: endDate,
       description: description,
       estimatedDays: estimatedDays,
       BKPID: BKPID,
@@ -334,6 +340,12 @@ export const ModalTaskEdit = (props: AlertProps) => {
       workTypeName: workTypeName,
       workTypeID: workTypeID,
       saveTaskAsTemplate: props.taskData.saveTaskAsTemplate,
+    }
+    if (startDate) {
+      editTaskData['startDate'] = startDate
+    }
+    if (startDate) {
+      editTaskData['endDate'] = endDate
     }
     props.editTaskData(editTaskData);
     // setOpen(false)
