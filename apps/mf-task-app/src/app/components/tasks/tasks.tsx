@@ -346,10 +346,10 @@ export function Tasks(props: TasksProps) {
       workTypeName: task.workTypeName,
       workTypeID: task.workTypeID,
     }
-    if(task.startDate){
+    if (task.startDate) {
       variables['startDate'] = task.startDate
     }
-    if(task.endDate){
+    if (task.endDate) {
       variables['endDate'] = task.endDate
     }
     editTaskStatusApi({
@@ -864,6 +864,17 @@ export function Tasks(props: TasksProps) {
           ></SubTaskDelete>
         </div>) : null
       }
+      {/* <ReactPaginate
+        previousLabel={"← Previous"}
+        nextLabel={"Next →"}
+        pageCount={pageCount}
+        onPageChange={handlePageClick}
+        containerClassName={"pagination"}
+        previousLinkClassName={"pagination__link"}
+        nextLinkClassName={"pagination__link"}
+        disabledClassName={"pagination__link--disabled"}
+        activeClassName={"pagination__link--active"}
+      /> */}
 
       <div className="TaskApp-container">
         <h3 className="alltask" style={{ marginBottom: '20px;' }}>{t("project_tab_menu.task.heading")}</h3>

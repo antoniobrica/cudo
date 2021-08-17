@@ -30,7 +30,7 @@ export function App() {
     }
   )
 
-  const [editbkpCost, { data: updatedCostData }] = useMutation(EDIT_COST,
+  const [editbkpCost, { loading: editCostLoading, data: updatedCostData }] = useMutation(EDIT_COST,
     {
       refetchQueries: [
         { query: GET_COST, variables: { referenceID } }
@@ -129,6 +129,7 @@ export function App() {
         <div>
           <AddNewItem openCost={openCost} cancel={cancel}></AddNewItem>
         </div>
+        {editCostLoading && <LoaderPage />}
         {openCostDelete && <CostDelete costId={costId} openAlertF={openCostDelete} cancel={closeDelete} confirm={confirmDeleteCost} />}
         <CostList addNew={addNew} costs={data?.costs} delete={deleteCost} updateBkpCost={updateBkpCost}></CostList>
         {/* <Button onClick={() => changeLanguage('en-GB')}>EN</Button>

@@ -4,6 +4,7 @@ import './add-new-item.module.scss';
 import { useMutation } from '@apollo/client';
 import { CREATE_COST, GET_COST } from '../graphql/graphql';
 import { ICosts } from '../interfaces/cost';
+import { LoaderPage } from "@cudo/shared-components"
 import { useHistory } from 'react-router-dom';
 
 /* eslint-disable-next-line */
@@ -23,7 +24,7 @@ export function AddNewItem(props: AddNewItemProps) {
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
-  const [addCost, { data }] = useMutation(CREATE_COST,
+  const [addCost, { loading, data }] = useMutation(CREATE_COST,
     {
       refetchQueries: [
         { query: GET_COST, variables: { referenceID } }
@@ -60,6 +61,9 @@ export function AddNewItem(props: AddNewItemProps) {
       });
     })
 
+  }
+  if (loading) {
+    return <div><LoaderPage /></div>
   }
   return (
     <ModalCost house={null} createCost={createCost} openCost={props.openCost} cancel={props.cancel}></ModalCost>

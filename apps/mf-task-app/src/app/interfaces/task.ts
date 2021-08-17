@@ -41,6 +41,11 @@ export interface ITask {
   workTypeID: string
   workTypeName: string
   subtasks: ISubTask[]
+  // total: number
+  // next: string
+  // previous: string
+  // page_total: string
+  // hasNextPage: boolean
 }
 export interface ITodos {
   getTodos: ITodo[];

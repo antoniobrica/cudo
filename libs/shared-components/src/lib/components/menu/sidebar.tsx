@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withTranslation } from 'react-i18next'; 
+import { withTranslation } from 'react-i18next';
 import './../../../assets/style/index.scss'
 import { Icon, Sidebar, Accordion, Form, Dropdown } from 'semantic-ui-react'
 
@@ -35,8 +35,8 @@ export class AccordionExampleMenu extends Component<MyProps> {
     this.setState({ worktypes: this.props.workTypeData?.projectById[0].projectWorkTypes })
     this.setState({ worktypeValue: this.props.workTypeData?.projectById[0].projectWorkTypes[0].workTypeName })
   }
-  handleClick = (titleProps) => {
-    console.log('activeIndex', titleProps)
+  handleClick = (titleProps, worktype) => {
+    console.log('activeIndex', worktype)
     const { index } = titleProps
     const { activeIndex } = this.state
     const newIndex = activeIndex === index ? -1 : index
@@ -49,7 +49,7 @@ export class AccordionExampleMenu extends Component<MyProps> {
   }
 
   render() {
-    const {t} = this.props
+    const { t } = this.props
     const { activeIndex } = this.state
     console.log('renderactiveIndex', activeIndex)
     return (
@@ -66,7 +66,7 @@ export class AccordionExampleMenu extends Component<MyProps> {
                 <Accordion.Title
                   active={activeIndex === i}
                   index={i}
-                  onClick={() => this.handleClick(i)}
+                  onClick={() => this.handleClick(i, worktype)}
                   className="active-title sidebar-menu-heading"
                 >
                   {worktype.workTypeName} <span className="workspan">({i + 1}/{this.state.worktypes.length}) </span>  <Icon name='angle down' />
@@ -92,7 +92,7 @@ export class AccordionExampleMenu extends Component<MyProps> {
                             </span>
                           </div>
                         </div>
-                      </span> 
+                      </span>
                     </li>
                     <li className="active">
                       <span className="strategic_plan">{t("project_tab_menu.preiminary_studies")}</span>
@@ -113,10 +113,10 @@ export class AccordionExampleMenu extends Component<MyProps> {
                             </span>
                           </div>
                         </div>
-                      </span> 
+                      </span>
                     </li>
                     <li>
-                      <span className="strategic_plan">{t("project_tab_menu.project_plannings")} </span> 
+                      <span className="strategic_plan">{t("project_tab_menu.project_plannings")} </span>
                       <span className="dots_area">
                         <div className="symbol-group symbol-hover py-2" >
                           <div className="symbol symbol-30 d-flex">
@@ -134,10 +134,10 @@ export class AccordionExampleMenu extends Component<MyProps> {
                             </span>
                           </div>
                         </div>
-                      </span> 
+                      </span>
                     </li>
                     <li>
-                      <span className="strategic_plan">{t("project_tab_menu.tender.title")}</span> 
+                      <span className="strategic_plan">{t("project_tab_menu.tender.title")}</span>
                       <span className="dots_area">
                         <div className="symbol-group symbol-hover py-2" >
                           <div className="symbol symbol-30 d-flex">
@@ -155,10 +155,10 @@ export class AccordionExampleMenu extends Component<MyProps> {
                             </span>
                           </div>
                         </div>
-                      </span> 
+                      </span>
                     </li>
                     <li>
-                      <span className="strategic_plan">{t("project_tab_menu.realization")}</span> 
+                      <span className="strategic_plan">{t("project_tab_menu.realization")}</span>
                       <span className="dots_area">
                         <div className="symbol-group symbol-hover py-2" >
                           <div className="symbol symbol-30 d-flex">
@@ -176,7 +176,7 @@ export class AccordionExampleMenu extends Component<MyProps> {
                             </span>
                           </div>
                         </div>
-                      </span> 
+                      </span>
                     </li>
                   </ul>
                 </Accordion.Content>
@@ -330,4 +330,4 @@ export class AccordionExampleMenu extends Component<MyProps> {
   }
 }
 
-export default  withTranslation()(AccordionExampleMenu);
+export default withTranslation()(AccordionExampleMenu);
