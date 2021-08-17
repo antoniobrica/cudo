@@ -43,6 +43,7 @@ export const GET_FILES = gql`query UploadedFiles($projectId:String!)
       structureID 
       directory
       structureTitle
+      versionCount
     }
     people { 
       userID 

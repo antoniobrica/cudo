@@ -197,10 +197,37 @@ export class FileService {
           isDeleted: false,
           referenceID: fileReferenceParams.referenceID,
           referenceType: fileReferenceParams.referenceType,
-        },relations:['fileReferences','people','children']
+        }, relations: ['fileReferences', 'people', 'children']
       })
-      return parent           
-   } catch (error) {
+
+      // #region Retrieve children wise version count - Need improvement 
+      let result = []
+      if (parent.length > 0) {
+        for (let i = 0; i < parent.length; i++) {
+
+          let modifiedFiles = []
+          if (parent[i]?.children?.length > 0) {
+            for (let j = 0; j < parent[i].children.length; j++) {
+              const childUploadedFileId = parent[i].children[j].uploadedFileID
+              let versionCount = 0
+              versionCount = await this.uploadedFilesRepository.count({
+                where: {
+                  parentUploadedFileID: childUploadedFileId,
+                  isDeleted: false
+                }
+              });
+              modifiedFiles.push({ ...parent[i].children[j], versionCount })
+            }
+          }
+          result.push({...parent[i], children: modifiedFiles})
+        }
+      }
+      // #endregion
+
+
+      return result
+      // return parent
+    } catch (error) {
       return error;
     }
   }
@@ -215,10 +242,10 @@ export class FileService {
   //         referenceType: fileReferenceParams.referenceType,
   //       }
   //     })
-      
+
   //     const children = await this.uploadedFilesRepository.findDescendants(parent)
   //     const ids = children.map(child => child.uploadedFileID)
-      
+
   //     return UploadedFilesEntity
   //       .createQueryBuilder("upload")
   //       .distinct(true)
@@ -233,40 +260,40 @@ export class FileService {
 
 
   public async deleteFile(fileDeleteInput: FileDeleteInput): Promise<UploadedFilesEntity> {
-    const file = await this.uploadedFilesRepository.findOne({ where:{uploadedFileID:fileDeleteInput.uploadedFileID} });
+    const file = await this.uploadedFilesRepository.findOne({ where: { uploadedFileID: fileDeleteInput.uploadedFileID } });
     if (file) {
-      file.isDeleted=!(file.isDeleted)
+      file.isDeleted = !(file.isDeleted)
       const updatedPost = await file.save()
       return updatedPost
-      }
-      throw new HttpException('File Not Found', HttpStatus.NOT_FOUND);
     }
+    throw new HttpException('File Not Found', HttpStatus.NOT_FOUND);
+  }
 
 
   public async getuploadedFileByID(fileFilter: FileDeleteInput) {
-      const parent = await this.uploadedFilesRepository.findOne({
-        where: {
-          parentUploadedFileID: null,
-          isDeleted: false,
-          uploadedFileID:fileFilter.uploadedFileID
-        },relations:['fileReferences','people','children']
-      })
-      if(parent){
-      return parent  
-      }
-      throw new HttpException('File Not Found', HttpStatus.NOT_FOUND);
+    const parent = await this.uploadedFilesRepository.findOne({
+      where: {
+        parentUploadedFileID: null,
+        isDeleted: false,
+        uploadedFileID: fileFilter.uploadedFileID
+      }, relations: ['fileReferences', 'people', 'children']
+    })
+    if (parent) {
+      return parent
+    }
+    throw new HttpException('File Not Found', HttpStatus.NOT_FOUND);
 
   }
 
   public async deleteFileVersion(fileDeleteInput: FileDeleteInput): Promise<UploadedFilesEntity> {
-    const file = await this.uploadedFilesRepository.findOne({ where:{uploadedFileID:fileDeleteInput.uploadedFileID} });
+    const file = await this.uploadedFilesRepository.findOne({ where: { uploadedFileID: fileDeleteInput.uploadedFileID } });
     if (file) {
-      file.isDeleted=!(file.isDeleted)
+      file.isDeleted = !(file.isDeleted)
       const updatedPost = await file.save()
       return updatedPost
-      }
-      throw new HttpException('File Version with uploadedFileId Not Found', HttpStatus.NOT_FOUND);
     }
+    throw new HttpException('File Version with uploadedFileId Not Found', HttpStatus.NOT_FOUND);
+  }
 
 
 }

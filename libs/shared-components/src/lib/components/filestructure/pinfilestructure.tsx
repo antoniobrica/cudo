@@ -171,23 +171,26 @@ export function PinFileStructure(props: FileStructureProps) {
 	}
 
 	const renderChildrenSingleFile = (singleFileItem) => {
-		const { uploadedFileID, fileType, fileTitle, fileVersion } = singleFileItem
+		const { uploadedFileID, fileType, fileTitle, fileVersion, versionCount } = singleFileItem
 		return (
 			<div key={uploadedFileID} className={selectedExpandVersionId === uploadedFileID && expandVersion ? "single-files-list expand" : "single-files-list"}>
 				<div className="files-left-area">
 					<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
 					<h3 className="files-name">{fileTitle}</h3>
-					<span className="version-files"><a onClick={() => onClickFileVersion(uploadedFileID)}>Ver 2</a></span>
-				</div>		
-
-				<div className="files-right-area">
-					<div className="symbol-group symbol-hover">
-						<div className="symbol symbol-30">
-							{/* <a href=""> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a> */}
-							<a onClick={() => viewFile(singleFileItem)} className={selectedFile === uploadedFileID ? "selected" : ""}> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
-						</div>
-					</div>
+					{versionCount > 0 ? <span className="version-files"><a onClick={() => onClickFileVersion(uploadedFileID)}>Ver {versionCount}</a></span> : null}
 				</div>
+
+				{versionCount > 0 ?
+					<div className="files-arrows" onClick={() => onClickFileVersion(uploadedFileID)}>
+						<i className="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i>
+					</div> :
+					<div className="files-right-area">
+						<div className="symbol-group symbol-hover">
+							<div className="symbol symbol-30">
+								<a onClick={() => viewFile(singleFileItem)} className={selectedFile === uploadedFileID ? "selected" : ""}> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
+							</div>
+						</div>
+					</div>}
 
 				{props.fileVersionLoading && selectedExpandVersionId === uploadedFileID ?
 					<>
@@ -200,10 +203,6 @@ export function PinFileStructure(props: FileStructureProps) {
 					<>
 						{props?.fileVersionDetail?.children?.length ?
 							<>
-								{/* <div className="files-arrows">
-									<i className="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i>
-								</div> */}
-
 								<div className="break"></div>
 								<div className="version-file-con">
 									{props?.fileVersionDetail?.children.map((item) => {
@@ -213,14 +212,6 @@ export function PinFileStructure(props: FileStructureProps) {
 											<p>Version {fileVersion} - <span>{fileTitle}</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
 											<div className="files-right-area">
 												<a onClick={() => viewFile(singleFileItem)} className={selectedFile === uploadedFileID ? "selected" : ""}> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
-
-												{/* <a onClick={() => viewFile(singleFileItem)} className="navi-link active" > 
-													<img src={selectedFile === uploadedFileID ?
-														`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/circle_blue.png`
-														:
-														`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/grey_circle.png`} />
-												</a>*/}
-
 											</div>
 										</div>)
 									})}

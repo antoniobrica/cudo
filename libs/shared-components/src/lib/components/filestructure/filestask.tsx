@@ -194,7 +194,7 @@ export function FileStructure(props: FileStructureProps) {
 	// #endregion
 
 	const renderChildrenSingleFile = (singleFileItem) => {
-		const { uploadedFileID, fileType, fileTitle, fileVersion } = singleFileItem
+		const { uploadedFileID, fileType, fileTitle, fileVersion, versionCount } = singleFileItem
 		return (
 			<div key={uploadedFileID} className={selectedExpandVersionId === uploadedFileID && expandVersion ? "single-files-list expand" : "single-files-list"}>
 				<div className="files-left-area">
@@ -202,7 +202,7 @@ export function FileStructure(props: FileStructureProps) {
 					<h3 className="files-name">{fileTitle}</h3>
 					<span className="no-of-files"><i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i> 2 comments</span>
 					<span className="no-of-files"><i className="ms-Icon ms-Icon--CheckboxComposite" aria-hidden="true"></i> 2 tasks</span>
-					<span className="version-files"><a onClick={() => onClickFileVersion(uploadedFileID)}>Ver 2</a></span>
+					{versionCount > 0 ? <span className="version-files"><a onClick={() => onClickFileVersion(uploadedFileID)}>Ver {versionCount}</a></span>:null}
 				</div>
 				<div className="files-right-area">
 					<div className="symbol-group symbol-hover">
