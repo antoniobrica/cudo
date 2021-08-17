@@ -1,8 +1,11 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
 import './../../../assets/style/index.scss'
 import { Tab, Accordion, Dropdown } from 'semantic-ui-react'
 import { MS_SERVICE_URL } from '@cudo/mf-core';
+
+import { LazyLoading } from '@cudo/shared-components';
+
 /* eslint-disable-next-line */
 export interface FileStructureProps {
 	files?,
@@ -89,9 +92,10 @@ export function PinFileStructure(props: FileStructureProps) {
 
 	React.useEffect(() => {
 		if (props.files) {
-			setItems(props.files.map((file, i) => ({ key: i, title: file.directory ? file.directory : file.BKPIDTitle, content: { content: (renderItems(file.children)) } })));
+			setFileFoldersList(props.files)
+			// setItems(props.files.map((file, i) => ({ key: i, title: file.directory ? file.directory : file.BKPIDTitle, content: { content: (renderItems(file.children)) } })));
 		}
-	}, [props.files, selectedFile]);
+	}, [props.files]);
 
 
 	// #region Commented old code
@@ -142,6 +146,128 @@ export function PinFileStructure(props: FileStructureProps) {
 	// }
 	// #endregion
 
+	const onClickExpand = (uploadedFileId) => {
+		if (uploadedFileId === selectedExpandId) {
+			setExpand(!expand)
+		} else {
+			setExpand(true)
+		}
+		setSelectedExpandId(uploadedFileId)
+	}
+
+	const onClickFileVersion = (uploadedFileVersionId) => {
+		if (uploadedFileVersionId === selectedExpandVersionId) {
+			setExpandVersion(!expandVersion)
+		} else {
+			setExpandVersion(true)
+		}
+
+		setSelectedExpandVersionId(uploadedFileVersionId)
+		props.selectedFileId(uploadedFileVersionId)
+	}
+
+	const onClickVersionDetail = () => {
+
+	}
+
+	const renderChildrenSingleFile = (singleFileItem) => {
+		const { uploadedFileID, fileType, fileTitle, fileVersion } = singleFileItem
+		return (
+			<div key={uploadedFileID} className={selectedExpandVersionId === uploadedFileID && expandVersion ? "single-files-list expand" : "single-files-list"}>
+				<div className="files-left-area">
+					<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
+					<h3 className="files-name">{fileTitle}</h3>
+					<span className="version-files"><a onClick={() => onClickFileVersion(uploadedFileID)}>Ver 2</a></span>
+				</div>		
+
+				<div className="files-right-area">
+					<div className="symbol-group symbol-hover">
+						<div className="symbol symbol-30">
+							{/* <a href=""> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a> */}
+							<a onClick={() => viewFile(singleFileItem)} className={selectedFile === uploadedFileID ? "selected" : ""}> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
+						</div>
+					</div>
+				</div>
+
+				{props.fileVersionLoading && selectedExpandVersionId === uploadedFileID ?
+					<>
+						<div className="break" />
+						<div className="version-file-con">
+							<LazyLoading />
+						</div>
+					</>
+					:
+					<>
+						{props?.fileVersionDetail?.children?.length ?
+							<>
+								{/* <div className="files-arrows">
+									<i className="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i>
+								</div> */}
+
+								<div className="break"></div>
+								<div className="version-file-con">
+									{props?.fileVersionDetail?.children.map((item) => {
+
+										const { uploadedFileID, fileType, fileTitle, fileVersion } = item
+										return (<div key={uploadedFileID} className="files-versioning-list">
+											<p>Version {fileVersion} - <span>{fileTitle}</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
+											<div className="files-right-area">
+												<a onClick={() => viewFile(singleFileItem)} className={selectedFile === uploadedFileID ? "selected" : ""}> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
+
+												{/* <a onClick={() => viewFile(singleFileItem)} className="navi-link active" > 
+													<img src={selectedFile === uploadedFileID ?
+														`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/circle_blue.png`
+														:
+														`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/grey_circle.png`} />
+												</a>*/}
+
+											</div>
+										</div>)
+									})}
+								</div>
+							</> : null}
+					</>
+				}
+			</div>
+		)
+	}
+
+	const renderChildrenWise = (children) => {
+		const renderedChildrenItem = children && children.length ? children.map((item) => {
+			return (<>
+				{renderChildrenSingleFile(item)}
+			</>)
+		}) : null
+		return renderedChildrenItem
+	}
+
+	let renderedFileFoldersList = null
+	if (fileFoldersList && fileFoldersList.length) {
+		renderedFileFoldersList = fileFoldersList.map(({ parentUploadedFileID, uploadedFileID, directory, BKPIDTitle, children }) => {
+
+			return (
+				<div key={uploadedFileID} className={selectedExpandId === uploadedFileID && expand ? "multiple-files-box expand" : "multiple-files-box"}>
+					<div className="multiple-files-header">
+						<div className="files-left-area">
+							<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/folder.png`} />
+							<h3 className="files-name">{parentUploadedFileID === null && directory ? directory : BKPIDTitle} {/*(2) */}</h3>
+							{children && children?.length ? <span className="no-of-files">( {children?.length} files )</span> : null}
+						</div>
+						{children && children?.length > 0 ?
+							<div className="files-arrows" onClick={() => onClickExpand(uploadedFileID)}>
+								<i className="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i>
+							</div> :
+							null}
+					</div>
+
+					<div className="multiple-files-listing">
+						{renderChildrenWise(children)}
+					</div>
+				</div>
+			)
+		})
+	}
+
 
 	return (
 		<div className=" navbar-collapse">
@@ -155,91 +281,111 @@ export function PinFileStructure(props: FileStructureProps) {
 				{/* <Accordion className="widtharea" defaultActiveIndex={0} panels={items} style={{ border: '0px' }} >
 				</Accordion> */}
 
-				<div>----------------------------</div>
+
 				{/* new file structure */}
 				<div className="all-files-con select-file-popup-area">
-					<div className="multiple-files-box expand">
-						<div className="multiple-files-header">
-							<div className="files-left-area">
-								<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/folder.png`} />
-								<h3 className="files-name">Information Data (2)</h3>
-								<span className="no-of-files">( 5 files )</span>
-							</div>
-							<div className="files-arrows">
-								<i className="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i>
-							</div>
-						</div>
-						<div className="multiple-files-listing">
-							<div className="single-files-list expand">
+					{renderedFileFoldersList}
+					{/* <div>--------------------------------------</div>
+					<>
+						<div className="multiple-files-box expand">
+							<div className="multiple-files-header">
 								<div className="files-left-area">
-									<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
-									<h3 className="files-name">file_name.pdf</h3>
-									<span className="version-files"><a>Ver 2</a></span>
+									<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/folder.png`} />
+									<h3 className="files-name">Information Data (2)</h3>
+									<span className="no-of-files">( 5 files )</span>
 								</div>
 								<div className="files-arrows">
 									<i className="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i>
 								</div>
-
-								<div className="break"></div>
-
-								<div className="version-file-con">
-									<div className="files-versioning-list">
-										<p>Version 2 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
-										<div className="files-right-area">
-											<a href="" className="selected"> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
-										</div>
-									</div>
-									<div className="files-versioning-list">
-										<p>Version 2 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
-										<div className="files-right-area">
-											<a href=""> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
-										</div>
-									</div>
-								</div>
 							</div>
+							<div className="multiple-files-listing">
+								<div className="single-files-list expand">
+									<div className="files-left-area">
+										<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
+										<h3 className="files-name">file_name.pdf</h3>
+										<span className="version-files"><a>Ver 2</a></span>
+									</div>
+									<div className="files-arrows">
+										<i className="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i>
+									</div>
 
-							<div className="single-files-list">
-								<div className="files-left-area">
-									<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
-									<h3 className="files-name">file_name.pdf</h3>
+									<div className="break"></div>
+
+									<div className="version-file-con">
+										<div className="files-versioning-list">
+											<p>Version 2 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
+											<div className="files-right-area">
+												<a href="" className="selected"> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
+											</div>
+										</div>
+										<div className="files-versioning-list">
+											<p>Version 2 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
+											<div className="files-right-area">
+												<a href=""> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
+											</div>
+										</div>
+									</div>
 								</div>
-								<div className="files-right-area">
-									<div className="symbol-group symbol-hover">
-										<div className="symbol symbol-30">
-											<a href=""> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
+
+								<div className="single-files-list">
+									<div className="files-left-area">
+										<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
+										<h3 className="files-name">file_name.pdf</h3>
+									</div>
+									<div className="files-right-area">
+										<div className="symbol-group symbol-hover">
+											<div className="symbol symbol-30">
+												<a href=""> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
 
-					<div className="multiple-files-box">
-						<div className="multiple-files-header">
-							<div className="files-left-area">
-								<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/folder.png`} />
-								<h3 className="files-name">Information Data</h3>
-								<span className="no-of-files">( 5 files )</span>
-							</div>
-							<div className="files-arrows">
-								<i className="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i>
-							</div>
-						</div>
-						<div className="multiple-files-listing">
-							<div className="single-files-list">
+						<div className="multiple-files-box">
+							<div className="multiple-files-header">
 								<div className="files-left-area">
-									<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
-									<h3 className="files-name">file_name.pdf</h3>
+									<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/folder.png`} />
+									<h3 className="files-name">Information Data</h3>
+									<span className="no-of-files">( 5 files )</span>
 								</div>
-								<div className="files-right-area">
-									<div className="symbol-group symbol-hover">
-										<div className="symbol symbol-30">
-											<a href=""><i className="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i></a>
+								<div className="files-arrows">
+									<i className="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i>
+								</div>
+							</div>
+							<div className="multiple-files-listing">
+								<div className="single-files-list">
+									<div className="files-left-area">
+										<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
+										<h3 className="files-name">file_name.pdf</h3>
+									</div>
+									<div className="files-right-area">
+										<div className="symbol-group symbol-hover">
+											<div className="symbol symbol-30">
+												<a href=""><i className="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i></a>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div className="single-files-list">
+									<div className="files-left-area">
+										<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
+										<h3 className="files-name">file_name.pdf</h3>
+									</div>
+									<div className="files-right-area">
+										<div className="symbol-group symbol-hover">
+											<div className="symbol symbol-30">
+												<a href=""><i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
+						</div>
 
+						<div className="single-file-box">
 							<div className="single-files-list">
 								<div className="files-left-area">
 									<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
@@ -254,55 +400,40 @@ export function PinFileStructure(props: FileStructureProps) {
 								</div>
 							</div>
 						</div>
-					</div>
 
-					<div className="single-file-box">
-						<div className="single-files-list">
-							<div className="files-left-area">
-								<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
-								<h3 className="files-name">file_name.pdf</h3>
+						<div className="single-file-box">
+							<div className="single-files-list">
+								<div className="files-left-area">
+									<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
+									<h3 className="files-name">file_name.pdf</h3>
+									<span className="version-files"><a href="">Ver 2</a></span>
+								</div>
+								<div className="files-right-area">
+									<div className="symbol-group symbol-hover">
+										<div className="symbol symbol-30">
+											<a href=""><i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
+										</div>
+									</div>
+								</div>
 							</div>
-							<div className="files-right-area">
-								<div className="symbol-group symbol-hover">
-									<div className="symbol symbol-30">
+
+							<div className="version-file-con">
+								<div className="files-versioning-list">
+									<p>Version 2 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
+									<div className="files-right-area">
+										<a href=""><i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
+									</div>
+								</div>
+								<div className="files-versioning-list">
+									<p>Version 2 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
+									<div className="files-right-area">
 										<a href=""><i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
 
-					<div className="single-file-box">
-						<div className="single-files-list">
-							<div className="files-left-area">
-								<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
-								<h3 className="files-name">file_name.pdf</h3>
-								<span className="version-files"><a href="">Ver 2</a></span>
-							</div>
-							<div className="files-right-area">
-								<div className="symbol-group symbol-hover">
-									<div className="symbol symbol-30">
-										<a href=""><i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div className="version-file-con">
-							<div className="files-versioning-list">
-								<p>Version 2 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
-								<div className="files-right-area">
-									<a href=""><i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
-								</div>
-							</div>
-							<div className="files-versioning-list">
-								<p>Version 2 - <span>file-name-pptx</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
-								<div className="files-right-area">
-									<a href=""><i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
-								</div>
-							</div>
-						</div>
-					</div>
+					</> */}
 				</div>
 
 			</div>

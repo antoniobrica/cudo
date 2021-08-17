@@ -46,7 +46,8 @@ export function CanvasTransparent(props: CanvasTransparentProps) {
       const hRatio = canvasToDrawCircle.current.clientWidth / imgagDraw.width;
       const vRatio = canvasToDrawCircle.current.clientHeight / imgagDraw.height;
       const ratio = Math.min(hRatio, vRatio);
-      circleContext.drawImage(imgagDraw, 0, 0, imgagDraw.width, imgagDraw.height, 0, 0, imgagDraw.width * ratio, imgagDraw.height * ratio);      
+      circleContext.arc(x_axis, y_axis, pinList.length + 1, 0, Math.PI * 2, true);     
+      circleContext.drawImage(imgagDraw, 0, 0, imgagDraw.width, imgagDraw.height, 0, 0, imgagDraw.width * ratio, imgagDraw.height * ratio); 
     }
 
     ctxToDrawCircle.current = circleContext
