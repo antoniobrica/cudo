@@ -11,7 +11,7 @@ import {
 import EditMileStonePopup from 'libs/shared-components/src/lib/components/modal/editmilestone';
 import ModalViewPlanning from '../../../../../shared-components/src/lib/components/modal/viewdetailsplanning';
 import SelectDropdown from '../../../../../shared-components/src/lib/components/select_dropdown/select_dropdown';
-import {SelectSearchableDropdown} from '../../../../../shared-components/src/lib/components/select_dropdown/select_searchable';
+import { SelectSearchableDropdown } from '../../../../../shared-components/src/lib/components/select_dropdown/select_searchable';
 import { useMilestonesQuery, useMilestoneMutation, useIMileStoneQuery, useMilestoneDeleteMutation, useMilestoneUpdateMutation } from '../../services/useRequest';
 import { GET_MILESTONES, ADD_MILESTONE, GET_MILESTONES_BY_ID, DELETE_MILESTONE, UPDATE_MILESTONE } from '../../graphql/graphql';
 import { LoaderPage } from "@cudo/shared-components";
@@ -34,7 +34,7 @@ export function Planning(props: PlanningProps) {
   const [openNew, setIsOpen] = React.useState(false);
   const [openD, setOpenD] = React.useState(false);
   const [openUpdate, setOpenUpdate] = React.useState(false);
-
+  const [milestoneLoading, setMilestoneLoading] = React.useState(false)
   const [openEdit, setOpenEdit] = React.useState(false);
   const [milestoneID, setmilestoneID] = React.useState('');
   const [milestoneIDd, setmilestoneIDd] = React.useState('');
@@ -44,7 +44,7 @@ export function Planning(props: PlanningProps) {
   const [milestoneByID, setmilestoneByID] = React.useState({});
   const { loading, error, data } = useMilestonesQuery(GET_MILESTONES);
   // const [addPlan] = useMilestoneMutation(ADD_MILESTONE);
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   enum Status {
     INPROGRESS = 'INPROGRESS',
     COMPLETED = 'COMPLETED',
@@ -92,7 +92,7 @@ export function Planning(props: PlanningProps) {
     setOpen(false)
     setOpenUpdate(false)
   }
-  const closeDeletePopup = () =>{
+  const closeDeletePopup = () => {
     setOpenD(false)
   }
   const closeEditPopup = () => {
@@ -113,7 +113,7 @@ export function Planning(props: PlanningProps) {
     if (data.status === 'COMPLETED') {
       setMilestoneStatus(t("project_tab_menu.task.re_open"));
     } else {
-      setMilestoneStatus(t("project_tab_menu.mark_completed"));
+      setMilestoneStatus(t("project_tab_menu.mark_complete"));
     }
     setUpdateStatus(data.milestoneID)
     setOpenUpdate(true)
@@ -121,6 +121,8 @@ export function Planning(props: PlanningProps) {
 
   const confirmation = (data, task) => {
     // console.log('data', task);
+    setMilestoneLoading(true);
+
     setOpenUpdate(false);
     let status;
     if (task.status === 'COMPLETED') {
@@ -132,7 +134,7 @@ export function Planning(props: PlanningProps) {
       milestoneID: task.milestoneID,
       description: task.description,
       worktypeName: task.worktypeName,
-      worktypeID:task.worktypeID,
+      worktypeID: task.worktypeID,
       milestoneTitle: task.milestoneTitle,
       phaseName: task.phaseName,
       dueDate: task.dueDate,
@@ -150,6 +152,8 @@ export function Planning(props: PlanningProps) {
             tasks: [...cacheData.MileStones, milestoneUpdate]
           },
         });
+        setMilestoneLoading(false);
+
       }
 
     });
@@ -161,7 +165,7 @@ export function Planning(props: PlanningProps) {
   }
 
   const getMilestoneData = (data) => {
-    // console.log('getMilestoneData', data);
+    setMilestoneLoading(true);
     addPlan({
       variables: data,
       update: (
@@ -175,14 +179,20 @@ export function Planning(props: PlanningProps) {
             getMileStones: [...cacheData.MileStones, data['createMileStone']]
           },
         });
+        setMilestoneLoading(false);
+
       }
     });
+
+
   }
 
   const confirmationUpdate = (plan) => {
     closeEditPopup()
   }
   const confirmationDelete = (plan) => {
+    setMilestoneLoading(true);
+
     closeDeletePopup()
     const milestoneID = plan.milestoneID;
     // console.log('plan=milestoneID', milestoneID);
@@ -202,6 +212,8 @@ export function Planning(props: PlanningProps) {
           },
           variables: { milestoneID },
         });
+        setMilestoneLoading(false);
+
       }
 
     });
@@ -220,6 +232,8 @@ export function Planning(props: PlanningProps) {
   // }
   const editMilestoneData = (data) => {
     // console.log('edited-data', data);
+    setMilestoneLoading(true);
+
     setOpen(false)
     milestoneUpdate({
       variables: data,
@@ -234,6 +248,8 @@ export function Planning(props: PlanningProps) {
             tasks: [...cacheData.MileStones, milestoneUpdate]
           },
         });
+        setMilestoneLoading(false);
+
       }
     });
 
@@ -253,31 +269,34 @@ export function Planning(props: PlanningProps) {
   const cancelAdd = () => {
     setIsOpen(false)
   }
-const getAddLinkSelect = (selectedValue)=>{
-  console.log('---getAddLinkSelect---selectedValue--', selectedValue)
-  if(selectedValue==='addLink'){
-    console.log('---if selectedValue--', selectedValue)
-    setIsOpen(true)
-  } else {
-    console.log('---else selectedValue--', selectedValue)
+  const getAddLinkSelect = (selectedValue) => {
+    console.log('---getAddLinkSelect---selectedValue--', selectedValue)
+    if (selectedValue === 'addLink') {
+      console.log('---if selectedValue--', selectedValue)
+      setIsOpen(true)
+    } else {
+      console.log('---else selectedValue--', selectedValue)
+    }
   }
-}
 
-const getSearchSelect = (selectedValue)=>{
-  console.log('---getAddLinkSelect---selectedValue--', selectedValue)
-  if(selectedValue==='addLink'){
-    console.log('---if selectedValue--', selectedValue)
-    setIsOpen(true)
-  } else {
-    console.log('---else selectedValue--', selectedValue)
+  const getSearchSelect = (selectedValue) => {
+    console.log('---getAddLinkSelect---selectedValue--', selectedValue)
+    if (selectedValue === 'addLink') {
+      console.log('---if selectedValue--', selectedValue)
+      setIsOpen(true)
+    } else {
+      console.log('---else selectedValue--', selectedValue)
+    }
   }
-}
 
 
 
 
   return (
     <div>
+      {
+        milestoneLoading && <LoaderPage />
+      }
       {openNew && <ModalPlanningNew worktypes={props.worktypes} cancel={cancelAdd} openNew={openNew} getMilestoneData={getMilestoneData}></ModalPlanningNew>}
       {open ?
         <div style={{ marginLeft: 900 }} >
@@ -313,6 +332,8 @@ const getSearchSelect = (selectedValue)=>{
           <EditMileStonePopup worktypes={props.worktypes} openEdit={openEdit} confirm={confirmationUpdate} getMilestoneData={editMilestoneData} planData={planData} cancel={closeEditPopup}></EditMileStonePopup>
         </div>
         : null}
+
+
       <div className="tabs-main-info-container planning-outer-con">
         <h3>{t("project_tab_menu.planning.title")}
           <Button size="small" className="primary" onClick={openAdd}>
@@ -322,10 +343,10 @@ const getSearchSelect = (selectedValue)=>{
 
         <div className="active-milestone">
           <h4 className="headingactive">
-          {t("project_tab_menu.planning.active_milestone")}
-          <SelectDropdown selectedValue={getAddLinkSelect}/>    
+            {t("project_tab_menu.planning.active_milestone")}
+            <SelectDropdown selectedValue={getAddLinkSelect} />
 
-          <SelectSearchableDropdown  selectedValue={getSearchSelect} />     
+            <SelectSearchableDropdown selectedValue={getSearchSelect} />
           </h4>
           <Form>
             {/* <Grid columns={4}>
@@ -426,7 +447,7 @@ const getSearchSelect = (selectedValue)=>{
                       <div className="date-status">
                         <label>{new Date(plan.dueDate).toDateString()}</label>
                         <a onClick={() => update(plan)}>
-                          
+
                           {plan.status == "INPROGRESS" ?
                             <i className="ms-Icon ms-Icon--Completed" aria-hidden="true"></i>
                             : <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/green_tick.png`} className=" mr-2 mr-10 " />

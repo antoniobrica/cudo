@@ -45,6 +45,11 @@ query Tasks($referenceID: String!)
       }
       subtasks{subtaskID, subtaskTitle, status,isDeleted}
   }
+  total
+next
+previous
+page_total
+hasNextPage
     } 
   }
 `;
@@ -153,8 +158,8 @@ mutation UpdateTask(
   $taskID: String!,    
   $status: TASKSTATUS!,
   $taskTitle: String!,
-  $startDate: DateTime!,
-  $endDate: DateTime!,
+  $startDate: DateTime,
+  $endDate: DateTime,
   $estimatedDays: String!,
   $sendNotification: Boolean!,
   $BKPID: String!,

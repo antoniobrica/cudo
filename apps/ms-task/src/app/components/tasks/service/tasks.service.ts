@@ -360,6 +360,9 @@ export class TasksService {
             }
         if (subtasks)
             for (let index = 0; index < subtasks.length; index++) {
+                if(subtasks[index].subtaskTitle===""){
+                    throw new TaskCustomError(TaskErrorTypeEnum.NO_SUBTASK_TITLE)
+                }
                 const subtaskEntity = new SubTaskEntity(subtasks[index])
                 const newSubTask = await this.subTaskRepository.create({ ...subtaskEntity, taskID: taskBasics.taskID });
                 const savedSubTask = await this.subTaskRepository.save(newSubTask);
@@ -412,7 +415,7 @@ export class TasksService {
         console.log(subtask)
         if (!subtask) {
             // throw subtask not found exeption
-            throw new TaskCustomError(TaskErrorTypeEnum.RECORD_NOT_EXIST)
+            throw new TaskCustomError(TaskErrorTypeEnum.SUBTASK_NOT_EXITST)
         }
             await this.subTaskRepository.update(subtask.Id, { ...createinput });
             const updatedPost = await this.subTaskRepository.findOne(subtask.Id);
@@ -444,7 +447,7 @@ export class TasksService {
             return updatedPost
         }
         // throw subtask not found exeption
-        throw new TaskCustomError(TaskErrorTypeEnum.RECORD_NOT_EXIST)
+        throw new TaskCustomError(TaskErrorTypeEnum.SUBTASK_NOT_EXITST)
     }
 
     public async findAlltasksBYTaskTypes(refFilter: ReferenceFilterParams, taskTypeFilter: taskTypeFilterParam): Promise<TasksEntity[]> {

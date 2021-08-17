@@ -43,22 +43,23 @@ export function TaskArea(props: Tasks) {
   }, [props?.task])
 
   useEffect(() => {
-    setSubTaskAddLoading(props.addSubTaskLoading)
-    if (props.addSubTaskLoading === false && viewSubTaskAdd === true) {
-      setViewSubTaskAdd(false)
+    if(!props.addSubTaskLoading){
+      setSubTaskAddLoading(false)
     }
-  }, [props?.addSubTaskLoading])
+      setViewSubTaskAdd(false)
+  }, [props?.taskListData])
 
   useEffect(() => {
     setSubTaskDeleteLoading(false)
-  },[props.taskListData])
+  }, [props.taskListData])
 
   useEffect(() => {
-    setSubTaskEditLoading(props.editSubTaskLoading)
-    if (props.editSubTaskLoading === false && openSubTaskEdit === true) {
-      setOpenSubTaskEdit(false)
+    if(!props.editSubTaskLoading){
+      setSubTaskEditLoading(false)
+
     }
-  }, [props?.editSubTaskLoading])
+      setOpenSubTaskEdit(false)
+  }, [props?.taskListData])
 
   const description = [
     <Segment>Pellentesque habitant morbi tristique senectus.</Segment>
@@ -87,6 +88,7 @@ export function TaskArea(props: Tasks) {
     setSubtaskTitle(e.target.value);
   }
   const createSubTask = (task) => {
+    setSubTaskAddLoading(true)
     const subTaskTitle = subtaskTitle;
     props.subTask(task, subTaskTitle)
     // setViewSubTaskAdd(false)
@@ -117,6 +119,7 @@ export function TaskArea(props: Tasks) {
   }
 
   const onClickSubTaskUpdate = (taskId, subTaskId, subTaskTitle) => {
+    setSubTaskEditLoading(true)
     if (viewSubTaskAdd === true) {
       setViewSubTaskAdd(false)
     }
@@ -167,21 +170,21 @@ export function TaskArea(props: Tasks) {
   let renderSubtaskItems = null
   const showSubTaskItems = (taskId, subTaskId, subTaskTitle, subtaskStatus, index) => {
     renderSubtaskItems =
-        <div className="d-flex align-items-center checklist-listing-main" key={subTaskId}>
-          <span className="anchor_complete" onClick={() => onClickSubTaskStatusUpdate(taskId, subTaskId, subtaskStatus === 'INPROGRESS' ? 'COMPLETED' : 'INPROGRESS')}>
-            {subtaskStatus === 'INPROGRESS' ?
-              <a title={t("project_tab_menu.task.completed")}><i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i> </a>
-              :
-              <i className="ms-Icon ms-Icon--Accept completed" aria-hidden="true"></i>
-            }
-          </span>
-          <span className="task-checklisting-text">{index + 1}. {subTaskTitle}</span>
+      <div className="d-flex align-items-center checklist-listing-main" key={subTaskId}>
+        <span className="anchor_complete" onClick={() => onClickSubTaskStatusUpdate(taskId, subTaskId, subtaskStatus === 'INPROGRESS' ? 'COMPLETED' : 'INPROGRESS')}>
+          {subtaskStatus === 'INPROGRESS' ?
+            <a title={t("project_tab_menu.task.completed")}><i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i> </a>
+            :
+            <i className="ms-Icon ms-Icon--Accept completed" aria-hidden="true"></i>
+          }
+        </span>
+        <span className="task-checklisting-text">{index + 1}. {subTaskTitle}</span>
 
 
-          <span className="checklist-actions" onClick={() => onClickEditSubTask(taskId, subTaskId, subTaskTitle)}> <Icon name="pencil" /></span>
-          <span className="checklist-actions" onClick={() => onClickDeleteSubTask(taskId, subTaskId)}>< Icon name="trash alternate outline" /> </span>
+        <span className="checklist-actions" onClick={() => onClickEditSubTask(taskId, subTaskId, subTaskTitle)}> <Icon name="pencil" /></span>
+        <span className="checklist-actions" onClick={() => onClickDeleteSubTask(taskId, subTaskId)}>< Icon name="trash alternate outline" /> </span>
 
-        </div>
+      </div>
 
     return renderSubtaskItems
   }
@@ -216,15 +219,17 @@ export function TaskArea(props: Tasks) {
                         <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> 5 {t("project_tab_menu.task.days")} <span className="dash-seperator">-</span> </span>
                       </a>
                     </div>
-                    <div className="navi-item">
-                      <a className="navi-link">
-                        <span className="navi-text">{props?.task?.phaseName}  <span className="dash-seperator">-</span>  </span>
-                      </a>
-                    </div>
+                    {props?.task?.phaseName && (
+                      <div className="navi-item">
+                        <a className="navi-link">
+                          <span className="navi-text">{props?.task?.phaseName}  <span className="dash-seperator">-</span>  </span>
+                        </a>
+                      </div>
+                    )}
                     {props?.task?.workTypeName &&
                       <div className="navi-item">
                         <a className="navi-link">
-                          <span className="navi-text">{props?.task?.workTypeName}   <span className="dash-seperator">-</span> </span>
+                          <span className="navi-text">{props?.task?.workTypeName} </span>
                         </a>
                       </div>
                     }
@@ -238,7 +243,7 @@ export function TaskArea(props: Tasks) {
                       subtaskData?.length > 0 ?
                         <div className="navi-item">
                           <a className="navi-link">
-                            <span className="navi-text"> {subtaskData?.length} Check points  </span>
+                            <span className="navi-text"> - {subtaskData?.length} {t("project_tab_menu.task.check_points")}  </span>
                           </a>
                         </div> : null
                     }
@@ -366,11 +371,12 @@ export function TaskArea(props: Tasks) {
 
                   <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row task-listing-desc">
 
-                    <div className="navi-item">
-                      <a className="navi-link active">
-                        <span className="navi-text">( {new Date(props?.task?.startDate).toDateString()} ↦ Due {new Date(props?.task?.endDate).toDateString()})</span>
-                      </a>
-                    </div>
+                    {(props?.task.startDate || props?.task?.endDate) && (
+                      <div className="navi-item">
+                        <a className="navi-link active">
+                          <span className="navi-text">( {props?.task?.startDate && new Date(props?.task?.startDate).toDateString()} ↦ Due {props?.task?.endDate && new Date(props?.task?.endDate).toDateString()})</span>
+                        </a>
+                      </div>)}
 
                     {props.task?.file &&
                       <div className="navi-item">
@@ -380,20 +386,22 @@ export function TaskArea(props: Tasks) {
                       </div>
                     }
 
-                    <div className="navi-item">
-                      <a className="navi-link">
-                        <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> {props?.task?.estimatedDays} {t("project_tab_menu.task.days")} <span className="dash-seperator">-</span> </span>
-                      </a>
-                    </div>
-                    <div className="navi-item">
-                      <a className="navi-link">
-                        <span className="navi-text">{props?.task?.phaseName} <span className="dash-seperator"> - </span> </span>
-                      </a>
-                    </div>
+                    {props?.task?.estimatedDays && (
+                      <div className="navi-item">
+                        <a className="navi-link">
+                          <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> {props?.task?.estimatedDays} {t("project_tab_menu.task.days")} <span className="dash-seperator">-</span> </span>
+                        </a>
+                      </div>)}
+                    {props?.task?.phaseName && (
+                      <div className="navi-item">
+                        <a className="navi-link">
+                          <span className="navi-text">{props?.task?.phaseName} <span className="dash-seperator"> - </span> </span>
+                        </a>
+                      </div>)}
                     {props?.task?.workTypeName &&
                       <div className="navi-item">
                         <a className="navi-link">
-                          <span className="navi-text"> {props?.task?.workTypeName} <span className="dash-seperator"> - </span>   </span>
+                          <span className="navi-text"> {props?.task?.workTypeName}  </span>
                         </a>
                       </div>
                     }
@@ -401,7 +409,7 @@ export function TaskArea(props: Tasks) {
                       subtaskData?.length > 0 ?
                         <div className="navi-item">
                           <a className="navi-link">
-                            <span className="navi-text"> {subtaskData?.length} Check points  </span>
+                            <span className="navi-text"> - {subtaskData?.length} {t("project_tab_menu.task.check_points")}  </span>
                           </a>
                         </div> : null
                     }
@@ -413,7 +421,6 @@ export function TaskArea(props: Tasks) {
                 <div className="sub-task-list-toggle" onClick={() => !isExpended ? openSubTask(props.task, props.id) : closeSubTask()}>
                   <Icon name='tasks' />
                 </div>
-
               </div>
 
               <div className="tasks-action-area">
@@ -493,45 +500,45 @@ export function TaskArea(props: Tasks) {
 
                   <div className="card-body">
 
-                    { 
-                   (subtaskDeleteLoading && props.taskDeleteUpdateStatusLoading) ? <LazyLoading /> : (
-                    <div>
-                      {subtaskData.map((subtask, index) => {
+                    {
+                      (subtaskDeleteLoading && props.taskDeleteUpdateStatusLoading) ? <LazyLoading /> : (
+                        <div>
+                          {subtaskData.map((subtask, index) => {
 
-                        const isSubtaskShowEdit = openSubTaskEdit === true && subtask.subtaskID === subTaskId
+                            const isSubtaskShowEdit = openSubTaskEdit === true && subtask.subtaskID === subTaskId
 
-                        return isSubtaskShowEdit ? showEditForm() : showSubTaskItems(props.task.taskID, subtask.subtaskID, subtask.subtaskTitle, subtask.status, index)
+                            return isSubtaskShowEdit ? showEditForm() : showSubTaskItems(props.task.taskID, subtask.subtaskID, subtask.subtaskTitle, subtask.status, index)
 
-                      })}
+                          })}
 
-                      {
-                        openSubTaskEdit === false && viewSubTaskAdd ?
-                          <div className="add-new-task-con">
-                            {subtaskAddLoading ? <LazyLoading /> : <>
-                              <span className="anchor_complete checklist-complete-box"><a title={t("project_tab_menu.task.completed")}> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i> </a> </span>
-                              <div className="classtop add-new-task-field">
-                                <Form.Field className="fillarea">
-                                  <Input placeholder='Enter your text here....' size='small' className="full-width "
-                                    type="text"
-                                    value={subtaskTitle}
-                                    onChange={onSubtaskTitle}
-                                  />
-                                </Form.Field>
-                                <Form.Field className="d-flex">
-                                  <button className="greenbutton anchor_complete" onClick={() => createSubTask(props.task)}>
-                                    <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
-                                  </button> &nbsp;  <button className="redbutton anchor_complete" onClick={cancelSubtaskAdd}>
-                                    <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> </button>
-                                </Form.Field>
+                          {
+                            openSubTaskEdit === false && viewSubTaskAdd ?
+                              <div className="add-new-task-con">
+                                {subtaskAddLoading ? <LazyLoading /> : <>
+                                  <span className="anchor_complete checklist-complete-box"><a title={t("project_tab_menu.task.completed")}> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i> </a> </span>
+                                  <div className="classtop add-new-task-field">
+                                    <Form.Field className="fillarea">
+                                      <Input placeholder='Enter your text here....' size='small' className="full-width "
+                                        type="text"
+                                        value={subtaskTitle}
+                                        onChange={onSubtaskTitle}
+                                      />
+                                    </Form.Field>
+                                    <Form.Field className="d-flex">
+                                      <button className="greenbutton anchor_complete" onClick={() => createSubTask(props.task)}>
+                                        <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
+                                      </button> &nbsp;  <button className="redbutton anchor_complete" onClick={cancelSubtaskAdd}>
+                                        <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> </button>
+                                    </Form.Field>
+                                  </div>
+                                </>}
                               </div>
-                            </>}
-                          </div>
-                          :
-                          <div onClick={addNewSubTask} className="add-new-link"> <span className="anchor_complete"><i className="ms-Icon ms-Icon--Add" aria-hidden="true"></i> {t("common.add_new_button")}</span></div>
+                              :
+                              <div onClick={addNewSubTask} className="add-new-link"> <span className="anchor_complete"><i className="ms-Icon ms-Icon--Add" aria-hidden="true"></i> {t("common.add_new_button")}</span></div>
 
-                      }
+                          }
 
-                    </div>)
+                        </div>)
                     }
 
                   </div>
