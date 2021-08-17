@@ -18,7 +18,7 @@ async function bootstrap() {
   // app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
   const port = process.env.PORT || 3333;
   await app.listen(port, () => {
-    Logger.log('Listening at http://192.168.1.5:' + port + '/' + globalPrefix);
+    Logger.log('Listening at http://192.168.0.31:' + port + '/' + globalPrefix);
   });
 }
 
