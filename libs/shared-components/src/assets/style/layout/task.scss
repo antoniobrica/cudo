@@ -318,6 +318,8 @@
   float: right;
   margin-top: -8px;
   @include align-items(center);
+  position: relative;
+  z-index: 1;
 }
 .button.icon i.dropdown.icon {
   display: none;

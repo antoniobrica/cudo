@@ -309,11 +309,11 @@ export function CreateTask(props: CreateTaskProps) {
         // trigger={<Button size='mini' className="grey-btn taskmargin">+ Add  New Task</Button>} 
         closeOnDimmerClick={false}
       >
-        {loading ?
+        {/* {loading ? */}
           <Dimmer active inverted Center inline>
             <Loader size='big'>Loading</Loader>
           </Dimmer>
-          : null}
+          {/* : null} */}
         <Modal.Header><h3>{t("project_tab_menu.task.add_new_task")} </h3></Modal.Header>
         <Modal.Content body>
           <div>
