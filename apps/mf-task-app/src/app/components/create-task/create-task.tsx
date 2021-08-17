@@ -335,7 +335,7 @@ export function CreateTask(props: CreateTaskProps) {
           <Dimmer active inverted Center inline>
             <Loader size='big'>Loading</Loader>
           </Dimmer>
-          : null}
+        : null}
         <Modal.Header><h3>{t("project_tab_menu.task.add_new_task")} </h3></Modal.Header>
         <Modal.Content body>
           <div>

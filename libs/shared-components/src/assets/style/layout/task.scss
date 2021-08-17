@@ -318,6 +318,8 @@
   float: right;
   margin-top: -8px;
   @include align-items(center);
+  position: relative;
+  z-index: 1;
 }
 .button.icon i.dropdown.icon {
   display: none;
@@ -391,6 +393,7 @@ canvas.coveringCanvas{
           font-size: 13px;
           font-weight: 500;
           color: #262B43;
+          top: inherit;
         }
       }
     }
@@ -668,6 +671,18 @@ button.anchor_complete i {
 }
 h3.alltask {
   margin-bottom: 15px;
+  position: relative;
+  a {
+    font-weight: 400;
+    color: #1e70bf;
+    margin-left: 5px;
+  }
+  i {
+    position: absolute;
+    right: 5px;
+    font-size: 14px;
+    cursor: pointer;
+  }
 }
 i.circle-checkmark {
   border-radius: 50%;
