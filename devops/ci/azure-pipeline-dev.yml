@@ -174,15 +174,25 @@ jobs:
                   npm run nx run-many -- --target=build --projects='mf-account-app' --with-deps --generatePackageJson=true
                   cp devops/docker/mf-dockerfile dist/apps/mf-account-app/Dockerfile
                   cp devops/docker/nginx.conf dist/apps/mf-account-app/
-          - task: Docker@2
-            displayName: Build and push an image to container registry
+          - task: PublishBuildArtifacts@1
+            displayName: Publish Artifacts
             inputs:
-              command: buildAndPush
-              repository: mf-account-app-dev
-              dockerfile: dist/apps/mf-account-app/Dockerfile
-              containerRegistry: dev-docker-registry
-              tags: $(tag)
-          - bash : helm upgrade  --namespace cudo-f-dev --install --wait cudo-aa --set image.tag=$(tag) /home/softobiz/charts/cudo-helm/dev/mf-account-app-dev/mf-account-app-dev-0.1.0.tgz
+              ArtifactName: mf-account-app
+
+          - task: CopyFiles@2
+            displayName: Publish-mf-account-app
+            inputs:
+             SourceFolder: $(Build.SourcesDirectory)/dist/apps/mf-account-app/
+             TargetFolder: $(Build.ArtifactStagingDirectory)/mf-account-app/
+
+          - task: AzureFileCopy@4
+            displayName: 'AzureBlob mf-account-app'
+            inputs:
+             SourcePath: '$(System.DefaultWorkingDirectory)/_pi-cudo-ms-dev/mf-account-app/mf-account-app/*'
+             azureSubscription: 'dev-cudo'
+             Destination: AzureBlob
+             storage: mfaccountappdev
+             ContainerName: '$web'
 - job: mfcontainerapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
