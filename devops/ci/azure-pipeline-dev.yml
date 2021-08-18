@@ -175,6 +175,7 @@ jobs:
                   npm run nx run-many -- --target=build --projects='mf-account-app' --with-deps --generatePackageJson=true
                   cp devops/docker/mf-dockerfile dist/apps/mf-account-app/Dockerfile
                   cp devops/docker/nginx.conf dist/apps/mf-account-app/
+                  echo $(mf-account-app-storage)
                   az storage blob upload-batch --account-name mfaccountappdev -s ./dist/apps/mf-account-app/ -d '$web' --account-key $(mf-account-app-storage) --auth-mode key
 - job: mfcontainerapp
   pool: cudo-selfhosted-agent
