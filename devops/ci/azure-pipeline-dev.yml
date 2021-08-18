@@ -174,28 +174,7 @@ jobs:
                   npm run nx run-many -- --target=build --projects='mf-account-app' --with-deps --generatePackageJson=true
                   cp devops/docker/mf-dockerfile dist/apps/mf-account-app/Dockerfile
                   cp devops/docker/nginx.conf dist/apps/mf-account-app/
-                  az storage blob upload-batch --account-name mfaccountappdev -s ./dist/apps/mf-account-app/ -d '$web' --account-key cMPvcUrZbqpv+ill65aVPKB8oRyE3/LzgvVrlCNNJDHtPHB1+zdnFrTUEidN+TfAKXSPplSmrYw8KJFoZuMzJA== --auth-mode key
-
-
-                  #- task: PublishBuildArtifacts@1
-                  # displayName: Publish Artifacts
-                  #     inputs:
-                  #   ArtifactName: mf-account-app
-
-                  # - task: CopyFiles@2
-                  #    displayName: Publish-mf-account-app
-                  #  inputs:
-                  #  SourceFolder: $(Build.SourcesDirectory)/dist/apps/mf-account-app/
-                  #   TargetFolder: $(Build.ArtifactStagingDirectory)/mf-account-app/
-
-             # - task: AzureFileCopy@4
-             # displayName: 'AzureBlob mf-account-app'
-             #inputs:
-             #SourcePath: '$(System.DefaultWorkingDirectory)/_pi-cudo-ms-dev/mf-account-app/mf-account-app/*'
-             #azureSubscription: 'dev-cudo'
-             #Destination: AzureBlob
-             #storage: mfaccountappdev
-             #ContainerName: '$web'
+                  az storage blob upload-batch --account-name mfaccountappdev -s ./dist/apps/mf-account-app/ -d '$web' --account-key $(mf-account-app-storage) --auth-mode key
 - job: mfcontainerapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
