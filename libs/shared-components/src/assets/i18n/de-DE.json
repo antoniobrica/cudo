@@ -315,6 +315,15 @@
         "protocol_status_updated": "Protocol status updated",
         "protocol_edit": "Protocol updated successfully",
         "protocol_deleted": "Protocol deleted"
+      },
+      "files": {
+        "file_uploaded": "File uploaded successfully",
+        "file_updated": "File updated successfully",
+        "file_saved": "File saved successfully",
+        "version_uploaded": "New version updated successfully",
+        "reference_added": "Project reference added to File",
+        "file_deleted": "File deleted successfully",
+        "file_version_deleted": "File version deleted successfully"
       }
     },
     "error": {
@@ -402,6 +411,15 @@
           "no_end_time": "Can not create protocol without end time",
           "wrong_time": "Start time must be smaller than end time"
         }
+      },
+      "files": {
+        "file_already_exists": "File already exists",
+        "file_not_found": "File not found",
+        "parent_not_found": "Parent not found",
+        "pins_not_found": "Pins not found",
+        "version_not_created": "File version not created",
+        "file_not_added": "File not added",
+        "file_not_deleted": "File not deleted"
       }
     }
   },
