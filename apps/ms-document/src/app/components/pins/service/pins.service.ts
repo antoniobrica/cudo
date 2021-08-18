@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindManyOptions, MoreThan, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import PinsTypeEntity from '../../../entities/pins.entity';
+import { FileErrorTypeEnum } from '../../../enum/file-error-type.enum';
+import FileCustomError from '../../../exceptions/fileCustomError.exception';
 import { PinsInputDto } from '../dto/input/pins.input.dto';
 import { PinsUpdateInputDto } from '../dto/input/pins.upate.input.dto';
 import PinsFilterParams from '../dto/input/pinsFilter.input';
-import PinsNotFoundException from '../exceptions/pinsNotFound.exception';
 
 @Injectable()
 export class PinsService {
@@ -27,7 +28,7 @@ export class PinsService {
         if (pins) {
             return pins;
         }
-        throw new PinsNotFoundException(refFilter.uploadedFileID);
+        throw new FileCustomError(FileErrorTypeEnum.PINS_NOT_FOUND)
     }
 
     async updatePins(refFilter: PinsFilterParams, pinsDetails: PinsUpdateInputDto) {
@@ -38,7 +39,8 @@ export class PinsService {
             const updatedPost = await this.referancesRepository.find({ where: { ...refFilter } });
             return updatedPost;
         }
-        throw new PinsNotFoundException(refFilter.uploadedFileID);
+        throw new FileCustomError(FileErrorTypeEnum.PINS_NOT_FOUND)
+
     }
 
     async deletePins(refFilter: PinsFilterParams) {
@@ -47,7 +49,8 @@ export class PinsService {
         if (deleteResponse) {
             return deleteResponse;
         }
-        throw new PinsNotFoundException(refFilter.uploadedFileID);
+        throw new FileCustomError(FileErrorTypeEnum.PINS_NOT_FOUND)
+
     }
 
 }
