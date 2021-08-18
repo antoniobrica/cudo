@@ -185,14 +185,14 @@ jobs:
              SourceFolder: $(Build.SourcesDirectory)/dist/apps/mf-account-app/
              TargetFolder: $(Build.ArtifactStagingDirectory)/mf-account-app/
 
-          - task: AzureFileCopy@4
-            displayName: 'AzureBlob mf-account-app'
-            inputs:
-             SourcePath: '$(System.DefaultWorkingDirectory)/_pi-cudo-ms-dev/mf-account-app/mf-account-app/*'
-             azureSubscription: 'dev-cudo'
-             Destination: AzureBlob
-             storage: mfaccountappdev
-             ContainerName: '$web'
+             # - task: AzureFileCopy@4
+             # displayName: 'AzureBlob mf-account-app'
+             #inputs:
+             #SourcePath: '$(System.DefaultWorkingDirectory)/_pi-cudo-ms-dev/mf-account-app/mf-account-app/*'
+             #azureSubscription: 'dev-cudo'
+             #Destination: AzureBlob
+             #storage: mfaccountappdev
+             #ContainerName: '$web'
 - job: mfcontainerapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
