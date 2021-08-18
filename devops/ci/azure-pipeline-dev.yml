@@ -23,8 +23,9 @@ trigger:
       - deploy/docker-compose-ory/*
       - libs/*
 variables:
-  tag: '$(Build.BuildId)'
-  group: dev
+  - group: dev
+    #variables:
+        # tag: '$(Build.BuildId)'
 jobs:
 - job: cudogetchp
   pool: cudo-selfhosted-agent
