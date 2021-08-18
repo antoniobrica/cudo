@@ -31,8 +31,8 @@ export function FileListing(props: FileListingProps) {
 
   const history = useHistory();
   const pathNames = history.location.pathname.split("/");
-  // const projectId = pathNames[3].toString();
-  const projectId = "13"
+  const projectId = pathNames[3].toString();
+  // const projectId = "13"
 
   const sharedContext = React.useContext(SharedViewStateContext);
   const downloadsContext = React.useContext(DownloadsViewStateContext);

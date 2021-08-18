@@ -6,6 +6,7 @@ import ViewFileDetail from '../modal/viewdetailsfile';
 import AddPinFile from '../modal/pinaddfile';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { LazyLoading } from '@cudo/shared-components';
+import moment from 'moment';
 
 /* eslint-disable-next-line */
 export interface FileStructureProps {
@@ -200,8 +201,8 @@ export function FileStructure(props: FileStructureProps) {
 				<div className="files-left-area">
 					<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
 					<h3 className="files-name">{fileTitle}</h3>
-					<span className="no-of-files"><i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i> 2 comments</span>
-					<span className="no-of-files"><i className="ms-Icon ms-Icon--CheckboxComposite" aria-hidden="true"></i> 2 tasks</span>
+					<span className="no-of-files" onClick={() => onClickViewFileDetail(singleFileItem)}><i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i> 2 comments</span>
+					<span className="no-of-files" onClick={() => onClickViewFileDetail(singleFileItem)}><i className="ms-Icon ms-Icon--CheckboxComposite" aria-hidden="true"></i> 2 tasks</span>
 					{versionCount > 0 ? <span className="version-files"><a onClick={() => onClickFileVersion(uploadedFileID)}>Ver {versionCount}</a></span>:null}
 				</div>
 				<div className="files-right-area">
@@ -239,9 +240,12 @@ export function FileStructure(props: FileStructureProps) {
 								<div className="version-file-con">
 									{props?.fileVersionDetail?.children.map((item) => {
 
-										const { uploadedFileID, fileType, fileTitle, fileVersion } = item
+										const { uploadedFileID, fileType, fileTitle, fileVersion, createdBy, updatedBy, createdAt, updatedAt } = item
+										const formattedCreatedAt = moment(createdAt).format('DD MMM, YYYY')
+										const formattedUpdatedAt = moment(updatedAt).format('DD MMM, YYYY')
+										
 										return (<div key={uploadedFileID} className="files-versioning-list">
-											<p>Version {fileVersion} - <span>{fileTitle}</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
+											<p>Version {fileVersion} - <span>{fileTitle}</span> <span className="small-text">(By: {updatedBy ? updatedBy : createdBy} - Uploaded on: {updatedAt ? formattedUpdatedAt : formattedCreatedAt})</span></p>
 											<div className="files-right-area">
 												<a onClick={onClickVersionDetail}> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
 											</div>

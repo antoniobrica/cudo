@@ -3,7 +3,7 @@ import React, { Component, useEffect, useRef } from 'react'
 import axios from 'axios';
 import { MS_SERVICE_URL } from '@cudo/mf-core'
 export interface CanvasTransparentProps {
-  imgUrl?,  
+  imgUrl?,
   fileId?,
   allowToCreateNewPin?
   // isPinCreated?
@@ -33,12 +33,12 @@ export function CanvasTransparent(props: CanvasTransparentProps) {
     const canvasToDrawCircleEle = canvasToDrawCircle.current;
     canvasToDrawCircleEle.width = canvasToDrawCircleEle.clientWidth;
     canvasToDrawCircleEle.height = canvasToDrawCircleEle.clientHeight;
-    
+
     // setCtxToDrawCircle(canvasToDrawCircleEle.getContext("2d"));
 
-    // start added MK
+    // start added MK ===================
     const circleContext = canvasToDrawCircleEle.getContext("2d")
-    circleContext.globalAlpha=0.15
+    circleContext.globalAlpha = 0.15
 
     const imgagDraw = new Image();
     imgagDraw.src = props.imgUrl;
@@ -46,17 +46,40 @@ export function CanvasTransparent(props: CanvasTransparentProps) {
       const hRatio = canvasToDrawCircle.current.clientWidth / imgagDraw.width;
       const vRatio = canvasToDrawCircle.current.clientHeight / imgagDraw.height;
       const ratio = Math.min(hRatio, vRatio);
-      circleContext.arc(x_axis, y_axis, pinList.length + 1, 0, Math.PI * 2, true);     
-      circleContext.drawImage(imgagDraw, 0, 0, imgagDraw.width, imgagDraw.height, 0, 0, imgagDraw.width * ratio, imgagDraw.height * ratio); 
+      // circleContext.arc(x_axis, y_axis, pinList.length + 1, 0, Math.PI * 2, true);
+      // circleContext.drawImage(imgagDraw, 0, 0, imgagDraw.width, imgagDraw.height, 0, 0, imgagDraw.width * ratio, imgagDraw.height * ratio);
     }
 
+    //======
+    console.log('--canvasTansparent-----drawFillCircle----')
+    // const { x, y, pinNumber } = info;
+    const pointSize = 10; // Change according to the size of the point.
+    // if (!info.isNewPin)
+    //  circleContext.fillStyle = info.isHovering ? info.hovercolor : info.blurcolor; // Red color   
+    // else
+    //   circleContext.fillStyle = info.isHovering ? info.hovercolor : info.newcolor;
+    circleContext.beginPath(); //Start path
+    circleContext.arc(x_axis, y_axis, pointSize, 0, Math.PI * 2, true); // Draw a point using the arc function of the canvasToDrawCircle with a point structure.
+    circleContext.fill(); // Close the path and fill.
+    circleContext.closePath();
+    circleContext.stroke();
+    circleContext.beginPath(); //Start path
+    circleContext.fillStyle = "black";
+    circleContext.fillText(JSON.stringify(pinList.length + 1), x_axis - 3, y_axis + 3)
+    circleContext.fill();
+    circleContext.closePath();
+    circleContext.stroke();
+    //======
+
     ctxToDrawCircle.current = circleContext
-    // end added mk
+    // end added mk =================
 
     // getPins().then(() => {
     //   console.log('--canvasTansparent----canvas-0-getPins Done', props.allowToCreateNewPin)
     // })
+
     
+
   }, []);
   // useEffect(() => {
   //   if (!props.isPinCreated)
@@ -116,8 +139,8 @@ export function CanvasTransparent(props: CanvasTransparentProps) {
     }
     setpinList([...lastBoxes])
     // props.setIsPinCreated(true);
-  // }, [props.isPinCreated, isCircleSelectedOnMouseDown, x_axis, y_axis]);
-}, [isCircleSelectedOnMouseDown, x_axis, y_axis]);
+    // }, [props.isPinCreated, isCircleSelectedOnMouseDown, x_axis, y_axis]);
+  }, [isCircleSelectedOnMouseDown, x_axis, y_axis]);
 
 
   useEffect(() => {
@@ -147,7 +170,7 @@ export function CanvasTransparent(props: CanvasTransparentProps) {
   }, [dragTarget, isCircleSelectedOnMouseDown]);
 
   const drawImagesWithPins = () => {
-    console.log('--canvasTansparent-------drawImagesWithPins--imgUrl--',props.imgUrl)
+    console.log('--canvasTansparent-------drawImagesWithPins--imgUrl--', props.imgUrl)
     const imgagDraw = new Image();
     imgagDraw.src = props.imgUrl;
     imgagDraw.onload = function () {
@@ -296,16 +319,16 @@ export function CanvasTransparent(props: CanvasTransparentProps) {
   return (
     <div className="outsideWrapper">
       <div className="insideWrapper">
-        <canvas className="coveringCanvas"  style={{ border: "1px solid red"}}
+        <canvas className="coveringCanvas"
           width="800" height="700"
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseOut={handleMouseOut}
           ref={canvasToDrawCircle}></canvas>
-        {/* <canvas className="coveringCanvas" style={{ border: "1px solid red"}}
-          width="800" height="700"          
-          ref={canvasToDrawImage}></canvas> */}
+        {/* <canvas className="coveringCanvas" 
+            width="800" height="700"          
+            ref={canvasToDrawImage}></canvas> */}
       </div>
     </div>
   );

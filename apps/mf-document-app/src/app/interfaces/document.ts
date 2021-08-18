@@ -46,6 +46,10 @@ export interface IFileParam {
   directory: string
   structureTitle: string
   versionCount: number
+  createdBy: string
+  createdAt: Date
+  updatedBy: string
+  updatedAt:Date
 }
 
 export interface IPeople {

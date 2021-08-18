@@ -22,8 +22,10 @@ export const GET_FILES = gql`query UploadedFiles($projectId:String!)
     structureID 
     directory
     structureTitle 
-    updatedBy 
     createdBy 
+    createdAt 
+    updatedBy 
+    updatedAt
     isEveryOneAllowed 
     children{
       parentUploadedFileID
@@ -43,6 +45,10 @@ export const GET_FILES = gql`query UploadedFiles($projectId:String!)
       directory
       structureTitle  
       versionCount
+      createdBy 
+      createdAt 
+      updatedBy 
+      updatedAt
     }
     people { 
       userID 
@@ -234,8 +240,10 @@ export const GET_FILE_VERSIONS = gql`query FileVersions($projectId:String!,$file
     fileTitle
     fileType
     fileVersion
-    createdBy
-    updatedBy
+    createdBy 
+    createdAt 
+    updatedBy 
+    updatedAt
     isDeleted
     referenceID
     referenceTitle
@@ -257,6 +265,10 @@ export const GET_FILE_VERSIONS = gql`query FileVersions($projectId:String!,$file
       structureID
       directory
       structureTitle
+      createdBy 
+      createdAt 
+      updatedBy 
+      updatedAt
     }
     people {
       userID

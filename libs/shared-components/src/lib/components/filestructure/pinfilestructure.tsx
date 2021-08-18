@@ -5,6 +5,7 @@ import { Tab, Accordion, Dropdown } from 'semantic-ui-react'
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 import { LazyLoading } from '@cudo/shared-components';
+import moment from 'moment';
 
 /* eslint-disable-next-line */
 export interface FileStructureProps {
@@ -205,13 +206,16 @@ export function PinFileStructure(props: FileStructureProps) {
 							<>
 								<div className="break"></div>
 								<div className="version-file-con">
-									{props?.fileVersionDetail?.children.map((item) => {
+									{props?.fileVersionDetail?.children.map((versionFileItem) => {
 
-										const { uploadedFileID, fileType, fileTitle, fileVersion } = item
+										const { uploadedFileID, fileType, fileTitle, fileVersion, createdBy, updatedBy, createdAt, updatedAt } = versionFileItem
+										const formattedCreatedAt = moment(createdAt).format('DD MMM, YYYY')
+										const formattedUpdatedAt = moment(updatedAt).format('DD MMM, YYYY')
+										
 										return (<div key={uploadedFileID} className="files-versioning-list">
-											<p>Version {fileVersion} - <span>{fileTitle}</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
+											<p>Version {fileVersion} - <span>{fileTitle}</span> <span className="small-text">(By: {updatedBy ? updatedBy : createdBy} - Uploaded on: {updatedAt ? formattedUpdatedAt : formattedCreatedAt})</span></p>
 											<div className="files-right-area">
-												<a onClick={() => viewFile(singleFileItem)} className={selectedFile === uploadedFileID ? "selected" : ""}> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
+												<a onClick={() => viewFile(versionFileItem)} className={selectedFile === uploadedFileID ? "selected" : ""}> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
 											</div>
 										</div>)
 									})}
