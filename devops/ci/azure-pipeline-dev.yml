@@ -174,7 +174,7 @@ jobs:
                   npm run nx run-many -- --target=build --projects='mf-account-app' --with-deps --generatePackageJson=true
                   cp devops/docker/mf-dockerfile dist/apps/mf-account-app/Dockerfile
                   cp devops/docker/nginx.conf dist/apps/mf-account-app/
-                  az storage blob upload-batch --account-name mfaccountappdev -s ./dist/apps/mf-account-app/ -d '$web'
+                  az storage blob upload-batch --account-name mfaccountappdev -s ./dist/apps/mf-account-app/ -d '$web' --account-key cMPvcUrZbqpv+ill65aVPKB8oRyE3/LzgvVrlCNNJDHtPHB1+zdnFrTUEidN+TfAKXSPplSmrYw8KJFoZuMzJA== --auth-mode key
 
 
                   #- task: PublishBuildArtifacts@1
