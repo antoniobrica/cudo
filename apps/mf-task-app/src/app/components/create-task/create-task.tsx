@@ -323,7 +323,7 @@ export function CreateTask(props: CreateTaskProps) {
   return (
     <div >
       {/* <Modal className= "modal_media right-side--fixed-modal add-new-task-modal overflow-hidden"  */}
-      <Modal className={loading ? "modal_media right-side--fixed-modal add-new-task-modal overflow-hidden" : "modal_media right-side--fixed-modal add-new-task-modal"}
+      <Modal className={loading ? "modal_media right-side--fixed-modal add-new-task-modal disabled-fields" : "modal_media right-side--fixed-modal add-new-task-modal"}
         closeIcon
         onClose={cancel}
         onOpen={() => setOpen(true)}
@@ -331,11 +331,11 @@ export function CreateTask(props: CreateTaskProps) {
         // trigger={<Button size='mini' className="grey-btn taskmargin">+ Add  New Task</Button>} 
         closeOnDimmerClick={false}
       >
-        {addTaskLoading ?
+        {/* {addTaskLoading ?
           <Dimmer active inverted Center inline>
             <Loader size='big'>Loading</Loader>
           </Dimmer>
-        : null}
+        : null} */}
         <Modal.Header><h3>{t("project_tab_menu.task.add_new_task")} </h3></Modal.Header>
         <Modal.Content body>
           <div>
@@ -517,6 +517,7 @@ export function CreateTask(props: CreateTaskProps) {
             content={t("common.submit")}
             onClick={handleSaveTask}
             positive
+            loading
             size='small' className="primary"
           />
           <Button size='small' className="icon-border" onClick={cancel}>

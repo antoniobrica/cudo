@@ -236,8 +236,19 @@ export function FileStructure(props: FileStructureProps) {
 										const { uploadedFileID, fileType, fileTitle, fileVersion } = item
 										return (<div key={uploadedFileID} className="files-versioning-list">
 											<p>Version {fileVersion} - <span>{fileTitle}</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
-											<div className="files-right-area">
+											<div className="files-right-area symbol symbol-30">
+												<a onClick={() => onClickFileDownload(fileTitle)}> <i className="ms-Icon ms-Icon--Download" aria-hidden="true"></i></a>
 												<a onClick={onClickVersionDetail}> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
+												<span>
+													<Dropdown icon='ellipsis horizontal' pointing='right'>
+														<Dropdown.Menu>
+															<Dropdown.Item icon='pencil' text='Edit file detail' />
+															<Dropdown.Item icon='eye' text='Upload new version' onClick={() => uploadNewVersion(singleFileItem)} />
+															<Dropdown.Item icon='check circle outline' text='Add task to this file' onClick={() => addPinTask(singleFileItem)} />
+															<Dropdown.Item icon='trash alternate outline' text='Delete' />
+														</Dropdown.Menu>
+													</Dropdown>
+												</span>
 											</div>
 										</div>)
 									})}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ModalPlanningNew } from '@cudo/shared-components';
+import { LazyLoading, ModalPlanningNew } from '@cudo/shared-components';
 import {
   Card,
   Form,
@@ -314,6 +314,7 @@ const getSearchSelect = (selectedValue)=>{
         </div>
         : null}
       <div className="tabs-main-info-container planning-outer-con">
+        <LazyLoading />
         <h3>{t("project_tab_menu.planning.title")}
           <Button size="small" className="primary" onClick={openAdd}>
             <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> {t("common.add_new_button")}

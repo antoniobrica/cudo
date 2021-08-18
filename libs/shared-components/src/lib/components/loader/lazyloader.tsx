@@ -4,7 +4,9 @@ import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react';
 export function LazyLoading() {
 
   return (
-    <div className="ui active centered inline loader"></div>
+    <Dimmer active inverted>
+      <Loader inverted>Loading</Loader>
+    </Dimmer>
   );
 }
 

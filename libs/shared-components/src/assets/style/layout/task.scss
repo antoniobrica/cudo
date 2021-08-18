@@ -170,6 +170,7 @@
   font-size: 1.4rem;
   border-style: dashed;
   align-items: center;
+  margin-top: 15px;
   @include flex(flex);
   @include align-items(center);
 }
@@ -672,9 +673,10 @@ button.anchor_complete i {
 h3.alltask {
   margin-bottom: 15px;
   position: relative;
-  a {
+  span {
+    font-size: 14px;
     font-weight: 400;
-    color: #1e70bf;
+    color: #718898;
     margin-left: 5px;
   }
   i {
@@ -776,6 +778,13 @@ button.ui.button.more-user-listing {
 
 .completed-task-con {
   margin-top: 40px;
+  &.expand {
+    h3.alltask {
+      i {
+        transform: rotate(180deg);
+      }
+    }
+  }
 }
 
 .task-action-area {
