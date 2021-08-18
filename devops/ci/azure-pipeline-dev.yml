@@ -174,16 +174,19 @@ jobs:
                   npm run nx run-many -- --target=build --projects='mf-account-app' --with-deps --generatePackageJson=true
                   cp devops/docker/mf-dockerfile dist/apps/mf-account-app/Dockerfile
                   cp devops/docker/nginx.conf dist/apps/mf-account-app/
-          - task: PublishBuildArtifacts@1
-            displayName: Publish Artifacts
-            inputs:
-              ArtifactName: mf-account-app
+                  az storage blob upload-batch --account-name mfaccountappdev -s dist/apps/mf-account-app/* -d '$web'
 
-          - task: CopyFiles@2
-            displayName: Publish-mf-account-app
-            inputs:
-             SourceFolder: $(Build.SourcesDirectory)/dist/apps/mf-account-app/
-             TargetFolder: $(Build.ArtifactStagingDirectory)/mf-account-app/
+
+                  #- task: PublishBuildArtifacts@1
+                  # displayName: Publish Artifacts
+                  #     inputs:
+                  #   ArtifactName: mf-account-app
+
+                  # - task: CopyFiles@2
+                  #    displayName: Publish-mf-account-app
+                  #  inputs:
+                  #  SourceFolder: $(Build.SourcesDirectory)/dist/apps/mf-account-app/
+                  #   TargetFolder: $(Build.ArtifactStagingDirectory)/mf-account-app/
 
              # - task: AzureFileCopy@4
              # displayName: 'AzureBlob mf-account-app'
