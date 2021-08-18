@@ -24,6 +24,7 @@ trigger:
       - libs/*
 variables:
   tag: '$(Build.BuildId)'
+  - group: dev
 jobs:
 - job: cudogetchp
   pool: cudo-selfhosted-agent
