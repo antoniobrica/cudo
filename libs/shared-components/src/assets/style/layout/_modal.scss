@@ -545,6 +545,28 @@ img.filter-icon {
   overflow: hidden !important;
 }
 
+.ui.modal.disabled-fields {
+  overflow: hidden;
+  i.close.icon {
+    opacity: .5;
+    pointer-events: none;
+  }
+  .form {
+    .field {
+      opacity: .5;
+      pointer-events: none;
+    }
+  }
+  .actions {
+    button {
+      .icon-border {
+        opacity: .5;
+        pointer-events: none;
+      }
+    }
+  }
+}
+
 .ui.inverted.dimmer {
   z-index: 99999;
   .content {
