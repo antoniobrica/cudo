@@ -176,14 +176,12 @@ jobs:
                   cp devops/docker/nginx.conf dist/apps/mf-account-app/
                   echo $(tag)
                   az storage blob upload-batch --account-name mfaccountappdev -s ./dist/apps/mf-account-app/ -d '$web' --account-key $(mf-account-app-storage) --auth-mode key
-          - task: fabienlavocat.FabienLavocat-PurgeAzureCDNEndpoint.PurgeAzureCDNEndpoint.PurgeAzureCDNEndpoint@2
-            displayName: 'Purge Azure CDN Endpoint'
+          - task: duy.trigger-release.trigger-release.trigger-release@1
+            displayName: 'Trigger a Release'
             inputs:
-              ConnectedServiceNameSelector: ConnectedServiceNameARM
-              ConnectedServiceNameARM: 'dev-cudo'
-              ResourceGroupName: 'rg-cudo-dev-001'
-              EndpointName: mfaccountappdev
-              ProfileName: mfaccountappdev
+              TargetProject: 'Project Management'
+              TargetDefinition: 1
+              releaseStagesInput: 'Stage 2'
 - job: mfcontainerapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
