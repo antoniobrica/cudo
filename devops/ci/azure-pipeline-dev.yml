@@ -176,14 +176,14 @@ jobs:
                   cp devops/docker/nginx.conf dist/apps/mf-account-app/
                   echo $(tag)
                   az storage blob upload-batch --account-name mfaccountappdev -s ./dist/apps/mf-account-app/ -d '$web' --account-key $(mf-account-app-storage) --auth-mode key
-          - task: AzureCLI@2
-            displayName: Azure CLI
-            inputs:
-              azureSubscription: dev-cudo
-              scriptType: shell
-              scriptLocation: inlineScript
-              inlineScript: |
-                az cdn endpoint purge -g rg-cudo-dev-001 -n mfaccountappdev --profile-name mfaccountappdev --content-paths '/*' --no-wait
+        #  - task: AzureCLI@2
+        #    displayName: Azure CLI
+        #    inputs:
+        #      azureSubscription: dev-cudo
+        #      scriptType: shell
+        #      scriptLocation: inlineScript
+        #     inlineScript: |
+        #        az cdn endpoint purge -g rg-cudo-dev-001 -n mfaccountappdev --profile-name mfaccountappdev --content-paths '/*' --no-wait
 - job: mfcontainerapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
