@@ -176,12 +176,12 @@ jobs:
                   cp devops/docker/nginx.conf dist/apps/mf-account-app/
                   echo $(tag)
                   az storage blob upload-batch --account-name mfaccountappdev -s ./dist/apps/mf-account-app/ -d '$web' --account-key $(mf-account-app-storage) --auth-mode key
-          - task: duy.trigger-release.trigger-release.trigger-release@1
-            displayName: 'Trigger a Release'
-            inputs:
-              TargetProject: 'Project%20Management'
-              TargetDefinition: 1
-              releaseStagesInput: '$(Parameters.releaseStagesInput)'
+          - task: maikvandergaag.maikvandergaag-trigger-pipeline.TriggerPipeline.TriggerPipeline@1
+             displayName: 'Trigger Azure DevOps Pipeline: Release'
+             inputs:
+                serviceConnection: 'cudo-release-trigger-SC'
+                project: 'Project Management'
+                releaseDefinition: mfaccountappdev
 - job: mfcontainerapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
