@@ -176,6 +176,7 @@ jobs:
                   cp devops/docker/nginx.conf dist/apps/mf-account-app/
                   echo $(tag)
                   az storage blob upload-batch --account-name mfaccountappdev -s ./dist/apps/mf-account-app/ -d '$web' --account-key $(mf-account-app-storage) --auth-mode key
+                  az cdn endpoint purge -g group -n endpoint --profile-name profile-name --content-paths '/*' 
 - job: mfcontainerapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
