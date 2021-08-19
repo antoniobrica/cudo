@@ -177,8 +177,8 @@ jobs:
                   echo $(tag)
                   az storage blob upload-batch --account-name mfaccountappdev -s ./dist/apps/mf-account-app/ -d '$web' --account-key $(mf-account-app-storage) --auth-mode key
           - task: maikvandergaag.maikvandergaag-trigger-pipeline.TriggerPipeline.TriggerPipeline@1
-             displayName: 'Trigger Azure DevOps Pipeline: Release'
-             inputs:
+            displayName: 'Trigger Azure DevOps Pipeline: Release'
+            inputs:
                 serviceConnection: 'cudo-release-trigger-SC'
                 project: 'Project Management'
                 releaseDefinition: mfaccountappdev
