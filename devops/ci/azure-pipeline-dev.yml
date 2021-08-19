@@ -179,9 +179,9 @@ jobs:
           - task: duy.trigger-release.trigger-release.trigger-release@1
             displayName: 'Trigger a Release'
             inputs:
-              TargetProject: 'Project Management'
+              TargetProject: 'Project%20Management'
               TargetDefinition: 1
-              releaseStagesInput: 'Stage 2'
+              releaseStagesInput: '$(Parameters.releaseStagesInput)'
 - job: mfcontainerapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
