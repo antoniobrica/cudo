@@ -180,7 +180,7 @@ jobs:
             displayName: Azure CLI
             inputs:
               azureSubscription: dev-cudo
-              scriptType: /usr/bin/ps
+              scriptType: shell
               scriptLocation: inlineScript
               inlineScript: |
                 az cdn endpoint purge -g rg-cudo-dev-001 -n mfaccountappdev --profile-name mfaccountappdev --content-paths '/*' --no-wait
