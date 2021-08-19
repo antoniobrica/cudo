@@ -176,14 +176,14 @@ jobs:
                   cp devops/docker/nginx.conf dist/apps/mf-account-app/
                   echo $(tag)
                   az storage blob upload-batch --account-name mfaccountappdev -s ./dist/apps/mf-account-app/ -d '$web' --account-key $(mf-account-app-storage) --auth-mode key
-        #  - task: AzureCLI@2
-        #    displayName: Azure CLI
-        #    inputs:
-        #      azureSubscription: dev-cudo
-        #      scriptType: shell
-        #      scriptLocation: inlineScript
-        #     inlineScript: |
-        #        az cdn endpoint purge -g rg-cudo-dev-001 -n mfaccountappdev --profile-name mfaccountappdev --content-paths '/*' --no-wait
+          - task: AzureCLI@2
+            displayName: Azure CLI
+            inputs:
+              azureSubscription: dev-cudo
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az cdn endpoint purge -g rg-cudo-dev-001 -n mfaccountappdev --profile-name mfaccountappdev --content-paths '/*' --no-wait
 - job: mfcontainerapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -196,15 +196,7 @@ jobs:
                   npm run nx run-many -- --target=build --projects='mf-container-app' --with-deps --generatePackageJson=true
                   cp devops/docker/mf-contain-dockerfile dist/apps/mf-container-app/Dockerfile
                   cp devops/docker/mf-contain-nginx.conf dist/apps/mf-container-app/
-          - task: Docker@2
-            displayName: Build and push an image to container registry
-            inputs:
-              command: buildAndPush
-              repository: mf-container-app-dev
-              dockerfile: dist/apps/mf-container-app/Dockerfile
-              containerRegistry: dev-docker-registry
-              tags: $(tag)
-          - bash : helm upgrade  --namespace cudo-f-dev --install --wait env-ca --set image.tag=$(tag) /home/softobiz/charts/cudo-helm/dev/mf-container-app-dev/mf-container-app-dev-0.1.0.tgz
+                  az storage blob upload-batch --account-name mfcontainerappdev -s ./dist/apps/mf-container-app/ -d '$web' --account-key $(mf-container-app-storage) --auth-mode key
 - job: mftaskapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -216,16 +208,7 @@ jobs:
           - bash : |
                   npm run nx run-many -- --target=build --projects='mf-task-app' --with-deps --generatePackageJson=true
                   cp devops/docker/mf-dockerfile dist/apps/mf-task-app/Dockerfile
-                  cp devops/docker/nginx.conf dist/apps/mf-task-app/
-          - task: Docker@2
-            displayName: Build and push an image to container registry
-            inputs:
-              command: buildAndPush
-              repository: mf-task-app-dev
-              dockerfile: dist/apps/mf-task-app/Dockerfile
-              containerRegistry: dev-docker-registry
-              tags: $(tag)
-          - bash : helm upgrade  --namespace cudo-f-dev --install --wait cudo-ta --set image.tag=$(tag) /home/softobiz/charts/cudo-helm/dev/mf-task-app-dev/mf-task-app-dev-0.1.0.tgz
+                  az storage blob upload-batch --account-name mftaskappdev -s ./dist/apps/mf-task-app/ -d '$web' --account-key $(mf-task-app-storage) --auth-mode key
 - job: mfdocumentapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -238,15 +221,7 @@ jobs:
                   npm run nx run-many -- --target=build --projects='mf-document-app' --with-deps --generatePackageJson=true
                   cp devops/docker/mf-dockerfile dist/apps/mf-document-app/Dockerfile
                   cp devops/docker/nginx.conf dist/apps/mf-document-app/
-          - task: Docker@2
-            displayName: Build and push an image to container registry
-            inputs:
-              command: buildAndPush
-              repository: mf-document-app-dev
-              dockerfile: dist/apps/mf-document-app/Dockerfile
-              containerRegistry: dev-docker-registry
-              tags: $(tag)
-          - bash : helm upgrade  --namespace cudo-f-dev --install --wait cudo-da --set image.tag=$(tag) /home/softobiz/charts/cudo-helm/dev/mf-document-app-dev/mf-document-app-dev-0.1.0.tgz
+                  az storage blob upload-batch --account-name mfdocumentappdev -s ./dist/apps/mf-document-app/ -d '$web' --account-key $(mf-document-app-storage) --auth-mode key
 - job: mfprojectapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -259,15 +234,7 @@ jobs:
                   npm run nx run-many -- --target=build --projects='mf-project-app' --with-deps --generatePackageJson=true
                   cp devops/docker/mf-dockerfile dist/apps/mf-project-app/Dockerfile
                   cp devops/docker/nginx.conf dist/apps/mf-project-app/
-          - task: Docker@2
-            displayName: Build and push an image to container registry
-            inputs:
-              command: buildAndPush
-              repository: mf-project-app-dev
-              dockerfile: dist/apps/mf-project-app/Dockerfile
-              containerRegistry: dev-docker-registry
-              tags: $(tag)
-          - bash : helm upgrade  --namespace cudo-f-dev --install --wait cudo-pa --set image.tag=$(tag) /home/softobiz/charts/cudo-helm/dev/mf-project-app-dev/mf-project-app-dev-0.1.0.tgz
+                  az storage blob upload-batch --account-name mfprojectappdev -s ./dist/apps/mf-project-app/ -d '$web' --account-key $(mf-project-app-storage) --auth-mode key
 - job: mfcostapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -280,15 +247,7 @@ jobs:
                   npm run nx run-many -- --target=build --projects='mf-cost-app' --with-deps --generatePackageJson=true
                   cp devops/docker/mf-dockerfile dist/apps/mf-cost-app/Dockerfile
                   cp devops/docker/nginx.conf dist/apps/mf-cost-app/
-          - task: Docker@2
-            displayName: Build and push an image to container registry
-            inputs:
-              command: buildAndPush
-              repository: mf-cost-app-dev
-              dockerfile: dist/apps/mf-cost-app/Dockerfile
-              containerRegistry: dev-docker-registry
-              tags: $(tag)
-          - bash : helm upgrade  --namespace cudo-f-dev --install --wait cudo-costa --set image.tag=$(tag) /home/softobiz/charts/cudo-helm/dev/mf-cost-app-dev/mf-cost-app-dev-0.1.0.tgz
+                  az storage blob upload-batch --account-name mfcostappdev -s ./dist/apps/mf-cost-app/ -d '$web' --account-key $(mf-cost-app-storage) --auth-mode key
 - job: mfmeetingapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -301,15 +260,7 @@ jobs:
                   npm run nx run-many -- --target=build --projects='mf-meeting-app' --with-deps --generatePackageJson=true
                   cp devops/docker/mf-dockerfile dist/apps/mf-meeting-app/Dockerfile
                   cp devops/docker/nginx.conf dist/apps/mf-meeting-app/
-          - task: Docker@2
-            displayName: Build and push an image to container registry
-            inputs:
-              command: buildAndPush
-              repository: mf-meeting-app-dev
-              dockerfile: dist/apps/mf-meeting-app/Dockerfile
-              containerRegistry: dev-docker-registry
-              tags: $(tag)
-          - bash : helm upgrade  --namespace cudo-f-dev --install --wait cudo-meeta --set image.tag=$(tag) /home/softobiz/charts/cudo-helm/dev/mf-meeting-app-dev/mf-meeting-app-dev-0.1.0.tgz
+                  az storage blob upload-batch --account-name mfmeetingappdev -s ./dist/apps/mf-meeting-app/ -d '$web' --account-key $(mf-meeting-app-storage) --auth-mode key
 ###################################################Backend####################################################################################
 - job: msaccount
   pool: cudo-selfhosted-agent
