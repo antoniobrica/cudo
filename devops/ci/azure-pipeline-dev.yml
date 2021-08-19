@@ -239,7 +239,7 @@ jobs:
                   cp devops/docker/mf-dockerfile dist/apps/mf-document-app/Dockerfile
                   cp devops/docker/nginx.conf dist/apps/mf-document-app/
                   az storage blob upload-batch --account-name mfdocumentappdev -s ./dist/apps/mf-document-app/ -d '$web' --account-key $(mf-document-app-storage) --auth-mode key
-           - task: AzureCLI@2
+          - task: AzureCLI@2
             displayName: Azure CLI
             inputs:
               azureSubscription: dev-cudo
