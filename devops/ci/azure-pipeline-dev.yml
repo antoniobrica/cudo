@@ -179,7 +179,7 @@ jobs:
           - task: AzureCLI@2
             displayName: Azure CLI
             inputs:
-              azureSubscription: cudo-dev
+              azureSubscription: dev-cudo
               scriptType: ps
               scriptLocation: inlineScript
               inlineScript: |
