@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { LazyLoading } from '@cudo/shared-components'
 import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch, useHistory, useLocation } from "react-router-dom";
 
@@ -98,13 +98,18 @@ function App() {
   const location = useLocation();
   const { url, path } = useRouteMatch();
   // console.log('---Project--app--history---', history)
+  useEffect(() => {
+    if(history.location.pathname.includes('/home/project/')){
+      history.push(history.location.pathname)
+    }
+  },[])
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <Router>
           <Switch>
-            <Route exact path={`${history.location.pathname}/:projectId`} render={() => <TabMenu />} />
-            <Route exact path={`${history.location.pathname}`} render={() => <ProjectInfo />} />
+            <Route exact path='/home/project/:projectId' render={() => <TabMenu />} />           
+            <Route exact path='/home/project' render={() => <ProjectInfo />} />
           </Switch>
         </Router>
       </PersistGate>
