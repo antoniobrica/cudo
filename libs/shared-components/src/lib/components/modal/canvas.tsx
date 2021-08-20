@@ -491,23 +491,26 @@ export function Canvas(props: CanvasProps) {
     <div className="outsideWrapper">
       <div className="insideWrapper">
         {/* {!isAllPinCanvasHide ? <> */}
-        <canvas className="coveringCanvas"
-          width="800" height="700"
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseOut={handleMouseOut}
-          ref={canvasToDrawCircle}></canvas>
-        {/* <canvas className="coveringCanvas"
-          width="800" height="700"
-          ref={canvasToDrawImage}></canvas> */}
-        {/* </>   : */}
-        <CanvasTransparent
-          imgUrl={props.imgUrl}
-          fileId={props.fileId}
-          allowToCreateNewPin={true}
-          selectedNewTaskCoOrdinate={getSelectedNewTaskCoOrdinates}
-        ></CanvasTransparent>
+        {/* {props?.allowToCreateNewPin ?
+          <> */}
+            <canvas className="coveringCanvas"
+              width="800" height="700"
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              onMouseOut={handleMouseOut}
+              ref={canvasToDrawCircle}></canvas>
+            {/* <canvas className="coveringCanvas"
+                width="800" height="700"
+                ref={canvasToDrawImage}></canvas> */}
+          {/* </>
+          : */}
+          <CanvasTransparent
+            imgUrl={props.imgUrl}
+            fileId={props.fileId}
+            allowToCreateNewPin={true}
+            selectedNewTaskCoOrdinate={getSelectedNewTaskCoOrdinates}
+          ></CanvasTransparent>
         {/* } */}
       </div>
     </div>
