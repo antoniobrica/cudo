@@ -141,7 +141,7 @@ export const AddPinFile = (props: AddPinProps) => {
                 imgUrl={imgUrl}
                 coardinates={getCoardinates}
                 fileId={fileId}
-                allowToCreateNewPin={false} // {allowToCreateNewPin}
+                allowToCreateNewPin={allowToCreateNewPin}
                 isPinCreated={isPinCreated}
                 setIsPinCreated={setIsPinCreated}
               ></Canvas>  

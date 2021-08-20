@@ -84,25 +84,25 @@ mutation CreateTask(
         referenceID: $referenceID
         },
       taskDetails: {
-      taskBasics:{
-      taskTitle: $taskTitle,
-      startDate: $startDate, 
-      endDate: $endDate,
-      estimatedDays: $estimatedDays,
-      sendNotification: $sendNotification,
-      BKPID: $BKPID,
-      BKPTitle: $BKPTitle,
-      saveTaskAsTemplate: $saveTaskAsTemplate,
-      phaseID: $phaseID,
-      phaseName: $phaseName,
-      status: INPROGRESS,
-      description: $description
-     fileID : $fileID
-     fileName:$fileName
-     taskTypeID:$taskTypeID
-     taskType:PROTOCOL
-     workTypeID: $workTypeID
-     workTypeName:$workTypeName
+        taskBasics:{
+        taskTitle: $taskTitle,
+        startDate: $startDate, 
+        endDate: $endDate,
+        estimatedDays: $estimatedDays,
+        sendNotification: $sendNotification,
+        BKPID: $BKPID,
+        BKPTitle: $BKPTitle,
+        saveTaskAsTemplate: $saveTaskAsTemplate,
+        phaseID: $phaseID,
+        phaseName: $phaseName,
+        status: INPROGRESS,
+        description: $description
+        fileID : $fileID
+        fileName:$fileName
+        taskTypeID:$taskTypeID
+        taskType:PROTOCOL
+        workTypeID: $workTypeID
+        workTypeName:$workTypeName
         }
       assignees: $assignees
       followers: $followers

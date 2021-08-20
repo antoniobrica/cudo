@@ -161,20 +161,22 @@ query Tasks($referenceID: String!)
     taskTypeID
     fileID
     taskType
-  reference{
-  referenceID
+    workTypeID
+    workTypeName
+    reference{
+      referenceID
+    }
+    assignees{
+      userID
+      userName
+    }
+    followers{
+      userID
+      userName
+    }
+    subtasks{subtaskID, subtaskTitle, status}
   }
-  assignees{
-  userID
-  userName
-  }
-  followers{
-  userID
-  userName
-  }
-  subtasks{subtaskID, subtaskTitle, status}
-  }
-  }
+}
 `;
 
 
@@ -196,6 +198,8 @@ mutation CreateTask(
   $fileName: String!
   $taskTypeID: String!
   $taskType: TASKTYPE!
+  $workTypeID: String!
+  $workTypeName: String!
   $files: [TaskFileParams!]!
   $subtasks: [SubTaskParams!]!
   $assignees: [PeopleParams!]!
@@ -205,31 +209,34 @@ mutation CreateTask(
       referenceFilter: {
         referenceType: PROJECTTYPE
         referenceID: $referenceID
-        },
+      },
       taskDetails: {
-      taskBasics:{
-      taskTitle: $taskTitle,
-      startDate: $startDate, 
-      endDate: $endDate,
-      estimatedDays: $estimatedDays,
-      sendNotification: $sendNotification,
-      BKPID: $BKPID,
-      BKPTitle: $BKPTitle,
-      saveTaskAsTemplate: $saveTaskAsTemplate,
-      phaseID: $phaseID,
-      phaseName: $phaseName,
-      status: INPROGRESS,
-      description: $description
-     fileID : $fileID
-     fileName:$fileName
-     taskTypeID:$taskTypeID
-     taskType: $taskType
+        taskBasics:{
+          taskTitle: $taskTitle,
+          startDate: $startDate, 
+          endDate: $endDate,
+          estimatedDays: $estimatedDays,
+          sendNotification: $sendNotification,
+          BKPID: $BKPID,
+          BKPTitle: $BKPTitle,
+          saveTaskAsTemplate: $saveTaskAsTemplate,
+          phaseID: $phaseID,
+          phaseName: $phaseName,
+          status: INPROGRESS,
+          description: $description
+          fileID : $fileID
+          fileName:$fileName
+          taskTypeID:$taskTypeID
+          taskType: $taskType
+          workTypeID: $workTypeID
+          workTypeName:$workTypeName
         }
-      assignees: $assignees
-      followers: $followers
-      files: $files,
-      subtasks: $subtasks
-   }){
+        assignees: $assignees
+        followers: $followers
+        files: $files,
+        subtasks: $subtasks
+      }
+    ){
     taskTitle
     startDate
     endDate
@@ -252,6 +259,8 @@ mutation UpdateTask(
   $phaseID: String!
   $phaseName: String!
   $description: String!
+  $workTypeID: String!
+  $workTypeName: String!
   $files: [TaskFileParams!]!
   $subtasks: [SubTaskParams!]!
   $assignees: [PeopleParams!]!
@@ -273,6 +282,8 @@ mutation UpdateTask(
           phaseID: $phaseID,
           phaseName: $phaseName,
           description: $description
+          workTypeID: $workTypeID
+          workTypeName:$workTypeName
         }
       assignees: $assignees
       followers: $followers
