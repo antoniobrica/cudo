@@ -17,7 +17,7 @@ export const ProjectErrorData = (errorCode: number): IProjectErrorCode => {
             return { message: "Record not_added", code: 5003 }
 
         case ProjectErrorTypeEnum.NO_PROJECT_NAME:
-            return { message: "Can't pass empty Company Name", code: 5004 }
+            return { message: "Can't pass empty Project Name", code: 5004 }
 
         case ProjectErrorTypeEnum.NO_PROJECT_NUMBER:
             return { message: "Can't pass empty Project Number", code: 5005 }
