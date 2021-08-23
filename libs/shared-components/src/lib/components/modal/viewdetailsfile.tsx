@@ -82,7 +82,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
       {/* <Button className="grey-btn" onClick={() => dispatch({ type: 'open', size: 'fullscreen' })}>
            view Files
         </Button> */}
-      <Modal className="view-pin-detail-popup"
+      <Modal className="view-pin-detail-popup hide-sidebar"
         // closeIcon
         size={'fullscreen'}
         open={open}
@@ -120,10 +120,18 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
               </div>
             </div>
 
+            
+
             <div className="right-side-file-information">
+              
               <div>
                 <Form>
-                  <Modal.Header><h3>File detail <i aria-hidden="true" className="close icon" onClick={cancel}></i></h3></Modal.Header>
+                  <Modal.Header><h3>File detail 
+                    <span>
+                      <i className="ms-Icon ms-Icon--Hide2 hide-icon" aria-hidden="true"><span>Hide</span></i>
+                      <i aria-hidden="true" className="close icon" onClick={cancel}></i>
+                    </span>
+                    </h3></Modal.Header>
                   <Grid columns={2}>
                     <Grid.Row>
                       <Grid.Column>
@@ -283,6 +291,8 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                 </Form>
               </div>
             </div>
+            <span className="expand-sidebar">Comments</span>
+            
           </Form>
         </Modal.Content>
       </Modal>
