@@ -8,7 +8,7 @@ export interface CanvasTransparentFabricProps {
   selectedNewTaskCoOrdinate?
 }
 export function CanvasTransparentFabric(props: CanvasTransparentFabricProps) {
-  
+  var canvas = new fabric.Canvas('canvas')
   var circle = new fabric.Circle({
     radius: 100,
     fill: '#eef',
@@ -34,7 +34,7 @@ export function CanvasTransparentFabric(props: CanvasTransparentFabricProps) {
   return (
     <div className="outsideWrapper">
       <div className="insideWrapper">
-      <canvas className="coveringCanvas"
+      <canvas className="coveringCanvas" id="canvas"
           width="800" height="700" style={{border: "2px solid red"}}
           // onMouseDown={handleMouseDown}
           // onMouseMove={handleMouseMove}
