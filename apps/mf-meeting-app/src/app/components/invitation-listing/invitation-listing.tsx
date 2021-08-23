@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { InvitationTab } from "@cudo/shared-components";
 import { LazyLoading } from '@cudo/shared-components';
 import { useInvitationQuery, useProtocolQuery, useSessionDetailQuery } from '../../services/useRequest';
-import { GET_INVITATIONS, GET_PROTOCOLS, GET_SESSION_DETAIL } from '../../graphql/graphql'
+import { DELETE_INVITATION, GET_INVITATIONS, GET_PROTOCOLS, GET_SESSION_DETAIL, UPDATE_INVITATION } from '../../graphql/graphql'
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { Button } from 'semantic-ui-react';
 import { useTranslation } from "react-i18next";
@@ -12,6 +12,9 @@ import InvitationDetail from "../invitation-detail/invitation-detail";
 import InvitationEdit from "../invitation-edit/invitation-edit";
 import InvitationDelete from "../invitation-delete/invitation-delete";
 import { ProtocolAdd } from "../protocol-add/protocol-add";
+import { toast } from "react-toastify";
+import { IInvitations } from "../../interfaces/invitation";
+import { useMutation } from "@apollo/client";
 export interface InvitationListingProps {
     sessionId?
 }
@@ -29,6 +32,9 @@ export function InvitationListing(props: InvitationListingProps) {
     const [openMeetingDetail, setOpenMeetingDetail] = useState(false)
     const [openMeetingEdit, setOpenMeetingEdit] = useState(false)
     const [openMeetingDelete, setOpenMeetingDelete] = useState(false)
+    const [activeErrorClass, setActiveErrorClass] = useState(false)
+    const [invitationError, setInvitationError] = useState("")
+    const [invitationDeleteLoading, setInvitationDeleteLoading] = useState(false)
 
     const { loading: sessionDetailLoading, error: sessionDetailError, data: sessionDetailData } = useSessionDetailQuery(GET_SESSION_DETAIL, {
         variables: { sessionID: props?.sessionId },
@@ -41,6 +47,67 @@ export function InvitationListing(props: InvitationListingProps) {
     const { loading: protocolLoading, error: protocolError, data: protocolData } = useProtocolQuery(GET_PROTOCOLS, {
         variables: {sessionId},
     }); 
+
+     // set sucess value to toaster function
+  const getInvitationToasterMessage = (data) => {
+    setActiveErrorClass(false)
+    toast(data)
+  }
+
+  // set error value to task error for toaster function
+  const getInvitationErrorMessage = (data) => {
+    setActiveErrorClass(true)
+
+    let errorExeptionMessage: string;
+    switch (data) {
+      case 4001:
+        errorExeptionMessage = t("toaster.error.meeting.session.session_already_exists")
+        break
+      case 4002:
+        errorExeptionMessage = t("toaster.error.meeting.session.planning_not_found")
+        break
+      case 4003:
+        errorExeptionMessage = t("toaster.error.meeting.session.planning_not_created")
+        break
+      case 4004:
+        errorExeptionMessage = t("toaster.error.meeting.session.no_title")
+        break
+      case 4005:
+        errorExeptionMessage = t("toaster.error.meeting.session.no_worktype")
+        break
+      case 4007:
+        errorExeptionMessage = t("toaster.error.meeting.session.no_assignee")
+        break
+      case 4008:
+        errorExeptionMessage = t("toaster.error.meeting.session.no_category")
+        break
+      case 4009:
+        errorExeptionMessage = t("toaster.error.meeting.session.no_members")
+        break
+      case 4012:
+        errorExeptionMessage = t("toaster.error.meeting.session.no_invitation_template")
+        break
+      case 4013:
+        errorExeptionMessage = t("toaster.error.meeting.session.no_protocol_template")
+        break
+      case 4014:
+        errorExeptionMessage = t("toaster.error.meeting.session.no_admin")
+        break
+      case 500:
+        errorExeptionMessage = t("toaster.error.meeting.session.internal_server_error")
+        break
+      default:
+        errorExeptionMessage = ""
+    }
+    setInvitationError(errorExeptionMessage)
+  }
+
+  // set error message to toaster
+  useEffect(() => {
+    if (invitationError) {
+      toast(invitationError)
+    }
+  }, [invitationError])
 
     useEffect(() => {
         if (props.sessionId) {
@@ -96,7 +163,66 @@ export function InvitationListing(props: InvitationListingProps) {
         setOpenMeetingDelete(true)
     }
 
-    if (loading)
+    const [deleteMeeting, { loading: deleteInvitationLoading, error: deleteInvitationError, data: deleteInvitationData }] = useMutation(DELETE_INVITATION,
+        {
+            refetchQueries: [
+                {
+                    query: GET_INVITATIONS,
+                    variables: { sessionId: props?.sessionId }
+                }
+            ]
+        }
+    )
+
+    useEffect(() => {
+        if(!deleteInvitationLoading && deleteInvitationData){
+          getInvitationToasterMessage(t("toaster.success.meeting.meeting_deleted"))      
+          cancel()
+          setInvitationDeleteLoading(false)
+
+        }
+        if(!deleteInvitationLoading && deleteInvitationError){
+          getInvitationErrorMessage(deleteInvitationError?.graphQLErrors[0]?.extensions?.exception?.status)
+          cancel()
+          setInvitationDeleteLoading(false)
+        }
+      },[deleteInvitationLoading])
+
+    const deleteInvitation = (meetingId) => {
+        setInvitationDeleteLoading(true)
+ 
+        deleteMeeting({
+            variables: { meetingId },
+            update: (
+                cache,
+                data
+            ) => {
+                const cacheData = cache.readQuery({
+                    query: GET_INVITATIONS,
+                    variables: { sessionId: props?.sessionId }
+                }) as IInvitations;
+ 
+                const newMeetings = cacheData?.getMeetingList?.results?.filter(
+                    (item) => item.meetingId !== meetingId
+                  );
+                  
+                cache.writeQuery({
+                    query: GET_INVITATIONS,
+                    data: {
+                        getMeetings: newMeetings
+                    },
+                    variables: { sessionId: sessionId }
+                });
+
+            }
+        });
+
+        cancel()
+    }
+
+   
+
+    if (loading || invitationDeleteLoading)
         return (
             <h1>
                 {' '}
@@ -121,7 +247,7 @@ export function InvitationListing(props: InvitationListingProps) {
 
     return (
         <div>
-            <InvitationAdd sessionId={props.sessionId} openAddInvitation={openPageAddInvitation} dataList={data} cancel={cancel} />
+            <InvitationAdd sessionId={props.sessionId} openAddInvitation={openPageAddInvitation} dataList={data} cancel={cancel} getInvitationToasterMessage={getInvitationToasterMessage} getInvitationErrorMessage={getInvitationErrorMessage} />
             <ProtocolAdd sessionId={props.sessionId} openAddProtocol= {openPageAddProtocol} cancel={cancel} />
 
 
@@ -142,7 +268,9 @@ export function InvitationListing(props: InvitationListingProps) {
                                 sessionId={sessionId}
                                 openEditInvitation={openMeetingEdit}
                                 dataList={data}
-                                cancel={cancel} />
+                                cancel={cancel} 
+                                getInvitationToasterMessage={getInvitationToasterMessage} getInvitationErrorMessage={getInvitationErrorMessage}
+                                />
                         </div> : null}
 
                     {openMeetingDelete ?
@@ -151,7 +279,8 @@ export function InvitationListing(props: InvitationListingProps) {
                                 meetingId={selectedMeetingId}
                                 sessionId={sessionId}
                                 openDeleteInvitation={openMeetingDelete}
-                                cancel={cancel} />
+                                cancel={cancel}
+                                deleteInvitation={deleteInvitation} />
                         </div> : null}
 
                     <InvitationTab

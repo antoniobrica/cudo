@@ -11,13 +11,9 @@ export interface SessionDeleteProps {
     sessionId?
     openDeleteSession?
     cancel?
-    setSessionDeleteLoading?
     getSessionErrorMessage?
     getSessionToasterMessage?
     deleteSession?
-    error?
-    data?
-    loading?
 }
 
 export function SessionDelete(props: SessionDeleteProps) {
@@ -42,10 +38,6 @@ export function SessionDelete(props: SessionDeleteProps) {
                     deleteSession={props.deleteSession}
                     openDeleteSession={props.openDeleteSession}
                     cancel={props.cancel}
-                    setSessionDeleteLoading={props.setSessionDeleteLoading}
-                    loading={props.loading}
-                    data={props.data}
-                    error={props.error}
                     getSessionToasterMessage={props.getSessionToasterMessage} getSessionErrorMessage={props.getSessionErrorMessage}
                 /> : null}
         </div>

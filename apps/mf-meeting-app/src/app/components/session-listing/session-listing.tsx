@@ -59,10 +59,10 @@ export function SessionListing() {
     variables: { projectId },
   });
 
-  useEffect(() => {
-    setSessionDeleteLoading(false)
+  // useEffect(() => {
+  //   setSessionDeleteLoading(false)
 
-  }, [data])
+  // }, [data])
 
   // set sucess value to toaster function
   const getSessionToasterMessage = (data) => {
@@ -159,62 +159,64 @@ export function SessionListing() {
     })
       .catch(err => console.log(err))
   }
-  const handleSessionDeleteLoading = (value) => {
-    setSessionDeleteLoading(value)
-  }
 
   const [deleteSessionDetail, { loading: deleteSessionLoading, error: deleteSessionerror, data: deleteSessionData }] = useMutation(DELETE_SESSION,
     {
-        refetchQueries: [{ query: GET_SESSIONS, variables: { projectId: projectId } }]
+      refetchQueries: [{ query: GET_SESSIONS, variables: { projectId: projectId } }]
     }
-)
+  )
 
   useEffect(() => {
-    if(!deleteSessionLoading && deleteSessionData){
-      getSessionToasterMessage(t("toaster.success.meeting.session_deleted"))      
+    if (!deleteSessionLoading && deleteSessionData) {
+      getSessionToasterMessage(t("toaster.success.meeting.session_deleted"))
+      cancel()
+      setSessionDeleteLoading(false)
     }
-    if(!deleteSessionLoading && deleteSessionerror){
+    if (!deleteSessionLoading && deleteSessionerror) {
       getSessionErrorMessage(deleteSessionerror?.graphQLErrors[0]?.extensions.exception.status)
+      cancel()
+      setSessionDeleteLoading(false)
     }
-    setSessionDeleteLoading(false)
-  },[data])
+
+  }, [deleteSessionLoading])
 
   const deleteSession = (sessionID) => {
     setSessionDeleteLoading(true)
 
     deleteSessionDetail({
-        variables: { sessionID },
-        update: (
-            cache,
-            data
-        ) => {
-            const cacheData = cache.readQuery({
-                query: GET_SESSIONS,
-                variables: { projectId: projectId }
-            }) as ISessions;
-            const newSessions = cacheData?.paginatedSession?.results?.filter(
-                (item) => item.sessionID !== sessionID
-            );
-    
-            cache.writeQuery({
-                query: GET_SESSIONS,
-                variables: { projectId: projectId },
-                data: {
-                    getSessions: newSessions
-                }
-            });
+      variables: { sessionID },
+      update: (
+        cache,
+        data
+      ) => {
+        const cacheData = cache.readQuery({
+          query: GET_SESSIONS,
+          variables: { projectId: projectId }
+        }) as ISessions;
+        const newSessions = cacheData?.paginatedSession?.results?.filter(
+          (item) => item.sessionID !== sessionID
+        );
 
-        }
+        cache.writeQuery({
+          query: GET_SESSIONS,
+          variables: { projectId: projectId },
+          data: {
+            getSessions: newSessions
+          }
+        });
+
+      }
     });
 
     cancel()
-}
+  }
 
   const cancel = () => {
     setOpenAddSession(false)
     setSessionId(null)
     setOpenEditSession(false)
     setOpenDeleteSession(false)
+
   }
   const addNew = () => {
     setOpenAddSession(true);
@@ -244,7 +246,6 @@ export function SessionListing() {
   if (loading || sessionDeleteLoading)
     return (
       <h1>
-        {' '}
         <LazyLoading />
       </h1>
     );
@@ -299,12 +300,8 @@ export function SessionListing() {
                     sessionId={sessionId}
                     openDeleteSession={openDeleteSession}
                     cancel={cancel}
-                    setSessionDeleteLoading={handleSessionDeleteLoading}
                     getSessionToasterMessage={getSessionToasterMessage} getSessionErrorMessage={getSessionErrorMessage}
                     deleteSession={deleteSession}
-                    loading={deleteSessionLoading}
-                    error={deleteSessionerror}
-                    data={deleteSessionData}
                   /> : null}
 
                 <MeetingTab

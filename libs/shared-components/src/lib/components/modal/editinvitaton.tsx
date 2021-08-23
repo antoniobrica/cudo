@@ -29,6 +29,9 @@ export interface EditInvitationProps {
   loading?
   data?
   dataList?
+  getInvitationErrorMessage?
+  getInvitationToasterMessage?
+  error?
 }
 
 interface EditInvitationErrors {
@@ -68,9 +71,14 @@ export function ModalEditInvitation(props: EditInvitationProps) {
    //on show or hide loader
    useEffect(() => {
     if (!props.loading && props.data) {
+      props.getInvitationToasterMessage(t("toaster.success.meeting.meeting_edit"))
       cancel()
     }
-  }, [props.dataList])
+    if (!props.loading && props.error) {
+      props.getInvitationErrorMessage(props.error?.graphQLErrors[0]?.extensions?.exception?.status)
+      cancel()
+    }
+  }, [props.loading])
 
   useEffect(() => {
     if (props?.meetingDetail) {

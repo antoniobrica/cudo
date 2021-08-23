@@ -13,6 +13,8 @@ export interface InvitationAddProps {
     openAddInvitation?
     cancel?
     dataList?
+    getInvitationErrorMessage?
+    getInvitationToasterMessage?
 }
 
 export function InvitationAdd(props: InvitationAddProps) {
@@ -22,13 +24,13 @@ export function InvitationAdd(props: InvitationAddProps) {
     const history = useHistory();
     const res = history.location.pathname.split("/");
     const projectId = res[3].toString();
-    const companyId=localStorage.getItem('selectedCompany')
+    const companyId = localStorage.getItem('selectedCompany')
 
     const { loading: sessionDetailLoading, error: sessionDetailError, data: sessionDetailData } = useSessionDetailQuery(GET_SESSION_DETAIL, {
         variables: { sessionID: props?.sessionId },
     });
 
-    const [addMeeting, {loading, error, data }] = useMutation(ADD_INVITATION,
+    const [addMeeting, { loading, error, data }] = useMutation(ADD_INVITATION,
         {
             refetchQueries: [
                 {
@@ -80,7 +82,7 @@ export function InvitationAdd(props: InvitationAddProps) {
             }
         });
     }
-console.log('----companyId----', companyId)
+    console.log('----companyId----', companyId)
     return (
         <div>
             <ModalAddInvitation
@@ -94,10 +96,14 @@ console.log('----companyId----', companyId)
                 loading={loading}
                 data={data}
                 dataList={props.dataList}
+                error={error}
+                getInvitationToasterMessage={props.getInvitationToasterMessage}
+                getInvitationErrorMessage={props.getInvitationErrorMessage}
+
             />
         </div>
     )
 }
 
-  
-  export default InvitationAdd
+
+export default InvitationAdd

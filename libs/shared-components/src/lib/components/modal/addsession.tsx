@@ -74,7 +74,7 @@ export function ModalAddSession(props: SessionProps) {
       props.getSessionErrorMessage(props.error?.graphQLErrors[0]?.extensions.exception.status)
       cancel()
     }
-  }, [sessionDataListTotal])
+  }, [props.loading])
 
   const onSessionTitleChange = (e) => {
     setSessionTitle(e.target.value)
