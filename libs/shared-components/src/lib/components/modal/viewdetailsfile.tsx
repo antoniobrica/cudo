@@ -41,6 +41,10 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
   const [numPages, setNumPages] = React.useState(null);
   const [pageNumber, setPageNumber] = React.useState(1);
   const [isPinCreated, setIsPinCreated] = React.useState<boolean>(false);
+
+  const [hideCommentPanel, setHideCommentPanel] = React.useState(false)
+  const [expandVersion, setExpandVersion] = React.useState(false);
+
   function onDocumentLoadSuccess({ numPages }) {
     console.log('numPages', numPages);
     setNumPages(numPages);
@@ -77,12 +81,26 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
   const openf = () => {
     setOpen(true)
   }
+
+  const onClickFileVersion = () => {
+    // const onClickFileVersion = (uploadedFileVersionId) => {
+		// if (uploadedFileVersionId === selectedExpandVersionId) {
+		// 	setExpandVersion(!expandVersion)
+		// } else {
+			setExpandVersion(!expandVersion)
+		// }
+
+		// setSelectedExpandVersionId(uploadedFileVersionId)
+		// props.selectedFileId(uploadedFileVersionId)
+	}
+
+
   return (
     <div id="navbar">
       {/* <Button className="grey-btn" onClick={() => dispatch({ type: 'open', size: 'fullscreen' })}>
            view Files
         </Button> */}
-      <Modal className="view-pin-detail-popup hide-sidebar"
+      <Modal className={hideCommentPanel ? "view-pin-detail-popup hide-sidebar" : "view-pin-detail-popup"}
         // closeIcon
         size={'fullscreen'}
         open={open}
@@ -120,18 +138,18 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
               </div>
             </div>
 
-            
+
 
             <div className="right-side-file-information">
-              
+
               <div>
                 <Form>
-                  <Modal.Header><h3>File detail 
+                  <Modal.Header><h3>File detail
                     <span>
-                      <i className="ms-Icon ms-Icon--Hide2 hide-icon" aria-hidden="true"><span>Hide</span></i>
+                      <i className="ms-Icon ms-Icon--Hide2 hide-icon" aria-hidden="true" onClick={() => setHideCommentPanel(true)}><span>Hide</span></i>
                       <i aria-hidden="true" className="close icon" onClick={cancel}></i>
                     </span>
-                    </h3></Modal.Header>
+                  </h3></Modal.Header>
                   <Grid columns={2}>
                     <Grid.Row>
                       <Grid.Column>
@@ -177,11 +195,11 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     </Grid.Row>
                   </Grid>
 
-                  <Grid columns={1} className="file-versioning-box expand">
+                  <Grid columns={1} className={expandVersion? "file-versioning-box expand": "file-versioning-box"}>
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <label>File versions(1) <i className="ms-Icon ms-Icon--ChevronDown right_float" aria-hidden="true"></i></label>
+                          <label>File versions(1) <i className="ms-Icon ms-Icon--ChevronDown right_float" aria-hidden="true" onClick={() => onClickFileVersion()}></i></label>
                           <div className="file-version-list">
                             <div className="version-wise-files">
                               <span>Version 1 -</span>
@@ -291,8 +309,8 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                 </Form>
               </div>
             </div>
-            <span className="expand-sidebar">Comments</span>
-            
+            <span className="expand-sidebar" onClick={() => setHideCommentPanel(false)}>Comments</span>
+
           </Form>
         </Modal.Content>
       </Modal>
