@@ -12,6 +12,12 @@ export interface SessionDeleteProps {
     openDeleteSession?
     cancel?
     setSessionDeleteLoading?
+    getSessionErrorMessage?
+    getSessionToasterMessage?
+    deleteSession?
+    error?
+    data?
+    loading?
 }
 
 export function SessionDelete(props: SessionDeleteProps) {
@@ -20,52 +26,27 @@ export function SessionDelete(props: SessionDeleteProps) {
         variables: { sessionID: props?.sessionId },
     });
 
-    const [deleteSessionDetail, { loading, error, data }] = useMutation(DELETE_SESSION,
-        {
-            refetchQueries: [{ query: GET_SESSIONS, variables: { projectId: props.projectId } }]
-        }
-    )
+    // const [deleteSessionDetail, { loading, error, data }] = useMutation(DELETE_SESSION,
+    //     {
+    //         refetchQueries: [{ query: GET_SESSIONS, variables: { projectId: props.projectId } }]
+    //     }
+    // )
 
-    const deleteSession = (sessionID) => {
-
-        deleteSessionDetail({
-            variables: { sessionID },
-            update: (
-                cache,
-                data
-            ) => {
-                const cacheData = cache.readQuery({
-                    query: GET_SESSIONS,
-                    variables: { projectId: props?.projectId }
-                }) as ISessions;
-                const newSessions = cacheData?.paginatedSession?.results?.filter(
-                    (item) => item.sessionID !== sessionID
-                );
-                cache.writeQuery({
-                    query: GET_SESSIONS,
-                    variables: { projectId: props.projectId },
-                    data: {
-                        getSessions: newSessions
-                    }
-                });
-
-            }
-        });
-
-        props.cancel(true)
-    }
+    
 
     return (
         <div>
             {sessionDetailData?.SessionByID?.sessionID ?
                 <ModalDeleteSession
                     sessionId={sessionDetailData?.SessionByID?.sessionID}
-                    deleteSession={deleteSession}
+                    deleteSession={props.deleteSession}
                     openDeleteSession={props.openDeleteSession}
                     cancel={props.cancel}
                     setSessionDeleteLoading={props.setSessionDeleteLoading}
-                    loading={loading}
-                    data={data}
+                    loading={props.loading}
+                    data={props.data}
+                    error={props.error}
+                    getSessionToasterMessage={props.getSessionToasterMessage} getSessionErrorMessage={props.getSessionErrorMessage}
                 /> : null}
         </div>
     )

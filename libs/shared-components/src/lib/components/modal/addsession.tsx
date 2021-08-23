@@ -11,6 +11,9 @@ export interface SessionProps {
   loading?
   data?
   dataList?
+  getSessionErrorMessage?
+  getSessionToasterMessage?
+  error?
 }
 
 interface AddSessionErrors {
@@ -64,6 +67,11 @@ export function ModalAddSession(props: SessionProps) {
   const sessionDataListTotal = props?.dataList.paginatedSession.total
   useEffect(() => {
     if (!props.loading && props.data) {
+      props.getSessionToasterMessage(t("toaster.success.meeting.session_created"))
+      cancel()
+    }
+    if(!props.loading && props.error){
+      props.getSessionErrorMessage(props.error?.graphQLErrors[0]?.extensions.exception.status)
       cancel()
     }
   }, [sessionDataListTotal])

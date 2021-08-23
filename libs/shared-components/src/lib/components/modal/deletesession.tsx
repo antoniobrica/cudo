@@ -10,6 +10,9 @@ export interface DeleteSessionProps {
   setSessionDeleteLoading?
   loading?
   data?
+  error?
+  getSessionErrorMessage?
+  getSessionToasterMessage?
 }
 
 export const ModalDeleteSession = (props: DeleteSessionProps) => {

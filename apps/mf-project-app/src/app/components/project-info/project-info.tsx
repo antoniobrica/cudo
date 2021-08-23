@@ -36,7 +36,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
   const { loading, error, data } = useProjectQuery(GET_PROJECTS, { variables: { companyId }, });
   const [openForm, setopenForm] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [taskErrors, setTaskErrors] = useState("")
+  const [projectErrors, setProjectErrors] = useState("")
 
   const { t } = useTranslation()
 
@@ -130,15 +130,15 @@ export function ProjectInfo(props: ProjectInfoProps) {
       default:
         errorExeptionMessage = ""
     }
-    setTaskErrors(errorExeptionMessage)
+    setProjectErrors(errorExeptionMessage)
   }
 
   // set error message to toaster
   React.useEffect(() => {
-    if (taskErrors) {
-      toast(taskErrors)
+    if (projectErrors) {
+      toast(projectErrors)
     }
-  }, [taskErrors])
+  }, [projectErrors])
 
   if (loading) return <LazyLoading />;
   if (error) return (
