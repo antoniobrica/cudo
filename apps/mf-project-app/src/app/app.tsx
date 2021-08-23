@@ -106,7 +106,6 @@ function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-      <TabMenu />
         <Router>
           <Switch>
             <Route exact path='/home/project' render={() => <ProjectInfo />} />
