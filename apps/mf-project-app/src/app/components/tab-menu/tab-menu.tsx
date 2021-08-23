@@ -86,6 +86,7 @@ function TabMenu(props: TabMenuProps) {
     const [input, setInput] = React.useState("");
 
     const [isTask, setIsTask] = React.useState(false);
+    const [activeIndex, setActiveIndex] = React.useState(0)
     const data = "parrent"
     const { url, path } = useRouteMatch();
 
@@ -100,6 +101,9 @@ function TabMenu(props: TabMenuProps) {
     };
     const handleOpenProject = (item) => {
       // props.parentCallback(item)
+    }
+    const onTabChange = (e,{activeIndex}) => {
+      setActiveIndex(activeIndex)
     }
     const panes = [
       {
@@ -263,7 +267,7 @@ function TabMenu(props: TabMenuProps) {
             <span className="">{worktypeName ? worktypeName : 'WorktypeName'}</span> <span className="preliminary-font">{t("project_tab_menu.preiminary_studies")}</span>
           </div>
           <Switch>
-            <Tab className="ui-tabs" menu={{ secondary: true, pointing: true }} panes={panes} />
+            <Tab renderActiveOnly={true} activeIndex={activeIndex} onTabChange={onTabChange} className="ui-tabs" menu={{ secondary: true, pointing: true }} panes={panes} />
           </Switch>
         </div>
       </Router>

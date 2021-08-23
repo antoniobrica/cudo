@@ -34,26 +34,26 @@ export function Home(props: HomeProps) {
 
 
 
-  // const callbackFunction = (childData) => {
-  //   // console.log('--container --home--callbackFunction--childData--', childData)
-  //   switch (childData) {
-  //     case 'logout':
-  //       logout();
-  //       break;
-  //     case 'project':
-  //       // goToProjectDashboard();
-  //       history.push('/home/project')
-  //       break;
-  //     default:
-  //       break;
-  //   }    
-  // };
+  const callbackFunction = (childData) => {
+    // console.log('--container --home--callbackFunction--childData--', childData)
+    switch (childData) {
+      case 'logout':
+        logout();
+        break;
+      case 'project':
+        // goToProjectDashboard();
+        history.push('/home/project')
+        break;
+      default:
+        break;
+    }    
+  };
   useEffect(() => {
     if (history?.location?.pathname.includes('/home/project/')) {
         // console.log('--Container--Home-useEffect-----history?.location?.pathname----', history?.location?.pathname)
         setPathByHistory(history?.location?.pathname)
       }    
-  }, [history?.location?.pathname])
+  }, [])
   const edit = (childData) => {
     history.push(`/settings`);
   }
@@ -81,7 +81,7 @@ export function Home(props: HomeProps) {
   return (
     <div className={menuExpand ? "expand-main-menu" : "collapsed-main-menu"}>
       <div>
-        <Menubar data={data} mainMenuExpand={onClickMenuExpand} history={history}></Menubar>
+        <Menubar data={data} parentCallback={callbackFunction} mainMenuExpand={onClickMenuExpand} history={history}></Menubar>
       </div>
       <div>
         <Switch>

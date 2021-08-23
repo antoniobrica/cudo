@@ -7,7 +7,7 @@ import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { useTranslation } from 'react-i18next';
 /* eslint-disable-next-line */
 export interface MenuProps {
-  // parentCallback?
+  parentCallback?
   data?
   mainMenuExpand?
   history?
@@ -76,9 +76,9 @@ export function Menubar(props: MenuProps) {
 
 
   const handleOpenProject = (item) => {
-    // props?.parentCallback(item)
+    props?.parentCallback(item)
     setVisible(item)
-    props.history.push(`/home/${item}`)
+    // props.history.push(`/home/${item}`)
   }
 
   const showHideMenu = () => {
