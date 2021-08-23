@@ -183,7 +183,7 @@ jobs:
               scriptType: bash
               scriptLocation: inlineScript
               inlineScript: |
-                az cdn endpoint purge -g rg-cudo-dev-001 -n mfaccountappdev --profile-name mfaccountappdev --content-paths '/*' --no-wait
+                az cdn endpoint purge -g rg-cudo-dev-001 -n mfaccountappdev --profile-name mfaccountappdev --content-paths '/*' 
 - job: mfcontainerapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -204,7 +204,7 @@ jobs:
               scriptType: bash
               scriptLocation: inlineScript
               inlineScript: |
-                az cdn endpoint purge -g rg-cudo-dev-001 -n mfcontainerappdev --profile-name mfcontainerappdev --content-paths '/*' --no-wait
+                az cdn endpoint purge -g rg-cudo-dev-001 -n mfcontainerappdev --profile-name mfcontainerappdev --content-paths '/*' 
 
 - job: mftaskapp
   pool: cudo-selfhosted-agent
@@ -225,7 +225,7 @@ jobs:
               scriptType: bash
               scriptLocation: inlineScript
               inlineScript: |
-                az cdn endpoint purge -g rg-cudo-dev-001 -n mftaskappdev --profile-name mftaskappdev --content-paths '/*' --no-wait
+                az cdn endpoint purge -g rg-cudo-dev-001 -n mftaskappdev --profile-name mftaskappdev --content-paths '/*' 
 - job: mfdocumentapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -246,7 +246,7 @@ jobs:
               scriptType: bash
               scriptLocation: inlineScript
               inlineScript: |
-                az cdn endpoint purge -g rg-cudo-dev-001 -n mfdocumentappdev --profile-name mfdocumentappdev --content-paths '/*' --no-wait
+                az cdn endpoint purge -g rg-cudo-dev-001 -n mfdocumentappdev --profile-name mfdocumentappdev --content-paths '/*' 
 - job: mfprojectapp
   pool: cudo-selfhosted-agent
   dependsOn: cudogetchp
@@ -267,7 +267,7 @@ jobs:
               scriptType: bash
               scriptLocation: inlineScript
               inlineScript: |
-                az cdn endpoint purge -g rg-cudo-dev-001 -n mfprojectappdev --profile-name mfprojectappdev --content-paths '/*' --no-wait
+                az cdn endpoint purge -g rg-cudo-dev-001 -n mfprojectappdev --profile-name mfprojectappdev --content-paths '/*' 
 
 - job: mfcostapp
   pool: cudo-selfhosted-agent
@@ -289,7 +289,7 @@ jobs:
               scriptType: bash
               scriptLocation: inlineScript
               inlineScript: |
-                az cdn endpoint purge -g rg-cudo-dev-001 -n mfcostappdev --profile-name mfcostappdev --content-paths '/*' --no-wait
+                az cdn endpoint purge -g rg-cudo-dev-001 -n mfcostappdev --profile-name mfcostappdev --content-paths '/*' 
 
 - job: mfmeetingapp
   pool: cudo-selfhosted-agent
@@ -311,7 +311,7 @@ jobs:
               scriptType: bash
               scriptLocation: inlineScript
               inlineScript: |
-                az cdn endpoint purge -g rg-cudo-dev-001 -n mfmeetingappdev --profile-name mfmeetingappdev --content-paths '/*' --no-wait
+                az cdn endpoint purge -g rg-cudo-dev-001 -n mfmeetingappdev --profile-name mfmeetingappdev --content-paths '/*' 
 ###################################################Backend####################################################################################
 - job: msaccount
   pool: cudo-selfhosted-agent
