@@ -2,7 +2,7 @@
 import React, { Component, useEffect, useRef, useState } from 'react'
 import axios from 'axios';
 import { MS_SERVICE_URL } from '@cudo/mf-core'
-import CanvasTransparent from './canvastransparent';
+import CanvasTransparentFabric from './canvastransparentfabric';
 export interface CanvasProps {
   imgUrl?,
   coardinates?,
@@ -505,12 +505,12 @@ export function Canvas(props: CanvasProps) {
                 ref={canvasToDrawImage}></canvas> */}
           {/* </>
           : */}
-          <CanvasTransparent
+          <CanvasTransparentFabric
             imgUrl={props.imgUrl}
             fileId={props.fileId}
             allowToCreateNewPin={true}
             selectedNewTaskCoOrdinate={getSelectedNewTaskCoOrdinates}
-          ></CanvasTransparent>
+          ></CanvasTransparentFabric>
         {/* } */}
       </div>
     </div>
