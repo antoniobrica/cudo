@@ -79,6 +79,7 @@ function Home({ history }) {
         </div>
       </div>
     </div>
+    
   );
 }
 

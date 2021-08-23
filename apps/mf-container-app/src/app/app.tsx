@@ -55,7 +55,6 @@ function App() {
           <Route path={config.routes.registration.path} component={UserRegistration} />
           <Route path={config.routes.error.path} component={Error} />
           <Route path={config.routes.testmodal.path} component={TestModel} />
-
         </Switch>
       </SessionProvider>
     </div>

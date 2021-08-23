@@ -12,6 +12,8 @@ export function App() {
         <Tasks />
       </div>
     </Suspense>
+
+    
   );
 }
 

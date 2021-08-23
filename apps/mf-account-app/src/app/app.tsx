@@ -29,8 +29,8 @@ const App = props => {
         </Grid>
       </Layout>
     </CombinedContextProvider>
-  );
-  
+
+  );  
 };
 
 export default App;
