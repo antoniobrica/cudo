@@ -1,6 +1,7 @@
 import { initI18n, changeLanguage } from '@cudo/mf-core';
 import { CostList } from '@cudo/shared-components';
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
+
 import { Button } from 'semantic-ui-react';
 import AddNewItem from './add-new-item/add-new-item';
 import { DELETE_COST, EDIT_COST, GET_COST } from './graphql/graphql';
@@ -10,6 +11,7 @@ import CostDelete from './delete-cost';
 import { useMutation } from '@apollo/client';
 import { ICosts } from './interfaces/cost';
 import { useHistory } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
 const defaultLanguage = 'de-DE';
 const supportedLanguages = [defaultLanguage, 'en-GB'];
@@ -18,11 +20,14 @@ initI18n('/assets/i18n/{{lng}}.json', defaultLanguage);
 export function App() {
   const [openCost, setOpenCost] = React.useState(false)
   const [openCostDelete, setOpenCostDelete] = React.useState(false)
+  const [loadingOnDeleteCost, setLoadingOnDeleteCost] = React.useState(false)
+  const [activeErrorClass, setActiveErrorClass] = React.useState(false)
+
   const [costId, setCostId] = React.useState('')
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
-  const [costDelete, { data: deleteCostData }] = useMutation(DELETE_COST,
+  const [costDelete, { loading: deleteCostLoading, data: deleteCostData, error: deleteCostError }] = useMutation(DELETE_COST,
     {
       refetchQueries: [
         { query: GET_COST, variables: { referenceID } }
@@ -41,9 +46,6 @@ export function App() {
   const { loading, error, data } = useCostQuery(GET_COST, {
     variables: { referenceID },
   });
-  if (loading) {
-    return <LoaderPage />
-  }
 
   // if (error) {
   //   const cancel = () => {
@@ -57,6 +59,14 @@ export function App() {
   //     </Suspense>
   //   )
   // }
+
+  // set toaster for delete task
+
+  const getTaskToasterMessage = (data) => {
+    setActiveErrorClass(false)
+    toast(data)
+  }
+
   const addNew = () => {
     console.log('add new')
     setOpenCost(true);
@@ -100,9 +110,22 @@ export function App() {
       }
     })
   }
+  // set toaster for delete 
+  useEffect(() => {
+    if (!deleteCostLoading && deleteCostData) {
+      setLoadingOnDeleteCost(false)
+      getTaskToasterMessage("toaster.success.task.task_edit")
 
+    }
+    if (!deleteCostLoading && deleteCostError) {
+      setLoadingOnDeleteCost(false)
+      getTaskToasterMessage("toaster.success.task.task_edit")
+
+    }
+  }, [deleteCostLoading])
 
   const confirmDeleteCost = (data) => {
+    setLoadingOnDeleteCost(true)
     console.log('data', data)
     costDelete({
       variables: {
@@ -123,9 +146,15 @@ export function App() {
     });
   }
 
+  if (loading) {
+    return <LoaderPage />
+  }
+
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div>
+        <ToastContainer className={`${activeErrorClass ? "error" : "success"}`} position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
         <div>
           <AddNewItem openCost={openCost} cancel={cancel}></AddNewItem>
         </div>

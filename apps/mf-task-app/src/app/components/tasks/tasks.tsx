@@ -25,6 +25,7 @@ import SubTaskDelete from '../delete-subtask/delete-subtask';
 import { FilterPopup, ToggleButton } from '@cudo/shared-components';
 import { FileListIndex } from '@cudo/mf-document-lib';
 import { toast, ToastContainer } from 'react-toastify';
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface TasksProps { }
 
 export function Tasks(props: TasksProps) {
