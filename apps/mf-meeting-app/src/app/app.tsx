@@ -16,7 +16,9 @@ export function App() {
         <SessionList />
       </div>
     </Suspense>
+    
   );
+  
 }
 
 export default App;

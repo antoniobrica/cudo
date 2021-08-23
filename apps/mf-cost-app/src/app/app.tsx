@@ -96,11 +96,10 @@ export function App() {
             cost: [...cacheData.costs, data['editbkpCost']]
           }
         });
-
       }
     })
   }
-
+  
 
   const confirmDeleteCost = (data) => {
     console.log('data', data)

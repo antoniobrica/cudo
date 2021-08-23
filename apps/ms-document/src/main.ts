@@ -40,6 +40,7 @@ async function setEnv() {
     process.env.AZURE_CLIENT_ID = environment.AZURE_CLIENT_ID,
     process.env.AZURE_CLIENT_SECRET = environment.AZURE_CLIENT_SECRET,
     process.env.VAULT_NAME = environment.VAULT_NAME
-
 }
+
+
 bootstrap();
