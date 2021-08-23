@@ -30,6 +30,7 @@ const App = props => {
       </Layout>
     </CombinedContextProvider>
   );
+  
 };
 
 export default App;

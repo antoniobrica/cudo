@@ -42,4 +42,5 @@ async function setEnv() {
     process.env.VAULT_NAME = environment.VAULT_NAME
 
 }
+
 bootstrap();

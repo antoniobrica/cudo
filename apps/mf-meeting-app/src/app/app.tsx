@@ -17,6 +17,7 @@ export function App() {
       </div>
     </Suspense>
   );
+  
 }
 
 export default App;

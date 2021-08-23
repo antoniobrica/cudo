@@ -101,7 +101,6 @@ export function App() {
     })
   }
 
-
   const confirmDeleteCost = (data) => {
     console.log('data', data)
     costDelete({

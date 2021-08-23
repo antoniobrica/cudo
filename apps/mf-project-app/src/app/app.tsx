@@ -77,7 +77,6 @@ function Home({ history }) {
             <CostApp></CostApp>
           </div>
         </div>
-
       </div>
     </div>
   );

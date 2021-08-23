@@ -59,7 +59,6 @@ function App() {
         </Switch>
       </SessionProvider>
     </div>
-
   )
 }
 // const App = ({ children }: any) => (
