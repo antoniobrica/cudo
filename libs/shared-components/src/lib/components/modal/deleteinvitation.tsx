@@ -35,7 +35,7 @@ export const ModalDeleteInvitation = (props: DeleteInvitationProps) => {
     <Modal
       closeIcon
       size={size}
-      onClose={() => setOpen(false)}
+      onClose={cancel}
       onOpen={onClickOpenDeleteInvitation}
       open={open}
       className="delete-confiramtion-popup"

@@ -107,7 +107,7 @@ export function Tasks(props: TasksProps) {
         errorExeptionMessage = t("toaster.error.task.task_not_found")
         break
       case 7003:
-        errorExeptionMessage = t("toaster.error.task.task_bot_created")
+        errorExeptionMessage = t("toaster.error.task.task_not_created")
         break
       case 7004:
         errorExeptionMessage = t("toaster.error.task.no_title")

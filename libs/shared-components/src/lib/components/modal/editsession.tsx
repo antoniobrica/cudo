@@ -12,6 +12,9 @@ export interface EditSessionProps {
   loading?
   data?
   dataList?
+  error?
+  getSessionErrorMessage?
+  getSessionToasterMessage?
 }
 
 interface EditSessionErrors {
@@ -61,7 +64,11 @@ export function ModalEditSession(props: EditSessionProps) {
   //on show or hide loader
   useEffect(() => {
     if (!props.loading && props.data) {
+      props.getSessionToasterMessage(t("toaster.success.meeting.session_edit"))
       cancel()
+    if(!props.loading && props.error){
+      props.getSessionErrorMessage(props.error?.graphQLErrors[0]?.extensions?.exception?.status)
+    }
     }
   }, [props.dataList])
 
