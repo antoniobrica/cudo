@@ -245,9 +245,7 @@ export function SessionListing() {
 
   if (loading || sessionDeleteLoading)
     return (
-      <h1>
         <LazyLoading />
-      </h1>
     );
 
   if (error) {

@@ -224,10 +224,7 @@ export function InvitationListing(props: InvitationListingProps) {
 
     if (loading || invitationDeleteLoading)
         return (
-            <h1>
-                {' '}
                 <LazyLoading />
-            </h1>
         );
 
     if (error) {
