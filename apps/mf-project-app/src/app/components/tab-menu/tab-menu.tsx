@@ -86,7 +86,7 @@ function TabMenu(props: TabMenuProps) {
     const [input, setInput] = React.useState("");
 
     const [isTask, setIsTask] = React.useState(false);
-    const [activeIndex, setActiveIndex] = React.useState(0)
+    const [activeIndex, setActiveIndex] = React.useState(null)
     const data = "parrent"
     const { url, path } = useRouteMatch();
 
@@ -108,28 +108,6 @@ function TabMenu(props: TabMenuProps) {
     const panes = [
       {
         menuItem: { key: 'Overview', icon: 'file alternate outline', content: t("project_tab_menu.overview.title"), to: `${url}/overview`, as: NavLink, exact: true, },
-        render: () => <Route
-          path={`${url}/overview`}
-          exact
-          render={() => (
-            <Tab.Pane attached={false} onClick={handleOpenProject('overview')}>
-
-              <div className="ui-tabs">
-                <div className="text-center ">
-                  <Image src='https://react.semantic-ui.com/images/wireframe/image.png' size='small' wrapped />
-
-                </div>
-                <div className="text-center margin-top">
-
-                  <span className="found">{t("common.data_not_found")}</span>
-                  <p className="project-sub" style={{ color: '#9A9EA1' }}>{t("project_tab_menu.overview.desc_line1")} <br /> {t("project_tab_menu.overview.desc_line2")}</p>
-                </div>
-              </div>
-
-
-            </Tab.Pane>
-          )}
-        />,
       },
       {
         menuItem: { key: 'Task', icon: 'shield alternate', content: t("project_tab_menu.task.title"), to: `${url}/task`, as: NavLink, exact: true, },
@@ -266,6 +244,28 @@ function TabMenu(props: TabMenuProps) {
                 <PlanningIndex worktypes={worktypes}></PlanningIndex>
               )}
             />
+            <Route
+          path={`${url}/overview`}
+          exact
+          render={() => (
+            <Tab.Pane attached={false} onClick={handleOpenProject('overview')}>
+
+              <div className="ui-tabs">
+                <div className="text-center ">
+                  <Image src='https://react.semantic-ui.com/images/wireframe/image.png' size='small' wrapped />
+
+                </div>
+                <div className="text-center margin-top">
+
+                  <span className="found">{t("common.data_not_found")}</span>
+                  <p className="project-sub" style={{ color: '#9A9EA1' }}>{t("project_tab_menu.overview.desc_line1")} <br /> {t("project_tab_menu.overview.desc_line2")}</p>
+                </div>
+              </div>
+
+
+            </Tab.Pane>
+          )}
+        />,
           </Switch>
         </div>
       </Router>
