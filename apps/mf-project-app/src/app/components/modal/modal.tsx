@@ -18,6 +18,14 @@ export interface ProjectInfoProps {
   getProjectToasterMessage
   getProjectErrorMessage
 }
+
+export interface AddProjectErrors {
+  titleError?: string,
+  numberError?: string,
+  companyError?: string,
+  buildingError?: string,
+}
+
 export function ModalExampleModal(props: ProjectInfoProps) {
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
 
@@ -96,6 +104,8 @@ export function ModalExampleModal(props: ProjectInfoProps) {
   const [secondOpen, setSecondOpen] = React.useState(false)
   const [projectWorkEstimates, setProjectWorkEstimates] = React.useState(null)
   const [dataList, setDataList] = React.useState(null)
+  const [errors, setErrors] = React.useState<AddProjectErrors>({})
+
 
   const [companyCountry, setCompanyCountry] = React.useState(null)
   const { t } = useTranslation()
@@ -163,12 +173,12 @@ export function ModalExampleModal(props: ProjectInfoProps) {
     }
   }, [clientCompany]);
 
-  React.useEffect(() => {
-    if (validationErrors?.length > 0) {
-      console.log('----validation errors----', validationErrors)
-      alert(validationErrors)
-    }
-  }, [validationErrors])
+  // React.useEffect(() => {
+  //   if (validationErrors?.length > 0) {
+  //     console.log('----validation errors----', validationErrors)
+  //     alert(validationErrors)
+  //   }
+  // }, [validationErrors])
 
   const onprojectNameChange = e => {
     setProjectName(e.target.value)
@@ -267,33 +277,26 @@ export function ModalExampleModal(props: ProjectInfoProps) {
   }
 
   const validation = () => {
-    let response = true
-    const errorMessages = []
+    const errorMessages: AddProjectErrors = {}
     if (!projectName) {
-      response = false
-      errorMessages.push(t("common.errors.no_project_name"))
+      errorMessages.titleError = (t("common.errors.no_project_name"))
     }
     if (!projectNum) {
-      response = false
-      errorMessages.push(t("common.errors.no_project_number"))
+      errorMessages.numberError = (t("common.errors.no_project_number"))
     }
     if (!client) {
-      errorMessages.push(t("common.errors.no_client_company"))
+      errorMessages.companyError = (t("common.errors.no_client_company"))
     }
     if (!buildingType) {
-      response = false
-      errorMessages.push(t("common.errors.no_building_type"))
+      errorMessages.buildingError = (t("common.errors.no_building_type"))
     }
 
-    if (!response) {
-      return errorMessages
-    }
-    return []
+    return errorMessages
   }
   const handleSaveProject = () => {
     const validationResponse = validation()
-    if (validationResponse?.length > 0) {
-      setValidationErrors(validationResponse)
+    if (Object.keys(validationResponse).length > 0) {
+      setErrors(validationResponse)
       return false
     }
     console.log('-----country----', country)
@@ -365,7 +368,9 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     value={projectName}
                     onChange={onprojectNameChange}
                     maxLength={TEXT_MAXLENGTHS["project_name"]?.maxLength}
+                    error={errors.titleError && !projectName}
                   />
+                  {errors?.titleError && !projectName ? <span className="error-message">{errors.titleError}</span> : null}
                   {/* <span className="error-message">There is some error</span> */}
                 </Form.Field>
               </Grid.Column>
@@ -378,7 +383,9 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     className="full-width" type="number"
                     value={projectNum}
                     onChange={onprojectNumChange}
+                    error={errors?.numberError && !projectNum}
                   />
+                  {errors?.numberError && !projectNum ? <span className="error-message">{errors.numberError}</span> : null}
                 </Form.Field>
               </Grid.Column>
             </Grid.Row>
@@ -394,7 +401,9 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     value={client}
                     onChange={onprojectClient}
                     clearable
+                    error={errors?.companyError && !client}
                   />
+                  {errors?.companyError && !client ? <span className="error-message">{errors.companyError}</span> : null}
                 </Form.Field>
                 <Form.Field>
                   <a className="anchor-color" onClick={() => setSecondOpen(true)}>+ {t("common.add_new_button")}</a>
@@ -408,7 +417,9 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     value={buildingType}
                     onChange={onBuildingType}
                     clearable
+                    error={errors?.buildingError && !buildingType }
                   />
+                  {errors?.buildingError && !buildingType ? <span className="error-message">{errors.buildingError}</span> : null}
                 </Form.Field>
               </Grid.Column>
             </Grid.Row>

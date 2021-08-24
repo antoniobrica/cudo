@@ -302,6 +302,12 @@
         "milstone_edit": "Milestone updated successfully",
         "milstone_deleted": "Milestone deleted"
       },
+      "cost": {
+        "cost_created": "cost created successfully",
+        "cost_status_updated": "cost status updated",
+        "cost_edit": "cost updated successfully",
+        "cost_deleted": "cost deleted"
+      },
       "meeting": {
         "session_created": "Session created successfully",
         "session_status_updated": "Session status updated",
@@ -370,6 +376,13 @@
         "no_worktype": "Can not create planning without worktype",
         "no_phase": "Can not create planning without phase",
         "no_due_date": "Can not create planning without due date"
+      },
+      "cost": {
+        "cost_not_found": "Cost not found",
+        "cost_already_exists": "Cost already exists",
+        "cost_not_created": "Cost not created",
+        "cost_not_updated": "Cost not updated",
+        "cost_not_deleted": "Cost not deleted"
       },
       "meeting": {
         "session": {
