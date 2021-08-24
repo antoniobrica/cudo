@@ -38,7 +38,7 @@ export const ProjectErrorData = (errorCode: number): IProjectErrorCode => {
             return { message: "Company not found", code: 5010 }
         
         case ProjectErrorTypeEnum.BUILDING_NOT_FOUND:
-        return { message: "Building not found", code: 5010 }
+        return { message: "Building not found", code: 5011 }
 
 
         default:

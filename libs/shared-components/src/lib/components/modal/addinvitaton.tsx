@@ -30,6 +30,9 @@ export interface AddInvitationProps {
   loading?
   data?
   dataList?
+  getInvitationErrorMessage?
+  getInvitationToasterMessage?
+  error?
 }
 
 interface AddInvitationErrors {
@@ -64,12 +67,17 @@ export function ModalAddInvitation(props: AddInvitationProps) {
     }
   }, [props.openAddInvitation])
 
-  //on show or hide loader
-  useEffect(() => {
-    if (!props.loading && props.data) {
-      cancel()
-    }
-  }, [props.dataList])
+ //on show or hide loader
+ useEffect(() => {
+  if (!props.loading && props.data) {
+    props.getInvitationToasterMessage(t("toaster.success.meeting.meeting_created"))
+    cancel()
+  }
+  if (!props.loading && props.error) {
+    props.getInvitationErrorMessage(props.error?.graphQLErrors[0]?.extensions?.exception?.status)
+    cancel()
+  }
+}, [props.loading])
 
   const openInvitationAddPopup = () => {
     setOpen(true)
