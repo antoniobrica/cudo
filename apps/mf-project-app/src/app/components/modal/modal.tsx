@@ -15,7 +15,17 @@ import { useTranslation } from 'react-i18next';
 
 export interface ProjectInfoProps {
   onSuccess
+  getProjectToasterMessage
+  getProjectErrorMessage
 }
+
+export interface AddProjectErrors {
+  titleError?: string,
+  numberError?: string,
+  companyError?: string,
+  buildingError?: string,
+}
+
 export function ModalExampleModal(props: ProjectInfoProps) {
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
 
@@ -93,20 +103,23 @@ export function ModalExampleModal(props: ProjectInfoProps) {
   const [addWorkTypes, setAddWorkTypes] = React.useState(1)
   const [secondOpen, setSecondOpen] = React.useState(false)
   const [projectWorkEstimates, setProjectWorkEstimates] = React.useState(null)
+  const [dataList, setDataList] = React.useState(null)
+  const [errors, setErrors] = React.useState<AddProjectErrors>({})
+
 
   const [companyCountry, setCompanyCountry] = React.useState(null)
-  const {t} = useTranslation()
+  const { t } = useTranslation()
 
   // const [addProject] = useProjectMutation(ADD_PROJECT);
 
   const [validationErrors, setValidationErrors] = React.useState(null)
 
-  const [addProject, { data }] = useMutation(ADD_PROJECT,
-    {
-      refetchQueries: [
-        { query: GET_PROJECTS }
-      ]
-    }
+  const [addProject, { loading: addProjectLoading, error: addProjectError, data: addProjectData }] = useMutation(ADD_PROJECT,
+    // {
+    //   refetchQueries: [
+    //     { query: GET_PROJECTS }
+    //   ]
+    // }
   )
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
   const { loading: worktypeLoading, error, data: worktypeData } = useWorkTypesQuery(GET_WORKTYPES);
@@ -119,6 +132,16 @@ export function ModalExampleModal(props: ProjectInfoProps) {
       setItems(worktypeData.workTypes.map(({ name, workTypeID }) => ({ key: name, value: name, text: name, id: workTypeID })));
     }
   }, [worktypeData]);
+
+  // set toaster message for add project
+  React.useEffect(() => {
+    if (!addProjectLoading && dataList) {
+      props.getProjectToasterMessage(t("toaster.success.project.project_created"))
+    }
+    if (!addProjectLoading && !dataList && addProjectError) {
+      props.getProjectErrorMessage(addProjectError.graphQLErrors[0]?.extensions.exception.status)
+    }
+  }, [addProjectLoading])
 
   // React.useEffect(() => {
   //   console.log('---worktypeData?.workTypes---', worktypeData?.workTypes)
@@ -150,12 +173,12 @@ export function ModalExampleModal(props: ProjectInfoProps) {
     }
   }, [clientCompany]);
 
-  React.useEffect(() => {
-    if (validationErrors?.length > 0) {
-      console.log('----validation errors----', validationErrors)
-      alert(validationErrors)
-    }
-  }, [validationErrors])
+  // React.useEffect(() => {
+  //   if (validationErrors?.length > 0) {
+  //     console.log('----validation errors----', validationErrors)
+  //     alert(validationErrors)
+  //   }
+  // }, [validationErrors])
 
   const onprojectNameChange = e => {
     setProjectName(e.target.value)
@@ -217,11 +240,11 @@ export function ModalExampleModal(props: ProjectInfoProps) {
   const onCountry = (data) => {
     setCountry(data)
   }
-  const onDescription = (html) => {
+  const onDescription = (e) => {
     // console.log('---onDescription---e---', event, html)
     // if(html.length > 10){
-      // event.preventDefault()
-      setDescription(html)
+    // event.preventDefault()
+    setDescription(e.target.value)
     // }
   }
   // const onKeyPresDescription = (e) => {
@@ -235,52 +258,45 @@ export function ModalExampleModal(props: ProjectInfoProps) {
     setAddWorkTypes(prevCount => prevCount + 1);
   }
   const moreWorkTypes = (data) => {
-    
-      console.log('----moreWorkTypes---', data)
-      const worktypesArr = [];
-      for (let i = 0; i < data.length; i++) {
-        // console.log('data', data[i])
-        worktypeData.workTypes.map(d => {
-          if (d.name == data[i].workTypeName) {
-            // console.log('workTypeName----', d.workTypeID);
-            data[i].workTypeID = d.workTypeID;
-          }
-        })
-      }
-      console.log('worktypes==>', data)
 
-      setProjectWorkEstimates(data);
-    
+    console.log('----moreWorkTypes---', data)
+    const worktypesArr = [];
+    for (let i = 0; i < data.length; i++) {
+      // console.log('data', data[i])
+      worktypeData.workTypes.map(d => {
+        if (d.name == data[i].workTypeName) {
+          // console.log('workTypeName----', d.workTypeID);
+          data[i].workTypeID = d.workTypeID;
+        }
+      })
+    }
+    console.log('worktypes==>', data)
+
+    setProjectWorkEstimates(data);
+
   }
 
   const validation = () => {
-    let response = true
-    const errorMessages = []
+    const errorMessages: AddProjectErrors = {}
     if (!projectName) {
-      response = false
-      errorMessages.push(t("common.errors.no_project_name"))
+      errorMessages.titleError = (t("common.errors.no_project_name"))
     }
     if (!projectNum) {
-      response = false
-      errorMessages.push(t("common.errors.no_project_number"))
+      errorMessages.numberError = (t("common.errors.no_project_number"))
     }
     if (!client) {
-      errorMessages.push(t("common.errors.no_client_company"))
+      errorMessages.companyError = (t("common.errors.no_client_company"))
     }
     if (!buildingType) {
-      response = false
-      errorMessages.push(t("common.errors.no_building_type"))
+      errorMessages.buildingError = (t("common.errors.no_building_type"))
     }
 
-    if (!response) {
-      return errorMessages
-    }
-    return []
+    return errorMessages
   }
   const handleSaveProject = () => {
     const validationResponse = validation()
-    if (validationResponse?.length > 0) {
-      setValidationErrors(validationResponse)
+    if (Object.keys(validationResponse).length > 0) {
+      setErrors(validationResponse)
       return false
     }
     console.log('-----country----', country)
@@ -295,7 +311,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
         projectNum,
         client,
         buildingType,
-        printingCompany:printing,
+        printingCompany: printing,
         description,
         projectWorkEstimates,
         addressLineOne: adressLine1,
@@ -312,10 +328,11 @@ export function ModalExampleModal(props: ProjectInfoProps) {
       ) => {
         const cacheData = cache.readQuery({ query: GET_PROJECTS }) as IProjects;
         console.log('---after add project data--', data)
+        setDataList(data)
         cache.writeQuery({
           query: GET_PROJECTS,
           data: {
-            getProjects: [...cacheData.projects, data['createProject']]
+            getProjects: [...cacheData?.projects, data['createProject']]
           }
         });
         console.log('data==', data);
@@ -351,7 +368,9 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     value={projectName}
                     onChange={onprojectNameChange}
                     maxLength={TEXT_MAXLENGTHS["project_name"]?.maxLength}
+                    error={errors.titleError && !projectName}
                   />
+                  {errors?.titleError && !projectName ? <span className="error-message">{errors.titleError}</span> : null}
                   {/* <span className="error-message">There is some error</span> */}
                 </Form.Field>
               </Grid.Column>
@@ -364,7 +383,9 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     className="full-width" type="number"
                     value={projectNum}
                     onChange={onprojectNumChange}
+                    error={errors?.numberError && !projectNum}
                   />
+                  {errors?.numberError && !projectNum ? <span className="error-message">{errors.numberError}</span> : null}
                 </Form.Field>
               </Grid.Column>
             </Grid.Row>
@@ -380,7 +401,9 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     value={client}
                     onChange={onprojectClient}
                     clearable
+                    error={errors?.companyError && !client}
                   />
+                  {errors?.companyError && !client ? <span className="error-message">{errors.companyError}</span> : null}
                 </Form.Field>
                 <Form.Field>
                   <a className="anchor-color" onClick={() => setSecondOpen(true)}>+ {t("common.add_new_button")}</a>
@@ -394,7 +417,9 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     value={buildingType}
                     onChange={onBuildingType}
                     clearable
+                    error={errors?.buildingError && !buildingType }
                   />
+                  {errors?.buildingError && !buildingType ? <span className="error-message">{errors.buildingError}</span> : null}
                 </Form.Field>
               </Grid.Column>
             </Grid.Row>
@@ -574,30 +599,31 @@ export function ModalExampleModal(props: ProjectInfoProps) {
               <Grid.Column>
                 <Form.Field>
                   <label>{t("common.desc")} </label>
-                  {/* <TextArea placeholder='Tell us more'
+                  <TextArea placeholder={t("common.tell_us_more")}
                     value={description}
                     onChange={onDescription}
-                  /> */}
-                  <ReactQuill
+                  />
+                  {/* <ReactQuill
                     value={description}
                     modules={{
-                      toolbar: {
-                        container: [
-                          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                          ['bold', 'italic', 'underline'],
-                          // [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                          [{ 'align': [] }],
-                          // ['link', 'image'],
-                          ['clean'],
-                          [{ 'color': [] }]
-                        ]
-                      }
+                      toolbar: false
+                      // {
+                      //   container: [
+                      //     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                      //     ['bold', 'italic', 'underline'],
+                      //     [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                      //     [{ 'align': [] }],
+                      //     ['link', 'image'],
+                      //     ['clean'],
+                      //     [{ 'color': [] }]
+                      //   ]
+                      // }
                     }}
                     placeholder={t("common.tell_us_more")}
                     onChange={(content, delta, source, editor) => onDescription(content)}
                     // onKeyDown={onKeyPresDescription}
                     id="txtDescription"
-                  />
+                  /> */}
                 </Form.Field>
               </Grid.Column>
 
@@ -698,7 +724,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     <Grid.Column>
                       <Form.Field>
                         <label>{t("project_list.add_new_project.company_type_label")} </label>
-                        <Select placeholder={t("common.select")} className="small" options={companyTypeOptions}  clearable />
+                        <Select placeholder={t("common.select")} className="small" options={companyTypeOptions} clearable />
 
                       </Form.Field>
                     </Grid.Column>

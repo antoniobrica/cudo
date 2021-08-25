@@ -134,7 +134,7 @@ export function ModalPlanningNew(props: PlanningProps) {
 
   const onDescriptionChange = e => {
     // console.log("$$$$$$$$$$$$$$$$$$$$$$$",e.target.value)
-    setDescription(e);
+    setDescription(e.target.value);
   }
 
   const validation = () => {
@@ -269,29 +269,30 @@ export function ModalPlanningNew(props: PlanningProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>{t("common.desc")} </label>
-                      {/* <TextArea placeholder="Tell us more"    
+                      <TextArea placeholder="Tell us more"    
                        value={description}
                        onChange={onDescriptionChange}
-                     /> */}
-                      <ReactQuill
+                     />
+                      {/* <ReactQuill
                         value={description}
                         modules={{
-                          toolbar: {
-                            container: [
-                              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                              ['bold', 'italic', 'underline'],
-                              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                              [{ 'align': [] }],
-                              ['link', 'image'],
-                              ['clean'],
-                              [{ 'color': [] }]
-                            ]
-                          }
+                          toolbar: false
+                          // {
+                          //   container: [
+                          //     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                          //     ['bold', 'italic', 'underline'],
+                          //     [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                          //     [{ 'align': [] }],
+                          //     ['link', 'image'],
+                          //     ['clean'],
+                          //     [{ 'color': [] }]
+                          //   ]
+                          // }
                         }}
                         placeholder={t("common.desc_placeholder")}
                         onChange={(content, delta, source, editor) => onDescriptionChange(content)}
                         id="txtDescription"
-                      />
+                      /> */}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>

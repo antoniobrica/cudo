@@ -34,7 +34,7 @@ type params = {
 function TabMenu(props: TabMenuProps) {
   const [worktypeName, setWorktype] = React.useState("");
   const [worktypes, setWorktypes] = React.useState();
-  const {t} = useTranslation()
+  const { t } = useTranslation()
 
   const history = useHistory();
   const params = useParams<params>();
@@ -86,6 +86,7 @@ function TabMenu(props: TabMenuProps) {
     const [input, setInput] = React.useState("");
 
     const [isTask, setIsTask] = React.useState(false);
+    const [activeIndex, setActiveIndex] = React.useState(null)
     const data = "parrent"
     const { url, path } = useRouteMatch();
 
@@ -101,10 +102,149 @@ function TabMenu(props: TabMenuProps) {
     const handleOpenProject = (item) => {
       // props.parentCallback(item)
     }
+    const onTabChange = (e, { activeIndex }) => {
+      setActiveIndex(activeIndex)
+    }
     const panes = [
       {
         menuItem: { key: 'Overview', icon: 'file alternate outline', content: t("project_tab_menu.overview.title"), to: `${url}/overview`, as: NavLink, exact: true, },
+      },
+      {
+        menuItem: { key: 'Task', icon: 'shield alternate', content: t("project_tab_menu.task.title"), to: `${url}/task`, as: NavLink, exact: true, },
         render: () => <Route
+          path={`${url}/task`}
+          exact
+          render={() => (
+            <Tab.Pane onClick={handleOpenProject('task')}>
+              {/* <TaskApp id={params.projectId}></TaskApp> */}
+              <TaskApp id={projectId}></TaskApp>
+            </Tab.Pane>
+          )}
+        />,
+      },
+      {
+
+        menuItem: { key: 'Planning', icon: 'flag outline', to: `${url}/planning`, as: NavLink, exact: true, content: t("project_tab_menu.planning.title") },
+      },
+      {
+
+        menuItem: { key: 'Cost', icon: 'money bill alternate outline', content: t("project_tab_menu.cost.title"), to: `${url}/cost`, as: NavLink, exact: true, },
+        render: () => <Route
+          path={`${url}/cost`}
+          exact
+          render={() => (
+            <Tab.Pane attached={false} onClick={handleOpenProject('cost')}>
+              <CostApp />
+            </Tab.Pane>
+          )}
+        />,
+      },
+      {
+
+        menuItem: { key: 'Tender', icon: 'gavel', content: t("project_tab_menu.tender.title"), to: `${url}/tender`, as: NavLink, exact: true },
+        render: () => <Route
+          path={`${url}/tender`}
+          exact
+          render={() => (
+            <Tab.Pane attached={false} onClick={handleOpenProject('tender')}>Tender</Tab.Pane>
+          )}
+        />,
+      },
+      {
+
+        menuItem: { key: 'Meetings', icon: 'calendar outline', content: t("project_tab_menu.meeting.title"), to: `${url}/meetings`, as: NavLink, exact: true },
+        render: () => <Route
+          path={`${url}/meetings`}
+          exact
+          render={() => (
+
+            <Tab.Pane attached={false} onClick={handleOpenProject('meetings')}>
+              <MeetingApp />
+            </Tab.Pane>
+          )}
+        />,
+      },
+      {
+
+        menuItem: { key: ' ', icon: 'folder open outline', content: t("project_tab_menu.files.title"), to: `${url}/files`, as: NavLink, exact: true, },
+        render: () =>
+          <Route
+            path={`${url}/files`}
+            exact
+            render={() => (
+              <Tab.Pane attached={false} onClick={handleOpenProject('files')}>
+                <DocumentApp />
+              </Tab.Pane>
+            )}
+          />
+        ,
+      },
+      {
+
+        menuItem: { key: 'Questions', icon: 'question circle outline', content: t("project_tab_menu.questions"), to: `${url}/questions`, as: NavLink, exact: true },
+        render: () =>
+          <Route
+            path={`${url}/questions`}
+            exact
+            render={() => (
+              <Tab.Pane attached={false} onClick={handleOpenProject('questions')}>Questions</Tab.Pane>
+            )}
+          />
+        ,
+      },
+      {
+
+        menuItem: { key: 'People', icon: 'user outline', content: t("project_list.add_new_project.people"), to: `${url}/people`, as: NavLink, exact: true },
+        render: () =>
+          <Route
+            path={`${url}/people`}
+            exact
+            render={() => (
+
+              <Tab.Pane attached={false} onClick={handleOpenProject('people')}>People</Tab.Pane>)}
+          />
+        ,
+      },
+      {
+
+        menuItem: { key: 'Settings', icon: 'setting', content: t("project_tab_menu.setting"), to: `${url}/settings`, as: NavLink, exact: true },
+        render: () => <Route
+          path={`${url}/settings`}
+          exact
+          render={() => (
+            <Tab.Pane attached={false} onClick={handleOpenProject('settings')}>Settings</Tab.Pane>)}
+        />
+        ,
+      },
+      {
+
+        menuItem: { key: 'Messages', icon: 'envelope open outline', content: t("project_tab_menu.messages.title"), to: `${url}/messages`, as: NavLink, exact: true },
+        render: () => <Route
+          path={`${url}/messages`}
+          exact
+          render={() => (
+            <Tab.Pane attached={false} onClick={handleOpenProject('messages')}>Messages</Tab.Pane>)}
+        />
+        ,
+      },
+    ]
+
+    return (
+      <Router>
+        <div className="app-content-body-dash navbar-collapse">
+          <div className="main-page-heading">
+            <span className="">{worktypeName ? worktypeName : 'WorktypeName'}</span> <span className="preliminary-font">{t("project_tab_menu.preiminary_studies")}</span>
+          </div>
+          <Tab renderActiveOnly={true} activeIndex={activeIndex} onTabChange={onTabChange} className="ui-tabs" menu={{ secondary: true, pointing: true }} panes={panes} />
+          <Switch>
+            <Route
+              path={`${url}/planning`}
+              exact
+              render={() => (
+                <PlanningIndex worktypes={worktypes}></PlanningIndex>
+              )}
+            />
+            <Route
           path={`${url}/overview`}
           exact
           render={() => (
@@ -126,144 +266,6 @@ function TabMenu(props: TabMenuProps) {
             </Tab.Pane>
           )}
         />,
-      },
-      {
-        menuItem: { key: 'Task', icon: 'shield alternate', content:t("project_tab_menu.task.title"), to: `${url}/task`, as: NavLink, exact: true, },
-        render: () => <Route
-          path={`${url}/task`}
-          exact
-          render={() => (
-            <Tab.Pane onClick={handleOpenProject('task')}>
-              {/* <TaskApp id={params.projectId}></TaskApp> */}
-              <TaskApp id={projectId}></TaskApp>
-            </Tab.Pane>
-          )}
-        />,
-      },
-      {
-
-        menuItem: { key: 'Planning', icon: 'flag outline', to: `${url}/planning`, as: NavLink, exact: true, content:t("project_tab_menu.planning.title") },
-        render: () => <Route
-          path={`${url}/planning`}
-          exact
-          render={() => (
-            <Tab.Pane attached={false} onClick={handleOpenProject('planning')}>
-              <PlanningIndex worktypes={worktypes}></PlanningIndex>
-            </Tab.Pane>
-          )}
-        />,
-      },
-      {
-
-        menuItem: { key: 'Cost', icon: 'money bill alternate outline', content:t("project_tab_menu.cost.title") , to: `${url}/cost`, as: NavLink, exact: true, },
-        render: () => <Route
-          path={`${url}/cost`}
-          exact
-          render={() => (
-            <Tab.Pane attached={false} onClick={handleOpenProject('cost')}>
-              <CostApp />
-            </Tab.Pane>
-          )}
-        />,
-      },
-      {
-
-        menuItem: { key: 'Tender', icon: 'gavel', content:t("project_tab_menu.tender.title") , to: `${url}/tender`, as: NavLink, exact: true },
-        render: () => <Route
-          path={`${url}/tender`}
-          exact
-          render={() => (
-            <Tab.Pane attached={false} onClick={handleOpenProject('tender')}>Tender</Tab.Pane>
-          )}
-        />,
-      },
-      {
-
-        menuItem: { key: 'Meetings', icon: 'calendar outline', content:t("project_tab_menu.meeting.title"), to: `${url}/meetings`, as: NavLink, exact: true },
-        render: () => <Route
-          path={`${url}/meetings`}
-          exact
-          render={() => (
-
-            <Tab.Pane attached={false} onClick={handleOpenProject('meetings')}>
-              <MeetingApp />
-            </Tab.Pane>
-          )}
-        />,
-      },
-      {
-
-        menuItem: { key: ' ', icon: 'folder open outline', content:t("project_tab_menu.files.title"), to: `${url}/files`, as: NavLink, exact: true, },
-        render: () =>
-          <Route
-            path={`${url}/files`}
-            exact
-            render={() => (
-              <Tab.Pane attached={false} onClick={handleOpenProject('files')}>
-                <DocumentApp />
-              </Tab.Pane>
-            )}
-          />
-        ,
-      },
-      {
-
-        menuItem: { key: 'Questions', icon: 'question circle outline', content:t("project_tab_menu.questions"), to: `${url}/questions`, as: NavLink, exact: true },
-        render: () =>
-          <Route
-            path={`${url}/questions`}
-            exact
-            render={() => (
-              <Tab.Pane attached={false} onClick={handleOpenProject('questions')}>Questions</Tab.Pane>
-            )}
-          />
-        ,
-      },
-      {
-
-        menuItem: { key: 'People', icon: 'user outline', content:t("project_list.add_new_project.people"), to: `${url}/people`, as: NavLink, exact: true },
-        render: () =>
-          <Route
-            path={`${url}/people`}
-            exact
-            render={() => (
-
-              <Tab.Pane attached={false} onClick={handleOpenProject('people')}>People</Tab.Pane>)}
-          />
-        ,
-      },
-      {
-
-        menuItem: { key: 'Settings', icon: 'setting', content:t("project_tab_menu.setting"), to: `${url}/settings`, as: NavLink, exact: true },
-        render: () => <Route
-          path={`${url}/settings`}
-          exact
-          render={() => (
-            <Tab.Pane attached={false} onClick={handleOpenProject('settings')}>Settings</Tab.Pane>)}
-        />
-        ,
-      },
-      {
-
-        menuItem: { key: 'Messages', icon: 'envelope open outline', content:t("project_tab_menu.messages.title"), to: `${url}/messages`, as: NavLink, exact: true },
-        render: () => <Route
-          path={`${url}/messages`}
-          exact
-          render={() => (
-            <Tab.Pane attached={false} onClick={handleOpenProject('messages')}>Messages</Tab.Pane>)}
-        />
-        ,
-      },
-    ]
-
-    return (
-      <Router>
-        <div className="app-content-body-dash navbar-collapse">
-          <div className="main-page-heading">
-            <span className="">{worktypeName ? worktypeName : 'WorktypeName'}</span> <span className="preliminary-font">{t("project_tab_menu.preiminary_studies")}</span>
-          </div>
-          <Switch>
-            <Tab className="ui-tabs" menu={{ secondary: true, pointing: true }} panes={panes} />
           </Switch>
         </div>
       </Router>
