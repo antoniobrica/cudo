@@ -64,10 +64,10 @@ export function ModalAddSession(props: SessionProps) {
   }
 
   //on show or hide loader
-  const sessionDataListTotal = props?.dataList.paginatedSession.total
+  const sessionDataListTotal = props?.dataList?.paginatedSession?.total
   useEffect(() => {
     if (!props.loading && props.data) {
-      props.getSessionToasterMessage(t("toaster.success.meeting.session_created"))
+      props?.getSessionToasterMessage(t("toaster.success.meeting.session_created"))
       cancel()
     }
     if(!props.loading && props.error){
