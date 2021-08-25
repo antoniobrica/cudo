@@ -437,19 +437,19 @@ export function ModalEditInvitation(props: EditInvitationProps) {
                       {/* <TextArea placeholder="Tell us more" /> */}
                       <ReactQuill
                         value={meetingDescription}
-                        modules={{
-                          toolbar: {
-                            container: [
-                              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                              ['bold', 'italic', 'underline'],
-                              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                              [{ 'align': [] }],
-                              ['link', 'image'],
-                              ['clean'],
-                              [{ 'color': [] }]
-                            ]
-                          }
-                        }}
+                        // modules={{
+                        //   toolbar: {
+                        //     container: [
+                        //       [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                        //       ['bold', 'italic', 'underline'],
+                        //       [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                        //       [{ 'align': [] }],
+                        //       ['link', 'image'],
+                        //       ['clean'],
+                        //       [{ 'color': [] }]
+                        //     ]
+                        //   }
+                        // }}
                         placeholder="Tell us more"
                         onChange={(content, delta, source, editor) => onDescription(content)}
                         // onKeyDown={onKeyPresDescription}
