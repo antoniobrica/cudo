@@ -2,7 +2,7 @@
 import React, { Component, useEffect, useRef, useState } from 'react'
 import axios from 'axios';
 import { MS_SERVICE_URL } from '@cudo/mf-core'
-import CanvasTransparentEditPin from './canvastransparenteditpin';
+
 import CanvasTransparentNewPin from './canvastransparentnewpin';
 export interface CanvasProps {
   imgUrl?,
@@ -29,7 +29,7 @@ export function Canvas(props: CanvasProps) {
   let startY = null;
 
   const [isAllPinCanvasHide, setAllPinCanvasHide] = useState(true)
- 
+
   const getPinQuery = `query Pins($uploadedFileID: String!) {
   pins(pinsFilter:{ 
     uploadedFileID: $uploadedFileID
@@ -503,23 +503,13 @@ export function Canvas(props: CanvasProps) {
           onMouseOut={handleMouseOut}
           ref={canvasToDrawCircle}></canvas>
 
-        {/* {hideNewPinMoveCanvas ? null :
-          <> */}
-            {props?.allowToCreateNewPin ?
-              <CanvasTransparentNewPin
-                allowToCreateNewPin={props.allowToCreateNewPin}
-                selectedNewTaskCoOrdinate={getSelectedNewTaskCoOrdinates}
-                lastPinDetail={pinList && pinList?.length && pinList[pinList?.length - 1]}
-              ></CanvasTransparentNewPin>
-              : null}
-          {/* </>
-        } */}
-
-        {/* <CanvasTransparentEditPin
-          allowToEditPin={props.allowToCreateNewPin}
-          selectedNewTaskCoOrdinate={getSelectedNewTaskCoOrdinates}
-          lastPinDetail={pinList && pinList?.length && pinList[pinList?.length - 1]}
-        ></CanvasTransparentEditPin> */}
+        {props?.allowToCreateNewPin ?
+          <CanvasTransparentNewPin
+            allowToCreateNewPin={props.allowToCreateNewPin}
+            selectedNewTaskCoOrdinate={getSelectedNewTaskCoOrdinates}
+            lastPinDetail={pinList && pinList?.length && pinList[pinList?.length - 1]}
+          ></CanvasTransparentNewPin>
+          : null}
 
       </div>
     </div>
