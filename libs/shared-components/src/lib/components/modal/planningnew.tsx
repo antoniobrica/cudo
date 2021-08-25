@@ -118,7 +118,7 @@ export function ModalPlanningNew(props: PlanningProps) {
 
   const onDescriptionChange = e => {
     // console.log("$$$$$$$$$$$$$$$$$$$$$$$",e.target.value)
-    setDescription(e);
+    setDescription(e.target.value);
   }
 
   const validation = () => {
@@ -241,11 +241,11 @@ export function ModalPlanningNew(props: PlanningProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>{t("common.desc")} </label>
-                      {/* <TextArea placeholder="Tell us more"    
+                      <TextArea placeholder="Tell us more"    
                        value={description}
                        onChange={onDescriptionChange}
-                     /> */}
-                      <ReactQuill
+                     />
+                      {/* <ReactQuill
                         value={description}
                         modules={{
                           toolbar: false
@@ -264,7 +264,7 @@ export function ModalPlanningNew(props: PlanningProps) {
                         placeholder={t("common.desc_placeholder")}
                         onChange={(content, delta, source, editor) => onDescriptionChange(content)}
                         id="txtDescription"
-                      />
+                      /> */}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>

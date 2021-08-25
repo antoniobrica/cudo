@@ -169,7 +169,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
             <ul>
               {data?.projects?.map((project: IProject, i) => {
                 const { projectId, projectName, client, buildingType, description } = project
-                // const shortDescription = description.length > 94 ? description.substring(0, 94) + '...' : description
+                const shortDescription = description.length > 94 ? description.substring(0, 94) + '...' : description
                 return (
                   <li key={projectId} >
                     <div className="project-logo-action">
@@ -203,8 +203,8 @@ export function ProjectInfo(props: ProjectInfoProps) {
                     </div>
 
                     <div className="project-description">
-                      {/* <p>{shortDescription ? shortDescription : 'NA'}</p> */}
-                      <p><ReactQuill id="txtDescription" readOnly={true} value={description} modules={{ toolbar: null }} /></p>
+                      <p>{shortDescription ? shortDescription : 'NA'}</p>
+                      {/* <p><ReactQuill id="txtDescription" readOnly={true} value={description} modules={{ toolbar: null }} /></p> */}
                       {/* <div className="project-members">
                         <Label circular color="orange">AK</Label>
                         <Label circular color="violet">AM</Label>

@@ -215,7 +215,7 @@ export function CreateTask(props: CreateTaskProps) {
   }
 
   const onDescriptionChange = (e) => {
-    setDescription(e);
+    setDescription(e.target.value);
   }
 
   const cancel = () => {
@@ -335,7 +335,7 @@ export function CreateTask(props: CreateTaskProps) {
           <Dimmer active inverted Center inline>
             <Loader size='big'>Loading</Loader>
           </Dimmer>
-        : null}
+          : null}
         <Modal.Header><h3>{t("project_tab_menu.task.add_new_task")} </h3></Modal.Header>
         <Modal.Content body>
           <div>
@@ -360,29 +360,28 @@ export function CreateTask(props: CreateTaskProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>{t("common.desc")} </label>
-                      {/* <TextArea placeholder='Tell us more'
+                      <TextArea placeholder={t("common.desc_placeholder")}
                         value={description}
-                        onChange={onDescriptionChange} /> */}
-                      <ReactQuill
+                        onChange={onDescriptionChange} />
+                      {/* <ReactQuill
                         value={description}
                         modules={{
-                          toolbar: false
-                          // {
-                          //   container: [
-                          //     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                          //     ['bold', 'italic', 'underline'],
-                          //     [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                          //     [{ 'align': [] }],
-                          //     ['link', 'image'],
-                          //     ['clean'],
-                          //     [{ 'color': [] }]
-                          //   ]
-                          // }
+                          toolbar: {
+                            container: [
+                              [{ 'size': ['small', false, 'large'] }],
+                              // ['bold', 'italic', 'underline'],
+                              // [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                              // [{ 'align': [] }],
+                              // ['link', 'image'],
+                              // ['clean'],
+                              // [{ 'color': [] }]
+                            ]
+                          }
                         }}
                         placeholder={t("common.desc_placeholder")}
-                        onChange={(content, delta, source, editor) => onDescriptionChange(content)}
+                        onChange={(content, delta, source, editor) => onDescriptionChange(content, editor)}
                         id="txtDescription"
-                      />
+                      /> */}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>

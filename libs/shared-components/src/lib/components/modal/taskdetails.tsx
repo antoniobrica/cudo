@@ -106,10 +106,10 @@ export const ModalViewTask = (props: AlertProps) => {
                   <Grid.Column>
                     <Form.Field className="filled-fields">
                       <label>{t("common.desc")} </label>
-                      {/* <span>
+                      <span>
                         {props?.taskData?.description}
-                      </span> */}
-                      <ReactQuill
+                      </span>
+                      {/* <ReactQuill
                         value={props?.taskData?.description}
                         readOnly={true}
                         modules={{
@@ -128,7 +128,7 @@ export const ModalViewTask = (props: AlertProps) => {
                         }}
                         placeholder={t("common.desc_placeholder")}
                         id="txtDescription"
-                      />
+                      /> */}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>

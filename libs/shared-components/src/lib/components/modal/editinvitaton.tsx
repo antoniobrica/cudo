@@ -165,10 +165,10 @@ export function ModalEditInvitation(props: EditInvitationProps) {
     setErrors({ ...errors, membersError: "" })
   }
 
-  const onDescription = (html) => {
+  const onDescription = (e) => {
     // if(html.length > 10){
     // event.preventDefault()
-    setMeetingDescription(html)
+    setMeetingDescription(e.target.value)
     // }
   }
 
@@ -433,9 +433,12 @@ export function ModalEditInvitation(props: EditInvitationProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Description</label>
-                      {/* <TextArea placeholder="Tell us more" /> */}
-                      <ReactQuill
+                    <label>{t("common.desc")}</label>
+                      <TextArea placeholder={t("common.tell_us_more")}
+                    value={meetingDescription}
+                    onChange={onDescription}
+                  />
+                      {/* <ReactQuill
                         value={meetingDescription}
                         // modules={{
                         //   toolbar: {
@@ -454,7 +457,7 @@ export function ModalEditInvitation(props: EditInvitationProps) {
                         onChange={(content, delta, source, editor) => onDescription(content)}
                         // onKeyDown={onKeyPresDescription}
                         id="txtDescription"
-                      />
+                      /> */}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>

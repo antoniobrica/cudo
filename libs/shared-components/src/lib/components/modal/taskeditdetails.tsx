@@ -296,7 +296,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
     setPhasesName(data.phaseName)
   }
   const onDescriptionChange = e => {
-    setDescription(e);
+    setDescription(e.target.value);
   }
 
   const validation = () => {
@@ -405,10 +405,10 @@ export const ModalTaskEdit = (props: AlertProps) => {
                   <Grid.Column>
                     <Form.Field>
                       <label>{t("common.desc")} </label>
-                      {/* <TextArea placeholder="Tell us more"
+                      <TextArea placeholder={t("common.desc_placeholder")}
                         value={description}
-                        onChange={onDescriptionChange} /> */}
-                      <ReactQuill
+                        onChange={onDescriptionChange} />
+                      {/* <ReactQuill
                         value={description}
                         modules={{
                           toolbar: false
@@ -427,7 +427,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         placeholder={t("common.desc_placeholder")}
                         onChange={(content, delta, source, editor) => onDescriptionChange(content)}
                         id="txtDescription"
-                      />
+                      /> */}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>

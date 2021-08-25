@@ -240,11 +240,11 @@ export function ModalExampleModal(props: ProjectInfoProps) {
   const onCountry = (data) => {
     setCountry(data)
   }
-  const onDescription = (html) => {
+  const onDescription = (e) => {
     // console.log('---onDescription---e---', event, html)
     // if(html.length > 10){
     // event.preventDefault()
-    setDescription(html)
+    setDescription(e.target.value)
     // }
   }
   // const onKeyPresDescription = (e) => {
@@ -599,11 +599,11 @@ export function ModalExampleModal(props: ProjectInfoProps) {
               <Grid.Column>
                 <Form.Field>
                   <label>{t("common.desc")} </label>
-                  {/* <TextArea placeholder='Tell us more'
+                  <TextArea placeholder={t("common.tell_us_more")}
                     value={description}
                     onChange={onDescription}
-                  /> */}
-                  <ReactQuill
+                  />
+                  {/* <ReactQuill
                     value={description}
                     modules={{
                       toolbar: false
@@ -623,7 +623,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     onChange={(content, delta, source, editor) => onDescription(content)}
                     // onKeyDown={onKeyPresDescription}
                     id="txtDescription"
-                  />
+                  /> */}
                 </Form.Field>
               </Grid.Column>
 
