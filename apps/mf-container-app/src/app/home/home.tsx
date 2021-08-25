@@ -26,7 +26,7 @@ export function Home(props: HomeProps) {
   const history = useHistory()
   const location = useLocation();
   // const routeMatch = useRouteMatch();
-  const { url, path, params } = useRouteMatch();
+  const { url, path } = useRouteMatch();
   
   useEffect(() => {
     if (!isAuthenticated()) ToEmail()
