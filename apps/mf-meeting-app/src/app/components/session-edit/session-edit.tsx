@@ -15,6 +15,8 @@ export interface EditSessionProps {
   openEditSession?
   cancel?
   dataList?
+  getSessionErrorMessage?
+  getSessionToasterMessage?
 }
 
 export function EditSession(props: EditSessionProps) {
@@ -122,7 +124,10 @@ export function EditSession(props: EditSessionProps) {
         editSession={updateSession}
         loading={loading}
         data={data}
+        error={error}
         dataList={props.dataList}
+        getSessionErrorMessage={props.getSessionErrorMessage}
+        getSessionToasterMessage={props.getSessionToasterMessage}
       />
     </div>
   );

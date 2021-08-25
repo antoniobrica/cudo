@@ -30,6 +30,9 @@ export interface AddInvitationProps {
   loading?
   data?
   dataList?
+  getInvitationErrorMessage?
+  getInvitationToasterMessage?
+  error?
 }
 
 interface AddInvitationErrors {
@@ -67,9 +70,14 @@ export function ModalAddInvitation(props: AddInvitationProps) {
   //on show or hide loader
   useEffect(() => {
     if (!props.loading && props.data) {
+      props.getInvitationToasterMessage(t("toaster.success.meeting.meeting_created"))
       cancel()
     }
-  }, [props.dataList])
+    if (!props.loading && props.error) {
+      props.getInvitationErrorMessage(props.error?.graphQLErrors[0]?.extensions?.exception?.status)
+      cancel()
+    }
+  }, [props.loading])
 
   const openInvitationAddPopup = () => {
     setOpen(true)
@@ -86,10 +94,10 @@ export function ModalAddInvitation(props: AddInvitationProps) {
     setErrors({ ...errors, membersError: "" })
   }
 
-  const onDescription = (html) => {
+  const onDescription = (e) => {
     // if(html.length > 10){
     // event.preventDefault()
-    setMeetingDescription(html)
+    setMeetingDescription(e.target.value)
     // }
   }
   // const onKeyPresDescription = (e) => {
@@ -162,7 +170,7 @@ export function ModalAddInvitation(props: AddInvitationProps) {
   }
 
   const createInvitation = () => {
-    
+
     const validationResult = validation()
     if (Object.keys(validationResult).length > 0) {
       setErrors(validationResult)
@@ -337,9 +345,9 @@ export function ModalAddInvitation(props: AddInvitationProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                    <label>Members<span className="danger">*</span></label>
-                    <MembersIndex members={[]} parentMembersSelect={onMembers} error={errors?.membersError && !members.length} />
-                    {errors?.membersError && !members.length ? <span className="error-message">{errors.membersError}</span> : null}
+                      <label>Members<span className="danger">*</span></label>
+                      <MembersIndex members={[]} parentMembersSelect={onMembers} error={errors?.membersError && !members.length} />
+                      {errors?.membersError && !members.length ? <span className="error-message">{errors.membersError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -425,27 +433,31 @@ export function ModalAddInvitation(props: AddInvitationProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>Description</label>
-                      {/* <TextArea placeholder="Tell us more" /> */}
-                      <ReactQuill
+                      <TextArea placeholder={t("common.tell_us_more")}
+                        value={meetingDescription}
+                        onChange={onDescription}
+                      />
+                      {/* <ReactQuill
                         value={meetingDescription}
                         modules={{
-                          toolbar: {
-                            container: [
-                              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                              ['bold', 'italic', 'underline'],
-                              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                              [{ 'align': [] }],
-                              ['link', 'image'],
-                              ['clean'],
-                              [{ 'color': [] }]
-                            ]
-                          }
+                          toolbar: false
+                          // {
+                          //   container: [
+                          //     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                          //     ['bold', 'italic', 'underline'],
+                          //     [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                          //     [{ 'align': [] }],
+                          //     ['link', 'image'],
+                          //     ['clean'],
+                          //     [{ 'color': [] }]
+                          //   ]
+                          // }
                         }}
                         placeholder="Tell us more"
                         onChange={(content, delta, source, editor) => onDescription(content)}
                         // onKeyDown={onKeyPresDescription}
                         id="txtDescription"
-                      />
+                      /> */}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>

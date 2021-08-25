@@ -29,6 +29,9 @@ export interface EditInvitationProps {
   loading?
   data?
   dataList?
+  getInvitationErrorMessage?
+  getInvitationToasterMessage?
+  error?
 }
 
 interface EditInvitationErrors {
@@ -68,9 +71,14 @@ export function ModalEditInvitation(props: EditInvitationProps) {
    //on show or hide loader
    useEffect(() => {
     if (!props.loading && props.data) {
+      props.getInvitationToasterMessage(t("toaster.success.meeting.meeting_edit"))
       cancel()
     }
-  }, [props.dataList])
+    if (!props.loading && props.error) {
+      props.getInvitationErrorMessage(props.error?.graphQLErrors[0]?.extensions?.exception?.status)
+      cancel()
+    }
+  }, [props.loading])
 
   useEffect(() => {
     if (props?.meetingDetail) {
@@ -157,10 +165,10 @@ export function ModalEditInvitation(props: EditInvitationProps) {
     setErrors({ ...errors, membersError: "" })
   }
 
-  const onDescription = (html) => {
+  const onDescription = (e) => {
     // if(html.length > 10){
     // event.preventDefault()
-    setMeetingDescription(html)
+    setMeetingDescription(e.target.value)
     // }
   }
 
@@ -425,28 +433,31 @@ export function ModalEditInvitation(props: EditInvitationProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Description</label>
-                      {/* <TextArea placeholder="Tell us more" /> */}
-                      <ReactQuill
+                    <label>{t("common.desc")}</label>
+                      <TextArea placeholder={t("common.tell_us_more")}
+                    value={meetingDescription}
+                    onChange={onDescription}
+                  />
+                      {/* <ReactQuill
                         value={meetingDescription}
-                        modules={{
-                          toolbar: {
-                            container: [
-                              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                              ['bold', 'italic', 'underline'],
-                              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                              [{ 'align': [] }],
-                              ['link', 'image'],
-                              ['clean'],
-                              [{ 'color': [] }]
-                            ]
-                          }
-                        }}
+                        // modules={{
+                        //   toolbar: {
+                        //     container: [
+                        //       [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                        //       ['bold', 'italic', 'underline'],
+                        //       [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                        //       [{ 'align': [] }],
+                        //       ['link', 'image'],
+                        //       ['clean'],
+                        //       [{ 'color': [] }]
+                        //     ]
+                        //   }
+                        // }}
                         placeholder="Tell us more"
                         onChange={(content, delta, source, editor) => onDescription(content)}
                         // onKeyDown={onKeyPresDescription}
                         id="txtDescription"
-                      />
+                      /> */}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>

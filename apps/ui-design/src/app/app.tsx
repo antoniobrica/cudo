@@ -66,6 +66,7 @@ import PinMaskTask from 'libs/shared-components/src/lib/components/modal/pinmask
 
 // import { Sidebar } from 'semantic-ui-react';
 import LazyLoading from 'libs/shared-components/src/lib/components/loader/lazyloader';
+import PopupLoading from 'libs/shared-components/src/lib/components/loader/popuploader';
 
 export function App() {
   return (
@@ -127,7 +128,7 @@ export function App() {
         <ModalCost></ModalCost><br />
         <PinMaskTask></PinMaskTask><br />
         <LazyLoading></LazyLoading>
-
+        <PopupLoading></PopupLoading>
       </div>
 
     </Suspense>

@@ -45,6 +45,11 @@ export interface IFileParam {
   structureID: string
   directory: string
   structureTitle: string
+  versionCount: number
+  createdBy: string
+  createdAt: Date
+  updatedBy: string
+  updatedAt:Date
 }
 
 export interface IPeople {
@@ -90,7 +95,3 @@ export interface IFileVersion {
   people: [IPeople]
   children: [IFileParam]
 }
-
-// export interface IFileVersion {
-//   fileVersions: IFileVersion;
-// }

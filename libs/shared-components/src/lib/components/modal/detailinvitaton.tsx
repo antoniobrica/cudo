@@ -175,9 +175,9 @@ export function ModalDetailInvitation(props: DetailInvitationProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field className="filled-fields">
-                      <label>Description</label>
-                      <span><ReactQuill id="txtDescription" readOnly={true} value={meetingDescription} modules={{ toolbar: null }} /></span>
-                      {/* <span>{meetingDescription}</span> */}
+                      <label>{t("common.desc")}</label>
+                      {/* <span><ReactQuill id="txtDescription" readOnly={true} value={meetingDescription} modules={{ toolbar: null }} /></span> */}
+                      <span>{meetingDescription}</span>
                       {/* <span>The building utilizes wrapped glass facades on the east, north, and west both for aesthetics and to reduce the amount of reflective surface area on the south facade, which also features brushed Jura limestone.</span> */}
                     </Form.Field>
                   </Grid.Column>

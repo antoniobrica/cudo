@@ -260,7 +260,7 @@ div.ui.toggle.checkbox label:before {
 div.add-files-modal button {
   position: absolute;
   right: 36px;
-  top: 40px;
+  top: 35px;
   z-index: 9;
 }
 .files-tab-outer .ui.card {
@@ -543,6 +543,28 @@ img.filter-icon {
 
 .overflow-hidden {
   overflow: hidden !important;
+}
+
+.ui.modal.disabled-fields {
+  overflow: hidden;
+  i.close.icon {
+    opacity: .5;
+    pointer-events: none;
+  }
+  .form {
+    .field {
+      opacity: .5;
+      pointer-events: none;
+    }
+  }
+  .actions {
+    button {
+      .icon-border {
+        opacity: .5;
+        pointer-events: none;
+      }
+    }
+  }
 }
 
 .ui.inverted.dimmer {

@@ -11,12 +11,15 @@ import {
 
   Select,
   TextArea,
+  Dimmer,
+  Loader,
 } from 'semantic-ui-react';
 import { PhaseIndex } from "@cudo/mf-account-app-lib"
 import moment, { calendarFormat } from 'moment';
 import ReactQuill, { Quill } from 'react-quill';
 import { useTranslation } from 'react-i18next';
 import { object } from '@hapi/joi';
+import PopupLoading from '../loader/popuploader';
 
 // import SampleModal from './sample-modal';
 
@@ -25,7 +28,9 @@ export interface PlanningProps {
   worktypes?
   openNew?
   cancel?
-
+  addLoading?
+  addData?
+  listData?
 }
 interface PlanningErrors {
   titleError?: string,
@@ -61,11 +66,21 @@ export function ModalPlanningNew(props: PlanningProps) {
   const { t } = useTranslation()
   const [open, setOpen] = React.useState(false);
   const [errors, setErrors] = React.useState<PlanningErrors>({})
+
+  const [loader, setLoader] = React.useState(false)
+
+  React.useEffect(() => {
+    if (!props.addLoading && props.addData) {
+      cancel()
+    }
+  }, [props.listData])
+
   React.useEffect(() => {
     if (props.openNew) {
       setOpen(props.openNew)
     }
   }, [props.openNew])
+
   React.useEffect(() => {
     if (props.worktypes) {
       console.log('worktypes', props.worktypes);
@@ -73,6 +88,7 @@ export function ModalPlanningNew(props: PlanningProps) {
 
     }
   }, [props.worktypes]);
+
   const onMworkType = (event, data) => {
     const workT = {
       worktypeID: '',
@@ -118,7 +134,7 @@ export function ModalPlanningNew(props: PlanningProps) {
 
   const onDescriptionChange = e => {
     // console.log("$$$$$$$$$$$$$$$$$$$$$$$",e.target.value)
-    setDescription(e);
+    setDescription(e.target.value);
   }
 
   const validation = () => {
@@ -141,6 +157,8 @@ export function ModalPlanningNew(props: PlanningProps) {
   const cancel = () => {
     setOpen(false)
     props.cancel()
+    resetAddData()
+    setLoader(false)
   }
 
   const resetAddData = () => {
@@ -164,6 +182,8 @@ export function ModalPlanningNew(props: PlanningProps) {
       setErrors(validationResult)
       return false
     }
+    setLoader(true)
+
     const data = {
       milestoneTitle: milestone,
       dueDate: dueDate,
@@ -174,13 +194,13 @@ export function ModalPlanningNew(props: PlanningProps) {
       worktypeName: workTypeD.worktypeName
     }
     props.getMilestoneData(data);
-    props.cancel()
-    resetAddData()
+    // props.cancel()
+    // resetAddData()
   }
 
   return (
     <div>
-      <Modal className="modal_media right-side--fixed-modal add-new-milestone-modal"
+      <Modal className={`modal_media right-side--fixed-modal add-new-milestone-modal${loader && " overflow-hidden"}`}
         closeIcon
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
@@ -192,6 +212,14 @@ export function ModalPlanningNew(props: PlanningProps) {
         // }
         closeOnDimmerClick={false}
       >
+        {
+          loader && (
+            // <PopupLoading />
+            <Dimmer active inverted Center inline>
+              <Loader size='big'>Loading</Loader>
+            </Dimmer>
+          )
+        }
         <Modal.Header>
           <h3>{t("project_tab_menu.planning.add_milestone")} </h3>
         </Modal.Header>
@@ -241,29 +269,30 @@ export function ModalPlanningNew(props: PlanningProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>{t("common.desc")} </label>
-                      {/* <TextArea placeholder="Tell us more"    
+                      <TextArea placeholder="Tell us more"    
                        value={description}
                        onChange={onDescriptionChange}
-                     /> */}
-                      <ReactQuill
+                     />
+                      {/* <ReactQuill
                         value={description}
                         modules={{
-                          toolbar: {
-                            container: [
-                              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                              ['bold', 'italic', 'underline'],
-                              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                              [{ 'align': [] }],
-                              ['link', 'image'],
-                              ['clean'],
-                              [{ 'color': [] }]
-                            ]
-                          }
+                          toolbar: false
+                          // {
+                          //   container: [
+                          //     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                          //     ['bold', 'italic', 'underline'],
+                          //     [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                          //     [{ 'align': [] }],
+                          //     ['link', 'image'],
+                          //     ['clean'],
+                          //     [{ 'color': [] }]
+                          //   ]
+                          // }
                         }}
                         placeholder={t("common.desc_placeholder")}
                         onChange={(content, delta, source, editor) => onDescriptionChange(content)}
                         id="txtDescription"
-                      />
+                      /> */}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>

@@ -7,9 +7,8 @@ export interface DeleteSessionProps {
   deleteSession,
   openDeleteSession,
   cancel,
-  setSessionDeleteLoading?
-  loading?
-  data?
+  getSessionErrorMessage?
+  getSessionToasterMessage?
 }
 
 export const ModalDeleteSession = (props: DeleteSessionProps) => {
@@ -21,24 +20,22 @@ export const ModalDeleteSession = (props: DeleteSessionProps) => {
     }
   }, [props.openDeleteSession]);
 
-  React.useEffect(() => {
-    if (!props.loading && props.data) {
-      cancel()
-    }
-  }, [props.loading])
+  // React.useEffect(() => {
+  //   if (!props.loading && props.data) {
+  //     cancel()
+  //   }
+  // }, [props.loading])
 
   const onClickOpenDeleteSession = () => {
     setOpen(true)
   }
   const yes = () => {
-    props.setSessionDeleteLoading(true)
-    setOpen(false)
     props.deleteSession(props.sessionId)
+    cancel()
   }
   const cancel = () => {
     setOpen(false)
     props.cancel()
-    props.setSessionDeleteLoading(false)
   }
   const size = undefined
   return (
@@ -46,7 +43,7 @@ export const ModalDeleteSession = (props: DeleteSessionProps) => {
     <Modal
       closeIcon
       size={size}
-      onClose={() => setOpen(false)}
+      onClose={cancel}
       onOpen={onClickOpenDeleteSession}
       open={open}
       className="delete-confiramtion-popup"

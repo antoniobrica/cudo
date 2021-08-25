@@ -243,7 +243,7 @@ export function TaskArea(props: Tasks) {
                       subtaskData?.length > 0 ?
                         <div className="navi-item">
                           <a className="navi-link">
-                            <span className="navi-text"> - {subtaskData?.length} {t("project_tab_menu.task.check_points")}  </span>
+                            <span className="navi-text"> - &nbsp;{subtaskData?.length} {t("project_tab_menu.task.check_points")}  </span>
                           </a>
                         </div> : null
                     }
@@ -409,7 +409,7 @@ export function TaskArea(props: Tasks) {
                       subtaskData?.length > 0 ?
                         <div className="navi-item">
                           <a className="navi-link">
-                            <span className="navi-text"> - {subtaskData?.length} {t("project_tab_menu.task.check_points")}  </span>
+                            <span className="navi-text"> - &nbsp;{subtaskData?.length} {t("project_tab_menu.task.check_points")}  </span>
                           </a>
                         </div> : null
                     }
@@ -497,6 +497,7 @@ export function TaskArea(props: Tasks) {
               isExpended && subtaskData && (taskId === props.id) ?
 
                 <div className="card1 card-custom gutter-b checklist-main-con">
+                  <LazyLoading />
 
                   <div className="card-body">
 
