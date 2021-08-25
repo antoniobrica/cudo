@@ -2,12 +2,19 @@
 import React from 'react';
 import { Button, Modal, Grid, Image, Segment, Form, Input, TextArea, Select, Checkbox, Dropdown } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
-import Canvas from './canvas';
+
+// import Canvas from './canvas';
+import CanvasImage from './canvasimage';
+
 import { useHistory } from 'react-router';
 import axios from 'axios';
 import { CreateFileTaskIndex, PinTaskListIndex } from '@cudo/mf-task-lib';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { useTranslation } from 'react-i18next';
+
+// import ImageMarker, { Marker } from 'react-image-marker';
+// import CanvasMarker from './canvasmarker';
+
 
 function exampleReducer(state, action) {
   switch (action.type) {
@@ -23,6 +30,7 @@ function exampleReducer(state, action) {
 
 export interface AddPinProps {
   isOpen?,
+  cancel?,
   filesData?,
   dowloadFilesData?,
   onSuccess?,
@@ -42,14 +50,17 @@ export const AddPinFile = (props: AddPinProps) => {
   const [pinSavedOnCanvase, setPinSavedOnCanvase] = React.useState(false);
 
   const { t } = useTranslation();
-  
+
+  // const [markers, setMarkers] = React.useState<Marker[]>([{ top: 10, left: 50 }, { top: 20, left: 70 }, { top: 30, left: 75 }, { top: 35, left: 80 }])
+
   React.useEffect(() => {
-    console.log("New Pin created ", isPinCreated);
+    console.log("--pinaddfile-1-New Pin created ", isPinCreated);
     setAllowToCreateNewPin(false);
   }, [isPinCreated])
 
   const close = () => {
     setOpen(false)
+    props.cancel(false)
   }
 
   const openM = () => {
@@ -64,34 +75,37 @@ export const AddPinFile = (props: AddPinProps) => {
 
   React.useEffect(() => {
     if (props.filesData) {
-      console.log('filesData==', props.filesData);
+      console.log('--pinaddfile-2-filesData==', props.filesData);
       setFileId(props.filesData.uploadedFileID)
       setFileData(props.filesData)
     }
   }, [props.filesData])
+
   React.useEffect(() => {
     if (props.dowloadFilesData) {
-      console.log('dowloadFilesData-s', props.dowloadFilesData);
+      // const tempPdfFilePath = `${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/sample_mk.pdf`
+      console.log('--pinaddfile-3-dowloadFilesData-s', props.dowloadFilesData);
       for (let i = 0; i < props.dowloadFilesData.length; i++) {
         if (props.dowloadFilesData[i].filename == props.filesData.fileTitle) {
-          console.log('uploadedfileid', props.dowloadFilesData[i]);
+          console.log('--pinaddfile-4-uploadedfileid', props.dowloadFilesData[i]);
           setimgUrl(props.dowloadFilesData[i].url);
+          // setimgUrl(tempPdfFilePath);
         }
       }
     }
-  })
+  }, [props.dowloadFilesData])
 
   const getCoardinates = (data) => {
-    console.log('getCoardinates', data);
+    console.log('--pinaddfile-5-getCoardinates', data);
     setCord(data);
   }
   const onSuccess = async () => {
-    console.log('onSuccess');
+    console.log('--pinaddfile-6-onSuccess');
     setAllowToCreateNewPin(false);
     setIsPinCreated(false);
   }
   const changePinTask = () => {
-    console.log('changePinTask');
+    console.log('--pinaddfile-7-changePinTask');
     setAllowToCreateNewPin(true);
   }
   const taskClose = () => {
@@ -122,16 +136,26 @@ export const AddPinFile = (props: AddPinProps) => {
         <Modal.Content>
           <Form>
             <div className="left-side-image-canvas">
-              <Canvas pinSaved={setPinSavedOnCanvase} savePin={saveNewPinOnCanvase} imgUrl={imgUrl} coardinates={getCoardinates} fileId={fileId} allowToCreateNewPin={allowToCreateNewPin} isPinCreated={isPinCreated} setIsPinCreated={setIsPinCreated}></Canvas>
+              <CanvasImage
+                pinSaved={setPinSavedOnCanvase}
+                savePin={saveNewPinOnCanvase}
+                imgUrl={imgUrl}
+                coardinates={getCoardinates}
+                fileId={fileId}
+                allowToCreateNewPin={allowToCreateNewPin}
+                isPinCreated={isPinCreated}
+                setIsPinCreated={setIsPinCreated}
+              ></CanvasImage>  
+              
             </div>
 
             <div className="right-side-file-details">
               <div className="add-pin-mark-field">
                 {!isPinCreated ?
-                    <Form.Field className="pin-add-field">
-                      <button className="ui mini button pinbutton" onClick={changePinTask}>{t('pin_mask.pin_mark_task')}</button>
-                      <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/grey_pin.png`} className="pinadd" />
-                    </Form.Field>
+                  <Form.Field className="pin-add-field">
+                    <button className="ui mini button pinbutton" onClick={changePinTask}>{t('pin_mask.pin_mark_task')}</button>
+                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/grey_pin.png`} className="pinadd" />
+                  </Form.Field>
                   :
                   <CreateFileTaskIndex pinsaved={pinSavedOnCanvase} savePin={setSaveNewPinOnCanvase} close={taskClose} onSuccess={onSuccess} cord={cord} fileData={fileData}></CreateFileTaskIndex>
                 }

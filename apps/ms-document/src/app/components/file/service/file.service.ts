@@ -201,7 +201,34 @@ export class FileService {
           referenceType: fileReferenceParams.referenceType,
         }, relations: ['fileReferences', 'people', 'children']
       })
-      return parent
+
+      // #region Retrieve children wise version count - Need improvement 
+      let result = []
+      if (parent.length > 0) {
+        for (let i = 0; i < parent.length; i++) {
+
+          let modifiedFiles = []
+          if (parent[i]?.children?.length > 0) {
+            for (let j = 0; j < parent[i].children.length; j++) {
+              const childUploadedFileId = parent[i].children[j].uploadedFileID
+              let versionCount = 0
+              versionCount = await this.uploadedFilesRepository.count({
+                where: {
+                  parentUploadedFileID: childUploadedFileId,
+                  isDeleted: false
+                }
+              });
+              modifiedFiles.push({ ...parent[i].children[j], versionCount })
+            }
+          }
+          result.push({...parent[i], children: modifiedFiles})
+        }
+      }
+      // #endregion
+
+
+      return result
+      // return parent
     } catch (error) {
       return error;
     }

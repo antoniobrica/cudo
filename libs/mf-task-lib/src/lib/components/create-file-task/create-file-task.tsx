@@ -239,7 +239,9 @@ export function CreateFileTask(props: CreateFileTaskProps) {
         followers,
         description,
         subtasks: [],
-        referenceID
+        referenceID,
+        workTypeID: worktypeID,
+        workTypeName: worktypeName
       },
       update: (
         cache,

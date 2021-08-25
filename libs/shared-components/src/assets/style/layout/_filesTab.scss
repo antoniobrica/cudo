@@ -2,7 +2,7 @@
   .navbar-collapse.files-tab-outer {
     .ui-tabs {
       .ui.menu.secondary.menu {
-        padding-bottom: 15px;
+        padding-bottom: 2px;
       }
     }
   }
@@ -67,16 +67,18 @@
     background: #fff;
     box-shadow: 0px 1px 2px #00000014;
     margin-bottom: 10px;
-    padding: 15px;
+    padding: 15px 18px;
     .multiple-files-header {
       @include flex(flex);
       @include justify-content(space-between);
+      @include align-items(center);
       .files-arrows {
         i {
           color: #1B1B40;
           font-weight: 600;
           cursor: pointer;
           @include transition(all .25s);
+          font-size: 16px;
         }
       }
     }
@@ -101,7 +103,7 @@
         }
         .version-file-con {
           margin: 15px 0 0;
-          padding: 10px 25px 0 25px;
+          padding: 10px 0 0 20px;
           min-width: 100%;
           display: none;
         }
@@ -445,12 +447,16 @@
         width: calc(100% - 460px);
         background: none;
         height: 100%;
+        @include transition(all .35s);
         .left-side-detail-file {
           height: 100%;
           @include flex(flex);
           @include align-items(center);
           @include flex-direction(column);
           @include justify-content(center);
+          img {
+            width: auto;
+          }
         }
       }
     }
@@ -464,6 +470,7 @@
     padding: 20px;
     height: 100%;
     overflow-y: auto;
+    @include transition(all .35s);
     .header {
       > h3 {
         font-size: 20px;
@@ -472,6 +479,25 @@
         padding: 0 20px 15px;
         @include flex(flex);
         @include justify-content(space-between);
+        span {
+          @include flex(flex);
+          @include align-items(center);
+          i {
+            margin-left: 10px;
+            &.hide-icon {
+              color: #9FB5C5;
+              font-size: 14px;
+              display: flex;
+              align-items: center;
+              margin-right: 10px;
+              span {
+                font-size: 13px;
+                font-family: "Work Sans", sans-serif, "Helvetica Neue", Arial, Helvetica, sans-serif;
+                margin-left: 10px;
+              }
+            }
+          }
+        }
         i {
           position: relative;
           top: 0;
@@ -595,6 +621,35 @@
         }
       }
     }
+  }
+  &.hide-sidebar {
+    .content {
+      form {
+        .view-pin-detail-popup {
+          width: 100%;
+        }
+        .right-side-file-information {
+          right: -460px;
+        }
+      }
+    }
+     span.expand-sidebar {
+      z-index: 9;
+     }
+  }
+  span.expand-sidebar {
+    position: absolute;
+    right: -47px;
+    top: 50px;
+    background: #252526;
+    font-weight: 500;
+    font-size: 14px;
+    transform: rotate(-91deg);
+    padding: 7px 12px;
+    box-shadow: 4px -2px 14px #00000021;
+    cursor: pointer;
+    color: #fff;
+    z-index: -1;
   }
 }
 

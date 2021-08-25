@@ -25,6 +25,7 @@ import SubTaskDelete from '../delete-subtask/delete-subtask';
 import { FilterPopup, ToggleButton } from '@cudo/shared-components';
 import { FileListIndex } from '@cudo/mf-document-lib';
 import { toast, ToastContainer } from 'react-toastify';
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface TasksProps { }
 
 export function Tasks(props: TasksProps) {
@@ -901,7 +902,7 @@ export function Tasks(props: TasksProps) {
           );
         })}
 
-        <div className="task-action-area">
+        {/* <div className="task-action-area">
           <button
             onClick={clickBottomAddTask}
             // className="ui large button btn-dashed  btn-large"
@@ -909,10 +910,10 @@ export function Tasks(props: TasksProps) {
             <i className="ms-Icon ms-Icon--Add" aria-hidden="true"></i> {t("project_tab_menu.task.add_new")}
           </button>
           <a href="">1 {t("project_tab_menu.task.completed_tasks")}</a>
-        </div>
+        </div> */}
 
-        <div className="completed-task-con">
-          <h3 className="alltask">{t("project_tab_menu.task.completed_tasks")}</h3>
+        <div className="completed-task-con expand">
+          <h3 className="alltask">{t("project_tab_menu.task.completed_tasks")} <span>(1 {t("project_tab_menu.task.completed_tasks")})</span> <i className="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i></h3>
           <div className="tasks-completed-listing">
             <div className="card1 card-custom gutter-b card-complete">
               <div className="card-body">

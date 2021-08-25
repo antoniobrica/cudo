@@ -497,6 +497,7 @@ export function TaskArea(props: Tasks) {
               isExpended && subtaskData && (taskId === props.id) ?
 
                 <div className="card1 card-custom gutter-b checklist-main-con">
+                  <LazyLoading />
 
                   <div className="card-body">
 

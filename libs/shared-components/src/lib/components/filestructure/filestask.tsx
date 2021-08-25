@@ -6,6 +6,7 @@ import ViewFileDetail from '../modal/viewdetailsfile';
 import AddPinFile from '../modal/pinaddfile';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { LazyLoading } from '@cudo/shared-components';
+import moment from 'moment';
 
 /* eslint-disable-next-line */
 export interface FileStructureProps {
@@ -108,7 +109,7 @@ export function FileStructure(props: FileStructureProps) {
 		} else {
 			setExpandVersion(true)
 		}
-		
+
 		setSelectedExpandVersionId(uploadedFileVersionId)
 		props.selectedFileId(uploadedFileVersionId)
 	}
@@ -194,15 +195,15 @@ export function FileStructure(props: FileStructureProps) {
 	// #endregion
 
 	const renderChildrenSingleFile = (singleFileItem) => {
-		const { uploadedFileID, fileType, fileTitle, fileVersion } = singleFileItem
+		const { uploadedFileID, fileType, fileTitle, fileVersion, versionCount } = singleFileItem
 		return (
 			<div key={uploadedFileID} className={selectedExpandVersionId === uploadedFileID && expandVersion ? "single-files-list expand" : "single-files-list"}>
 				<div className="files-left-area">
 					<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
 					<h3 className="files-name">{fileTitle}</h3>
-					<span className="no-of-files"><i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i> 2 comments</span>
-					<span className="no-of-files"><i className="ms-Icon ms-Icon--CheckboxComposite" aria-hidden="true"></i> 2 tasks</span>
-					<span className="version-files"><a onClick={() => onClickFileVersion(uploadedFileID)}>Ver 2</a></span>
+					<span className="no-of-files" onClick={() => onClickViewFileDetail(singleFileItem)}><i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i> 2 comments</span>
+					<span className="no-of-files" onClick={() => onClickViewFileDetail(singleFileItem)}><i className="ms-Icon ms-Icon--CheckboxComposite" aria-hidden="true"></i> 2 tasks</span>
+					{versionCount > 0 ? <span className="version-files"><a onClick={() => onClickFileVersion(uploadedFileID)}>Ver {versionCount}</a></span>:null}
 				</div>
 				<div className="files-right-area">
 					<div className="symbol-group symbol-hover">
@@ -224,7 +225,13 @@ export function FileStructure(props: FileStructureProps) {
 					</div>
 				</div>
 
-				{props.fileVersionLoading && selectedExpandVersionId === uploadedFileID ? (<LazyLoading />)
+				{props.fileVersionLoading && selectedExpandVersionId === uploadedFileID ?
+					<>
+						<div className="break" />
+						<div className="version-file-con">
+							<LazyLoading />
+						</div>
+					</>
 					:
 					<>
 						{props?.fileVersionDetail?.children?.length ?
@@ -233,11 +240,25 @@ export function FileStructure(props: FileStructureProps) {
 								<div className="version-file-con">
 									{props?.fileVersionDetail?.children.map((item) => {
 
-										const { uploadedFileID, fileType, fileTitle, fileVersion } = item
+										const { uploadedFileID, fileType, fileTitle, fileVersion, createdBy, updatedBy, createdAt, updatedAt } = item
+										const formattedCreatedAt = moment(createdAt).format('DD MMM, YYYY')
+										const formattedUpdatedAt = moment(updatedAt).format('DD MMM, YYYY')
+										
 										return (<div key={uploadedFileID} className="files-versioning-list">
-											<p>Version {fileVersion} - <span>{fileTitle}</span> <span className="small-text">(By: John Smith - Uploaded on: 20 Sep, 2020)</span></p>
-											<div className="files-right-area">
+											<p>Version {fileVersion} - <span>{fileTitle}</span> <span className="small-text">(By: {updatedBy ? updatedBy : createdBy} - Uploaded on: {updatedAt ? formattedUpdatedAt : formattedCreatedAt})</span></p>
+											<div className="files-right-area symbol symbol-30">
+												<a onClick={() => onClickFileDownload(fileTitle)}> <i className="ms-Icon ms-Icon--Download" aria-hidden="true"></i></a>
 												<a onClick={onClickVersionDetail}> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
+												<span>
+													<Dropdown icon='ellipsis horizontal' pointing='right'>
+														<Dropdown.Menu>
+															<Dropdown.Item icon='pencil' text='Edit file detail' />
+															<Dropdown.Item icon='eye' text='Upload new version' onClick={() => uploadNewVersion(singleFileItem)} />
+															<Dropdown.Item icon='check circle outline' text='Add task to this file' onClick={() => addPinTask(singleFileItem)} />
+															<Dropdown.Item icon='trash alternate outline' text='Delete' />
+														</Dropdown.Menu>
+													</Dropdown>
+												</span>
 											</div>
 										</div>)
 									})}
