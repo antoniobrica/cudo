@@ -1,11 +1,11 @@
 
 import React, { Component, useEffect, useRef, useState } from 'react'
 import axios from 'axios';
-import { MS_SERVICE_URL } from '@cudo/mf-core'
-import CanvasTransparentEditPin from './canvastransparenteditpin';
+import { MS_SERVICE_URL } from '@cudo/mf-core' 
+
 import CanvasTransparentNewPin from './canvastransparentnewpin';
-export interface CanvasProps {
-  imgUrl?,
+export interface CanvasPinsProps {
+  // imgUrl?,
   coardinates?,
   fileId?,
   allowToCreateNewPin?
@@ -14,7 +14,7 @@ export interface CanvasProps {
   savePin?
   pinSaved?
 }
-export function Canvas(props: CanvasProps) {
+export function CanvasPins(props: CanvasPinsProps) {
   const canvasToDrawCircle = useRef<HTMLCanvasElement>();
   const canvasToDrawImage = useRef<HTMLCanvasElement>();
   const [pinList, setpinList] = React.useState([]);
@@ -29,21 +29,23 @@ export function Canvas(props: CanvasProps) {
   let startY = null;
 
   const [isAllPinCanvasHide, setAllPinCanvasHide] = useState(true)
- 
+
   const getPinQuery = `query Pins($uploadedFileID: String!) {
-  pins(pinsFilter:{ 
-    uploadedFileID: $uploadedFileID
-      }){ 
-        pinsID 
-        x_axis 
-        y_axis 
-        z_axis 
-      } 
- }`;
+  pins(
+    pinsFilter:{ 
+      uploadedFileID: $uploadedFileID
+    }
+  ) { 
+      pinsID 
+      x_axis 
+      y_axis 
+      z_axis 
+    } 
+  }`;
 
   // initialize the canvasToDrawCircle context
   useEffect(() => {
-    console.log('--canvas---useEffect--initialize the canvasToDrawCircle context--')
+    // console.log('--canvaspin---useEffect--initialize the canvasToDrawCircle context--')
     const canvasToDrawCircleEle = canvasToDrawCircle.current;
     canvasToDrawCircleEle.width = canvasToDrawCircleEle.clientWidth;
     canvasToDrawCircleEle.height = canvasToDrawCircleEle.clientHeight;
@@ -54,25 +56,26 @@ export function Canvas(props: CanvasProps) {
     // setCtxToDrawImage(canvasToDrawImageEle.getContext("2d"));
 
     getPins().then(() => {
-      console.log("--canvas-0-getPins Done", props.allowToCreateNewPin)
+      // console.log("--canvaspin-0-getPins Done", props.allowToCreateNewPin)
     })
 
   }, []);
+
   useEffect(() => {
-    console.log('--canvas---useEffect--getPins--on isPinCreated--')
+    // console.log('--canvaspin---useEffect--getPins--on isPinCreated--')
     if (!props.isPinCreated)
       getPins().then(() => {
-        console.log("--canvas-1-getPins Done", props.allowToCreateNewPin);
+        // console.log("--canvaspin-1-getPins Done", props.allowToCreateNewPin);
       })
   }, [props.isPinCreated]);
 
   useEffect(() => {
-    console.log('--canvas---useEffect--redrawAfterPinPotionChanged--')
+    // console.log('--canvaspin---useEffect--redrawAfterPinPotionChanged--')
     redrawAfterPinPotionChanged();
   }, [pinList]);
 
   useEffect(() => {
-    console.log('--canvas---useEffect--redrawOnMouseHoverOverCircle--')
+    // console.log('--canvaspin---useEffect--redrawOnMouseHoverOverCircle--')
     if (!isCircleSelectedOnMouseHover)
       return;
     redrawOnMouseHoverOverCircle();
@@ -80,7 +83,7 @@ export function Canvas(props: CanvasProps) {
   }, [isCircleSelectedOnMouseHover]);
 
   useEffect(() => {
-    console.log('--canvas---useEffect--drawObj--setpinlist--')
+    // console.log('--canvaspin---useEffect--drawObj--setpinlist--')
     if (isCircleSelectedOnMouseDown) {
       props.coardinates({ pinsID: dragTarget?.pinsID, pinNumber: dragTarget?.pinNumber })
       return;
@@ -120,9 +123,8 @@ export function Canvas(props: CanvasProps) {
     // props.setIsPinCreated(true);
   }, [props.isPinCreated, isCircleSelectedOnMouseDown, x_axis, y_axis]);
 
-
   useEffect(() => {
-    console.log("--canvas--useEffect--setpinList--updatePin--On circle mouse down and hover ", dragTarget, isCircleSelectedOnMouseDown, isCircleSelectedOnMouseHover);
+    // console.log("--canvaspin--useEffect--setpinList--updatePin--On circle mouse down and hover ", dragTarget, isCircleSelectedOnMouseDown, isCircleSelectedOnMouseHover);
     let lastBoxes = [...pinList];
     lastBoxes = lastBoxes.map((box) => {
       if (box.pinsID == dragTarget.pinsID) {
@@ -148,17 +150,17 @@ export function Canvas(props: CanvasProps) {
   }, [dragTarget, isCircleSelectedOnMouseDown, isCircleSelectedOnMouseHover]);
 
   useEffect(() => {
-    console.log("--canvas---useEffect--Pin Save flag recieved in canvas component ", props.savePin)
+    // console.log("--canvaspin---useEffect--Pin Save flag recieved in canvas component ", props.savePin)
     if (!props.savePin) { props.pinSaved(false); return; }
     saveNewPin(dragTarget);
   }, [props.savePin]);
 
   const saveNewPin = async (dragTargetTemp) => {
-    console.log('--canvas---saveNewPin--')
+    // console.log('--canvaspin---saveNewPin--')
     try {
       if (dragTargetTemp?.pinsID == '') {
 
-        console.log("--canvas-4-Save Pin call", dragTargetTemp)
+        // console.log("--canvaspin-4-Save Pin call", dragTargetTemp)
         const res = await axios.post(
           MS_SERVICE_URL['ms_document'].url,
           {
@@ -185,7 +187,7 @@ export function Canvas(props: CanvasProps) {
   }
 
   const updatePin = async (dragTargetTemp) => {
-    console.log('--canvas---updatePin--')
+    // console.log('--canvaspin---updatePin--')
     try {
       if (!dragTargetTemp || dragTargetTemp?.isNewPin)
         return;
@@ -211,7 +213,7 @@ export function Canvas(props: CanvasProps) {
   }
 
   const updateSetBoxes = (dragTargetTemp) => {
-    console.log('--canvas---updateSetBoxes--')
+    // console.log('--canvaspin---updateSetBoxes--')
     let lastBoxes = [...pinList];
     lastBoxes = lastBoxes.map((box) => {
       if (box.pinsID == dragTargetTemp.pinsID) {
@@ -226,7 +228,7 @@ export function Canvas(props: CanvasProps) {
   }
 
   const getPins = async () => {
-    console.log('--canvas---getPins--')
+    // console.log('--canvaspin---getPins--')
     try {
       const res = await axios.post(
         MS_SERVICE_URL['ms_document'].url,
@@ -254,7 +256,7 @@ export function Canvas(props: CanvasProps) {
       });
       props.coardinates(lastBoxes[lastBoxes.length - 1])
       setpinList([...lastBoxes])
-      console.log('--canvas-5---getPins---lastBoxes--', lastBoxes)
+      // console.log('--canvaspin-5---getPins---lastBoxes--', lastBoxes)
       return lastBoxes;
     } catch (error) {
       console.log(error)
@@ -263,28 +265,27 @@ export function Canvas(props: CanvasProps) {
 
   const query = `mutation 
     CreatePins(
-    $uploadedFileID: String!
-    $x_axis: Float!
-    $y_axis: Float!
-    $z_axis: Float!
-    $isDeleted: Boolean!
-    $pageNumber: Float!
-    $pinNumber:Float!
-      )
-     { 
+        $uploadedFileID: String!
+        $x_axis: Float!
+        $y_axis: Float!
+        $z_axis: Float!
+        $isDeleted: Boolean!
+        $pageNumber: Float!
+        $pinNumber:Float!
+    )
+    { 
       createPins(
         pinsDetails:{ 
-        x_axis:$x_axis
-        y_axis:$y_axis
-        z_axis:$z_axis
-        isDeleted:$isDeleted 
-        uploadedFileID: $uploadedFileID
-        pageNumber: $pageNumber
-        pinNumber: $pinNumber
-      }) 
-    
-      { 
-    
+          x_axis:$x_axis
+          y_axis:$y_axis
+          z_axis:$z_axis
+          isDeleted:$isDeleted 
+          uploadedFileID: $uploadedFileID
+          pageNumber: $pageNumber
+          pinNumber: $pinNumber
+        }
+      )    
+      {     
         pinsID 
         uploadedFileID 
         x_axis 
@@ -295,35 +296,32 @@ export function Canvas(props: CanvasProps) {
         createdBy 
         createdAt 
         updatedAt 
-      } 
-    
+      }     
     } `;
 
   const updateQuery = `mutation 
     UpdatePins(
-    $uploadedFileID: String!
-    $x_axis: Float!
-    $y_axis: Float!
-    $z_axis: Float!
-    $isDeleted: Boolean!
-    $pinsID: String!
-      )
-     { 
+      $uploadedFileID: String!
+      $x_axis: Float!
+      $y_axis: Float!
+      $z_axis: Float!
+      $isDeleted: Boolean!
+      $pinsID: String!
+    )
+    { 
       updatePins(
         pinsFilter:{
           uploadedFileID: $uploadedFileID
           pinsID: $pinsID
-          }
-          pinsUpdateDto:{ 
-        x_axis:$x_axis
-        y_axis:$y_axis
-        z_axis:$z_axis
-        isDeleted:$isDeleted 
-      
-      }) 
-    
-      { 
-    
+        }
+        pinsUpdateDto:{ 
+          x_axis:$x_axis
+          y_axis:$y_axis
+          z_axis:$z_axis
+          isDeleted:$isDeleted       
+        }
+      )    
+      {     
         pinsID 
         uploadedFileID 
         x_axis 
@@ -334,27 +332,18 @@ export function Canvas(props: CanvasProps) {
         createdBy 
         createdAt 
         updatedAt 
-      } 
-    
+      }    
     } `;
 
   const drawImagesWithPins = () => {
-    console.log('--canvas---drawImagesWithPins--')
-    const imgagDraw = new Image();
-    imgagDraw.src = props.imgUrl;
-    imgagDraw.onload = function () {
-      const hRatio = canvasToDrawCircle.current.clientWidth / imgagDraw.width;
-      const vRatio = canvasToDrawCircle.current.clientHeight / imgagDraw.height;
-      const ratio = Math.min(hRatio, vRatio);
-      ctxToDrawCircle.drawImage(imgagDraw, 0, 0, imgagDraw.width, imgagDraw.height, 0, 0, imgagDraw.width * ratio, imgagDraw.height * ratio);
-      pinList.map(info => {
-        drawFillCircle(info)
-      });
-    }
+    // console.log('--canvaspin---drawImagesWithPins--')
+    pinList.map(info => {
+      drawFillCircle(info)
+    });
   }
 
   const redrawAfterPinPotionChanged = () => {
-    console.log('--canvas---redrawAfterPinPotionChanged--')
+    // console.log('--canvaspin---redrawAfterPinPotionChanged--')
     if (ctxToDrawCircle) {
       ctxToDrawCircle.clearRect(0, 0, canvasToDrawCircle.current.clientWidth, canvasToDrawCircle.current.clientHeight);
       drawImagesWithPins();
@@ -362,7 +351,7 @@ export function Canvas(props: CanvasProps) {
   }
 
   const redrawOnMouseHoverOverCircle = () => {
-    console.log('--canvas---redrawOnMouseHoverOverCircle--')
+    // console.log('--canvaspin---redrawOnMouseHoverOverCircle--')
     if (ctxToDrawCircle) {
       ctxToDrawCircle.clearRect(0, 0, canvasToDrawCircle.current.clientWidth, canvasToDrawCircle.current.clientHeight);
       drawImagesWithPinsOnMouseHover();
@@ -370,22 +359,14 @@ export function Canvas(props: CanvasProps) {
   }
 
   const drawImagesWithPinsOnMouseHover = () => {
-    console.log('--canvas---drawImagesWithPinsOnMouseHover--')
-    const imgagDraw = new Image();
-    imgagDraw.src = props.imgUrl;
-    imgagDraw.onload = function () {
-      const hRatio = canvasToDrawCircle.current.clientWidth / imgagDraw.width;
-      const vRatio = canvasToDrawCircle.current.clientHeight / imgagDraw.height;
-      const ratio = Math.min(hRatio, vRatio);
-      ctxToDrawCircle.drawImage(imgagDraw, 0, 0, imgagDraw.width, imgagDraw.height, 0, 0, imgagDraw.width * ratio, imgagDraw.height * ratio);
-      pinList.map(info => {
-        drawFillCircle(info)
-      });
-    }
+    // console.log('--canvaspin---drawImagesWithPinsOnMouseHover--')
+    pinList.map(info => {
+      drawFillCircle(info)
+    });
   }
 
   const drawFillCircle = (info, style = {}) => {
-    console.log('--canvas---drawFillCircle--')
+    // console.log('--canvaspin---drawFillCircle--')
     const { x, y, pinNumber } = info;
     const pointSize = 10; // Change according to the size of the point.
     if (!info.isNewPin)
@@ -406,7 +387,7 @@ export function Canvas(props: CanvasProps) {
   }
 
   const hitCircle = (x, y) => {
-    console.log('--canvas---hitCircle--')
+    // console.log('--canvaspin---hitCircle--')
     let isTarget = false;
     for (let i = 0; i < pinList.length; i++) {
       const box = pinList[i];
@@ -424,7 +405,7 @@ export function Canvas(props: CanvasProps) {
   }
 
   const hitCircleOnMouseHover = (x, y) => {
-    console.log('--canvas---hitCircleOnMouseHover--')
+    // console.log('--canvaspin---hitCircleOnMouseHover--')
     for (let i = 0; i < pinList.length; i++) {
       const box = pinList[i];
       const d = Math.pow(box.r, 2) - (((Math.pow(box.x - x, 2))) + ((Math.pow(box.y - y, 2))))
@@ -439,20 +420,16 @@ export function Canvas(props: CanvasProps) {
   }
 
   const handleMouseDown = e => {
-    console.log('--canvas--handleMouseDown--')
-    // setisRedraw(false)
+    // console.log('--canvaspin--handleMouseDown--')
     startX = e.nativeEvent.offsetX - canvasToDrawCircle.current.clientLeft;
     startY = e.nativeEvent.offsetY - canvasToDrawCircle.current.clientTop;
     setx_Axis(startX);
     sety_Axis(startY);
-    hitCircle(startX, startY);
-    // if (props.allowToCreateNewPin) {
-    //   props.setIsPinCreated(true);
-    // }
+    hitCircle(startX, startY);    
   }
 
   const handleMouseMove = e => {
-    console.log('--canvas--handleMouseMove--')
+    // console.log('--canvaspin--handleMouseMove--')
     setAllPinCanvasHide(true)
     if (!isCircleSelectedOnMouseHover) {
       startX = e.nativeEvent.offsetX - canvasToDrawCircle.current.clientLeft;
@@ -462,7 +439,7 @@ export function Canvas(props: CanvasProps) {
       hitCircleOnMouseHover(startX, startY);
     }
     if (!isCircleSelectedOnMouseDown) return;
-    console.log("--canvas-6-isCircleSelectedOnMouseDown on mouse move", isCircleSelectedOnMouseDown)
+    // console.log("--canvaspin-6-isCircleSelectedOnMouseDown on mouse move", isCircleSelectedOnMouseDown)
     const mouseX = e.nativeEvent.offsetX - canvasToDrawCircle.current.clientLeft;
     const mouseY = e.nativeEvent.offsetY - canvasToDrawCircle.current.clientTop;
     startX = mouseX;
@@ -475,58 +452,43 @@ export function Canvas(props: CanvasProps) {
   }
 
   const handleMouseUp = e => {
-    console.log('--canvas--handleMouseUp--')
+    // console.log('--canvaspin--handleMouseUp--')
     setIsCircleSelectedOnMouseDown(false);
   }
 
   const handleMouseOut = e => {
-    console.log('--canvas--handleMouseOut--')
+    // console.log('--canvaspin--handleMouseOut--')
     handleMouseUp(e);
   }
 
   const getSelectedNewTaskCoOrdinates = (newPinDetail) => {
-    // console.log('--canvas--getSelectedNewTaskCoOrdinates--newPinDetail--', newPinDetail)
-    // setHideNewPinMoveCanvas(true)
+    // console.log('--canvaspin--getSelectedNewTaskCoOrdinates--newPinDetail--', newPinDetail)    
     setpinList([...pinList, newPinDetail])
     props.setIsPinCreated(true);
   }
 
   return (
-    <div className="outsideWrapper">
-      <div className="insideWrapper">
+    <>
+      <canvas id="canvasCreatedPins" className="transparentCanvas"
+        width="800" height="700"
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseOut={handleMouseOut}
+        ref={canvasToDrawCircle}></canvas>
 
-        <canvas id="layer1" className="coveringCanvas"
-          width="800" height="700"
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseOut={handleMouseOut}
-          ref={canvasToDrawCircle}></canvas>
-
-        {/* {hideNewPinMoveCanvas ? null :
-          <> */}
-            {props?.allowToCreateNewPin ?
-              <CanvasTransparentNewPin
-                allowToCreateNewPin={props.allowToCreateNewPin}
-                selectedNewTaskCoOrdinate={getSelectedNewTaskCoOrdinates}
-                lastPinDetail={pinList && pinList?.length && pinList[pinList?.length - 1]}
-              ></CanvasTransparentNewPin>
-              : null}
-          {/* </>
-        } */}
-
-        {/* <CanvasTransparentEditPin
-          allowToEditPin={props.allowToCreateNewPin}
+      {props?.allowToCreateNewPin ?
+        <CanvasTransparentNewPin
+          allowToCreateNewPin={props.allowToCreateNewPin}
           selectedNewTaskCoOrdinate={getSelectedNewTaskCoOrdinates}
           lastPinDetail={pinList && pinList?.length && pinList[pinList?.length - 1]}
-        ></CanvasTransparentEditPin> */}
-
-      </div>
-    </div>
+        ></CanvasTransparentNewPin>
+        : null}
+    </>
   );
 }
 
 
-export default Canvas;
+export default CanvasPins;
 
 

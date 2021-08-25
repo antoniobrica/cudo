@@ -1,7 +1,8 @@
 import React from 'react';
 import './../../../assets/style/index.scss'
 import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react';
-export function LoaderPage() {
+export interface LoaderPageProps{}
+export function LoaderPage(props: LoaderPageProps) {
 
   return (
     <div>

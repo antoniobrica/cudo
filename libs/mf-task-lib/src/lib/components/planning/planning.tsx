@@ -34,7 +34,7 @@ export function Planning(props: PlanningProps) {
   const [openNew, setIsOpen] = React.useState(false);
   const [openD, setOpenD] = React.useState(false);
   const [openUpdate, setOpenUpdate] = React.useState(false);
-  const [milestoneLoading, setMilestoneLoading] = React.useState(false)
+  // const [milestoneLoading, setMilestoneLoading] = React.useState(false)
   const [openEdit, setOpenEdit] = React.useState(false);
   const [milestoneID, setmilestoneID] = React.useState('');
   const [milestoneIDd, setmilestoneIDd] = React.useState('');
@@ -49,7 +49,7 @@ export function Planning(props: PlanningProps) {
     INPROGRESS = 'INPROGRESS',
     COMPLETED = 'COMPLETED',
   }
-  const [addPlan, { data: refreshData }] = useMutation(ADD_MILESTONE,
+  const [addPlan, { loading: addPlanningLoading, error: addPlanningError, data: addPlanningData }] = useMutation(ADD_MILESTONE,
     {
       refetchQueries: [
         { query: GET_MILESTONES }
@@ -57,13 +57,14 @@ export function Planning(props: PlanningProps) {
     }
   )
   const [planData, setPlanData] = React.useState();
-  const { loading: milLoading, error: MileError, data: MilestoneData } = useIMileStoneQuery(GET_MILESTONES_BY_ID, {
+  const { loading: detailPlanningLoading, error: detailPlanningError, data: detailPlanningData } = useIMileStoneQuery(GET_MILESTONES_BY_ID, {
     variables: { milestoneID: milestoneID },
   });
-  const [planDelete] = useMilestoneDeleteMutation(DELETE_MILESTONE, {
+  // const [planDelete] = useMilestoneDeleteMutation(DELETE_MILESTONE, {
+  const [planDelete, { loading: deletePlanningLoading, error: deletePlanningError, data: deletePlanningData }] = useMutation(DELETE_MILESTONE, {
     variables: { milestoneID: milestoneIDd },
   });
-  const [milestoneUpdate, { data: refreshMilestone }] = useMutation(UPDATE_MILESTONE,
+  const [milestoneUpdate, { loading: updatePlanningLoading, error: updatePlanningError, data: updatePlanningData }] = useMutation(UPDATE_MILESTONE,
     {
       variables: { milestoneID: milestoneIDd },
       refetchQueries: [
@@ -121,7 +122,7 @@ export function Planning(props: PlanningProps) {
 
   const confirmation = (data, task) => {
     // console.log('data', task);
-    setMilestoneLoading(true);
+    // setMilestoneLoading(true);
 
     setOpenUpdate(false);
     let status;
@@ -152,7 +153,7 @@ export function Planning(props: PlanningProps) {
             tasks: [...cacheData.MileStones, milestoneUpdate]
           },
         });
-        setMilestoneLoading(false);
+        // setMilestoneLoading(false);
 
       }
 
@@ -165,7 +166,7 @@ export function Planning(props: PlanningProps) {
   }
 
   const getMilestoneData = (data) => {
-    setMilestoneLoading(true);
+    // setMilestoneLoading(true);
     addPlan({
       variables: data,
       update: (
@@ -179,7 +180,7 @@ export function Planning(props: PlanningProps) {
             getMileStones: [...cacheData.MileStones, data['createMileStone']]
           },
         });
-        setMilestoneLoading(false);
+        // setMilestoneLoading(false);
 
       }
     });
@@ -191,7 +192,7 @@ export function Planning(props: PlanningProps) {
     closeEditPopup()
   }
   const confirmationDelete = (plan) => {
-    setMilestoneLoading(true);
+    // setMilestoneLoading(true);
 
     closeDeletePopup()
     const milestoneID = plan.milestoneID;
@@ -212,7 +213,7 @@ export function Planning(props: PlanningProps) {
           },
           variables: { milestoneID },
         });
-        setMilestoneLoading(false);
+        // setMilestoneLoading(false);
 
       }
 
@@ -232,7 +233,7 @@ export function Planning(props: PlanningProps) {
   // }
   const editMilestoneData = (data) => {
     // console.log('edited-data', data);
-    setMilestoneLoading(true);
+    // setMilestoneLoading(true);
 
     setOpen(false)
     milestoneUpdate({
@@ -248,16 +249,25 @@ export function Planning(props: PlanningProps) {
             tasks: [...cacheData.MileStones, milestoneUpdate]
           },
         });
-        setMilestoneLoading(false);
+        // setMilestoneLoading(false);
 
       }
     });
 
   }
-  if (loading) return <LoaderPage />;
+  if (loading)
+    return (
+      <h1>
+        {' '}
+        <LazyLoading />
+      </h1>
+    );
+
   if (error) return (
     <div>
-      <ModalPlanningNew worktypes={props.worktypes} getMilestoneData={getMilestoneData}></ModalPlanningNew>
+      <ModalPlanningNew worktypes={props.worktypes} getMilestoneData={getMilestoneData}
+        addLoading={addPlanningLoading} addData={addPlanningData} listData={data}
+      ></ModalPlanningNew>
     </div>
   );
   if (data) {
@@ -294,17 +304,19 @@ export function Planning(props: PlanningProps) {
 
   return (
     <div>
-      {
+      {/* {
         milestoneLoading && <LoaderPage />
-      }
-      {openNew && <ModalPlanningNew worktypes={props.worktypes} cancel={cancelAdd} openNew={openNew} getMilestoneData={getMilestoneData}></ModalPlanningNew>}
+      } */}
+      {openNew && 
+      <ModalPlanningNew worktypes={props.worktypes} cancel={cancelAdd} openNew={openNew} getMilestoneData={getMilestoneData}
+      addLoading={addPlanningLoading} addData={addPlanningData} listData={data}></ModalPlanningNew>}
       {open ?
         <div style={{ marginLeft: 900 }} >
           <ModalViewPlanning
             openPlanningDetail={open}
             cancel={cancel}
             milestoneDataById={milestoneByID}
-            loading={milLoading}
+            loading={detailPlanningLoading}
             edit={edittPlan}
             delete={deletePlan}
           ></ModalViewPlanning>
@@ -329,13 +341,17 @@ export function Planning(props: PlanningProps) {
         : null}
       {openEdit ?
         <div style={{ marginLeft: 900 }} >
-          <EditMileStonePopup worktypes={props.worktypes} openEdit={openEdit} confirm={confirmationUpdate} getMilestoneData={editMilestoneData} planData={planData} cancel={closeEditPopup}></EditMileStonePopup>
+          <EditMileStonePopup 
+          worktypes={props.worktypes} openEdit={openEdit} confirm={confirmationUpdate} 
+          getMilestoneData={editMilestoneData} planData={planData} cancel={closeEditPopup} 
+          updateLoading={updatePlanningLoading} updateData={updatePlanningData} listData={data}
+          ></EditMileStonePopup>
         </div>
         : null}
 
 
       <div className="tabs-main-info-container planning-outer-con">
-        <LazyLoading />
+        {/* <LazyLoading /> */}
         <h3>{t("project_tab_menu.planning.title")}
           <Button size="small" className="primary" onClick={openAdd}>
             <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> {t("common.add_new_button")}
@@ -345,9 +361,9 @@ export function Planning(props: PlanningProps) {
         <div className="active-milestone">
           <h4 className="headingactive">
             {t("project_tab_menu.planning.active_milestone")}
-            <SelectDropdown selectedValue={getAddLinkSelect} />
+            {/* <SelectDropdown selectedValue={getAddLinkSelect} />
 
-            <SelectSearchableDropdown selectedValue={getSearchSelect} />
+            <SelectSearchableDropdown selectedValue={getSearchSelect} /> */}
           </h4>
           <Form>
             {/* <Grid columns={4}>

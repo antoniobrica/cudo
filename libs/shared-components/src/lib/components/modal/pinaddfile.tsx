@@ -2,9 +2,10 @@
 import React from 'react';
 import { Button, Modal, Grid, Image, Segment, Form, Input, TextArea, Select, Checkbox, Dropdown } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
-import Canvas from './canvas';
-// import CanvasTransparent from './canvastransparent';
-// import CanvasNew from './canvasnew';
+
+// import Canvas from './canvas';
+import CanvasImage from './canvasimage';
+
 import { useHistory } from 'react-router';
 import axios from 'axios';
 import { CreateFileTaskIndex, PinTaskListIndex } from '@cudo/mf-task-lib';
@@ -135,22 +136,17 @@ export const AddPinFile = (props: AddPinProps) => {
         <Modal.Content>
           <Form>
             <div className="left-side-image-canvas">
-              <Canvas
+              <CanvasImage
                 pinSaved={setPinSavedOnCanvase}
                 savePin={saveNewPinOnCanvase}
                 imgUrl={imgUrl}
                 coardinates={getCoardinates}
                 fileId={fileId}
-                allowToCreateNewPin={false}// {allowToCreateNewPin}
+                allowToCreateNewPin={allowToCreateNewPin}
                 isPinCreated={isPinCreated}
                 setIsPinCreated={setIsPinCreated}
-              ></Canvas>  
-
-              {/* <CanvasMarker
-                imgUrl={imgUrl}
-                fileId={fileId}
-                allowToCreateNewPin={true}
-              ></CanvasMarker> */}
+              ></CanvasImage>  
+              
             </div>
 
             <div className="right-side-file-details">
