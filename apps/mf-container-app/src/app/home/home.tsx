@@ -35,7 +35,7 @@ export function Home(props: HomeProps) {
 
 
   const callbackFunction = (childData) => {
-    // console.log('--container --home--callbackFunction--childData--', childData)
+    console.log('--container --home--callbackFunction--childData--', childData)
     switch (childData) {
       case 'logout':
         logout();

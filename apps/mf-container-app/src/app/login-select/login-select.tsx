@@ -18,6 +18,7 @@ export function LoginSelect(props: LoginSelectProps) {
   const [selectedCompany, setselectedCompany] = useState('');
   const handleLogin = () => {
     if (selectedCompany) {
+      console.log('--handleLogin-test after login---')
       localStorage.setItem('selectedCompany', selectedCompany);
       history.push('/home/project');
     }
@@ -30,6 +31,7 @@ export function LoginSelect(props: LoginSelectProps) {
       ToEmail()
     }
     else {
+      console.log('---test after login---')
       // Need to handle with redux
       setEmail(localStorage.getItem('email'))
       axios({
