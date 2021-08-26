@@ -42,7 +42,7 @@ export function WorkType(props: WorkTypeProps) {
     setFields(values);
   }
   const getWorktype = (data, id)=>{
-     console.log('selected-WorkType', data)
+    //  console.log('selected-WorkType', data)
      handleChangeInput(id, data,'worktype' )
   }
 

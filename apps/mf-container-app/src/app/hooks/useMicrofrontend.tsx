@@ -20,7 +20,7 @@ const useMicrofrontend = (id: string, url: string) => {
         document.body.appendChild(script);
         script.onload = handleLoad;
     }, []); // eslint-disable-line
-    console.log({ isLoaded, [id]: window[id] }, id);
+    // console.log({ isLoaded, [id]: window[id] }, id);
     return { isLoaded, [id]: window[id] };
 };
 

@@ -259,7 +259,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
   }
   const moreWorkTypes = (data) => {
 
-    console.log('----moreWorkTypes---', data)
+    // console.log('----moreWorkTypes---', data)
     const worktypesArr = [];
     for (let i = 0; i < data.length; i++) {
       // console.log('data', data[i])
@@ -270,7 +270,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
         }
       })
     }
-    console.log('worktypes==>', data)
+    // console.log('worktypes==>', data)
 
     setProjectWorkEstimates(data);
 
@@ -299,7 +299,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
       setErrors(validationResponse)
       return false
     }
-    console.log('-----country----', country)
+    // console.log('-----country----', country)
     // console.log('-----printing----', printing)
     setOpen(false);
     addProject({
@@ -327,7 +327,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
         data
       ) => {
         const cacheData = cache.readQuery({ query: GET_PROJECTS }) as IProjects;
-        console.log('---after add project data--', data)
+        // console.log('---after add project data--', data)
         setDataList(data)
         cache.writeQuery({
           query: GET_PROJECTS,
@@ -335,7 +335,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
             getProjects: [...cacheData?.projects, data['createProject']]
           }
         });
-        console.log('data==', data);
+        // console.log('data==', data);
 
         props.onSuccess(data);
       }

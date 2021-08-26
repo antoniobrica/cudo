@@ -9,7 +9,7 @@ import { MS_SERVICE_URL } from '@cudo/mf-core'
 export class SasGeneratorService {
 
   getSasToken(): Observable<BlobStorageRequest> {
-    console.log('sasstoken');
+    console.log('---document app---sasstoken');
 
     return Axios.post<BlobStorageRequest>(
       MS_SERVICE_URL['ms_document'].url,

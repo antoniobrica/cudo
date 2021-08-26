@@ -73,13 +73,13 @@ export function FileSetting(props: FileProps) {
   const getUploadsEffect = () => {
     const sub = context.uploadedItems$
       .pipe(tap(items => {
-        console.log('getUploadsEffect', items);
+        // console.log('getUploadsEffect', items);
         setItems(items);
         const fileArr = [];
         for (let i = 0; i < items.length; i++) {
           fileArr.push({ fileURL: items[i].filename, fileTitle: items[i].filename, fileType: items[i].type, fileVersion: "v1" });
         }
-        console.log('fileArr', fileArr);
+        // console.log('fileArr', fileArr);
 
         setFileList(fileArr);
       }))
@@ -95,12 +95,12 @@ export function FileSetting(props: FileProps) {
   ]
   const [open, setOpen] = React.useState(false)
   const setBKPIDChange = (data) => {
-    console.log('bkp=f', data.isFolder);
+    // console.log('bkp=f', data.isFolder);
     setisFolder(data.isFolder)
     if (data.isFolder) {
       setfolderName(data.folderTitle)
       setDirectory(data.folderTitle)
-      console.log('folderName', folderName);
+      // console.log('folderName', folderName);
     }
     else {
       setBKPIDTitle(data.BKPIDTitle)
@@ -140,7 +140,7 @@ export function FileSetting(props: FileProps) {
   }
 
   const uploadFiles = (files: FileList | null) => {
-    console.log('files', files);
+    // console.log('files', files);
     files && context.uploadItems(files);
     // const fileArr = [];
     // for (let i = 0; i < items.length; i++) {
@@ -158,7 +158,7 @@ export function FileSetting(props: FileProps) {
   const handleSaveFile = () => {
     setOpen(false);
     files.map((file, i) => {
-      console.log('file==', file);
+      // console.log('file==', file);
       addFile({
         variables: {
           projectId,
@@ -195,14 +195,14 @@ export function FileSetting(props: FileProps) {
   };
 
   const folderOpen = () => {
-    console.log('folder');
+    // console.log('folder');
     setFolderOpen(true);
   }
   const cancel = (data) => {
     setFolderOpen(false);
   }
   const folderData = (data) => {
-    console.log('folderName=>', data);
+    // console.log('folderName=>', data);
     setFolderOpen(false);
   }
 

@@ -16,10 +16,10 @@ export function LoginSelect(props: LoginSelectProps) {
   const [email, setEmail] = useState('');
   const [companies, setCompanies] = useState([]);
   const [selectedCompany, setselectedCompany] = useState('');
-  console.log('----login select company page---')
+  // console.log('----login select company page---')
   const handleLogin = () => {
     if (selectedCompany) {
-      console.log('--handleLogin-test after login---')
+      // console.log('--handleLogin-test after login---')
       localStorage.setItem('selectedCompany', selectedCompany);
       history.push('/home/project');
     }
@@ -32,7 +32,7 @@ export function LoginSelect(props: LoginSelectProps) {
       ToEmail()
     }
     else {
-      console.log('---test after login---')
+      // console.log('---test after login---')
       // Need to handle with redux
       setEmail(localStorage.getItem('email'))
       axios({
@@ -53,7 +53,7 @@ export function LoginSelect(props: LoginSelectProps) {
             `
         }
       }).then((result) => {
-        console.log(result.data?.data?.userByEmail);
+        // console.log(result.data?.data?.userByEmail);
         if (result.data?.data?.userByEmail?.length) {
           if (result.data?.data?.userByEmail?.length == 1) {
             const element = result.data?.data?.userByEmail[0];

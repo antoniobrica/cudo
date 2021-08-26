@@ -26,7 +26,7 @@ const client = new ApolloClient({
 });
 
 window.renderTaskApp = (containerId, history) => {
-  console.log("In Container APP")
+  console.log("--In Container APP---", containerId)
   ReactDOM.render(
     // <React.StrictMode>
     <BrowserRouter>
@@ -49,7 +49,7 @@ window.unmountMeetingApp = (containerId) => {
 
 if (!document.getElementById("TaskApp-container")) {
   // ReactDOM.render(<App />, document.getElementById("root"));
-  console.log("Not In Container APP")
+  console.log("---In Task Container APP---")
   ReactDOM.render(
     <BrowserRouter>
       <ApolloProvider client={client}>

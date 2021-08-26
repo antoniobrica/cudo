@@ -31,17 +31,17 @@ export class BlobDownloadsViewStateService {
   ) { }
 
   downloadItem(filename: string): void {
-    console.log('filename', filename);
+    console.log('--downloadItem--filename', filename);
 
     this.downloadQueueInner$.next(filename);
   }
   viewItem(filename: string): void {
-    console.log('filename', filename);
+    console.log('--viewItem--filename', filename);
 
     this.ViewQueueInner$.next(filename);
   }
   private downloadFile = (filename: string) => {
-    console.log('filename2', filename);
+    console.log('--downloadFile--filename2--', filename);
     return this.blobState.getStorageOptionsWithContainer().pipe(
       switchMap(options =>
         this.blobStorage

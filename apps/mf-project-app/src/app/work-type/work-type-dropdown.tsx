@@ -14,9 +14,9 @@ export function WorkTypeDropdown(props: WorktypeDropdownProps) {
   const {t} = useTranslation()
  
   const onMworkType = (event, data) => {
-   console.log('events',data);
+  //  console.log('events',data);
    
-    console.log('wtd', data.value)
+    // console.log('wtd', data.value)
     setworkType(data.value)
     if(data.value){
     props.selectedWorkType(data.value, props.id)

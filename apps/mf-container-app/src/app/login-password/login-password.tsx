@@ -18,7 +18,7 @@ export function LoginPassword(props: LoginPasswordProps) {
   };
   const [email, setEmail] = useState('');
   const [requestResponse, setRequestResponse] = useState<LoginFlow>()
-  console.log('----login password page---')
+  // console.log('----login password page---')
   useEffect(() => {
     // Need to implement using redux
     setEmail(localStorage.getItem('email'));

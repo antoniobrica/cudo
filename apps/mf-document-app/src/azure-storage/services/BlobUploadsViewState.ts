@@ -29,7 +29,7 @@ export class BlobUploadsViewStateService {
 
   private uploadFile = (file: File) =>{
     const filename = file.name + new Date().getTime();
-    console.log('filename', filename);
+    // console.log('filename', filename);
     
     return this.blobState.getStorageOptionsWithContainer().pipe(
       switchMap(options => {
