@@ -30,6 +30,7 @@ export interface FileStructureProps {
   selectedFileId?,
   fileVersionDetail?,
   fileVersionLoading?,
+  onlyAddFileToTask?
 }
 export function SelectFilePopup(props: FileStructureProps) {
   const countryOptions = [
@@ -63,10 +64,16 @@ export function SelectFilePopup(props: FileStructureProps) {
   }, [props.files])
 
   const goToAddPin = () => {
-    setOpen(false)
-    setIsPinFile(true)
-    // cancel()
-    setView(true);
+    if(props.onlyAddFileToTask){
+      alert('File added')
+      cancel()
+    }else{
+
+      setOpen(false)
+      setIsPinFile(true)
+      // cancel()
+      setView(true);
+    }
   }
   // const tick = () => {
   //   setIsTick(isTick => !isTick)

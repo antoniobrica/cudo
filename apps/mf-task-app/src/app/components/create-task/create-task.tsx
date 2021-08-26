@@ -15,6 +15,7 @@ import { start } from 'repl';
 import { useTranslation } from 'react-i18next';
 
 import { LazyLoading } from '@cudo/shared-components'
+import { FileListIndex } from '@cudo/mf-document-lib';
 
 /* eslint-disable-next-line */
 export interface CreateTaskProps {
@@ -70,6 +71,8 @@ export function CreateTask(props: CreateTaskProps) {
   const [BKPTitle, setBKPIDTitle] = React.useState("");
   const [files, setFileList] = React.useState<any>([]);
   const [description, setDescription] = React.useState("")
+  const [isOpenTaskFiles, setisOpenTaskFiles] = useState(false)
+  const [onlyAddFileToTask, setOnlyAddFileToTask] = useState(true)
 
   const [workType, setworkType] = React.useState(null)
   const [workTypeD, setworkTypeD] = React.useState(null)
@@ -218,6 +221,10 @@ export function CreateTask(props: CreateTaskProps) {
     setDescription(e.target.value);
   }
 
+  const cancelIsTaskFileOpen = () => {
+    setisOpenTaskFiles(false)
+  }
+
   const cancel = () => {
     setOpen(false)
     setAddTaskLoading(false)
@@ -336,7 +343,11 @@ export function CreateTask(props: CreateTaskProps) {
             <Loader size='big'>Loading</Loader>
           </Dimmer>
           : null}
-        <Modal.Header><h3>{t("project_tab_menu.task.add_new_task")} </h3></Modal.Header>
+
+          {
+            isOpenTaskFiles &&  <FileListIndex isTaskFile={isOpenTaskFiles} cancel={cancelIsTaskFileOpen} onlyAddFileToTask={onlyAddFileToTask} />
+          }
+        <Modal.Header><h3>{t("project_tab_menu.task.add_new_task")} </h3></Modal.Header>s
         <Modal.Content body>
           <div>
             <Form>
@@ -496,6 +507,9 @@ export function CreateTask(props: CreateTaskProps) {
                   </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
+                <Form.Field>
+                  <label>Files</label><Button onClick={() => setisOpenTaskFiles(true)}>Add Files</Button>
+                  </Form.Field>
                 </Grid.Row>
               </Grid>
               <Grid columns={1}>

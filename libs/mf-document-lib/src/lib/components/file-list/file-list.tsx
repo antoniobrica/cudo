@@ -16,6 +16,7 @@ import { tap } from 'rxjs/operators';
 export interface FileListProps {
   isTaskFile,
   cancel
+  onlyAddFileToTask?
 }
 
 export function FileList(props: FileListProps) {
@@ -139,6 +140,7 @@ export function FileList(props: FileListProps) {
         selectedFileId={getSelectedFileId}
         fileVersionDetail={selectedFileVersions?.fileVersions}
         fileVersionLoading={fileVersionLoading}
+        onlyAddFileToTask={props.onlyAddFileToTask}
       />
     </div>
   );

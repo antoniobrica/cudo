@@ -14,13 +14,14 @@ const client = new ApolloClient({
 export interface FileListIndexProps {
   isTaskFile,
   cancel
+  onlyAddFileToTask?
 }
 
 export function FileListIndex(props: FileListIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <FileList isTaskFile={props.isTaskFile} cancel={props.cancel} />
+        <FileList onlyAddFileToTask={props.onlyAddFileToTask} isTaskFile={props.isTaskFile} cancel={props.cancel} />
       </ApolloHooksProvider>
     </ApolloProvider>
   );
