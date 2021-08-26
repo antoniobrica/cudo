@@ -16,6 +16,7 @@ export function Email(props: LoginProps) {
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [isEmailExist, setIsEmailExist] = useState(true);
+  console.log('----login page---')
   const handleLogin = () => {
     // Need to implement using redux
     axios({

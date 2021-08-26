@@ -16,6 +16,7 @@ export function LoginSelect(props: LoginSelectProps) {
   const [email, setEmail] = useState('');
   const [companies, setCompanies] = useState([]);
   const [selectedCompany, setselectedCompany] = useState('');
+  console.log('----login select company page---')
   const handleLogin = () => {
     if (selectedCompany) {
       console.log('--handleLogin-test after login---')
