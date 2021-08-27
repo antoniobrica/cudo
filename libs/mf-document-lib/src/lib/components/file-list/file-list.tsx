@@ -18,6 +18,7 @@ export interface FileListProps {
   cancel
   onlyAddFileToTask?
   addSelectedFiles?
+  selectedFiles?
 }
 
 export function FileList(props: FileListProps) {
@@ -122,14 +123,13 @@ export function FileList(props: FileListProps) {
   }
 
 
-  if (isLoading) {
-    return (<LazyLoading />)
-  }
-
+  // if (loading) {
+  //   return (<LazyLoading />)
+  // }
   return (
     <div>
       {loading ?
-        <LoaderPage /> : null}
+        <LazyLoading /> : null}
       <SelectFilePopup
         isTaskFile={props.isTaskFile}
         cancel={props.cancel}
@@ -143,6 +143,7 @@ export function FileList(props: FileListProps) {
         fileVersionLoading={fileVersionLoading}
         onlyAddFileToTask={props.onlyAddFileToTask}
         addSelectedFiles={props.addSelectedFiles}
+        selectedFiles={props.selectedFiles}
       />
     </div>
   );

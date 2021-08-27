@@ -33,6 +33,7 @@ export interface FileStructureProps {
   fileVersionLoading?,
   onlyAddFileToTask?
   addSelectedFiles?
+  selectedFiles?
 }
 export function SelectFilePopup(props: FileStructureProps) {
   const countryOptions = [
@@ -66,9 +67,9 @@ export function SelectFilePopup(props: FileStructureProps) {
   }, [props.files])
 
   const goToAddFile = (data) => {
-      alert('File added')
-      props.downloadFiles(data)
-      cancel()
+    props.downloadFiles(data)
+    setOpen(false)
+    props.cancel(false)
   }
   // const tick = () => {
   //   setIsTick(isTick => !isTick)
@@ -77,6 +78,7 @@ export function SelectFilePopup(props: FileStructureProps) {
     setOpen(false)
     props.cancel(false)
     setView(false);
+    props.addSelectedFiles([])
   }
 
   React.useEffect(() => {
@@ -164,6 +166,7 @@ export function SelectFilePopup(props: FileStructureProps) {
                   fileVersionDetail={props.fileVersionDetail}
                   fileVersionLoading={props.fileVersionLoading}
                   addSelectedFiles={props.addSelectedFiles}
+                  selectedFiles={props.selectedFiles}
                 />
               ) : (
                 <PinFileStructure

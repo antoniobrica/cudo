@@ -19,6 +19,7 @@ export interface TaskFileStructureProps {
 	fileVersionDetail?,
 	fileVersionLoading?,
 	addSelectedFiles?
+	selectedFiles?
 }
 
 export function TaskFileStructure(props: TaskFileStructureProps) {
@@ -49,6 +50,12 @@ export function TaskFileStructure(props: TaskFileStructureProps) {
 	React.useEffect(() => {
 		props.addSelectedFiles(selectedFiles)
 	}, [selectedFiles])
+
+	React.useEffect(() => {
+		if(props.selectedFiles.length > 0){
+			setSelectedFiles(props.selectedFiles)
+		}
+	},[])
 
 	// const viewFile = (data) => {
 	// 	if (selectedFile !== data.uploadedFileID) {

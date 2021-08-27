@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 
 import { LazyLoading } from '@cudo/shared-components'
 import { FileListIndex } from '@cudo/mf-document-lib';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 /* eslint-disable-next-line */
 export interface CreateTaskProps {
@@ -154,6 +155,17 @@ export function CreateTask(props: CreateTaskProps) {
   }
   const addSelectedFiles = (data) => {
     setSelectedFiles(data)
+    const seletedFilesData = []
+    data.map(file => {
+      seletedFilesData.push({fileID:file.fileURL,fileName:file.fileURL, fileUrl:file.fileURL})
+    })
+    setFileList(seletedFilesData)
+  }
+  console.log('///////////////////////',files)
+
+  const removeSeletedFile = (file) => {
+    const newSelectedFiles = selectedFiles.filter(item => item.fileURL !== file.fileURL)
+    setSelectedFiles(newSelectedFiles)
   }
 
   const sendNotificationChange = (event) => {
@@ -259,7 +271,7 @@ export function CreateTask(props: CreateTaskProps) {
     setworkTypeData('')
     setDate(null)
     setErrors({})
-
+    setSelectedFiles([])
   }
 
   const validation = () => {
@@ -354,6 +366,7 @@ export function CreateTask(props: CreateTaskProps) {
               isTaskFile={isOpenTaskFiles}
               cancel={cancelIsTaskFileOpen}
               onlyAddFileToTask={onlyAddFileToTask}
+              selectedFiles={selectedFiles}
               addSelectedFiles={addSelectedFiles}
             />
           )
@@ -522,6 +535,19 @@ export function CreateTask(props: CreateTaskProps) {
                     <label>Files</label><Button onClick={() => setisOpenTaskFiles(true)}>Add Files</Button>
                   </Form.Field>
                 </Grid.Row>
+                <Grid.Row>
+                  {
+                    selectedFiles.map(file => (
+                      <Form.Field>
+                        <div className="multiple-files-header">
+                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} />
+                          <p className="files-name">{file.fileURL}</p>
+                          <i onClick={() => removeSeletedFile(file)} className="close icon"></i>
+                        </div>
+                      </Form.Field>
+                    ))
+                  }
+                </Grid.Row>
               </Grid>
               <Grid columns={1}>
                 <Grid.Row>
@@ -542,7 +568,7 @@ export function CreateTask(props: CreateTaskProps) {
             content={t("common.submit")}
             onClick={handleSaveTask}
             positive
-            loading
+            // loading
             size='small' className="primary"
           />
           <Button size='small' className="icon-border" onClick={cancel}>

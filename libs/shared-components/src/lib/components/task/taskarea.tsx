@@ -43,10 +43,10 @@ export function TaskArea(props: Tasks) {
   }, [props?.task])
 
   useEffect(() => {
-    if(!props.addSubTaskLoading){
+    if (!props.addSubTaskLoading) {
       setSubTaskAddLoading(false)
     }
-      setViewSubTaskAdd(false)
+    setViewSubTaskAdd(false)
   }, [props?.taskListData])
 
   useEffect(() => {
@@ -54,11 +54,11 @@ export function TaskArea(props: Tasks) {
   }, [props.taskListData])
 
   useEffect(() => {
-    if(!props.editSubTaskLoading){
+    if (!props.editSubTaskLoading) {
       setSubTaskEditLoading(false)
 
     }
-      setOpenSubTaskEdit(false)
+    setOpenSubTaskEdit(false)
   }, [props?.taskListData])
 
   const description = [
@@ -207,12 +207,13 @@ export function TaskArea(props: Tasks) {
                 <div className="d-flex mr-3">
 
                   <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row task-listing-desc">
-                    {props.task.file &&
+                    {props?.task?.files.length > 0 && (
                       <div className="navi-item">
                         <a className="navi-link">
-                          <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.files.length} files  -  </span>
+                          <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props?.task?.files?.length} files  -  </span>
                         </a>
                       </div>
+                    )
                     }
                     <div className="navi-item">
                       <a className="navi-link">
@@ -378,12 +379,13 @@ export function TaskArea(props: Tasks) {
                         </a>
                       </div>)}
 
-                    {props.task?.file &&
+                    {props?.task?.files.length > 0 && (
                       <div className="navi-item">
                         <a className="navi-link">
-                          <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.files.length} files  -  </span>
+                          <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props?.task?.files?.length} files  -  </span>
                         </a>
                       </div>
+                    )
                     }
 
                     {props?.task?.estimatedDays && (
