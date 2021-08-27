@@ -17,6 +17,7 @@ export interface FileListProps {
   isTaskFile,
   cancel
   onlyAddFileToTask?
+  addSelectedFiles?
 }
 
 export function FileList(props: FileListProps) {
@@ -141,6 +142,7 @@ export function FileList(props: FileListProps) {
         fileVersionDetail={selectedFileVersions?.fileVersions}
         fileVersionLoading={fileVersionLoading}
         onlyAddFileToTask={props.onlyAddFileToTask}
+        addSelectedFiles={props.addSelectedFiles}
       />
     </div>
   );

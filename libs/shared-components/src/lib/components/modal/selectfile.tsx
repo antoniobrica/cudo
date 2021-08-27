@@ -18,6 +18,7 @@ import FilterPopup from './fliter';
 import { relative } from 'path';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { useTranslation } from 'react-i18next';
+import TaskFileStructure from '../filestructure/filestotask';
 export interface FileStructureProps {
   // files?,
   downloadFiles?,
@@ -31,6 +32,7 @@ export interface FileStructureProps {
   fileVersionDetail?,
   fileVersionLoading?,
   onlyAddFileToTask?
+  addSelectedFiles?
 }
 export function SelectFilePopup(props: FileStructureProps) {
   const countryOptions = [
@@ -63,17 +65,10 @@ export function SelectFilePopup(props: FileStructureProps) {
     }
   }, [props.files])
 
-  const goToAddPin = () => {
-    if(props.onlyAddFileToTask){
+  const goToAddFile = (data) => {
       alert('File added')
+      props.downloadFiles(data)
       cancel()
-    }else{
-
-      setOpen(false)
-      setIsPinFile(true)
-      // cancel()
-      setView(true);
-    }
   }
   // const tick = () => {
   //   setIsTick(isTick => !isTick)
@@ -156,17 +151,37 @@ export function SelectFilePopup(props: FileStructureProps) {
                 </Form.Field>
               </div>
             </Form><br />
-            <PinFileStructure
-              uploadNewVersion={null}
-              files={props.files}
-              downloadFiles={props.downloadFiles}
-              viewFiles={viewFiles}
-              downloadedImg={props.downloadedImg}
-              isPinFile={isPinFile}
-              selectedFileId={props.selectedFileId}
-              fileVersionDetail={props.fileVersionDetail}
-              fileVersionLoading={props.fileVersionLoading}
-            ></PinFileStructure>
+            {
+              props?.onlyAddFileToTask ? (
+                <TaskFileStructure
+                  uploadNewVersion={null}
+                  files={props.files}
+                  downloadFiles={props.downloadFiles}
+                  viewFiles={viewFiles}
+                  downloadedImg={props.downloadedImg}
+                  isPinFile={isPinFile}
+                  selectedFileId={props.selectedFileId}
+                  fileVersionDetail={props.fileVersionDetail}
+                  fileVersionLoading={props.fileVersionLoading}
+                  addSelectedFiles={props.addSelectedFiles}
+                />
+              ) : (
+                <PinFileStructure
+                  uploadNewVersion={null}
+                  files={props.files}
+                  downloadFiles={props.downloadFiles}
+                  viewFiles={viewFiles}
+                  downloadedImg={props.downloadedImg}
+                  isPinFile={isPinFile}
+                  selectedFileId={props.selectedFileId}
+                  fileVersionDetail={props.fileVersionDetail}
+                  fileVersionLoading={props.fileVersionLoading}
+                ></PinFileStructure>
+              )
+            }
+
+
+
 
             {/* <div className="d-flex align-items-center py-2">
               <span>
@@ -247,7 +262,7 @@ export function SelectFilePopup(props: FileStructureProps) {
         <Modal.Actions>
           <Button
             content={t("common.continue")}
-            onClick={goToAddPin}
+            onClick={goToAddFile}
             positive
             size="small"
             className="primary"

@@ -73,6 +73,7 @@ export function CreateTask(props: CreateTaskProps) {
   const [description, setDescription] = React.useState("")
   const [isOpenTaskFiles, setisOpenTaskFiles] = useState(false)
   const [onlyAddFileToTask, setOnlyAddFileToTask] = useState(true)
+  const [selectedFiles, setSelectedFiles] = useState([])
 
   const [workType, setworkType] = React.useState(null)
   const [workTypeD, setworkTypeD] = React.useState(null)
@@ -150,6 +151,9 @@ export function CreateTask(props: CreateTaskProps) {
     // To calculate the time difference of two dates
 
     setEstimatedDays(data.value)
+  }
+  const addSelectedFiles = (data) => {
+    setSelectedFiles(data)
   }
 
   const sendNotificationChange = (event) => {
@@ -344,9 +348,16 @@ export function CreateTask(props: CreateTaskProps) {
           </Dimmer>
           : null}
 
-          {
-            isOpenTaskFiles &&  <FileListIndex isTaskFile={isOpenTaskFiles} cancel={cancelIsTaskFileOpen} onlyAddFileToTask={onlyAddFileToTask} />
-          }
+        {
+          isOpenTaskFiles && (
+            <FileListIndex
+              isTaskFile={isOpenTaskFiles}
+              cancel={cancelIsTaskFileOpen}
+              onlyAddFileToTask={onlyAddFileToTask}
+              addSelectedFiles={addSelectedFiles}
+            />
+          )
+        }
         <Modal.Header><h3>{t("project_tab_menu.task.add_new_task")} </h3></Modal.Header>s
         <Modal.Content body>
           <div>
@@ -507,8 +518,8 @@ export function CreateTask(props: CreateTaskProps) {
                   </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
-                <Form.Field>
-                  <label>Files</label><Button onClick={() => setisOpenTaskFiles(true)}>Add Files</Button>
+                  <Form.Field>
+                    <label>Files</label><Button onClick={() => setisOpenTaskFiles(true)}>Add Files</Button>
                   </Form.Field>
                 </Grid.Row>
               </Grid>
