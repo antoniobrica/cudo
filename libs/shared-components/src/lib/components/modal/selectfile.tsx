@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import {
   Button,
   Header,
@@ -19,7 +19,6 @@ import { relative } from 'path';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { useTranslation } from 'react-i18next';
 import TaskFileStructure from '../filestructure/filestotask';
-import { AddFileSettingUpload } from '@cudo/mf-document-lib';
 export interface FileStructureProps {
   // files?,
   downloadFiles?,
@@ -35,6 +34,7 @@ export interface FileStructureProps {
   onlyAddFileToTask?
   addSelectedFiles?
   selectedFiles?
+  changeAdd?
 }
 export function SelectFilePopup(props: FileStructureProps) {
   const countryOptions = [
@@ -67,10 +67,17 @@ export function SelectFilePopup(props: FileStructureProps) {
     }
   }, [props.files])
 
-  const goToAddFile = (data) => {
-    props.downloadFiles(data)
-    setOpen(false)
-    props.cancel(false)
+  const goToAddPin = (data) => {
+    if (props.onlyAddFileToTask) {
+      props.downloadFiles(data)
+      setOpen(false)
+      props.cancel(false)
+    } else {
+      setOpen(false)
+      setIsPinFile(true)
+      // cancel()
+      setView(true);
+    }
   }
   // const tick = () => {
   //   setIsTick(isTick => !isTick)
@@ -104,7 +111,6 @@ export function SelectFilePopup(props: FileStructureProps) {
     setFilesData(data);
     props.viewFiles(data)
   }
-  console.log("Mk test :::::::::::")
 
   return (
     <div style={{ marginTop: -10, marginRight: 8 }}>
@@ -148,14 +154,10 @@ export function SelectFilePopup(props: FileStructureProps) {
                 <Form.Field>
 
                   <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/filter.png`} style={{ position: 'relative', left: '30px', top: '6px' }}></img>
-                  {/* <FilterPopup /> */} 
-                    <Suspense fallback={<div>Loading...</div>}>
-                      <AddFileSettingUpload />
-
-                    </Suspense>
-                  {/* <Button size="small" className="primary" style={{ marginLeft: '50', }}>
+                  {/* <FilterPopup /> */}
+                  <Button size="small" className="primary" onClick={() => props.changeAdd('uploadFile')} style={{ marginLeft: '50', }}>
                     <Icon name='add' /> {t("common.add_new_button")}
-                  </Button> */}
+                  </Button>
                 </Form.Field>
               </div>
             </Form><br />
@@ -271,7 +273,7 @@ export function SelectFilePopup(props: FileStructureProps) {
         <Modal.Actions>
           <Button
             content={t("common.continue")}
-            onClick={goToAddFile}
+            onClick={goToAddPin}
             positive
             size="small"
             className="primary"
