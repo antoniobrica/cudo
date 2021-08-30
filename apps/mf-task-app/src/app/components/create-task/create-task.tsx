@@ -157,11 +157,10 @@ export function CreateTask(props: CreateTaskProps) {
     setSelectedFiles(data)
     const seletedFilesData = []
     data.map(file => {
-      seletedFilesData.push({fileID:file.fileURL,fileName:file.fileURL, fileUrl:file.fileURL})
+      seletedFilesData.push({ fileID: file.fileURL, fileName: file.fileURL, fileUrl: file.fileURL })
     })
     setFileList(seletedFilesData)
   }
-  console.log('///////////////////////',files)
 
   const removeSeletedFile = (file) => {
     const newSelectedFiles = selectedFiles.filter(item => item.fileURL !== file.fileURL)
@@ -371,7 +370,7 @@ export function CreateTask(props: CreateTaskProps) {
             />
           )
         }
-        <Modal.Header><h3>{t("project_tab_menu.task.add_new_task")} </h3></Modal.Header>s
+        <Modal.Header><h3>{t("project_tab_menu.task.add_new_task")} </h3></Modal.Header>
         <Modal.Content body>
           <div>
             <Form>
@@ -530,25 +529,37 @@ export function CreateTask(props: CreateTaskProps) {
 
                   </Grid.Column>
                 </Grid.Row>
-                <Grid.Row>
-                  <Form.Field>
-                    <label>Files</label><Button onClick={() => setisOpenTaskFiles(true)}>Add Files</Button>
-                  </Form.Field>
-                </Grid.Row>
-                <Grid.Row>
-                  {
-                    selectedFiles.map(file => (
-                      <Form.Field>
-                        <div className="multiple-files-header">
-                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} />
-                          <p className="files-name">{file.fileURL}</p>
-                          <i onClick={() => removeSeletedFile(file)} className="close icon"></i>
-                        </div>
-                      </Form.Field>
-                    ))
-                  }
-                </Grid.Row>
               </Grid>
+
+              <Grid columns={1} className="add-extra-files">
+                <Grid.Row>
+                  <Grid.Column>
+                    <Form.Field>
+                      <label>Select Files</label><Button className="icon-border" size="small" onClick={() => setisOpenTaskFiles(true)}><i className="ms-Icon ms-font-xl ms-Icon--Add"></i> Add Files</Button>
+                    </Form.Field>
+                  </Grid.Column>
+                </Grid.Row>
+                {selectedFiles.length > 0 && (
+                  <Grid.Row className="add-files-list">
+                    <Grid.Column className="uploaded-files">
+                      <ul>
+                        {
+                          selectedFiles.map(file => (
+                            <li>
+                              <p>
+                                <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} />
+                                {file.fileURL}
+                              </p>
+                              <i onClick={() => removeSeletedFile(file)} className="close icon"></i>
+                            </li>
+                          ))
+                        }
+                      </ul>
+                    </Grid.Column>
+                  </Grid.Row>)
+                }
+              </Grid>
+
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>

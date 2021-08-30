@@ -810,3 +810,40 @@ button.ui.button.more-user-listing {
     }
   }
 }
+
+.add-extra-files {
+  border-top: 1px solid #ededed;
+  padding: 10px 0 !important;
+  margin-top: 22px !important;
+  border-bottom: 1px solid #ededed;
+  margin-bottom: 15px !important;
+  .field {
+    @include flex(flex);
+    @include align-items(center);
+    @include justify-content(space-between);
+    button.icon-border {
+      color: color('blue', 'base');
+      padding: 0;
+      i {
+        font-size: 16px;
+        margin-right: 5px;
+      }
+    }
+  }
+}
+
+.filter-with-add-file {
+  @include flex(flex);
+  @include align-items(center);
+  img {
+    margin-right: 15px;
+  }
+  .add-files-modal {
+    button {
+      position: relative;
+      top: inherit;
+      left: inherit;
+      right: inherit;
+    }
+  }
+}
