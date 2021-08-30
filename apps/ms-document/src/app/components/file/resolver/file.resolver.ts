@@ -54,6 +54,7 @@ export class FileResolver {
 
   @Query(() => [UploadedFileModel], { nullable: true })
   async uploadedFiles(@Args("referenceFilter") referenceFilter: ReferenceFilterParams) {
+    
     return await this.fileService.uploadedFiles(referenceFilter)
   }
 

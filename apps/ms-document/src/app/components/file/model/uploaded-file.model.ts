@@ -73,7 +73,7 @@ export class UploadedFileModel {
     @Field({ nullable: true, description: `True if file is deleted` })
     isDeleted?: boolean;
 
-    @Field({ nullable: true, description: `Count of files versions` })
+    @Field({ nullable: true, description: `Count of versions of a file` })
     versionCount?: number;
 
     @Field({ nullable: true, description: `ReferenceID ` })
