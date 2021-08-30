@@ -15,6 +15,8 @@ import { start } from 'repl';
 import { useTranslation } from 'react-i18next';
 
 import { LazyLoading } from '@cudo/shared-components'
+import { FileListIndex } from '@cudo/mf-document-lib';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 /* eslint-disable-next-line */
 export interface CreateTaskProps {
@@ -70,6 +72,9 @@ export function CreateTask(props: CreateTaskProps) {
   const [BKPTitle, setBKPIDTitle] = React.useState("");
   const [files, setFileList] = React.useState<any>([]);
   const [description, setDescription] = React.useState("")
+  const [isOpenTaskFiles, setisOpenTaskFiles] = useState(false)
+  const [onlyAddFileToTask, setOnlyAddFileToTask] = useState(true)
+  const [selectedFiles, setSelectedFiles] = useState([])
 
   const [workType, setworkType] = React.useState(null)
   const [workTypeD, setworkTypeD] = React.useState(null)
@@ -148,6 +153,20 @@ export function CreateTask(props: CreateTaskProps) {
 
     setEstimatedDays(data.value)
   }
+  const addSelectedFiles = (data) => {
+    setSelectedFiles(data)
+    const seletedFilesData = []
+    data.map(file => {
+      seletedFilesData.push({fileID:file.fileURL,fileName:file.fileURL, fileUrl:file.fileURL})
+    })
+    setFileList(seletedFilesData)
+  }
+  console.log('///////////////////////',files)
+
+  const removeSeletedFile = (file) => {
+    const newSelectedFiles = selectedFiles.filter(item => item.fileURL !== file.fileURL)
+    setSelectedFiles(newSelectedFiles)
+  }
 
   const sendNotificationChange = (event) => {
     setEendNotification(event.target.value)
@@ -218,6 +237,10 @@ export function CreateTask(props: CreateTaskProps) {
     setDescription(e.target.value);
   }
 
+  const cancelIsTaskFileOpen = () => {
+    setisOpenTaskFiles(false)
+  }
+
   const cancel = () => {
     setOpen(false)
     setAddTaskLoading(false)
@@ -248,7 +271,7 @@ export function CreateTask(props: CreateTaskProps) {
     setworkTypeData('')
     setDate(null)
     setErrors({})
-
+    setSelectedFiles([])
   }
 
   const validation = () => {
@@ -336,7 +359,19 @@ export function CreateTask(props: CreateTaskProps) {
             <Loader size='big'>Loading</Loader>
           </Dimmer>
           : null}
-        <Modal.Header><h3>{t("project_tab_menu.task.add_new_task")} </h3></Modal.Header>
+
+        {
+          isOpenTaskFiles && (
+            <FileListIndex
+              isTaskFile={isOpenTaskFiles}
+              cancel={cancelIsTaskFileOpen}
+              onlyAddFileToTask={onlyAddFileToTask}
+              selectedFiles={selectedFiles}
+              addSelectedFiles={addSelectedFiles}
+            />
+          )
+        }
+        <Modal.Header><h3>{t("project_tab_menu.task.add_new_task")} </h3></Modal.Header>s
         <Modal.Content body>
           <div>
             <Form>
@@ -496,6 +531,22 @@ export function CreateTask(props: CreateTaskProps) {
                   </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
+                  <Form.Field>
+                    <label>Files</label><Button onClick={() => setisOpenTaskFiles(true)}>Add Files</Button>
+                  </Form.Field>
+                </Grid.Row>
+                <Grid.Row>
+                  {
+                    selectedFiles.map(file => (
+                      <Form.Field>
+                        <div className="multiple-files-header">
+                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} />
+                          <p className="files-name">{file.fileURL}</p>
+                          <i onClick={() => removeSeletedFile(file)} className="close icon"></i>
+                        </div>
+                      </Form.Field>
+                    ))
+                  }
                 </Grid.Row>
               </Grid>
               <Grid columns={1}>
@@ -517,7 +568,7 @@ export function CreateTask(props: CreateTaskProps) {
             content={t("common.submit")}
             onClick={handleSaveTask}
             positive
-            loading
+            // loading
             size='small' className="primary"
           />
           <Button size='small' className="icon-border" onClick={cancel}>
