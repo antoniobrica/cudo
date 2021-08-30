@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import {
   Button,
   Header,
@@ -19,6 +19,7 @@ import { relative } from 'path';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { useTranslation } from 'react-i18next';
 import TaskFileStructure from '../filestructure/filestotask';
+import { AddFileSettingUpload } from '@cudo/mf-document-lib';
 export interface FileStructureProps {
   // files?,
   downloadFiles?,
@@ -147,9 +148,12 @@ export function SelectFilePopup(props: FileStructureProps) {
 
                   <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/filter.png`} style={{ position: 'relative', left: '30px', top: '6px' }}></img>
                   {/* <FilterPopup /> */}
-                  <Button size="small" className="primary" style={{ marginLeft: '50', }}>
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <AddFileSettingUpload />
+                    </Suspense>
+                  {/* <Button size="small" className="primary" style={{ marginLeft: '50', }}>
                     <Icon name='add' /> {t("common.add_new_button")}
-                  </Button>
+                  </Button> */}
                 </Form.Field>
               </div>
             </Form><br />

@@ -161,7 +161,6 @@ export function CreateTask(props: CreateTaskProps) {
     })
     setFileList(seletedFilesData)
   }
-  console.log('///////////////////////',files)
 
   const removeSeletedFile = (file) => {
     const newSelectedFiles = selectedFiles.filter(item => item.fileURL !== file.fileURL)
@@ -371,7 +370,7 @@ export function CreateTask(props: CreateTaskProps) {
             />
           )
         }
-        <Modal.Header><h3>{t("project_tab_menu.task.add_new_task")} </h3></Modal.Header>s
+        <Modal.Header><h3>{t("project_tab_menu.task.add_new_task")} </h3></Modal.Header>
         <Modal.Content body>
           <div>
             <Form>
