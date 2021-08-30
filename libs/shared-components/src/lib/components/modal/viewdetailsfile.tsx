@@ -45,6 +45,8 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
   const [hideCommentPanel, setHideCommentPanel] = React.useState(false)
   const [expandVersion, setExpandVersion] = React.useState(false);
 
+  const [pinCount, setPinCount] = React.useState(0)
+
   function onDocumentLoadSuccess({ numPages }) {
     console.log('numPages', numPages);
     setNumPages(numPages);
@@ -93,6 +95,10 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
 		// setSelectedExpandVersionId(uploadedFileVersionId)
 		// props.selectedFileId(uploadedFileVersionId)
 	}
+
+  const getPinCount = (count) => {
+    setPinCount(count)
+  }
 
 
   return (
@@ -230,9 +236,9 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <label>Tasks (1)</label>
+                          <label>Tasks ({pinCount})</label>
                           {!isPinCreated ?
-                            <PinTaskListIndex filesData={props.filesData} cord={''}></PinTaskListIndex> : null}
+                            <PinTaskListIndex filesData={props.filesData} cord={''} pinCount={getPinCount} ></PinTaskListIndex> : null}
                           {/* <div className="pin-task-completed-card">
                             <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} />
                             <div className="pin-task-description-box">

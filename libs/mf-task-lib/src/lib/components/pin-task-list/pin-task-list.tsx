@@ -14,6 +14,7 @@ import { useTaskUpdateMutation, useTaskDeleteMutation } from '../../services/use
 export interface PinTaskListProps {
   filesData?
   cord?
+  pinCount?
 }
 
 export function PinTaskList(props: PinTaskListProps) {
@@ -84,7 +85,7 @@ export function PinTaskList(props: PinTaskListProps) {
       setLoading(false);
       console.log('get_pin_tasks', res.data.data);
       setPinTasks(res.data.data.tasksByTasktypes)
-
+      props.pinCount(res.data.data.tasksByTasktypes?.length)
     })
       .catch(err => console.log(err))
   }
