@@ -17,7 +17,7 @@ import { AccordionExampleMenu, ModalExampleModal2, Cardbar, Menubar, Tabsbar, Me
 import ModalExampleCompany from 'libs/shared-components/src/lib/components/modal/companypopup';
 import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
 import ListExampleFloated from 'libs/shared-components/src/lib/components/task/taskarea';
-import ModalAddPrint from 'libs/shared-components/src/lib/components/modal/addfile';
+// import AddFileUpload from 'libs/shared-components/src/lib/components/modal/addfile';
 import ModalAddFile from 'libs/shared-components/src/lib/components/modal/addedfile';
 import FileStructure from 'libs/shared-components/src/lib/components/filestructure/filestask';
 import ModalExampleSize from 'libs/shared-components/src/lib/components/modal/viewdetailsfile';
@@ -86,7 +86,7 @@ export function App() {
         <ModalExampleCompany></ModalExampleCompany><br />
         <ModalExamplePrinting></ModalExamplePrinting><br />
         <ListExampleFloated></ListExampleFloated><br /><br />
-        <ModalAddPrint></ModalAddPrint><br />
+        {/* <AddFileUpload></AddFileUpload><br /> */}
         <ModalAddFile></ModalAddFile><br />
         <FileStructure></FileStructure><br />
         <ModalExampleSize></ModalExampleSize><br />

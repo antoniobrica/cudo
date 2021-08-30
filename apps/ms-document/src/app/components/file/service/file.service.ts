@@ -202,7 +202,7 @@ export class FileService {
         }, relations: ['fileReferences', 'people', 'children']
       })
 
-      // #region Retrieve children wise version count - Need improvement 
+      // #region Retrieve children wise file wise versions count - Need improvement 
       let result = []
       if (parent.length > 0) {
         for (let i = 0; i < parent.length; i++) {
@@ -226,9 +226,8 @@ export class FileService {
       }
       // #endregion
 
-
-      return result
       // return parent
+      return result
     } catch (error) {
       return error;
     }
