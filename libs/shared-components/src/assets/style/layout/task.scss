@@ -831,3 +831,19 @@ button.ui.button.more-user-listing {
     }
   }
 }
+
+.filter-with-add-file {
+  @include flex(flex);
+  @include align-items(center);
+  img {
+    margin-right: 15px;
+  }
+  .add-files-modal {
+    button {
+      position: relative;
+      top: inherit;
+      left: inherit;
+      right: inherit;
+    }
+  }
+}

@@ -144,9 +144,9 @@ export function SelectFilePopup(props: FileStructureProps) {
                     type="search" style={{ marginLeft: '5px' }}
                   />
                 </Form.Field>
-                <Form.Field>
+                <Form.Field className="filter-with-add-file">
 
-                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/filter.png`} style={{ position: 'relative', left: '30px', top: '6px' }}></img>
+                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/filter.png`}></img>
                   {/* <FilterPopup /> */} 
                     <Suspense fallback={<div>Loading...</div>}>
                       <AddFileSettingUpload />
