@@ -157,7 +157,7 @@ export function CreateTask(props: CreateTaskProps) {
     setSelectedFiles(data)
     const seletedFilesData = []
     data.map(file => {
-      seletedFilesData.push({fileID:file.fileURL,fileName:file.fileURL, fileUrl:file.fileURL})
+      seletedFilesData.push({ fileID: file.fileURL, fileName: file.fileURL, fileUrl: file.fileURL })
     })
     setFileList(seletedFilesData)
   }
@@ -539,23 +539,25 @@ export function CreateTask(props: CreateTaskProps) {
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
-                <Grid.Row className="add-files-list">
-                  <Grid.Column className="uploaded-files">
-                    <ul>
-                      {
-                        selectedFiles.map(file => (
-                          <li>
-                            <p>
-                              <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} />
-                              {file.fileURL}
-                            </p>
-                            <i onClick={() => removeSeletedFile(file)} className="close icon"></i>
-                          </li>
-                        ))
-                      }
-                    </ul>
-                  </Grid.Column>
-                </Grid.Row>
+                {selectedFiles.length > 0 && (
+                  <Grid.Row className="add-files-list">
+                    <Grid.Column className="uploaded-files">
+                      <ul>
+                        {
+                          selectedFiles.map(file => (
+                            <li>
+                              <p>
+                                <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} />
+                                {file.fileURL}
+                              </p>
+                              <i onClick={() => removeSeletedFile(file)} className="close icon"></i>
+                            </li>
+                          ))
+                        }
+                      </ul>
+                    </Grid.Column>
+                  </Grid.Row>)
+                }
               </Grid>
 
               <Grid columns={1}>
