@@ -104,6 +104,7 @@ export function SelectFilePopup(props: FileStructureProps) {
     setFilesData(data);
     props.viewFiles(data)
   }
+  console.log("Mk test :::::::::::")
 
   return (
     <div style={{ marginTop: -10, marginRight: 8 }}>
