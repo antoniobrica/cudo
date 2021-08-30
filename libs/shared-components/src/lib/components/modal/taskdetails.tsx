@@ -204,8 +204,38 @@ export const ModalViewTask = (props: AlertProps) => {
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
-              <br />
-              <Divider />
+
+              <Grid columns={1} className="add-extra-files">
+                <Grid.Row>
+                  <Grid.Column>
+                    <Form.Field>
+                      <label>Files</label>
+                    </Form.Field>
+                  </Grid.Column>
+                </Grid.Row>
+                <Grid.Row className="add-files-list">
+                  <Grid.Column className="uploaded-files">
+                    <ul>
+                      <li>
+                        <p>
+                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} />
+                          Test_2BHK.jpg1628517497176
+                        </p>
+                        <i className="eye icon"></i>
+                      </li>
+                      <li>
+                        <p>
+                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} />
+                          Test_2BHK.jpg1628517497176
+                        </p>
+                        <i className="eye icon"></i>
+                      </li>
+                    </ul>
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
+
+
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
