@@ -48,6 +48,10 @@ export function FileListing(props: FileListingProps) {
   const [openPinFile, setOpenPinFile] = React.useState(false)
   const [imgUrl, setimgUrl] = React.useState('');
   const [filesData, setFilesData] = React.useState([]);
+
+// const [fileVersionLoading, setFileVersionLoading] = React.useState(null)
+// const [fileVersionData, setFileVersionData] = React.useState(null)
+
   const [addFile, { data: neVersionDta }] = useMutation(UPLOAD_FILE_VERSION,
     {
       refetchQueries: [
@@ -101,6 +105,24 @@ export function FileListing(props: FileListingProps) {
   const { loading: fileVersionLoading, error: fileVersionError, data: fileVersionData } = useFileVersionQuery(GET_FILE_VERSIONS, {
     variables: { projectId, fileId: selectedFileId },
   });
+
+  // if (selectedFileId) {
+  //   const { loading: fileVersionLoadingResponse, error: fileVersionErrorResponse, data: fileVersionDataResponse } = useFileVersionQuery(GET_FILE_VERSIONS, {
+  //     variables: { projectId, fileId: selectedFileId },
+  //   });
+  //   setFileVersionLoading(fileVersionLoadingResponse)
+  //   setFileVersionData(fileVersionDataResponse)
+  // }
+
+  // React.useEffect(() => {
+  //   if (selectedFileId) {
+  //     const { loading: fileVersionLoadingResponse, error: fileVersionErrorResponse, data: fileVersionDataResponse } = useFileVersionQuery(GET_FILE_VERSIONS, {
+  //       variables: { projectId, fileId: selectedFileId },
+  //     });
+  //     setFileVersionLoading(fileVersionLoadingResponse)
+  //     setFileVersionData(fileVersionDataResponse)
+  //   }
+  // }, [selectedFileId])
 
   React.useEffect(() => {
     if (fileVersionData) {
