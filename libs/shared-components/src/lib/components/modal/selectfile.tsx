@@ -147,10 +147,10 @@ export function SelectFilePopup(props: FileStructureProps) {
                 <Form.Field>
 
                   <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/filter.png`} style={{ position: 'relative', left: '30px', top: '6px' }}></img>
-                  {/* <FilterPopup /> */}
+                  {/* <FilterPopup /> */} 
                     <Suspense fallback={<div>Loading...</div>}>
                       <AddFileSettingUpload />
-                      
+
                     </Suspense>
                   {/* <Button size="small" className="primary" style={{ marginLeft: '50', }}>
                     <Icon name='add' /> {t("common.add_new_button")}
