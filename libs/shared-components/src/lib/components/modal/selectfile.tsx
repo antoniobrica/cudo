@@ -150,6 +150,7 @@ export function SelectFilePopup(props: FileStructureProps) {
                   {/* <FilterPopup /> */}
                     <Suspense fallback={<div>Loading...</div>}>
                       <AddFileSettingUpload />
+                      
                     </Suspense>
                   {/* <Button size="small" className="primary" style={{ marginLeft: '50', }}>
                     <Icon name='add' /> {t("common.add_new_button")}
