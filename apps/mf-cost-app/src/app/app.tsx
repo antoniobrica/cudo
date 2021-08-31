@@ -46,7 +46,7 @@ export function App() {
   const { loading, error, data } = useCostQuery(GET_COST, {
     variables: { referenceID },
   });
-  console.log('----cost app----')
+  console.log('mf cost app')
   // if (error) {
   //   const cancel = () => {
   //     setOpenCost(false)

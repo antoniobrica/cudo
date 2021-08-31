@@ -6,6 +6,7 @@ export class AppService {
     secretService = new SecretService
   }
   getData(): { message: string } {
+    console.log(' ms document app')
     return { message: 'Welcome to ms-document!' };
   }
 }

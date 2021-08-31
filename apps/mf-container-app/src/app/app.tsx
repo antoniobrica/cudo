@@ -37,6 +37,7 @@ function App() {
 
   const { url, path } = useRouteMatch();
   const history = useHistory();
+  console.log(' mf container app')
   return (
     <div className="App">
       <SessionProvider>

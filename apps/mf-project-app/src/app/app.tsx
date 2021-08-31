@@ -97,7 +97,7 @@ function App() {
   const history = useHistory()
   const location = useLocation();
   const { url, path } = useRouteMatch();
-  // console.log('---Project--app--history---', history)
+  console.log(' mf project app')
   useEffect(() => {
     if(history.location.pathname.includes('/home/project/')){
       history.push(history.location.pathname)
