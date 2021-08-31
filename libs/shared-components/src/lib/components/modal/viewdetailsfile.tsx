@@ -6,6 +6,7 @@ import { PinTaskListIndex } from '@cudo/mf-task-lib';
 
 import { Document, Page, pdfjs } from "react-pdf";
 import { MS_SERVICE_URL } from '@cudo/mf-core';
+import CanvasImage from './canvasimage';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 function exampleReducer(state, action) {
@@ -86,15 +87,15 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
 
   const onClickFileVersion = () => {
     // const onClickFileVersion = (uploadedFileVersionId) => {
-		// if (uploadedFileVersionId === selectedExpandVersionId) {
-		// 	setExpandVersion(!expandVersion)
-		// } else {
-			setExpandVersion(!expandVersion)
-		// }
+    // if (uploadedFileVersionId === selectedExpandVersionId) {
+    // 	setExpandVersion(!expandVersion)
+    // } else {
+    setExpandVersion(!expandVersion)
+    // }
 
-		// setSelectedExpandVersionId(uploadedFileVersionId)
-		// props.selectedFileId(uploadedFileVersionId)
-	}
+    // setSelectedExpandVersionId(uploadedFileVersionId)
+    // props.selectedFileId(uploadedFileVersionId)
+  }
 
   const getPinCount = (count) => {
     setPinCount(count)
@@ -130,6 +131,17 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                   :
                   // <Canvas imgUrl={imgUrl} isPinCreated={isPinCreated} setIsPinCreated={setIsPinCreated}></Canvas>
                   <Image src={imgUrl} fluid />
+
+                  // <CanvasImage
+                  //   // pinSaved={setPinSavedOnCanvase}
+                  //   // savePin={saveNewPinOnCanvase}
+                  //   imgUrl={imgUrl}
+                  //   // coardinates={getCoardinates}
+                  //   fileId={props.filesData.uploadedFileID}
+                  //   allowToCreateNewPin={false}
+                  //   // isPinCreated={false}
+                  //   // setIsPinCreated={false}
+                  // ></CanvasImage>
                 }
                 <div className="file-pagination">File versions
                   <Pagination
@@ -201,7 +213,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     </Grid.Row>
                   </Grid>
 
-                  <Grid columns={1} className={expandVersion? "file-versioning-box expand": "file-versioning-box"}>
+                  <Grid columns={1} className={expandVersion ? "file-versioning-box expand" : "file-versioning-box"}>
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>

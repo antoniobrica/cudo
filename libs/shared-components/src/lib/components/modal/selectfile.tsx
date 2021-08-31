@@ -120,7 +120,7 @@ export function SelectFilePopup(props: FileStructureProps) {
       } */}
       {view && imgUrl.length > 0 ?
         <div>
-          <AddPinFile isOpen={view} cancel={cancel} filesData={filesData} dowloadFilesData={props.downloadedImg} savePin={props.savePins} />
+          <AddPinFile isOpen={view} cancel={cancel} filesData={filesData} dowloadFilesData={props.downloadedImg} savePin={props.savePins} onSuccess={""} />
         </div> : null}
       <Modal className="modal_media right-side--fixed-modal select-file-modal"
         closeIcon

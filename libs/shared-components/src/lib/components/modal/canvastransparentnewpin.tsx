@@ -49,7 +49,7 @@ export function CanvasTransparentNewPin(props: CanvasTransparentNewPinProps) {
     const drawObj = {
       x: x_axis,
       y: y_axis, r: 10,
-      pinNumber: JSON.stringify(Number(Number(props?.lastPinDetail?.pinNumber) + 1)),
+      pinNumber: JSON.stringify(Number(Number(props?.lastPinDetail?.pinNumber) > 0 ? Number(props?.lastPinDetail?.pinNumber) : 0 + 1)),
       pinsID: "",
       hovercolor: "blue",
       blurcolor: "yellow",
@@ -196,14 +196,14 @@ export function CanvasTransparentNewPin(props: CanvasTransparentNewPinProps) {
     handleMouseUp(e);
   }
 
-  return (   
+  return (
     <canvas id="canvasNewPin" className="transparentCanvas"
       width="800" height="700"
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseOut={handleMouseOut}
-      ref={canvasToDrawCircle}></canvas>    
+      ref={canvasToDrawCircle}></canvas>
   );
 }
 
