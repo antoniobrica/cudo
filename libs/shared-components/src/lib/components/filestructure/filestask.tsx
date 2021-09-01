@@ -564,7 +564,7 @@ export function FileStructure(props: FileStructureProps) {
 	]
 
 	return (
-		<div className=" navbar-collapse files-tab-outer">
+		<div className="files-tab-outer tabs-main-info-container">
 			{fileView && imgUrl.length > 0 ?
 				<div>
 					<ViewFileDetail open={fileView} fType={fType} filesData={filesData} dowloadFilesData={props.downloadedImg} ></ViewFileDetail>

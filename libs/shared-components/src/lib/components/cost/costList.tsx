@@ -95,7 +95,7 @@ export function CostList(props: CostListProps) {
   }
 
   return (
-    <div>
+    <div className="tabs-main-info-container">
 
       {/* 
       <div className="cost-management-con">

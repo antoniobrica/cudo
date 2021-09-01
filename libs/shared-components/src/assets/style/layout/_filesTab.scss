@@ -357,6 +357,25 @@
   }
 }
 
+
+// For canvas transparent image
+.left-side-image-canvas {
+  .outsideWrapper {
+    .insideWrapper {
+      height: 100%;
+      background: #E3E3E4;
+      @include flex(flex);
+      @include align-items(center);
+      @include justify-content(center);
+      position: relative;
+      overflow: hidden;
+    }
+  }
+  + .file-pagination {
+    display: none;
+  }
+}
+
 .pin-task-completed-card {
   @include flex(flex);
   padding: 15px 0;
@@ -373,9 +392,11 @@
       @include flex(flex);
       @include justify-content(space-between);
       .pin-task-info {
+        font-size: 11px;
         h3 {
           font-size: 13px;
           font-weight: 500;
+          margin-bottom: 6px;
           @include flex(flex);
           @include align-items(center);
           i {

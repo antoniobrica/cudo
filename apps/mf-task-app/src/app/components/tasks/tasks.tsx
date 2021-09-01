@@ -768,7 +768,7 @@ export function Tasks(props: TasksProps) {
   }
 
   return (
-    <div>
+    <div className="tabs-main-info-container">
       <ToastContainer className={`${activeErrorClass ? "error" : "success"}`} position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
 
       <div className="pin_area">
