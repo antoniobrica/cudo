@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import MeetingEntity from "../../../entities/meeting.entity";
@@ -9,8 +9,11 @@ import MeetingCustomError from "../../../exceptions/meetingCustomError.exception
 import SortFilterParam from "../../../utils/types/sortParam";
 import StatusFilterParam from "../../../utils/types/status.filter";
 import { Pagination, PaginationOptionsInterface } from "../../paginate";
+import ProtocolDetailFilterParam from "../dto/args/protocol.detail.filter";
 import ProtocolFilterParam from "../dto/args/protocol.filter";
+import { ProtocolDeleteInput } from "../dto/input/protocol-delete-input";
 import { ProtocolDeatilsInput } from "../dto/input/protocol-details.input";
+import { ProtocolDetailsUpdateInput } from "../dto/input/prtocol-details-update-input";
 
 @Injectable()
 export class ProtocolService {
@@ -24,20 +27,20 @@ export class ProtocolService {
     try {
       const { protocolBasics, protocolFiles, meetings } = createInput
 
-       // handling client input error
-       let errorType:number;
-       if(!protocolBasics.protocolStartTime || !protocolBasics.protocolEndTime){
-         errorType = MeetingErrorTypeEnum.NO_TIME
-       }
-       if(!protocolBasics.protocolDate){
-         errorType = MeetingErrorTypeEnum.NO_DATE
-       }
-       if(!protocolBasics.protocolTitle){
-         errorType = MeetingErrorTypeEnum.NO_TITLE
-       }
-       if(errorType){
-         throw new MeetingCustomError(errorType)
-       }      
+      // handling client input error
+      let errorType: number;
+      if (!protocolBasics.protocolStartTime || !protocolBasics.protocolEndTime) {
+        errorType = MeetingErrorTypeEnum.NO_TIME
+      }
+      if (!protocolBasics.protocolDate) {
+        errorType = MeetingErrorTypeEnum.NO_DATE
+      }
+      if (!protocolBasics.protocolTitle) {
+        errorType = MeetingErrorTypeEnum.NO_TITLE
+      }
+      if (errorType) {
+        throw new MeetingCustomError(errorType)
+      }
 
       const protocolDetails = new ProtocolEntity({ ...protocolBasics })
 
@@ -46,14 +49,14 @@ export class ProtocolService {
           const previousProtocolFileIds = protocolDetails.protocolFiles.map(item => item.id)
           await this.protocolFileRepository.delete(previousProtocolFileIds)
         }
-        for (let index = 0; index < protocolFiles.length; index++){
+        for (let index = 0; index < protocolFiles.length; index++) {
           const protocolFileEntity = new ProtocolFileEntity(protocolFiles[index])
-          const newProtocolFile = await this.protocolFileRepository.create({...protocolFileEntity})
+          const newProtocolFile = await this.protocolFileRepository.create({ ...protocolFileEntity })
           const savedProtocolFile = await this.protocolFileRepository.save(newProtocolFile)
 
-          if(index === 0) {
+          if (index === 0) {
             protocolDetails.protocolFiles = [savedProtocolFile]
-          }else {
+          } else {
             protocolDetails.protocolFiles.push(savedProtocolFile)
           }
         }
@@ -61,7 +64,7 @@ export class ProtocolService {
 
       // if(meetings) {
       //   for (let index = 0; index < meetings.length; index++){
-          
+
       //   }
       // }
 
@@ -80,13 +83,13 @@ export class ProtocolService {
   public async findProtocolList(
     options?: PaginationOptionsInterface,
     protocolFilter?: ProtocolFilterParam,
-    statusFilter?:StatusFilterParam,
-    sortFilter?:SortFilterParam
-  ):Promise<Pagination<ProtocolEntity>> {
+    statusFilter?: StatusFilterParam,
+    sortFilter?: SortFilterParam
+  ): Promise<Pagination<ProtocolEntity>> {
 
-    const filterByStatus = statusFilter ? {status: statusFilter.status} : {}
-    const sorting = sortFilter?.sortBy === "DESC" ? {order: {createdAt: "DESC"}} : {}
-    const paginationLimitSkip = {take: options.limit, skip: options.page * options.limit}
+    const filterByStatus = statusFilter ? { status: statusFilter.status } : {}
+    const sorting = sortFilter?.sortBy === "DESC" ? { order: { createdAt: "DESC" } } : {}
+    const paginationLimitSkip = { take: options.limit, skip: options.page * options.limit }
 
     const [results, total] = await this.protocolRepository.findAndCount({
       where: {
@@ -97,10 +100,10 @@ export class ProtocolService {
         ...sorting
       },
       ...paginationLimitSkip,
-      relations: ['protocolFiles','meetings']
+      relations: ['protocolFiles', 'meetings']
     }
     );
-    
+
     const pagination = new Pagination({
       results,
       total
@@ -109,18 +112,87 @@ export class ProtocolService {
   }
 
   // get protocol by ID
-  public async findProtocolById() {
-    //
+  public async findProtocolById(protocolDetailFilter: ProtocolDetailFilterParam): Promise<ProtocolEntity> {
+    const protocol = await this.protocolRepository.findOne({ where: { ...protocolDetailFilter }, relations: ['protocolFiles', 'meetings'] })
+
+    if (!protocol) {
+      throw new NotFoundException('protocol not found')
+    }
+    return protocol
   }
 
   // update protocol
-  public async updateProtocol() {
-    //
+  public async updateProtocol(protocolUpdateInput: ProtocolDetailsUpdateInput): Promise<ProtocolEntity> {
+
+    try {
+      const { protocolBasics, meetings, protocolFiles } = protocolUpdateInput
+    const protocolDetails = await this.protocolRepository.findOne({
+      where: { protocolId: protocolBasics.protocolId },
+      relations: ['protocolFiles', 'meetings']
+    })
+
+    if (!protocolDetails) {
+      throw new NotFoundException('protocol not found')
+    }
+
+    // if(meetings) {
+      //   for (let index = 0; index < meetings.length; index++){
+
+      //   }
+      // }
+
+    if (protocolFiles) {
+      if(protocolDetails.protocolFiles.length > 0) {
+        const previousProtocolFileIds = protocolDetails.protocolFiles.map(item => item.id)
+        await this.protocolFileRepository.delete(previousProtocolFileIds)
+      }
+      for (let index = 0; index <protocolFiles.length; index++) {
+        const protocolFileEntity = new ProtocolFileEntity(protocolFiles[index])
+        const newProtocolFile = await this.protocolFileRepository.create({...protocolFileEntity})
+        const savedProtocolFile = await this.protocolFileRepository.save(newProtocolFile)
+        if (index === 0) {
+          protocolDetails.protocolFiles = [savedProtocolFile]
+        }else {
+          protocolDetails.protocolFiles.push(savedProtocolFile)
+        }
+      }
+    }
+
+    protocolBasics.companyId ? protocolDetails.companyId = protocolBasics.companyId : null
+    protocolBasics.projectTypeId ? protocolDetails.projectTypeId = protocolBasics.projectTypeId : null
+    protocolBasics.protocolDate ? protocolDetails.protocolDate = protocolBasics.protocolDate : null
+    protocolBasics.protocolDescription ? protocolDetails.protocolDescription = protocolBasics.protocolDescription : null
+    protocolBasics.protocolDuration ? protocolDetails.protocolDuration = protocolBasics.protocolDuration : null
+    protocolBasics.protocolEndTime ? protocolDetails.protocolEndTime = protocolBasics.protocolEndTime : null
+    protocolBasics.protocolId ? protocolDetails.protocolId = protocolBasics.protocolId : null
+    protocolBasics.protocolStartTime ? protocolDetails.protocolStartTime = protocolBasics.protocolStartTime : null
+    protocolBasics.protocolTitle ? protocolDetails.protocolTitle = protocolBasics.protocolTitle : null
+    protocolBasics.sessionId ? protocolDetails.sessionId = protocolBasics.sessionId : null
+    protocolBasics.status ? protocolDetails.status = protocolBasics.status : null
+    protocolBasics.workTypeId ? protocolDetails.workTypeId = protocolBasics.workTypeId : null
+
+
+
+    await this.protocolRepository.save(protocolDetails)
+    const protocolUpdatedDetails = await this.protocolRepository.findOne({
+      where: {protocolId: protocolBasics.protocolId},
+      relations: ['protocolFiles', 'meetings']
+    })
+    return protocolUpdatedDetails
+    } catch (error) {
+      return error
+    }
   }
 
   // delete protocol using id
-  public async deleteProtocol() {
-    //
+  public async deleteProtocol(protocolDeleteInput: ProtocolDeleteInput): Promise<ProtocolEntity> {
+    const protocolDetails = await this.findProtocolById(protocolDeleteInput)
+    if (protocolDetails) {
+      protocolDetails.isDeleted = !(protocolDetails.isDeleted)
+      const updatedMeetingDetail = await protocolDetails.save()
+      return updatedMeetingDetail
+    }
+    throw new NotFoundException('protocol not found')
   }
 
 }
