@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import './tasks.module.scss';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
-import { LazyLoading, LoaderPage, ModalTaskEdit, TaskArea } from '@cudo/shared-components';
+import { AddPinFile, LazyLoading, LoaderPage, ModalTaskEdit, TaskArea } from '@cudo/shared-components';
 import { Dropdown, Grid, Popup, Button, Icon } from 'semantic-ui-react';
 import axios from 'axios';
 import {
@@ -57,6 +57,7 @@ export function Tasks(props: TasksProps) {
   const [isTaskFile, setIsTaskFile] = React.useState(false);
   const [isNewTask, setIsNewTask] = React.useState(false);
   const [taskStatus, settaskStatus] = React.useState('');
+  const [viewAddPinFile, setViewAddPinFile] = useState(false)
 
   const [openSubTaskStatusConfirm, setOpenSubTaskStatusConfirm] = React.useState(false);
   const [openSubTaskDeleteConfirm, setOpenSubTaskDeleteConfirm] = React.useState(false);
@@ -307,6 +308,7 @@ export function Tasks(props: TasksProps) {
     setOpenD(false);
     setViewTaskOpen(false);
     setEditTaskOpen(false);
+    setViewAddPinFile(false)
   };
   const confirmation = (data, task) => {
     setLoadingOnEditTaskStatus(true)
@@ -434,6 +436,13 @@ export function Tasks(props: TasksProps) {
     setTaskData(task);
     setEditTaskOpen(true);
   };
+
+  const openViewAddPinFile = (task) => {
+    setTaskData(task);
+    setViewAddPinFile(true)
+    // setIsTaskFile(true)
+  }
+
   const refresh = (data) => {
     console.log('refresh is called', data);
   };
@@ -786,7 +795,10 @@ export function Tasks(props: TasksProps) {
           />
         ) : null}
       </div>
-      {isTaskFile ? (
+      {
+       viewAddPinFile && <AddPinFile isOpen={viewAddPinFile} cancel={cancel} taskData={taskData} />
+      }
+      {(isTaskFile) ? (
         <div className="pin_area" style={{ marginLeft: 804 }}>
           <FileListIndex isTaskFile={isTaskFile} cancel={cancelNew} />
         </div>
@@ -890,6 +902,7 @@ export function Tasks(props: TasksProps) {
                 veiwTask={viewTask}
                 editTask={editTask}
                 subTask={subTask}
+                viewAddPinFile={openViewAddPinFile}
                 updateSubTaskStatus={updateSubTaskStatus}
                 updateSubTask={updateSubTask}
                 deleteSubTask={deleteSubTask}

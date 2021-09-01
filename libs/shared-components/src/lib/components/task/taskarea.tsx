@@ -22,6 +22,7 @@ export interface Tasks {
   editSubTaskLoading?
   taskListData?
   taskDeleteUpdateStatusLoading?
+  viewAddPinFile?
 }
 
 export function TaskArea(props: Tasks) {
@@ -71,7 +72,11 @@ export function TaskArea(props: Tasks) {
     props.deleteTask(task, id)
   }
   const veiwTaskbyId = (task, id) => {
-    props.veiwTask(task, id)
+    if(props.task?.taskType === 'PIN'){
+      props.viewAddPinFile(task,id)
+    } else{
+      props.veiwTask(task, id)
+    }
   }
   const editTaskbyId = (task, id) => {
     props.editTask(task, id)
