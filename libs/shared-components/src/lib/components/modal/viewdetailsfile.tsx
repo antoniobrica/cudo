@@ -42,11 +42,13 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
   const [numPages, setNumPages] = React.useState(null);
   const [pageNumber, setPageNumber] = React.useState(1);
   const [isPinCreated, setIsPinCreated] = React.useState<boolean>(false);
+  const [pinSavedOnCanvase, setPinSavedOnCanvase] = React.useState(false);
 
   const [hideCommentPanel, setHideCommentPanel] = React.useState(false)
   const [expandVersion, setExpandVersion] = React.useState(false);
 
   const [pinCount, setPinCount] = React.useState(0)
+  const [cord, setCord] = React.useState(null);
 
   function onDocumentLoadSuccess({ numPages }) {
     console.log('numPages', numPages);
@@ -56,6 +58,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
 
   React.useEffect(() => {
     if (props.open) {
+      console.log('--viewdetailsfile-useEffect--setOpen--', props.open);
       setOpen(props.open)
     }
   }, [props.open]);
@@ -65,6 +68,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
     if (props.dowloadFilesData) {
       for (let i = 0; i < props.dowloadFilesData.length; i++) {
         if (props.dowloadFilesData[i].filename == props.filesData.fileTitle) {
+          console.log('--viewdetailsfile-useEffect--setimgUrl-with cond filedata-', props.dowloadFilesData[i].url);
           setimgUrl(props.dowloadFilesData[i].url);
         }
       }
@@ -73,15 +77,17 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
   })
   React.useEffect(() => {
     if (props.filesData) {
-      console.log('filesData', props.filesData);
+      console.log('--viewdetailsfile-useEffect--filesData--', props.filesData);
       setFiles(props.filesData)
     }
   }, [props.filesData])
 
   const cancel = () => {
+    console.log('--viewdetailsfile-cancel--');
     setOpen(false);
   }
   const openf = () => {
+    console.log('--viewdetailsfile-openf--');
     setOpen(true)
   }
 
@@ -90,6 +96,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
     // if (uploadedFileVersionId === selectedExpandVersionId) {
     // 	setExpandVersion(!expandVersion)
     // } else {
+    console.log('--viewdetailsfile-onClickFileVersion--expandVersion--', expandVersion);
     setExpandVersion(!expandVersion)
     // }
 
@@ -98,9 +105,14 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
   }
 
   const getPinCount = (count) => {
+    console.log('--viewdetailsfile-getPinCount--', count);
     setPinCount(count)
   }
 
+  const getCoardinates = (data) => {
+    console.log('--viewdetailsfile--getCoardinates--', data);
+    setCord(data);
+  }
 
   return (
     <div id="navbar">
@@ -130,18 +142,19 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                   </Document>
                   :
                   // <Canvas imgUrl={imgUrl} isPinCreated={isPinCreated} setIsPinCreated={setIsPinCreated}></Canvas>
-                  <Image src={imgUrl} fluid />
-
-                  // <CanvasImage
-                  //   // pinSaved={setPinSavedOnCanvase}
-                  //   // savePin={saveNewPinOnCanvase}
-                  //   imgUrl={imgUrl}
-                  //   // coardinates={getCoardinates}
-                  //   fileId={props.filesData.uploadedFileID}
-                  //   allowToCreateNewPin={false}
-                  //   // isPinCreated={false}
-                  //   // setIsPinCreated={false}
-                  // ></CanvasImage>
+                  // <Image src={imgUrl} fluid />
+                  <div className="left-side-image-canvas">
+                    <CanvasImage
+                      pinSaved={setPinSavedOnCanvase}
+                      // savePin={saveNewPinOnCanvase}
+                      imgUrl={imgUrl}
+                      coardinates={getCoardinates}
+                      fileId={props.filesData.uploadedFileID}
+                      allowToCreateNewPin={false}
+                      isPinCreated={isPinCreated}
+                      setIsPinCreated={setIsPinCreated}
+                    ></CanvasImage>
+                  </div>
                 }
                 <div className="file-pagination">File versions
                   <Pagination
@@ -249,8 +262,9 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                       <Grid.Column>
                         <Form.Field>
                           <label>Tasks ({pinCount})</label>
-                          {!isPinCreated ?
-                            <PinTaskListIndex filesData={props.filesData} cord={''} pinCount={getPinCount} ></PinTaskListIndex> : null}
+                          {/* {!isPinCreated ? */}
+                          <PinTaskListIndex filesData={props.filesData} cord={''} pinCount={getPinCount} ></PinTaskListIndex>
+                          {/* : null} */}
                           {/* <div className="pin-task-completed-card">
                             <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} />
                             <div className="pin-task-description-box">

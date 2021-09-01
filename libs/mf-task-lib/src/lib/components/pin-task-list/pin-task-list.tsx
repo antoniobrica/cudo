@@ -83,9 +83,10 @@ export function PinTaskList(props: PinTaskListProps) {
       }
     ).then(res => {
       setLoading(false);
-      console.log('get_pin_tasks', res.data.data);
+      console.log('1-getPins', res.data.data);
       setPinTasks(res.data.data.tasksByTasktypes)
       props.pinCount(res.data.data.tasksByTasktypes?.length)
+      console.log('2-getPins -- pincount--', res.data.data.tasksByTasktypes?.length);
     })
       .catch(err => console.log(err))
   }
