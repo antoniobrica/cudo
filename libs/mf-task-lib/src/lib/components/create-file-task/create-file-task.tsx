@@ -221,10 +221,12 @@ export function CreateFileTask(props: CreateFileTaskProps) {
       addTak()
     }
   }, [props.pinsaved])
+  
   const handleSaveTask = () => {
     props.savePin(true);
     console.log("Save Pin flag set on submit button")
   };
+  
   const addTak = () => {
     addTask({
       variables: {

@@ -45,11 +45,14 @@ export function CanvasTransparentNewPin(props: CanvasTransparentNewPinProps) {
   }, [isCircleSelectedOnMouseHover]);
 
   useEffect(() => {
-    // console.log('---canvastransparent--1-props?.lastPinDetail----', props?.lastPinDetail, props?.lastPinDetail?.pinNumber)
+    console.log('---11canvastransparent--1-props?.lastPinDetail----', props?.lastPinDetail, props?.lastPinDetail?.pinNumber)
+    const newPinNumber = Number(props?.lastPinDetail?.pinNumber) > 0 ? Number(props?.lastPinDetail?.pinNumber) + 1 : 1
+    console.log('---22newPinNumber---', newPinNumber)
     const drawObj = {
       x: x_axis,
-      y: y_axis, r: 10,
-      pinNumber: JSON.stringify(Number(Number(props?.lastPinDetail?.pinNumber) > 0 ? Number(props?.lastPinDetail?.pinNumber) : 0 + 1)),
+      y: y_axis,
+      r: 10,
+      pinNumber: JSON.stringify(newPinNumber),
       pinsID: "",
       hovercolor: "blue",
       blurcolor: "yellow",
@@ -57,7 +60,7 @@ export function CanvasTransparentNewPin(props: CanvasTransparentNewPinProps) {
       isHovering: true,
       isNewPin: true
     }
-    // console.log('---canvastransparent--2-drawObj----', drawObj)
+    console.log('---33canvastransparent--2-drawObj----', drawObj)
     let isFound = false;
     let lastBoxes = [...pinList];
     lastBoxes = lastBoxes.map((box) => {

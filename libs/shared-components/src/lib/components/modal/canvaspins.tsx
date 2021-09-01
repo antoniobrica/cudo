@@ -481,7 +481,7 @@ export function CanvasPins(props: CanvasPinsProps) {
         <CanvasTransparentNewPin
           allowToCreateNewPin={props.allowToCreateNewPin}
           selectedNewTaskCoOrdinate={getSelectedNewTaskCoOrdinates}
-          lastPinDetail={pinList && pinList?.length>1 && pinList[pinList?.length - 1]}
+          lastPinDetail={pinList && pinList?.length>0 && pinList[pinList?.length - 1]}
         ></CanvasTransparentNewPin>
         : null}
     </>
