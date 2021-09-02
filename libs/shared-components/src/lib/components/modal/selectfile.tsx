@@ -142,14 +142,14 @@ export function SelectFilePopup(props: FileStructureProps) {
           <div>
             <Form>
               <div className="slect-file-search-box">
-                <Form.Field>
-                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/search_white.png`} style={{ position: 'relative', top: '11px' }}></img>
+                <Form.Field className="search-box-file">
+                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/search_white.png`}></img>
 
                   <Input
                     placeholder={t("common.search")}
                     size="small"
-                    className="full-width inputfieldarea bordernone"
-                    type="search" style={{ marginLeft: '5px' }}
+                    className="full-width"
+                    type="search"
                   />
                 </Form.Field>
                 <Form.Field className="filter-with-add-file">

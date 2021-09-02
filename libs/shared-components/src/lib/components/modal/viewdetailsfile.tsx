@@ -24,6 +24,12 @@ const countryOptions = [
   { key: 'ax', value: 'ax', text: 'Aland Islands' },
 
 ]
+
+const versionOptions = [
+  { key: 'af', value: 'version 1', text: 'Version 1' },
+  { key: 'ax', value: 'version 2', text: 'Version 2' },
+]
+
 export interface FileDetailsProps {
   open?,
   filesData?,
@@ -156,7 +162,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     ></CanvasImage>
                   </div>
                 }
-                <div className="file-pagination">File versions
+                {/* <div className="file-pagination">File versions
                   <Pagination
                     defaultActivePage={1}
                     firstItem={null}
@@ -165,7 +171,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     secondary
                     totalPages={1}
                   />
-                </div>
+                </div> */}
               </div>
             </div>
 
@@ -175,7 +181,10 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
 
               <div>
                 <Form>
-                  <Modal.Header><h3>File detail
+                  <Modal.Header><h3 className="title-select">
+                    <span> File detail
+                      <Select placeholder='Select version' options={versionOptions} />
+                    </span>
                     <span>
                       <i className="ms-Icon ms-Icon--Hide2 hide-icon" aria-hidden="true" onClick={() => setHideCommentPanel(true)}><span>Hide</span></i>
                       <i aria-hidden="true" className="close icon" onClick={cancel}></i>
