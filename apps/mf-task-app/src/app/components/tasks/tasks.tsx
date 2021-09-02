@@ -25,6 +25,7 @@ import SubTaskDelete from '../delete-subtask/delete-subtask';
 import { FilterPopup, ToggleButton } from '@cudo/shared-components';
 import { FileListIndex } from '@cudo/mf-document-lib';
 import { toast, ToastContainer } from 'react-toastify';
+import FilePinDetails from 'libs/mf-document-lib/src/lib/components/pin-file-from-task/file-pin';
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface TasksProps { }
 
@@ -796,7 +797,7 @@ export function Tasks(props: TasksProps) {
         ) : null}
       </div>
       {
-       viewAddPinFile && <AddPinFile isOpen={viewAddPinFile} cancel={cancel} taskData={taskData} />
+       viewAddPinFile && <FilePinDetails isOpen={viewAddPinFile} cancel={cancel} taskData={taskData} />
       }
       {(isTaskFile) ? (
         <div className="pin_area" style={{ marginLeft: 804 }}>
