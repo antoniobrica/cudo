@@ -8,7 +8,7 @@ import ProductList from '../components/product-list/product-list';
 
 
 const App = props => {
-  console.log(' mf account app')
+  console.log(' 1 mf account app')
   return (
     <CombinedContextProvider {...props}>
       <Layout>

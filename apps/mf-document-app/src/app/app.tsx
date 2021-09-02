@@ -16,7 +16,7 @@ const supportedLanguages = [defaultLanguage, 'en-GB'];
 initI18n('/assets/i18n/{{lng}}.json', defaultLanguage);
 
 export function App() {
-  console.log(' mf document app')
+  console.log(' 1 mf document app')
   return (
     <div >
        <Suspense fallback={<div>Loading....</div>}>

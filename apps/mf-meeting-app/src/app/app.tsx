@@ -10,7 +10,7 @@ const supportedLanguages = [defaultLanguage, 'en-GB'];
 initI18n('/assets/i18n/{{lng}}.json', defaultLanguage);
 
 export function App() {
-  console.log(' mf meeting app')
+  console.log(' 1 mf meeting app')
   return (
     <Suspense fallback={<LazyLoading />}>
       <div>
