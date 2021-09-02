@@ -10,11 +10,12 @@ import ProtocolFileEntity from '../../entities/protocol-file.entity';
 // import MeetingFilesEntity from '../../entities/meeting-files.entity';
 // import { InvitationMiddleware } from './middleware/invitation.middleware'
 import ProtocolEntity from '../../entities/protocol.entity';
+import { MeetingModule } from '../meeting/meeting.module';
 import { ProtocolResolver } from './resolver/protocol.resolver';
 import { ProtocolService } from './service/protocol.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ProtocolEntity,ProtocolFileEntity])],
+  imports: [MeetingModule,TypeOrmModule.forFeature([ProtocolEntity,ProtocolFileEntity])],
   providers: [ProtocolService,ProtocolResolver],
 })
 export class ProtocolModule {} // implements NestModule {
