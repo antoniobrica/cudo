@@ -31,18 +31,15 @@ export class AccordionExampleMenu extends Component<MyProps> {
     worktypeValue: '',
   }
   componentDidMount() {
-    console.log('wt', this.props.workTypeData?.projectById[0]);
     this.setState({ worktypes: this.props.workTypeData?.projectById[0].projectWorkTypes })
     this.setState({ worktypeValue: this.props.workTypeData?.projectById[0].projectWorkTypes[0].workTypeName })
   }
   handleClick = (titleProps, worktype) => {
-    console.log('activeIndex', worktype)
     const { index } = titleProps
     const { activeIndex } = this.state
     const newIndex = activeIndex === index ? -1 : index
 
     this.setState({ activeIndex: titleProps });
-    console.log('activeIndexSet', activeIndex);
     const value = this.state.worktypes[activeIndex + 1].workTypeName;
     this.setState({ worktypeValue: value });
     this.props.changeWorktypeName(value);
@@ -51,7 +48,6 @@ export class AccordionExampleMenu extends Component<MyProps> {
   render() {
     const { t } = this.props
     const { activeIndex } = this.state
-    console.log('renderactiveIndex', activeIndex)
     return (
       <div className="sidebar-wrapper sidebar-theme">
         <div className="sidebar-header-project-name">

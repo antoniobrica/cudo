@@ -57,14 +57,12 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
   const [cord, setCord] = React.useState(null);
 
   function onDocumentLoadSuccess({ numPages }) {
-    console.log('numPages', numPages);
-    setNumPages(numPages);
+     setNumPages(numPages);
   }
 
 
   React.useEffect(() => {
     if (props.open) {
-      console.log('--viewdetailsfile-useEffect--setOpen--', props.open);
       setOpen(props.open)
     }
   }, [props.open]);
@@ -74,7 +72,6 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
     if (props.dowloadFilesData) {
       for (let i = 0; i < props.dowloadFilesData.length; i++) {
         if (props.dowloadFilesData[i].filename == props.filesData.fileTitle) {
-          console.log('--viewdetailsfile-useEffect--setimgUrl-with cond filedata-', props.dowloadFilesData[i].url);
           setimgUrl(props.dowloadFilesData[i].url);
         }
       }
@@ -83,17 +80,14 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
   })
   React.useEffect(() => {
     if (props.filesData) {
-      console.log('--viewdetailsfile-useEffect--filesData--', props.filesData);
       setFiles(props.filesData)
     }
   }, [props.filesData])
 
   const cancel = () => {
-    console.log('--viewdetailsfile-cancel--');
     setOpen(false);
   }
   const openf = () => {
-    console.log('--viewdetailsfile-openf--');
     setOpen(true)
   }
 
@@ -102,7 +96,6 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
     // if (uploadedFileVersionId === selectedExpandVersionId) {
     // 	setExpandVersion(!expandVersion)
     // } else {
-    console.log('--viewdetailsfile-onClickFileVersion--expandVersion--', expandVersion);
     setExpandVersion(!expandVersion)
     // }
 
@@ -111,12 +104,10 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
   }
 
   const getPinCount = (count) => {
-    console.log('--viewdetailsfile-getPinCount--', count);
     setPinCount(count)
   }
 
   const getCoardinates = (data) => {
-    console.log('--viewdetailsfile--getCoardinates--', data);
     setCord(data);
   }
 

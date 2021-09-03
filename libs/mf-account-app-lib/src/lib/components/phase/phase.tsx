@@ -21,7 +21,6 @@ export function Phase(props: PhaseProps) {
   const { t } = useTranslation()
   React.useEffect(() => {
     if (props.phaseName) {
-      console.log('phaseName', props.phaseName);
       setPhase(props.phaseName);
     }
   }, [props.phaseName]);

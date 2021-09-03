@@ -107,10 +107,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
         var de = props.taskData.endDate
         setEndDate(formatDate(de));
       }
-      // console.log('dateE', d);
-
-      // var d2 = d.substring(5, 7) + '/' + d.substring(8, 10) + '/' + d.substring(0, 4);
-
+      
       const assignees = [];
       props?.taskData?.assignees?.map((data, i) => {
         assignees.push({ userID: data.userID, userName: data.userName })

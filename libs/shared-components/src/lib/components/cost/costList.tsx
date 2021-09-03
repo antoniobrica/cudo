@@ -30,7 +30,6 @@ export function CostList(props: CostListProps) {
   const [editBkpIp, setEditBkpIp] = React.useState(null);
 
   const addNew = () => {
-    console.log('add new');
     props.addNew()
 
   }
@@ -45,11 +44,9 @@ export function CostList(props: CostListProps) {
   }
 
   const deleteCost = (data) => {
-    console.log('deleteCost', data)
     props.delete(data)
   }
   const editBkp = (data) => {
-    console.log('edit', data);
     setEditBkpData(data);
     setEditBkpT(data.BKPTitle);
     setEditBkpD(data.description);
@@ -62,7 +59,6 @@ export function CostList(props: CostListProps) {
     { key: 'panel-2', title: 'Freehold Two Solar LLC', content: { content: <a href=''>+ Add item</a> } },
   ]
   const editBkpTitle = (d) => {
-    console.log('editted bkp', d)
     const data = {
       BKPID: d.BKPID,
       bkpCostID: d.bkpCostID,

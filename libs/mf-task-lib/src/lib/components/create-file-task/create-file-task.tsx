@@ -70,14 +70,12 @@ export function CreateFileTask(props: CreateFileTaskProps) {
 
   React.useEffect(() => {
     if (props.fileData) {
-      console.log('fileData-task', props.fileData);
       setfileData(props.fileData)
     }
   }, [props.fileData])
 
   React.useEffect(() => {
     if (props.cord) {
-      console.log('props.cord', props.cord);
       settaskTypeID(props.cord.pinsID);
     }
   }, [props.cord])
@@ -102,7 +100,6 @@ export function CreateFileTask(props: CreateFileTaskProps) {
  }`;
 
   const getWorkType = (referenceID) => {
-    console.log('sasstoken');
     return axios.post(
       MS_SERVICE_URL['ms_project'].url,
       {
@@ -124,9 +121,6 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   const onStartDateChange = e => {
     setDate(e.target.value)
     const date = moment.utc(moment(e.target.value).utc()).format();
-    console.log('====================================');
-    console.log('date', date);
-    console.log('====================================');
     setStartDate(e.target.value)
   }
   const onEndDateChange = e => {
@@ -149,19 +143,14 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   }
 
   const onFollowers = (data) => {
-    console.log('====================================');
-    console.log('followers', data);
-    console.log('====================================');
     setfollowers(data)
   }
   const setBKPIDChange = (data) => {
     setBKPIDTitle(data.BKPIDTitle)
     setBKPID(data.BKPID)
-    console.log('bkp==>', data);
+
   }
   const setAsignee = (data) => {
-    console.log('assignee', data)
-
     const ppl = []
     ppl.push(data)
     setAssignees(ppl)
@@ -183,7 +172,6 @@ export function CreateFileTask(props: CreateFileTaskProps) {
 
   React.useEffect(() => {
     if (workTypes) {
-      console.log('worktypes', workTypes);
       setworkType(workTypes.map(({ workTypeName, projectWorkTypeID }) => ({ key: projectWorkTypeID, value: workTypeName, text: workTypeName, id: projectWorkTypeID })));
     }
   }, [workTypes]);
@@ -194,7 +182,6 @@ export function CreateFileTask(props: CreateFileTaskProps) {
     };
     for (let i = 0; i < workTypes.length; i++) {
       if (workTypes[i]?.workTypeName === data.value) {
-        console.log('workTypes[i]', workTypes[i]);
         workT.worktypeID = workTypes[i].projectWorkTypeID;
         workT.worktypeName = data.value;
         setworktypeName(workT.worktypeName);
@@ -203,7 +190,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
       }
     }
     setworkTypeData(data.value);
-    console.log('worktypeName-', workTypeD);
+
   }
 
   const cancel = () => {
@@ -217,16 +204,15 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   }
   React.useEffect(() => {
     if (props.pinsaved) {
-      console.log("Pin is saved now creating task on pin ")
       addTak()
     }
   }, [props.pinsaved])
-  
+
   const handleSaveTask = () => {
     props.savePin(true);
-    console.log("Save Pin flag set on submit button")
+
   };
-  
+
   const addTak = () => {
     addTask({
       variables: {
@@ -264,7 +250,6 @@ export function CreateFileTask(props: CreateFileTaskProps) {
     });
   }
   const onDescriptionChange = e => {
-    console.log('des=>', e.target.value);
     setDescription(e.target.value);
   }
 
@@ -358,22 +343,22 @@ export function CreateFileTask(props: CreateFileTaskProps) {
               </Grid.Column>
             </Grid.Row>
 
-            <div className="followers-label-area">            
-                <Form.Field>
-                  <div className="event top-event follower-listing-labels">
-                    {followers.map((p, id) => {
-                      const name = p.userName.split(" ").map((n) => n[0]).join("");
-                      //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
-                      return (
-                        <div className="label-light-purple-circle label-spacer" key={id}>
-                          <span className="white-text">{name}</span>
-                        </div>
-                      )
-                    })
-                    }
-                  </div>
-                </Form.Field>
-              </div>           
+            <div className="followers-label-area">
+              <Form.Field>
+                <div className="event top-event follower-listing-labels">
+                  {followers.map((p, id) => {
+                    const name = p.userName.split(" ").map((n) => n[0]).join("");
+                    //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
+                    return (
+                      <div className="label-light-purple-circle label-spacer" key={id}>
+                        <span className="white-text">{name}</span>
+                      </div>
+                    )
+                  })
+                  }
+                </div>
+              </Form.Field>
+            </div>
           </Grid>
           <Grid columns={2}>
             <Grid.Row>

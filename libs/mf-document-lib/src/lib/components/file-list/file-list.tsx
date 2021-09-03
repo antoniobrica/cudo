@@ -98,14 +98,13 @@ export function FileList(props: FileListProps) {
   }
 
   const viewFiles = (data) => {
-    console.log('viewInSHaredDc', data);
-
+   
     setFileName(data.fileTitle);
     downloadsContext.viewItem(data.fileTitle)
   }
 
   const uploadNewVersion = (data) => {
-    console.log('data', data);
+   
     setFileVersion(data);
     //setOpenNew(true)
   }

@@ -33,9 +33,8 @@ export function RegisterPage(props: RegisterProps) {
   const [country_code, setCountry_code] = useState({} as FormField);
   const [state_pin, setState_pin] = useState({} as FormField);
   const [country, setCountry] = useState({} as FormField);
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   useEffect(() => {
-    console.log("RegisterPage called");
     props?.fields?.map(field => {
       switch (field.name) {
         case "csrf_token":
@@ -140,7 +139,7 @@ export function RegisterPage(props: RegisterProps) {
                                       <Select placeholder={t("common.select")} className="small" options={countryOptions} type={country_code?.type}
                                         name={country_code?.name}
                                         defaultValue={country_code?.value as any}
-                                        {...country_code?.required}  clearable />
+                                        {...country_code?.required} clearable />
                                     </Form.Field>
                                   </Grid.Column>
                                   <Grid.Column>

@@ -44,7 +44,7 @@ export function TestCanvas() {
   // draw rectangle with background
   const drawFillRect = (info, style = {}) => {
     const { x, y, w, h, title } = info;
-    // console.log("Info", info)
+    
     const pointSize = 10; // Change according to the size of the point.
     ctx.fillStyle = "yellow"; // Red color   
     ctx.beginPath(); //Start path
@@ -67,7 +67,7 @@ export function TestCanvas() {
       const box = boxes[i];
       const d = Math.pow(box.r, 2) - (((Math.pow(box.x - x, 2))) + ((Math.pow(box.y - y, 2))))
       if (d > 0) {
-        // console.log("inside", box);
+        
         dragTarget = box;
         isTarget = true;
         break;

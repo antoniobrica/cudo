@@ -13,12 +13,10 @@ export interface InvitationDetailProps {
 }
 
 export function InvitationDetail(props: InvitationDetailProps) {
-    console.log('--detail page--meetingId---', props.meetingId)
     const { loading, error, data } = useInvitationDetailQuery(GET_INVITATION_DETAIL, {
         variables: { meetingId: props?.meetingId },
     });
 
-    console.log('----meeting detail page data----', data)
     return (
         <div>
             {data?.getMeetingById ?

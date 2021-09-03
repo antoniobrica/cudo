@@ -22,8 +22,7 @@ export function CanvasTransparentNewPin(props: CanvasTransparentNewPinProps) {
 
   // initialize the canvasToDrawCircle context
   useEffect(() => {
-    // console.log('--canvastransparent---useEffect--initialize the canvasToDrawCircle context--')
-    const canvasToDrawCircleEle = canvasToDrawCircle.current;
+     const canvasToDrawCircleEle = canvasToDrawCircle.current;
     canvasToDrawCircleEle.width = canvasToDrawCircleEle.clientWidth;
     canvasToDrawCircleEle.height = canvasToDrawCircleEle.clientHeight;
 
@@ -32,22 +31,18 @@ export function CanvasTransparentNewPin(props: CanvasTransparentNewPinProps) {
   }, []);
 
   useEffect(() => {
-    // console.log('--canvastransparent---useEffect--redrawAfterPinPotionChanged--')
-    redrawAfterPinPotionChanged();
+     redrawAfterPinPotionChanged();
   }, [pinList]);
 
   useEffect(() => {
-    // console.log('--canvastransparent---useEffect--redrawOnMouseHoverOverCircle--')
-    if (!isCircleSelectedOnMouseHover)
+     if (!isCircleSelectedOnMouseHover)
       return;
     redrawOnMouseHoverOverCircle();
     setIsCircleSelectedOnMouseHover(false);
   }, [isCircleSelectedOnMouseHover]);
 
   useEffect(() => {
-    console.log('---11canvastransparent--1-props?.lastPinDetail----', props?.lastPinDetail, props?.lastPinDetail?.pinNumber)
-    const newPinNumber = Number(props?.lastPinDetail?.pinNumber) > 0 ? Number(props?.lastPinDetail?.pinNumber) + 1 : 1
-    console.log('---22newPinNumber---', newPinNumber)
+     const newPinNumber = Number(props?.lastPinDetail?.pinNumber) > 0 ? Number(props?.lastPinDetail?.pinNumber) + 1 : 1
     const drawObj = {
       x: x_axis,
       y: y_axis,
@@ -60,13 +55,11 @@ export function CanvasTransparentNewPin(props: CanvasTransparentNewPinProps) {
       isHovering: true,
       isNewPin: true
     }
-    console.log('---33canvastransparent--2-drawObj----', drawObj)
-    let isFound = false;
+      let isFound = false;
     let lastBoxes = [...pinList];
     lastBoxes = lastBoxes.map((box) => {
       if (box.pinsID === drawObj.pinsID) {
-        // console.log("is matched---box.pinsID = drawObj.pinsID---", box.pinsID, drawObj.pinsID);
-        const dragObj = { ...box }
+         const dragObj = { ...box }
         dragObj.x = drawObj.x;
         dragObj.y = drawObj.y;
         dragObj.isNewPin = drawObj.isNewPin;
@@ -76,19 +69,15 @@ export function CanvasTransparentNewPin(props: CanvasTransparentNewPinProps) {
       }
       return box
     })
-    // console.log("Last boooox array",lastBoxes)
-    if (!isFound) {
-      // console.log("nnnnnnnno box found",lastBoxes)
-      lastBoxes.push(drawObj);
+     if (!isFound) {
+        lastBoxes.push(drawObj);
     }
-    // console.log('---canvastransparent--5-lastBoxes----', lastBoxes)
-    setpinList([...lastBoxes])
+      setpinList([...lastBoxes])
 
   }, [isCircleSelectedOnMouseDown, x_axis, y_axis]);
 
   useEffect(() => {
-    // console.log("--canvastransparent--useEffect--setpinList--updatePin--On circle mouse down and hover ", dragTarget, isCircleSelectedOnMouseDown, isCircleSelectedOnMouseHover);
-    let lastBoxes = [...pinList];
+      let lastBoxes = [...pinList];
     lastBoxes = lastBoxes.map((box) => {
       if (box.pinsID == dragTarget.pinsID) {
         const dragObj = { ...box }
@@ -105,38 +94,33 @@ export function CanvasTransparentNewPin(props: CanvasTransparentNewPinProps) {
   }, [dragTarget, isCircleSelectedOnMouseDown, isCircleSelectedOnMouseHover]);
 
   const drawImagesWithPins = () => {
-    // console.log('--canvastransparent---drawImagesWithPins--')
-    pinList.map(info => {
+     pinList.map(info => {
       drawFillCircle(info)
     });
   }
 
   const redrawAfterPinPotionChanged = () => {
-    // console.log('--canvastransparent---redrawAfterPinPotionChanged--')
-    if (ctxToDrawCircle) {
+     if (ctxToDrawCircle) {
       ctxToDrawCircle.clearRect(0, 0, canvasToDrawCircle.current.clientWidth, canvasToDrawCircle.current.clientHeight);
       drawImagesWithPins();
     }
   }
 
   const redrawOnMouseHoverOverCircle = () => {
-    // console.log('--canvastransparent---redrawOnMouseHoverOverCircle--')
-    if (ctxToDrawCircle) {
+     if (ctxToDrawCircle) {
       ctxToDrawCircle.clearRect(0, 0, canvasToDrawCircle.current.clientWidth, canvasToDrawCircle.current.clientHeight);
       drawImagesWithPinsOnMouseHover();
     }
   }
 
   const drawImagesWithPinsOnMouseHover = () => {
-    // console.log('--canvastransparent---drawImagesWithPinsOnMouseHover--')
-    pinList.map(info => {
+     pinList.map(info => {
       drawFillCircle(info)
     });
   }
 
   const drawFillCircle = (info, style = {}) => {
-    // console.log('--canvastransparent---drawFillCircle--')
-    const { x, y, pinNumber } = info;
+     const { x, y, pinNumber } = info;
     const pointSize = 10; // Change according to the size of the point.
     if (!info.isNewPin)
       ctxToDrawCircle.fillStyle = info.isHovering ? info.hovercolor : info.blurcolor; // Red color   
@@ -156,8 +140,7 @@ export function CanvasTransparentNewPin(props: CanvasTransparentNewPinProps) {
   }
 
   const handleMouseDown = e => {
-    // console.log('--canvastransparent--handleMouseDown--')
-
+   
     startX = e.nativeEvent.offsetX - canvasToDrawCircle.current.clientLeft;
     startY = e.nativeEvent.offsetY - canvasToDrawCircle.current.clientTop;
     setx_Axis(startX);
@@ -167,8 +150,7 @@ export function CanvasTransparentNewPin(props: CanvasTransparentNewPinProps) {
   }
 
   const handleMouseMove = e => {
-    // console.log('--canvastransparent--handleMouseMove--')
-    if (props.allowToCreateNewPin) {
+     if (props.allowToCreateNewPin) {
       if (!isCircleSelectedOnMouseHover) {
         startX = e.nativeEvent.offsetX - canvasToDrawCircle.current.clientLeft;
         startY = e.nativeEvent.offsetY - canvasToDrawCircle.current.clientTop;
@@ -176,8 +158,7 @@ export function CanvasTransparentNewPin(props: CanvasTransparentNewPinProps) {
         sety_Axis(startY);
       }
       if (!isCircleSelectedOnMouseDown) return;
-      // console.log("--canvas-6-isCircleSelectedOnMouseDown on mouse move", isCircleSelectedOnMouseDown)
-      const mouseX = e.nativeEvent.offsetX - canvasToDrawCircle.current.clientLeft;
+       const mouseX = e.nativeEvent.offsetX - canvasToDrawCircle.current.clientLeft;
       const mouseY = e.nativeEvent.offsetY - canvasToDrawCircle.current.clientTop;
       startX = mouseX;
       startY = mouseY;
@@ -190,13 +171,11 @@ export function CanvasTransparentNewPin(props: CanvasTransparentNewPinProps) {
   }
 
   const handleMouseUp = e => {
-    // console.log('--canvastransparent--handleMouseUp--')
-    setIsCircleSelectedOnMouseDown(false);
+      setIsCircleSelectedOnMouseDown(false);
   }
 
   const handleMouseOut = e => {
-    // console.log('--canvastransparent--handleMouseOut--')
-    handleMouseUp(e);
+     handleMouseUp(e);
   }
 
   return (

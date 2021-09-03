@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Button, Modal, Grid, Image, Segment, Form, Input, TextArea, Select, Checkbox, Dropdown } from 'semantic-ui-react';
-// import SampleModal from './sample-modal';
 
 // import Canvas from './canvas';
 import CanvasImage from './canvasimage';
@@ -11,10 +10,6 @@ import axios from 'axios';
 import { CreateFileTaskIndex, PinTaskListIndex } from '@cudo/mf-task-lib';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { useTranslation } from 'react-i18next';
-
-// import ImageMarker, { Marker } from 'react-image-marker';
-// import CanvasMarker from './canvasmarker';
-
 
 function exampleReducer(state, action) {
   switch (action.type) {
@@ -51,10 +46,7 @@ export const AddPinFile = (props: AddPinProps) => {
 
   const { t } = useTranslation();
 
-  // const [markers, setMarkers] = React.useState<Marker[]>([{ top: 10, left: 50 }, { top: 20, left: 70 }, { top: 30, left: 75 }, { top: 35, left: 80 }])
-
   React.useEffect(() => {
-    console.log("--pinaddfile-1-New Pin created ", isPinCreated);
     setAllowToCreateNewPin(false);
   }, [isPinCreated])
 
@@ -75,7 +67,6 @@ export const AddPinFile = (props: AddPinProps) => {
 
   React.useEffect(() => {
     if (props.filesData) {
-      console.log('--pinaddfile-2-filesData==', props.filesData);
       setFileId(props.filesData.uploadedFileID)
       setFileData(props.filesData)
     }
@@ -83,29 +74,23 @@ export const AddPinFile = (props: AddPinProps) => {
 
   React.useEffect(() => {
     if (props.dowloadFilesData) {
-      // const tempPdfFilePath = `${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/sample_mk.pdf`
-      console.log('--pinaddfile-3-dowloadFilesData-s', props.dowloadFilesData);
       for (let i = 0; i < props.dowloadFilesData.length; i++) {
         if (props.dowloadFilesData[i].filename == props.filesData.fileTitle) {
-          console.log('--pinaddfile-4-uploadedfileid', props.dowloadFilesData[i]);
           setimgUrl(props.dowloadFilesData[i].url);
-          // setimgUrl(tempPdfFilePath);
+          
         }
       }
     }
   }, [props.dowloadFilesData])
 
   const getCoardinates = (data) => {
-    console.log('--pinaddfile-5-getCoardinates', data);
     setCord(data);
   }
   const onSuccess = async () => {
-    console.log('--pinaddfile-6-onSuccess');
     setAllowToCreateNewPin(false);
     setIsPinCreated(false);
   }
   const changePinTask = () => {
-    console.log('--pinaddfile-7-changePinTask');
     setAllowToCreateNewPin(true);
   }
   const taskClose = () => {

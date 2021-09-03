@@ -46,7 +46,7 @@ export function App() {
   const { loading, error, data } = useCostQuery(GET_COST, {
     variables: { referenceID },
   });
-  console.log('----cost app----')
+ 
   // if (error) {
   //   const cancel = () => {
   //     setOpenCost(false)
@@ -68,7 +68,6 @@ export function App() {
   }
 
   const addNew = () => {
-    // console.log('add new')
     setOpenCost(true);
   }
 
@@ -85,8 +84,7 @@ export function App() {
   }
 
   const updateBkpCost = (data) => {
-    // console.log('edit', data)
-    editbkpCost({
+     editbkpCost({
       variables: {
         BKPID: data.BKPID,
         bkpCostID: data.bkpCostID,
@@ -125,7 +123,7 @@ export function App() {
 
   const confirmDeleteCost = (data) => {
     setLoadingOnDeleteCost(true)
-    // console.log('data', data)
+    
     costDelete({
       variables: {
         costID: data

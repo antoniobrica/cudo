@@ -70,8 +70,7 @@ export function PinTaskList(props: PinTaskListProps) {
     } 
    }`;
   const getPins = async () => {
-    console.log('new-task fetch')
-    setLoading(true);
+     setLoading(true);
     return axios.post(
       MS_SERVICE_URL['ms_task'].url,
       {
@@ -83,11 +82,9 @@ export function PinTaskList(props: PinTaskListProps) {
       }
     ).then(res => {
       setLoading(false);
-      console.log('1-getPins', res.data.data);
-      setPinTasks(res.data.data.tasksByTasktypes)
+       setPinTasks(res.data.data.tasksByTasktypes)
       props.pinCount(res.data.data.tasksByTasktypes?.length)
-      console.log('2-getPins -- pincount--', res.data.data.tasksByTasktypes?.length);
-    })
+     })
       .catch(err => console.log(err))
   }
 
@@ -107,15 +104,13 @@ export function PinTaskList(props: PinTaskListProps) {
   }
 
   const cancel = () => {
-    console.log('canceled');
-    setOpen(false);
+     setOpen(false);
     setOpenD(false);
     setViewTaskOpen(false);
     setEditTaskOpen(false);
   };
   const confirmation = (data, task) => {
-    console.log('data', task);
-    setOpen(false);
+     setOpen(false);
     updateTask(taskData);
 
     let status;
@@ -146,8 +141,7 @@ export function PinTaskList(props: PinTaskListProps) {
     });
   };
   const updateTask = (task) => {
-    console.log("Update status", task);
-    setTaskData(task);
+     setTaskData(task);
     setOpen(true);
     if (task.status === 'COMPLETED') {
       settaskStatus('Re-open');
@@ -204,8 +198,7 @@ export function PinTaskList(props: PinTaskListProps) {
     setEditTaskOpen(true);
   };
   const editTaskData = (data) => {
-    console.log('editTaskData', data);
-    const assignees = [];
+     const assignees = [];
     data.assignees.map((data, i) => {
       assignees.push({ userID: data.userID, userName: data.userName })
     })

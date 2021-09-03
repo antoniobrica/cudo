@@ -223,7 +223,7 @@
         "title_error": "Please provide title",
         "category_error": "Please select meeting category",
         "protocol_template_error": "Please select protocol template",
-        "invitation_template_error": "Please select invitaion template",
+        "invitation_template_error": "Please select invitation template",
         "admins_error": "Please select admins",
         "members_error": "Please select members",
         "date_error": "Please provide date"

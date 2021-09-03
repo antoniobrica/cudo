@@ -28,8 +28,7 @@ export function AddNewFolder(props: IAddNewFolderProps) {
   }
   const onFolderName = (e) => {
     const fname = e.target.value;
-    console.log('fname', fname);
-    setfolderName(fname)
+     setfolderName(fname)
   }
 
   const onSubmit = () => {

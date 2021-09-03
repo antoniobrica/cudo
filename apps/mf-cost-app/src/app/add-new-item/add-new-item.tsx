@@ -33,7 +33,7 @@ export function AddNewItem(props: AddNewItemProps) {
   )
 
   const createCost = (cost) => {
-    // console.log('create-Cost', cost)
+    
     cost.map(data => {
       addCost({
         variables: {

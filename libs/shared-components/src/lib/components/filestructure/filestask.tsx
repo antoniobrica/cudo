@@ -90,8 +90,7 @@ export function FileStructure(props: FileStructureProps) {
 	}
 
 	const savePins = (data) => {
-		console.log('savePins==>', data);
-		setOpenPinFile(false) //  added mk for open create pin before fileView detail
+	 	setOpenPinFile(false) 
 	}
 
 	const onClickExpand = (uploadedFileId) => {

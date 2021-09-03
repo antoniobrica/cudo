@@ -38,9 +38,8 @@ function TabMenu(props: TabMenuProps) {
 
   const history = useHistory();
   const params = useParams<params>();
-  // console.log('----tab menu----projectId---', params.projectId)
   const projectId = params.projectId
-  // console.log('----Project tabmenu--projectId--', projectId)
+
   const { loading, error, data } = useQuery(GET_PROJECT_BY_ID, {
     variables: { projectId },
   });
@@ -53,7 +52,6 @@ function TabMenu(props: TabMenuProps) {
   }, [data]);
 
   const changeWorktypeName = (data) => {
-    // console.log('changeWorktypeName', data)
     setWorktype(data);
   }
 
@@ -80,7 +78,7 @@ function TabMenu(props: TabMenuProps) {
       <MicroFrontend history={history} host={documentHost} name="DocumentApp" />
     );
   }
- 
+
 
   function Home() {
     const [input, setInput] = React.useState("");
@@ -89,8 +87,7 @@ function TabMenu(props: TabMenuProps) {
     const [activeIndex, setActiveIndex] = React.useState(null)
     const data = "parrent"
     const { url, path } = useRouteMatch();
-    // console.log('--Project tabmenu----Home--url, path---', url, path)
-
+    
     const callbackFunction = (childData) => {
       setInput(childData);
       if (childData == "task") {
@@ -101,12 +98,10 @@ function TabMenu(props: TabMenuProps) {
       }
     };
     const handleOpenProject = (item) => {
-      // console.log('--Project tabmenu--handleOpenProject--item--', item)
       // props.parentCallback(item)
     }
     const onTabChange = (e, { activeIndex }) => {
-      // console.log('--Project tabmenu--onTabChange--activeIndex--', activeIndex)
-      setActiveIndex(activeIndex)
+       setActiveIndex(activeIndex)
     }
     const panes = [
       {
@@ -269,7 +264,7 @@ function TabMenu(props: TabMenuProps) {
             <Route path={`${url}/meetings`} exact render={() => (
               <Tab.Pane onClick={handleOpenProject('meetings')}><MeetingApp id={projectId}></MeetingApp></Tab.Pane>)} />
             <Route path={`${url}/files`} exact render={() => (
-              <Tab.Pane onClick={handleOpenProject('files')}><DocumentApp id={projectId}></DocumentApp></Tab.Pane>)} />           
+              <Tab.Pane onClick={handleOpenProject('files')}><DocumentApp id={projectId}></DocumentApp></Tab.Pane>)} />
             {/* end Added for router */}
 
             ,
