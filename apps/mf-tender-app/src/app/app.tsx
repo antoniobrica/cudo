@@ -89,7 +89,6 @@ function Home({ history }) {
 }
 
 function App() {
-  console.log(' 1 mf tender app')
   return (
     <React.StrictMode>
       <BrowserRouter>
