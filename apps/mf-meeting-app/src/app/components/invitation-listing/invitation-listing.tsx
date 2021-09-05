@@ -236,7 +236,7 @@ export function InvitationListing(props: InvitationListingProps) {
                 <h3>{t("common.data_not_found")}</h3>
                 <p>{t("project_tab_menu.meeting.no_invitation_data_found_desc")}</p>
                 <Button size="small" className="primary" onClick={addNew}>
-                    + {t("project_tab_menu.meeting.add_new_invitation")}
+                <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> {t("project_tab_menu.meeting.add_new_invitation")}
                 </Button>
             </div>
         )
@@ -301,7 +301,7 @@ export function InvitationListing(props: InvitationListingProps) {
                     <h3>{t("common.data_not_found")}</h3>
                     <p>{t("project_tab_menu.meeting.no_invitation_data_found_desc")}</p>
                     <Button size="small" className="primary" onClick={addNew}>
-                        + {t("project_tab_menu.meeting.add_new_invitation")}
+                    <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> {t("project_tab_menu.meeting.add_new_invitation")}
                     </Button>
 
                 </div>

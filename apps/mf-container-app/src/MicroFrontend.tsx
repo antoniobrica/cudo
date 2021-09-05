@@ -11,12 +11,11 @@ const check = (host, callback) => {
 function MicroFrontend({ name, host, history }) {
 
   const [shouldReturnMain, setShouldReturnMain] = useState(undefined)
-  // console.log('-Container--MicroFrontend-- name, host, history --',name, host, history)
+
   useLayoutEffect(() => {
     const scriptId = `render${name}`;
 
     const renderMicroFrontend = () => {
-      // console.log('-Container--MicroFrontend--useLayoutEffect--renderMicroFrontend----',`render${name}`,`${name}-container`, history)
       window[`render${name}`](`${name}-container`, history);
     };
 
@@ -35,17 +34,6 @@ function MicroFrontend({ name, host, history }) {
       setShouldReturnMain(true)
 
     };
-    // script.addEventListener("error", () => {
-    //   setShouldReturnMain(false)
-    //   console.log('--script load error-----')
-
-    // })
-
-    // script.onError = () => {
-    //     setShouldReturnMain(false)
-    //     console.log('--script load error-----')
-
-    // }
 
     check(host, (isServerRunning) => {
       if (isServerRunning) {

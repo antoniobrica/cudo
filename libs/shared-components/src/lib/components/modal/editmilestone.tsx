@@ -82,10 +82,8 @@ export function EditMileStonePopup(props: PlanningProps) {
     }
   }, [props.openEdit]);
   React.useEffect(() => {
-    if (props.worktypes) {
-      console.log('worktypes', props.worktypes);
+    if (props.worktypes) {     
       setworkType(props.worktypes.map(({ workTypeName, projectWorkTypeID }) => ({ key: projectWorkTypeID, value: workTypeName, text: workTypeName, id: projectWorkTypeID })));
-
     }
   }, [props.worktypes]);
 
@@ -97,7 +95,7 @@ export function EditMileStonePopup(props: PlanningProps) {
     if(data.value){
       for (let i = 0; i < props.worktypes.length; i++) {
         if (props.worktypes[i]?.workTypeName === data.value) {
-          console.log('props.worktypes[i]', props.worktypes[i]);
+        
           workT.worktypeID = props.worktypes[i].projectWorkTypeID;
           workT.worktypeName = data.value;
           setWorktypeName(workT.worktypeName)
@@ -113,7 +111,6 @@ export function EditMileStonePopup(props: PlanningProps) {
     
     setworkTypeData(data.value)
 
-    console.log('worktypeName-', workTypeD);
   }
 
   function formatDate(date) {
@@ -134,7 +131,6 @@ export function EditMileStonePopup(props: PlanningProps) {
     if (props.planData) {
       const d = props.planData.dueDate;
 
-      console.log('plan-edit-data', props.planData);
       setMilestoneName(props.planData.milestoneTitle);
       const date = moment.utc(moment(props.planData.dueDate).utc()).format();
       setDueDate(formatDate(d));

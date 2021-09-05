@@ -65,7 +65,6 @@ export class BkpHierarchyService {
 //   if (bkp.bkpMain) {
 //     listingQB = listingQB.andWhere("l.bkpMain ilike :bkp.bkpMain", {bkpMain: `%${bkp.bkpMain}%`});
 //   }
-//   console.log(">>>>>>>>>>>", listingQB.getMany())
 //  return listingQB.getMany()
 //   }
 

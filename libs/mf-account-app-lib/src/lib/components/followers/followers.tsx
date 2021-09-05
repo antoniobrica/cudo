@@ -57,7 +57,7 @@ export function Followers(props: FollowersProps) {
   //   props.parentFollowersSelect(people);
   // }
   const onFollowers = (event, data) => {
-    console.log('followers--', data.value)
+  
     const peopleArr = [];
     for (let i = 0; i < data.value.length; i++) {
       items.map(d => {

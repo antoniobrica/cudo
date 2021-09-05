@@ -63,7 +63,6 @@ export function PinFileStructure(props: FileStructureProps) {
 	}
 
 	// const download = (data) => {
-	// 	console.log('--pinfilestructure--download');
 	// 	props.downloadFiles(data)
 	// }
 	// const expandFolder = (data) => {
@@ -73,10 +72,8 @@ export function PinFileStructure(props: FileStructureProps) {
 	React.useEffect(() => {
 		if (selectedFile) {
 			if (props.downloadedImg) {
-				console.log('--pinfilestructure--useEffect--downloadedImg', props.downloadedImg);
 				for (let i = 0; i < props.downloadedImg.length; i++) {
 					if (props.downloadedImg[i].filename == filesData['fileTitle']) {
-						console.log('--pinfilestructure--useEffect--url', props.downloadedImg[i].url);
 						setFileId(props.downloadedImg[i].url)
 						setimgUrl(props.downloadedImg[i].url);
 					}
@@ -87,7 +84,6 @@ export function PinFileStructure(props: FileStructureProps) {
 	}, [selectedFile])
 
 	const uploadNewVersion = (file) => {
-		console.log('--pinfilestructure--uploadNewVersion--file', file);
 		props.uploadNewVersion(file);
 	}
 
@@ -211,7 +207,7 @@ export function PinFileStructure(props: FileStructureProps) {
 										const { uploadedFileID, fileType, fileTitle, fileVersion, createdBy, updatedBy, createdAt, updatedAt } = versionFileItem
 										const formattedCreatedAt = moment(createdAt).format('DD MMM, YYYY')
 										const formattedUpdatedAt = moment(updatedAt).format('DD MMM, YYYY')
-										
+
 										return (<div key={uploadedFileID} className="files-versioning-list">
 											<p>Version {fileVersion} - <span>{fileTitle}</span> <span className="small-text">(By: {updatedBy ? updatedBy : createdBy} - Uploaded on: {updatedAt ? formattedUpdatedAt : formattedCreatedAt})</span></p>
 											<div className="files-right-area">

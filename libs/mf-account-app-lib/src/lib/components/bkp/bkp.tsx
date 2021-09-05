@@ -23,7 +23,7 @@ export function Bkp(props: BkpProps) {
   const { loading: folderL, error: folderE, data: FolderD } = useFolderQuery(GET_FOLDER)
   React.useEffect(() => {
     if (data && FolderD) {
-      console.log('FolderD', FolderD);
+     
       const bkps = data.Bkp.map(({ bkpTitle, bkpID }) => ({ key: bkpID, value: bkpTitle, text: bkpID + " - " + bkpTitle }))
       setItems(data.Bkp.map(({ bkpTitle, bkpID }) => ({ key: bkpID, value: bkpTitle, text: bkpID + " - " + bkpTitle })));
       const arr = FolderD.Folders.map(({ folderTitle, folderID }) => ({ key: folderID, value: folderTitle, text: folderTitle }))
@@ -40,8 +40,7 @@ export function Bkp(props: BkpProps) {
 
   // React.useEffect(()=>{
   //   if(FolderD){
-  //     console.log('FolderD',FolderD);
-
+ 
   //       const arr = FolderD.Folders.map(({ folderTitle, folderID }) => ({ key: folderID, value: folderTitle, text: folderTitle }))
   //       setItems1(arr);
   //       if(items){
@@ -54,7 +53,7 @@ export function Bkp(props: BkpProps) {
   // }, [FolderD]);
 
   const onBkp = (event, data) => {
-    console.log('data==', data)
+   
     const bkpID = { BKPID: '', BKPIDTitle: '', isFolder: false };
     for (let i = 0; i <= items.length; i++) {
       if (items[i]?.value === data.value) {

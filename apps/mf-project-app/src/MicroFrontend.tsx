@@ -1,9 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useLayoutEffect, useState, useEffect } from "react";
+
+const check = (host, callback) => {
+  fetch(host, {
+    method: "GET",
+  })
+    .then(() => callback(true))
+    .catch(err => callback(false))
+}
 
 function MicroFrontend({ name, host, history }) {
-  console.log('--project--MicroFrontend--',name, host, history);
-  
-  useEffect(() => {
+  const [shouldReturnMain, setShouldReturnMain] = useState(undefined)
+ 
+  useLayoutEffect(() => {
     const scriptId = `render${name}`;
     const renderMicroFrontend = () => {
       window[`render${name}`](`${name}-container`, history);
@@ -21,14 +29,30 @@ function MicroFrontend({ name, host, history }) {
     script.onload = () => {
       renderMicroFrontend();
     };
-    console.log('-----project--MicroFrontend--useEffect--script.src---', script.src);
-    document.head.appendChild(script);
+
+    check(host, (isServerRunning) => {
+      if (isServerRunning) {
+        document.head.appendChild(script);
+        setShouldReturnMain(true)
+      } else {
+        setShouldReturnMain(false)
+
+      }
+    })
+
+    //  document.head.appendChild(script);
     return () => {
       window[`unmount${name}`] && window[`unmount${name}`](`${name}-container`);
     };
-  });
+  },[]);
 
-  return <main id={`${name}-container`} />;
+  if (shouldReturnMain === undefined) {
+    return null
+  }
+   
+  return shouldReturnMain ? <main id={`${name}-container`} /> : <div style={{ height: "230px", width: "230px", padding: "200px", background: "#ccc" }}>
+    {name} service unavailable!!
+  </div>;
 }
 
 MicroFrontend.defaultProps = {

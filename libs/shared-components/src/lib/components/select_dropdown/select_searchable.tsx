@@ -24,7 +24,6 @@ export function SelectSearchableDropdown(props: selectWithSearch) {
 
 
   const onSelectChange = (data) => {
-    console.log('---select--value--', data.value)
     props.selectedValue(data.value)
   }
 

@@ -39,9 +39,7 @@ export const ModalViewTask = (props: AlertProps) => {
       setOpen(props.openAlertF);
     }
   }, [props.openAlertF]);
-  React.useEffect(() => {
-    console.log('taskData', props.taskData)
-  })
+ 
   const openf = () => {
     setOpen(true)
   }

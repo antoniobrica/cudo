@@ -41,3 +41,26 @@
 canvas.transparentCanvas {
     position: absolute;
   }
+
+.no-data-found-info {
+  button {
+    i {
+      font-size: 14px;
+    }
+  }
+}
+
+.task-full-details {
+  .ui.circular.label, .ui.circular.labels .label {
+    min-width: 2em;
+    min-height: 2em;
+    padding: .5em!important;
+    line-height: 1.5em;
+    text-align: center;
+    border-radius: 500rem;
+    width: 2.5em;
+    height: 2.5em;
+    font-size: 10px;
+    font-weight: 400;
+  }
+}

@@ -228,7 +228,7 @@ export function InvitationTab(props: InvitationTabProps) {
                       <h3>{t("common.data_not_found")}</h3>
                       <p>{t("project_tab_menu.meeting.no_protocol_data_found_desc")}</p>
                       <Button size="small" className="primary" onClick={onClickAddProtocol} >
-                          + {t("project_tab_menu.meeting.add_new_protocol")}
+                      <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> {t("project_tab_menu.meeting.add_new_protocol")}
                       </Button>
                       </div>
       )

@@ -42,38 +42,21 @@ export function ProjectInfo(props: ProjectInfoProps) {
 
   const history = useHistory();
   const location = useLocation()
-  // console.log('---Project--projectInfo--location--mk--', location, '---history---', history)
+  
   // @ts-ignore
   const projectId = location?.state?.projectId ? location?.state?.projectId : null
-  // console.log('--Project--projectInfo-useEffect-----refreshed projectId-from history-location-state---', projectId);
   
-  //  useEffect(() => {
-  //   if (projectId) {
-  //     console.log('--Project--projectInfo-useEffect-----refreshed projectId-from history-location-state---', projectId);
-  //     openProject(projectId)
-  //   }
-  //  }, [projectId])
-
-  const addProject = () => {
-    setopenForm(!openForm);
-  }
-
   const dispatch = useDispatch()
 
   const openProject = (projectId) => {
-    // console.log('---Project detail open==>', history)
     dispatch({ type: projectAction.SELECT_PROJECT_ID, payload: projectId })
-    // console.log('---Project detail history push-----------')
     history.push(`/home/project/${projectId}`);
   }
 
   dispatch({ type: projectAction.SELECT_PROJECT_ID, payload: null })
   dispatch({ type: projectAction.SELECT_COMPANY_ID, payload: localStorage.getItem('selectedCompany') })
 
-  function openModal() {
-    setIsOpen(true);
-  }
-
+ 
   const refresh = (data) => {
     // console.log('refresh is called', data);
   }

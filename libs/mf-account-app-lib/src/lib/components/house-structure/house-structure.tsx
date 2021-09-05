@@ -16,7 +16,7 @@ export function HouseStructure(props: HouseStructureProps) {
 
   const { loading, error, data } = useStructureQuery(GET_STRUCTURE);
   React.useEffect(() => {
-    console.log(data)
+   
     if (data) {
       setItems(data.structureRoots.map(({ structureName, structureID }) => ({ key: structureID, value: structureName, text: structureName })));
     }

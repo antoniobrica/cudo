@@ -60,10 +60,8 @@ export function ModalCost(props: ModalCostProps) {
   }
   const handleChange = (event, index) => {
     if (event.target == undefined) {
-      console.log('e', event)
       const values = [...items];
       const itemValue = values[index];
-      console.log('itemValue', itemValue)
       itemValue['BKPTitle'] = event.BKPIDTitle;
       itemValue['BKPID'] = event.BKPID;
       values[index] = itemValue;
@@ -86,7 +84,6 @@ export function ModalCost(props: ModalCostProps) {
     setOpenFile(false)
   }
   const confirm = (data) => {
-    console.log('files-cost', data);
     const values = [...items];
     const itemValue = values[idx];
     itemValue['uploadedFileID'] = data.fileTitle;
@@ -98,11 +95,9 @@ export function ModalCost(props: ModalCostProps) {
 
   }
   const createCost = () => {
-    console.log('cost-items==>', items);
     items.map((data) => {
       if (!data.BKPTitle) {
         setIsValidBkp(true)
-        console.log('BKPTitle is missing')
       }
       if (data.BKPTitle) {
         setIsValidBkp(false)
@@ -133,7 +128,6 @@ export function ModalCost(props: ModalCostProps) {
       }
     })
     if (isApi) {
-      console.log('isApi', isApi)
       props.createCost(items)
       cancel();
     }

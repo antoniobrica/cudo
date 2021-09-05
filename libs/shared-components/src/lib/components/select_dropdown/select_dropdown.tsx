@@ -33,7 +33,6 @@ const formatOptionLabel = ({ value, label, addlabel }) => (
 export function SelectDropdown(props: selectWithAddNew) {
 
   const onSelectChange = (data) => {
-    console.log('---select--value--', data.value)
     props.selectedValue(data.value)
   }
 

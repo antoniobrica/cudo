@@ -32,7 +32,6 @@ export function ModalViewPlanning(props: PlanningProps) {
   const [open, setOpen] = React.useState(false);
   const {t} = useTranslation()
   React.useEffect(() => {
-    // console.log('loading', props.loading);
     if (props.openPlanningDetail) {
       setOpen(props.openPlanningDetail);
     }

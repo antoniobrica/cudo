@@ -68,8 +68,7 @@ export function Menubar(props: MenuProps) {
 
   // useEffect(() => {    
   //   if (props?.historyPath?.includes('/home/project/')) {
-  //     // console.log('--container menu useEffect-----props?.historyPath---', props?.historyPath)
-  //     handleOpenProject('project')
+   //     handleOpenProject('project')
   //   }  
   // }, [props?.historyPath])
   const {t} = useTranslation()

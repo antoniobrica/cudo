@@ -96,14 +96,13 @@ export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
   const getUploadsEffect = () => {
     const sub = context.uploadedItems$
       .pipe(tap(items => {
-        // console.log('--getUploadsEffect--', items);
+       
         setItems(items);
         const fileArr = [];
         for (let i = 0; i < items.length; i++) {
           fileArr.push({ fileURL: items[i].filename, fileTitle: items[i].filename, fileType: items[i].type, fileVersion: "v1" });
         }
-        console.log('--fileArr--', fileArr);
-
+       
         setFileList(fileArr);
       }))
       .subscribe();
@@ -117,12 +116,12 @@ export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
     { key: 'pw', value: 'pw', text: 'Paint Work' },
   ]
   const setBKPIDChange = (data) => {
-    // console.log('bkp=f', data.isFolder);
+    
     setisFolder(data.isFolder)
     if (data.isFolder) {
       setfolderName(data.folderTitle)
       setDirectory(data.folderTitle)
-      // console.log('folderName', folderName);
+      
     }
     else {
       setBKPIDTitle(data.BKPIDTitle)
@@ -151,15 +150,9 @@ export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
   }
 
   const uploadFiles = (files: FileList | null) => {
-    // console.log('--uploadFiles--files', files);
+     
     files && context.uploadItems(files);
-    // const fileArr = [];
-    // for (let i = 0; i < items.length; i++) {
-    //   fileArr.push({ fileURL: items[i].filename, fileTitle: items[i].filename, fileType: items[i].type, fileVersion: "v1" });
-    // }
-    // console.log('fileArr', fileArr);
-
-    // setFileList(fileArr);
+    
   }
   enum fileType {
     IMAGE = "IMAGE",
@@ -168,10 +161,9 @@ export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
   }
   const handleSaveFile = () => {
     setOpen(false);
-    // console.log('--handleSaveFile--files---', files?.length, files)
-    
+     
     files.map((file, i) => {
-      // console.log('----file==', file);
+      
       addFile({
         variables: {
           projectId,
@@ -214,14 +206,14 @@ export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
   };
 
   const folderOpen = () => {
-    // console.log('folder');
+     
     setFolderOpen(true);
   }
   const cancel = (data) => {
     setFolderOpen(false);
   }
   const folderData = (data) => {
-    // console.log('folderName=>', data);
+     
     setFolderOpen(false);
   }
 

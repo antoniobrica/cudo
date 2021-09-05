@@ -63,7 +63,6 @@ export function SelectFilePopup(props: FileStructureProps) {
 
   React.useEffect(() => {
     if (props.files) {
-      console.log('--selectfile--setFileData', props.files);
       setFileData(props.files)
     }
   }, [props.files])
@@ -92,11 +91,9 @@ export function SelectFilePopup(props: FileStructureProps) {
 
   React.useEffect(() => {
     if (props.downloadedImg) {
-      console.log('--111--selectfile---useeffect---downloadedImg', props.downloadedImg);
       for (let i = 0; i < props.downloadedImg.length; i++) {
         if (props.downloadedImg[i].filename == filesData['fileTitle']) {
-          console.log('--222--selectfile---useeffect---url', props.downloadedImg[i].url);
-
+         
           setimgUrl(props.downloadedImg[i].url);
         }
       }
@@ -105,10 +102,8 @@ export function SelectFilePopup(props: FileStructureProps) {
   }, [props.downloadedImg])
 
   const viewFiles = (data) => {
-    console.log('--selectfile--data-view', data);
-
-    setFtype(data.fileType);
-    // setView(true);
+   
+    setFtype(data.fileType);   
     setFilesData(data);
     props.viewFiles(data)
   }
@@ -120,7 +115,7 @@ export function SelectFilePopup(props: FileStructureProps) {
       } */}
       {view && imgUrl.length > 0 ?
         <div>
-          <AddPinFile isOpen={view} cancel={cancel} filesData={filesData} dowloadFilesData={props.downloadedImg} savePin={props.savePins} />
+          <AddPinFile isOpen={view} cancel={cancel} filesData={filesData} dowloadFilesData={props.downloadedImg} savePin={props.savePins} onSuccess={""} />
         </div> : null}
       <Modal className="modal_media right-side--fixed-modal select-file-modal"
         closeIcon
@@ -142,14 +137,14 @@ export function SelectFilePopup(props: FileStructureProps) {
           <div>
             <Form>
               <div className="slect-file-search-box">
-                <Form.Field>
-                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/search_white.png`} style={{ position: 'relative', top: '11px' }}></img>
+                <Form.Field className="search-box-file">
+                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/search_white.png`}></img>
 
                   <Input
                     placeholder={t("common.search")}
                     size="small"
-                    className="full-width inputfieldarea bordernone"
-                    type="search" style={{ marginLeft: '5px' }}
+                    className="full-width"
+                    type="search"
                   />
                 </Form.Field>
                 <Form.Field className="filter-with-add-file">

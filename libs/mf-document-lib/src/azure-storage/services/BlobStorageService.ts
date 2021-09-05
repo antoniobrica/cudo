@@ -53,8 +53,7 @@ export class BlobStorageService {
   }
 
   private uploadFile(blockBlobClient: BlockBlobClient, file: File) {
-    console.log('file>', file);
-
+   
     return new Observable<number>(observer => {
       blockBlobClient
         .uploadBrowserData(file, {

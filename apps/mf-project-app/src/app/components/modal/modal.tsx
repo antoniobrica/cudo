@@ -143,17 +143,6 @@ export function ModalExampleModal(props: ProjectInfoProps) {
     }
   }, [addProjectLoading])
 
-  // React.useEffect(() => {
-  //   console.log('---worktypeData?.workTypes---', worktypeData?.workTypes)
-  //   console.log('---projectWorkEstimates---', projectWorkEstimates)
-  //   if (worktypeData?.workTypes?.length >= projectWorkEstimates?.length) {
-  //     const usedWorkTypeIDs = projectWorkEstimates.map((item) => item.workTypeID)
-  //     // console.log('---usedWorkTypeIDs---', usedWorkTypeIDs)
-  //     const availableWorkTypes = worktypeData.workTypes.filter((item) => !usedWorkTypeIDs.includes(item.workTypeID))
-  //     console.log('---availableWorkTypes---', availableWorkTypes)
-  //     setItems(availableWorkTypes.map(({ name, workTypeID }) => ({ key: name, value: name, text: name, id: workTypeID })));
-  //   }
-  // }, [worktypeData, projectWorkEstimates]);
 
   React.useEffect(() => {
     if (buildingTypesData) {
@@ -173,12 +162,6 @@ export function ModalExampleModal(props: ProjectInfoProps) {
     }
   }, [clientCompany]);
 
-  // React.useEffect(() => {
-  //   if (validationErrors?.length > 0) {
-  //     console.log('----validation errors----', validationErrors)
-  //     alert(validationErrors)
-  //   }
-  // }, [validationErrors])
 
   const onprojectNameChange = e => {
     setProjectName(e.target.value)
@@ -241,36 +224,23 @@ export function ModalExampleModal(props: ProjectInfoProps) {
     setCountry(data)
   }
   const onDescription = (e) => {
-    // console.log('---onDescription---e---', event, html)
-    // if(html.length > 10){
-    // event.preventDefault()
     setDescription(e.target.value)
-    // }
+
   }
-  // const onKeyPresDescription = (e) => {
-  //   console.log('--onKeyPresDescription--', e)
-  //   if (e.getLength().length > 10 && e.key !== 'Backspace') {
-  //     e.preventDefault();
-  //   }
-  // }
 
   const addWorkType = () => {
     setAddWorkTypes(prevCount => prevCount + 1);
   }
   const moreWorkTypes = (data) => {
 
-    // console.log('----moreWorkTypes---', data)
     const worktypesArr = [];
     for (let i = 0; i < data.length; i++) {
-      // console.log('data', data[i])
       worktypeData.workTypes.map(d => {
         if (d.name == data[i].workTypeName) {
-          // console.log('workTypeName----', d.workTypeID);
           data[i].workTypeID = d.workTypeID;
         }
       })
     }
-    // console.log('worktypes==>', data)
 
     setProjectWorkEstimates(data);
 
@@ -299,14 +269,10 @@ export function ModalExampleModal(props: ProjectInfoProps) {
       setErrors(validationResponse)
       return false
     }
-    // console.log('-----country----', country)
-    // console.log('-----printing----', printing)
+
     setOpen(false);
     addProject({
       variables: {
-        // projectName, projectNum, client, buildingType,
-        // printingCom, description, projectWorkEstimates
-
         projectName,
         projectNum,
         client,
@@ -327,7 +293,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
         data
       ) => {
         const cacheData = cache.readQuery({ query: GET_PROJECTS }) as IProjects;
-        // console.log('---after add project data--', data)
+         
         setDataList(data)
         cache.writeQuery({
           query: GET_PROJECTS,
@@ -335,8 +301,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
             getProjects: [...cacheData?.projects, data['createProject']]
           }
         });
-        // console.log('data==', data);
-
+         
         props.onSuccess(data);
       }
     });
@@ -417,7 +382,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     value={buildingType}
                     onChange={onBuildingType}
                     clearable
-                    error={errors?.buildingError && !buildingType }
+                    error={errors?.buildingError && !buildingType}
                   />
                   {errors?.buildingError && !buildingType ? <span className="error-message">{errors.buildingError}</span> : null}
                 </Form.Field>
