@@ -172,7 +172,7 @@ export function ModalCost(props: ModalCostProps) {
 
         </Table.Cell>
         <Table.Cell collapsing>
-          <a onClick={() => removeItem(index)} >X</a>
+          <a onClick={() => removeItem(index)} className="cost-remove-row"><i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i></a>
         </Table.Cell>
       </Table.Row>
     )

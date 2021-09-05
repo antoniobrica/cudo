@@ -766,10 +766,11 @@ export function Tasks(props: TasksProps) {
       },
     })
   }
+  
 
   return (
     <div className="tabs-main-info-container">
-      <ToastContainer className={`${activeErrorClass ? "error" : "success"}`} position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
+      <ToastContainer className={`${activeErrorClass ? "error" : "success"}`} position="top-right" autoClose={999995000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
 
       <div className="pin_area">
         <FilterPopup />

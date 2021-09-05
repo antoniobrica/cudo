@@ -183,7 +183,6 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                 <Form>
                   <Modal.Header><h3 className="title-select">
                     <span> File detail
-                      <Select placeholder='Select version' options={versionOptions} />
                     </span>
                     <span>
                       <i className="ms-Icon ms-Icon--Hide2 hide-icon" aria-hidden="true" onClick={() => setHideCommentPanel(true)}><span>Hide</span></i>
@@ -224,12 +223,18 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     </Grid.Row>
                   </Grid>
 
-                  <Grid columns={1}>
+                  <Grid columns={2}>
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
                           <label>Uploaded by</label>
                           <p className="form_desc">John Smith</p>
+                        </Form.Field>
+                      </Grid.Column>
+                      <Grid.Column>
+                        <Form.Field>
+                          <label>Select version</label>
+                          <Select placeholder='Select version' className="small" options={versionOptions} selection clearable/>
                         </Form.Field>
                       </Grid.Column>
                     </Grid.Row>

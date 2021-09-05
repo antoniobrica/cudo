@@ -846,6 +846,7 @@ li {
 .ui.inverted.dimmer {
     .ui.loader {
         opacity: 1;
+        font-size: 14px;
         &:after {
             border-color: color("blue", "base") transparent transparent;
         }

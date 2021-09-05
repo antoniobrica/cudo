@@ -123,7 +123,7 @@ export function SelectFilePopup(props: FileStructureProps) {
           <AddPinFile isOpen={view} cancel={cancel} filesData={filesData} dowloadFilesData={props.downloadedImg} savePin={props.savePins} onSuccess={""} />
         </div> : null}
       <Modal className="modal_media right-side--fixed-modal select-file-modal"
-        closeIcon
+        // closeIcon
         onClose={cancel}
         onOpen={() => setOpen(true)}
         open={open}
@@ -135,8 +135,9 @@ export function SelectFilePopup(props: FileStructureProps) {
         // }
         closeOnDimmerClick={false}
       >
+      <div className="fixed-popup-inner-con">
         <Modal.Header>
-          <h3>{t("project_tab_menu.files.select_file")}</h3>
+          <h3>{t("project_tab_menu.files.select_file")}</h3> <Icon name='close' onClick={cancel} />
         </Modal.Header>
         <Modal.Content body>
           <div>
@@ -291,6 +292,7 @@ export function SelectFilePopup(props: FileStructureProps) {
             <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> {t("common.cancel")}
           </Button>
         </Modal.Actions>
+        </div>
       </Modal>
     </div >
   );
