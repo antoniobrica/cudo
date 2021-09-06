@@ -25,7 +25,6 @@ import SubTaskDelete from '../delete-subtask/delete-subtask';
 import { FilterPopup, ToggleButton } from '@cudo/shared-components';
 import { FileListIndex } from '@cudo/mf-document-lib';
 import { toast, ToastContainer } from 'react-toastify';
-import FilePinDetails from 'libs/mf-document-lib/src/lib/components/pin-file-from-task/file-pin';
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface TasksProps { }
 
@@ -58,7 +57,6 @@ export function Tasks(props: TasksProps) {
   const [isTaskFile, setIsTaskFile] = React.useState(false);
   const [isNewTask, setIsNewTask] = React.useState(false);
   const [taskStatus, settaskStatus] = React.useState('');
-  const [viewAddPinFile, setViewAddPinFile] = useState(false)
 
   const [openSubTaskStatusConfirm, setOpenSubTaskStatusConfirm] = React.useState(false);
   const [openSubTaskDeleteConfirm, setOpenSubTaskDeleteConfirm] = React.useState(false);
@@ -309,7 +307,6 @@ export function Tasks(props: TasksProps) {
     setOpenD(false);
     setViewTaskOpen(false);
     setEditTaskOpen(false);
-    setViewAddPinFile(false)
   };
   const confirmation = (data, task) => {
     setLoadingOnEditTaskStatus(true)
@@ -440,8 +437,7 @@ export function Tasks(props: TasksProps) {
 
   const openViewAddPinFile = (task) => {
     setTaskData(task);
-    setViewAddPinFile(true)
-    // setIsTaskFile(true)
+    setIsTaskFile(true)
   }
 
   const refresh = (data) => {
@@ -796,12 +792,9 @@ export function Tasks(props: TasksProps) {
           />
         ) : null}
       </div>
-      {
-       viewAddPinFile && <FilePinDetails isOpen={viewAddPinFile} cancel={cancel} taskData={taskData} />
-      }
-      {(isTaskFile) ? (
+      {isTaskFile ? (
         <div className="pin_area" style={{ marginLeft: 804 }}>
-          <FileListIndex isTaskFile={isTaskFile} cancel={cancelNew} />
+          <FileListIndex isTaskFile={isTaskFile} cancel={cancelNew} taskData={taskData} />
         </div>
       ) : null}
       {open ? (
