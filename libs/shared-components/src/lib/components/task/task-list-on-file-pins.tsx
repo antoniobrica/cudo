@@ -29,10 +29,11 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
       <Form.Field>
         <div>
           {props.pinTasks && props.pinTasks.map((task, i) => {
-           
+
             return (
               <div>
-                <div className="pin-task-completed-card">
+                <div className={props?.cord?.pinsID === task?.taskTypeID ? "pin-task-completed-card pin-task-hover" : "pin-task-completed-card"}>
+                  {/* <div className= "pin-task-completed-card"> */}
                   <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} />
                   <div className="pin-task-description-box">
                     <div className="task-full-details">

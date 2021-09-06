@@ -57,7 +57,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
   const [cord, setCord] = React.useState(null);
 
   function onDocumentLoadSuccess({ numPages }) {
-     setNumPages(numPages);
+    setNumPages(numPages);
   }
 
 
@@ -78,6 +78,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
 
     }
   })
+
   React.useEffect(() => {
     if (props.filesData) {
       setFiles(props.filesData)
@@ -111,6 +112,8 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
     setCord(data);
   }
 
+  console.log('----props.filesData---', props?.filesData)
+
   return (
     <div id="navbar">
       {/* <Button className="grey-btn" onClick={() => dispatch({ type: 'open', size: 'fullscreen' })}>
@@ -128,8 +131,6 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
           <Form>
             <div className="view-pin-detail-popup">
               <div className="left-side-detail-file">
-                {/* <Canvas imgUrl={imgUrl} ></Canvas> */}
-                {/* <Image src={imgUrl} fluid /> */}
                 {props.fType == 'application/pdf' ?
                   <Document
                     file={imgUrl}
@@ -138,8 +139,6 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     <Page pageNumber={pageNumber} />
                   </Document>
                   :
-                  // <Canvas imgUrl={imgUrl} isPinCreated={isPinCreated} setIsPinCreated={setIsPinCreated}></Canvas>
-                  // <Image src={imgUrl} fluid />
                   <div className="left-side-image-canvas">
                     <CanvasImage
                       pinSaved={setPinSavedOnCanvase}
@@ -262,9 +261,9 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                       <Grid.Column>
                         <Form.Field>
                           <label>Tasks ({pinCount})</label>
-                          {/* {!isPinCreated ? */}
-                          <PinTaskListIndex filesData={props.filesData} cord={''} pinCount={getPinCount} ></PinTaskListIndex>
-                          {/* : null} */}
+                         
+                          <PinTaskListIndex filesData={props.filesData} cord={cord} pinCount={getPinCount} ></PinTaskListIndex>
+                        
                           {/* <div className="pin-task-completed-card">
                             <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} />
                             <div className="pin-task-description-box">
