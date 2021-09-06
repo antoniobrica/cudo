@@ -433,7 +433,8 @@ canvas.coveringCanvas{
   @include align-items(center);
   @include justify-content(center);
 }
-span.completed-task-list-text.line-through {
+span.completed-task-list-text.line-through,
+span.completed-task-list-text {
   font-size: 1.3rem;
   font-weight: 500;
   color: #718898;

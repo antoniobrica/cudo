@@ -645,6 +645,29 @@
             display: inline-block;
           }
         }
+        &.pin-task-hover {
+          background: #efefef;
+          margin: 0 -20px 7px;
+          padding: 15px 20px;
+        }
+      }
+      label {
+        i {
+          transform: rotate(-90deg);
+        }
+      }
+      .detail-file-listing-box {
+        display: none;
+      }
+      &.expand {
+        .detail-file-listing-box {
+          display: block;
+        }
+        label {
+          i {
+            transform: rotate(0deg);
+          }
+        }
       }
     }
     .comments-con {

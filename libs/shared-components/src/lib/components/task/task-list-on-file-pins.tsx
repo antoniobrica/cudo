@@ -35,11 +35,9 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
   }
 
   return (
-    <div>
+    <div className="detail-file-listing-box">
       <Form.Field>
-        <div>
           {props.pinTasks && props.pinTasks.map((task, i) => {
-
             return (
               <div>
                 <div
@@ -253,7 +251,6 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
               </div>
             )
           })}
-        </div>
       </Form.Field>
     </div>
   );

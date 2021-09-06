@@ -847,6 +847,7 @@ li {
     .ui.loader {
         opacity: 1;
         font-size: 14px;
+        font-weight: 500;
         &:after {
             border-color: color("blue", "base") transparent transparent;
         }
