@@ -15,6 +15,7 @@ export interface PinTaskListProps {
   filesData?
   cord?
   pinCount?
+  taskHovered?
 }
 
 export function PinTaskList(props: PinTaskListProps) {
@@ -243,6 +244,12 @@ export function PinTaskList(props: PinTaskListProps) {
       },
     });
   };
+
+  const taskHovered = (taskTypeID) => {
+    console.log('--pin-task-list--taskHovered--taskTypeID--', taskTypeID)
+    props.taskHovered(taskTypeID)
+  };
+
   return (
     <div>
       {taskStatusConfirmation ? (
@@ -306,7 +313,9 @@ export function PinTaskList(props: PinTaskListProps) {
         updateTask={updateTask}
         deleteTask={deleteTask}
         veiwTask={viewTask}
-        editTask={editTask}></TaskListOnFilePins>}
+        editTask={editTask}
+        taskHovered={taskHovered}
+        ></TaskListOnFilePins>}
     </div>
   );
 }

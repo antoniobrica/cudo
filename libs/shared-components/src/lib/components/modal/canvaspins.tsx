@@ -13,6 +13,7 @@ export interface CanvasPinsProps {
   setIsPinCreated?
   savePin?
   pinSaved?
+  hoveredTaskTypeID?
 }
 export function CanvasPins(props: CanvasPinsProps) {
   const canvasToDrawCircle = useRef<HTMLCanvasElement>();
@@ -145,6 +146,16 @@ export function CanvasPins(props: CanvasPinsProps) {
     if (!props.savePin) { props.pinSaved(false); return; }
     saveNewPin(dragTarget);
   }, [props.savePin]);
+
+  useEffect(() => {
+    if (props?.hoveredTaskTypeID) {
+      pinList.map((item)=>{
+        if(item.pinsID ===props?.hoveredTaskTypeID){
+          hitCircleOnMouseHover(item.x, item.y);
+        }
+      })      
+    }
+  }, [props?.hoveredTaskTypeID])
 
   const saveNewPin = async (dragTargetTemp) => {
     try {

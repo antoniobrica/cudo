@@ -56,6 +56,8 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
   const [pinCount, setPinCount] = React.useState(0)
   const [cord, setCord] = React.useState(null);
 
+  const [hoveredTaskTypeID,setHoveredTaskTypeID] = React.useState(null)
+
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
   }
@@ -112,6 +114,10 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
     setCord(data);
   }
 
+  const getTaskHovered = (taskTypeID) => {
+    setHoveredTaskTypeID(taskTypeID)
+  }
+
   console.log('----props.filesData---', props?.filesData)
 
   return (
@@ -149,6 +155,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                       allowToCreateNewPin={false}
                       isPinCreated={isPinCreated}
                       setIsPinCreated={setIsPinCreated}
+                      hoveredTaskTypeID={hoveredTaskTypeID}
                     ></CanvasImage>
                   </div>
                 }
@@ -267,7 +274,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                         <Form.Field>
                           <label>Tasks ({pinCount})</label>
                          
-                          <PinTaskListIndex filesData={props.filesData} cord={cord} pinCount={getPinCount} ></PinTaskListIndex>
+                          <PinTaskListIndex filesData={props.filesData} cord={cord} pinCount={getPinCount} taskHovered={getTaskHovered} ></PinTaskListIndex>
                         
                           {/* <div className="pin-task-completed-card">
                             <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} />
