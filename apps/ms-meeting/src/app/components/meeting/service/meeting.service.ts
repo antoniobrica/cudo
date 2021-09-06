@@ -28,8 +28,7 @@ export class MeetingService {
   ) { }
 
   public async addMeeting(createInput: MeetingDetailsInput): Promise<MeetingEntity> {
-    console.log('---service addMeeting custom message----')
-  
+     
     try {
        const { meetingBasics, members, meetingFiles } = createInput;
       const meetingDetails = new MeetingEntity({ ...meetingBasics });
@@ -56,8 +55,7 @@ export class MeetingService {
       if(errorType){
         throw new MeetingCustomError(errorType)
       }
-      // console.log('--after-check custom validation message--')
-
+     
       if (members) {
         for (let index = 0; index < members.length; index++) {
           let relationAddMember = await this.membersRepository.findOne({ where: { memberID: members[index].memberID } });
@@ -99,7 +97,6 @@ export class MeetingService {
       await this.meetingRepository.save(newMeeting);
       return newMeeting;
     } catch (error) {
-      // console.log('---- error----', error)
       return error;
     }
   }
@@ -138,7 +135,7 @@ export class MeetingService {
     if (!meeting) {
       throw new MeetingCustomError(MeetingErrorTypeEnum.RECORD_NOT_EXIST)
     }
-    console.log(meeting)
+   
     return meeting;
   }
 

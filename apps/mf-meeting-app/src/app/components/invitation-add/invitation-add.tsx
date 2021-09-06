@@ -82,7 +82,7 @@ export function InvitationAdd(props: InvitationAddProps) {
             }
         });
     }
-    console.log('----companyId----', companyId)
+   
     return (
         <div>
             <ModalAddInvitation

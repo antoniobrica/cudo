@@ -19,7 +19,6 @@ import { ProtocolService } from './service/protocol.service';
 })
 export class ProtocolModule {} // implements NestModule {
   // configure(meetingContext: MiddlewareConsumer) {
-    // console.log('----meeting module--meetingContext--', meetingContext)
     // meetingContext.apply(InvitationMiddleware)
       // .forRoutes({ path: "*", method: RequestMethod.GET })
   // }

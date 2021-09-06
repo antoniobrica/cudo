@@ -34,7 +34,7 @@ export function FileStructure(props: FileStructureProps) {
 	const [expandVersion, setExpandVersion] = useState(false);
 	const [selectedExpandVersionId, setSelectedExpandVersionId] = useState(null);
 
-	const [view, setView] = useState(false);
+	const [fileView, setFileView] = useState(false);
 	const [openPinFile, setOpenPinFile] = useState(false)
 
 	const [designVersionExpand, setDesignVersionExpand] = useState(false)
@@ -66,7 +66,7 @@ export function FileStructure(props: FileStructureProps) {
 
 	const onClickViewFileDetail = (data) => {
 		setFtype(data.fileType);
-		setView(true);
+		setFileView(true);
 		setFilesData(data);
 
 		props.viewFiles(data.fileTitle)
@@ -90,8 +90,7 @@ export function FileStructure(props: FileStructureProps) {
 	}
 
 	const savePins = (data) => {
-		console.log('savePins==>', data);
-
+	 	setOpenPinFile(false) 
 	}
 
 	const onClickExpand = (uploadedFileId) => {
@@ -112,10 +111,6 @@ export function FileStructure(props: FileStructureProps) {
 
 		setSelectedExpandVersionId(uploadedFileVersionId)
 		props.selectedFileId(uploadedFileVersionId)
-	}
-
-	const onClickVersionDetail = () => {
-
 	}
 
 	// #region commented Old code
@@ -203,7 +198,7 @@ export function FileStructure(props: FileStructureProps) {
 					<h3 className="files-name">{fileTitle}</h3>
 					<span className="no-of-files" onClick={() => onClickViewFileDetail(singleFileItem)}><i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i> 2 comments</span>
 					<span className="no-of-files" onClick={() => onClickViewFileDetail(singleFileItem)}><i className="ms-Icon ms-Icon--CheckboxComposite" aria-hidden="true"></i> 2 tasks</span>
-					{versionCount > 0 ? <span className="version-files"><a onClick={() => onClickFileVersion(uploadedFileID)}>Ver {versionCount}</a></span>:null}
+					{versionCount > 0 ? <span className="version-files"><a onClick={() => onClickFileVersion(uploadedFileID)}>Ver {versionCount}</a></span> : null}
 				</div>
 				<div className="files-right-area">
 					<div className="symbol-group symbol-hover">
@@ -243,7 +238,7 @@ export function FileStructure(props: FileStructureProps) {
 										const { uploadedFileID, fileType, fileTitle, fileVersion, createdBy, updatedBy, createdAt, updatedAt } = item
 										const formattedCreatedAt = moment(createdAt).format('DD MMM, YYYY')
 										const formattedUpdatedAt = moment(updatedAt).format('DD MMM, YYYY')
-										
+
 										return (<div key={uploadedFileID} className="files-versioning-list">
 											<p>Version {fileVersion} - <span>{fileTitle}</span> <span className="small-text">(By: {updatedBy ? updatedBy : createdBy} - Uploaded on: {updatedAt ? formattedUpdatedAt : formattedCreatedAt})</span></p>
 											<div className="files-right-area symbol symbol-30">
@@ -568,11 +563,10 @@ export function FileStructure(props: FileStructureProps) {
 	]
 
 	return (
-		<div className=" navbar-collapse files-tab-outer">
-			{view && imgUrl.length > 0 ?
+		<div className="files-tab-outer tabs-main-info-container">
+			{fileView && imgUrl.length > 0 ?
 				<div>
-					<ViewFileDetail open={view} fType={fType} filesData={filesData} dowloadFilesData={props.downloadedImg} ></ViewFileDetail>
-					{/* <AddPinFile isOpen={view} filesData={filesData} dowloadFilesData={props.downloadedImg} savePin={savePins} onSuccess={""} /> */}
+					<ViewFileDetail open={fileView} fType={fType} filesData={filesData} dowloadFilesData={props.downloadedImg} ></ViewFileDetail>
 				</div> : null}
 			{openPinFile && imgUrl.length > 0 ?
 				<div>

@@ -26,15 +26,14 @@ export function Bkps(props: BkpsProps) {
   }, [data, FolderD]);
   React.useEffect(() => {
     if (props.bkp) {
-      console.log('bkps', props.bkp)
+     
       setBKPID(props.bkp)
     }
   }, [props.bkp])
 
   // React.useEffect(()=>{
   //   if(FolderD){
-  //     console.log('FolderD',FolderD);
-
+  
   //       const arr = FolderD.Folders.map(({ folderTitle, folderID }) => ({ key: folderID, value: folderTitle, text: folderTitle }))
   //       setItems1(arr);
   //       if(items){
@@ -47,7 +46,7 @@ export function Bkps(props: BkpsProps) {
   // }, [FolderD]);
 
   const onBkp = (event, data) => {
-    console.log('data==', data)
+  
     const bkpID = { BKPID: '', BKPIDTitle: '' };
     for (let i = 0; i <= items.length; i++) {
       if (items[i]?.value === data.value) {

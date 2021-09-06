@@ -86,15 +86,13 @@ export function Tasks(props: TasksProps) {
   const [subTaskDeleteApi, { loading: deleteSubTaskLoading, error: deleteSubTaskError, data: deleteSubTaskData }] = useMutation(DELETE_SUBTASK, {
     variables: { subtaskID: subTaskId },
   });
-  // const [subTaskUpdateApi, { data }] = useMutation(UPDATE_SUBTASK, {
-  //   refetchQueries: [{ query: GET_TASKS, variables: { referenceID } }],
-  // });
 
   // set sucess value to toaster function
   const getTaskToasterMessage = (data) => {
     setActiveErrorClass(false)
     toast(data)
   }
+
   // set error value to task error for toaster function
   const getTaskErrorMessage = (data) => {
     setActiveErrorClass(true)
@@ -272,35 +270,12 @@ export function Tasks(props: TasksProps) {
     COMPLETED = 'COMPLETED',
   }
   if (taskListLoading) return (<LazyLoading />)
-  // if (taskListError) return (<div>Tasks not fetched. An internal server error occured</div>)
-  // return (
-  //   <h1>
-  //     <LoaderPage />
-  //   </h1>
-  // );
 
   if (loadingOnDeleteTask) return (<LazyLoading />)
-  // if (deleteTaskError) return (<div>Task not deleted. An internal server error occured</div>)
-  // return (
-  //   <h1>
-  //     <LoaderPage />
-  //   </h1>
-  // );
 
   if (loadingOnEditTask) return (<LazyLoading />)
-  // if (editTaskError) return (<div>Task not updated. An internal server error occured</div>)
 
   if (loadingOnEditTaskStatus) return (<LazyLoading />)
-  // console.log(editTaskStatusError)
-  // if (editTaskStatusError) return (<div>Task status not updated. An internal server error occured</div>)
-
-
-  // if (addSubTaskLoading) return (<LazyLoading />)
-  // if (addSubTaskError) return (<div>Sub-task not added. An internal server error occured</div>)
-
-  // // if (editSubTaskLoading) return (<LazyLoading />)
-  // if (editSubTaskError) return (<div>Sub-task not updated. An internal server error occured</div>)
-
 
   const cancel = () => {
     setOpen(false);
@@ -495,7 +470,7 @@ export function Tasks(props: TasksProps) {
           query: GET_TASKS,
           variables: { referenceID },
           data: {
-            tasks: updatedTaskList, // [...cacheData.tasks.results, data],
+            tasks: updatedTaskList,
           },
         });
       },
@@ -542,22 +517,6 @@ export function Tasks(props: TasksProps) {
         workTypeName: data.workTypeName,
         workTypeID: data.workTypeID,
       },
-
-      // update: (cache, data) => {
-      //   const cacheData = cache.readQuery({
-      //     query: GET_TASKS,
-      //     variables: { referenceID },
-      //   }) as ITasks;
-
-      //   cache.writeQuery({
-      //     query: GET_TASKS,
-      //     data: {
-      //       tasks: [...cacheData.tasks.results, data],
-      //     },
-      //     variables: { referenceID },
-      //   });
-      // },
-
 
       update: (cache, updatedTaskData) => {
 
@@ -639,8 +598,7 @@ export function Tasks(props: TasksProps) {
 
             const subTaskList = task.subtasks.map((subTask) => {
               if (subTask.subtaskID === subtaskId) {
-                // return data;   
-
+               
                 if (subTask.status === 'INPROGRESS') {
                   return { ...subTask, status: Status.COMPLETED };
                 } else {
@@ -774,7 +732,7 @@ export function Tasks(props: TasksProps) {
   }
 
   return (
-    <div>
+    <div className="tabs-main-info-container">
       <ToastContainer className={`${activeErrorClass ? "error" : "success"}`} position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
 
       <div className="pin_area">

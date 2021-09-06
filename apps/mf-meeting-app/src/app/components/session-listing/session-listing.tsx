@@ -257,7 +257,7 @@ export function SessionListing() {
         <h3>{t("common.data_not_found")}</h3>
         <p>{t("project_tab_menu.meeting.no_session_data_found_desc")}</p>
         <Button size="small" className="primary" onClick={addNew}>
-          + {t("project_tab_menu.meeting.add_new_session")}
+        <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> {t("project_tab_menu.meeting.add_new_session")}
         </Button>
         <AddSession projectId={projectId} cancel={cancel} openAddSession={openAddSession} />
       </div>
@@ -318,7 +318,7 @@ export function SessionListing() {
                 <h3>{t("common.data_not_found")}</h3>
                 <p>{t("project_tab_menu.meeting.no_session_data_found_desc")}</p>
                 <Button size="small" className="primary" onClick={addNew}>
-                  + {t("project_tab_menu.meeting.add_new_session")}
+                <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> {t("project_tab_menu.meeting.add_new_session")}
                 </Button>
                 <AddSession projectId={projectId} cancel={cancel} openAddSession={openAddSession} />
               </div>

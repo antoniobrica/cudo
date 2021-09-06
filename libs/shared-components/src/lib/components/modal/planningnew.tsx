@@ -83,7 +83,6 @@ export function ModalPlanningNew(props: PlanningProps) {
 
   React.useEffect(() => {
     if (props.worktypes) {
-      console.log('worktypes', props.worktypes);
       setworkType(props.worktypes.map(({ workTypeName, projectWorkTypeID }) => ({ key: projectWorkTypeID, value: workTypeName, text: workTypeName, id: projectWorkTypeID })));
 
     }
@@ -97,7 +96,7 @@ export function ModalPlanningNew(props: PlanningProps) {
     if (data.value) {
       for (let i = 0; i < props.worktypes.length; i++) {
         if (props.worktypes[i]?.workTypeName === data.value) {
-          console.log('props.worktypes[i]', props.worktypes[i]);
+        
           workT.worktypeID = props.worktypes[i].projectWorkTypeID;
           workT.worktypeName = data.value;
           setworktypeName(workT.worktypeName);
@@ -112,18 +111,14 @@ export function ModalPlanningNew(props: PlanningProps) {
     }
 
     setworkTypeData(data.value)
-
-    console.log('worktypeName-', workTypeD);
   }
   const onsetPhasesID = (data) => {
-    console.log('phase', data);
-
+  
     setPhasesID((data.phaseID).toString());
     setPhasesName(data.phaseName)
   }
 
   const onMilestoneChange = (e) => {
-    console.log('milestone=>', e.target.value);
     setMilestoneName(e.target.value);
   }
 
@@ -133,7 +128,6 @@ export function ModalPlanningNew(props: PlanningProps) {
   }
 
   const onDescriptionChange = e => {
-    // console.log("$$$$$$$$$$$$$$$$$$$$$$$",e.target.value)
     setDescription(e.target.value);
   }
 

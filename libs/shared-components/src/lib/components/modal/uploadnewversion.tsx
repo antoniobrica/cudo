@@ -80,14 +80,13 @@ export function UploadNewVersion(props: AlertProps) {
   const getUploadsEffect = () => {
     const sub = context.uploadedItems$
       .pipe(tap(items => {
-        console.log('getUploadsEffect', items);
+        
         setItems(items);
         const fileArr = [];
         for (let i = 0; i < items.length; i++) {
           fileArr.push({ fileURL: items[i].filename, fileTitle: items[i].filename, fileType: items[i].type, fileVersion: "v1" });
         }
-        console.log('fileArr', fileArr);
-
+        
         setFileList(fileArr);
       }))
       .subscribe();
@@ -97,7 +96,7 @@ export function UploadNewVersion(props: AlertProps) {
 
   React.useEffect(() => {
     if (props.file) {
-      console.log('files-data', props.file);
+     
       setFileData(props.file);
       setPhasesName(props.file.phaseName);
       setBKPIDTitle(props.file.directory);
@@ -122,8 +121,7 @@ export function UploadNewVersion(props: AlertProps) {
     setOpen(false)
     props.cancel()
   }
-  const uploadFiles = (files: FileList | null) => {
-    console.log('files', files);
+  const uploadFiles = (files: FileList | null) => {   
     files && context.uploadItems(files);
   }
   enum fileType {
@@ -133,8 +131,7 @@ export function UploadNewVersion(props: AlertProps) {
   }
   const submit = () => {
     setOpen(false)
-    console.log('new file', files);
-
+   
     const data = {
       directory,
       fileURL: files[0].fileURL,
@@ -154,7 +151,7 @@ export function UploadNewVersion(props: AlertProps) {
       //   'imageUrl': "url1"
       // }]
     }
-    console.log('save-versions', data);
+   
     props.uploadNewVersion(data);
   }
   const onsetPhasesID = (data) => {
@@ -166,12 +163,11 @@ export function UploadNewVersion(props: AlertProps) {
     setfileTypeID(data.fileTypeID)
   }
   const setBKPIDChange = (data) => {
-    console.log('bkp=f', data.isFolder);
+    
     setisFolder(data.isFolder)
     if (data.isFolder) {
       setfolderName(data.folderTitle)
-      setDirectory(data.folderTitle)
-      console.log('folderName', folderName);
+      setDirectory(data.folderTitle)     
     }
     else {
       setBKPIDTitle(data.BKPIDTitle)

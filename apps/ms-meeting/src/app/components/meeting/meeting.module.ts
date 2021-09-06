@@ -12,9 +12,8 @@ import { InvitationMiddleware } from './middleware/invitation.middleware'
   imports: [TypeOrmModule.forFeature([MeetingEntity, MeetingFilesEntity, MembersEntity])],
   providers: [MeetingResolver, MeetingService],
 })
-export class MeetingModule {} // implements NestModule {
+export class MeetingModule { } // implements NestModule {
   // configure(meetingContext: MiddlewareConsumer) {
-    // console.log('----meeting module--meetingContext--', meetingContext)
     // meetingContext.apply(InvitationMiddleware)
       // .forRoutes({ path: "*", method: RequestMethod.GET })
   // }

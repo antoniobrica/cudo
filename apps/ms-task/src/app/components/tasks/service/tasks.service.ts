@@ -274,8 +274,7 @@ export class TasksService {
             where: { taskID: taskBasics.taskID },
             relations: ['reference', 'assignees', 'followers', 'files', 'subtasks']
         });
-        console.log(taskeDetails)
-
+      
         if (taskeDetails.length <= 0){
             // throw task not found exeption
             throw new TaskCustomError(TaskErrorTypeEnum.RECORD_NOT_EXIST)
@@ -311,7 +310,6 @@ export class TasksService {
             for (let index = 0; index < assignees.length; index++) {
 
                 // for (let delIndex = 0; delIndex < taskeDetail.assignees.length; delIndex++) {
-                //     console.log('----taskeDetail.assignees--delIndex---------', taskeDetail.assignees[delIndex])
                 //     const deleteAssigneesentity = new TaskAssigneessEntity(assignees[delIndex])
                 //     await this.tasksAssigneeRepository.delete(taskeDetail.assignees[delIndex].id);
                 // }
@@ -401,7 +399,7 @@ export class TasksService {
         taskBasics.projectWorktype ? taskeDetail.projectWorktype = taskBasics.projectWorktype : null;
         taskBasics.projectWorktypeID ? taskeDetail.projectWorktypeID = taskBasics.projectWorktypeID : null;
         taskBasics.projectWorktypeName ? taskeDetail.projectWorktypeName = taskBasics.projectWorktypeName : null;
-        console.log('----update task for status-------', taskBasics)
+       
         await this.projectTasksRepository.save(taskeDetail);
         const tasks = await this.projectTasksRepository.find({
             where: { taskID: taskBasics.taskID },
@@ -412,7 +410,7 @@ export class TasksService {
 
     public async updateSubTask(updateSubTask: SubTaskFilterInput, createinput: SubTaskInput): Promise<SubTaskEntity> {
         const subtask = await this.subTaskRepository.findOne({ where: { subtaskID: updateSubTask.subtaskID } });
-        console.log(subtask)
+       
         if (!subtask) {
             // throw subtask not found exeption
             throw new TaskCustomError(TaskErrorTypeEnum.SUBTASK_NOT_EXITST)

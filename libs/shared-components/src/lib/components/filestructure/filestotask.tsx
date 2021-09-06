@@ -52,10 +52,10 @@ export function TaskFileStructure(props: TaskFileStructureProps) {
 	}, [selectedFiles])
 
 	React.useEffect(() => {
-		if(props.selectedFiles.length > 0){
+		if (props.selectedFiles.length > 0) {
 			setSelectedFiles(props.selectedFiles)
 		}
-	},[])
+	}, [])
 
 	// const viewFile = (data) => {
 	// 	if (selectedFile !== data.uploadedFileID) {
@@ -89,7 +89,7 @@ export function TaskFileStructure(props: TaskFileStructureProps) {
 	}
 
 	// const download = (data) => {
-	// 	console.log('--pinfilestructure--download');
+
 	// 	props.downloadFiles(data)
 	// }
 	// const expandFolder = (data) => {
@@ -99,10 +99,8 @@ export function TaskFileStructure(props: TaskFileStructureProps) {
 	React.useEffect(() => {
 		if (selectedFile) {
 			if (props.downloadedImg) {
-				console.log('--pinfilestructure--useEffect--downloadedImg', props.downloadedImg);
 				for (let i = 0; i < props.downloadedImg.length; i++) {
 					if (props.downloadedImg[i].filename == filesData['fileTitle']) {
-						console.log('--pinfilestructure--useEffect--url', props.downloadedImg[i].url);
 						setFileId(props.downloadedImg[i].url)
 						setimgUrl(props.downloadedImg[i].url);
 					}
@@ -113,7 +111,6 @@ export function TaskFileStructure(props: TaskFileStructureProps) {
 	}, [selectedFile])
 
 	const uploadNewVersion = (file) => {
-		console.log('--pinfilestructure--uploadNewVersion--file', file);
 		props.uploadNewVersion(file);
 	}
 

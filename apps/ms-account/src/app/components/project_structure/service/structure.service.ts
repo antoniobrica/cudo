@@ -53,7 +53,7 @@ export class StructureService {
         await manager.save(childStructure);
       }
       const trees = await manager.getTreeRepository(Structure).findDescendantsTree(parentStructure);
-      console.log(JSON.stringify(trees))
+     
       return trees;
     } catch (error) {
       return error;
@@ -81,7 +81,7 @@ export class StructureService {
       await manager.save(childStructure);
     }
     const trees = await manager.getTreeRepository(Structure).findDescendantsTree(parentStructure);
-    console.log(JSON.stringify(trees))
+   
     return trees;
   }
 
@@ -95,7 +95,7 @@ export class StructureService {
     const manager = getManager();
     const filterStructure = await manager.getTreeRepository(Structure).findOne({ where: { structureID: structureFilterArgs.structureID } });
     const trees = await manager.getTreeRepository(Structure).findDescendantsTree(filterStructure);
-    console.log(trees)
+   
     return trees;
   }
 
@@ -118,7 +118,7 @@ export class StructureService {
   //       .execute();
   //   });
   //   const a = await manager.getTreeRepository(Structure).delete({ structureID: updateStructure.parentStructureID });
-  //   console.log(a);
+  
   //   const trees = await manager.getTreeRepository(Structure).findDescendantsTree(filterStructure);
   //   return trees;
   // }

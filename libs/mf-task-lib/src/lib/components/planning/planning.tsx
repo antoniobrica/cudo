@@ -80,12 +80,10 @@ export function Planning(props: PlanningProps) {
   //   if (MilestoneData) {
   //     setmilestoneByID(MilestoneData)
   //     setOpen(true)
-  //     console.log('MilestoneData', MilestoneData);
   //   }
   // }, [MilestoneData])
   // React.useEffect(() => {
   //   if (props.worktypes) {
-  //     console.log('worktypes-planning', props.worktypes);
   //   }
   // }, [props.worktypes])
 
@@ -121,7 +119,6 @@ export function Planning(props: PlanningProps) {
   }
 
   const confirmation = (data, task) => {
-    // console.log('data', task);
     // setMilestoneLoading(true);
 
     setOpenUpdate(false);
@@ -145,7 +142,6 @@ export function Planning(props: PlanningProps) {
     milestoneUpdate({
       variables: updatedMilestone,
       update: (cache) => {
-        // console.log('updatedMilestone', updatedMilestone)
         const cacheData = cache.readQuery({ query: GET_MILESTONES }) as IMileStones;
         cache.writeQuery({
           query: GET_MILESTONES,
@@ -196,7 +192,6 @@ export function Planning(props: PlanningProps) {
 
     closeDeletePopup()
     const milestoneID = plan.milestoneID;
-    // console.log('plan=milestoneID', milestoneID);
     planDelete({
       variables: {
         milestoneID
@@ -232,7 +227,6 @@ export function Planning(props: PlanningProps) {
 
   // }
   const editMilestoneData = (data) => {
-    // console.log('edited-data', data);
     // setMilestoneLoading(true);
 
     setOpen(false)
@@ -270,9 +264,7 @@ export function Planning(props: PlanningProps) {
       ></ModalPlanningNew>
     </div>
   );
-  if (data) {
-    // console.log('milestone-data', data.MileStones);
-  }
+
   const openAdd = () => {
     setIsOpen(true)
   }
@@ -280,36 +272,25 @@ export function Planning(props: PlanningProps) {
     setIsOpen(false)
   }
   const getAddLinkSelect = (selectedValue) => {
-    console.log('---getAddLinkSelect---selectedValue--', selectedValue)
     if (selectedValue === 'addLink') {
-      console.log('---if selectedValue--', selectedValue)
       setIsOpen(true)
-    } else {
-      console.log('---else selectedValue--', selectedValue)
     }
   }
 
   const getSearchSelect = (selectedValue) => {
-    console.log('---getAddLinkSelect---selectedValue--', selectedValue)
     if (selectedValue === 'addLink') {
-      console.log('---if selectedValue--', selectedValue)
       setIsOpen(true)
-    } else {
-      console.log('---else selectedValue--', selectedValue)
     }
   }
-
-
-
 
   return (
     <div>
       {/* {
         milestoneLoading && <LoaderPage />
       } */}
-      {openNew && 
-      <ModalPlanningNew worktypes={props.worktypes} cancel={cancelAdd} openNew={openNew} getMilestoneData={getMilestoneData}
-      addLoading={addPlanningLoading} addData={addPlanningData} listData={data}></ModalPlanningNew>}
+      {openNew &&
+        <ModalPlanningNew worktypes={props.worktypes} cancel={cancelAdd} openNew={openNew} getMilestoneData={getMilestoneData}
+          addLoading={addPlanningLoading} addData={addPlanningData} listData={data}></ModalPlanningNew>}
       {open ?
         <div style={{ marginLeft: 900 }} >
           <ModalViewPlanning
@@ -341,10 +322,10 @@ export function Planning(props: PlanningProps) {
         : null}
       {openEdit ?
         <div style={{ marginLeft: 900 }} >
-          <EditMileStonePopup 
-          worktypes={props.worktypes} openEdit={openEdit} confirm={confirmationUpdate} 
-          getMilestoneData={editMilestoneData} planData={planData} cancel={closeEditPopup} 
-          updateLoading={updatePlanningLoading} updateData={updatePlanningData} listData={data}
+          <EditMileStonePopup
+            worktypes={props.worktypes} openEdit={openEdit} confirm={confirmationUpdate}
+            getMilestoneData={editMilestoneData} planData={planData} cancel={closeEditPopup}
+            updateLoading={updatePlanningLoading} updateData={updatePlanningData} listData={data}
           ></EditMileStonePopup>
         </div>
         : null}

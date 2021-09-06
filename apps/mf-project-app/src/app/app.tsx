@@ -79,7 +79,7 @@ const defaultHistory = createBrowserHistory();
 //         </div>
 //       </div>
 //     </div>
-    
+
 //   );
 // }
 
@@ -97,19 +97,19 @@ function App() {
   const history = useHistory()
   const location = useLocation();
   const { url, path } = useRouteMatch();
-  // console.log('---Project--app--history---', history)
+
   useEffect(() => {
-    if(history.location.pathname.includes('/home/project/')){
+    if (history.location.pathname.includes('/home/project/')) {
       history.push(history.location.pathname)
     }
-  },[])
+  }, [])
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <Router>
           <Switch>
             <Route exact path='/home/project' render={() => <ProjectInfo />} />
-            <Route path='/home/project/:projectId' render={() => <TabMenu />} />           
+            <Route path='/home/project/:projectId' render={() => <TabMenu />} />
           </Switch>
         </Router>
       </PersistGate>
