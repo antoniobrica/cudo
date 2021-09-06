@@ -192,172 +192,172 @@ export function TaskArea(props: Tasks) {
 
   return (
     <div>
-      {props?.task?.status === "COMPLETED" ?
-        <div className="card1 card-custom gutter-b card-complete">
+      {props?.task?.status === "COMPLETED" ? null
+        // <div className="card1 card-custom gutter-b card-complete">
 
-          <div className="card-body">
+        //   <div className="card-body">
 
-            <div className="task-upper-con d-flex justify-content-between">
+        //     <div className="task-upper-con d-flex justify-content-between">
 
-              <div className="d-flex align-items-center py-2">
-                <span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} className="  mr-10 " />  </span>
-                <span className="textt">T-{props?.task?.sequenceNumber}</span>
-                <span onClick={() => updateStatus(props.task, props.id)} className="anchor_complete">  <span className="check-it-complete task-completed mr-2 mr-10"><i className="ms-Icon ms-font-xl ms-Icon--Accept"></i></span>   </span>
-                <span className="completed-task-list-text line-through">{props?.task?.taskTitle}</span>
-                <div className="d-flex mr-3">
+        //       <div className="d-flex align-items-center py-2">
+        //         <span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} className="  mr-10 " />  </span>
+        //         <span className="textt">T-{props?.task?.sequenceNumber}</span>
+        //         <span onClick={() => updateStatus(props.task, props.id)} className="anchor_complete">  <span className="check-it-complete task-completed mr-2 mr-10"><i className="ms-Icon ms-font-xl ms-Icon--Accept"></i></span>   </span>
+        //         <span className="completed-task-list-text line-through">{props?.task?.taskTitle}</span>
+        //         <div className="d-flex mr-3">
 
-                  <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row task-listing-desc">
-                    {props?.task?.files.length > 0 && (
-                      <div className="navi-item">
-                        <a className="navi-link">
-                          <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props?.task?.files?.length} files  -  </span>
-                        </a>
-                      </div>
-                    )
-                    }
-                    <div className="navi-item">
-                      <a className="navi-link">
-                        <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> 5 {t("project_tab_menu.task.days")} <span className="dash-seperator">-</span> </span>
-                      </a>
-                    </div>
-                    {props?.task?.phaseName && (
-                      <div className="navi-item">
-                        <a className="navi-link">
-                          <span className="navi-text">{props?.task?.phaseName}  <span className="dash-seperator">-</span>  </span>
-                        </a>
-                      </div>
-                    )}
-                    {props?.task?.workTypeName &&
-                      <div className="navi-item">
-                        <a className="navi-link">
-                          <span className="navi-text">{props?.task?.workTypeName} </span>
-                        </a>
-                      </div>
-                    }
+        //           <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row task-listing-desc">
+        //             {props?.task?.files.length > 0 && (
+        //               <div className="navi-item">
+        //                 <a className="navi-link">
+        //                   <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props?.task?.files?.length} files  -  </span>
+        //                 </a>
+        //               </div>
+        //             )
+        //             }
+        //             <div className="navi-item">
+        //               <a className="navi-link">
+        //                 <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> 5 {t("project_tab_menu.task.days")} <span className="dash-seperator">-</span> </span>
+        //               </a>
+        //             </div>
+        //             {props?.task?.phaseName && (
+        //               <div className="navi-item">
+        //                 <a className="navi-link">
+        //                   <span className="navi-text">{props?.task?.phaseName}  <span className="dash-seperator">-</span>  </span>
+        //                 </a>
+        //               </div>
+        //             )}
+        //             {props?.task?.workTypeName &&
+        //               <div className="navi-item">
+        //                 <a className="navi-link">
+        //                   <span className="navi-text">{props?.task?.workTypeName} </span>
+        //                 </a>
+        //               </div>
+        //             }
 
-                    {/* <div className="navi-item">
-                      <a className="navi-link">
-                        <span className="navi-text">Paint Work   <span className="dash-seperator">-</span> </span>
-                      </a>
-                    </div> */}
-                    { // props?.task?.subtasks?.length > 0 ?
-                      subtaskData?.length > 0 ?
-                        <div className="navi-item">
-                          <a className="navi-link">
-                            <span className="navi-text"> - &nbsp;{subtaskData?.length} {t("project_tab_menu.task.check_points")}  </span>
-                          </a>
-                        </div> : null
-                    }
-                    {/* {props.task.taskType &&
-                      <div className="navi-item">
-                        <a className="navi-link">
-                          <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.taskType} </span>
-                        </a>
-                      </div>
-                    } */}
-                    {/* {props.task.assignees && props.task.assignees.map((as, i) => {
-                      return (
-                        <div className="navi-item">
-                          <a className="navi-link">
-                            <span className="navi-text">as  - </span>
-                          </a>
-                        </div>
-                      )
-                    })} */}
-                  </div>
+        //             {/* <div className="navi-item">
+        //               <a className="navi-link">
+        //                 <span className="navi-text">Paint Work   <span className="dash-seperator">-</span> </span>
+        //               </a>
+        //             </div> */}
+        //             { // props?.task?.subtasks?.length > 0 ?
+        //               subtaskData?.length > 0 ?
+        //                 <div className="navi-item">
+        //                   <a className="navi-link">
+        //                     <span className="navi-text"> - &nbsp;{subtaskData?.length} {t("project_tab_menu.task.check_points")}  </span>
+        //                   </a>
+        //                 </div> : null
+        //             }
+        //             {/* {props.task.taskType &&
+        //               <div className="navi-item">
+        //                 <a className="navi-link">
+        //                   <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props.task.taskType} </span>
+        //                 </a>
+        //               </div>
+        //             } */}
+        //             {/* {props.task.assignees && props.task.assignees.map((as, i) => {
+        //               return (
+        //                 <div className="navi-item">
+        //                   <a className="navi-link">
+        //                     <span className="navi-text">as  - </span>
+        //                   </a>
+        //                 </div>
+        //               )
+        //             })} */}
+        //           </div>
 
-                </div>
+        //         </div>
 
-                <div className="sub-task-list-toggle">
-                  <Icon name='tasks' />
-                </div>
+        //         <div className="sub-task-list-toggle">
+        //           <Icon name='tasks' />
+        //         </div>
 
-              </div>
+        //       </div>
 
-              <div className="tasks-action-area">
+        //       <div className="tasks-action-area">
 
-                {props.task?.taskType &&
-                  <div className="navi-item  ">
-                    <a className="navi-link">
-                      <span className="navi-text">
-                        {props.task.taskType == 'PIN' &&
-                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pin_blue.png`} />
-                        }
+        //         {props.task?.taskType &&
+        //           <div className="navi-item  ">
+        //             <a className="navi-link">
+        //               <span className="navi-text">
+        //                 {props.task.taskType == 'PIN' &&
+        //                   <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pin_blue.png`} />
+        //                 }
 
-                      </span>
-                    </a>
-                  </div>
-                }
-                {/* {props.task.assignees && props.task.assignees.map((as, i) => {
-                  return (
-                    <div className="navi-item " style={{ paddingLeft: '154px' }}>
-                      <a className="navi-link">
-                        <span className="navi-text"> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} /> </span>
-                      </a>
-                    </div>
-                  )
-                })} */}
-                {props.task?.assignees.length > 0 ?
+        //               </span>
+        //             </a>
+        //           </div>
+        //         }
+        //         {/* {props.task.assignees && props.task.assignees.map((as, i) => {
+        //           return (
+        //             <div className="navi-item " style={{ paddingLeft: '154px' }}>
+        //               <a className="navi-link">
+        //                 <span className="navi-text"> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} /> </span>
+        //               </a>
+        //             </div>
+        //           )
+        //         })} */}
+        //         {props.task?.assignees.length > 0 ?
 
-                  <div className="navi-item d-flex">
-                    <a className="navi-link">
-                      <span className="navi-text pin-action"> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} /> </span>
-                    </a>
-                    <Popup trigger={<Button className="more-user-listing">3+</Button>} flowing hoverable>
-                      <Grid>
-                        <Grid.Column textAlign='center'>
-                          <div className="user-tooltip-listing">
-                            <Popup className="user-tooltip-name"
-                              trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
-                              content='Mike'
-                              size='mini'
-                            />
-                            <Popup className="user-tooltip-name"
-                              trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
-                              content='John'
-                              size='mini'
-                            />
-                            <Popup className="user-tooltip-name"
-                              trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
-                              content='Hussy'
-                              size='mini'
-                            />
-                            <Popup className="user-tooltip-name"
-                              trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
-                              content='Kevin'
-                              size='mini'
-                            />
-                          </div>
-                        </Grid.Column>
-                      </Grid>
-                    </Popup>
-                  </div> : null
-                }
-
-
-                <div className="symbol-group symbol-hover py-2" >
-                  <div className="symbol symbol-30 d-flex">
+        //           <div className="navi-item d-flex">
+        //             <a className="navi-link">
+        //               <span className="navi-text pin-action"> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} /> </span>
+        //             </a>
+        //             <Popup trigger={<Button className="more-user-listing">3+</Button>} flowing hoverable>
+        //               <Grid>
+        //                 <Grid.Column textAlign='center'>
+        //                   <div className="user-tooltip-listing">
+        //                     <Popup className="user-tooltip-name"
+        //                       trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+        //                       content='Mike'
+        //                       size='mini'
+        //                     />
+        //                     <Popup className="user-tooltip-name"
+        //                       trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+        //                       content='John'
+        //                       size='mini'
+        //                     />
+        //                     <Popup className="user-tooltip-name"
+        //                       trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+        //                       content='Hussy'
+        //                       size='mini'
+        //                     />
+        //                     <Popup className="user-tooltip-name"
+        //                       trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+        //                       content='Kevin'
+        //                       size='mini'
+        //                     />
+        //                   </div>
+        //                 </Grid.Column>
+        //               </Grid>
+        //             </Popup>
+        //           </div> : null
+        //         }
 
 
-                    {/* <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user2.png`} /> */}
-                    <span  >
+        //         <div className="symbol-group symbol-hover py-2" >
+        //           <div className="symbol symbol-30 d-flex">
 
-                      <Dropdown icon='ellipsis horizontal' pointing='right'>
-                        <Dropdown.Menu>
-                          <Dropdown.Item onClick={() => veiwTaskbyId(props.task, props.id)} icon='eye' text={t("common.view_details")} />
-                          <Dropdown.Item onClick={() => editTaskbyId(props.task, props.id)} icon='pencil' text={t("common.edit")} />
-                          <Dropdown.Item onClick={() => updateStatus(props.task, props.id)} icon='check circle outline' text={t("project_tab_menu.task.re_open")} />
-                          <Dropdown.Item onClick={() => deleteTaskbyId(props.task, props.id)} icon='trash alternate outline' text={t("common.delete")} />
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-          </div>
-        </div>
+        //             {/* <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user2.png`} /> */}
+        //             <span  >
+
+        //               <Dropdown icon='ellipsis horizontal' pointing='right'>
+        //                 <Dropdown.Menu>
+        //                   <Dropdown.Item onClick={() => veiwTaskbyId(props.task, props.id)} icon='eye' text={t("common.view_details")} />
+        //                   <Dropdown.Item onClick={() => editTaskbyId(props.task, props.id)} icon='pencil' text={t("common.edit")} />
+        //                   <Dropdown.Item onClick={() => updateStatus(props.task, props.id)} icon='check circle outline' text={t("project_tab_menu.task.re_open")} />
+        //                   <Dropdown.Item onClick={() => deleteTaskbyId(props.task, props.id)} icon='trash alternate outline' text={t("common.delete")} />
+        //                 </Dropdown.Menu>
+        //               </Dropdown>
+        //             </span>
+        //           </div>
+        //         </div>
+        //       </div>
+        //     </div>
+
+        //   </div>
+        // </div>
         :
 
         <div className={props?.task?.taskType && props?.task?.taskType == 'PIN' ? "card1 card-custom gutter-b task-main-con pinned-box" : "card1 card-custom gutter-b task-main-con"} >
