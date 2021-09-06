@@ -47,7 +47,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
   const [protocolEndTime, setProtocolEndTime] = React.useState("");
   const [protocolDescription, setProtocolDescription] = React.useState("");
   const [errors, setErrors] = React.useState<AddProtocolErrors>({});
-  const {t} = useTranslation()
+  const { t } = useTranslation()
 
   React.useEffect(() => {
     if (props.openAddProtocol) {
@@ -105,8 +105,8 @@ export function ModalAddProtocol(props: AddProtocolProps) {
     return new Date(finalDateTime)
   }
 
-  const onDescription = (html) => {
-    setProtocolDescription(html)
+  const onDescription = (e) => {
+    setProtocolDescription(e.target.value)
   }
 
   const openProtocolAddPopup = () => {
@@ -129,7 +129,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
     if (!protocolEndTime) {
       errorResponse.endTimeError = t("common.errors.end_time")
     }
-    if(protocolStartTime > protocolEndTime) {
+    if (protocolStartTime > protocolEndTime) {
       errorResponse.startEndTimeError = t("common.errors.start_end_time")
     }
     return errorResponse
@@ -154,9 +154,9 @@ export function ModalAddProtocol(props: AddProtocolProps) {
 
     const protocolDurationSeconds = (endProtocolDateTime.getTime() - startProtocolDateTime.getTime()) / 1000
     const protocolDurationMinutes = `${protocolDurationSeconds / 60} min`
-    
+
     const data = {
-      companyId:props.companyId,
+      companyId: props.companyId,
       projectTypeId: props.projectTypeId,
       workTypeId: props.sessionDetail.SessionByID.worktypeID,
       sessionId: props.sessionId,
@@ -165,9 +165,9 @@ export function ModalAddProtocol(props: AddProtocolProps) {
       protocolStartTime: new Date(startProtocolDateTime),
       protocolEndTime: endProtocolDateTime,
       protocolDescription,
-      meetings:[],
-      protocolFiles:[],
-      protocolDuration:protocolDurationMinutes,
+      meetings: [],
+      protocolFiles: [],
+      protocolDuration: protocolDurationMinutes,
       status: 'SCHEDULED'
     }
 
@@ -219,7 +219,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                      {t("common.title")} <span className="danger">*</span>
+                        {t("common.title")} <span className="danger">*</span>
                       </label>
                       <Input
                         placeholder="Team onboarding"
@@ -291,27 +291,30 @@ export function ModalAddProtocol(props: AddProtocolProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>{t("common.desc")}</label>
-                      {/* <TextArea placeholder="Tell us more" /> */}
-                      <ReactQuill
+                      <TextArea placeholder={t("common.tell_us_more")}
+                        value={protocolDescription}
+                        onChange={onDescription}
+                      />                      {/* <ReactQuill
                         value={protocolDescription}
                         modules={{
-                          toolbar: {
-                            container: [
-                              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                              ['bold', 'italic', 'underline'],
-                              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                              [{ 'align': [] }],
-                              ['link', 'image'],
-                              ['clean'],
-                              [{ 'color': [] }]
-                            ]
-                          }
+                          toolbar: false
+                          // {
+                          //   container: [
+                          //     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                          //     ['bold', 'italic', 'underline'],
+                          //     [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                          //     [{ 'align': [] }],
+                          //     ['link', 'image'],
+                          //     ['clean'],
+                          //     [{ 'color': [] }]
+                          //   ]
+                          // }
                         }}
                         placeholder={t("common.tell_us_more")}
                         onChange={(content, delta, source, editor) => onDescription(content)}
                         // onKeyDown={onKeyPresDescription}
                         id="txtDescription"
-                      />
+                      /> */}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -341,9 +344,9 @@ export function ModalAddProtocol(props: AddProtocolProps) {
                   <Grid.Column>
                     <Form.Field>
                       <Checkbox
-                      label="Add Invitation"
-                      checked={openAddInvitation}
-                      onChange={hanleCheckbox}
+                        label="Add Invitation"
+                        checked={openAddInvitation}
+                        onChange={hanleCheckbox}
                       />
                     </Form.Field>
                   </Grid.Column>

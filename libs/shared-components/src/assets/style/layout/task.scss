@@ -170,6 +170,7 @@
   font-size: 1.4rem;
   border-style: dashed;
   align-items: center;
+  margin-top: 15px;
   @include flex(flex);
   @include align-items(center);
 }
@@ -637,6 +638,7 @@ span.anchor_complete.checklist-complete-box span.material-icons.check-grey {
   height: auto !important;
   input {
     height: auto !important;
+    margin: 0.334em 0 0.334em 0.642857em;
   }
   .divider.text {
     padding: 5px;
@@ -672,9 +674,10 @@ button.anchor_complete i {
 h3.alltask {
   margin-bottom: 15px;
   position: relative;
-  a {
+  span {
+    font-size: 14px;
     font-weight: 400;
-    color: #1e70bf;
+    color: #718898;
     margin-left: 5px;
   }
   i {
@@ -776,6 +779,13 @@ button.ui.button.more-user-listing {
 
 .completed-task-con {
   margin-top: 40px;
+  &.expand {
+    h3.alltask {
+      i {
+        transform: rotate(180deg);
+      }
+    }
+  }
 }
 
 .task-action-area {
@@ -798,6 +808,43 @@ button.ui.button.more-user-listing {
     font-weight: 500;
     &:hover {
       color: #2D62ED;
+    }
+  }
+}
+
+.add-extra-files {
+  border-top: 1px solid #ededed;
+  padding: 10px 0 !important;
+  margin-top: 22px !important;
+  border-bottom: 1px solid #ededed;
+  margin-bottom: 15px !important;
+  .field {
+    @include flex(flex);
+    @include align-items(center);
+    @include justify-content(space-between);
+    button.icon-border {
+      color: color('blue', 'base');
+      padding: 0;
+      i {
+        font-size: 16px;
+        margin-right: 5px;
+      }
+    }
+  }
+}
+
+.filter-with-add-file {
+  @include flex(flex);
+  @include align-items(center);
+  img {
+    margin-right: 15px;
+  }
+  .add-files-modal {
+    button {
+      position: relative;
+      top: inherit;
+      left: inherit;
+      right: inherit;
     }
   }
 }

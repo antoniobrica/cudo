@@ -11,6 +11,7 @@ export interface InvitationDeleteProps {
     meetingId?
     openDeleteInvitation?
     cancel?
+    deleteInvitation?
 }
 
 export function InvitationDelete(props: InvitationDeleteProps) {
@@ -19,54 +20,12 @@ export function InvitationDelete(props: InvitationDeleteProps) {
         variables: { meetingId: props?.meetingId },
     });
 
-    const [deleteMeeting, { data }] = useMutation(DELETE_INVITATION,
-        {
-            refetchQueries: [
-                {
-                    query: GET_INVITATIONS,
-                    variables: { sessionId: props?.sessionId }
-                }
-            ]
-        }
-    )
-
-    const deleteInvitation = (meetingId) => {
- 
-        deleteMeeting({
-            variables: { meetingId },
-            update: (
-                cache,
-                data
-            ) => {
-                const cacheData = cache.readQuery({
-                    query: GET_INVITATIONS,
-                    variables: { sessionId: props?.sessionId }
-                }) as IInvitations;
- 
-                const newMeetings = cacheData?.getMeetingList?.results?.filter(
-                    (item) => item.meetingId !== meetingId
-                  );
-                  
-                cache.writeQuery({
-                    query: GET_INVITATIONS,
-                    data: {
-                        getMeetings: newMeetings
-                    },
-                    variables: { sessionId: props?.sessionId }
-                });
-
-            }
-        });
-
-        props.cancel(true)
-    }
-
     return (
         <div>
             {invitationDetailData?.getMeetingById ?
                 <ModalDeleteInvitation
                     meetingId={invitationDetailData?.getMeetingById?.meetingId}
-                    deleteInvitation={deleteInvitation}
+                    deleteInvitation={props.deleteInvitation}
                     openDeleteInvitation={props.openDeleteInvitation}
                     cancel={props.cancel}
                 /> : null}

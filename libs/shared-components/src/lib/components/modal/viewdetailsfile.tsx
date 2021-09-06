@@ -6,6 +6,7 @@ import { PinTaskListIndex } from '@cudo/mf-task-lib';
 
 import { Document, Page, pdfjs } from "react-pdf";
 import { MS_SERVICE_URL } from '@cudo/mf-core';
+import CanvasImage from './canvasimage';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 function exampleReducer(state, action) {
@@ -23,6 +24,12 @@ const countryOptions = [
   { key: 'ax', value: 'ax', text: 'Aland Islands' },
 
 ]
+
+const versionOptions = [
+  { key: 'af', value: 'version 1', text: 'Version 1' },
+  { key: 'ax', value: 'version 2', text: 'Version 2' },
+]
+
 export interface FileDetailsProps {
   open?,
   filesData?,
@@ -41,9 +48,16 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
   const [numPages, setNumPages] = React.useState(null);
   const [pageNumber, setPageNumber] = React.useState(1);
   const [isPinCreated, setIsPinCreated] = React.useState<boolean>(false);
+  const [pinSavedOnCanvase, setPinSavedOnCanvase] = React.useState(false);
+
+  const [hideCommentPanel, setHideCommentPanel] = React.useState(false)
+  const [expandVersion, setExpandVersion] = React.useState(false);
+
+  const [pinCount, setPinCount] = React.useState(0)
+  const [cord, setCord] = React.useState(null);
+
   function onDocumentLoadSuccess({ numPages }) {
-    console.log('numPages', numPages);
-    setNumPages(numPages);
+     setNumPages(numPages);
   }
 
 
@@ -66,7 +80,6 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
   })
   React.useEffect(() => {
     if (props.filesData) {
-      console.log('filesData', props.filesData);
       setFiles(props.filesData)
     }
   }, [props.filesData])
@@ -77,12 +90,33 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
   const openf = () => {
     setOpen(true)
   }
+
+  const onClickFileVersion = () => {
+    // const onClickFileVersion = (uploadedFileVersionId) => {
+    // if (uploadedFileVersionId === selectedExpandVersionId) {
+    // 	setExpandVersion(!expandVersion)
+    // } else {
+    setExpandVersion(!expandVersion)
+    // }
+
+    // setSelectedExpandVersionId(uploadedFileVersionId)
+    // props.selectedFileId(uploadedFileVersionId)
+  }
+
+  const getPinCount = (count) => {
+    setPinCount(count)
+  }
+
+  const getCoardinates = (data) => {
+    setCord(data);
+  }
+
   return (
     <div id="navbar">
       {/* <Button className="grey-btn" onClick={() => dispatch({ type: 'open', size: 'fullscreen' })}>
            view Files
         </Button> */}
-      <Modal className="view-pin-detail-popup"
+      <Modal className={hideCommentPanel ? "view-pin-detail-popup hide-sidebar" : "view-pin-detail-popup"}
         // closeIcon
         size={'fullscreen'}
         open={open}
@@ -105,9 +139,21 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                   </Document>
                   :
                   // <Canvas imgUrl={imgUrl} isPinCreated={isPinCreated} setIsPinCreated={setIsPinCreated}></Canvas>
-                  <Image src={imgUrl} fluid />
+                  // <Image src={imgUrl} fluid />
+                  <div className="left-side-image-canvas">
+                    <CanvasImage
+                      pinSaved={setPinSavedOnCanvase}
+                      // savePin={saveNewPinOnCanvase}
+                      imgUrl={imgUrl}
+                      coardinates={getCoardinates}
+                      fileId={props.filesData.uploadedFileID}
+                      allowToCreateNewPin={false}
+                      isPinCreated={isPinCreated}
+                      setIsPinCreated={setIsPinCreated}
+                    ></CanvasImage>
+                  </div>
                 }
-                <div className="file-pagination">File versions
+                {/* <div className="file-pagination">File versions
                   <Pagination
                     defaultActivePage={1}
                     firstItem={null}
@@ -116,14 +162,25 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     secondary
                     totalPages={1}
                   />
-                </div>
+                </div> */}
               </div>
             </div>
 
+
+
             <div className="right-side-file-information">
+
               <div>
                 <Form>
-                  <Modal.Header><h3>File detail <i aria-hidden="true" className="close icon"></i></h3></Modal.Header>
+                  <Modal.Header><h3 className="title-select">
+                    <span> File detail
+                      <Select placeholder='Select version' options={versionOptions} />
+                    </span>
+                    <span>
+                      <i className="ms-Icon ms-Icon--Hide2 hide-icon" aria-hidden="true" onClick={() => setHideCommentPanel(true)}><span>Hide</span></i>
+                      <i aria-hidden="true" className="close icon" onClick={cancel}></i>
+                    </span>
+                  </h3></Modal.Header>
                   <Grid columns={2}>
                     <Grid.Row>
                       <Grid.Column>
@@ -169,11 +226,11 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     </Grid.Row>
                   </Grid>
 
-                  <Grid columns={1} className="file-versioning-box expand">
+                  <Grid columns={1} className={expandVersion ? "file-versioning-box expand" : "file-versioning-box"}>
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <label>File versions(1) <i className="ms-Icon ms-Icon--ChevronDown right_float" aria-hidden="true"></i></label>
+                          <label>File versions(1) <i className="ms-Icon ms-Icon--ChevronDown right_float" aria-hidden="true" onClick={() => onClickFileVersion()}></i></label>
                           <div className="file-version-list">
                             <div className="version-wise-files">
                               <span>Version 1 -</span>
@@ -204,9 +261,10 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <label>Tasks (1)</label>
-                          {!isPinCreated ?
-                            <PinTaskListIndex filesData={props.filesData} cord={''}></PinTaskListIndex> : null}
+                          <label>Tasks ({pinCount})</label>
+                          {/* {!isPinCreated ? */}
+                          <PinTaskListIndex filesData={props.filesData} cord={''} pinCount={getPinCount} ></PinTaskListIndex>
+                          {/* : null} */}
                           {/* <div className="pin-task-completed-card">
                             <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} />
                             <div className="pin-task-description-box">
@@ -283,6 +341,8 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                 </Form>
               </div>
             </div>
+            <span className="expand-sidebar" onClick={() => setHideCommentPanel(false)}>Comments</span>
+
           </Form>
         </Modal.Content>
       </Modal>

@@ -1,5 +1,5 @@
-/**
- * This is not a production server yet!
+/**                     
+ *      i This is not a production server yet!
  * This is only a minimal backend to get started.
  */
 
@@ -10,7 +10,7 @@ import { AppModule } from './app/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const globalPrefix = 'api';
+  const globalPrefix = 'api/ms-meeting';
   app.setGlobalPrefix(globalPrefix);
   app.useGlobalPipes(new ValidationPipe({ skipMissingProperties: true }));
 

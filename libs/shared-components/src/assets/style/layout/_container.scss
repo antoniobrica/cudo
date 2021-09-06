@@ -4,3 +4,9 @@
 .tabs-main-info-container {
 	padding: 2rem;
 }
+
+#ProjectApp-container {
+	.ui.attached.segment.tab {
+		border: none;
+	}
+}

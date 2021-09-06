@@ -17,7 +17,9 @@ export function UserRegistration(props: UserRegistrationProps) {
   useEffect(() => {
     const request = initialiseRequest({ type: "register" }, { filterid: "flow" }) as Promise<any>
     request
-      .then(request => setRequestResponse(request))
+      .then(request1 => {
+        setRequestResponse(request1)
+      })
       .catch((error) => { console.log(error) })
   }, [setRequestResponse])
 

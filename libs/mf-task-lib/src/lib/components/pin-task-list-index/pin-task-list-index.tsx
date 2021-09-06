@@ -10,6 +10,7 @@ import { MS_SERVICE_URL } from '@cudo/mf-core';
 export interface PinTaskListIndexProps {
   filesData?
   cord?
+  pinCount?
 }
 const client = new ApolloClient({
   uri: MS_SERVICE_URL['ms_task'].url,
@@ -19,7 +20,7 @@ export function PinTaskListIndex(props: PinTaskListIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <PinTaskList filesData={props.filesData} cord={props.cord}></PinTaskList>
+        <PinTaskList filesData={props.filesData} cord={props.cord} pinCount={props?.pinCount}></PinTaskList>
       </ApolloHooksProvider>
     </ApolloProvider>
   );

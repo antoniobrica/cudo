@@ -17,7 +17,7 @@ import { AccordionExampleMenu, ModalExampleModal2, Cardbar, Menubar, Tabsbar, Me
 import ModalExampleCompany from 'libs/shared-components/src/lib/components/modal/companypopup';
 import ModalExamplePrinting from 'libs/shared-components/src/lib/components/modal/addprintingpopup';
 import ListExampleFloated from 'libs/shared-components/src/lib/components/task/taskarea';
-import ModalAddPrint from 'libs/shared-components/src/lib/components/modal/addfile';
+// import AddFileUpload from 'libs/shared-components/src/lib/components/modal/addfile';
 import ModalAddFile from 'libs/shared-components/src/lib/components/modal/addedfile';
 import FileStructure from 'libs/shared-components/src/lib/components/filestructure/filestask';
 import ModalExampleSize from 'libs/shared-components/src/lib/components/modal/viewdetailsfile';
@@ -66,6 +66,7 @@ import PinMaskTask from 'libs/shared-components/src/lib/components/modal/pinmask
 
 // import { Sidebar } from 'semantic-ui-react';
 import LazyLoading from 'libs/shared-components/src/lib/components/loader/lazyloader';
+import PopupLoading from 'libs/shared-components/src/lib/components/loader/popuploader';
 
 export function App() {
   return (
@@ -85,7 +86,7 @@ export function App() {
         <ModalExampleCompany></ModalExampleCompany><br />
         <ModalExamplePrinting></ModalExamplePrinting><br />
         <ListExampleFloated></ListExampleFloated><br /><br />
-        <ModalAddPrint></ModalAddPrint><br />
+        {/* <AddFileUpload></AddFileUpload><br /> */}
         <ModalAddFile></ModalAddFile><br />
         <FileStructure></FileStructure><br />
         <ModalExampleSize></ModalExampleSize><br />
@@ -127,7 +128,7 @@ export function App() {
         <ModalCost></ModalCost><br />
         <PinMaskTask></PinMaskTask><br />
         <LazyLoading></LazyLoading>
-
+        <PopupLoading></PopupLoading>
       </div>
 
     </Suspense>

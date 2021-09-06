@@ -15,6 +15,7 @@ const client = new ApolloClient({
 export interface FollowersIndexProps {
   parentFollowersSelect,
   followers?,
+  label?
 }
 
 export function FollowersIndex(props: FollowersIndexProps) {
@@ -24,7 +25,7 @@ export function FollowersIndex(props: FollowersIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <Followers followers={props.followers} parentFollowersSelect={onSelectF} />
+        <Followers followers={props.followers} parentFollowersSelect={onSelectF} label={props?.label} />
       </ApolloHooksProvider>
     </ApolloProvider>
   );

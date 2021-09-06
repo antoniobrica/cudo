@@ -32,7 +32,7 @@ export function MeetingTab(props: MeetingTab) {
       const resultList = props.sessionListData.paginatedSession.results
 
       setSessionList(resultList)
-      let categories = []
+      const categories = []
       resultList.forEach(({ meetingCategoryID, meetingCategoryTitle }) => {
         categories.push({ meetingCategoryID, meetingCategoryTitle })
       })

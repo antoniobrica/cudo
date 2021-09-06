@@ -11,20 +11,19 @@ export interface WorkTypeProps {
 }
 
 export function WorkType(props: WorkTypeProps) {
-  const [fields, setFields] = React.useState([{ workTypeName: null, estimatedCost: null ,workTypeID:null}])
-  const {t} = useTranslation()
+  const [fields, setFields] = React.useState([{ workTypeName: null, estimatedCost: null, workTypeID: null }])
+  const { t } = useTranslation()
 
   function handleChangeInput(i, event, field) {
     const values = [...fields];
-    if(field === 'worktype'){
-          values[i].workTypeName = event
+    if (field === 'worktype') {
+      values[i].workTypeName = event
     }
     else {
       values[i].estimatedCost = Number(event.target.value);
     }
     setFields(values);
     props.workTypeData(fields)
-    //console.log("fields",fields);
   }
 
   function handleAddInput() {
@@ -32,7 +31,7 @@ export function WorkType(props: WorkTypeProps) {
     values.push({
       workTypeName: '',
       estimatedCost: '',
-      workTypeID:''
+      workTypeID: ''
     });
     setFields(values);
   }
@@ -41,9 +40,8 @@ export function WorkType(props: WorkTypeProps) {
     values.splice(i, 1);
     setFields(values);
   }
-  const getWorktype = (data, id)=>{
-     console.log('selected-WorkType', data)
-     handleChangeInput(id, data,'worktype' )
+  const getWorktype = (data, id) => {
+    handleChangeInput(id, data, 'worktype')
   }
 
   return (
@@ -55,46 +53,46 @@ export function WorkType(props: WorkTypeProps) {
         </Table.Row>
       </Table.Header>
 
-     
-        <Table.Body>
-          {
-            fields.map((field, idx) => {
-              return (
-                <Table.Row key={`${field}-${idx}`}>
-                  <Table.Cell>
-                    <Form>
-                      {/* <Form.Field>
+
+      <Table.Body>
+        {
+          fields.map((field, idx) => {
+            return (
+              <Table.Row key={`${field}-${idx}`}>
+                <Table.Cell>
+                  <Form>
+                    {/* <Form.Field>
                         <Select placeholder='Select' className="small"  options={props.worktypes}
                           value={field.workTypeName}
                           onChange={e =>handleChangeInput( idx, e, 'worktype')}
                         />
                       </Form.Field> */}
-                      <WorkTypeDropdown data={props.worktypes} id={idx} selectedWorkType={getWorktype}/>
-                    </Form>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Form>
-                      <Form.Field className="estimated-cost-field">
-                        <Input label='$' size='small' className="full-width"
-                          type="text"
-                          value={field.estimatedCost}
-                          onChange={e =>handleChangeInput( idx, e, 'estCost')}
-                        />
-                      </Form.Field>
-                      <i className="ms-Icon ms-Icon--Delete delete-row" aria-hidden="true"></i>
-                    </Form>
-                  </Table.Cell>
-                </Table.Row>
-              )
-            }
+                    <WorkTypeDropdown data={props.worktypes} id={idx} selectedWorkType={getWorktype} />
+                  </Form>
+                </Table.Cell>
+                <Table.Cell>
+                  <Form>
+                    <Form.Field className="estimated-cost-field">
+                      <Input label='$' size='small' className="full-width"
+                        type="text"
+                        value={field.estimatedCost}
+                        onChange={e => handleChangeInput(idx, e, 'estCost')}
+                      />
+                    </Form.Field>
+                    <i className="ms-Icon ms-Icon--Delete delete-row" aria-hidden="true"></i>
+                  </Form>
+                </Table.Cell>
+              </Table.Row>
             )
           }
-          <Table.Row>
-            <Table.Cell colspan="2" className="add-more-work">
-              <a onClick={() => handleAddInput()}><i className="ms-Icon ms-font-xl ms-Icon--Add ms-fontColor-themePrimary"></i> {t("project_list.add_new_project.add_more_button")} </a>
-            </Table.Cell>
-          </Table.Row>
-        </Table.Body>
+          )
+        }
+        <Table.Row>
+          <Table.Cell colspan="2" className="add-more-work">
+            <a onClick={() => handleAddInput()}><i className="ms-Icon ms-font-xl ms-Icon--Add ms-fontColor-themePrimary"></i> {t("project_list.add_new_project.add_more_button")} </a>
+          </Table.Cell>
+        </Table.Row>
+      </Table.Body>
     </Table>
 
   );

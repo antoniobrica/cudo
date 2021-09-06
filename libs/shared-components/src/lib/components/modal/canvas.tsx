@@ -1,7 +1,9 @@
 
-import React, { Component, useEffect, useRef } from 'react'
+import React, { Component, useEffect, useRef, useState } from 'react'
 import axios from 'axios';
 import { MS_SERVICE_URL } from '@cudo/mf-core'
+
+import CanvasTransparentNewPin from './canvastransparentnewpin';
 export interface CanvasProps {
   imgUrl?,
   coardinates?,
@@ -26,6 +28,8 @@ export function Canvas(props: CanvasProps) {
   let startX = null;
   let startY = null;
 
+  const [isAllPinCanvasHide, setAllPinCanvasHide] = useState(true)
+
   const getPinQuery = `query Pins($uploadedFileID: String!) {
   pins(pinsFilter:{ 
     uploadedFileID: $uploadedFileID
@@ -47,22 +51,27 @@ export function Canvas(props: CanvasProps) {
     // canvasToDrawImageEle.height = canvasToDrawImageEle.clientHeight;
     setCtxToDrawCircle(canvasToDrawCircleEle.getContext("2d"));
     // setCtxToDrawImage(canvasToDrawImageEle.getContext("2d"));
+
     getPins().then(() => {
-      console.log("getPins Done", props.allowToCreateNewPin)
+
     })
+
   }, []);
   useEffect(() => {
+
     if (!props.isPinCreated)
       getPins().then(() => {
-        console.log("getPins Done", props.allowToCreateNewPin);
+
       })
   }, [props.isPinCreated]);
 
   useEffect(() => {
+
     redrawAfterPinPotionChanged();
   }, [pinList]);
 
   useEffect(() => {
+
     if (!isCircleSelectedOnMouseHover)
       return;
     redrawOnMouseHoverOverCircle();
@@ -111,7 +120,6 @@ export function Canvas(props: CanvasProps) {
 
 
   useEffect(() => {
-    console.log("On useeffect ", dragTarget, isCircleSelectedOnMouseDown, isCircleSelectedOnMouseHover);
     let lastBoxes = [...pinList];
     lastBoxes = lastBoxes.map((box) => {
       if (box.pinsID == dragTarget.pinsID) {
@@ -137,7 +145,6 @@ export function Canvas(props: CanvasProps) {
   }, [dragTarget, isCircleSelectedOnMouseDown, isCircleSelectedOnMouseHover]);
 
   useEffect(() => {
-    console.log("Pin Save flag recieved in canvas component ", props.savePin)
     if (!props.savePin) { props.pinSaved(false); return; }
     saveNewPin(dragTarget);
   }, [props.savePin]);
@@ -146,7 +153,6 @@ export function Canvas(props: CanvasProps) {
     try {
       if (dragTargetTemp?.pinsID == '') {
 
-        console.log("Save Pin call", dragTargetTemp)
         const res = await axios.post(
           MS_SERVICE_URL['ms_document'].url,
           {
@@ -422,12 +428,13 @@ export function Canvas(props: CanvasProps) {
     setx_Axis(startX);
     sety_Axis(startY);
     hitCircle(startX, startY);
-    if (props.allowToCreateNewPin) {
-      props.setIsPinCreated(true);
-    }
+    // if (props.allowToCreateNewPin) {
+    //   props.setIsPinCreated(true);
+    // }
   }
 
   const handleMouseMove = e => {
+    setAllPinCanvasHide(true)
     if (!isCircleSelectedOnMouseHover) {
       startX = e.nativeEvent.offsetX - canvasToDrawCircle.current.clientLeft;
       startY = e.nativeEvent.offsetY - canvasToDrawCircle.current.clientTop;
@@ -436,7 +443,6 @@ export function Canvas(props: CanvasProps) {
       hitCircleOnMouseHover(startX, startY);
     }
     if (!isCircleSelectedOnMouseDown) return;
-    console.log("isCircleSelectedOnMouseDown on mouse move", isCircleSelectedOnMouseDown)
     const mouseX = e.nativeEvent.offsetX - canvasToDrawCircle.current.clientLeft;
     const mouseY = e.nativeEvent.offsetY - canvasToDrawCircle.current.clientTop;
     startX = mouseX;
@@ -456,19 +462,32 @@ export function Canvas(props: CanvasProps) {
     handleMouseUp(e);
   }
 
+  const getSelectedNewTaskCoOrdinates = (newPinDetail) => {
+    // setHideNewPinMoveCanvas(true)
+    setpinList([...pinList, newPinDetail])
+    props.setIsPinCreated(true);
+  }
+
   return (
     <div className="outsideWrapper">
       <div className="insideWrapper">
-        <canvas className="coveringCanvas"
+
+        <canvas id="layer1" className="coveringCanvas"
           width="800" height="700"
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseOut={handleMouseOut}
           ref={canvasToDrawCircle}></canvas>
-        <canvas className="coveringCanvas"
-          width="800" height="700"
-          ref={canvasToDrawImage}></canvas>
+
+        {props?.allowToCreateNewPin ?
+          <CanvasTransparentNewPin
+            allowToCreateNewPin={props.allowToCreateNewPin}
+            selectedNewTaskCoOrdinate={getSelectedNewTaskCoOrdinates}
+            lastPinDetail={pinList && pinList?.length && pinList[pinList?.length - 1]}
+          ></CanvasTransparentNewPin>
+          : null}
+
       </div>
     </div>
   );

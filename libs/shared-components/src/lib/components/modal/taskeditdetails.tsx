@@ -107,10 +107,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
         var de = props.taskData.endDate
         setEndDate(formatDate(de));
       }
-      // console.log('dateE', d);
-
-      // var d2 = d.substring(5, 7) + '/' + d.substring(8, 10) + '/' + d.substring(0, 4);
-
+      
       const assignees = [];
       props?.taskData?.assignees?.map((data, i) => {
         assignees.push({ userID: data.userID, userName: data.userName })
@@ -296,7 +293,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
     setPhasesName(data.phaseName)
   }
   const onDescriptionChange = e => {
-    setDescription(e);
+    setDescription(e.target.value);
   }
 
   const validation = () => {
@@ -405,28 +402,29 @@ export const ModalTaskEdit = (props: AlertProps) => {
                   <Grid.Column>
                     <Form.Field>
                       <label>{t("common.desc")} </label>
-                      {/* <TextArea placeholder="Tell us more"
+                      <TextArea placeholder={t("common.desc_placeholder")}
                         value={description}
-                        onChange={onDescriptionChange} /> */}
-                      <ReactQuill
+                        onChange={onDescriptionChange} />
+                      {/* <ReactQuill
                         value={description}
                         modules={{
-                          toolbar: {
-                            container: [
-                              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                              ['bold', 'italic', 'underline'],
-                              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                              [{ 'align': [] }],
-                              ['link', 'image'],
-                              ['clean'],
-                              [{ 'color': [] }]
-                            ],
-                          }
+                          toolbar: false
+                          // {
+                          //   container: [
+                          //     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                          //     ['bold', 'italic', 'underline'],
+                          //     [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                          //     [{ 'align': [] }],
+                          //     ['link', 'image'],
+                          //     ['clean'],
+                          //     [{ 'color': [] }]
+                          //   ]
+                          // }
                         }}
                         placeholder={t("common.desc_placeholder")}
                         onChange={(content, delta, source, editor) => onDescriptionChange(content)}
                         id="txtDescription"
-                      />
+                      /> */}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>

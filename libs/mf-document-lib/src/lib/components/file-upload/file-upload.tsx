@@ -84,13 +84,13 @@ export function FileUpload(props: FileProps) {
   const getUploadsEffect = () => {
     const sub = context.uploadedItems$
       .pipe(tap(items => {
-        console.log('getUploadsEffect', items);
+        
         setItems(items);
         const fileArr = [];
         for (let i = 0; i < items.length; i++) {
           fileArr.push({ fileURL: items[i].filename, fileTitle: items[i].filename, fileType: items[i].type, fileVersion: "v1" });
         }
-        console.log('fileArr', fileArr);
+       
 
         setFileList(fileArr);
       }))
@@ -106,12 +106,12 @@ export function FileUpload(props: FileProps) {
   ]
   const [open, setOpen] = React.useState(false)
   const setBKPIDChange = (data) => {
-    console.log('bkp=f', data.isFolder);
+    
     setisFolder(data.isFolder)
     if (data.isFolder) {
       setfolderName(data.folderTitle)
       setDirectory(data.folderTitle)
-      console.log('folderName', folderName);
+       
     }
     else {
       setBKPIDTitle(data.BKPIDTitle)
@@ -151,15 +151,9 @@ export function FileUpload(props: FileProps) {
   }
 
   const uploadFiles = (files: FileList | null) => {
-    console.log('files', files);
+    
     files && context.uploadItems(files);
-    // const fileArr = [];
-    // for (let i = 0; i < items.length; i++) {
-    //   fileArr.push({ fileURL: items[i].filename, fileTitle: items[i].filename, fileType: items[i].type, fileVersion: "v1" });
-    // }
-    // console.log('fileArr', fileArr);
-
-    // setFileList(fileArr);
+     
   }
   enum fileType {
     IMAGE = "IMAGE",
@@ -170,7 +164,7 @@ export function FileUpload(props: FileProps) {
 
     props.confirm(files)
     // files.map((file, i) => {
-    //   console.log('file==', file);
+     
     //   addFile({
     //     variables: {
       //     projectId,
@@ -206,14 +200,14 @@ export function FileUpload(props: FileProps) {
   };
 
   const folderOpen = () => {
-    console.log('folder');
+    
     setFolderOpen(true);
   }
   const cancel = (data) => {
     setFolderOpen(false);
   }
   const folderData = (data) => {
-    console.log('folderName=>', data);
+    
     setFolderOpen(false);
   }
 

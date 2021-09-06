@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify'
 
 export const showToastMessage = (message, type) => {
-  console.log('---showToastMessage--message, type--', message, type)
+ 
     if (typeof message !== 'string') {
       return
     }

@@ -1,0 +1,20 @@
+FROM nginx:latest
+WORKDIR /var/www/html
+RUN rm -rf /etc/nginx/conf.d/*
+COPY mf-contain-nginx.conf /etc/nginx/conf.d/nginx.conf
+COPY . .
+RUN rm -f nginx.conf
+RUN rm -f mf-contain-nginx.conf
+RUN groupadd -r www && useradd --no-log-init -r -g www www
+RUN mkdir -p /var/lib/nginx/tmp /var/log/nginx /var/cache/nginx/ \
+    && chown -R www:www /var/lib/nginx /var/log/nginx  /var/cache/nginx /var/www \
+    && chmod -R 755 /var/lib/nginx /var/log/nginx
+RUN touch /run/nginx.pid \
+ && chown -R www:www /run/nginx.pid
+RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+    && ln -sf /dev/stderr /var/log/nginx/error.log
+RUN ls -ld /var/cache/nginx/ /var/www/html
+USER www
+EXPOSE 8080
+
+CMD nginx -g "daemon off;"

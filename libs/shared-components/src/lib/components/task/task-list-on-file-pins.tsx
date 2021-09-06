@@ -13,7 +13,6 @@ export interface TaskListOnFilePinsProps {
 
 export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
   const updateStatus = (task) => {
-    console.log('updateTask', task)
     props.updateTask(task)
   }
   const deleteTaskbyId = (task) => {
@@ -30,7 +29,7 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
       <Form.Field>
         <div>
           {props.pinTasks && props.pinTasks.map((task, i) => {
-            console.log("task status", task.status)
+           
             return (
               <div>
                 <div className="pin-task-completed-card">

@@ -16,6 +16,7 @@ export function LoginSelect(props: LoginSelectProps) {
   const [email, setEmail] = useState('');
   const [companies, setCompanies] = useState([]);
   const [selectedCompany, setselectedCompany] = useState('');
+
   const handleLogin = () => {
     if (selectedCompany) {
       localStorage.setItem('selectedCompany', selectedCompany);
@@ -50,7 +51,6 @@ export function LoginSelect(props: LoginSelectProps) {
             `
         }
       }).then((result) => {
-        console.log(result.data?.data?.userByEmail);
         if (result.data?.data?.userByEmail?.length) {
           if (result.data?.data?.userByEmail?.length == 1) {
             const element = result.data?.data?.userByEmail[0];

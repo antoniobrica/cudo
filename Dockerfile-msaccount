@@ -8,7 +8,7 @@ COPY cypress*.json ./
 RUN npm install
 COPY . .
 #RUN npm run build ms-account
-#CMD ["node", "dist/main"]
+##CMD ["node", "dist/main"]
 #RUN nohup npm start ms-account > stdout.txt 2> stderr.txt &
 EXPOSE 5001
 CMD ["npm", "start","ms-account"]

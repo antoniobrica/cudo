@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useState } from "react";
 
 const check = (host, callback) => {
-    fetch(host, {
+  fetch(host, {
     method: "GET",
   })
     .then(() => callback(true))
@@ -9,17 +9,18 @@ const check = (host, callback) => {
 }
 
 function MicroFrontend({ name, host, history }) {
-  
+
   const [shouldReturnMain, setShouldReturnMain] = useState(undefined)
+
   useLayoutEffect(() => {
     const scriptId = `render${name}`;
 
     const renderMicroFrontend = () => {
-      window[`render${name}`](`${name}-container`, history);      
+      window[`render${name}`](`${name}-container`, history);
     };
-    
+
     if (document.getElementById(scriptId)) {
-      renderMicroFrontend();      
+      renderMicroFrontend();
       return;
     }
     const main = "main.js";
@@ -33,18 +34,7 @@ function MicroFrontend({ name, host, history }) {
       setShouldReturnMain(true)
 
     };
-    // script.addEventListener("error", () => {
-    //   setShouldReturnMain(false)
-    //   console.log('--script load error-----')
 
-    // })
-
-    // script.onError = () => {
-    //     setShouldReturnMain(false)
-    //     console.log('--script load error-----')
-
-    // }
-  
     check(host, (isServerRunning) => {
       if (isServerRunning) {
         document.head.appendChild(script);
@@ -59,7 +49,7 @@ function MicroFrontend({ name, host, history }) {
       window[`unmount${name}`] && window[`unmount${name}`](`${name}-container`);
     };
   }, []);
- 
+
   if (shouldReturnMain === undefined) {
     return null
   }

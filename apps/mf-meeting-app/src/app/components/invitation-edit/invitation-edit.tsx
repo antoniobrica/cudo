@@ -12,6 +12,8 @@ export interface InvitationEditProps {
     openEditInvitation?
     cancel?
     dataList?
+    getInvitationErrorMessage?
+    getInvitationToasterMessage?
 }
 
 export function InvitationEdit(props: InvitationEditProps) {
@@ -85,6 +87,9 @@ export function InvitationEdit(props: InvitationEditProps) {
                     loading={loading}
                     data={data}
                     dataList={props.dataList}
+                    error={error}
+                    getInvitationToasterMessage={props.getInvitationToasterMessage}
+                    getInvitationErrorMessage={props.getInvitationErrorMessage}
                 /> : null}
         </div>
     )

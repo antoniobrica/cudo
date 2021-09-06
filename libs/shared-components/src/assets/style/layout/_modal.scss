@@ -247,6 +247,20 @@ div.ui.toggle.checkbox label:before {
 .slect-file-search-box {
   display: flex;
   justify-content: space-between;
+  .field {
+    &.search-box-file {
+      margin: 0;
+      img {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 2;
+      }
+    }
+    input {
+      padding: 0.5rem 3.5rem 0.5rem 1.5rem !important;
+    }
+  }
 }
 .select-file-modal {
   .navbar-collapse {
@@ -260,7 +274,7 @@ div.ui.toggle.checkbox label:before {
 div.add-files-modal button {
   position: absolute;
   right: 36px;
-  top: 40px;
+  top: 35px;
   z-index: 9;
 }
 .files-tab-outer .ui.card {
@@ -463,35 +477,7 @@ img.filter-icon {
       }
     }
   }
-  .uploaded-files {
-    h3 {
-      font-size: 14px;
-      font-weight: 500;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-      li {
-        @include flex(flex);
-        @include align-items(center);
-        @include justify-content(space-between);
-        margin: 5px 0;
-        p {
-          @include flex(flex);
-          @include align-items(center);
-          font-size: 14px;
-          font-weight: 500;
-          margin: 0;
-          img {
-            margin-right: 12px;
-          }
-        }
-        i {
-          cursor: pointer;
-        }
-      }
-    }
-  }
+  
   .file-setting-option {
     margin-bottom: 20px;
     h3 {
@@ -532,6 +518,7 @@ img.filter-icon {
           @include flex(flex);
           @include align-items(center);
           font-size: 13px;
+          cursor: pointer;
           input {
             margin-right: 7px;
           }
@@ -541,8 +528,66 @@ img.filter-icon {
   }
 }
 
+.add-extra-files {
+  .add-files-list {
+    padding-top: 0;
+  }
+}
+
+.uploaded-files {
+  h3 {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    li {
+      @include flex(flex);
+      @include align-items(center);
+      @include justify-content(space-between);
+      margin: 8px 0;
+      p {
+        @include flex(flex);
+        @include align-items(center);
+        font-size: 14px;
+        font-weight: 500;
+        margin: 0;
+        img {
+          margin-right: 12px;
+        }
+      }
+      i {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
 .overflow-hidden {
   overflow: hidden !important;
+}
+
+.ui.modal.disabled-fields {
+  overflow: hidden;
+  i.close.icon {
+    opacity: .5;
+    pointer-events: none;
+  }
+  .form {
+    .field {
+      opacity: .5;
+      pointer-events: none;
+    }
+  }
+  .actions {
+    button {
+      .icon-border {
+        opacity: .5;
+        pointer-events: none;
+      }
+    }
+  }
 }
 
 .ui.inverted.dimmer {

@@ -39,9 +39,7 @@ export const ModalViewTask = (props: AlertProps) => {
       setOpen(props.openAlertF);
     }
   }, [props.openAlertF]);
-  React.useEffect(() => {
-    console.log('taskData', props.taskData)
-  })
+ 
   const openf = () => {
     setOpen(true)
   }
@@ -106,28 +104,29 @@ export const ModalViewTask = (props: AlertProps) => {
                   <Grid.Column>
                     <Form.Field className="filled-fields">
                       <label>{t("common.desc")} </label>
-                      {/* <span>
+                      <span>
                         {props?.taskData?.description}
-                      </span> */}
-                      <ReactQuill
+                      </span>
+                      {/* <ReactQuill
                         value={props?.taskData?.description}
                         readOnly={true}
                         modules={{
-                          toolbar: {
-                            container: [
-                              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                              ['bold', 'italic', 'underline'],
-                              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                              [{ 'align': [] }],
-                              ['link', 'image'],
-                              ['clean'],
-                              [{ 'color': [] }]
-                            ],
-                          }
+                          toolbar: false
+                          // {
+                          //   container: [
+                          //     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                          //     ['bold', 'italic', 'underline'],
+                          //     [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                          //     [{ 'align': [] }],
+                          //     ['link', 'image'],
+                          //     ['clean'],
+                          //     [{ 'color': [] }]
+                          //   ]
+                          // }
                         }}
                         placeholder={t("common.desc_placeholder")}
                         id="txtDescription"
-                      />
+                      /> */}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -203,8 +202,38 @@ export const ModalViewTask = (props: AlertProps) => {
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
-              <br />
-              <Divider />
+
+              <Grid columns={1} className="add-extra-files">
+                <Grid.Row>
+                  <Grid.Column>
+                    <Form.Field>
+                      <label>Files</label>
+                    </Form.Field>
+                  </Grid.Column>
+                </Grid.Row>
+                <Grid.Row className="add-files-list">
+                  <Grid.Column className="uploaded-files">
+                    <ul>
+                      <li>
+                        <p>
+                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} />
+                          Test_2BHK.jpg1628517497176
+                        </p>
+                        <i className="eye icon"></i>
+                      </li>
+                      <li>
+                        <p>
+                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} />
+                          Test_2BHK.jpg1628517497176
+                        </p>
+                        <i className="eye icon"></i>
+                      </li>
+                    </ul>
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
+
+
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>

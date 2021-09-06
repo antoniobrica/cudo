@@ -1,4 +1,4 @@
-/**
+/**                     
  * This is not a production server yet!
  * This is only a minimal backend to get started.
  */
@@ -11,7 +11,7 @@ import { AppModule } from './app/app.module';
 import { environment } from './environments/environment'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const globalPrefix = 'api';
+  const globalPrefix = 'api/ms-document';
   app.setGlobalPrefix(globalPrefix);
   const port = process.env.PORT || 3333;
   await setEnv();
@@ -40,6 +40,7 @@ async function setEnv() {
     process.env.AZURE_CLIENT_ID = environment.AZURE_CLIENT_ID,
     process.env.AZURE_CLIENT_SECRET = environment.AZURE_CLIENT_SECRET,
     process.env.VAULT_NAME = environment.VAULT_NAME
-
 }
+
+
 bootstrap();

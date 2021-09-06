@@ -14,6 +14,8 @@ export interface AddSessionProps {
   openAddSession?
   cancel?
   dataList?
+  getSessionErrorMessage?
+  getSessionToasterMessage?
 }
 
 export function AddSession(props: AddSessionProps) {
@@ -108,8 +110,9 @@ export function AddSession(props: AddSessionProps) {
 
   }
   return (
+    
     <div>
-      <ModalAddSession openAddSession={props.openAddSession} cancel={props.cancel} workTypes={workTypes} loading={loading} data={data} dataList={props.dataList} createSession={createSession} />
+      <ModalAddSession openAddSession={props.openAddSession} cancel={props.cancel} workTypes={workTypes} loading={loading} error={error} data={data} dataList={props.dataList} createSession={createSession} getSessionToasterMessage={props.getSessionToasterMessage} getSessionErrorMessage={props.getSessionErrorMessage} />
     </div>
   );
 }

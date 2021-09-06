@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 export interface FollowersProps {
   parentFollowersSelect,
   followers?,
+  label?
 }
 enum ReferenceType {
   COMPANY = "COMPANY"
@@ -17,7 +18,7 @@ enum ReferenceType {
 export function Followers(props: FollowersProps) {
   const [items, setItems] = React.useState([])
   const [followers, setFollowers] = React.useState(null)
-  const {t} = useTranslation()
+  const { t } = useTranslation()
 
   const { loading, error, data } = useQuery(GET_REFERENCES, {
     variables: {
@@ -56,7 +57,7 @@ export function Followers(props: FollowersProps) {
   //   props.parentFollowersSelect(people);
   // }
   const onFollowers = (event, data) => {
-    console.log('followers--', data.value)
+  
     const peopleArr = [];
     for (let i = 0; i < data.value.length; i++) {
       items.map(d => {
@@ -79,7 +80,7 @@ export function Followers(props: FollowersProps) {
         onChange={onFollowers}
       /> */}
 
-      <label>{t("common.followers")}</label>
+      <label>{props?.label ? props.label : t("common.followers")}</label>
 
       <Dropdown className="small_drop follower-select"
         clearable

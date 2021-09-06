@@ -33,7 +33,7 @@ ReactDOM.render(
         <App />
       </BrowserRouter>
     </Provider>
-   </Suspense>
+  </Suspense>
   ,
   document.getElementById('root')
 );

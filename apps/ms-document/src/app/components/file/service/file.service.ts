@@ -1,10 +1,12 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { getManager, Repository, TreeRepository } from 'typeorm';
 import { FileParamEntity } from '../../../entities/file.param.entity';
 import FileReferencesEntity from '../../../entities/fileReference.entity';
 import { PeopleEntity } from '../../../entities/people.entity';
 import { UploadedFilesEntity } from '../../../entities/uploaded-files.entity';
+import { FileErrorTypeEnum } from '../../../enum/file-error-type.enum';
+import FileCustomError from '../../../exceptions/fileCustomError.exception';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
 import { FileFilterArgs } from '../dto/args/file-filter.args';
@@ -35,7 +37,7 @@ export class FileService {
       const { peoples } = updateFileInput;
       const fileDetail = await this.uploadedFilesRepository.findOne({ where: { uploadedFileID: updateFileInput.uploadedFileID }, relations: ['fileReferences', 'people'] });
       if (!fileDetail) {
-        throw new HttpException('Uploaded file ID Not Found', HttpStatus.NOT_FOUND);
+        throw new FileCustomError(FileErrorTypeEnum.FILE_NOT_FOUND)
       }
 
       const res = new UploadedFilesEntity(updateFileInput);
@@ -116,7 +118,7 @@ export class FileService {
         await manager.save(childStructure);
       }
       else {
-        throw new HttpException('Major file version ID Not found', HttpStatus.NOT_FOUND);
+        throw new FileCustomError(FileErrorTypeEnum.PARENT_FILE_NOT_FOUND)
       }
       const trees = await manager.getTreeRepository(UploadedFilesEntity).findDescendantsTree(parentFileDetails);
       return trees;
@@ -130,7 +132,7 @@ export class FileService {
       const manager = getManager();
       const parentFileDetails = await this.uploadedFilesRepository.findOne({ where: { uploadedFileID: parentFileParams.uploadedFileID, referenceID: parentFileParams.referenceID, referenceType: parentFileParams.referenceType }, relations: ['fileReferences', 'people'] });
       if (!parentFileDetails) {
-        throw new HttpException('Parent file not found', HttpStatus.NOT_FOUND);
+        throw new FileCustomError(FileErrorTypeEnum.PARENT_FILE_NOT_FOUND)
       }
       const trees = await manager.getTreeRepository(UploadedFilesEntity).findDescendantsTree(parentFileDetails);
       return trees;
@@ -149,7 +151,7 @@ export class FileService {
         await manager.save(parentFileDetails);
       }
       else {
-        throw new HttpException('Major file version ID Not found', HttpStatus.NOT_FOUND);
+        throw new FileCustomError(FileErrorTypeEnum.FILE_VERSION_NOT_FOUND)
       }
       const trees = await this.uploadedFilesRepository.findOne({ where: { uploadedFileID: fileParams.uploadedFileID }, relations: ['fileReferences', 'people'] });
       return trees;
@@ -197,10 +199,36 @@ export class FileService {
           isDeleted: false,
           referenceID: fileReferenceParams.referenceID,
           referenceType: fileReferenceParams.referenceType,
-        },relations:['fileReferences','people','children']
+        }, relations: ['fileReferences', 'people', 'children']
       })
-      return parent           
-   } catch (error) {
+
+      // #region Retrieve children wise file wise versions count - Need improvement 
+      let result = []
+      if (parent.length > 0) {
+        for (let i = 0; i < parent.length; i++) {
+
+          let modifiedFiles = []
+          if (parent[i]?.children?.length > 0) {
+            for (let j = 0; j < parent[i].children.length; j++) {
+              const childUploadedFileId = parent[i].children[j].uploadedFileID
+              let versionCount = 0
+              versionCount = await this.uploadedFilesRepository.count({
+                where: {
+                  parentUploadedFileID: childUploadedFileId,
+                  isDeleted: false
+                }
+              });
+              modifiedFiles.push({ ...parent[i].children[j], versionCount })
+            }
+          }
+          result.push({...parent[i], children: modifiedFiles})
+        }
+      }
+      // #endregion
+
+      // return parent
+      return result
+    } catch (error) {
       return error;
     }
   }
@@ -215,10 +243,10 @@ export class FileService {
   //         referenceType: fileReferenceParams.referenceType,
   //       }
   //     })
-      
+
   //     const children = await this.uploadedFilesRepository.findDescendants(parent)
   //     const ids = children.map(child => child.uploadedFileID)
-      
+
   //     return UploadedFilesEntity
   //       .createQueryBuilder("upload")
   //       .distinct(true)
@@ -233,40 +261,40 @@ export class FileService {
 
 
   public async deleteFile(fileDeleteInput: FileDeleteInput): Promise<UploadedFilesEntity> {
-    const file = await this.uploadedFilesRepository.findOne({ where:{uploadedFileID:fileDeleteInput.uploadedFileID} });
+    const file = await this.uploadedFilesRepository.findOne({ where: { uploadedFileID: fileDeleteInput.uploadedFileID } });
     if (file) {
-      file.isDeleted=!(file.isDeleted)
+      file.isDeleted = !(file.isDeleted)
       const updatedPost = await file.save()
       return updatedPost
-      }
-      throw new HttpException('File Not Found', HttpStatus.NOT_FOUND);
     }
+    throw new FileCustomError(FileErrorTypeEnum.FILE_NOT_FOUND)
+  }
 
 
   public async getuploadedFileByID(fileFilter: FileDeleteInput) {
-      const parent = await this.uploadedFilesRepository.findOne({
-        where: {
-          parentUploadedFileID: null,
-          isDeleted: false,
-          uploadedFileID:fileFilter.uploadedFileID
-        },relations:['fileReferences','people','children']
-      })
-      if(parent){
-      return parent  
-      }
-      throw new HttpException('File Not Found', HttpStatus.NOT_FOUND);
+    const parent = await this.uploadedFilesRepository.findOne({
+      where: {
+        parentUploadedFileID: null,
+        isDeleted: false,
+        uploadedFileID: fileFilter.uploadedFileID
+      }, relations: ['fileReferences', 'people', 'children']
+    })
+    if (parent) {
+      return parent
+    }
+    throw new FileCustomError(FileErrorTypeEnum.FILE_NOT_FOUND)
 
   }
 
   public async deleteFileVersion(fileDeleteInput: FileDeleteInput): Promise<UploadedFilesEntity> {
-    const file = await this.uploadedFilesRepository.findOne({ where:{uploadedFileID:fileDeleteInput.uploadedFileID} });
+    const file = await this.uploadedFilesRepository.findOne({ where: { uploadedFileID: fileDeleteInput.uploadedFileID } });
     if (file) {
-      file.isDeleted=!(file.isDeleted)
+      file.isDeleted = !(file.isDeleted)
       const updatedPost = await file.save()
       return updatedPost
-      }
-      throw new HttpException('File Version with uploadedFileId Not Found', HttpStatus.NOT_FOUND);
     }
+    throw new FileCustomError(FileErrorTypeEnum.FILE_VERSION_NOT_FOUND)
+  }
 
 
 }

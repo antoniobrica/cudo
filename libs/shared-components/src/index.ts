@@ -14,7 +14,7 @@ export * from './lib/components/modal/addprintingpopup';
 export * from './lib/components/login/logindrop';
 export * from './lib/components/login/loginpassword';
 export * from './lib/components/task/taskarea';
-export * from './lib/components/modal/addfile';
+// export * from './lib/components/modal/addfile';
 export * from './lib/components/modal/addedfile';
 export * from './lib/components/filestructure/filestask';
 export * from './lib/components/modal/viewdetailsfile';
@@ -45,6 +45,7 @@ export * from './lib/components/cost/costList';
 export * from './lib/components/modal/fliter';
 export * from './lib/components/tabs/togglebutton';
 export * from './lib/components/modal/confirmsubtaskstatus';
+export * from './lib/components/tabs/meetingtabs'
 export * from './lib/components/invitation/invitation';
 export * from './lib/components/modal/addinvitaton'
 export * from './lib/components/modal/addprotocol'

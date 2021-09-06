@@ -27,30 +27,31 @@ export function Home(props: HomeProps) {
   const location = useLocation();
   // const routeMatch = useRouteMatch();
   const { url, path } = useRouteMatch();
-  
+
   useEffect(() => {
     if (!isAuthenticated()) ToEmail()
   }, [])
 
-  useEffect(() => {
-    if (history?.location?.pathname.includes('/home/project/')) {
-        // console.log('--Container--Home-useEffect-----history?.location?.pathname----', history?.location?.pathname)
-        setPathByHistory(history?.location?.pathname)
-      }    
-  }, [history?.location?.pathname])
+
 
   const callbackFunction = (childData) => {
-    // console.log('--container --home--callbackFunction--childData--', childData)
     switch (childData) {
       case 'logout':
         logout();
         break;
       case 'project':
-        goToProjectDashboard();
+        // goToProjectDashboard();
+        history.push('/home/project')
+        break;
       default:
         break;
-    }    
+    }
   };
+  useEffect(() => {
+    if (history?.location?.pathname.includes('/home/project/')) {
+      setPathByHistory(history?.location?.pathname)
+    }
+  }, [])
   const edit = (childData) => {
     history.push(`/settings`);
   }
@@ -65,26 +66,16 @@ export function Home(props: HomeProps) {
     setMenuExpand(!menuExpand)
   }
 
-  const goToProjectDashboard = () => {
-    // console.log('--Container home--goToProjectDashboard-----pathByHistory--', pathByHistory,'-----history---', history)
-    if(pathByHistory.includes('/home/project/')){
-      // console.log('---Reset for refresh project detail---pathByHistory.split("/")[3]--', pathByHistory?.split('/')[3])
-      history.push({pathname:'/home/project', state:{projectId: pathByHistory.split('/')[3]}})     
-    } else {
-    history.push('/home/project')   
-    } 
-  }
-
   return (
     <div className={menuExpand ? "expand-main-menu" : "collapsed-main-menu"}>
       <div>
-        <Menubar data={data} parentCallback={callbackFunction} mainMenuExpand={onClickMenuExpand} historyPath={pathByHistory}></Menubar>
+        <Menubar data={data} parentCallback={callbackFunction} mainMenuExpand={onClickMenuExpand} history={history}></Menubar>
       </div>
       <div>
         <Switch>
           <Route exact path={`${path}/profile`} render={() => <UserProfile />} />
           <Route exact path={`${path}/settings`} render={() => <UserProfileEdit />} />
-          <Route exact path={`${path}/project`} render={() => <MfProjectAppMount host={projectHost} history={history} />} />
+          <Route exact path={pathByHistory ? pathByHistory : `${path}/project`} render={() => <MfProjectAppMount host={projectHost} history={history} />} />
         </Switch>
       </div>
     </div>

@@ -223,7 +223,7 @@
         "title_error": "Please provide title",
         "category_error": "Please select meeting category",
         "protocol_template_error": "Please select protocol template",
-        "invitation_template_error": "Please select invitaion template",
+        "invitation_template_error": "Please select invitation template",
         "admins_error": "Please select admins",
         "members_error": "Please select members",
         "date_error": "Please provide date"
@@ -280,6 +280,12 @@
   },
   "toaster": {
     "success": {
+      "project": {
+        "project_created": "Project created successfully",
+        "project_status_updated": "Project status updated",
+        "project_edit": "Project updated successfully",
+        "project_deleted": "Project deleted"
+      },
       "task": {
         "task_created": "Task created successfully",
         "task_status_updated": "Task status updated",
@@ -296,6 +302,12 @@
         "milstone_edit": "Milestone updated successfully",
         "milstone_deleted": "Milestone deleted"
       },
+      "cost": {
+        "cost_created": "cost created successfully",
+        "cost_status_updated": "cost status updated",
+        "cost_edit": "cost updated successfully",
+        "cost_deleted": "cost deleted"
+      },
       "meeting": {
         "session_created": "Session created successfully",
         "session_status_updated": "Session status updated",
@@ -309,9 +321,31 @@
         "protocol_status_updated": "Protocol status updated",
         "protocol_edit": "Protocol updated successfully",
         "protocol_deleted": "Protocol deleted"
+      },
+      "files": {
+        "file_uploaded": "File uploaded successfully",
+        "file_updated": "File updated successfully",
+        "file_saved": "File saved successfully",
+        "version_uploaded": "New version updated successfully",
+        "reference_added": "Project reference added to File",
+        "file_deleted": "File deleted successfully",
+        "file_version_deleted": "File version deleted successfully"
       }
     },
     "error": {
+      "project": {
+        "project_not_found": "Project not found",
+        "company_not_found": "Company not found",
+        "building_not_found": "Building not found",
+        "project_already_exists": "Project already exists",
+        "project_not_created": "Project not created",
+        "project_not_updated": "Project not updated",
+        "project_not_deleted": "Project not deleted",
+        "no_name": "Can not create task without project name",
+        "no_number": "Can not create task without project number",
+        "no_client": "Can not create task without project client company",
+        "no_building": "Can not create task without project building type"
+      },
       "task": {
         "task_not_found": "Task not found",
         "task_already_exists": "Task already exists",
@@ -342,6 +376,13 @@
         "no_worktype": "Can not create planning without worktype",
         "no_phase": "Can not create planning without phase",
         "no_due_date": "Can not create planning without due date"
+      },
+      "cost": {
+        "cost_not_found": "Cost not found",
+        "cost_already_exists": "Cost already exists",
+        "cost_not_created": "Cost not created",
+        "cost_not_updated": "Cost not updated",
+        "cost_not_deleted": "Cost not deleted"
       },
       "meeting": {
         "session": {
@@ -383,6 +424,15 @@
           "no_end_time": "Can not create protocol without end time",
           "wrong_time": "Start time must be smaller than end time"
         }
+      },
+      "files": {
+        "file_already_exists": "File already exists",
+        "file_not_found": "File not found",
+        "parent_not_found": "Parent not found",
+        "pins_not_found": "Pins not found",
+        "version_not_created": "File version not created",
+        "file_not_added": "File not added",
+        "file_not_deleted": "File not deleted"
       }
     }
   },
@@ -428,7 +478,7 @@
     "who_can_access": "Who can access",
     "everyone_in_worktype": "Everyone in Project/Work type",
     "everyone_in_subproject": "Everyone in Project/Subproject",
-    "specific_access": "Specify People ,only",
+    "specific_access": "Specify People only",
     "data_not_found": "No Data Found",
     "please_confirm": "Please Confirm",
     "add_more": "Add more",

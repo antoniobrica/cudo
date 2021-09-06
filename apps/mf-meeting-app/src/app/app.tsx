@@ -1,4 +1,4 @@
-import React,{Suspense} from 'react';
+import React, { Suspense } from 'react';
 import { initI18n } from '@cudo/mf-core';
 import { LazyLoading } from '@cudo/shared-components'
 // import styles from './app.module.scss';
@@ -10,13 +10,16 @@ const supportedLanguages = [defaultLanguage, 'en-GB'];
 initI18n('/assets/i18n/{{lng}}.json', defaultLanguage);
 
 export function App() {
+ 
   return (
     <Suspense fallback={<LazyLoading />}>
-    <div>      
-      <SessionList  />
-    </div>
+      <div>
+        <SessionList />
+      </div>
     </Suspense>
+    
   );
+  
 }
 
 export default App;

@@ -31,8 +31,8 @@ export function FileListing(props: FileListingProps) {
 
   const history = useHistory();
   const pathNames = history.location.pathname.split("/");
-  // const projectId = pathNames[3].toString();
-  const projectId = "13"
+  const projectId = pathNames[3].toString();
+  // const projectId = "13"
 
   const sharedContext = React.useContext(SharedViewStateContext);
   const downloadsContext = React.useContext(DownloadsViewStateContext);
@@ -48,6 +48,10 @@ export function FileListing(props: FileListingProps) {
   const [openPinFile, setOpenPinFile] = React.useState(false)
   const [imgUrl, setimgUrl] = React.useState('');
   const [filesData, setFilesData] = React.useState([]);
+
+// const [fileVersionLoading, setFileVersionLoading] = React.useState(null)
+// const [fileVersionData, setFileVersionData] = React.useState(null)
+
   const [addFile, { data: neVersionDta }] = useMutation(UPLOAD_FILE_VERSION,
     {
       refetchQueries: [
@@ -101,6 +105,24 @@ export function FileListing(props: FileListingProps) {
   const { loading: fileVersionLoading, error: fileVersionError, data: fileVersionData } = useFileVersionQuery(GET_FILE_VERSIONS, {
     variables: { projectId, fileId: selectedFileId },
   });
+
+  // if (selectedFileId) {
+  //   const { loading: fileVersionLoadingResponse, error: fileVersionErrorResponse, data: fileVersionDataResponse } = useFileVersionQuery(GET_FILE_VERSIONS, {
+  //     variables: { projectId, fileId: selectedFileId },
+  //   });
+  //   setFileVersionLoading(fileVersionLoadingResponse)
+  //   setFileVersionData(fileVersionDataResponse)
+  // }
+
+  // React.useEffect(() => {
+  //   if (selectedFileId) {
+  //     const { loading: fileVersionLoadingResponse, error: fileVersionErrorResponse, data: fileVersionDataResponse } = useFileVersionQuery(GET_FILE_VERSIONS, {
+  //       variables: { projectId, fileId: selectedFileId },
+  //     });
+  //     setFileVersionLoading(fileVersionLoadingResponse)
+  //     setFileVersionData(fileVersionDataResponse)
+  //   }
+  // }, [selectedFileId])
 
   React.useEffect(() => {
     if (fileVersionData) {
@@ -205,7 +227,10 @@ export function FileListing(props: FileListingProps) {
               cancel={cancel}
               uploadNewVersion={uploadNewVersionFile}
               file={fileVersion} /> : null}
-          <FileStructure files={data?.uploadedFiles} downloadFiles={downloadFiles} viewFiles={viewFiles}
+          <FileStructure 
+            files={data?.uploadedFiles} 
+            downloadFiles={downloadFiles} 
+            viewFiles={viewFiles}
             uploadNewVersion={uploadNewVersion}
             addPinTask={addPinTask}
             downloadedImg={itemsd}

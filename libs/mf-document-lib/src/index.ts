@@ -8,3 +8,4 @@ export * from './lib/components/file-details/file-details';
 export * from './lib/mf-document-lib';
 // export * from '../src/azure-storage/contexts/viewStateContext';
 // export * from '../src/azure-storage/types/azure-storage'
+export * from './lib/components/file-setting-upload/add-file-setting-upload'

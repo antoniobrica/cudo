@@ -10,7 +10,7 @@ export interface MenuProps {
   parentCallback?
   data?
   mainMenuExpand?
-  historyPath?
+  history?
 }
 
 const profileOption = [
@@ -64,20 +64,20 @@ const addNew = [
 export function Menubar(props: MenuProps) {
   const { url, path } = useRouteMatch();
   const [visible, setVisible] = React.useState('')
-  const history = useHistory()
+  // const history = useHistory()
 
-  useEffect(() => {    
-    if (props?.historyPath?.includes('/home/project/')) {
-      // console.log('--container menu useEffect-----props?.historyPath---', props?.historyPath)
-      handleOpenProject('project')
-    }  
-  }, [props?.historyPath])
+  // useEffect(() => {    
+  //   if (props?.historyPath?.includes('/home/project/')) {
+   //     handleOpenProject('project')
+  //   }  
+  // }, [props?.historyPath])
   const {t} = useTranslation()
 
 
   const handleOpenProject = (item) => {
-    setVisible(item)
     props?.parentCallback(item)
+    setVisible(item)
+    // props.history.push(`/home/${item}`)
   }
 
   const showHideMenu = () => {

@@ -9,15 +9,12 @@ export interface WorktypeDropdownProps {
 }
 
 export function WorkTypeDropdown(props: WorktypeDropdownProps) {
-  const [items, setItems] = React.useState([])
+ 
   const [workType, setworkType] = React.useState(null) 
   const {t} = useTranslation()
  
   const onMworkType = (event, data) => {
-   console.log('events',data);
-   
-    console.log('wtd', data.value)
-    setworkType(data.value)
+     setworkType(data.value)
     if(data.value){
     props.selectedWorkType(data.value, props.id)
   }

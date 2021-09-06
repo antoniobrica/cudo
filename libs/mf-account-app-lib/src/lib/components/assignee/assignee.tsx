@@ -31,8 +31,7 @@ export function Assignee(props: AssigneeProps) {
 
   React.useEffect(() => {
     if (props?.assignees[0]?.userName) {
-      console.log('props.assignees[0].userName', props?.assignees[0]?.userName);
-      setAssignee(props?.assignees[0]?.userName)
+     setAssignee(props?.assignees[0]?.userName)
     }
   }, [props?.assignees[0]?.userName])
 

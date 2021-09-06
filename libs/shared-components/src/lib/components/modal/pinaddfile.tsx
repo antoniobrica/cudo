@@ -1,8 +1,10 @@
 
 import React from 'react';
 import { Button, Modal, Grid, Image, Segment, Form, Input, TextArea, Select, Checkbox, Dropdown } from 'semantic-ui-react';
-// import SampleModal from './sample-modal';
-import Canvas from './canvas';
+
+// import Canvas from './canvas';
+import CanvasImage from './canvasimage';
+
 import { useHistory } from 'react-router';
 import axios from 'axios';
 import { CreateFileTaskIndex, PinTaskListIndex } from '@cudo/mf-task-lib';
@@ -23,6 +25,7 @@ function exampleReducer(state, action) {
 
 export interface AddPinProps {
   isOpen?,
+  cancel?,
   filesData?,
   dowloadFilesData?,
   onSuccess?,
@@ -42,14 +45,14 @@ export const AddPinFile = (props: AddPinProps) => {
   const [pinSavedOnCanvase, setPinSavedOnCanvase] = React.useState(false);
 
   const { t } = useTranslation();
-  
+
   React.useEffect(() => {
-    console.log("New Pin created ", isPinCreated);
     setAllowToCreateNewPin(false);
   }, [isPinCreated])
 
   const close = () => {
     setOpen(false)
+    props.cancel(false)
   }
 
   const openM = () => {
@@ -64,34 +67,30 @@ export const AddPinFile = (props: AddPinProps) => {
 
   React.useEffect(() => {
     if (props.filesData) {
-      console.log('filesData==', props.filesData);
       setFileId(props.filesData.uploadedFileID)
       setFileData(props.filesData)
     }
   }, [props.filesData])
+
   React.useEffect(() => {
     if (props.dowloadFilesData) {
-      console.log('dowloadFilesData-s', props.dowloadFilesData);
       for (let i = 0; i < props.dowloadFilesData.length; i++) {
         if (props.dowloadFilesData[i].filename == props.filesData.fileTitle) {
-          console.log('uploadedfileid', props.dowloadFilesData[i]);
           setimgUrl(props.dowloadFilesData[i].url);
+          
         }
       }
     }
-  })
+  }, [props.dowloadFilesData])
 
   const getCoardinates = (data) => {
-    console.log('getCoardinates', data);
     setCord(data);
   }
   const onSuccess = async () => {
-    console.log('onSuccess');
     setAllowToCreateNewPin(false);
     setIsPinCreated(false);
   }
   const changePinTask = () => {
-    console.log('changePinTask');
     setAllowToCreateNewPin(true);
   }
   const taskClose = () => {
@@ -122,16 +121,26 @@ export const AddPinFile = (props: AddPinProps) => {
         <Modal.Content>
           <Form>
             <div className="left-side-image-canvas">
-              <Canvas pinSaved={setPinSavedOnCanvase} savePin={saveNewPinOnCanvase} imgUrl={imgUrl} coardinates={getCoardinates} fileId={fileId} allowToCreateNewPin={allowToCreateNewPin} isPinCreated={isPinCreated} setIsPinCreated={setIsPinCreated}></Canvas>
+              <CanvasImage
+                pinSaved={setPinSavedOnCanvase}
+                savePin={saveNewPinOnCanvase}
+                imgUrl={imgUrl}
+                coardinates={getCoardinates}
+                fileId={fileId}
+                allowToCreateNewPin={allowToCreateNewPin}
+                isPinCreated={isPinCreated}
+                setIsPinCreated={setIsPinCreated}
+              ></CanvasImage>  
+              
             </div>
 
             <div className="right-side-file-details">
               <div className="add-pin-mark-field">
                 {!isPinCreated ?
-                    <Form.Field className="pin-add-field">
-                      <button className="ui mini button pinbutton" onClick={changePinTask}>{t('pin_mask.pin_mark_task')}</button>
-                      <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/grey_pin.png`} className="pinadd" />
-                    </Form.Field>
+                  <Form.Field className="pin-add-field">
+                    <button className="ui mini button pinbutton" onClick={changePinTask}>{t('pin_mask.pin_mark_task')}</button>
+                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/grey_pin.png`} className="pinadd" />
+                  </Form.Field>
                   :
                   <CreateFileTaskIndex pinsaved={pinSavedOnCanvase} savePin={setSaveNewPinOnCanvase} close={taskClose} onSuccess={onSuccess} cord={cord} fileData={fileData}></CreateFileTaskIndex>
                 }

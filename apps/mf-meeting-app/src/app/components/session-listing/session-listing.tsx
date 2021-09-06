@@ -3,7 +3,7 @@ import MeetingTab from "libs/shared-components/src/lib/components/tabs/meetingta
 import { LazyLoading } from '@cudo/shared-components';
 import { useHistory } from 'react-router';
 import axios from 'axios';
-import { GET_SESSIONS } from '../../graphql/graphql'
+import { DELETE_SESSION, GET_SESSIONS } from '../../graphql/graphql'
 import { useSessionQuery } from '../../services/useRequest';
 import AddSession from '../session-add/session-add';
 import EditSession from '../session-edit/session-edit';
@@ -16,6 +16,9 @@ import {
   Image, Button
 } from 'semantic-ui-react';
 import { useTranslation } from "react-i18next";
+import { toast, ToastContainer } from "react-toastify";
+import { ISessions } from "../../interfaces/session";
+import { useMutation } from "@apollo/client";
 
 
 export function SessionListing() {
@@ -26,8 +29,8 @@ export function SessionListing() {
   const [openEditSession, setOpenEditSession] = useState(false)
   const [openDeleteSession, setOpenDeleteSession] = useState(false)
   const [openViewInvitationList, setOpenViewInvitationList] = useState(false)
-
-
+  const [activeErrorClass, setActiveErrorClass] = useState(false)
+  const [costErrors, setCostErrors] = useState("")
   const [sessionId, setSessionId] = useState(null)
   // const [viewInvitationTab, setViewInvitationTab] = useState(false)
 
@@ -56,9 +59,71 @@ export function SessionListing() {
     variables: { projectId },
   });
 
+  // useEffect(() => {
+  //   setSessionDeleteLoading(false)
+
+  // }, [data])
+
+  // set sucess value to toaster function
+  const getSessionToasterMessage = (data) => {
+    setActiveErrorClass(false)
+    toast(data)
+  }
+
+  // set error value to task error for toaster function
+  const getSessionErrorMessage = (data) => {
+    setActiveErrorClass(true)
+
+    let errorExeptionMessage: string;
+    switch (data) {
+      case 4001:
+        errorExeptionMessage = t("toaster.error.meeting.session.session_already_exists")
+        break
+      case 4002:
+        errorExeptionMessage = t("toaster.error.meeting.session.planning_not_found")
+        break
+      case 4003:
+        errorExeptionMessage = t("toaster.error.meeting.session.planning_not_created")
+        break
+      case 4004:
+        errorExeptionMessage = t("toaster.error.meeting.session.no_title")
+        break
+      case 4005:
+        errorExeptionMessage = t("toaster.error.meeting.session.no_worktype")
+        break
+      case 4007:
+        errorExeptionMessage = t("toaster.error.meeting.session.no_assignee")
+        break
+      case 4008:
+        errorExeptionMessage = t("toaster.error.meeting.session.no_category")
+        break
+      case 4009:
+        errorExeptionMessage = t("toaster.error.meeting.session.no_members")
+        break
+      case 4012:
+        errorExeptionMessage = t("toaster.error.meeting.session.no_invitation_template")
+        break
+      case 4013:
+        errorExeptionMessage = t("toaster.error.meeting.session.no_protocol_template")
+        break
+      case 4014:
+        errorExeptionMessage = t("toaster.error.meeting.session.no_admin")
+        break
+      case 500:
+        errorExeptionMessage = t("toaster.error.meeting.session.internal_server_error")
+        break
+      default:
+        errorExeptionMessage = ""
+    }
+    setCostErrors(errorExeptionMessage)
+  }
+
+  // set error message to toaster
   useEffect(() => {
-    setSessionDeleteLoading(false)
-  },[data])
+    if (costErrors) {
+      toast(costErrors)
+    }
+  }, [costErrors])
 
   const query = `query Game($projectId: String!) {
     projectById( projectId: $projectId)
@@ -94,8 +159,56 @@ export function SessionListing() {
     })
       .catch(err => console.log(err))
   }
-  const handleSessionDeleteLoading = (value) => {
-    setSessionDeleteLoading(value)
+
+  const [deleteSessionDetail, { loading: deleteSessionLoading, error: deleteSessionerror, data: deleteSessionData }] = useMutation(DELETE_SESSION,
+    {
+      refetchQueries: [{ query: GET_SESSIONS, variables: { projectId: projectId } }]
+    }
+  )
+
+  useEffect(() => {
+    if (!deleteSessionLoading && deleteSessionData) {
+      getSessionToasterMessage(t("toaster.success.meeting.session_deleted"))
+      cancel()
+      setSessionDeleteLoading(false)
+    }
+    if (!deleteSessionLoading && deleteSessionerror) {
+      getSessionErrorMessage(deleteSessionerror?.graphQLErrors[0]?.extensions.exception.status)
+      cancel()
+      setSessionDeleteLoading(false)
+    }
+
+  }, [deleteSessionLoading])
+
+  const deleteSession = (sessionID) => {
+    setSessionDeleteLoading(true)
+
+    deleteSessionDetail({
+      variables: { sessionID },
+      update: (
+        cache,
+        data
+      ) => {
+        const cacheData = cache.readQuery({
+          query: GET_SESSIONS,
+          variables: { projectId: projectId }
+        }) as ISessions;
+        const newSessions = cacheData?.paginatedSession?.results?.filter(
+          (item) => item.sessionID !== sessionID
+        );
+
+        cache.writeQuery({
+          query: GET_SESSIONS,
+          variables: { projectId: projectId },
+          data: {
+            getSessions: newSessions
+          }
+        });
+
+      }
+    });
+
+    cancel()
   }
 
   const cancel = () => {
@@ -103,6 +216,7 @@ export function SessionListing() {
     setSessionId(null)
     setOpenEditSession(false)
     setOpenDeleteSession(false)
+
   }
   const addNew = () => {
     setOpenAddSession(true);
@@ -131,10 +245,7 @@ export function SessionListing() {
 
   if (loading || sessionDeleteLoading)
     return (
-      <h1>
-        {' '}
         <LazyLoading />
-      </h1>
     );
 
   if (error) {
@@ -146,7 +257,7 @@ export function SessionListing() {
         <h3>{t("common.data_not_found")}</h3>
         <p>{t("project_tab_menu.meeting.no_session_data_found_desc")}</p>
         <Button size="small" className="primary" onClick={addNew}>
-          + {t("project_tab_menu.meeting.add_new_session")}
+        <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> {t("project_tab_menu.meeting.add_new_session")}
         </Button>
         <AddSession projectId={projectId} cancel={cancel} openAddSession={openAddSession} />
       </div>
@@ -158,13 +269,14 @@ export function SessionListing() {
   return (
 
     <div>
+      <ToastContainer className={`${activeErrorClass ? "error" : "success"}`} position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
 
       {
         openViewInvitationList ?
           <InvitationListing sessionId={sessionId} />
           :
           <div>
-            <AddSession projectId={projectId} cancel={cancel} openAddSession={openAddSession} dataList={data} />
+            <AddSession projectId={projectId} cancel={cancel} openAddSession={openAddSession} dataList={data} getSessionToasterMessage={getSessionToasterMessage} getSessionErrorMessage={getSessionErrorMessage} />
 
             {data?.paginatedSession?.results?.length > 0 ?
 
@@ -177,6 +289,7 @@ export function SessionListing() {
                     openEditSession={openEditSession}
                     dataList={data}
                     cancel={cancel}
+                    getSessionToasterMessage={getSessionToasterMessage} getSessionErrorMessage={getSessionErrorMessage}
                   /> : null}
 
                 {openDeleteSession ?
@@ -185,7 +298,8 @@ export function SessionListing() {
                     sessionId={sessionId}
                     openDeleteSession={openDeleteSession}
                     cancel={cancel}
-                    setSessionDeleteLoading={handleSessionDeleteLoading}
+                    getSessionToasterMessage={getSessionToasterMessage} getSessionErrorMessage={getSessionErrorMessage}
+                    deleteSession={deleteSession}
                   /> : null}
 
                 <MeetingTab
@@ -204,7 +318,7 @@ export function SessionListing() {
                 <h3>{t("common.data_not_found")}</h3>
                 <p>{t("project_tab_menu.meeting.no_session_data_found_desc")}</p>
                 <Button size="small" className="primary" onClick={addNew}>
-                  + {t("project_tab_menu.meeting.add_new_session")}
+                <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> {t("project_tab_menu.meeting.add_new_session")}
                 </Button>
                 <AddSession projectId={projectId} cancel={cancel} openAddSession={openAddSession} />
               </div>

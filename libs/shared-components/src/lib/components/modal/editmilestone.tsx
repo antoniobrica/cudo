@@ -10,13 +10,14 @@ import {
 
   Select,
   TextArea,
+  Dimmer,
+  Loader,
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 import moment, { calendarFormat } from 'moment';
 import { PhaseIndex } from "@cudo/mf-account-app-lib"
 import { useTranslation } from 'react-i18next';
-
-
+import PopupLoading from '../loader/popuploader';
 
 export interface PlanningProps {
   getMilestoneData?,
@@ -25,6 +26,9 @@ export interface PlanningProps {
   confirm?,
   cancel?,
   worktypes?
+  updateLoading?
+  updateData?
+  listData?
 }
 interface PlanningErrors {
   titleError?: string,
@@ -33,6 +37,7 @@ interface PlanningErrors {
   phaseError?: string
 }
 export function EditMileStonePopup(props: PlanningProps) {
+  
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
@@ -62,16 +67,23 @@ export function EditMileStonePopup(props: PlanningProps) {
   
   const { t } = useTranslation()
   const [errors, setErrors] = React.useState<PlanningErrors>({})
+
+  const [loader, setLoader] = React.useState(false)
+
+  React.useEffect(() => {
+    if (!props.updateLoading && props.updateData) {
+      cancel()
+    }
+  }, [props.listData])
+
   React.useEffect(() => {
     if (props.openEdit) {
       setOpen(props.openEdit);
     }
   }, [props.openEdit]);
   React.useEffect(() => {
-    if (props.worktypes) {
-      console.log('worktypes', props.worktypes);
+    if (props.worktypes) {     
       setworkType(props.worktypes.map(({ workTypeName, projectWorkTypeID }) => ({ key: projectWorkTypeID, value: workTypeName, text: workTypeName, id: projectWorkTypeID })));
-
     }
   }, [props.worktypes]);
 
@@ -83,7 +95,7 @@ export function EditMileStonePopup(props: PlanningProps) {
     if(data.value){
       for (let i = 0; i < props.worktypes.length; i++) {
         if (props.worktypes[i]?.workTypeName === data.value) {
-          console.log('props.worktypes[i]', props.worktypes[i]);
+        
           workT.worktypeID = props.worktypes[i].projectWorkTypeID;
           workT.worktypeName = data.value;
           setWorktypeName(workT.worktypeName)
@@ -99,7 +111,6 @@ export function EditMileStonePopup(props: PlanningProps) {
     
     setworkTypeData(data.value)
 
-    console.log('worktypeName-', workTypeD);
   }
 
   function formatDate(date) {
@@ -120,7 +131,6 @@ export function EditMileStonePopup(props: PlanningProps) {
     if (props.planData) {
       const d = props.planData.dueDate;
 
-      console.log('plan-edit-data', props.planData);
       setMilestoneName(props.planData.milestoneTitle);
       const date = moment.utc(moment(props.planData.dueDate).utc()).format();
       setDueDate(formatDate(d));
@@ -140,6 +150,8 @@ export function EditMileStonePopup(props: PlanningProps) {
   const cancel = () => {
     setOpen(false)
     props.cancel()
+    // resetEditData()
+    setLoader(false)
   }
   const onsetPhasesID = (data) => {
     setPhasesID((data.phaseID).toString());
@@ -181,6 +193,7 @@ export function EditMileStonePopup(props: PlanningProps) {
       setErrors(validationResult)
       return false
     }
+    setLoader(true)
     const data = {
       milestoneID: milestoneID,
       milestoneTitle: milestone,
@@ -192,7 +205,7 @@ export function EditMileStonePopup(props: PlanningProps) {
       worktypeName: worktypeName
     }
     props.getMilestoneData(data);
-    cancel()
+    // cancel()
   }
 
 
@@ -201,7 +214,7 @@ export function EditMileStonePopup(props: PlanningProps) {
   return (
     <div id="navbar">
       <Modal
-        className="modal_media right-side--fixed-modal edit-milestone-modal"
+        className={`modal_media right-side--fixed-modal edit-milestone-modal${loader && " overflow-hidden"}`}
         closeIcon
         onClose={cancel}
         onOpen={openf}
@@ -213,6 +226,14 @@ export function EditMileStonePopup(props: PlanningProps) {
         }
         closeOnDimmerClick={false}
       >
+        {
+          loader && (
+            // <PopupLoading />
+            <Dimmer active inverted Center inline>
+              <Loader size='big'>Loading</Loader>
+            </Dimmer>
+          )
+        }
         <Modal.Header>
           <h3>{t("project_tab_menu.planning.edit_milestone")}  </h3>
         </Modal.Header>

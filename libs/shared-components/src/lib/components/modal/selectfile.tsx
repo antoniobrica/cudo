@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import {
   Button,
   Header,
@@ -18,6 +18,8 @@ import FilterPopup from './fliter';
 import { relative } from 'path';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { useTranslation } from 'react-i18next';
+import TaskFileStructure from '../filestructure/filestotask';
+import { AddFileSettingUpload } from '@cudo/mf-document-lib';
 export interface FileStructureProps {
   // files?,
   downloadFiles?,
@@ -26,7 +28,14 @@ export interface FileStructureProps {
   isTaskFile?,
   files?,
   cancel?,
-  savePins?
+  savePins?,
+  selectedFileId?,
+  fileVersionDetail?,
+  fileVersionLoading?,
+  onlyAddFileToTask?
+  addSelectedFiles?
+  selectedFiles?
+  changeAdd?
 }
 export function SelectFilePopup(props: FileStructureProps) {
   const countryOptions = [
@@ -35,14 +44,14 @@ export function SelectFilePopup(props: FileStructureProps) {
   ];
 
   const [open, setOpen] = React.useState(false);
-  const [isTick, setIsTick] = React.useState(false);
+  // const [isTick, setIsTick] = React.useState(false);
   const [isPinFile, setIsPinFile] = React.useState(false);
   const [filesData, setFilesData] = React.useState([]);
   const [fileData, setFileData] = React.useState([]);
   const [imgUrl, setimgUrl] = React.useState('');
   const [fType, setFtype] = React.useState('');
   const [view, setView] = React.useState(false);
-  const {t} = useTranslation()
+  const { t } = useTranslation()
 
 
 
@@ -54,43 +63,47 @@ export function SelectFilePopup(props: FileStructureProps) {
 
   React.useEffect(() => {
     if (props.files) {
-      console.log('setFileData', props.files);
       setFileData(props.files)
     }
   }, [props.files])
 
-  const goToAddPin = () => {
-    setOpen(false)
-    setIsPinFile(true)
-    // cancel()
-    setView(true);
+  const goToAddPin = (data) => {
+    if (props.onlyAddFileToTask) {
+      props.downloadFiles(data)
+      setOpen(false)
+      props.cancel(false)
+    } else {
+      setOpen(false)
+      setIsPinFile(true)
+      // cancel()
+      setView(true);
+    }
   }
-  const tick = () => {
-    setIsTick(isTick => !isTick)
-  }
+  // const tick = () => {
+  //   setIsTick(isTick => !isTick)
+  // }
   const cancel = () => {
     setOpen(false)
     props.cancel(false)
+    setView(false);
+    props.addSelectedFiles([])
   }
 
   React.useEffect(() => {
     if (props.downloadedImg) {
-      console.log('downloadedImg', props.downloadedImg);
       for (let i = 0; i < props.downloadedImg.length; i++) {
         if (props.downloadedImg[i].filename == filesData['fileTitle']) {
-          console.log('url', props.downloadedImg[i].url);
-
+         
           setimgUrl(props.downloadedImg[i].url);
         }
       }
 
     }
-  })
-  const viewFiles = (data) => {
-    console.log('data-view', data);
+  }, [props.downloadedImg])
 
-    setFtype(data.fileType);
-    // setView(true);
+  const viewFiles = (data) => {
+   
+    setFtype(data.fileType);   
     setFilesData(data);
     props.viewFiles(data)
   }
@@ -102,20 +115,20 @@ export function SelectFilePopup(props: FileStructureProps) {
       } */}
       {view && imgUrl.length > 0 ?
         <div>
-          <AddPinFile isOpen={view} filesData={filesData} dowloadFilesData={props.downloadedImg} savePin={props.savePins} />
+          <AddPinFile isOpen={view} cancel={cancel} filesData={filesData} dowloadFilesData={props.downloadedImg} savePin={props.savePins} onSuccess={""} />
         </div> : null}
       <Modal className="modal_media right-side--fixed-modal select-file-modal"
         closeIcon
         onClose={cancel}
         onOpen={() => setOpen(true)}
         open={open}
-      // trigger={
-      //   <Button className="grey-btn" size="mini">
-      //     <img src={img1} className="  mr-10 " />
-      //     Task from file
-      //   </Button>
-      // }
-      closeOnDimmerClick={false}
+        // trigger={
+        //   <Button className="grey-btn" size="mini">
+        //     <img src={img1} className="  mr-10 " />
+        //     Task from file
+        //   </Button>
+        // }
+        closeOnDimmerClick={false}
       >
         <Modal.Header>
           <h3>{t("project_tab_menu.files.select_file")}</h3>
@@ -124,27 +137,62 @@ export function SelectFilePopup(props: FileStructureProps) {
           <div>
             <Form>
               <div className="slect-file-search-box">
-                <Form.Field>
-                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/search_white.png`} style={{ position: 'relative', top: '11px' }}></img>
+                <Form.Field className="search-box-file">
+                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/search_white.png`}></img>
 
                   <Input
                     placeholder={t("common.search")}
                     size="small"
-                    className="full-width inputfieldarea bordernone"
-                    type="search" style={{ marginLeft: '5px' }}
+                    className="full-width"
+                    type="search"
                   />
                 </Form.Field>
-                <Form.Field>
+                <Form.Field className="filter-with-add-file">
 
-                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/filter.png`} style={{ position: 'relative', left: '30px', top: '6px' }}></img>
-                  {/* <FilterPopup /> */}
-                  <Button size="small" className="primary" style={{ marginLeft: '50', }}>
+                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/filter.png`}></img>
+                  {/* <FilterPopup /> */} 
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <AddFileSettingUpload />
+
+                    </Suspense>
+                  {/* <Button size="small" className="primary" style={{ marginLeft: '50', }}>
                     <Icon name='add' /> {t("common.add_new_button")}
-                  </Button>
+                  </Button>  */}
                 </Form.Field>
               </div>
             </Form><br />
-            <PinFileStructure uploadNewVersion={null} files={props.files} downloadFiles={props.downloadFiles} viewFiles={viewFiles} downloadedImg={props.downloadedImg} isPinFile={isPinFile}></PinFileStructure>
+            {
+              props?.onlyAddFileToTask ? (
+                <TaskFileStructure
+                  uploadNewVersion={null}
+                  files={props.files}
+                  downloadFiles={props.downloadFiles}
+                  viewFiles={viewFiles}
+                  downloadedImg={props.downloadedImg}
+                  isPinFile={isPinFile}
+                  selectedFileId={props.selectedFileId}
+                  fileVersionDetail={props.fileVersionDetail}
+                  fileVersionLoading={props.fileVersionLoading}
+                  addSelectedFiles={props.addSelectedFiles}
+                  selectedFiles={props.selectedFiles}
+                />
+              ) : (
+                <PinFileStructure
+                  uploadNewVersion={null}
+                  files={props.files}
+                  downloadFiles={props.downloadFiles}
+                  viewFiles={viewFiles}
+                  downloadedImg={props.downloadedImg}
+                  isPinFile={isPinFile}
+                  selectedFileId={props.selectedFileId}
+                  fileVersionDetail={props.fileVersionDetail}
+                  fileVersionLoading={props.fileVersionLoading}
+                ></PinFileStructure>
+              )
+            }
+
+
+
 
             {/* <div className="d-flex align-items-center py-2">
               <span>
