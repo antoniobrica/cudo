@@ -4,10 +4,6 @@ import { Request, Response, NextFunction } from 'express';
 @Injectable()
 export class InvitationMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
-    // console.log('----Invitation Middleware----')
-    // console.log('Request...',req.ip);
-    // console.log('Request...', req.path);
-    // console.log('Request...', req.headers);
     next();
   }
 }
@@ -21,7 +17,7 @@ export class InvitationMiddleware implements NestMiddleware {
 // export class InvitationMiddleware implements NestMiddleware{
 //    constructor(){}
 //    async use(req: Request, res: Response,nest: NextFunction){
-//        console.log('--InvitationMiddleware--req---', req)
+
 //       // get token and decode or any custom auth logic
 //       next()
 //    }
@@ -36,7 +32,7 @@ export class InvitationMiddleware implements NestMiddleware {
 //     next: NextFn,
 // ) => {
 //     const value = await next();
-//     console.log(value);
+
 //     return value;
 // };
 // export default loggerMiddleware;

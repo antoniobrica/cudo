@@ -74,11 +74,12 @@
       @include align-items(center);
       .files-arrows {
         i {
-          color: #1B1B40;
-          font-weight: 600;
+          color: #9FB5C5;
+          font-weight: 500;
           cursor: pointer;
           @include transition(all .25s);
           font-size: 16px;
+          transform: rotate(-90deg);
         }
       }
     }
@@ -121,7 +122,7 @@
       .multiple-files-header { 
           .files-arrows {
             i {
-              transform: rotate(180deg);
+              transform: rotate(0deg);
             }
           }
       }
@@ -210,14 +211,14 @@
       a {
         margin: 0;
         i {
-          border: 1px solid #718898;
+          border: 1px solid #E0E6EB;
           width: 22px;
           display: flex;
           align-items: center;
           justify-content: center;
           height: 22px;
           background: #fff;
-          color: #718898;
+          color: #E0E6EB;
           border-radius: 50%;
         }
         &.selected {
@@ -236,16 +237,29 @@
       }
     }
     .multiple-files-box {
+      margin-bottom: 10px;
+      padding: 8px 0;
+      box-shadow: none;
       .multiple-files-listing {
+        border-top: none;
+        margin-top: 10px;
         .single-files-list {
           padding: 10px 0;
           .version-file-con {
             padding: 10px 0px 0 25px;
           }
+          .files-arrows {
+            i {
+              transform: rotate(-90deg);
+              font-size: 16px;
+              cursor: pointer;
+              color: #9FB5C5;
+            }
+          }
           &.expand {
             .files-arrows {
               i {
-                transform: rotate(180deg);
+                transform: rotate(0deg);
               }
             }
           }
@@ -357,6 +371,25 @@
   }
 }
 
+
+// For canvas transparent image
+.left-side-image-canvas {
+  .outsideWrapper {
+    .insideWrapper {
+      height: 100%;
+      background: #E3E3E4;
+      @include flex(flex);
+      @include align-items(center);
+      @include justify-content(center);
+      position: relative;
+      overflow: hidden;
+    }
+  }
+  + .file-pagination {
+    display: none;
+  }
+}
+
 .pin-task-completed-card {
   @include flex(flex);
   padding: 15px 0;
@@ -373,9 +406,11 @@
       @include flex(flex);
       @include justify-content(space-between);
       .pin-task-info {
+        font-size: 11px;
         h3 {
           font-size: 13px;
           font-weight: 500;
+          margin-bottom: 6px;
           @include flex(flex);
           @include align-items(center);
           i {
@@ -510,6 +545,11 @@
     .file-versioning-box {
       label {
         font-weight: 600;
+        i {
+          cursor: pointer;
+          transform: rotate(-90deg);
+          @include transition(all .25s);
+        }
       }
       .file-version-list {
         @include flex(flex);
@@ -551,7 +591,7 @@
       &.expand {
         label {
           i {
-            transform: rotate(180deg);
+            transform: rotate(0deg);
             cursor: pointer;
             @include transition(all .25s);
           }
@@ -564,15 +604,32 @@
     .completed-task-list {
       .pin-task-completed-card {
         margin: 0 0 7px;
+        > img {
+          display: none;
+        }
         &:last-child {
           border-bottom: none;
         }
         .pin-task-description-box {
+          .task-full-details {
+            .pin-task-info {
+              padding: 0 0 0 25px;
+              color: #718898;
+              font-size: 13px;
+              h3 {
+                margin-left: -25px;
+              }
+            }
+          }
           .added-task-listing {
             p {
               font-size: 13px;
               margin: 2px 0 0 0;
               color: #718898;
+            }
+            ul {
+              margin: 5px 0 0 0;
+              padding: 0 0 0 25px;
             }
           }
           a.add-new-task-link {
@@ -697,6 +754,29 @@
       span {
         opacity: 1;
       }
+    }
+  }
+}
+
+
+.title-select {
+  .ui.selection.dropdown {
+    min-height: 3rem;
+    height: 3rem;
+    max-width: 130px;
+    padding: 0.5rem 0.7rem;
+    margin-left: 10px;
+    .dropdown.icon {
+      height: 1.4rem !important;
+      top: 3px !important;
+    }
+    .divider.text {
+      margin: 0;
+      padding: 0;
+      font-size: 12px;
+    }
+    .divider.default.text {
+      font-size: 12px;
     }
   }
 }

@@ -20,8 +20,7 @@ export function Canvas() {
     const canvasEle = canvas.current;
     canvasEle.width = canvasEle.clientWidth;
     canvasEle.height = canvasEle.clientHeight;
-
-    console.log('canvasEle', canvasEle);
+  
 
     // get context of the canvas
     ctx = canvasEle.getContext("2d");
@@ -47,7 +46,7 @@ export function Canvas() {
 
   // identify the click event in the rectangle
   const hitBox = (x, y) => {
-    console.log(x, y)
+   
     let isTarget = null;
     for (let i = 0; i < boxes.length; i++) {
       const box = boxes[i];

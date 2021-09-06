@@ -16,6 +16,9 @@ import { tap } from 'rxjs/operators';
 export interface FileListProps {
   isTaskFile,
   cancel
+  onlyAddFileToTask?
+  addSelectedFiles?
+  selectedFiles?
 }
 
 export function FileList(props: FileListProps) {
@@ -95,14 +98,13 @@ export function FileList(props: FileListProps) {
   }
 
   const viewFiles = (data) => {
-    console.log('viewInSHaredDc', data);
-
+   
     setFileName(data.fileTitle);
     downloadsContext.viewItem(data.fileTitle)
   }
 
   const uploadNewVersion = (data) => {
-    console.log('data', data);
+   
     setFileVersion(data);
     //setOpenNew(true)
   }
@@ -120,14 +122,13 @@ export function FileList(props: FileListProps) {
   }
 
 
-  if (isLoading) {
-    return (<LazyLoading />)
-  }
-
+  // if (loading) {
+  //   return (<LazyLoading />)
+  // }
   return (
     <div>
       {loading ?
-        <LoaderPage /> : null}
+        <LazyLoading /> : null}
       <SelectFilePopup
         isTaskFile={props.isTaskFile}
         cancel={props.cancel}
@@ -139,6 +140,9 @@ export function FileList(props: FileListProps) {
         selectedFileId={getSelectedFileId}
         fileVersionDetail={selectedFileVersions?.fileVersions}
         fileVersionLoading={fileVersionLoading}
+        onlyAddFileToTask={props.onlyAddFileToTask}
+        addSelectedFiles={props.addSelectedFiles}
+        selectedFiles={props.selectedFiles}
       />
     </div>
   );

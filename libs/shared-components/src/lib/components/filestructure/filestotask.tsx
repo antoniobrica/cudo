@@ -8,7 +8,7 @@ import { LazyLoading } from '@cudo/shared-components';
 import moment from 'moment';
 
 /* eslint-disable-next-line */
-export interface FileStructureProps {
+export interface TaskFileStructureProps {
 	files?,
 	downloadFiles,
 	downloadedImg,
@@ -18,9 +18,11 @@ export interface FileStructureProps {
 	selectedFileId?,
 	fileVersionDetail?,
 	fileVersionLoading?,
+	addSelectedFiles?
+	selectedFiles?
 }
 
-export function PinFileStructure(props: FileStructureProps) {
+export function TaskFileStructure(props: TaskFileStructureProps) {
 	const [view, setView] = React.useState(false);
 	// const [expand, setExpand] = React.useState(false);
 	const [isLoading, setIsLoading] = React.useState(false);
@@ -30,6 +32,7 @@ export function PinFileStructure(props: FileStructureProps) {
 	const [fname, setFname] = React.useState('');
 	const [fType, setFtype] = React.useState('');
 	const [isPinFile, setIsPinFile] = React.useState(false);
+	const [selectedFiles, setSelectedFiles] = useState([])
 
 	const [fileId, setFileId] = React.useState('');
 	const [selectedFile, setSelectedFile] = React.useState(null)
@@ -45,24 +48,48 @@ export function PinFileStructure(props: FileStructureProps) {
 
 
 	React.useEffect(() => {
-		if (props.isPinFile) {
-			setIsPinFile(props.isPinFile)
-		}
-	}, [props.isPinFile])
+		props.addSelectedFiles(selectedFiles)
+	}, [selectedFiles])
 
-	const viewFile = (data) => {
-		if (selectedFile !== data.uploadedFileID) {
-			setSelectedFile(data.uploadedFileID)
+	React.useEffect(() => {
+		if (props.selectedFiles.length > 0) {
+			setSelectedFiles(props.selectedFiles)
+		}
+	}, [])
+
+	// const viewFile = (data) => {
+	// 	if (selectedFile !== data.uploadedFileID) {
+	// 		setSelectedFile(data.uploadedFileID)
+	// 	} else {
+	// 		setSelectedFile(null)
+	// 	}
+
+	// 	setFtype(data.fileType);
+	// 	setFilesData(data);
+	// 	props.viewFiles(data)
+	// }
+
+	const addSelectedFiles = (data) => {
+		const fileIndex = selectedFiles.findIndex(file => file.fileURL === data.fileURL)
+		if (fileIndex === -1) {
+			setSelectedFiles([...selectedFiles, data])
+			// setSelectedFile(data.uploadedFileID)
 		} else {
-			setSelectedFile(null)
+			const newFilesData = selectedFiles.filter(file => file.fileURL !== data.fileURL)
+			setSelectedFiles(newFilesData)
 		}
+	}
 
-		setFtype(data.fileType);
-		setFilesData(data);
-		props.viewFiles(data)
+	const isSelected = (data) => {
+		const fileIndex = selectedFiles.findIndex(file => file.fileURL === data.fileURL)
+		if (fileIndex !== -1) {
+			return true
+		}
+		return false
 	}
 
 	// const download = (data) => {
+
 	// 	props.downloadFiles(data)
 	// }
 	// const expandFolder = (data) => {
@@ -184,10 +211,12 @@ export function PinFileStructure(props: FileStructureProps) {
 					<div className="files-right-area">
 						<div className="symbol-group symbol-hover">
 							<div className="symbol symbol-30">
-								<a onClick={() => viewFile(singleFileItem)} className={selectedFile === uploadedFileID ? "selected" : ""}> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
+								<a onClick={() => addSelectedFiles(singleFileItem)} className={isSelected(singleFileItem) ? "selected" : ""}> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
 							</div>
 						</div>
 					</div>}
+
+
 
 				{props.fileVersionLoading && selectedExpandVersionId === uploadedFileID ?
 					<>
@@ -211,7 +240,7 @@ export function PinFileStructure(props: FileStructureProps) {
 										return (<div key={uploadedFileID} className="files-versioning-list">
 											<p>Version {fileVersion} - <span>{fileTitle}</span> <span className="small-text">(By: {updatedBy ? updatedBy : createdBy} - Uploaded on: {updatedAt ? formattedUpdatedAt : formattedCreatedAt})</span></p>
 											<div className="files-right-area">
-												<a onClick={() => viewFile(versionFileItem)} className={selectedFile === uploadedFileID ? "selected" : ""}> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
+												<a onClick={() => addSelectedFiles(versionFileItem)} className={isSelected(versionFileItem) ? "selected" : ""}> <i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></a>
 											</div>
 										</div>)
 									})}
@@ -276,6 +305,7 @@ export function PinFileStructure(props: FileStructureProps) {
 				{/* new file structure */}
 				<div className="all-files-con select-file-popup-area">
 					{renderedFileFoldersList}
+
 					{/* <div>--------------------------------------</div>
 					<>
 						<div className="multiple-files-box expand">
@@ -432,4 +462,4 @@ export function PinFileStructure(props: FileStructureProps) {
 	);
 }
 
-export default PinFileStructure;
+export default TaskFileStructure;

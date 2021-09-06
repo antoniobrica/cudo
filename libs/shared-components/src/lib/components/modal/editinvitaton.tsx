@@ -160,7 +160,6 @@ export function ModalEditInvitation(props: EditInvitationProps) {
   }
 
   const onMembers = (data) => {
-    console.log('----errors.memberError----', errors.membersError)
     setMembers(data)
     setErrors({ ...errors, membersError: "" })
   }

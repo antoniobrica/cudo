@@ -223,7 +223,7 @@
         "title_error": "Please provide title",
         "category_error": "Please select meeting category",
         "protocol_template_error": "Please select protocol template",
-        "invitation_template_error": "Please select invitaion template",
+        "invitation_template_error": "Please select invitation template",
         "admins_error": "Please select admins",
         "members_error": "Please select members",
         "date_error": "Please provide date"
@@ -478,7 +478,7 @@
     "who_can_access": "Who can access",
     "everyone_in_worktype": "Everyone in Project/Work type",
     "everyone_in_subproject": "Everyone in Project/Subproject",
-    "specific_access": "Specify People ,only",
+    "specific_access": "Specify People only",
     "data_not_found": "No Data Found",
     "please_confirm": "Please Confirm",
     "add_more": "Add more",

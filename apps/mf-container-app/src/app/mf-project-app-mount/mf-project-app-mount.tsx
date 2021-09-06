@@ -11,7 +11,6 @@ export interface MfProjectAppMountProps {
 }
 
 export function MfProjectAppMount(props: MfProjectAppMountProps) {
-  // console.log('-Container--MfProjectAppMount--props--',props)
   return (
     <MicroFrontend history={props.history} host={props.host} name="ProjectApp" />
   );
