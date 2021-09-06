@@ -40,6 +40,7 @@ export function ModalCost(props: ModalCostProps) {
   const [isValidItemQuantity, setIsValidItemQuantity] = React.useState(false)
   const [isValidItemPrice, setIsValidItemPrice] = React.useState(false)
   const [idx, setIdx] = React.useState(0)
+  const [houseStructure, setHouseStructure] = React.useState("")
   const [openFile, setOpenFile] = React.useState(false)
   const [files, setFileList] = React.useState<any>([]);
   const [items, setItems] = React.useState<Iitem[]>([])
@@ -132,16 +133,20 @@ export function ModalCost(props: ModalCostProps) {
         setIsApi(false)
       }
     })
-    if (isApi) {
-      console.log('isApi', isApi)
-      props.createCost(items)
-      cancel();
-    }
-    // props.createCost(items)
-    // setOpen(false);
-    // cancel();
+    // if (isApi) {
+    //   console.log('isApi', isApi)
+    //   props.createCost(items)
+    //   cancel();
+    // }
+    const hs = houseStructure;
+    props.createCost(items, hs)
+    setOpen(false);
+    cancel();
   }
 
+  const house = (data) => {
+    setHouseStructure(data)
+  }
   function CostItem() {
     return items.map((item, index) =>
       <Table.Row>
@@ -204,7 +209,7 @@ export function ModalCost(props: ModalCostProps) {
           <div>
             <Modal.Header className="cost-modal-header">
               <h3 className="">{t('project_tab_menu.cost.select_house')} <span>({t('project_tab_menu.cost.this_house_contain')})</span></h3>
-              <HouseStructureIndex></HouseStructureIndex>
+              <HouseStructureIndex house={house}></HouseStructureIndex>
             </Modal.Header>
             {/* <Form>
               <Grid columns={2}>

@@ -32,11 +32,14 @@ export function AddNewItem(props: AddNewItemProps) {
     }
   )
 
-  const createCost = (cost) => {
-    console.log('create-Cost', cost)
+  const createCost = (cost, hs) => {
+    console.log('create-Cost', hs)
+
     cost.map(data => {
       addCost({
         variables: {
+          structureID: hs.structureID,
+          structureName: hs.structureName,
           BKPID: data.BKPID,
           BKPTitle: data.BKPTitle,
           description: data.description,

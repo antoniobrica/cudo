@@ -1,11 +1,8 @@
 import React from 'react';
-
 import './../../../assets/style/index.scss'
 import { Tab, Image, Input, Accordion, Form, Grid, Card, Dropdown, Icon, Table, Label } from 'semantic-ui-react';
 import { NONAME } from 'dns';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
-
-
 /* eslint-disable-next-line */
 export interface CostListProps {
   addNew?,
@@ -19,7 +16,6 @@ export function CostList(props: CostListProps) {
   const [editC, setEditC] = React.useState(false)
   const [expandBkpF, setExpandBkpF] = React.useState(false)
   const [expandFirstLayer, setExpandFirstLayer] = React.useState(false)
-
   const [isBkpEdited, setIsBkpEdited] = React.useState(false)
   const [estimateCost, setEstimateCost] = React.useState('5,000.00')
   const [showBkp, setexpandBkp] = React.useState(false)
@@ -28,6 +24,27 @@ export function CostList(props: CostListProps) {
   const [editBkpD, setEditBkpD] = React.useState(null);
   const [editBkpIq, setEditBkpIq] = React.useState(null);
   const [editBkpIp, setEditBkpIp] = React.useState(null);
+  const [totalCost, setTotalCost] = React.useState(0);
+  const [totalItems, setTotalItems] = React.useState(0);
+  const [gst, setGst] = React.useState(0);
+  const [subTotal, setSubTotal] = React.useState(0);
+
+  React.useEffect(() => {
+    let tx = 0;
+    let totalItems = 0;
+    props?.costs?.map((cost, id) => {
+      tx += cost.BKPCosts[0].itemPrice;
+      totalItems += cost.BKPCosts[0].itemQuantity
+    })
+    const g = tx / 10;
+    const st = g + tx;
+    setSubTotal(st)
+    setGst(g);
+    setTotalCost(tx);
+    setTotalItems(totalItems);
+    console.log('sum==', tx)
+
+  }, [props.costs])
 
   const addNew = () => {
     console.log('add new');
@@ -221,7 +238,7 @@ export function CostList(props: CostListProps) {
                 <div className="treeview__level show" data-level="A">
                   <Icon name="add" className="show-view" onClick={() => setExpandFirstLayer(!expandFirstLayer)} />
                   {expandFirstLayer && <Icon name="minus" className="hide-view" onClick={() => setExpandFirstLayer(!expandFirstLayer)} />}
-                  <span className="level-title cost-item-parent"><Icon name="list" /> Jack W. Elementary School <span className="item-total-price">Total price: $1500.00</span></span>
+                  <span className="level-title cost-item-parent"><Icon name="list" /> Jack W. Elementary School <span className="item-total-price">Total price: ${totalCost}</span></span>
                 </div>
                 {expandFirstLayer && <ul>
                   <li>
@@ -255,7 +272,7 @@ export function CostList(props: CostListProps) {
                                 </Table.Header>
 
                                 <Table.Body>
-                                  {props.costs.map((cost, id) => {
+                                  {props?.costs?.map((cost, id) => {
                                     return (
                                       isBkpEdited && (cost?.BKPCosts[0]?.bkpCostID === editBkpData?.bkpCostID) ?
                                         <Table.Row>
@@ -347,8 +364,8 @@ export function CostList(props: CostListProps) {
                                 <Table.Footer>
                                   <Table.Row>
                                     <Table.HeaderCell colspan="5">Total</Table.HeaderCell>
-                                    <Table.HeaderCell>5</Table.HeaderCell>
-                                    <Table.HeaderCell colspan="2">$5,000.00</Table.HeaderCell>
+                                    <Table.HeaderCell>{totalItems}</Table.HeaderCell>
+                                    <Table.HeaderCell colspan="2">${totalCost}</Table.HeaderCell>
                                   </Table.Row>
                                 </Table.Footer>
                               </Table>
@@ -406,9 +423,9 @@ export function CostList(props: CostListProps) {
                   </div>
 
                   <div className="sub-total-item">
-                    <p>Sub Total <span>$00.00</span></p>
-                    <p>GST 10% <span>$00.00</span></p>
-                    <p>Total <span>$00.00</span></p>
+                    <p>Sub Total <span>${totalCost}</span></p>
+                    <p>GST 10% <span>${gst}</span></p>
+                    <p>Total <span>${subTotal}</span></p>
                   </div>
                 </div>
 

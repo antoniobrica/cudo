@@ -6,7 +6,9 @@ import './house-structure-index.module.scss';
 import { HouseStructure } from '@cudo/mf-account-app-lib';
 import { MS_SERVICE_URL } from '@cudo/mf-core'
 /* eslint-disable-next-line */
-export interface HouseStructureIndexProps { }
+export interface HouseStructureIndexProps {
+  house
+}
 const client = new ApolloClient({
   uri: MS_SERVICE_URL['ms_account'].url,
   cache: new InMemoryCache()
@@ -15,7 +17,7 @@ export function HouseStructureIndex(props: HouseStructureIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <HouseStructure></HouseStructure>
+        <HouseStructure house={props.house}></HouseStructure>
       </ApolloHooksProvider>
     </ApolloProvider>
   );
