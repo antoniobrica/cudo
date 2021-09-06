@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea, Checkbox, Loader, Dimmer } from 'semantic-ui-react';
+import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea, Checkbox, Loader, Dimmer, Icon } from 'semantic-ui-react';
 import { radios } from '@storybook/addon-knobs';
 import { IPeople, IPeoples, ITask, ITasks, TaskMutation } from "../../interfaces/task";
 import { useTaskMutation } from '../../services/useRequest';
@@ -346,7 +346,7 @@ export function CreateTask(props: CreateTaskProps) {
     <div >
       {/* <Modal className= "modal_media right-side--fixed-modal add-new-task-modal overflow-hidden"  */}
       <Modal className={loading ? "modal_media right-side--fixed-modal add-new-task-modal disabled-fields" : "modal_media right-side--fixed-modal add-new-task-modal"}
-        closeIcon
+        // closeIcon
         onClose={cancel}
         onOpen={() => setOpen(true)}
         open={open}
@@ -355,237 +355,240 @@ export function CreateTask(props: CreateTaskProps) {
       >
         {addTaskLoading ?
           <Dimmer active inverted Center inline>
-            <Loader size='big'>Loading</Loader>
+            <Loader size='big'>Submitting</Loader>
           </Dimmer>
           : null}
 
         {
           isOpenTaskFiles && (
             <FileListIndex
-              isTaskFile={isOpenTaskFiles}
-              cancel={cancelIsTaskFileOpen}
-              onlyAddFileToTask={onlyAddFileToTask}
-              selectedFiles={selectedFiles}
-              addSelectedFiles={addSelectedFiles}
+            isTaskFile={isOpenTaskFiles}
+            cancel={cancelIsTaskFileOpen}
+            onlyAddFileToTask={onlyAddFileToTask}
+            selectedFiles={selectedFiles}
+            addSelectedFiles={addSelectedFiles}
             />
-          )
-        }
-        <Modal.Header><h3>{t("project_tab_menu.task.add_new_task")} </h3></Modal.Header>
-        <Modal.Content body>
-          <div>
-            <Form>
-              <Grid columns={1}>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>{t("project_tab_menu.task.task_title")} <span className="danger">*</span></label>
-                      <Input placeholder={t("project_tab_menu.task.task_title")} size='small' className="full-width" type="text"
-                        value={taskTitle}
-                        onChange={onTaskTitleChange}
-                        error={errors?.titleError && !taskTitle}
-                      />
-                      {errors?.titleError && !taskTitle ? <span className="error-message">{errors.titleError}</span> : null}
-                    </Form.Field>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-              <Grid columns={1}>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>{t("common.desc")} </label>
-                      <TextArea placeholder={t("common.desc_placeholder")}
-                        value={description}
-                        onChange={onDescriptionChange} />
-                      {/* <ReactQuill
-                        value={description}
-                        modules={{
-                          toolbar: {
-                            container: [
-                              [{ 'size': ['small', false, 'large'] }],
-                              // ['bold', 'italic', 'underline'],
-                              // [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                              // [{ 'align': [] }],
-                              // ['link', 'image'],
-                              // ['clean'],
-                              // [{ 'color': [] }]
-                            ]
-                          }
-                        }}
-                        placeholder={t("common.desc_placeholder")}
-                        onChange={(content, delta, source, editor) => onDescriptionChange(content, editor)}
-                        id="txtDescription"
-                      /> */}
-                    </Form.Field>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-              <Grid columns={1}>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>{t("project_tab_menu.task.work_type")} <span className="danger">*</span></label>
-                      {/* <Select placeholder='Select' className="small" options={workTypes} /> */}
-                      <Select
-                        placeholder={t("common.select")}
-                        className="small"
-                        value={workTypeData}
-                        options={workType}
-                        onChange={onMworkType}
-                        selection
-                        clearable
-                        error={errors?.workTypeError && !workTypeID}
-                      />
-                      {errors?.workTypeError && !workTypeID ? <span className="error-message">{errors.workTypeError}</span> : null}
-                    </Form.Field>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-              <Grid columns={2}>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>{t("common.select_phase")} </label>
-                      <PhaseIndex parentPhaseSelect={onsetPhasesID} />
-                    </Form.Field>
-                  </Grid.Column>
-                  <Grid.Column>
-                    <BkpsIndex bkp={''} parentBKPSelect={setBKPIDChange} />
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-              <Grid columns={1}>
-                <Grid.Row>
-                  <Grid.Column>
-                    <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Assignee" error={errors?.assigneeError && !assignees.length} />
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-              <Grid>
-                <Grid.Row>
-                  <Grid.Column>
-                    <FollowersIndex followers={[]} parentFollowersSelect={onFollowers} />
-                  </Grid.Column>
-                </Grid.Row>
-                <div className="followers-label-area">
-                  <Form.Field>
-                    <div className="event top-event follower-listing-labels">
-                      {followers.map((p, id) => {
-                        const name = p.userName.split(" ").map((n) => n[0]).join("");
-                        //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
-                        return (
-                          <div className="label-light-purple-circle label-spacer" key={id}>
-                            <span className="white-text">{name}</span>
-                          </div>
-                        )
-                      })
-                      }
+            )
+          }
+        <div className="fixed-popup-inner-con">
+          <Modal.Header><h3>{t("project_tab_menu.task.add_new_task")} </h3> <Icon name='close' onClick={cancel} /></Modal.Header>
 
-                      {/* <div className="label-light-black-circle label-spacer">
-                        <span className="white-text ">RJ</span>
-                      </div>
-                      <div className="label-light-blue-circle label-spacer">
-                        <span className="white-text">JB</span>
-                      </div> */}
-                    </div>
-                  </Form.Field>
-                </div>
-              </Grid>
-
-              <Grid columns={3}>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>{t("common.start_date")} </label>
-                      {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
-                      <Input placeholder='Default' size='small' className="full-width"
-                        type="date"
-                        value={startDate}
-                        onChange={onStartDateChange}
-                        error={errors?.dateError && (startDate > endDate)}
-                      />
-                      {errors?.dateError && (startDate > endDate) ? <span className="error-message">{errors.dateError}</span> : null}
-                    </Form.Field>
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>{t("common.end_date")} </label>
-                      {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
-                      <Input placeholder='Default' size='small' className="full-width" type="date"
-                        defaultValue={startDate}
-                        value={endDate}
-                        onChange={onEndDateChange}
-                      />
-                    </Form.Field>
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>{t("common.estimated_days")}  </label>
-                      <Input placeholder={t("project_tab_menu.task.enter_days")} className="small"
-                        value={estimatedDays}
-                        onChange={onsetEstimatedDays}
-                      />
-                    </Form.Field>
-
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-
-              <Grid columns={1} className="add-extra-files">
-                <Grid.Row>
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>Select Files</label><Button className="icon-border" size="small" onClick={() => setisOpenTaskFiles(true)}><i className="ms-Icon ms-font-xl ms-Icon--Add"></i> Add Files</Button>
-                    </Form.Field>
-                  </Grid.Column>
-                </Grid.Row>
-                {selectedFiles.length > 0 && (
-                  <Grid.Row className="add-files-list">
-                    <Grid.Column className="uploaded-files">
-                      <ul>
-                        {
-                          selectedFiles.map(file => (
-                            <li>
-                              <p>
-                                <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} />
-                                {file.fileURL}
-                              </p>
-                              <i onClick={() => removeSeletedFile(file)} className="close icon"></i>
-                            </li>
-                          ))
-                        }
-                      </ul>
+          <Modal.Content body>
+            <div>
+              <Form>
+                <Grid columns={1}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>{t("project_tab_menu.task.task_title")} <span className="danger">*</span></label>
+                        <Input placeholder={t("project_tab_menu.task.task_title")} size='small' className="full-width" type="text"
+                          value={taskTitle}
+                          onChange={onTaskTitleChange}
+                          error={errors?.titleError && !taskTitle}
+                        />
+                        {errors?.titleError && !taskTitle ? <span className="error-message">{errors.titleError}</span> : null}
+                      </Form.Field>
                     </Grid.Column>
-                  </Grid.Row>)
-                }
-              </Grid>
-
-              <Grid columns={1}>
-                <Grid.Row>
-                  <Grid.Column>
+                  </Grid.Row>
+                </Grid>
+                <Grid columns={1}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>{t("common.desc")} </label>
+                        <TextArea placeholder={t("common.desc_placeholder")}
+                          value={description}
+                          onChange={onDescriptionChange} />
+                        {/* <ReactQuill
+                          value={description}
+                          modules={{
+                            toolbar: {
+                              container: [
+                                [{ 'size': ['small', false, 'large'] }],
+                                // ['bold', 'italic', 'underline'],
+                                // [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                // [{ 'align': [] }],
+                                // ['link', 'image'],
+                                // ['clean'],
+                                // [{ 'color': [] }]
+                              ]
+                            }
+                          }}
+                          placeholder={t("common.desc_placeholder")}
+                          onChange={(content, delta, source, editor) => onDescriptionChange(content, editor)}
+                          id="txtDescription"
+                        /> */}
+                      </Form.Field>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+                <Grid columns={1}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>{t("project_tab_menu.task.work_type")} <span className="danger">*</span></label>
+                        {/* <Select placeholder='Select' className="small" options={workTypes} /> */}
+                        <Select
+                          placeholder={t("common.select")}
+                          className="small"
+                          value={workTypeData}
+                          options={workType}
+                          onChange={onMworkType}
+                          selection
+                          clearable
+                          error={errors?.workTypeError && !workTypeID}
+                        />
+                        {errors?.workTypeError && !workTypeID ? <span className="error-message">{errors.workTypeError}</span> : null}
+                      </Form.Field>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+                <Grid columns={2}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>{t("common.select_phase")} </label>
+                        <PhaseIndex parentPhaseSelect={onsetPhasesID} />
+                      </Form.Field>
+                    </Grid.Column>
+                    <Grid.Column>
+                      <BkpsIndex bkp={''} parentBKPSelect={setBKPIDChange} />
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+                <Grid columns={1}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Assignee" error={errors?.assigneeError && !assignees.length} />
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+                <Grid>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <FollowersIndex followers={[]} parentFollowersSelect={onFollowers} />
+                    </Grid.Column>
+                  </Grid.Row>
+                  <div className="followers-label-area">
                     <Form.Field>
-                      <label>{t("common.task_configuration")}   </label>
-                      <div className="content configuration-toggle">
-                        <p className="paragraph task-configuration">{t("common.notification_for_task")} <Checkbox toggle className="task-toggle" /></p></div>
+                      <div className="event top-event follower-listing-labels">
+                        {followers.map((p, id) => {
+                          const name = p.userName.split(" ").map((n) => n[0]).join("");
+                          //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
+                          return (
+                            <div className="label-light-purple-circle label-spacer" key={id}>
+                              <span className="white-text">{name}</span>
+                            </div>
+                          )
+                        })
+                        }
+
+                        {/* <div className="label-light-black-circle label-spacer">
+                          <span className="white-text ">RJ</span>
+                        </div>
+                        <div className="label-light-blue-circle label-spacer">
+                          <span className="white-text">JB</span>
+                        </div> */}
+                      </div>
                     </Form.Field>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-            </Form>
-          </div>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button
-            content={t("common.submit")}
-            onClick={handleSaveTask}
-            positive
-            // loading
-            size='small' className="primary"
-          />
-          <Button size='small' className="icon-border" onClick={cancel}>
-            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i>  {t("common.cancel")}
-          </Button>
-        </Modal.Actions>
+                  </div>
+                </Grid>
+
+                <Grid columns={3}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>{t("common.start_date")} </label>
+                        {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
+                        <Input placeholder='Default' size='small' className="full-width"
+                          type="date"
+                          value={startDate}
+                          onChange={onStartDateChange}
+                          error={errors?.dateError && (startDate > endDate)}
+                        />
+                        {errors?.dateError && (startDate > endDate) ? <span className="error-message">{errors.dateError}</span> : null}
+                      </Form.Field>
+                    </Grid.Column>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>{t("common.end_date")} </label>
+                        {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
+                        <Input placeholder='Default' size='small' className="full-width" type="date"
+                          defaultValue={startDate}
+                          value={endDate}
+                          onChange={onEndDateChange}
+                        />
+                      </Form.Field>
+                    </Grid.Column>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>{t("common.estimated_days")}  </label>
+                        <Input placeholder={t("project_tab_menu.task.enter_days")} className="small"
+                          value={estimatedDays}
+                          onChange={onsetEstimatedDays}
+                        />
+                      </Form.Field>
+
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+
+                <Grid columns={1} className="add-extra-files">
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>Select Files</label><Button className="icon-border" size="small" onClick={() => setisOpenTaskFiles(true)}><i className="ms-Icon ms-font-xl ms-Icon--Add"></i> Add Files</Button>
+                      </Form.Field>
+                    </Grid.Column>
+                  </Grid.Row>
+                  {selectedFiles.length > 0 && (
+                    <Grid.Row className="add-files-list">
+                      <Grid.Column className="uploaded-files">
+                        <ul>
+                          {
+                            selectedFiles.map(file => (
+                              <li>
+                                <p>
+                                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} />
+                                  {file.fileURL}
+                                </p>
+                                <i onClick={() => removeSeletedFile(file)} className="close icon"></i>
+                              </li>
+                            ))
+                          }
+                        </ul>
+                      </Grid.Column>
+                    </Grid.Row>)
+                  }
+                </Grid>
+
+                <Grid columns={1}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>{t("common.task_configuration")}   </label>
+                        <div className="content configuration-toggle">
+                          <p className="paragraph task-configuration">{t("common.notification_for_task")} <Checkbox toggle className="task-toggle" /></p></div>
+                      </Form.Field>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+              </Form>
+            </div>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button
+              content={t("common.submit")}
+              onClick={handleSaveTask}
+              positive
+              // loading
+              size='small' className="primary"
+            />
+            <Button size='small' className="icon-border" onClick={cancel}>
+              <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i>  {t("common.cancel")}
+            </Button>
+          </Modal.Actions>
+        </div>
       </Modal>
 
     </div>
