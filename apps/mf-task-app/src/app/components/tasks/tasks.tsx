@@ -891,32 +891,57 @@ export function Tasks(props: TasksProps) {
                         <span className="completed-task-list-text line-through">{task?.taskTitle}</span>
                         <div className="d-flex mr-3">
                           <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row task-listing-desc">
-                            ( {new Date(task?.startDate).toDateString()} ↦ Due {new Date(task?.endDate).toDateString()})
-                            <div className="navi-item">
-                              <a className="navi-link">
-                                <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>2 files  -  </span>
-                              </a>
-                            </div>
-                            <div className="navi-item">
-                              <a className="navi-link">
-                                <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> 5 days <span className="dash-seperator">-</span> </span>
-                              </a>
-                            </div>
-                            <div className="navi-item">
-                              <a className="navi-link">
-                                <span className="navi-text">Realization  <span className="dash-seperator">-</span>  </span>
-                              </a>
-                            </div>
-                            <div className="navi-item">
-                              <a className="navi-link">
-                                <span className="navi-text">Work Type 9   <span className="dash-seperator">-</span> </span>
-                              </a>
-                            </div>
-                            <div className="navi-item">
-                              <a className="navi-link">
-                                <span className="navi-text"> 3 Check points  </span>
-                              </a>
-                            </div>
+                            {(task.startDate || task?.endDate) && (
+                              <>
+                                ( {new Date(task?.startDate).toDateString()} ↦ Due {new Date(task?.endDate).toDateString()})
+                              </>
+                            )}
+                            {
+                              task?.files.length > 0 && (
+                                <div className="navi-item">
+                                  <a className="navi-link">
+                                    <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{task?.files?.length} files  -  </span>
+                                  </a>
+                                </div>
+                              )
+                            }
+
+                            {task?.estimatedDays && (
+
+                              <div className="navi-item">
+                                <a className="navi-link">
+                                  <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> {task?.estimatedDays} days <span className="dash-seperator">-</span> </span>
+                                </a>
+                              </div>
+                            )}
+                            {
+                              task?.phaseName && (
+                                <div className="navi-item">
+                                  <a className="navi-link">
+                                    <span className="navi-text">{task?.phaseName}  <span className="dash-seperator">-</span>  </span>
+                                  </a>
+                                </div>
+                              )
+                            }
+                            {
+                              task?.workTypeName && (
+                                <div className="navi-item">
+                                  <a className="navi-link">
+                                    <span className="navi-text">{task?.workTypeName}   <span className="dash-seperator">-</span> </span>
+                                  </a>
+                                </div>
+                              )
+                            }
+                            {
+                              task?.subtasks.filter((item) => item.isDeleted !== true)?.length > 0 && (
+                                <div className="navi-item">
+                                  <a className="navi-link">
+                                    <span className="navi-text"> {task?.subtasks.filter((item) => item.isDeleted !== true)?.length} {t("project_tab_menu.task.check_points")}  </span>
+                                  </a>
+                                </div>
+                              )
+                            }
+
                           </div>
 
                         </div>

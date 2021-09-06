@@ -203,7 +203,7 @@ export const ModalViewTask = (props: AlertProps) => {
                 </Grid.Row>
               </Grid>
 
-              <Grid columns={1} className="add-extra-files">
+              {/* <Grid columns={1} className="add-extra-files">
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
@@ -231,7 +231,7 @@ export const ModalViewTask = (props: AlertProps) => {
                     </ul>
                   </Grid.Column>
                 </Grid.Row>
-              </Grid>
+              </Grid> */}
 
 
               <Grid columns={1}>
