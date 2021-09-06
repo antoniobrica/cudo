@@ -558,6 +558,7 @@ export function Tasks(props: TasksProps) {
   };
   const cancelNew = () => {
     setIsTaskFile(false);
+    setTaskData(null)
   };
   const cancelTask = () => {
     setIsNewTask(false);

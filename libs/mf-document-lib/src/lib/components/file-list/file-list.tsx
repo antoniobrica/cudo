@@ -54,19 +54,22 @@ export function FileList(props: FileListProps) {
     if (props?.taskData?.fileID) {
       data?.uploadedFiles?.forEach(file => {
         file?.children?.forEach(child => {
-          if(child.uploadedFileID === props?.taskData?.fileID){
-          setSelectedFileFromTask(child)
+          if (child.uploadedFileID === props?.taskData?.fileID) {
+            setSelectedFileFromTask(child)
+            setAddPinFromTask(true)
+            viewFiles(child)
+
           }
         })
       })
     }
-      
-    
+
+
   }, [data])
 
-  React.useEffect(() => {
-    setAddPinFromTask(true)
-  },[selectedFileFromTask])
+  // React.useEffect(() => {
+  //   setAddPinFromTask(true)
+  // },[selectedFileFromTask])
 
 
 
@@ -122,13 +125,13 @@ export function FileList(props: FileListProps) {
   }
 
   const viewFiles = (data) => {
-   
+
     setFileName(data.fileTitle);
     downloadsContext.viewItem(data.fileTitle)
   }
 
   const uploadNewVersion = (data) => {
-   
+
     setFileVersion(data);
     //setOpenNew(true)
   }
@@ -155,9 +158,10 @@ export function FileList(props: FileListProps) {
   // }
   return (
     <div>
-      {loading ?
-        <LazyLoading /> : null}
       {
+      loading ?
+        <LazyLoading />
+        :
         addPinFromTask ? (
           <AddPinFile isOpen={addPinFromTask} cancel={cancel} filesData={selectedFileFromTask} dowloadFilesData={itemsd} savePin={savePins} />
         ) : (
