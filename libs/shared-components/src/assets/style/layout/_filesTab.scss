@@ -651,6 +651,24 @@
           padding: 15px 20px;
         }
       }
+      label {
+        i {
+          transform: rotate(-90deg);
+        }
+      }
+      .detail-file-listing-box {
+        display: none;
+      }
+      &.expand {
+        .detail-file-listing-box {
+          display: block;
+        }
+        label {
+          i {
+            transform: rotate(0deg);
+          }
+        }
+      }
     }
     .comments-con {
       .comments-section {

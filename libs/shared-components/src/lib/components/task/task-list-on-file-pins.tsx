@@ -25,11 +25,9 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
     props.editTask(task)
   }
   return (
-    <div>
+    <div className="detail-file-listing-box">
       <Form.Field>
-        <div>
           {props.pinTasks && props.pinTasks.map((task, i) => {
-
             return (
               <div>
                 <div className={props?.cord?.pinsID === task?.taskTypeID ? "pin-task-completed-card pin-task-hover" : "pin-task-completed-card"}>
@@ -240,7 +238,6 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
               </div>
             )
           })}
-        </div>
       </Form.Field>
     </div>
   );
