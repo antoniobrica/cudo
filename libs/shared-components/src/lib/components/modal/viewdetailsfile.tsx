@@ -179,37 +179,32 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                       <i aria-hidden="true" className="close icon" onClick={cancel}></i>
                     </span>
                   </h3></Modal.Header>
-                  <Grid columns={2}>
+                  <Grid columns={1}>
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
                           <label>File name</label>
-                          <p className="form_desc">{props?.filesData?.fileTitle}</p>
+                          <Select placeholder='Select version' className="small" options={versionOptions} selection clearable/>
+                          {/* <p className="form_desc">{props?.filesData?.fileTitle}</p> */}
                         </Form.Field>
                       </Grid.Column>
+                    </Grid.Row>
+                  </Grid>
+
+                  <Grid columns={2}>
+                    <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
                           <label>File type</label>
                           <p className="form_desc">{props?.filesData?.fileType}</p>
                         </Form.Field>
                       </Grid.Column>
-                    </Grid.Row>
-                  </Grid>
-
-                  <Grid columns={2}>
-                    <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
                           <label>Phase</label>
                           <p className="form_desc">{props?.filesData?.phaseName}</p>
                         </Form.Field>
                       </Grid.Column>
-                      <Grid.Column>
-                        <Form.Field>
-                          <label>Uploaded on</label>
-                          <p className="form_desc">20 Oct, 2020</p>
-                        </Form.Field>
-                      </Grid.Column>
                     </Grid.Row>
                   </Grid>
 
@@ -217,14 +212,14 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <label>Uploaded by</label>
-                          <p className="form_desc">John Smith</p>
+                          <label>Uploaded on</label>
+                          <p className="form_desc">20 Oct, 2020</p>
                         </Form.Field>
                       </Grid.Column>
                       <Grid.Column>
                         <Form.Field>
-                          <label>Select version</label>
-                          <Select placeholder='Select version' className="small" options={versionOptions} selection clearable/>
+                          <label>Uploaded by</label>
+                          <p className="form_desc">John Smith</p>
                         </Form.Field>
                       </Grid.Column>
                     </Grid.Row>
