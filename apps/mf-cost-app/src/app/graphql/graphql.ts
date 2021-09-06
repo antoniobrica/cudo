@@ -43,12 +43,13 @@ mutation CreateCost(
   $itemPrice: Float!,
   $itemQuantity: Float!,
   $referenceID: String!,
-
+  $structureID: String!,
+  $structureName: String!
   ){ 
     createCost( 
       referenceFilter: {  referenceID: $referenceID, referenceType: PROJECTTYPE } 
       costDetails: { 
-        costBasicInfo: { structureID: "1", structureName: "New" } 
+        costBasicInfo: { structureID: $structureID, structureName: $structureName } 
         BKPCosts: { 
           bkpCostBasic: { 
             BKPID: $BKPID

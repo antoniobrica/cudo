@@ -147,7 +147,10 @@ export function App() {
     return <LoaderPage />
   }
 
+  if (data) {
+    console.log('cost-data', data);
 
+  }
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div>
