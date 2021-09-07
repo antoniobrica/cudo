@@ -9,11 +9,14 @@ const check = (host, callback) => {
 }
 
 function MicroFrontend({ name, host, history }) {
+
   const [shouldReturnMain, setShouldReturnMain] = useState(undefined)
- 
-  useLayoutEffect(() => {
+
+  useEffect(() => {
     const scriptId = `render${name}`;
+
     const renderMicroFrontend = () => {
+      console.log('--renderMicroFrontend--name---', name)
       window[`render${name}`](`${name}-container`, history);
     };
 
@@ -23,11 +26,14 @@ function MicroFrontend({ name, host, history }) {
     }
     const main = "main.js";
     const script = document.createElement("script");
+
     script.id = scriptId;
     script.crossOrigin = "";
     script.src = `${host}/${main}`;
     script.onload = () => {
       renderMicroFrontend();
+      setShouldReturnMain(true)
+
     };
 
     check(host, (isServerRunning) => {
@@ -40,16 +46,17 @@ function MicroFrontend({ name, host, history }) {
       }
     })
 
-    //  document.head.appendChild(script);
+    // document.head.appendChild(script);
+
     return () => {
       window[`unmount${name}`] && window[`unmount${name}`](`${name}-container`);
     };
-  },[]);
+  }, []);
 
   if (shouldReturnMain === undefined) {
     return null
   }
-   
+
   return shouldReturnMain ? <main id={`${name}-container`} /> : <div style={{ height: "230px", width: "230px", padding: "200px", background: "#ccc" }}>
     {name} service unavailable!!
   </div>;
@@ -61,3 +68,46 @@ MicroFrontend.defaultProps = {
 };
 
 export default MicroFrontend;
+
+// =============Above modified and below old code - both running====================================================================
+
+// import React, { useEffect } from "react";
+
+// function MicroFrontend({ name, host, history }) {
+//   console.log('MicroFrontend',history);
+  
+//   useEffect(() => {
+//     const scriptId = `render${name}`;
+//     const renderMicroFrontend = () => {
+//       window[`render${name}`](`${name}-container`, history);
+//     };
+
+//     if (document.getElementById(scriptId)) {
+//       renderMicroFrontend();
+//       return;
+//     }
+//     const main = "main.js";
+//     const script = document.createElement("script");
+//     script.id = scriptId;
+//     script.crossOrigin = "";
+//     script.src = `${host}/${main}`;
+//     script.onload = () => {
+//       renderMicroFrontend();
+//     };
+//     console.log(script.src);
+//     document.head.appendChild(script);
+//     return () => {
+//       window[`unmount${name}`] && window[`unmount${name}`](`${name}-container`);
+//     };
+//   });
+
+//   return <main id={`${name}-container`} />;
+// }
+
+// MicroFrontend.defaultProps = {
+//   document,
+//   window,
+// };
+
+// export default MicroFrontend;
+

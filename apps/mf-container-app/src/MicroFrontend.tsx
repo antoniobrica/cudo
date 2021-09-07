@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useEffect, useState } from "react";
 
 const check = (host, callback) => {
   fetch(host, {
@@ -12,7 +12,7 @@ function MicroFrontend({ name, host, history }) {
 
   const [shouldReturnMain, setShouldReturnMain] = useState(undefined)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const scriptId = `render${name}`;
 
     const renderMicroFrontend = () => {
@@ -64,3 +64,46 @@ MicroFrontend.defaultProps = {
 };
 
 export default MicroFrontend;
+
+// =============Above modified and below old code - both running====================================================================
+
+// import React, { useEffect } from "react";
+
+// function MicroFrontend({ name, host, history }) {
+
+//   useEffect(() => {
+//     const scriptId = `render${name}`;
+
+//     const renderMicroFrontend = () => {
+//       console.log(window[`render${name}`])
+//       window[`render${name}`](`${name}-container`, history);
+//     };
+
+//     if (document.getElementById(scriptId)) {
+
+//       renderMicroFrontend();
+//       return;
+//     }
+//     const main = "main.js";
+//     const script = document.createElement("script");
+
+//     script.id = scriptId;
+//     script.crossOrigin = "";
+//     script.src = `${host}/${main}`;
+//     script.onload = () => {
+//       renderMicroFrontend();
+//     };
+//     document.head.appendChild(script);
+//     return () => {
+//       window[`unmount${name}`] && window[`unmount${name}`](`${name}-container`);
+//     };
+//   });
+//   return <main id={`${name}-container`} />;
+// }
+
+// MicroFrontend.defaultProps = {
+//   document,
+//   window,
+// };
+
+// export default MicroFrontend;

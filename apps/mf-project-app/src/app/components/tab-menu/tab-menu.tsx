@@ -56,6 +56,7 @@ function TabMenu(props: TabMenuProps) {
   }
 
   function TaskApp(history: any) {
+    console.log('---task app load--history--', history)
     return (
       <MicroFrontend history={history} host={taskHost} name="TaskApp" />
     );
@@ -257,13 +258,13 @@ function TabMenu(props: TabMenuProps) {
             />
 
             {/* start Added for router */}
-            <Route path={`${url}/task`} exact render={() => (
+            <Route path={`${url}/task`} render={() => (
               <Tab.Pane onClick={handleOpenProject('task')}><TaskApp id={projectId}></TaskApp></Tab.Pane>)} />
-            <Route path={`${url}/cost`} exact render={() => (
+            <Route path={`${url}/cost`} render={() => (
               <Tab.Pane onClick={handleOpenProject('costs')}><CostApp id={projectId}></CostApp></Tab.Pane>)} />
-            <Route path={`${url}/meetings`} exact render={() => (
+            <Route path={`${url}/meetings`} render={() => (
               <Tab.Pane onClick={handleOpenProject('meetings')}><MeetingApp id={projectId}></MeetingApp></Tab.Pane>)} />
-            <Route path={`${url}/files`} exact render={() => (
+            <Route path={`${url}/files`} render={() => (
               <Tab.Pane onClick={handleOpenProject('files')}><DocumentApp id={projectId}></DocumentApp></Tab.Pane>)} />
             {/* end Added for router */}
 

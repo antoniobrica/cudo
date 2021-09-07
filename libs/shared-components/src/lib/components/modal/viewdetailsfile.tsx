@@ -27,8 +27,9 @@ const countryOptions = [
 ]
 
 const versionOptions = [
-  { key: 'af', value: 'version 1', text: 'Version 1' },
-  { key: 'ax', value: 'version 2', text: 'Version 2' },
+  // { key: 'af', value: 'Test_Image_11.png1628519479250-V1', text: 'Test_Image_11.png1628519479250-V1' },
+  { key: 'ax', value: 'version 1', text: 'Version 1' },
+  { key: 'axx', value: 'version 2', text: 'Version 2' },
 ]
 
 export interface FileDetailsProps {
@@ -36,6 +37,7 @@ export interface FileDetailsProps {
   filesData?,
   dowloadFilesData?,
   fType?
+  cancel?
 }
 export const ViewFileDetail = (props: FileDetailsProps) => {
   // const [state, dispatch] = React.useReducer(exampleReducer, {
@@ -43,7 +45,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
   //   size: undefined,
   // })
   // const { open, size } = state
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(null);
   const [files, setFiles] = React.useState();
   const [imgUrl, setimgUrl] = React.useState('');
   const [numPages, setNumPages] = React.useState(null);
@@ -66,9 +68,9 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
 
 
   React.useEffect(() => {
-    if (props.open) {
+    // if (props.open) {
       setOpen(props.open)
-    }
+    // }
   }, [props.open]);
 
 
@@ -81,7 +83,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
       }
 
     }
-  },[props.dowloadFilesData])
+  }, [props.dowloadFilesData])
 
   React.useEffect(() => {
     if (props.filesData) {
@@ -91,6 +93,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
 
   const cancel = () => {
     setOpen(false);
+    props.cancel(true);
   }
   const openf = () => {
     setOpen(true)
@@ -150,19 +153,19 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                   </Document>
                   :
                   <div className="left-side-image-canvas">
-                    {imgUrl?
-                    <CanvasImage
-                      pinSaved={setPinSavedOnCanvase}
-                      // savePin={saveNewPinOnCanvase}
-                      imgUrl={imgUrl}
-                      coardinates={getCoardinates}
-                      fileId={props.filesData.uploadedFileID}
-                      allowToCreateNewPin={false}
-                      isPinCreated={isPinCreated}
-                      setIsPinCreated={setIsPinCreated}
-                      hoveredTaskTypeID={hoveredTaskTypeID}
-                    ></CanvasImage>
-                    : <LazyLoading/>}
+                    {imgUrl ?
+                      <CanvasImage
+                        pinSaved={setPinSavedOnCanvase}
+                        // savePin={saveNewPinOnCanvase}
+                        imgUrl={imgUrl}
+                        coardinates={getCoardinates}
+                        fileId={props.filesData.uploadedFileID}
+                        allowToCreateNewPin={false}
+                        isPinCreated={isPinCreated}
+                        setIsPinCreated={setIsPinCreated}
+                        hoveredTaskTypeID={hoveredTaskTypeID}
+                      ></CanvasImage>
+                      : <LazyLoading />}
                   </div>
                 }
                 {/* <div className="file-pagination">File versions
