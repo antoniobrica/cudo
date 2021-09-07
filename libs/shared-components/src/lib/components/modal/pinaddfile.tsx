@@ -30,6 +30,7 @@ export interface AddPinProps {
   dowloadFilesData?,
   onSuccess?,
   savePin?,
+  taskData?
 
 }
 export const AddPinFile = (props: AddPinProps) => {

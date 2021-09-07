@@ -17,13 +17,14 @@ export interface FileListIndexProps {
   onlyAddFileToTask?
   addSelectedFiles?
   selectedFiles?
+  taskData?
 }
 
 export function FileListIndex(props: FileListIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <FileList  isTaskFile={props.isTaskFile} selectedFiles={props.selectedFiles} cancel={props.cancel} addSelectedFiles={props.addSelectedFiles} onlyAddFileToTask={props?.onlyAddFileToTask}/>
+        <FileList  isTaskFile={props.isTaskFile} selectedFiles={props.selectedFiles} cancel={props.cancel} addSelectedFiles={props.addSelectedFiles} onlyAddFileToTask={props?.onlyAddFileToTask} taskData={props.taskData} />
       </ApolloHooksProvider>
     </ApolloProvider>
   );

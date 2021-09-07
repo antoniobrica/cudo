@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 
 import { GET_FILES, GET_FILE_VERSIONS } from '../../graphql/graphql';
 import { useFileQuery, useFileVersionQuery } from '../../services/useRequest';
-import { LazyLoading, LoaderPage } from "@cudo/shared-components";
+import { AddPinFile, LazyLoading, LoaderPage } from "@cudo/shared-components";
 import SelectFilePopup from 'libs/shared-components/src/lib/components/modal/selectfile';
 
 import './file-list.module.scss';
@@ -19,6 +19,7 @@ export interface FileListProps {
   onlyAddFileToTask?
   addSelectedFiles?
   selectedFiles?
+  taskData?
 }
 
 export function FileList(props: FileListProps) {
@@ -31,9 +32,11 @@ export function FileList(props: FileListProps) {
   const [fileData, setFileData] = React.useState<BlobItem[]>([]);
   const [items, setItems] = React.useState<ContainerItem[]>([]);
   const [itemsd, setItemsd] = React.useState<BlobItemDownload[]>([]);
+  const [addPinFromTask, setAddPinFromTask] = React.useState(false)
 
   const [selectedFileId, setSelectedFileId] = React.useState(null)
   const [selectedFileVersions, setSelectedFileVersions] = React.useState(null)
+  const [selectedFileFromTask, setSelectedFileFromTask] = React.useState(null)
 
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -46,6 +49,27 @@ export function FileList(props: FileListProps) {
   const { loading: fileVersionLoading, error: fileVersionError, data: fileVersionData } = useFileVersionQuery(GET_FILE_VERSIONS, {
     variables: { projectId, fileId: selectedFileId },
   });
+
+  React.useEffect(() => {
+    if (props?.taskData?.fileID) {
+      data?.uploadedFiles?.forEach(file => {
+        file?.children?.forEach(child => {
+          if(child.uploadedFileID === props?.taskData?.fileID){
+          setSelectedFileFromTask(child)
+          }
+        })
+      })
+    }
+      
+    
+  }, [data])
+
+  React.useEffect(() => {
+    setAddPinFromTask(true)
+  },[selectedFileFromTask])
+
+
+
 
   React.useEffect(() => {
     if (fileVersionData) {
@@ -120,6 +144,10 @@ export function FileList(props: FileListProps) {
   const getSelectedFileId = (fileId) => {
     setSelectedFileId(fileId)
   }
+  const cancel = () => {
+    setAddPinFromTask(false)
+    props.cancel()
+  }
 
 
   // if (loading) {
@@ -129,21 +157,28 @@ export function FileList(props: FileListProps) {
     <div>
       {loading ?
         <LazyLoading /> : null}
-      <SelectFilePopup
-        isTaskFile={props.isTaskFile}
-        cancel={props.cancel}
-        files={data?.uploadedFiles}
-        downloadFiles={downloadFiles}
-        viewFiles={viewFiles}
-        downloadedImg={itemsd}
-        savePins={savePins}
-        selectedFileId={getSelectedFileId}
-        fileVersionDetail={selectedFileVersions?.fileVersions}
-        fileVersionLoading={fileVersionLoading}
-        onlyAddFileToTask={props.onlyAddFileToTask}
-        addSelectedFiles={props.addSelectedFiles}
-        selectedFiles={props.selectedFiles}
-      />
+      {
+        addPinFromTask ? (
+          <AddPinFile isOpen={addPinFromTask} cancel={cancel} filesData={selectedFileFromTask} dowloadFilesData={itemsd} savePin={savePins} />
+        ) : (
+          <SelectFilePopup
+            isTaskFile={props.isTaskFile}
+            cancel={props.cancel}
+            files={data?.uploadedFiles}
+            downloadFiles={downloadFiles}
+            viewFiles={viewFiles}
+            downloadedImg={itemsd}
+            savePins={savePins}
+            selectedFileId={getSelectedFileId}
+            fileVersionDetail={selectedFileVersions?.fileVersions}
+            fileVersionLoading={fileVersionLoading}
+            onlyAddFileToTask={props.onlyAddFileToTask}
+            addSelectedFiles={props.addSelectedFiles}
+            selectedFiles={props.selectedFiles}
+          />
+        )
+      }
+
     </div>
   );
 }
