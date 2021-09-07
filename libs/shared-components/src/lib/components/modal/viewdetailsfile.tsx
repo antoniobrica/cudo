@@ -7,6 +7,7 @@ import { PinTaskListIndex } from '@cudo/mf-task-lib';
 import { Document, Page, pdfjs } from "react-pdf";
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import CanvasImage from './canvasimage';
+import LazyLoading from '../loader/lazyloader';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 function exampleReducer(state, action) {
@@ -56,7 +57,8 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
   const [pinCount, setPinCount] = React.useState(0)
   const [cord, setCord] = React.useState(null);
 
-  const [hoveredTaskTypeID,setHoveredTaskTypeID] = React.useState(null)
+  const [expand, setExpand] = React.useState(false)
+  const [hoveredTaskTypeID, setHoveredTaskTypeID] = React.useState(null)
 
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
@@ -79,7 +81,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
       }
 
     }
-  })
+  },[props.dowloadFilesData])
 
   React.useEffect(() => {
     if (props.filesData) {
@@ -118,7 +120,9 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
     setHoveredTaskTypeID(taskTypeID)
   }
 
-  console.log('----props.filesData---', props?.filesData)
+  const onClickTaskExpand = () => {
+    setExpand(!expand)
+  }
 
   return (
     <div id="navbar">
@@ -146,6 +150,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                   </Document>
                   :
                   <div className="left-side-image-canvas">
+                    {imgUrl?
                     <CanvasImage
                       pinSaved={setPinSavedOnCanvase}
                       // savePin={saveNewPinOnCanvase}
@@ -157,6 +162,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                       setIsPinCreated={setIsPinCreated}
                       hoveredTaskTypeID={hoveredTaskTypeID}
                     ></CanvasImage>
+                    : <LazyLoading/>}
                   </div>
                 }
                 {/* <div className="file-pagination">File versions
@@ -191,7 +197,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                       <Grid.Column>
                         <Form.Field>
                           <label>File name</label>
-                          <Select placeholder='Select version' className="small" options={versionOptions} selection clearable/>
+                          <Select placeholder='Select version' className="small" options={versionOptions} selection clearable />
                           {/* <p className="form_desc">{props?.filesData?.fileTitle}</p> */}
                         </Form.Field>
                       </Grid.Column>
@@ -263,14 +269,14 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     </Grid.Row>
                   </Grid>
 
-                  <Grid columns={1} className="completed-task-list">
+                  <Grid columns={1} className={expand ? "completed-task-list expand" : "completed-task-list"}>
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <label>Tasks ({pinCount})</label>
-                         
+                          <label>Tasks ({pinCount}) <i className="ms-Icon ms-Icon--ChevronDown right_float" aria-hidden="true" onClick={() => { onClickTaskExpand() }}></i></label>
+
                           <PinTaskListIndex filesData={props.filesData} cord={cord} pinCount={getPinCount} taskHovered={getTaskHovered} ></PinTaskListIndex>
-                        
+
                           {/* <div className="pin-task-completed-card">
                             <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} />
                             <div className="pin-task-description-box">

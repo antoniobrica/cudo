@@ -41,7 +41,7 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
             return (
               <div>
                 <div
-                  className={props?.cord?.pinsID === task?.taskTypeID || taskHoveredId=== task?.taskTypeID? "pin-task-completed-card pin-task-hover" : "pin-task-completed-card"}
+                  className={props?.cord?.pinsID === task?.taskTypeID? "pin-task-completed-card pin-task-hover" : "pin-task-completed-card"}
                   onMouseOver={() => getTaskHovered(task)}
                 >
                   {/* <div className= "pin-task-completed-card"> */}
