@@ -737,6 +737,64 @@
     color: #fff;
     z-index: -1;
   }
+  .completed-task-list {
+    .detail-file-listing-box {
+      .pin-task-completed-card {
+        .pin-task-description-box {
+          .add-task-checklist {
+            margin-top: 10px;
+            .checklist-listing-main {
+              &:first-child {
+                border-top: 1px solid #f1f5f8;
+              }
+              span {
+                &.anchor_complete {
+                  i {
+                    width: 18px;
+                    height: 18px;
+                    font-size: 11px;
+                  }
+                }
+              }
+            }
+            .add-new-task-con {
+              @include flex(flex);
+              @include align-items(center);
+              margin-bottom: 10px;
+              margin-top: 12px;
+              span.anchor_complete {
+                a {
+                  span {
+                    i {
+                      font-size: 11px;
+                      width: 18px;
+                      height: 18px;
+                    }
+                  }
+                }
+              }
+              .add-new-task-field {
+                flex: 1;
+                margin-top: 0 !important;
+                margin-left: 15px !important;
+                .fillarea {
+                  margin-bottom: 0;
+                  input {
+                    height: 3.1rem;
+                  }
+                }
+              }
+            }
+            .add-new-checklist-button {
+              .add-new-link {
+                padding: 5px 15px 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 
