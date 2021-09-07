@@ -303,10 +303,17 @@ export function Tasks(props: TasksProps) {
     let obj;
     if (task.status === 'COMPLETED') {
       status = Status.INPROGRESS;
-      obj = {
-        ...newArray[updatedTaskIndex],
-        status: Status.INPROGRESS
+      if (updatedTaskIndex === -1) {
+        setCompletedTasks(completedTasks?.filter(item => item.taskID !== task.taskID))
+        const newUpdatedTaskFromCompletedTask = {...task,status}
+        newArray.push(newUpdatedTaskFromCompletedTask)
+      } else {
+        obj = {
+          ...newArray[updatedTaskIndex],
+          status: Status.INPROGRESS
+        }
       }
+
     } else {
       status = Status.COMPLETED;
       obj = {
@@ -316,7 +323,6 @@ export function Tasks(props: TasksProps) {
     }
     newArray[updatedTaskIndex] = obj
     setTasksForTaskArea(newArray)
-    console.log('ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd', tasksForTaskArea)
     const taskID = task.taskID;
     const assignees = [];
     task.assignees.map((data, i) => {
@@ -907,7 +913,7 @@ export function Tasks(props: TasksProps) {
         </div> */}
 
         <div className="completed-task-con expand">
-          <h3 className="alltask">{t("project_tab_menu.task.completed_tasks")} <span>({completedTasks?.length} {t("project_tab_menu.task.completed_tasks")})</span> <i className={`ms-Icon ${showCompletedTasks ? "ms-Icon--ChevronDown" : "ms-Icon--ChevronUp"}`} aria-hidden="true" onClick={() => setShowCompletedTasks(!showCompletedTasks)} ></i></h3>
+          <h3 className="alltask">{t("project_tab_menu.task.completed_tasks")} <span className="ms-Icon" onClick={() => setShowCompletedTasks(!showCompletedTasks)}><span>({completedTasks?.length} {t("project_tab_menu.task.completed_tasks")})</span> <i className={`ms-Icon ${showCompletedTasks ? "ms-Icon--ChevronDown" : "ms-Icon--ChevronUp"}`} aria-hidden="true" ></i></span></h3>
           {
             showCompletedTasks && completedTasks.map((task, id) => (
               <div className="tasks-completed-listing">
