@@ -55,10 +55,10 @@ export function FileList(props: FileListProps) {
       data?.uploadedFiles?.forEach(file => {
         file?.children?.forEach(child => {
           if (child.uploadedFileID === props?.taskData?.fileID) {
+            getViewItems()
             setSelectedFileFromTask(child)
             setAddPinFromTask(true)
             viewFiles(child)
-
           }
         })
       })

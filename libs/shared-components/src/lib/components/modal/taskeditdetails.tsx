@@ -345,8 +345,8 @@ export const ModalTaskEdit = (props: AlertProps) => {
       editTaskData['endDate'] = endDate
     }
     props.editTaskData(editTaskData);
-    // setOpen(false)
-    // props.cancel()
+    setOpen(false)
+    props.cancel()
   }
 
   return (
