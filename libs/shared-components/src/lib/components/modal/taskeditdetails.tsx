@@ -21,6 +21,7 @@ import { MS_SERVICE_URL } from '@cudo/mf-core';
 import 'react-quill/dist/quill.snow.css';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { FileListIndex } from '@cudo/mf-document-lib';
 
 function exampleReducer(state, action) {
   switch (action.type) {
@@ -71,6 +72,10 @@ export const ModalTaskEdit = (props: AlertProps) => {
   const [workTypeData, setworkTypeData] = React.useState('')
   const [workTypes, setWorkTypes] = React.useState([]);
   const [date, setDate] = React.useState(null)
+  const [isOpenTaskFiles, setisOpenTaskFiles] = React.useState(false)
+  const [selectedFiles, setSelectedFiles] = React.useState([])
+  const [onlyAddFileToTask, setOnlyAddFileToTask] = React.useState(true)
+
 
 
   const [workTypeID, setworktypeID] = React.useState("")
@@ -107,7 +112,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
         var de = props.taskData.endDate
         setEndDate(formatDate(de));
       }
-      
+
       const assignees = [];
       props?.taskData?.assignees?.map((data, i) => {
         assignees.push({ userID: data.userID, userName: data.userName })
@@ -128,6 +133,14 @@ export const ModalTaskEdit = (props: AlertProps) => {
       setworktypeName(props?.taskData?.workTypeName);
       setworkTypeData(props?.taskData?.workTypeName)
       setworktypeID(props?.taskData?.workTypeID)
+      if(props?.taskData?.files){
+        setFileList(props?.taskData?.files)
+        const filesFromTask = []
+        props?.taskData?.files?.forEach(file => {
+          filesFromTask.push({uploadedFileID:file.fileID, fileTitle:file.fileName, fileURL: file.fileUrl})
+        })
+        setSelectedFiles(filesFromTask)
+      }
 
     }
   }, [props.taskData]);
@@ -246,19 +259,38 @@ export const ModalTaskEdit = (props: AlertProps) => {
     setStartDate(e.target.value)
   }
   const onEndDateChange = e => {
-    if(startDate){
+    if (startDate) {
       const date1 = new Date(e.target.value)
-    const date2 = new Date(date)
-    const Difference_In_Time = date1.getTime() - date2.getTime();
+      const date2 = new Date(date)
+      const Difference_In_Time = date1.getTime() - date2.getTime();
 
-    // To calculate the no. of days between two dates
-    const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-    setEstimatedDays(Difference_In_Days <= 0 ? "" : Difference_In_Days.toString())
-  }
+      // To calculate the no. of days between two dates
+      const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      setEstimatedDays(Difference_In_Days <= 0 ? "" : Difference_In_Days.toString())
+    }
     setEndDate(e.target.value);
   }
   const onsetEstimatedDays = (event, data) => {
     setEstimatedDays(data.value)
+  }
+
+  const addSelectedFiles = (data) => {
+    setSelectedFiles(data)
+    const seletedFilesData = []
+    data.map(file => {
+      seletedFilesData.push({ fileID: file.uploadedFileID, fileName: file.fileTitle, fileUrl: file.fileURL })
+    })
+    setFileList(seletedFilesData)
+  }
+
+  const removeSeletedFile = (file) => {
+    const newSelectedFiles = selectedFiles.filter(item => item.fileURL !== file.fileURL)
+    setSelectedFiles(newSelectedFiles)
+    setFileList(newSelectedFiles)
+  }
+
+  const cancelIsTaskFileOpen = () => {
+    setisOpenTaskFiles(false)
   }
 
   const sendNotificationChange = (event) => {
@@ -331,7 +363,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
       phaseName: phaseName,
       sendNotification: false,
       status: props.taskData.status,
-      files: [],
+      files,
       assignees: assignees,
       followers: followers,
       workTypeName: workTypeName,
@@ -345,8 +377,8 @@ export const ModalTaskEdit = (props: AlertProps) => {
       editTaskData['endDate'] = endDate
     }
     props.editTaskData(editTaskData);
-    // setOpen(false)
-    // props.cancel()
+    setOpen(false)
+    props.cancel()
   }
 
   return (
@@ -369,6 +401,17 @@ export const ModalTaskEdit = (props: AlertProps) => {
             <Loader size='big'>Loading</Loader>
           </Dimmer>
           : null}
+           {
+          isOpenTaskFiles && (
+            <FileListIndex
+              isTaskFile={isOpenTaskFiles}
+              cancel={cancelIsTaskFileOpen}
+              onlyAddFileToTask={onlyAddFileToTask}
+              selectedFiles={selectedFiles}
+              addSelectedFiles={addSelectedFiles}
+            />
+          )
+        }
         <Modal.Header>
           <h3>{t("project_tab_menu.task.edit_task")} </h3>
         </Modal.Header>
@@ -583,6 +626,36 @@ export const ModalTaskEdit = (props: AlertProps) => {
                 </Grid.Row>
                 <Grid.Row></Grid.Row>
               </Grid>
+
+              <Grid columns={1} className="add-extra-files">
+                <Grid.Row>
+                  <Grid.Column>
+                    <Form.Field>
+                      <label>Select Files</label><Button className="icon-border" size="small" onClick={() => setisOpenTaskFiles(true)}><i className="ms-Icon ms-font-xl ms-Icon--Add"></i> Add Files</Button>
+                    </Form.Field>
+                  </Grid.Column>
+                </Grid.Row>
+                {selectedFiles.length > 0 && (
+                  <Grid.Row className="add-files-list">
+                    <Grid.Column className="uploaded-files">
+                      <ul>
+                        {
+                          selectedFiles.map(file => (
+                            <li>
+                              <p>
+                                <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} />
+                                {file.fileURL}
+                              </p>
+                              <i onClick={() => removeSeletedFile(file)} className="close icon"></i>
+                            </li>
+                          ))
+                        }
+                      </ul>
+                    </Grid.Column>
+                  </Grid.Row>)
+                }
+              </Grid>
+
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>

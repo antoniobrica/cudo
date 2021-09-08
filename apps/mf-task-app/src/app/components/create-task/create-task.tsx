@@ -157,7 +157,7 @@ export function CreateTask(props: CreateTaskProps) {
     setSelectedFiles(data)
     const seletedFilesData = []
     data.map(file => {
-      seletedFilesData.push({ fileID: file.fileURL, fileName: file.fileURL, fileUrl: file.fileURL })
+      seletedFilesData.push({ fileID: file.uploadedFileID, fileName: file.fileTitle, fileUrl: file.fileURL })
     })
     setFileList(seletedFilesData)
   }
@@ -165,6 +165,7 @@ export function CreateTask(props: CreateTaskProps) {
   const removeSeletedFile = (file) => {
     const newSelectedFiles = selectedFiles.filter(item => item.fileURL !== file.fileURL)
     setSelectedFiles(newSelectedFiles)
+    setFileList(newSelectedFiles)
   }
 
   const sendNotificationChange = (event) => {

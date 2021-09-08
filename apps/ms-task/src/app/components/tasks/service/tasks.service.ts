@@ -350,6 +350,11 @@ export class TasksService {
             }
         }
         if (files)
+            if(taskeDetail.files.length > 0) {
+                const taskPreviousFilesIDs = taskeDetail.files.map(item => item.id)
+                await this.taskFileRepository.delete(taskPreviousFilesIDs)
+            }
+            taskeDetail.files = []
             for (let index = 0; index < files.length; index++) {
                 const taskfileEntity = new TaskFileEntity(files[index])
                 const newTaskFile = await this.taskFileRepository.create({ ...taskfileEntity });

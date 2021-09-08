@@ -469,7 +469,7 @@ export function Tasks(props: TasksProps) {
       variables: {
         taskID: updateTaskData.taskID,
         status: updateTaskData.status,
-        files: [],
+        files: updateTaskData.files,
         taskTitle: updateTaskData.taskTitle,
         startDate: updateTaskData.startDate,
         endDate: updateTaskData.endDate,
