@@ -54,6 +54,8 @@ export function PinTaskList(props: PinTaskListProps) {
     description
     estimatedDays
     BKPID
+    workTypeID
+    workTypeName
     BKPTitle
     phaseID
     phaseName
@@ -70,7 +72,7 @@ export function PinTaskList(props: PinTaskListProps) {
     } 
    }`;
   const getPins = async () => {
-     setLoading(true);
+    setLoading(true);
     return axios.post(
       MS_SERVICE_URL['ms_task'].url,
       {
@@ -82,9 +84,9 @@ export function PinTaskList(props: PinTaskListProps) {
       }
     ).then(res => {
       setLoading(false);
-       setPinTasks(res.data.data.tasksByTasktypes)
+      setPinTasks(res.data.data.tasksByTasktypes)
       props.pinCount(res.data.data.tasksByTasktypes?.length)
-     })
+    })
       .catch(err => console.log(err))
   }
 
@@ -104,13 +106,13 @@ export function PinTaskList(props: PinTaskListProps) {
   }
 
   const cancel = () => {
-     setOpen(false);
+    setOpen(false);
     setOpenD(false);
     setViewTaskOpen(false);
     setEditTaskOpen(false);
   };
   const confirmation = (data, task) => {
-     setOpen(false);
+    setOpen(false);
     updateTask(taskData);
 
     let status;
@@ -141,7 +143,7 @@ export function PinTaskList(props: PinTaskListProps) {
     });
   };
   const updateTask = (task) => {
-     setTaskData(task);
+    setTaskData(task);
     setOpen(true);
     if (task.status === 'COMPLETED') {
       settaskStatus('Re-open');
@@ -198,7 +200,7 @@ export function PinTaskList(props: PinTaskListProps) {
     setEditTaskOpen(true);
   };
   const editTaskData = (data) => {
-     const assignees = [];
+    const assignees = [];
     data.assignees.map((data, i) => {
       assignees.push({ userID: data.userID, userName: data.userName })
     })
@@ -218,6 +220,8 @@ export function PinTaskList(props: PinTaskListProps) {
         sendNotification: false,
         BKPID: data.BKPID,
         BKPTitle: data.BKPTitle,
+        workTypeID:data.workTypeID,
+        workTypeName:data.workTypeName,
         saveTaskAsTemplate: data.saveTaskAsTemplate || ' ',
         phaseID: data.phaseID,
         phaseName: data.phaseName,
@@ -288,6 +292,7 @@ export function PinTaskList(props: PinTaskListProps) {
             taskStatus={taskStatus}
             cancel={cancel}
             id={idx}
+            editTask={editTask}
           ></ModalViewTask>
         </div>
       ) : null}
