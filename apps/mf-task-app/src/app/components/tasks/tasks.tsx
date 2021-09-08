@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import './tasks.module.scss';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
-import { LazyLoading, LoaderPage, ModalTaskEdit, TaskArea } from '@cudo/shared-components';
+import { AddPinFile, LazyLoading, LoaderPage, ModalTaskEdit, TaskArea } from '@cudo/shared-components';
 import { Dropdown, Grid, Popup, Button, Icon } from 'semantic-ui-react';
 import axios from 'axios';
 import {
@@ -451,6 +451,12 @@ export function Tasks(props: TasksProps) {
     setTaskData(task);
     setEditTaskOpen(true);
   };
+
+  const openViewAddPinFile = (task) => {
+    setTaskData(task);
+    setIsTaskFile(true)
+  }
+
   const refresh = (data) => {
     console.log('refresh is called', data);
   };
@@ -594,6 +600,7 @@ export function Tasks(props: TasksProps) {
   };
   const cancelNew = () => {
     setIsTaskFile(false);
+    setTaskData(null)
   };
   const cancelTask = () => {
     setIsNewTask(false);
@@ -788,7 +795,7 @@ export function Tasks(props: TasksProps) {
       </div>
       {isTaskFile ? (
         <div className="pin_area" style={{ marginLeft: 804 }}>
-          <FileListIndex isTaskFile={isTaskFile} cancel={cancelNew} />
+          <FileListIndex isTaskFile={isTaskFile} cancel={cancelNew} taskData={taskData} />
         </div>
       ) : null}
       {open ? (
@@ -890,6 +897,7 @@ export function Tasks(props: TasksProps) {
                 veiwTask={viewTask}
                 editTask={editTask}
                 subTask={subTask}
+                viewAddPinFile={openViewAddPinFile}
                 updateSubTaskStatus={updateSubTaskStatus}
                 updateSubTask={updateSubTask}
                 deleteSubTask={deleteSubTask}
