@@ -24,6 +24,13 @@ export interface CreateFileTaskProps {
   pinsaved?
 }
 
+interface AddTaskErrors {
+  titleError?: string,
+  workTypeError?: string,
+  assigneeError?: string,
+  dateError?: string
+}
+
 export function CreateFileTask(props: CreateFileTaskProps) {
   const [open, setOpen] = React.useState(false)
   const [taskTitle, setTaskTitle] = React.useState("")
@@ -50,6 +57,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   const [taskTypeID, settaskTypeID] = React.useState('')
   const [assignees, setAssignees] = React.useState<any>([]);
   const [followers, setfollowers] = React.useState<any>([]);
+  const [errors, setErrors] = React.useState<AddTaskErrors>({})
   const history = useHistory();
   const { t } = useTranslation()
   const res = history.location.pathname.split("/");
@@ -151,10 +159,15 @@ export function CreateFileTask(props: CreateFileTaskProps) {
 
   }
   const setAsignee = (data) => {
-    const ppl = []
-    ppl.push(data)
-    setAssignees(ppl)
-    // setAsignis(data)
+
+    if (data.userID) {
+      const ppl = []
+      ppl.push(data)
+      setAssignees(ppl)
+      // setAsignis(data)
+    } else {
+      setAssignees([])
+    }
   }
 
 
@@ -180,15 +193,22 @@ export function CreateFileTask(props: CreateFileTaskProps) {
       worktypeID: '',
       worktypeName: ''
     };
-    for (let i = 0; i < workTypes.length; i++) {
-      if (workTypes[i]?.workTypeName === data.value) {
-        workT.worktypeID = workTypes[i].projectWorkTypeID;
-        workT.worktypeName = data.value;
-        setworktypeName(workT.worktypeName);
-        setworktypeID(workT.worktypeID);
-        setworkTypeD(workT)
+    if(data.value){
+      for (let i = 0; i < workTypes.length; i++) {
+        if (workTypes[i]?.workTypeName === data.value) {
+          workT.worktypeID = workTypes[i].projectWorkTypeID;
+          workT.worktypeName = data.value;
+          setworktypeName(workT.worktypeName);
+          setworktypeID(workT.worktypeID);
+          setworkTypeD(workT)
+        }
       }
+    }else {
+      setworktypeName('');
+          setworktypeID('');
+          setworkTypeD('')
     }
+    
     setworkTypeData(data.value);
 
   }
@@ -208,29 +228,57 @@ export function CreateFileTask(props: CreateFileTaskProps) {
     }
   }, [props.pinsaved])
 
-  const handleSaveTask = () => {
-    props.savePin(true);
+  const validation = () => {
+    const foundErrors: AddTaskErrors = {}
+    if (!taskTitle) {
+      foundErrors.titleError = t("common.errors.title_error")
+    }
+    if (!worktypeID) {
+      foundErrors.workTypeError = t("common.errors.worktype_error")
+    }
+    if (!assignees.length) {
+      foundErrors.assigneeError = t("common.errors.assignee_error")
+    }
+    if (startDate > endDate) {
+      foundErrors.dateError = t("common.errors.date_error")
+    }
+    return foundErrors
+  }
 
+  const handleSaveTask = () => {
+    const validationResult = validation()
+    if (Object.keys(validationResult).length > 0) {
+      setErrors(validationResult)
+      return false
+    }
+    props.savePin(true);
   };
 
   const addTak = () => {
+    const variables = {
+      taskTitle, estimatedDays,
+      sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
+      fileID: fileData.uploadedFileID,
+      fileName: fileData.fileTitle,
+      taskTypeID,
+      taskType: taskType.PIN,
+      files,
+      assignees,
+      followers,
+      description,
+      subtasks: [],
+      referenceID,
+      workTypeID: worktypeID,
+      workTypeName: worktypeName
+    }
+    if (startDate) {
+      variables['startDate'] = startDate
+    }
+    if (startDate) {
+      variables['endDate'] = endDate
+    }
     addTask({
-      variables: {
-        taskTitle, startDate, endDate, estimatedDays,
-        sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
-        fileID: fileData.uploadedFileID,
-        fileName: fileData.fileTitle,
-        taskTypeID,
-        taskType: taskType.PIN,
-        files,
-        assignees,
-        followers,
-        description,
-        subtasks: [],
-        referenceID,
-        workTypeID: worktypeID,
-        workTypeName: worktypeName
-      },
+      variables,
       update: (
         cache,
         { data: { addTask } }: FetchResult<TaskMutation>
@@ -281,7 +329,10 @@ export function CreateFileTask(props: CreateFileTaskProps) {
                   <label>{t("project_tab_menu.task.task_title")} <span className="danger">*</span></label>
                   <Input placeholder={t("project_tab_menu.task.task_title")} size='small' className="full-width" type="text"
                     value={taskTitle}
-                    onChange={onTaskTitleChange} />
+                    onChange={onTaskTitleChange}
+                    error={errors?.titleError && !taskTitle}
+                  />
+                  {errors?.titleError && !taskTitle ? <span className="error-message">{errors.titleError}</span> : null}
                 </Form.Field>
               </Grid.Column>
             </Grid.Row>
@@ -311,7 +362,9 @@ export function CreateFileTask(props: CreateFileTaskProps) {
                     options={workType}
                     onChange={onMworkType}
                     clearable
+                    error={errors?.workTypeError && !worktypeID}
                   />
+                  {errors?.workTypeError && !worktypeID ? <span className="error-message">{errors.workTypeError}</span> : null}
                 </Form.Field>
               </Grid.Column>
             </Grid.Row>
@@ -332,7 +385,8 @@ export function CreateFileTask(props: CreateFileTaskProps) {
           <Grid columns={1}>
             <Grid.Row>
               <Grid.Column>
-                <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Assignee" />
+                <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Assignee"
+                  error={errors?.assigneeError && !assignees.length} />
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -369,7 +423,9 @@ export function CreateFileTask(props: CreateFileTaskProps) {
                     type="date"
                     value={startDate}
                     onChange={onStartDateChange}
+                    error={errors?.dateError && (startDate > endDate)}
                   />
+                  {errors?.dateError && (startDate > endDate) ? <span className="error-message">{errors.dateError}</span> : null}
                 </Form.Field>
               </Grid.Column>
               <Grid.Column>
