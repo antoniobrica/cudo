@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea, Checkbox } from 'semantic-ui-react';
+import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea, Checkbox, Dimmer, Loader } from 'semantic-ui-react';
 import { radios } from '@storybook/addon-knobs';
 import { ITask, ITasks, TaskMutation } from "../../interfaces/task";
 import { ApolloCache, FetchResult, useMutation, useQuery } from '@apollo/client';
@@ -58,18 +58,32 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   const [assignees, setAssignees] = React.useState<any>([]);
   const [followers, setfollowers] = React.useState<any>([]);
   const [errors, setErrors] = React.useState<AddTaskErrors>({})
+  const [addTaskLoading, setAddTaskLoading] = React.useState(false)
+
   const history = useHistory();
   const { t } = useTranslation()
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
 
-  const [addTask, { data }] = useMutation(ADD_TASK,
+  const [addTask, { loading, error, data }] = useMutation(ADD_TASK,
     {
       refetchQueries: [
         { query: GET_TASKS, variables: { referenceID } }
       ],
     }
   )
+
+  React.useEffect(() => {
+    if (!loading && data) {
+      setAddTaskLoading(false)
+      cancel()
+    }
+    if (!loading && error) {
+      setAddTaskLoading(false)
+      cancel()
+    }
+  }, [data])
+
   React.useEffect(() => {
     if (referenceID) {
       getWorkType(referenceID)
@@ -193,7 +207,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
       worktypeID: '',
       worktypeName: ''
     };
-    if(data.value){
+    if (data.value) {
       for (let i = 0; i < workTypes.length; i++) {
         if (workTypes[i]?.workTypeName === data.value) {
           workT.worktypeID = workTypes[i].projectWorkTypeID;
@@ -203,12 +217,12 @@ export function CreateFileTask(props: CreateFileTaskProps) {
           setworkTypeD(workT)
         }
       }
-    }else {
+    } else {
       setworktypeName('');
-          setworktypeID('');
-          setworkTypeD('')
+      setworktypeID('');
+      setworkTypeD('')
     }
-    
+
     setworkTypeData(data.value);
 
   }
@@ -251,6 +265,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
       setErrors(validationResult)
       return false
     }
+    setAddTaskLoading(true)
     props.savePin(true);
   };
 
@@ -311,6 +326,11 @@ export function CreateFileTask(props: CreateFileTaskProps) {
         trigger={<Button size='mini' className="grey-btn taskmargin">+ Add  New Task</Button>}      >
         <Modal.Header><h3>Add New Task </h3></Modal.Header>
         <Modal.Content body> */}
+         {addTaskLoading ?
+          <Dimmer active inverted Center inline>
+            <Loader size='big'>Loading</Loader>
+          </Dimmer>
+          : null}
       <div className="added-pin-number-con">
         <Form>
           <Grid columns={1}>
