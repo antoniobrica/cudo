@@ -9,18 +9,19 @@ const check = (host, callback) => {
 }
 
 function MicroFrontend({ name, host, history }) {
-
+  console.log('MicroFrontend--1--name, host, history---', name, host, history)
   const [shouldReturnMain, setShouldReturnMain] = useState(undefined)
 
   useEffect(() => {
     const scriptId = `render${name}`;
-
+    console.log('MicroFrontend--2--useEffect--scriptId---', scriptId)
     const renderMicroFrontend = () => {
-      console.log('--renderMicroFrontend--name---', name)
+      console.log('MicroFrontend--3--renderMicroFrontend--useEffect--name--history--', name, history)
       window[`render${name}`](`${name}-container`, history);
     };
 
     if (document.getElementById(scriptId)) {
+      console.log('MicroFrontend--4--useEffect--scriptId---', scriptId)
       renderMicroFrontend();
       return;
     }
@@ -30,7 +31,9 @@ function MicroFrontend({ name, host, history }) {
     script.id = scriptId;
     script.crossOrigin = "";
     script.src = `${host}/${main}`;
+    console.log('MicroFrontend--5--useEffect--script---', script)
     script.onload = () => {
+      console.log('MicroFrontend-6--Microfrontend--onload--')
       renderMicroFrontend();
       setShouldReturnMain(true)
 
@@ -38,25 +41,28 @@ function MicroFrontend({ name, host, history }) {
 
     check(host, (isServerRunning) => {
       if (isServerRunning) {
+        console.log('MicroFrontend--7--check(host, (isServerRunning) --', host, isServerRunning)
         document.head.appendChild(script);
         setShouldReturnMain(true)
       } else {
+        console.log('MicroFrontend--8--check(host, (isServerRunning) --', host, isServerRunning)
         setShouldReturnMain(false)
 
       }
     })
 
-    // document.head.appendChild(script);
-
     return () => {
+      console.log('MicroFrontend--9--window[`unmount${name}`]--name--', name)
       window[`unmount${name}`] && window[`unmount${name}`](`${name}-container`);
     };
   }, []);
 
   if (shouldReturnMain === undefined) {
+    console.log('MicroFrontend--10--shouldReturnMain--', shouldReturnMain)
     return null
   }
 
+  console.log('MicroFrontend--11--shouldReturnMain--name--', shouldReturnMain, name)
   return shouldReturnMain ? <main id={`${name}-container`} /> : <div style={{ height: "230px", width: "230px", padding: "200px", background: "#ccc" }}>
     {name} service unavailable!!
   </div>;
@@ -75,7 +81,7 @@ export default MicroFrontend;
 
 // function MicroFrontend({ name, host, history }) {
 //   console.log('MicroFrontend',history);
-  
+
 //   useEffect(() => {
 //     const scriptId = `render${name}`;
 //     const renderMicroFrontend = () => {
