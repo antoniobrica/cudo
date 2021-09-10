@@ -11,6 +11,7 @@ export interface CanvasImageProps {
   setIsPinCreated?
   savePin?
   pinSaved?
+  hoveredTaskTypeID?
 }
 export function CanvasImage(props: CanvasImageProps) {
   const canvasImage = useRef<HTMLCanvasElement>();
@@ -48,6 +49,7 @@ export function CanvasImage(props: CanvasImageProps) {
           allowToCreateNewPin={props?.allowToCreateNewPin}
           isPinCreated={props?.isPinCreated}
           setIsPinCreated={props?.setIsPinCreated}
+          hoveredTaskTypeID={props?.hoveredTaskTypeID}
         ></CanvasPins>
       </div>
     </div>

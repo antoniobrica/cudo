@@ -1,13 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux'
 
 import './tab-menu.module.scss';
 import { AccordionExampleMenu } from "@cudo/shared-components"
 import { environment } from "../../../environments/environment";
 import MicroFrontend from "../../../MicroFrontend";
-import {
-  Tab, Image
-} from 'semantic-ui-react';
+import { Tab, Image } from 'semantic-ui-react';
 import { NavLink, BrowserRouter as Router, useRouteMatch, Route, Switch, useLocation, useParams } from 'react-router-dom';
 import { useHistory } from "react-router";
 import { PlanningIndex } from '@cudo/mf-task-lib';
@@ -15,8 +12,6 @@ import { useProjectByIdQuery } from '../../services/useRequest';
 import { GET_PROJECT_BY_ID } from '../../graphql/graphql';
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
-
-
 
 const {
   EACT_APP_COST_HOST: costHost,
@@ -27,7 +22,7 @@ const {
 
 
 /* eslint-disable-next-line */
-export interface TabMenuProps { }
+export interface TabMenuProps {}
 type params = {
   projectId: string;
 };
@@ -56,6 +51,7 @@ function TabMenu(props: TabMenuProps) {
   }
 
   function TaskApp(history: any) {
+    console.log('--tabmenu--TaskApp--history--', history)
     return (
       <MicroFrontend history={history} host={taskHost} name="TaskApp" />
     );
@@ -74,6 +70,7 @@ function TabMenu(props: TabMenuProps) {
   }
 
   function DocumentApp(history: any) {
+    console.log('--tab-menu--DocumentApp--history--', history)
     return (
       <MicroFrontend history={history} host={documentHost} name="DocumentApp" />
     );
@@ -99,6 +96,7 @@ function TabMenu(props: TabMenuProps) {
     };
     const handleOpenProject = (item) => {
       // props.parentCallback(item)
+      console.log('--handleOpenProject--item--', item)
     }
     const onTabChange = (e, { activeIndex }) => {
        setActiveIndex(activeIndex)
@@ -257,13 +255,13 @@ function TabMenu(props: TabMenuProps) {
             />
 
             {/* start Added for router */}
-            <Route path={`${url}/task`} exact render={() => (
+            <Route path={`${url}/task`} render={() => (
               <Tab.Pane onClick={handleOpenProject('task')}><TaskApp id={projectId}></TaskApp></Tab.Pane>)} />
-            <Route path={`${url}/cost`} exact render={() => (
+            <Route path={`${url}/cost`} render={() => (
               <Tab.Pane onClick={handleOpenProject('costs')}><CostApp id={projectId}></CostApp></Tab.Pane>)} />
-            <Route path={`${url}/meetings`} exact render={() => (
+            <Route path={`${url}/meetings`} render={() => (
               <Tab.Pane onClick={handleOpenProject('meetings')}><MeetingApp id={projectId}></MeetingApp></Tab.Pane>)} />
-            <Route path={`${url}/files`} exact render={() => (
+            <Route path={`${url}/files`} render={() => (
               <Tab.Pane onClick={handleOpenProject('files')}><DocumentApp id={projectId}></DocumentApp></Tab.Pane>)} />
             {/* end Added for router */}
 
@@ -286,9 +284,7 @@ function TabMenu(props: TabMenuProps) {
     //   </div>
     // );
   }
-
-
-
+  
   return (
     <div>
       {data ?
@@ -302,10 +298,4 @@ function TabMenu(props: TabMenuProps) {
   );
 }
 
-const mapStateToProps = state => ({
-  projectId: state.app.selectedProject.selectedProjectId
-})
-
-// export default TabMenu;
-
-export default connect(mapStateToProps)(TabMenu)
+export default TabMenu;

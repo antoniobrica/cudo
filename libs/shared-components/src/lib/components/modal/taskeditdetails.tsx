@@ -11,6 +11,7 @@ import {
   TextArea,
   Dimmer,
   Loader,
+  Icon
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 import { FollowersIndex, AssigneeIndex, BkpIndex, BkpsIndex, PhaseIndex } from "@cudo/mf-account-app-lib";
@@ -353,7 +354,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
     <div id="navbar">
       <Modal
         className={props.editTaskLoading ? "modal_media right-side--fixed-modal edit-task-modal overflow-hidden" : "modal_media right-side--fixed-modal edit-task-modal"}
-        closeIcon
+        // closeIcon
         onClose={cancel}
         onOpen={openf}
         open={open}
@@ -369,8 +370,10 @@ export const ModalTaskEdit = (props: AlertProps) => {
             <Loader size='big'>Loading</Loader>
           </Dimmer>
           : null}
+        <div className="fixed-popup-inner-con">
         <Modal.Header>
           <h3>{t("project_tab_menu.task.edit_task")} </h3>
+          <Icon name='close' onClick={cancel} />
         </Modal.Header>
         <Modal.Content body>
           <div>
@@ -611,6 +614,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
             <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> {t("common.cancel")}
           </Button>
         </Modal.Actions>
+        </div>
       </Modal>
     </div>
   );

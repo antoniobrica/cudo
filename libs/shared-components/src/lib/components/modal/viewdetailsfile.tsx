@@ -7,6 +7,7 @@ import { PinTaskListIndex } from '@cudo/mf-task-lib';
 import { Document, Page, pdfjs } from "react-pdf";
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import CanvasImage from './canvasimage';
+import LazyLoading from '../loader/lazyloader';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 function exampleReducer(state, action) {
@@ -26,8 +27,9 @@ const countryOptions = [
 ]
 
 const versionOptions = [
-  { key: 'af', value: 'version 1', text: 'Version 1' },
-  { key: 'ax', value: 'version 2', text: 'Version 2' },
+  // { key: 'af', value: 'Test_Image_11.png1628519479250-V1', text: 'Test_Image_11.png1628519479250-V1' },
+  { key: 'ax', value: 'version 1', text: 'Version 1' },
+  { key: 'axx', value: 'version 2', text: 'Version 2' },
 ]
 
 export interface FileDetailsProps {
@@ -35,6 +37,7 @@ export interface FileDetailsProps {
   filesData?,
   dowloadFilesData?,
   fType?
+  cancel?
 }
 export const ViewFileDetail = (props: FileDetailsProps) => {
   // const [state, dispatch] = React.useReducer(exampleReducer, {
@@ -42,7 +45,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
   //   size: undefined,
   // })
   // const { open, size } = state
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(null);
   const [files, setFiles] = React.useState();
   const [imgUrl, setimgUrl] = React.useState('');
   const [numPages, setNumPages] = React.useState(null);
@@ -56,15 +59,18 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
   const [pinCount, setPinCount] = React.useState(0)
   const [cord, setCord] = React.useState(null);
 
+  const [expand, setExpand] = React.useState(false)
+  const [hoveredTaskTypeID, setHoveredTaskTypeID] = React.useState(null)
+
   function onDocumentLoadSuccess({ numPages }) {
-     setNumPages(numPages);
+    setNumPages(numPages);
   }
 
 
   React.useEffect(() => {
-    if (props.open) {
+    // if (props.open) {
       setOpen(props.open)
-    }
+    // }
   }, [props.open]);
 
 
@@ -77,7 +83,8 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
       }
 
     }
-  })
+  }, [props.dowloadFilesData])
+
   React.useEffect(() => {
     if (props.filesData) {
       setFiles(props.filesData)
@@ -86,6 +93,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
 
   const cancel = () => {
     setOpen(false);
+    props.cancel(true);
   }
   const openf = () => {
     setOpen(true)
@@ -111,6 +119,14 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
     setCord(data);
   }
 
+  const getTaskHovered = (taskTypeID) => {
+    setHoveredTaskTypeID(taskTypeID)
+  }
+
+  const onClickTaskExpand = () => {
+    setExpand(!expand)
+  }
+
   return (
     <div id="navbar">
       {/* <Button className="grey-btn" onClick={() => dispatch({ type: 'open', size: 'fullscreen' })}>
@@ -128,8 +144,6 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
           <Form>
             <div className="view-pin-detail-popup">
               <div className="left-side-detail-file">
-                {/* <Canvas imgUrl={imgUrl} ></Canvas> */}
-                {/* <Image src={imgUrl} fluid /> */}
                 {props.fType == 'application/pdf' ?
                   <Document
                     file={imgUrl}
@@ -138,19 +152,20 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     <Page pageNumber={pageNumber} />
                   </Document>
                   :
-                  // <Canvas imgUrl={imgUrl} isPinCreated={isPinCreated} setIsPinCreated={setIsPinCreated}></Canvas>
-                  // <Image src={imgUrl} fluid />
                   <div className="left-side-image-canvas">
-                    <CanvasImage
-                      pinSaved={setPinSavedOnCanvase}
-                      // savePin={saveNewPinOnCanvase}
-                      imgUrl={imgUrl}
-                      coardinates={getCoardinates}
-                      fileId={props.filesData.uploadedFileID}
-                      allowToCreateNewPin={false}
-                      isPinCreated={isPinCreated}
-                      setIsPinCreated={setIsPinCreated}
-                    ></CanvasImage>
+                    {imgUrl ?
+                      <CanvasImage
+                        pinSaved={setPinSavedOnCanvase}
+                        // savePin={saveNewPinOnCanvase}
+                        imgUrl={imgUrl}
+                        coardinates={getCoardinates}
+                        fileId={props.filesData.uploadedFileID}
+                        allowToCreateNewPin={false}
+                        isPinCreated={isPinCreated}
+                        setIsPinCreated={setIsPinCreated}
+                        hoveredTaskTypeID={hoveredTaskTypeID}
+                      ></CanvasImage>
+                      : <LazyLoading />}
                   </div>
                 }
                 {/* <div className="file-pagination">File versions
@@ -174,27 +189,38 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                 <Form>
                   <Modal.Header><h3 className="title-select">
                     <span> File detail
-                      <Select placeholder='Select version' options={versionOptions} />
                     </span>
                     <span>
                       <i className="ms-Icon ms-Icon--Hide2 hide-icon" aria-hidden="true" onClick={() => setHideCommentPanel(true)}><span>Hide</span></i>
                       <i aria-hidden="true" className="close icon" onClick={cancel}></i>
                     </span>
                   </h3></Modal.Header>
-                  <Grid columns={2}>
+                  <Grid columns={1}>
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
                           <label>File name</label>
-                          <p className="form_desc">{props?.filesData?.fileTitle}</p>
+                          <Select placeholder='Select version' className="small" options={versionOptions} selection clearable />
+                          {/* <p className="form_desc">{props?.filesData?.fileTitle}</p> */}
                         </Form.Field>
                       </Grid.Column>
+                    </Grid.Row>
+                  </Grid>
+
+                  <Grid columns={2}>
+                    <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
                           <label>File type</label>
                           <p className="form_desc">{props?.filesData?.fileType}</p>
                         </Form.Field>
                       </Grid.Column>
+                      <Grid.Column>
+                        <Form.Field>
+                          <label>Phase</label>
+                          <p className="form_desc">{props?.filesData?.phaseName}</p>
+                        </Form.Field>
+                      </Grid.Column>
                     </Grid.Row>
                   </Grid>
 
@@ -202,21 +228,10 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <label>Phase</label>
-                          <p className="form_desc">{props?.filesData?.phaseName}</p>
-                        </Form.Field>
-                      </Grid.Column>
-                      <Grid.Column>
-                        <Form.Field>
                           <label>Uploaded on</label>
                           <p className="form_desc">20 Oct, 2020</p>
                         </Form.Field>
                       </Grid.Column>
-                    </Grid.Row>
-                  </Grid>
-
-                  <Grid columns={1}>
-                    <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
                           <label>Uploaded by</label>
@@ -257,14 +272,14 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     </Grid.Row>
                   </Grid>
 
-                  <Grid columns={1} className="completed-task-list">
+                  <Grid columns={1} className={expand ? "completed-task-list expand" : "completed-task-list"}>
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <label>Tasks ({pinCount})</label>
-                          {/* {!isPinCreated ? */}
-                          <PinTaskListIndex filesData={props.filesData} cord={''} pinCount={getPinCount} ></PinTaskListIndex>
-                          {/* : null} */}
+                          <label>Tasks ({pinCount}) <i className="ms-Icon ms-Icon--ChevronDown right_float" aria-hidden="true" onClick={() => { onClickTaskExpand() }}></i></label>
+
+                          <PinTaskListIndex filesData={props.filesData} cord={cord} pinCount={getPinCount} taskHovered={getTaskHovered} ></PinTaskListIndex>
+
                           {/* <div className="pin-task-completed-card">
                             <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} />
                             <div className="pin-task-description-box">

@@ -1,5 +1,5 @@
 import { MS_SERVICE_URL } from '@cudo/mf-core';
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import { Dropdown, Form, Label } from 'semantic-ui-react';
 /* eslint-disable-next-line */
 export interface TaskListOnFilePinsProps {
@@ -9,9 +9,12 @@ export interface TaskListOnFilePinsProps {
   deleteTask?
   veiwTask?
   editTask?
+  taskHovered?
 }
 
 export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
+  const [taskHoveredId, setTaskHoveredId] = useState(null)
+
   const updateStatus = (task) => {
     props.updateTask(task)
   }
@@ -24,15 +27,24 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
   const editTaskbyId = (task) => {
     props.editTask(task)
   }
+
+  const getTaskHovered = (task) => {
+    console.log('--task-list-on-file-pins--getTaskHovered--task--', task)
+    setTaskHoveredId(task.taskTypeID)
+    props.taskHovered(task.taskTypeID)
+  }
+
   return (
-    <div>
+    <div className="detail-file-listing-box">
       <Form.Field>
-        <div>
           {props.pinTasks && props.pinTasks.map((task, i) => {
-           
             return (
               <div>
-                <div className="pin-task-completed-card">
+                <div
+                  className={props?.cord?.pinsID === task?.taskTypeID? "pin-task-completed-card pin-task-hover" : "pin-task-completed-card"}
+                  onMouseOver={() => getTaskHovered(task)}
+                >
+                  {/* <div className= "pin-task-completed-card"> */}
                   <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} />
                   <div className="pin-task-description-box">
                     <div className="task-full-details">
@@ -239,7 +251,6 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
               </div>
             )
           })}
-        </div>
       </Form.Field>
     </div>
   );

@@ -20,6 +20,7 @@ export interface ITodo {
     zip?: string
     country?: string
     description?: string
+    createdBy?: string
     }
 
     export interface IWorkType {

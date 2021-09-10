@@ -33,6 +33,7 @@ export const GET_PROJECTS = gql`
         estimatedCost
       }
       description
+      createdBy
     }
   }
 `;
@@ -54,6 +55,7 @@ query ProjectById($projectId: String!)
         estimatedCost
       }
       description
+      createdBy
     }
   }
 `;
