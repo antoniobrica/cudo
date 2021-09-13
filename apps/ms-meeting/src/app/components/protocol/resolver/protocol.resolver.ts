@@ -5,8 +5,11 @@ import StatusFilterParam from "../../../utils/types/status.filter";
 import { Pagination } from "../../paginate";
 import { pageParams } from "../../paginate/pagination.param";
 import { PaginationProtocolModel } from "../../paginate/paginattion.protocol.model";
+import ProtocolDetailFilterParam from "../dto/args/protocol.detail.filter";
 import ProtocolFilterParam from "../dto/args/protocol.filter";
+import { ProtocolDeleteInput } from "../dto/input/protocol-delete-input";
 import { ProtocolDeatilsInput } from "../dto/input/protocol-details.input";
+import { ProtocolDetailsUpdateInput } from "../dto/input/prtocol-details-update-input";
 import { ProtocolModel } from "../model/protocol.model";
 import { ProtocolService } from "../service/protocol.service";
 
@@ -31,17 +34,17 @@ export class ProtocolResolver {
     }
 
     @Query(() => ProtocolModel)
-    public async getProtocotById() {
-        return this.protocolService.findProtocolById()
+    public async getProtocotById(@Args("protocolDetailFilter") protocolDetailFilter: ProtocolDetailFilterParam) {
+        return this.protocolService.findProtocolById(protocolDetailFilter)
     }
 
     @Mutation(() => ProtocolModel)
-    public async updateProtocol() {
-        return this.protocolService.updateProtocol()
+    public async updateProtocol(@Args('protocolUpdateInput') protocolUpdateInput:ProtocolDetailsUpdateInput) {
+        return this.protocolService.updateProtocol(protocolUpdateInput)
     }
 
     @Mutation(() => ProtocolModel)
-    public async deleteProtocol() {
-        return this.protocolService.deleteProtocol()
+    public async deleteProtocol(@Args('protocolDeleteInput') protocolDeleteInput:ProtocolDeleteInput) {
+        return this.protocolService.deleteProtocol(protocolDeleteInput)
     }
 }

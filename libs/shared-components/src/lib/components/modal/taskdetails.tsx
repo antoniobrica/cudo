@@ -33,13 +33,25 @@ export const ModalViewTask = (props: AlertProps) => {
   ];
 
   const [open, setOpen] = React.useState(false)
-  const {t} = useTranslation()
+  const [selectedFiles, setSelectedFiles] = React.useState([])
+
+  const { t } = useTranslation()
   React.useEffect(() => {
     if (props.openAlertF) {
       setOpen(props.openAlertF);
     }
   }, [props.openAlertF]);
- 
+
+  React.useEffect(() => {
+    if (props?.taskData?.files) {
+      const filesFromTask = []
+      props?.taskData?.files?.forEach(file => {
+        filesFromTask.push({ uploadedFileID: file.fileID, fileTitle: file.fileName, fileURL: file.fileUrl })
+      })
+      setSelectedFiles(filesFromTask)
+    }
+  }, [props.taskData])
+
   const openf = () => {
     setOpen(true)
   }
@@ -71,8 +83,7 @@ export const ModalViewTask = (props: AlertProps) => {
             <span onClick={() => props.editTask(props.taskData)} className="edit-task-link"><Icon name="edit" /> {t("common.edit")}</span>
           </h3>
           <span className="task-created-date">
-          {t("common.created_on")}:{Moment(props?.taskData?.createdAt).format('DD-MM-YYYY')} - {t("common.created_by")}: {props?.taskData?.createdBy}
-          <Icon name='close' onClick={cancel} />
+            {t("common.created_on")}:{Moment(props?.taskData?.createdAt).format('DD-MM-YYYY')} - {t("common.created_by")}: {props?.taskData?.createdBy}
           </span>
         </Modal.Header>
         <Modal.Content body>
@@ -213,26 +224,28 @@ export const ModalViewTask = (props: AlertProps) => {
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
-                <Grid.Row className="add-files-list">
-                  <Grid.Column className="uploaded-files">
-                    <ul>
-                      <li>
-                        <p>
-                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} />
-                          Test_2BHK.jpg1628517497176
-                        </p>
-                        <i className="eye icon"></i>
-                      </li>
-                      <li>
-                        <p>
-                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} />
-                          Test_2BHK.jpg1628517497176
-                        </p>
-                        <i className="eye icon"></i>
-                      </li>
-                    </ul>
-                  </Grid.Column>
-                </Grid.Row>
+                {
+                  selectedFiles.length > 0 && (
+                    <Grid.Row className="add-files-list">
+                      <Grid.Column className="uploaded-files">
+                        <ul>
+                          {
+                            selectedFiles.map(file => (
+                              <li>
+                                <p>
+                                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} />
+                                  {file.fileTitle}
+                                </p>
+                                <i className="eye icon"></i>
+                              </li>
+                            ))
+                          }
+                        </ul>
+                      </Grid.Column>
+                    </Grid.Row>
+                  )
+                }
+
               </Grid>
 
 
@@ -252,25 +265,25 @@ export const ModalViewTask = (props: AlertProps) => {
                     <Form.Field className="filled-fields">
                       <label>
                         <a href="">
-                          
+
                           <i
                             className="ms-Icon ms-Icon--Attach"
                             aria-hidden="true"
                           ></i>
                           {t("project_tab_menu.add_file")}
                         </a>
-                        
+
                         <a href="">
-                          
+
                           <i
                             className="ms-Icon ms-Icon--Emoji"
                             aria-hidden="true"
                           ></i>
                           {t("project_tab_menu.task.emoji")}
                         </a>
-                        
+
                         <a href="">
-                          
+
                           <i
                             className="ms-Icon ms-Icon--Accounts"
                             aria-hidden="true"

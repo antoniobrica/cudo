@@ -93,6 +93,10 @@ export function FileStructure(props: FileStructureProps) {
 	 	setOpenPinFile(false) 
 	}
 
+	const cancelOpenPinFile = () => {
+		setOpenPinFile(false)
+	}
+
 	const onClickExpand = (uploadedFileId) => {
 		if (uploadedFileId === selectedExpandId) {
 			setExpand(!expand)
@@ -574,9 +578,9 @@ export function FileStructure(props: FileStructureProps) {
 				<div>
 					<ViewFileDetail open={fileView} fType={fType} filesData={filesData} dowloadFilesData={props.downloadedImg} cancel={getCloseDetailView} ></ViewFileDetail>
 				</div> : null}
-			{openPinFile && imgUrl.length > 0 ?
+			{openPinFile ?
 				<div>
-					<AddPinFile isOpen={openPinFile} filesData={filesData} dowloadFilesData={props.downloadedImg} savePin={savePins} onSuccess={""} />
+					<AddPinFile isOpen={openPinFile} cancel={cancelOpenPinFile} filesData={filesData} dowloadFilesData={props.downloadedImg} savePin={savePins} onSuccess={""} />
 				</div> : null}
 
 			<Tab className="ui-tabs work-tabs" menu={{ secondary: true, pointing: true }} panes={panes} />

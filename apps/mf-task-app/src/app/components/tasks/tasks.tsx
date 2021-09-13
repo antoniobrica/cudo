@@ -27,14 +27,26 @@ import { FileListIndex } from '@cudo/mf-document-lib';
 import { toast, ToastContainer } from 'react-toastify';
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface TasksProps { }
+enum Status {
+  INPROGRESS = 'INPROGRESS',
+  COMPLETED = 'COMPLETED',
+}
 
 export function Tasks(props: TasksProps) {
   const history = useHistory();
   const { t } = useTranslation();
+  const [completedTasks, setCompletedTasks] = useState([])
+  const [tasksForTaskArea, setTasksForTaskArea] = useState([])
   const [referenceID, setReferenceID] = React.useState<string>('')
   const { loading: taskListLoading, error: taskListError, data: taskListData } = useTaskQuery(GET_TASKS, {
     variables: { referenceID },
   });
+
+  React.useEffect(() => {
+    setCompletedTasks(taskListData?.tasks?.results?.filter(task => task.status === Status.COMPLETED))
+    setTasksForTaskArea(taskListData?.tasks?.results?.filter(task => task.status === Status.INPROGRESS))
+
+  }, [taskListData])
 
   React.useEffect(() => {
     const res = history.location.pathname.split('/');
@@ -53,6 +65,7 @@ export function Tasks(props: TasksProps) {
   const [workTypes, setWorkTypes] = React.useState([]);
   const [taskData, setTaskData] = React.useState();
   const [projectId, setProjectId] = React.useState('');
+  const [showCompletedTasks, setShowCompletedTasks] = React.useState(false)
 
   const [isTaskFile, setIsTaskFile] = React.useState(false);
   const [isNewTask, setIsNewTask] = React.useState(false);
@@ -265,10 +278,7 @@ export function Tasks(props: TasksProps) {
       .catch((err) => console.log(err));
   };
 
-  enum Status {
-    INPROGRESS = 'INPROGRESS',
-    COMPLETED = 'COMPLETED',
-  }
+
   if (taskListLoading) return (<LazyLoading />)
 
   if (loadingOnDeleteTask) return (<LazyLoading />)
@@ -288,11 +298,31 @@ export function Tasks(props: TasksProps) {
     setOpen(false);
 
     let status;
+    const newArray = [...tasksForTaskArea]
+    const updatedTaskIndex = newArray?.findIndex(item => item.taskID === task.taskID)
+    let obj;
     if (task.status === 'COMPLETED') {
       status = Status.INPROGRESS;
+      if (updatedTaskIndex === -1) {
+        setCompletedTasks(completedTasks?.filter(item => item.taskID !== task.taskID))
+        const newUpdatedTaskFromCompletedTask = {...task,status}
+        newArray.push(newUpdatedTaskFromCompletedTask)
+      } else {
+        obj = {
+          ...newArray[updatedTaskIndex],
+          status: Status.INPROGRESS
+        }
+      }
+
     } else {
       status = Status.COMPLETED;
+      obj = {
+        ...newArray[updatedTaskIndex],
+        status: Status.COMPLETED
+      }
     }
+    newArray[updatedTaskIndex] = obj
+    setTasksForTaskArea(newArray)
     const taskID = task.taskID;
     const assignees = [];
     task.assignees.map((data, i) => {
@@ -348,13 +378,13 @@ export function Tasks(props: TasksProps) {
           }
         });
 
-        cache.writeQuery({
-          query: GET_TASKS,
-          variables: { referenceID },
-          data: {
-            tasks: newTask,
-          },
-        });
+        // cache.writeQuery({
+        //   query: GET_TASKS,
+        //   variables: { referenceID },
+        //   data: {
+        //     tasks: newTask,
+        //   },
+        // });
       },
     });
   };
@@ -392,8 +422,10 @@ export function Tasks(props: TasksProps) {
     setOpen(true);
     if (task.status === 'COMPLETED') {
       settaskStatus('Re-open');
+
     } else {
       settaskStatus('Mark as Complete');
+
     }
   };
   const deleteTask = (task) => {
@@ -405,6 +437,16 @@ export function Tasks(props: TasksProps) {
     setId(id)
     setViewTaskOpen(true);
   };
+
+  const viewTaskById = (task, id) => {
+    if (task?.taskType === 'PIN') {
+      // viewAddPinFile(task)
+      return
+    } else {
+      viewTask(task, id)
+    }
+  }
+
   const editTask = (task) => {
     setTaskData(task);
     setEditTaskOpen(true);
@@ -433,7 +475,7 @@ export function Tasks(props: TasksProps) {
       variables: {
         taskID: updateTaskData.taskID,
         status: updateTaskData.status,
-        files: [],
+        files: updateTaskData.files,
         taskTitle: updateTaskData.taskTitle,
         startDate: updateTaskData.startDate,
         endDate: updateTaskData.endDate,
@@ -599,7 +641,7 @@ export function Tasks(props: TasksProps) {
 
             const subTaskList = task.subtasks.map((subTask) => {
               if (subTask.subtaskID === subtaskId) {
-               
+
                 if (subTask.status === 'INPROGRESS') {
                   return { ...subTask, status: Status.COMPLETED };
                 } else {
@@ -845,7 +887,7 @@ export function Tasks(props: TasksProps) {
 
       <div className="TaskApp-container">
         <h3 className="alltask" style={{ marginBottom: '20px;' }}>{t("project_tab_menu.task.heading")}</h3>
-        {taskListData?.tasks?.results?.map((task, id) => {
+        {tasksForTaskArea?.map((task, id) => {
           return (
             <div key={id} >
               <TaskArea
@@ -880,117 +922,158 @@ export function Tasks(props: TasksProps) {
         </div> */}
 
         <div className="completed-task-con expand">
-          <h3 className="alltask">{t("project_tab_menu.task.completed_tasks")} <span>(1 {t("project_tab_menu.task.completed_tasks")})</span> <i className="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i></h3>
-          <div className="tasks-completed-listing">
-            <div className="card1 card-custom gutter-b card-complete">
-              <div className="card-body">
-                <div className="task-upper-con d-flex justify-content-between">
-                  <div className="d-flex align-items-center py-2">
-                    <span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} className="  mr-10 " />  </span>
-                    <span className="textt">T-001</span>
-                    <span className="anchor_complete">  <span className="check-it-complete task-completed mr-2 mr-10"><i className="ms-Icon ms-font-xl ms-Icon--Accept"></i></span>   </span>
-                    <span className="completed-task-list-text line-through">Task title</span>
-                    <div className="d-flex mr-3">
-                      <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row task-listing-desc">
-                        ( Fri Jul 30 2021 ↦ Due Sat Aug 07 2021)
-                        <div className="navi-item">
-                          <a className="navi-link">
-                            <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>2 files  -  </span>
-                          </a>
+          <h3 className="alltask">{t("project_tab_menu.task.completed_tasks")} <span className="ms-Icon" onClick={() => setShowCompletedTasks(!showCompletedTasks)}><span>({completedTasks?.length} {t("project_tab_menu.task.completed_tasks")})</span> <i className={`ms-Icon ${showCompletedTasks ? "ms-Icon--ChevronDown" : "ms-Icon--ChevronUp"}`} aria-hidden="true" ></i></span></h3>
+          {
+            showCompletedTasks && completedTasks.map((task, id) => (
+              <div className="tasks-completed-listing">
+                <div className="card1 card-custom gutter-b card-complete">
+                  <div className="card-body">
+                    <div className="task-upper-con d-flex justify-content-between">
+                      <div className="d-flex align-items-center py-2">
+                        <span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} className="  mr-10 " />  </span>
+                        <span className="textt">T-{task?.sequenceNumber}</span>
+                        <span onClick={() => updateTask(task)}>
+                          <span className="anchor_complete">  <span className="check-it-complete task-completed mr-2 mr-10"><i className="ms-Icon ms-font-xl ms-Icon--Accept"></i></span>   </span></span>
+                        <span className="task-heading">{task?.taskTitle}</span>
+                        <div className="d-flex mr-3">
+                          <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row task-listing-desc">
+                            {(task.startDate || task?.endDate) && (
+                              <>
+                                ( {new Date(task?.startDate).toDateString()} ↦ Due {new Date(task?.endDate).toDateString()})
+                              </>
+                            )}
+                            {
+                              task?.files.length > 0 && (
+                                <div className="navi-item">
+                                  <a className="navi-link">
+                                    <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{task?.files?.length} files  -  </span>
+                                  </a>
+                                </div>
+                              )
+                            }
+
+                            {task?.estimatedDays && (
+
+                              <div className="navi-item">
+                                <a className="navi-link">
+                                  <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> {task?.estimatedDays} days <span className="dash-seperator">-</span> </span>
+                                </a>
+                              </div>
+                            )}
+                            {
+                              task?.phaseName && (
+                                <div className="navi-item">
+                                  <a className="navi-link">
+                                    <span className="navi-text">{task?.phaseName}  <span className="dash-seperator">-</span>  </span>
+                                  </a>
+                                </div>
+                              )
+                            }
+                            {
+                              task?.workTypeName && (
+                                <div className="navi-item">
+                                  <a className="navi-link">
+                                    <span className="navi-text">{task?.workTypeName}
+                                      {/* <span className="dash-seperator">-</span> */}
+                                    </span>
+                                  </a>
+                                </div>
+                              )
+                            }
+                            {
+                              task?.subtasks.filter((item) => item.isDeleted !== true)?.length > 0 && (
+                                <div className="navi-item">
+                                  <a className="navi-link">
+                                    <span className="navi-text">
+                                      - &nbsp;{task?.subtasks.filter((item) => item.isDeleted !== true)?.length} {t("project_tab_menu.task.check_points")}  </span>
+                                  </a>
+                                </div>
+                              )
+                            }
+
+                          </div>
+
                         </div>
-                        <div className="navi-item">
-                          <a className="navi-link">
-                            <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> 5 days <span className="dash-seperator">-</span> </span>
-                          </a>
+
+                        <div className="sub-task-list-toggle">
+                          <Icon name='tasks' />
                         </div>
-                        <div className="navi-item">
-                          <a className="navi-link">
-                            <span className="navi-text">Realization  <span className="dash-seperator">-</span>  </span>
-                          </a>
-                        </div>
-                        <div className="navi-item">
-                          <a className="navi-link">
-                            <span className="navi-text">Work Type 9   <span className="dash-seperator">-</span> </span>
-                          </a>
-                        </div>
-                        <div className="navi-item">
-                          <a className="navi-link">
-                            <span className="navi-text"> 3 Check points  </span>
-                          </a>
-                        </div>
+
                       </div>
 
-                    </div>
+                      <div className="tasks-action-area">
+                        <div className="navi-item  ">
+                          <a className="navi-link">
+                            <span className="navi-text">
+                              {
+                                task.taskType === 'PIN' && (
+                                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pin_blue.png`} />
+                                )
+                              }
 
-                    <div className="sub-task-list-toggle">
-                      <Icon name='tasks' />
-                    </div>
+                            </span>
+                          </a>
+                        </div>
 
-                  </div>
-
-                  <div className="tasks-action-area">
-                    <div className="navi-item  ">
-                      <a className="navi-link">
-                        <span className="navi-text">
-                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pin_blue.png`} />
-                        </span>
-                      </a>
-                    </div>
-
-                    <div className="navi-item d-flex">
-                      <a className="navi-link">
-                        <span className="navi-text pin-action"> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} /> </span>
-                      </a>
-                      <Popup trigger={<Button className="more-user-listing">3+</Button>} flowing hoverable>
-                        <Grid>
-                          <Grid.Column textAlign='center'>
-                            <div className="user-tooltip-listing">
-                              <Popup className="user-tooltip-name"
-                                trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
-                                content='Mike'
-                                size='mini'
-                              />
-                              <Popup className="user-tooltip-name"
-                                trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
-                                content='John'
-                                size='mini'
-                              />
-                              <Popup className="user-tooltip-name"
-                                trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
-                                content='Hussy'
-                                size='mini'
-                              />
-                              <Popup className="user-tooltip-name"
-                                trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
-                                content='Kevin'
-                                size='mini'
-                              />
+                        {
+                          task?.assignees.length > 0 && (
+                            <div className="navi-item d-flex">
+                              <a className="navi-link">
+                                <span className="navi-text pin-action"> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} /> </span>
+                              </a>
+                              <Popup trigger={<Button className="more-user-listing">3+</Button>} flowing hoverable>
+                                <Grid>
+                                  <Grid.Column textAlign='center'>
+                                    <div className="user-tooltip-listing">
+                                      <Popup className="user-tooltip-name"
+                                        trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                        content='Mike'
+                                        size='mini'
+                                      />
+                                      <Popup className="user-tooltip-name"
+                                        trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                        content='John'
+                                        size='mini'
+                                      />
+                                      <Popup className="user-tooltip-name"
+                                        trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                        content='Hussy'
+                                        size='mini'
+                                      />
+                                      <Popup className="user-tooltip-name"
+                                        trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                        content='Kevin'
+                                        size='mini'
+                                      />
+                                    </div>
+                                  </Grid.Column>
+                                </Grid>
+                              </Popup>
                             </div>
-                          </Grid.Column>
-                        </Grid>
-                      </Popup>
-                    </div>
+                          )
+                        }
 
-
-                    <div className="symbol-group symbol-hover py-2" >
-                      <div className="symbol symbol-30 d-flex">
-                        <span>
-                          <Dropdown icon='ellipsis horizontal' pointing='right'>
-                            <Dropdown.Menu>
-                              <Dropdown.Item icon='eye' text={t("common.view_details")} />
-                              <Dropdown.Item icon='pencil' text={t("common.edit")} />
-                              <Dropdown.Item icon='check circle outline' text={t("project_tab_menu.task.re_open")} />
-                              <Dropdown.Item icon='trash alternate outline' text={t("common.delete")} />
-                            </Dropdown.Menu>
-                          </Dropdown>
-                        </span>
+                        <div className="symbol-group symbol-hover py-2" >
+                          <div className="symbol symbol-30 d-flex">
+                            <span>
+                              <Dropdown icon='ellipsis horizontal' pointing='right'>
+                                <Dropdown.Menu>
+                                  <Dropdown.Item onClick={() => viewTaskById(task, id)} icon='eye' text={t("common.view_details")} />
+                                  <Dropdown.Item onClick={() => editTask(task)} icon='pencil' text={t("common.edit")} />
+                                  <Dropdown.Item onClick={() => updateTask(task)} icon='check circle outline' text={t("project_tab_menu.task.re_open")} />
+                                  <Dropdown.Item onClick={() => deleteTask(task)} icon='trash alternate outline' text={t("common.delete")} />
+                                </Dropdown.Menu>
+                              </Dropdown>
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            ))
+          }
 
         </div>
       </div>

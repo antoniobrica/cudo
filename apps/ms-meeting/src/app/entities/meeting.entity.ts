@@ -4,6 +4,7 @@ import * as uuid from 'uuid';
 import MembersEntity from './members.entity';
 import ReferanceTypeEntity from './reference-type.entity';
 import MeetingFilesEntity from './meeting-files.entity';
+import ProtocolEntity from './protocol.entity';
 
 @Entity({ name: 'meeting' })
 export default class MeetingEntity extends BaseEntity {
@@ -101,6 +102,12 @@ export default class MeetingEntity extends BaseEntity {
     @ManyToMany(type => MeetingFilesEntity, { cascade: true })
     @JoinTable()
     meetingFiles?: MeetingFilesEntity[];
+
+    @Expose()
+    // n:n relation with ProtocolEntity:MeetingEntity
+    @ManyToMany(type => ProtocolEntity)
+    @JoinTable()
+    protocols:ProtocolEntity[]
 
     @Expose()
     @Column({ nullable: true })

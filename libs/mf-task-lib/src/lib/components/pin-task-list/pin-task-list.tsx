@@ -60,6 +60,11 @@ export function PinTaskList(props: PinTaskListProps) {
     BKPTitle
     phaseID
     phaseName
+    files{
+      fileID
+      fileName
+      fileUrl
+    }
     assignees{
       userID
       userName

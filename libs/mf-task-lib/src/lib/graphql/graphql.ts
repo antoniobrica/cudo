@@ -183,8 +183,8 @@ query Tasks($referenceID: String!)
 export const ADD_TASK = gql`
 mutation CreateTask(
   $taskTitle: String!, 
-  $startDate: DateTime!,
-  $endDate: DateTime!,
+  $startDate: DateTime,
+  $endDate: DateTime,
   $estimatedDays: String!,
   $sendNotification: Boolean!,
   $BKPID: String!,
@@ -249,8 +249,8 @@ mutation UpdateTask(
   $taskID: String!,    
   $status: TASKSTATUS!,
   $taskTitle: String!,
-  $startDate: DateTime!,
-  $endDate: DateTime!,
+  $startDate: DateTime,
+  $endDate: DateTime,
   $estimatedDays: String!,
   $sendNotification: Boolean!,
   $BKPID: String!,
