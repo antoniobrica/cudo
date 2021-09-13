@@ -309,7 +309,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                       <Grid.Column>
                         <Form.Field>
                           <div className="toggle-label">
-                            <label>Show Completed Tasks</label>
+                            <label>Show Completed Tasks (1)</label>
                             <Radio toggle />
                           </div>
                           <div className="pin-task-completed-card">
