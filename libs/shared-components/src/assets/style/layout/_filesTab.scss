@@ -624,6 +624,12 @@
               font-size: 13px;
               h3 {
                 margin-left: -25px;
+                .sub-task-list-toggle {
+                  i {
+                    font-size: 12px;
+                    margin-left: 10px;
+                  }
+                }
               }
             }
           }
@@ -650,8 +656,22 @@
           margin: 0 -20px 7px;
           padding: 15px 20px;
         }
+        &:hover {
+          .pin-task-description-box {
+            .task-full-details {
+              .pin-task-info {
+                h3 {
+                  .sub-task-list-toggle {
+                    opacity: 1;
+                  }
+                }
+              }
+            }
+          }
+        }
       }
       label {
+        font-weight: 600;
         i {
           transform: rotate(-90deg);
         }
@@ -737,6 +757,64 @@
     color: #fff;
     z-index: -1;
   }
+  .completed-task-list {
+    .detail-file-listing-box {
+      .pin-task-completed-card {
+        .pin-task-description-box {
+          .add-task-checklist {
+            margin-top: 10px;
+            .checklist-listing-main {
+              &:first-child {
+                border-top: 1px solid #f1f5f8;
+              }
+              span {
+                &.anchor_complete {
+                  i {
+                    width: 18px;
+                    height: 18px;
+                    font-size: 11px;
+                  }
+                }
+              }
+            }
+            .add-new-task-con {
+              @include flex(flex);
+              @include align-items(center);
+              margin-bottom: 10px;
+              margin-top: 12px;
+              span.anchor_complete {
+                a {
+                  span {
+                    i {
+                      font-size: 11px;
+                      width: 18px;
+                      height: 18px;
+                    }
+                  }
+                }
+              }
+              .add-new-task-field {
+                flex: 1;
+                margin-top: 0 !important;
+                margin-left: 15px !important;
+                .fillarea {
+                  margin-bottom: 0;
+                  input {
+                    height: 3.1rem;
+                  }
+                }
+              }
+            }
+            .add-new-checklist-button {
+              .add-new-link {
+                padding: 5px 15px 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 
@@ -806,6 +884,21 @@
     }
     .divider.default.text {
       font-size: 12px;
+    }
+  }
+}
+
+.ui.grid.completed-task-list.with-completed-toggle {
+  .toggle-label {
+    @include flex(flex);
+    @include align-items(center);
+    @include justify-content(space-between);
+  }
+  .pin-task-completed-card {
+    .pin-task-description-box {
+      .added-task-listing {
+        padding-left: 25px;
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import React, { Suspense, useState } from 'react';
-import { Dropdown, Form, Label } from 'semantic-ui-react';
+import { Dropdown, Form, Label, Button, Input, Icon } from 'semantic-ui-react';
 /* eslint-disable-next-line */
 export interface TaskListOnFilePinsProps {
   pinTasks?
@@ -52,6 +52,7 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
                         <h3>
                           <i className="ms-Icon ms-font-xl ms-Icon--Completed"></i>
                           {task.taskTitle}
+                          <div className="sub-task-list-toggle"> <Icon name='tasks' /> </div>
                         </h3>
                         {new Date(task?.startDate).toDateString()} ↦ Due {new Date(task?.endDate).toDateString()}
                       </div>
@@ -96,6 +97,39 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
                             </Dropdown>
                           </span>
                         </div>
+                      </div>
+                    </div>
+                    <div className="add-task-checklist">
+                      <div className="d-flex align-items-center checklist-listing-main">
+                        <span className="anchor_complete">
+                            <i className="ms-Icon ms-Icon--Accept completed" aria-hidden="true"></i>
+                        </span>
+                        <span className="task-checklisting-text">1. Checklist 1</span>
+                        <span className="checklist-actions"> <Icon name="pencil" /></span>
+                        <span className="checklist-actions">< Icon name="trash alternate outline" /> </span>
+                      </div>
+
+                      <div className="add-new-task-con">
+                        <span className="anchor_complete checklist-complete-box">
+                          <a title="Mark as complete"> <span><i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></span> </a>
+                        </span>
+                        <div className="classtop add-new-task-field">
+                          <Form.Field className="fillarea">
+                            <Input placeholder='Enter your text here....' size='small' className="full-width" type="text" />
+                          </Form.Field>
+                          <Form.Field className="d-flex">
+                            <button className="greenbutton anchor_complete">
+                              <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
+                            </button> 
+                            <button className="redbutton anchor_complete">
+                              <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> 
+                            </button>
+                          </Form.Field>
+                        </div>
+                      </div>
+
+                      <div className="add-new-checklist-button">
+                        <div className="add-new-link"> <span className="anchor_complete"><i className="ms-Icon ms-Icon--Add" aria-hidden="true"></i> Add new</span></div>
                       </div>
                     </div>
                   </div>

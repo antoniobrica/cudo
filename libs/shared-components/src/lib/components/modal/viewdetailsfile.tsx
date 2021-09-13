@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Pagination, Modal, Input, Form, Grid, Image, Comment, Dropdown, Select, TextArea } from 'semantic-ui-react'
+import { Button, Pagination, Modal, Input, Form, Grid, Image, Comment, Dropdown, Select, TextArea, Radio, Icon } from 'semantic-ui-react'
 import Canvas from './canvas';
 // import { Document, Page } from 'react-pdf';
 import { PinTaskListIndex } from '@cudo/mf-task-lib';
@@ -27,9 +27,8 @@ const countryOptions = [
 ]
 
 const versionOptions = [
-  // { key: 'af', value: 'Test_Image_11.png1628519479250-V1', text: 'Test_Image_11.png1628519479250-V1' },
-  { key: 'ax', value: 'version 1', text: 'Version 1' },
-  { key: 'axx', value: 'version 2', text: 'Version 2' },
+  { key: 'af', value: 'map 1', text: 'House map - Version 1' },
+  { key: 'ax', value: 'map 2', text: 'House map - Version 2' },
 ]
 
 export interface FileDetailsProps {
@@ -200,7 +199,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                       <Grid.Column>
                         <Form.Field>
                           <label>File name</label>
-                          <Select placeholder='Select version' className="small" options={versionOptions} selection clearable />
+                          <Select className="small" options={versionOptions} selection clearable/>
                           {/* <p className="form_desc">{props?.filesData?.fileTitle}</p> */}
                         </Form.Field>
                       </Grid.Column>
@@ -315,6 +314,52 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                               <a href="" className="add-new-task-link">+ Add new task</a>
                             </div>
                           </div> */}
+                        </Form.Field>
+                      </Grid.Column>
+                    </Grid.Row>
+                  </Grid>
+
+                  <Grid columns={1} className="completed-task-list with-completed-toggle">
+                    <Grid.Row>
+                      <Grid.Column>
+                        <Form.Field>
+                          <div className="toggle-label">
+                            <label>Show Completed Tasks (1)</label>
+                            <Radio toggle />
+                          </div>
+                          <div className="pin-task-completed-card">
+                            <div className="pin-task-description-box">
+                              <div className="task-full-details">
+                                <div className="pin-task-info">
+                                  <h3 className="task-completed">
+                                    <i className="ms-Icon ms-font-xl ms-Icon--Completed"></i>
+                                    This is task name here
+                                  </h3>
+                                  <p>Starts Tomorrow ↦ Due Fri Aug 28th</p>
+                                </div>
+                                <div className="user-img">
+                                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/people_1.png`} />
+                                </div>
+                              </div>
+                              <div className="added-task-listing">
+                                <p>Strategic Planning - Paint Work</p>
+                                <div className="symbol-group">
+                                  <div className="symbol symbol-30">
+                                    <span className="">
+                                      <Dropdown icon='ellipsis horizontal' pointing="right">
+                                        <Dropdown.Menu>
+                                          <Dropdown.Item icon='eye' text='View detail' />
+                                          <Dropdown.Item icon='pencil' text='Edit' />
+                                          <Dropdown.Item icon='check circle outline' text='Mark as complete' />
+                                          <Dropdown.Item icon='trash alternate outline' text='Delete' />
+                                        </Dropdown.Menu>
+                                      </Dropdown>
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </Form.Field>
                       </Grid.Column>
                     </Grid.Row>
