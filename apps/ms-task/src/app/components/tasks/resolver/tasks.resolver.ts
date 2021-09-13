@@ -4,13 +4,14 @@ import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import SortFilterParam from '../../../utils/types/sortParam';
 import StatusFilterParam from '../../../utils/types/status.filter';
 import TaskFilterParams from '../../../utils/types/taskFilterParams';
+import TasksOnPinsShiftFilterParams from '../../../utils/types/tasksOnPinsShiftFilterParams';
 import taskTypeFilterParam from '../../../utils/types/taskType.filter';
 import { Pagination } from '../../paginate';
 import { pageParams } from '../../paginate/pagination.param';
 import { PaginationTaskModel } from '../../paginate/pagination.task.model';
 import SubTaskInput from '../dto/input/create-subtask.input';
 import { FileFilterInput } from '../dto/input/file-delete.input ';
-import {  SubTaskFilterInput } from '../dto/input/subtask-delete.input';
+import { SubTaskFilterInput } from '../dto/input/subtask-delete.input';
 import { TaskDeleteInput } from '../dto/input/task-delete.input';
 import { TaskDetailsUpdateInput } from '../dto/input/task-details-update.input';
 import { TaskDetailsInput } from '../dto/input/task-details.input';
@@ -32,18 +33,18 @@ export class TasksResolver {
 
     @Query(() => PaginationTaskModel, { nullable: true })
     async tasks(
-    @Args("referenceFilter") getTasksArgs: ReferenceFilterParams,
-    @Args('options',{nullable: true})options:pageParams,
-    @Args("statusFilter",{nullable: true}) status?:StatusFilterParam,
-    @Args("sortFilter",{nullable: true}) sortFilter?:SortFilterParam,): Promise<Pagination<TasksEntity>>  {
-        return await this.projectTasksService.findAllByStatus(getTasksArgs,options,status,sortFilter
-          )
+        @Args("referenceFilter") getTasksArgs: ReferenceFilterParams,
+        @Args('options', { nullable: true }) options: pageParams,
+        @Args("statusFilter", { nullable: true }) status?: StatusFilterParam,
+        @Args("sortFilter", { nullable: true }) sortFilter?: SortFilterParam,): Promise<Pagination<TasksEntity>> {
+        return await this.projectTasksService.findAllByStatus(getTasksArgs, options, status, sortFilter
+        )
     }
 
     @Query(() => [TasksModel], { nullable: true })
     async tasksByTasktypes(@Args("referenceFilter") getTasksArgs: ReferenceFilterParams,
-    @Args("taskTypeFilter",{nullable:true}) taskType?: taskTypeFilterParam): Promise<TasksModel[]> {
-        return await this.projectTasksService.findAlltasksBYTaskTypes(getTasksArgs,taskType)
+        @Args("taskTypeFilter", { nullable: true }) taskType?: taskTypeFilterParam): Promise<TasksModel[]> {
+        return await this.projectTasksService.findAlltasksBYTaskTypes(getTasksArgs, taskType)
     }
 
 
@@ -85,10 +86,10 @@ export class TasksResolver {
 
     @Mutation(() => SubTaskModel)
     async updateSubTask(
-      @Args('subTaskFilter')update: SubTaskFilterInput,
-      @Args('subTaskDetail') createsub: SubTaskInput,
+        @Args('subTaskFilter') update: SubTaskFilterInput,
+        @Args('subTaskDetail') createsub: SubTaskInput,
     ) {
-      return this.projectTasksService.updateSubTask(update,createsub);
+        return this.projectTasksService.updateSubTask(update, createsub);
     }
 
 
@@ -98,6 +99,13 @@ export class TasksResolver {
     ) {
         return this.projectTasksService.deleteTask(taskDeleteInput);
     }
-  
+
+    @Mutation(() => [TasksModel])
+    async shiftPreviousActiveTasksToNewVersion(@Args("taskFilterParams") tasksOnPinsShiftFilter: TasksOnPinsShiftFilterParams,
+        @Args('taskUpdateInput') taskUpdateInput: TaskDetailsUpdateInput,
+    ) {
+        return this.projectTasksService.shiftActiveTasksToNewVersion(tasksOnPinsShiftFilter, taskUpdateInput);
+    }
+
 }
 

@@ -4,20 +4,7 @@ import { OneToMany } from "typeorm";
 import { StatusEnum } from "../../../../enum/status.enum";
 
 @InputType()
-export class PinsUpdateInputDto {
-
-
-    @Field({ description: `X-Axis of pin` })
-    x_axis: number;
-
-    @Field({ description: `Y-Axis of pin` })
-    y_axis: number;
-
-    @Field({ description: `Z-Axis of pin` })
-    z_axis: number;
-
-    @Field({ description: `Pins Deleted or not` })
-    isDeleted?: boolean;
+export class PinsStatusUpdateInputDto {
     
     @Field(type => StatusEnum, { nullable: true, description: `Pin status` })
     status?: StatusEnum;

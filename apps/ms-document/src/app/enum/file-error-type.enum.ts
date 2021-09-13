@@ -6,4 +6,5 @@ export enum FileErrorTypeEnum {
     PINS_NOT_FOUND,
     FILE_NOT_ADDED ,
     PROJECT_NOT_FOUND,
+    INTERNAL_SERVER_ERROR
 }

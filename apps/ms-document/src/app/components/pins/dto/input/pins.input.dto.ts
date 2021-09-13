@@ -1,6 +1,7 @@
 import { Field, InputType } from "@nestjs/graphql";
 import { IsNotEmpty, IsOptional, Length } from 'class-validator';
 import { OneToMany } from "typeorm";
+import { StatusEnum } from "../../../../enum/status.enum";
 
 @InputType()
 export class PinsInputDto {
@@ -26,4 +27,6 @@ export class PinsInputDto {
     @Field({ description: `Pins Deleted or not` })
     isDeleted?: boolean;
 
+    @Field(type => StatusEnum, { nullable: true, description: `Pin status` })
+    status?: StatusEnum;
 }
