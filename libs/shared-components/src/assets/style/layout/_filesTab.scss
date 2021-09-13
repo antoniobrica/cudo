@@ -624,6 +624,12 @@
               font-size: 13px;
               h3 {
                 margin-left: -25px;
+                .sub-task-list-toggle {
+                  i {
+                    font-size: 12px;
+                    margin-left: 10px;
+                  }
+                }
               }
             }
           }
@@ -650,8 +656,22 @@
           margin: 0 -20px 7px;
           padding: 15px 20px;
         }
+        &:hover {
+          .pin-task-description-box {
+            .task-full-details {
+              .pin-task-info {
+                h3 {
+                  .sub-task-list-toggle {
+                    opacity: 1;
+                  }
+                }
+              }
+            }
+          }
+        }
       }
       label {
+        font-weight: 600;
         i {
           transform: rotate(-90deg);
         }
@@ -864,6 +884,21 @@
     }
     .divider.default.text {
       font-size: 12px;
+    }
+  }
+}
+
+.ui.grid.completed-task-list.with-completed-toggle {
+  .toggle-label {
+    @include flex(flex);
+    @include align-items(center);
+    @include justify-content(space-between);
+  }
+  .pin-task-completed-card {
+    .pin-task-description-box {
+      .added-task-listing {
+        padding-left: 25px;
+      }
     }
   }
 }

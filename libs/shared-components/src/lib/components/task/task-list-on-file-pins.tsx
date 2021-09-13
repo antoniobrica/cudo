@@ -39,6 +39,7 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
                         <h3>
                           <i className="ms-Icon ms-font-xl ms-Icon--Completed"></i>
                           {task.taskTitle}
+                          <div className="sub-task-list-toggle"> <Icon name='tasks' /> </div>
                         </h3>
                         {new Date(task?.startDate).toDateString()} ↦ Due {new Date(task?.endDate).toDateString()}
                       </div>
