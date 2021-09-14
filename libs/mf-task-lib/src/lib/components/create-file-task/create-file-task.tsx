@@ -304,7 +304,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
         cache.writeQuery({
           query: GET_TASKS,
           data: {
-            tasksD: [...cacheData.tasks, addTask]
+            tasksD: [...cacheData.tasks?.results, addTask]
           },
           variables: { referenceID },
         });

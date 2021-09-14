@@ -240,7 +240,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     </Grid.Row>
                   </Grid>
 
-                  <Grid columns={1} className={expandVersion ? "file-versioning-box expand" : "file-versioning-box"}>
+                 {/*  <Grid columns={1} className={expandVersion ? "file-versioning-box expand" : "file-versioning-box"}>
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
@@ -254,7 +254,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                             </div>
                             <i className="ms-Icon ms-Icon--RedEye right_float" aria-hidden="true"></i>
                             <i className="ms-Icon ms-Icon--Delete" aria-hidden="true"></i>
-                          </div>
+                          </div> */}
                           {/* <div className="file-version-list">
                             <div className="version-wise-files">
                               <span>Version 1 -</span>
@@ -265,11 +265,11 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                             <i className="ms-Icon ms-Icon--RedEye right_float" aria-hidden="true"></i>
                             <i className="ms-Icon ms-Icon--Delete" aria-hidden="true"></i>
 
-                          </div> */}
+                          </div>
                         </Form.Field>
                       </Grid.Column>
                     </Grid.Row>
-                  </Grid>
+                  </Grid> */}
 
                   <Grid columns={1} className={expand ? "completed-task-list expand" : "completed-task-list"}>
                     <Grid.Row>
