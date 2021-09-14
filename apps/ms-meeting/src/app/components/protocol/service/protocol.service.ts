@@ -76,12 +76,11 @@ export class ProtocolService {
 
           const savedMeeting = await this.meetingService.addMeeting(meetings[index]);
 
-          // if (index === 0) {
-          //   protocolDetails.meetings = [savedMeeting]
-          // } else {
-          // protocolDetails.meetings.push(savedMeeting)
-          // }
-          protocolDetails.meetings.push(savedMeeting)
+          if (index === 0) {
+            protocolDetails.meetings = [savedMeeting]
+          } else {
+            protocolDetails.meetings.push(savedMeeting)
+          }
         }
       }
 
