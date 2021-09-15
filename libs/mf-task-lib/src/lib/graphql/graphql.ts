@@ -159,6 +159,7 @@ query Tasks($referenceID: String!)
     updatedBy
     createdBy
     taskTypeID
+    parentFileID
     fileID
     taskType
     workTypeID
@@ -194,6 +195,7 @@ mutation CreateTask(
   $phaseName: String!,
   $referenceID: String!,
   $description: String!,
+  $parentFileID: String! 
   $fileID: String! 
   $fileName: String!
   $taskTypeID: String!
@@ -224,6 +226,7 @@ mutation CreateTask(
           phaseName: $phaseName,
           status: INPROGRESS,
           description: $description
+          parentFileID : $parentFileID
           fileID : $fileID
           fileName:$fileName
           taskTypeID:$taskTypeID

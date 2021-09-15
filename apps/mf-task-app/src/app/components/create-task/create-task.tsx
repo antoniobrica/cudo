@@ -304,6 +304,7 @@ export function CreateTask(props: CreateTaskProps) {
     const variables = {
       taskTitle, estimatedDays,
       sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
+      parentFileID: "",
       fileID: "",
       fileName: "$fileName",
       taskTypeID: "$taskTypeID",

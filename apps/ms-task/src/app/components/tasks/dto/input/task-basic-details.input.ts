@@ -39,7 +39,10 @@ export class TaskBasicDetailsInput {
     @Field(type => StatusEnum, { nullable:true, description: `Task status` })
     status?: StatusEnum;
 
-    @Field({ nullable: true, description: ` Task ParentID`  })
+    @Field({ nullable: true, description: ` Task On file Parent FileID`  })
+    parentFileID?: string;
+
+    @Field({ nullable: true, description: ` Task On File FileID`  })
     fileID?: string;
 
     @Field({ nullable: true, description: ` Project workType ID`  })

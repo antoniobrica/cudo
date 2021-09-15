@@ -53,7 +53,10 @@ export class TasksModel {
   @Field({ nullable: true, description: `Description of task` })
   description?: string;
 
-  @Field({ nullable: true, description: ` file ID`  })
+  @Field({ nullable: true, description: `Task on file - Parent file ID`  })
+  parentFileID?: string;
+
+  @Field({ nullable: true, description: `Task on file - file ID`  })
   fileID?: string;
 
   @Field({ nullable: true, description: ` file Name`  })

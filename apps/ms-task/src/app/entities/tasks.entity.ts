@@ -92,6 +92,10 @@ export class TasksEntity extends BaseEntity {
 
   @Expose()
   @Column({ nullable: true })
+  parentFileID?: string;
+
+  @Expose()
+  @Column({ nullable: true })
   fileID?: string;
 
   @Expose()

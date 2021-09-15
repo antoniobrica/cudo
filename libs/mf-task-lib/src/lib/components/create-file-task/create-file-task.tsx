@@ -273,6 +273,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
     const variables = {
       taskTitle, estimatedDays,
       sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
+      parentFileID: fileData.parentUploadedFileID,
       fileID: fileData.uploadedFileID,
       fileName: fileData.fileTitle,
       taskTypeID,

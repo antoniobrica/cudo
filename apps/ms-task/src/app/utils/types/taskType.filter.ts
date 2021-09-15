@@ -5,7 +5,10 @@ import { TaskTypeEnum } from "../../enums/taskType.enum";
 @InputType()
 class taskTypeFilterParam {
 
-    @Field({ nullable: true, description: `  file ID`  })
+    @Field({ nullable: true, description: `Task on file - parent file ID`  })
+    parentFileID?: string;
+
+    @Field({ nullable: true, description: `Task on file - file ID`  })
     fileID?: string;
 
     @Field({ nullable: true, description: ` Task ParentID`  })
