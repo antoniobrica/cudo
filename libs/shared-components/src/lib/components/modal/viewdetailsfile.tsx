@@ -68,7 +68,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
 
   React.useEffect(() => {
     // if (props.open) {
-      setOpen(props.open)
+    setOpen(props.open)
     // }
   }, [props.open]);
 
@@ -143,30 +143,30 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
           <Form>
             <div className="view-pin-detail-popup">
               <div className="left-side-detail-file">
-                {props.fType == 'application/pdf' ?
+                {/* {props.fType == 'application/pdf' ?
                   <Document
                     file={imgUrl}
                     onLoadSuccess={onDocumentLoadSuccess}
                   >
                     <Page pageNumber={pageNumber} />
                   </Document>
-                  :
+                  : */}
+                {imgUrl ?
                   <div className="left-side-image-canvas">
-                    {imgUrl ?
-                      <CanvasImage
-                        pinSaved={setPinSavedOnCanvase}
-                        // savePin={saveNewPinOnCanvase}
-                        imgUrl={imgUrl}
-                        coardinates={getCoardinates}
-                        fileId={props.filesData.uploadedFileID}
-                        allowToCreateNewPin={false}
-                        isPinCreated={isPinCreated}
-                        setIsPinCreated={setIsPinCreated}
-                        hoveredTaskTypeID={hoveredTaskTypeID}
-                      ></CanvasImage>
-                      : <LazyLoading />}
+                    <CanvasImage
+                      pinSaved={setPinSavedOnCanvase}
+                      // savePin={saveNewPinOnCanvase}
+                      imgUrl={imgUrl}
+                      coardinates={getCoardinates}
+                      fileId={props.filesData.uploadedFileID}
+                      allowToCreateNewPin={false}
+                      isPinCreated={isPinCreated}
+                      setIsPinCreated={setIsPinCreated}
+                      hoveredTaskTypeID={hoveredTaskTypeID}
+                    ></CanvasImage>
                   </div>
-                }
+                  : <LazyLoading />}
+                {/* } */}
                 {/* <div className="file-pagination">File versions
                   <Pagination
                     defaultActivePage={1}
@@ -199,7 +199,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                       <Grid.Column>
                         <Form.Field>
                           <label>File name</label>
-                          <Select className="small" options={versionOptions} selection clearable/>
+                          <Select className="small" options={versionOptions} selection clearable />
                           {/* <p className="form_desc">{props?.filesData?.fileTitle}</p> */}
                         </Form.Field>
                       </Grid.Column>
@@ -240,7 +240,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     </Grid.Row>
                   </Grid>
 
-                 {/*  <Grid columns={1} className={expandVersion ? "file-versioning-box expand" : "file-versioning-box"}>
+                  {/*  <Grid columns={1} className={expandVersion ? "file-versioning-box expand" : "file-versioning-box"}>
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
@@ -255,7 +255,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                             <i className="ms-Icon ms-Icon--RedEye right_float" aria-hidden="true"></i>
                             <i className="ms-Icon ms-Icon--Delete" aria-hidden="true"></i>
                           </div> */}
-                          {/* <div className="file-version-list">
+                  {/* <div className="file-version-list">
                             <div className="version-wise-files">
                               <span>Version 1 -</span>
                               <h3>2302101_version_03647.pptx
