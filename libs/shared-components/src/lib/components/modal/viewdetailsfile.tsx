@@ -27,8 +27,8 @@ const countryOptions = [
 ]
 
 const versionOptions = [
-  { key: 'af', value: 'map 1', text: 'House map - Version 1' },
-  { key: 'ax', value: 'map 2', text: 'House map - Version 2' },
+  { key: 'af', value: 'map 1', text: 'Ver 1' },
+  { key: 'ax', value: 'map 2', text: 'Ver 2' },
 ]
 
 export interface FileDetailsProps {
@@ -199,7 +199,10 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                       <Grid.Column>
                         <Form.Field>
                           <label>File name</label>
-                          <Select className="small" options={versionOptions} selection clearable/>
+                          <div className="select-version-box">
+                            <label>House map - </label>
+                            <Select className="small" options={versionOptions} selection clearable/>
+                          </div>
                           {/* <p className="form_desc">{props?.filesData?.fileTitle}</p> */}
                         </Form.Field>
                       </Grid.Column>
