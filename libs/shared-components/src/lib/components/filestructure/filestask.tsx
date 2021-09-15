@@ -252,7 +252,7 @@ export function FileStructure(props: FileStructureProps) {
 											<p>Version {fileVersion} - <span>{fileTitle}</span> <span className="small-text">(By: {updatedBy ? updatedBy : createdBy} - Uploaded on: {updatedAt ? formattedUpdatedAt : formattedCreatedAt})</span></p>
 											<div className="files-right-area symbol symbol-30">
 												<a onClick={() => onClickFileDownload(fileTitle)}> <i className="ms-Icon ms-Icon--Download" aria-hidden="true"></i></a>
-												<a onClick={() => onClickViewFileDetail(item)}> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
+												<a onClick={() => onClickViewFileDetail(singleFileItem)}> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
 												<span>
 													<Dropdown icon='ellipsis horizontal' pointing='right'>
 														<Dropdown.Menu>
