@@ -90,28 +90,16 @@ export function Bkp(props: BkpProps) {
   return (
     <Form.Field>
 
-      {
-        props.folderOpen ? (
-          <>
-          <label>BKP/Folder</label>
-            <SelectDropdown folderOpen={props.folderOpen} />
-          </>
-        )
-          : (
-            <>
               <label>{t("common.select_bkp")}   </label>
-              <Select name='bkp' placeholder={t("common.select")} className="small"
+              {/* <Select name='bkp' placeholder={t("common.select")} className="small"
                 options={items2}
                 value={BKPID}
                 onChange={onBkp}
                 clearable
                 search
-              />
-            </>
-          )
-
-      }
-
+              /> */}
+           
+      <SelectDropdown folderOpen={props.folderOpen} options={items2} value={props.bkp} onBkp={onBkp}  />
 
     </Form.Field>
   );

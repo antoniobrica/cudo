@@ -6,23 +6,24 @@ import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react';
 export interface selectWithAddNew {
   selectedValue?
   folderOpen?
+  options?
+  value?
+  onBkp?
 }
 
 
-const options = [
-  { value: "Abe", label: "Abe" },
-  { value: "John", label: "John" },
-  { value: "Dustin", label: "Dustin" },
-  { value: "Rahul", label: "Rahul" },
-  { value: "John", label: "John" },
-  { value: "Dustin", label: "Dustin" },
-  { value: "Rahul", label: "Rahul" },
-  { value: "John", label: "John" },
-  { value: "Dustin", label: "Dustin" },
-  { value: "Rahul", label: "Rahul" },
-
-
-];
+// const options = [
+//   { value: "Abe", label: "Abe" },
+//   { value: "John", label: "John" },
+//   { value: "Dustin", label: "Dustin" },
+//   { value: "Rahul", label: "Rahul" },
+//   { value: "John", label: "John" },
+//   { value: "Dustin", label: "Dustin" },
+//   { value: "Rahul", label: "Rahul" },
+//   { value: "John", label: "John" },
+//   { value: "Dustin", label: "Dustin" },
+//   { value: "Rahul", label: "Rahul" },
+// ];
 
 // const formatOptionLabel = ({ value, label, addlabel }) => (
 //   <div style={{ display: "flex" }}>
@@ -40,9 +41,19 @@ const options = [
 
 
 export function SelectDropdown(props: selectWithAddNew) {
+  const [BkpId, setBkpId] = React.useState('Select')
+
+  const options = props?.options?.map(bkp => {
+    return {value:bkp, label:bkp.text }
+  })
 
   const onSelectChange = (data) => {
-    props.selectedValue(data.value)
+    if(data && data !== 'Select'){
+      props.onBkp('',data.value)
+      setBkpId(data.value.value)
+    }else{
+      setBkpId('Select')
+    }
   }
 
   const CustomMenu = ({ innerRef, innerProps, children }) => (
@@ -58,15 +69,14 @@ export function SelectDropdown(props: selectWithAddNew) {
   return (
     <div>
       <Select
-        // value={options[0]}
+        value={{value:BkpId,label:BkpId}}
         placeholder='Select'
         // addLinkOption={addLinkOption}
         // formatOptionLabel={formatOptionLabel}
         options={options}
-        onChange={(value) => onSelectChange(value)}
+        onChange={onSelectChange}
         components={{ Menu: CustomMenu }}
-        isClearable
-        on
+        isClearable={BkpId !== 'Select'}
       />
     </div>
   );

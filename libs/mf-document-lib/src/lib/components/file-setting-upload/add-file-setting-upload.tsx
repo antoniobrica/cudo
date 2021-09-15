@@ -341,7 +341,7 @@ export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
                             {/* <Select placeholder='Select' className="small" options={countryOptions} clearable /> */}
                             <BkpIndex bkp={BKPID}
                               parentBKPSelect={setBKPIDChange}
-                              // folderOpen={folderOpen}
+                              folderOpen={folderOpen}
                             ></BkpIndex>
                             {/* <Form.Field>
                               <a className="anchor-color" onClick={folderOpen}>+ {t("common.add_new_button")}</a>

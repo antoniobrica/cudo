@@ -212,8 +212,15 @@ export const AddPinFile = (props: AddPinProps) => {
                     <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/grey_pin.png`} className="pinadd" />
                   </Form.Field>
                   :
-                  <CreateFileTaskIndex pinsaved={pinSavedOnCanvase} savePin={setSaveNewPinOnCanvase} close={taskClose} onSuccess={onSuccess} cord={cord} fileData={fileData} getTaskToasterMessage={getTaskToasterMessage}
-                  getTaskErrorMessage={getTaskErrorMessage}></CreateFileTaskIndex>
+                  <CreateFileTaskIndex
+                    pinsaved={pinSavedOnCanvase}
+                    savePin={setSaveNewPinOnCanvase}
+                    close={taskClose}
+                    onSuccess={onSuccess}
+                    cord={cord}
+                    fileData={fileData}
+                    getTaskToasterMessage={getTaskToasterMessage}
+                    getTaskErrorMessage={getTaskErrorMessage} />
                 }
                 {!isPinCreated ?
                   <PinTaskListIndex filesData={fileData} cord={cord}></PinTaskListIndex> : null}
