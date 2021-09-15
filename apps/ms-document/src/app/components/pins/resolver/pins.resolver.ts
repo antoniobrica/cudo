@@ -4,6 +4,7 @@ import { PinsUpdateInputDto } from '../dto/input/pins.upate.input.dto';
 import PinsFilterParams from '../dto/input/pinsFilter.input';
 import { PinsShiftUpdateInputDto } from '../dto/input/pinsShift.update.input.dto';
 import { PinsStatusUpdateInputDto } from '../dto/input/pinsStatus.upate.input.dto';
+import { PinsTaskInfoUpdateInputDto } from '../dto/input/pinsTaskInfo.update.input.dto';
 import { PinsModel } from '../model/pins.model';
 import { PinsService } from '../service/pins.service';
 
@@ -53,5 +54,12 @@ export class PinsResolver {
         @Args('pinsShiftUpdateDto') pinsShiftUpdateInput: PinsShiftUpdateInputDto,
     ) {
         return this.pinsService.shiftActivePinsToNewVersion(refFilter, pinsShiftUpdateInput);
+    }
+
+    @Mutation(() => [PinsModel])
+    async updateTaskInfoInPinDetail(@Args("pinsFilter") refFilter: PinsFilterParams,
+        @Args('pinsShiftUpdateDto') pinsTaskInfoUpdateInput: PinsTaskInfoUpdateInputDto,
+    ) {
+        return this.pinsService.updateTaskReferenceInPinDetail(refFilter, pinsTaskInfoUpdateInput);
     }
 }

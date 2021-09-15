@@ -63,6 +63,14 @@ export default class PinsTypeEntity extends BaseEntity {
     @Column({ nullable: true })
     status?: string;
 
+    @Expose()
+    @Column({ nullable: true })
+    taskID?: string;
+
+    @Expose()
+    @Column({ nullable: true })
+    taskTitle?: string;
+
     constructor(pinsTypeEntity: Partial<PinsTypeEntity>) {
         super();
         if (pinsTypeEntity) {
