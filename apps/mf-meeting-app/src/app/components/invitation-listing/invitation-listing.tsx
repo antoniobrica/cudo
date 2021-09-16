@@ -15,6 +15,7 @@ import { ProtocolAdd } from "../protocol-add/protocol-add";
 import { toast } from "react-toastify";
 import { IInvitations } from "../../interfaces/invitation";
 import { useMutation } from "@apollo/client";
+import ProtocolEdit from "../protocol-edit/protocol-edit";
 export interface InvitationListingProps {
     sessionId?
 }
@@ -31,10 +32,12 @@ export function InvitationListing(props: InvitationListingProps) {
     const [selectedMeetingId, setSelectedMeetingId] = useState(null)
     const [openMeetingDetail, setOpenMeetingDetail] = useState(false)
     const [openMeetingEdit, setOpenMeetingEdit] = useState(false)
+    const [openProtocolEdit, setOpenProtocolEdit] = useState(false)
     const [openMeetingDelete, setOpenMeetingDelete] = useState(false)
     const [activeErrorClass, setActiveErrorClass] = useState(false)
     const [invitationError, setInvitationError] = useState("")
     const [invitationDeleteLoading, setInvitationDeleteLoading] = useState(false)
+    const [selectedProtocol, setSelectedProtocol] = useState(null)
 
     const { loading: sessionDetailLoading, error: sessionDetailError, data: sessionDetailData } = useSessionDetailQuery(GET_SESSION_DETAIL, {
         variables: { sessionID: props?.sessionId },
@@ -146,6 +149,7 @@ export function InvitationListing(props: InvitationListingProps) {
         setOpenMeetingEdit(false)
         setOpenPageAddProtocol(false)
         setOpenMeetingDelete(false)
+        setOpenProtocolEdit(false)
     }
 
     const onClickViewInvitation = (meetingId) => {
@@ -161,6 +165,11 @@ export function InvitationListing(props: InvitationListingProps) {
     const onClickDeleteInvitation = (meetingId) => {
         setSelectedMeetingId(meetingId)
         setOpenMeetingDelete(true)
+    }
+
+    const onClickEditProtocol = (item) => {
+        setSelectedProtocol(item)
+        setOpenProtocolEdit(true)
     }
 
     const [deleteMeeting, { loading: deleteInvitationLoading, error: deleteInvitationError, data: deleteInvitationData }] = useMutation(DELETE_INVITATION,
@@ -279,6 +288,19 @@ export function InvitationListing(props: InvitationListingProps) {
                                 cancel={cancel}
                                 deleteInvitation={deleteInvitation} />
                         </div> : null}
+                    
+                    {
+                        openProtocolEdit && (
+                            <div>
+                                <ProtocolEdit
+                                 openProtcolEdit={openProtocolEdit}
+                                 cancel={cancel}
+                                 protocolData={selectedProtocol}
+                                 sessionId={sessionId}
+                                 />
+                            </div>
+                        )
+                    }
 
                     <InvitationTab
                         sessionId={props?.sessionId}
@@ -290,6 +312,7 @@ export function InvitationListing(props: InvitationListingProps) {
                         viewInvitation={onClickViewInvitation}
                         editInvitation={onClickEditInvitation}
                         deleteInvitation={onClickDeleteInvitation}
+                        editProtocol={onClickEditProtocol}
                     />
                 </div>
                 : // null
