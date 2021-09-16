@@ -238,3 +238,79 @@ export const GET_FILE_VERSIONS = gql`query FileVersions($projectId:String!,$file
   }
 }
 `
+
+export const GET_COMMENTS = gql`query GetComments($uploadedFileID:String!){
+  getComments(commentsFilter:{
+    uploadedFileID: $uploadedFileID # "ca813050-095f-11ec-b7f7-13a0db5fb508"
+  }) {
+    commentsID
+    uploadedFileID
+    comment
+    createdBy
+    createdAt
+    updatedAt
+    isDeleted
+  }
+}`
+
+export const ADD_COMMENT = gql`mutation CreateComment(
+  $uploadedFileID:String!,
+  $comment:String!,
+  $createdBy:String!
+){
+  createComment(
+    commentCreateDto: {
+      uploadedFileID: $uploadedFileID # "ca813050-095f-11ec-b7f7-13a0db5fb508"
+      comment: $comment # "test new comment message another abcd"
+      createdBy: $createdBy # "Mukut"
+    }
+  ){
+    commentsID
+    uploadedFileID
+    comment
+    createdBy
+    createdAt
+    updatedAt
+    isDeleted
+  }
+}`
+
+export const UPDATE_COMMENT = gql`mutation UpdateComment(
+  $uploadedFileID:String!, 
+  $commentsID:String!,
+  $comment:String!
+){
+  updateComment(
+    commentFilter: {
+      # uploadedFileID: $uploadedFileID # "ca813050-095f-11ec-b7f7-13a0db5fb508"
+      commentsID: $commentsID # "ab028a70-16a8-11ec-b28d-2b111cca10d3"
+    }
+    commentUpdateDto: { 
+      comment: $comment # "test comment message updated" 
+    }
+  ){
+    commentsID
+    uploadedFileID
+    comment
+    createdBy
+    createdAt
+    updatedAt
+    isDeleted
+  }
+}`
+
+export const DELETE_COMMENT = gql`mutation DeleteComment($commentsID:String!){
+  deleteComment(
+    commentDeleteInput: { 
+      commentsID: $commentsID # "ab028a70-16a8-11ec-b28d-2b111cca10d3" 
+    }
+  ) {
+    commentsID
+    uploadedFileID
+    comment
+    createdBy
+    createdAt
+    updatedAt
+    isDeleted
+  }
+}`
