@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Form, Grid } from 'semantic-ui-react';
+import { Form, Grid, Icon } from 'semantic-ui-react';
 
 import { LoaderPage } from "@cudo/shared-components"
 
@@ -16,10 +16,20 @@ export interface CommentListProps {
 export function CommentList(props: CommentListProps) {
 
   // const [comment, setComment] = useState(null)
-  console.log('----props?.uploadedFileID---', props?.uploadedFileID)
+  
   const { loading: commentListLoading, error: commentListError, data: commentListData } = useQuery(GET_COMMENTS, {
     variables: { uploadedFileID: props?.uploadedFileID },
   });
+
+const onClickEditComment = () =>{
+console.log('---edit--')
+}
+
+const onClickDeleteComment = () =>{
+  
+  console.log('---delete--')
+}
+
   console.log('---commentListData--', commentListData)
   return (
     <>
@@ -41,6 +51,9 @@ export function CommentList(props: CommentListProps) {
               {/* <p>I have a query that exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p> */}
               <p>{commentMessage.length > 129 ? commentMessage.subStr(0, 129) : commentMessage}</p>
             </div>
+            <span className="checklist-actions" onClick={() => onClickEditComment()}> <Icon name="pencil" /></span>
+        <span className="checklist-actions" onClick={() => onClickDeleteComment()}>< Icon name="trash alternate outline" /> </span>
+
           </div>
 
         )
