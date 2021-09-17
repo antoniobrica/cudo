@@ -1,3 +1,4 @@
+import { useMutation } from '@apollo/client';
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Checkbox, Modal, Input, Form, Grid, Select } from 'semantic-ui-react';
@@ -17,7 +18,11 @@ export interface AddFolderProps {
 export function AddFolder(props: AddFolderProps) {
 
   const [folderTitle, setfolderTitle] = React.useState("");
-  const [addFolder] = useAddFolderMutation(ADD_FOLDER);
+  const [addFolder] = useMutation(ADD_FOLDER, {
+    refetchQueries: [
+      { query: GET_FOLDER, variables: { referenceID: "dapr", referenceType: "COMPANY", folderTitle: "" } }
+    ]
+  });
   const { t } = useTranslation()
   const [open, setOpen] = React.useState(false);
   const [folderName, setfolderName] = React.useState("");
@@ -28,14 +33,14 @@ export function AddFolder(props: AddFolderProps) {
     }
   }, [props.open])
   const openF = () => {
-
+    //
   }
   const onfolderTitle = (e) => {
     const fname = e.target.value;
     setfolderTitle(fname)
   }
   const handleSaveFile = () => {
-    
+
     props.folderData(folderName);
     props.cancel(false);
     addFolder({
