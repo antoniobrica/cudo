@@ -6,6 +6,8 @@ import { useBkpQuery, useFolderQuery } from '../../services/useRequest';
 import { SelectDropdown } from '@cudo/shared-components'
 import './bkp.module.scss';
 import { useTranslation } from 'react-i18next';
+import AddFolderIndex from '../add-folder-index/add-folder-index';
+import { useQuery } from '@apollo/client';
 
 /* eslint-disable-next-line */
 export interface BkpProps {
@@ -19,9 +21,17 @@ export function Bkp(props: BkpProps) {
   const [items1, setItems1] = React.useState([])
   const [items2, setItems2] = React.useState([])
   const [BKPID, setBKPID] = React.useState("")
+  const [folderopen, setFolderOpen] = React.useState(false);
+
   const { t } = useTranslation()
-  const { loading, error, data } = useBkpQuery(GET_BKP);
-  const { loading: folderL, error: folderE, data: FolderD } = useFolderQuery(GET_FOLDER)
+  // const { loading, error, data } = useBkpQuery(GET_BKP);
+  const {loading, error, data} = useQuery(GET_BKP, {
+    variables:{referenceID:"dapr",referenceType:"COMPANY",bkpTitle:""}
+  })
+  // const { loading: folderL, error: folderE, data: FolderD } = useFolderQuery(GET_FOLDER)
+  const { loading: folderL, error: folderE, data: FolderD } = useQuery(GET_FOLDER, {
+    variables:{referenceID:"dapr",referenceType:"COMPANY",folderTitle:""}
+  })
   React.useEffect(() => {
     if (data && FolderD) {
 
@@ -52,6 +62,17 @@ export function Bkp(props: BkpProps) {
   //   }
 
   // }, [FolderD]);
+  const folderOpen = () => {
+
+    setFolderOpen(true);
+  }
+  const cancel = (data) => {
+    setFolderOpen(false);
+  }
+  const folderData = (data) => {
+
+    setFolderOpen(false);
+  }
 
   const onBkp = (event, data) => {
 
@@ -90,16 +111,19 @@ export function Bkp(props: BkpProps) {
   return (
     <Form.Field>
 
-              <label>{t("common.select_bkp")}   </label>
-              {/* <Select name='bkp' placeholder={t("common.select")} className="small"
+      <label>{t("common.select_bkp")}   </label>
+      {/* <Select name='bkp' placeholder={t("common.select")} className="small"
                 options={items2}
                 value={BKPID}
                 onChange={onBkp}
                 clearable
                 search
               /> */}
-           
-      <SelectDropdown folderOpen={props.folderOpen} options={items2} value={props.bkp} onBkp={onBkp}  />
+      {folderopen ?
+        <div>
+          <AddFolderIndex open={folderopen} cancel={cancel} folderData={folderData}></AddFolderIndex>
+        </div> : null}
+      <SelectDropdown folderOpen={folderOpen} options={items2} value={props.bkp} onBkp={onBkp} />
 
     </Form.Field>
   );

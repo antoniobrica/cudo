@@ -595,3 +595,65 @@ query GetProtocolList(
     # hasNextPage
   }
 }`;
+
+export const UPDATE_PROTOCOL = gql`
+mutation UpdateProtcol(
+  #   $companyId: String!, 
+  #   $projectTypeId: String!,
+  #   $workTypeId: String!,
+  #   $sessionId: String!,
+    $protocolId:String!,
+    $protocolTitle:String!,
+    $protocolStartTime: DateTime!,
+    $protocolEndTime: DateTime!,
+    $protocolDate: DateTime!,
+    $protocolFiles: [ProtocolFilesParam!]!,
+    $protocolDuration:String!,
+    $status:String,
+    $protocolDescription:String!
+){
+  updateProtocol(
+    protocolUpdateInput:{
+      protocolBasics:{
+        # $companyId: String!
+        # $projectTypeId: String!
+        # $workTypeId: String!
+        # $sessionId: String!
+        protocolId:$protocolId
+        protocolTitle:$protocolTitle
+        protocolDescription:$protocolDescription
+        protocolStartTime: $protocolStartTime
+        protocolEndTime: $protocolEndTime
+        protocolDate: $protocolDate
+        protocolDuration:$protocolDuration
+        status:$status
+
+      }
+      protocolFiles: $protocolFiles
+    }
+  ){
+    protocolTitle
+    protocolId
+    protocolDate
+    protocolDuration
+    sessionId
+    companyId
+    updatedBy
+    protocolDescription
+    createdBy
+    # createdAt
+    updatedBy
+    updatedAt
+    isDeleted
+    status
+    meetings{
+      meetingTitle
+    }
+    protocolFiles{
+      fileId
+      protocolFileTitle
+    }
+  }
+}
+
+`

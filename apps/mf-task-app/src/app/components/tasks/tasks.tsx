@@ -440,8 +440,7 @@ export function Tasks(props: TasksProps) {
 
   const viewTaskById = (task, id) => {
     if (task?.taskType === 'PIN') {
-      // viewAddPinFile(task)
-      return
+      openViewAddPinFile(task)
     } else {
       viewTask(task, id)
     }

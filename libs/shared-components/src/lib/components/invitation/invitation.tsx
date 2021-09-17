@@ -17,6 +17,7 @@ export interface InvitationTabProps {
   deleteInvitation?
   addProtocolClick?
   protocols?
+  editProtocol?
 }
 
 export function InvitationTab(props: InvitationTabProps) {
@@ -203,7 +204,7 @@ export function InvitationTab(props: InvitationTabProps) {
                               <Dropdown icon='ellipsis horizontal' pointing='right'>
                                 <Dropdown.Menu>
                                   <Dropdown.Item icon="eye" text={t("common.view_details")} />
-                                  <Dropdown.Item icon="pencil" text={t("common.edit")} />
+                                  <Dropdown.Item icon="pencil" text={t("common.edit")} onClick={() => props?.editProtocol(item)} />
                                   <Dropdown.Item
                                     icon="trash alternate outline"
                                     text={t("common.delete")}
