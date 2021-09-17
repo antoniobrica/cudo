@@ -71,17 +71,14 @@ export function CommentAdd(props: CommentAddProps) {
     setCommentMessage('')
   };
 
-  const onClickCommentCancel = () => {
-    setCommentMessage('')
-  }
+  // const onClickCommentCancel = () => {
+  //   setCommentMessage('')
+  // }
 
   return (
     <Form.Field>
       <label>Comments ({commentListData?.getComments?.length})</label>
-      {/* <Input placeholder='click to add comment' size='small' className="full-width" type="text"
-        onChange={() => onCommentTextChange}
-        onClick={onClickCommentAdd}
-      /> */}
+      {/* <Input placeholder='click to add comment' size='small' className="full-width" type="text" /> */}
 
       <ReactQuill
         value={commentMessage}
@@ -103,10 +100,13 @@ export function CommentAdd(props: CommentAddProps) {
         // onKeyDown={onKeyPresDescription}
         id="txtDescription"
       />
-      <span className="greenbutton anchor_complete" onClick={() => onClickCommentAdd()}>
+      {/* <span className="greenbutton anchor_complete" onClick={() => onClickCommentAdd()}>
         <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
       </span> &nbsp;  <span className="redbutton anchor_complete" onClick={() => onClickCommentCancel()}>
-        <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> </span>
+        <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> </span> */}
+      <div className="comments-action">
+        <Button positive size='small' className="primary full-width" onClick={() => onClickCommentAdd()}>Add Comment</Button>
+      </div>
     </Form.Field>
 
   )

@@ -306,13 +306,16 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     </Grid.Row>
                   </Grid>
 
-                  <Grid columns={1}>
+                  <Grid columns={1} className='add-comments'>
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
                           {/* <label>Comments (2)</label>
-                          <Input placeholder='click to add comment' size='small' className="full-width" type="text" /> */}
-
+                          <Input placeholder='click to add comment' size='small' className="full-width" type="text" />
+                          <div className="comments-action">
+                            <Button positive size='small' className="primary full-width">Add Comment</Button>
+                          </div> */}
+                          
                           <CommentAdd uploadedFileID={props?.filesData?.uploadedFileID} />
                         </Form.Field>
                       </Grid.Column>
