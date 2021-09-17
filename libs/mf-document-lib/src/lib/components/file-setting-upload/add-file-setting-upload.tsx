@@ -205,17 +205,17 @@ export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
 
   };
 
-  const folderOpen = () => {
-     
-    setFolderOpen(true);
-  }
-  const cancel = (data) => {
-    setFolderOpen(false);
-  }
-  const folderData = (data) => {
-     
-    setFolderOpen(false);
-  }
+  // const folderOpen = () => {
+
+  //   setFolderOpen(true);
+  // }
+  // const cancel = (data) => {
+  //   setFolderOpen(false);
+  // }
+  // const folderData = (data) => {
+
+  //   setFolderOpen(false);
+  // }
 
   // const onFileChange = event => {
   //   const fl = event.target.files;
@@ -230,10 +230,10 @@ export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
 
   return (
     <div id=" " className="add-files-modal" >
-      {folderopen ?
+      {/* {folderopen ?
         <div>
           <AddFolderIndex open={folderopen} cancel={cancel} folderData={folderData}></AddFolderIndex>
-        </div> : null}
+        </div> : null} */}
       <Modal className="modal_media modal_center add-file-setting-popup"
         closeIcon
         size="small"
@@ -337,10 +337,13 @@ export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
                       <Grid.Row>
                         <Grid.Column>
                           <Form.Field>
-                            {/* <label>BKP/Folder</label>
-                            <Select placeholder='Select' className="small" options={countryOptions} clearable /> */}
-                            <BkpIndex bkp={BKPID} parentBKPSelect={setBKPIDChange}></BkpIndex>
-                            <Form.Field>
+                            {/* <label>BKP/Folder</label> */}
+                            {/* <Select placeholder='Select' className="small" options={countryOptions} clearable /> */}
+                            <BkpIndex bkp={BKPID}
+                              parentBKPSelect={setBKPIDChange}
+                              // folderOpen={folderOpen}
+                            ></BkpIndex>
+                            {/* <Form.Field>
                               <a className="anchor-color" onClick={folderOpen}>+ {t("common.add_new_button")}</a>
                             </Form.Field>
                           </Form.Field>

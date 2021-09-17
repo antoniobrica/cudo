@@ -19,9 +19,22 @@ export const GET_USERS = gql`
   } 
   }
 `;
+// titleFilter: { bkpTitle: "bkp2" }
+//     referenceFilter: {
+//       referenceType: COMPANY
+//       referenceID: "dapr"
+//     }
 
-export const GET_BKP = gql`{
-    Bkp(referenceFilter:{referenceType:COMPANY,referenceID:"dapr"})
+export const GET_BKP = gql`
+query Bkp($referenceID:String!,$referenceType:ReferenceType!,$bkpTitle:String!)
+{
+  Bkp(
+    titleFilter: { bkpTitle: $bkpTitle }
+    referenceFilter: {
+      referenceType: $referenceType
+      referenceID: $referenceID
+    }
+  )
    {
     bkpID
     bkpTitle
@@ -29,8 +42,13 @@ export const GET_BKP = gql`{
   
 }`
 
-export const GET_FOLDER = gql`{
-  Folders(referenceFilter: { referenceID: "dapr", referenceType: COMPANY }) { 
+export const GET_FOLDER = gql`
+query Folders($referenceID:String!,$referenceType:ReferenceType!,$folderTitle:String!)
+{
+  Folders(
+    referenceFilter: { referenceType: $referenceType, referenceID: $referenceID }
+    titleFilter: {folderTitle:$folderTitle}
+  ) { 
     folderTitle 
     folderID 
   } 
@@ -109,7 +127,7 @@ mutation CreateFolder(
   ){ 
     createFolder( 
       referenceFilter: { referenceID: "dapr", referenceType: COMPANY } 
-      folderDetails: { folderID: "4", folderTitle:  $folderTitle } 
+      folderDetails: {folderTitle:  $folderTitle } 
     ) { 
       folderID 
       folderTitle 

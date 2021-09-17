@@ -405,6 +405,15 @@ export function Tasks(props: TasksProps) {
     setId(id)
     setViewTaskOpen(true);
   };
+
+  const viewTaskById = (task, id) => {
+    if (task?.taskType === 'PIN') {
+      openViewAddPinFile(task)
+    } else {
+      viewTask(task, id)
+    }
+  }
+
   const editTask = (task) => {
     setTaskData(task);
     setEditTaskOpen(true);

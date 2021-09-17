@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {  Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { BkpEntity } from '../../../entities/bkp.entity';
 import { FolderEntity } from '../../../entities/folder.entity';
+import BkpTitleFilterParams from '../../../utils/types/bkpTitleFilterParams';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
 import { CreateBkpInput } from '../dto/create-bkp.input';
@@ -47,16 +48,30 @@ export class BkpService {
     throw new BkpNotFoundException(bkp.bkpID);
   }
 
-  public async findAllBkp(refFilter: ReferenceFilterParams): Promise<BkpEntity[]> {
+  public async findAllBkp(refFilter: ReferenceFilterParams, titleFilter: BkpTitleFilterParams): Promise<BkpEntity[]> {
     const selectedReference = await this.referenceService.getReferenceById(refFilter)
     return await this.BkpRepository.find({
-      "reference": {
-        id: selectedReference.id
+      where: {
+        bkpTitle: Like(`%${titleFilter.bkpTitle}%`),
+        reference: {
+          id: selectedReference.id
+        }
       }
     });
-
   }
-  
+
+  // public async filterAllBkpByTitle(refFilter: ReferenceFilterParams, titleFilter: BkpTitleFilterParams) {
+  //   const selectedReference = await this.referenceService.getReferenceById(refFilter)
+  //   return await this.BkpRepository.find({
+  //     where: {
+  //       bkpTitle: Like(`%${titleFilter.bkpTitle}%`),
+  //       reference: {
+  //         id: selectedReference.id
+  //       }
+  //     }
+  //   })
+  // }
+
   public async findAllFolder(refFilter: ReferenceFilterParams): Promise<FolderEntity[]> {
     const selectedReference = await this.referenceService.getReferenceById(refFilter)
     return await this.FolderRepository.find({
@@ -66,5 +81,5 @@ export class BkpService {
     });
 
   }
-  
+
 }
