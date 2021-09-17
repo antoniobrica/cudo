@@ -117,6 +117,11 @@ export function FileStructure(props: FileStructureProps) {
 		props.selectedFileId(uploadedFileVersionId)
 	}
 
+	const getCloseDetailView = (isOpenPopup) => {
+		console.log('--getFileViewOpen---isOpenPopup--', isOpenPopup)
+		setFileView(false)
+	}
+
 	// #region commented Old code
 	// const expandFolder = (data) => {
 	// 	setExpand(true);
@@ -568,9 +573,10 @@ export function FileStructure(props: FileStructureProps) {
 
 	return (
 		<div className="files-tab-outer tabs-main-info-container">
-			{fileView && imgUrl.length > 0 ?
+			{/* {fileView && imgUrl.length > 0 ? */}
+			{fileView ?
 				<div>
-					<ViewFileDetail open={fileView} fType={fType} filesData={filesData} dowloadFilesData={props.downloadedImg} ></ViewFileDetail>
+					<ViewFileDetail open={fileView} fType={fType} filesData={filesData} dowloadFilesData={props.downloadedImg} cancel={getCloseDetailView} ></ViewFileDetail>
 				</div> : null}
 			{openPinFile ?
 				<div>

@@ -67,7 +67,7 @@ export function SelectDropdown(props: selectWithAddNew) {
   )
 
   return (
-    <div>
+    <div className="searchable-select">
       <Select
         value={{value:BkpId,label:BkpId}}
         placeholder='Select'

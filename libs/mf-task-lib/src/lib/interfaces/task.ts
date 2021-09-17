@@ -62,13 +62,12 @@ export interface ITask {
   fileName: string
   taskTypeID: string
   taskType: string
+  workTypeID: string
+  workTypeName: string
+  subtasks: ISubTask[]
 }
 export interface ITodos {
   getTodos: ITodo[];
-}
-
-export interface ITasks {
-  tasks: ITask[];
 }
 
 export interface TaskMutation {
@@ -76,5 +75,31 @@ export interface TaskMutation {
 }
 export interface TaskUpdateMutation {
   addTask: ITaskUpdate;
+}
+
+// export interface ITasks {
+//   tasks: ITask[];
+// }
+
+export interface ITaskResults {
+  results: ITask[];
+}
+
+export interface ITasks {
+  tasks: ITaskResults;
+}
+
+export interface ISubTask {
+  subtaskID: string
+  subtaskTitle: string
+  status: string
+  isDeleted: boolean
+}
+export interface ISubTaskUpdate {
+  subtaskID?: string;
+  status: string;
+}
+export interface SubTaskUpdateMutation {
+  updateSubTask: ISubTaskUpdate;
 }
 

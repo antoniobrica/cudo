@@ -59,6 +59,10 @@ export default class PinsTypeEntity extends BaseEntity {
     @Column({ nullable: true })
     isDeleted?: boolean;
 
+    @Expose()
+    @Column({ nullable: true })
+    status?: string;
+
     constructor(pinsTypeEntity: Partial<PinsTypeEntity>) {
         super();
         if (pinsTypeEntity) {
@@ -71,8 +75,5 @@ export default class PinsTypeEntity extends BaseEntity {
             this.pinsID = this.pinsID || uuid.v1();
         }
     }
-
-
-
 
 }

@@ -7,8 +7,11 @@ class PinsFilterParams {
   @Field({ nullable: true, description: `File ID` })
   uploadedFileID?: string;
 
-  @Field({ nullable: true, description: `File ID` })
+  @Field({ nullable: true, description: `Pin ID` })
   pinsID?: string;
+
+  @Field({ nullable: true, description: `Pin status` })
+  status?: string;
 
   @Field({ nullable: true, description: `Page Number of PDF and 0 for images` })
   pageNumber: number;

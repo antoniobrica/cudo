@@ -19,8 +19,9 @@ import { SubTaskFilterInput } from '../dto/input/subtask-delete.input';
 import { TaskDeleteInput } from '../dto/input/task-delete.input';
 import { TaskDetailsUpdateInput } from '../dto/input/task-details-update.input';
 import { TaskDetailsInput } from '../dto/input/task-details.input';
-import {  TaskErrorTypeEnum } from '../../../enums/task-error-type.enum';
+import { TaskErrorTypeEnum } from '../../../enums/task-error-type.enum';
 import TaskCustomError from '../../../exceptions/taskCustomError.execption';
+import TasksOnPinsShiftFilterParams from '../../../utils/types/tasksOnPinsShiftFilterParams';
 
 @Injectable()
 export class TasksService {
@@ -41,24 +42,24 @@ export class TasksService {
     public async create(createProjectTaskInput: TaskDetailsInput, referenceFilter: ReferenceFilterParams): Promise<TasksEntity> {
         try {
             const { assignees, followers, files, taskBasics, subtasks } = createProjectTaskInput;
-            
+
             // handling client input errors
-            let errorType:number;
-            
-            if(taskBasics.startDate > taskBasics.endDate){
+            let errorType: number;
+
+            if (taskBasics.startDate > taskBasics.endDate) {
                 errorType = TaskErrorTypeEnum.WRONG_DATE
             }
-            if(!assignees.length){
+            if (!assignees.length) {
                 errorType = TaskErrorTypeEnum.NO_ASSIGNEE
             }
-            if(!taskBasics.workTypeID){
-                errorType= TaskErrorTypeEnum.NO_WORKTYPE
+            if (!taskBasics.workTypeID) {
+                errorType = TaskErrorTypeEnum.NO_WORKTYPE
             }
-            if(!taskBasics.taskTitle){
+            if (!taskBasics.taskTitle) {
                 errorType = TaskErrorTypeEnum.NO_TITLE
             }
-            
-            if(errorType){
+
+            if (errorType) {
                 throw new TaskCustomError(errorType)
             }
 
@@ -126,6 +127,7 @@ export class TasksService {
             await this.projectTasksRepository.save(newTask);
             return newTask;
         } catch (error) {
+            console.log('----error---', error)
             return error;
         }
     }
@@ -259,7 +261,7 @@ export class TasksService {
             },
             relations: ['reference', 'assignees', 'followers', 'files', 'subtasks']
         });
-        if(!foundTask.length){
+        if (!foundTask.length) {
             // throw task not found exeption
             throw new TaskCustomError(TaskErrorTypeEnum.RECORD_NOT_EXIST)
         }
@@ -274,31 +276,31 @@ export class TasksService {
             where: { taskID: taskBasics.taskID },
             relations: ['reference', 'assignees', 'followers', 'files', 'subtasks']
         });
-      
-        if (taskeDetails.length <= 0){
+
+        if (taskeDetails.length <= 0) {
             // throw task not found exeption
             throw new TaskCustomError(TaskErrorTypeEnum.RECORD_NOT_EXIST)
         }
 
-         // handling client input errors
-         let errorType:number;
-            
-         if(taskBasics.startDate > taskBasics.endDate){
-             errorType = TaskErrorTypeEnum.WRONG_DATE
-         }
-         if(!assignees.length){
-             errorType = TaskErrorTypeEnum.NO_ASSIGNEE
-         }
-         if(!taskBasics.workTypeID){
-             errorType= TaskErrorTypeEnum.NO_WORKTYPE
-         }
-         if(!taskBasics.taskTitle){
-             errorType = TaskErrorTypeEnum.NO_TITLE
-         }
-         
-         if(errorType){
-             throw new TaskCustomError(errorType)
-         }
+        // handling client input errors
+        let errorType: number;
+
+        if (taskBasics.startDate > taskBasics.endDate) {
+            errorType = TaskErrorTypeEnum.WRONG_DATE
+        }
+        if (!assignees.length) {
+            errorType = TaskErrorTypeEnum.NO_ASSIGNEE
+        }
+        if (!taskBasics.workTypeID) {
+            errorType = TaskErrorTypeEnum.NO_WORKTYPE
+        }
+        if (!taskBasics.taskTitle) {
+            errorType = TaskErrorTypeEnum.NO_TITLE
+        }
+
+        if (errorType) {
+            throw new TaskCustomError(errorType)
+        }
         const taskeDetail = taskeDetails[0];
 
         if (assignees) {
@@ -363,7 +365,7 @@ export class TasksService {
             }
         if (subtasks)
             for (let index = 0; index < subtasks.length; index++) {
-                if(subtasks[index].subtaskTitle===""){
+                if (subtasks[index].subtaskTitle === "") {
                     throw new TaskCustomError(TaskErrorTypeEnum.NO_SUBTASK_TITLE)
                 }
                 const subtaskEntity = new SubTaskEntity(subtasks[index])
@@ -404,7 +406,7 @@ export class TasksService {
         taskBasics.projectWorktype ? taskeDetail.projectWorktype = taskBasics.projectWorktype : null;
         taskBasics.projectWorktypeID ? taskeDetail.projectWorktypeID = taskBasics.projectWorktypeID : null;
         taskBasics.projectWorktypeName ? taskeDetail.projectWorktypeName = taskBasics.projectWorktypeName : null;
-       
+
         await this.projectTasksRepository.save(taskeDetail);
         const tasks = await this.projectTasksRepository.find({
             where: { taskID: taskBasics.taskID },
@@ -415,31 +417,31 @@ export class TasksService {
 
     public async updateSubTask(updateSubTask: SubTaskFilterInput, createinput: SubTaskInput): Promise<SubTaskEntity> {
         const subtask = await this.subTaskRepository.findOne({ where: { subtaskID: updateSubTask.subtaskID } });
-       
+
         if (!subtask) {
             // throw subtask not found exeption
             throw new TaskCustomError(TaskErrorTypeEnum.SUBTASK_NOT_EXITST)
         }
-            await this.subTaskRepository.update(subtask.Id, { ...createinput });
-            const updatedPost = await this.subTaskRepository.findOne(subtask.Id);
-            // #region Check all subtask status are completed then task also be completed
-            if (updatedPost.status === 'COMPLETED') {
-                const subtasks = await this.subTaskRepository.find({ where: { taskID: subtask.taskID, isDeleted: false } })
-                let completedSubTaskCount = 0
-                for (let index = 0; index < subtasks.length; index++) {
-                    if (subtasks[index].status === 'COMPLETED') {
-                        completedSubTaskCount = completedSubTaskCount + 1
-                    }
-                }
-                if (subtasks.length === completedSubTaskCount) {
-                    const taskeDetail = await this.projectTasksRepository.findOne({ where: { taskID: subtask.taskID } })
-                    await this.projectTasksRepository.update(taskeDetail.id, { status: 'COMPLETED' });
+        await this.subTaskRepository.update(subtask.Id, { ...createinput });
+        const updatedPost = await this.subTaskRepository.findOne(subtask.Id);
+        // #region Check all subtask status are completed then task also be completed
+        if (updatedPost.status === 'COMPLETED') {
+            const subtasks = await this.subTaskRepository.find({ where: { taskID: subtask.taskID, isDeleted: false } })
+            let completedSubTaskCount = 0
+            for (let index = 0; index < subtasks.length; index++) {
+                if (subtasks[index].status === 'COMPLETED') {
+                    completedSubTaskCount = completedSubTaskCount + 1
                 }
             }
-            // #endregion
+            if (subtasks.length === completedSubTaskCount) {
+                const taskeDetail = await this.projectTasksRepository.findOne({ where: { taskID: subtask.taskID } })
+                await this.projectTasksRepository.update(taskeDetail.id, { status: 'COMPLETED' });
+            }
+        }
+        // #endregion
 
-            return updatedPost;
-        
+        return updatedPost;
+
     }
 
     public async deletesubTaskByID(subtaskDeleteInput: SubTaskFilterInput): Promise<SubTaskEntity> {
@@ -477,7 +479,7 @@ export class TasksService {
         const files = await this.taskFileRepository.find({
             where: { taskFileID: taskFileID },
         });
-        if(files.length){
+        if (files.length) {
             return files;
         }
         // throw file not found exeption
@@ -493,5 +495,26 @@ export class TasksService {
         }
         // else throw task not found error
         throw new TaskCustomError(TaskErrorTypeEnum.RECORD_NOT_EXIST)
+    }
+
+    async shiftActiveTasksToNewVersion(tasksOnPinsShiftFilter: TasksOnPinsShiftFilterParams, tasksUpdateDetails: TaskDetailsUpdateInput) {
+
+        const activeTasks = await this.projectTasksRepository.find({ where: { ...tasksOnPinsShiftFilter, status: 'INPROGRESS', isDeleted:false } });
+        if (activeTasks?.length) {
+            let updatedTaskIds = []
+            for (let i = 0; i < activeTasks.length; i++) {
+                // Update to new version file
+                await this.projectTasksRepository.update(activeTasks[i].id, { ...tasksUpdateDetails });
+                updatedTaskIds.push(activeTasks[i].id)
+            }
+
+            if (!updatedTaskIds?.length) {
+                throw new TaskCustomError(TaskErrorTypeEnum.INTERNAL_SERVER_ERROR)
+            }
+
+            const updatedTasks = await this.projectTasksRepository.find({ where: { id: [updatedTaskIds] } });
+            return updatedTasks;
+        }
+        // throw new TaskCustomError(TaskErrorTypeEnum.TASK_NOT_FOUND)
     }
 }

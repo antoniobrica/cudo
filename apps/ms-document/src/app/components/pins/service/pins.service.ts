@@ -7,6 +7,8 @@ import FileCustomError from '../../../exceptions/fileCustomError.exception';
 import { PinsInputDto } from '../dto/input/pins.input.dto';
 import { PinsUpdateInputDto } from '../dto/input/pins.upate.input.dto';
 import PinsFilterParams from '../dto/input/pinsFilter.input';
+import { PinsShiftUpdateInputDto } from '../dto/input/pinsShift.update.input.dto';
+import { PinsStatusUpdateInputDto } from '../dto/input/pinsStatus.upate.input.dto';
 
 @Injectable()
 export class PinsService {
@@ -53,4 +55,33 @@ export class PinsService {
 
     }
 
+    async updatePinStatus(refFilter: PinsFilterParams, pinsStatusInput: PinsStatusUpdateInputDto) {
+        const pinDetail = await this.referancesRepository.findOne({ where: { ...refFilter } });
+        if (pinDetail) {
+            await this.referancesRepository.update(pinDetail.id, { ...pinsStatusInput });
+            const updatedPinDetail = await this.referancesRepository.find({ where: { ...refFilter } });
+            return updatedPinDetail;
+        }
+        throw new FileCustomError(FileErrorTypeEnum.PINS_NOT_FOUND)
+    }
+
+    async shiftActivePinsToNewVersion(refFilter: PinsFilterParams, pinsShiftInput: PinsShiftUpdateInputDto) {
+
+        const activePins = await this.referancesRepository.find({ where: { ...refFilter, status: 'INPROGRESS', isDeleted: false } });
+        if (activePins) {
+            let updatedPinIds = []
+            for (let i = 0; i < activePins.length; i++) {
+                // Update to new version file
+                await this.referancesRepository.update(activePins[i].id, { ...pinsShiftInput });
+                updatedPinIds.push(activePins[i].id)                
+            }
+
+            if (!updatedPinIds?.length) {
+                throw new FileCustomError(FileErrorTypeEnum.INTERNAL_SERVER_ERROR)
+            }
+            const updatedPins = await this.referancesRepository.find({ where: { id: [updatedPinIds] } });
+            return updatedPins;
+        }
+        // throw new FileCustomError(FileErrorTypeEnum.PINS_NOT_FOUND)
+    }
 }
