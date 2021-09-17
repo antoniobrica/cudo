@@ -278,8 +278,8 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <label>Tasks ({pinCount}) <i className="ms-Icon ms-Icon--ChevronDown right_float" aria-hidden="true" onClick={() => { onClickTaskExpand() }}></i></label>
-
+                          <label>Tasks ({pinCount}) 
+                            <span className="task-add-button"><Button size='small' className="icon-border" onClick={cancel}><i className="ms-Icon ms-font-xl ms-Icon--Add"></i> Add New</Button></span> <i className="ms-Icon ms-Icon--ChevronDown right_float" aria-hidden="true" onClick={() => { onClickTaskExpand() }}></i></label>
                           <PinTaskListIndex filesData={props.filesData} cord={cord} pinCount={getPinCount} taskHovered={getTaskHovered} ></PinTaskListIndex>
 
                           {/* <div className="pin-task-completed-card">
@@ -368,12 +368,15 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     </Grid.Row>
                   </Grid>
 
-                  <Grid columns={1}>
+                  <Grid columns={1} className="add-comments">
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
                           <label>Comments (2)</label>
                           <Input placeholder='click to add comment' size='small' className="full-width" type="text" />
+                          <div className="comments-action">
+                            <Button positive size='small' className="primary full-width">Add Comment</Button>
+                          </div>
                         </Form.Field>
                       </Grid.Column>
                     </Grid.Row>

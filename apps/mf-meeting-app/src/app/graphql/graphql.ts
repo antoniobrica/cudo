@@ -498,7 +498,8 @@ mutation CreateProtocol(
   $protocolStartTime: DateTime!,
   $protocolEndTime: DateTime!,
   $protocolDescription: String!,
-  $protocolFiles: [ProtocolFilesParam!]!,  
+  $protocolFiles: [ProtocolFilesParam!]!,
+  $meetings: [MeetingDetailsInput!],  
   $protocolDuration: String!,
   $status: String
   ){ 
@@ -517,6 +518,7 @@ mutation CreateProtocol(
           protocolDuration: $protocolDuration
           status: $status
         },
+        meetings: $meetings,
         protocolFiles:  $protocolFiles, 
       }  
     ){      
@@ -529,6 +531,10 @@ mutation CreateProtocol(
       protocolStartTime
       protocolEndTime
       protocolId
+      meetings{
+        meetingTitle
+        meetingId
+      }
       protocolFiles{
         fileId
         protocolFileId
@@ -559,7 +565,7 @@ query GetProtocolList(
       # workTypeId: $workTypeId
       sessionId: $sessionId
     }
-    options: { limit: 10, page: 0 }
+    options: { limit: 100, page: 0 }
   ) {
     results {
       companyId

@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import { Button, Checkbox, Header, Radio, Dropdown, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
 import ProgressBar from 'libs/shared-components/src/lib/components/progress_bar/progressbar';
 
-import { LoaderPage } from "@cudo/shared-components"
+import { LoaderPage, SelectDropdown } from "@cudo/shared-components"
 import { FetchResult, useMutation } from '@apollo/client';
 import { AddNewFolder } from '@cudo/shared-components';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
@@ -24,7 +24,7 @@ import { BlobItemUpload, BlobItemDownload } from 'libs/mf-document-lib/src/azure
 export interface AddFileSettingUploadProps { }
 
 export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
-  
+
   const context = useContext(UploadsViewStateContext);
   const sharedContext = React.useContext(SharedViewStateContext);
 
@@ -96,13 +96,13 @@ export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
   const getUploadsEffect = () => {
     const sub = context.uploadedItems$
       .pipe(tap(items => {
-       
+
         setItems(items);
         const fileArr = [];
         for (let i = 0; i < items.length; i++) {
           fileArr.push({ fileURL: items[i].filename, fileTitle: items[i].filename, fileType: items[i].type, fileVersion: "v1" });
         }
-       
+
         setFileList(fileArr);
       }))
       .subscribe();
@@ -116,12 +116,12 @@ export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
     { key: 'pw', value: 'pw', text: 'Paint Work' },
   ]
   const setBKPIDChange = (data) => {
-    
+
     setisFolder(data.isFolder)
     if (data.isFolder) {
       setfolderName(data.folderTitle)
       setDirectory(data.folderTitle)
-      
+
     }
     else {
       setBKPIDTitle(data.BKPIDTitle)
@@ -150,9 +150,9 @@ export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
   }
 
   const uploadFiles = (files: FileList | null) => {
-     
+
     files && context.uploadItems(files);
-    
+
   }
   enum fileType {
     IMAGE = "IMAGE",
@@ -161,9 +161,9 @@ export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
   }
   const handleSaveFile = () => {
     setOpen(false);
-     
+
     files.map((file, i) => {
-      
+
       addFile({
         variables: {
           projectId,
@@ -206,14 +206,14 @@ export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
   };
 
   const folderOpen = () => {
-     
+
     setFolderOpen(true);
   }
   const cancel = (data) => {
     setFolderOpen(false);
   }
   const folderData = (data) => {
-     
+
     setFolderOpen(false);
   }
 
@@ -283,8 +283,8 @@ export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
                     <div className="uploaded-files">
                       <h3>{t("project_tab_menu.files.upload_files")}</h3>
                       <ul>
-                        {items && items.length>0 && items.map((file, index) => {
-                         
+                        {items && items.length > 0 && items.map((file, index) => {
+
                           return (
                             <>
                               <li key={index}>
@@ -337,12 +337,15 @@ export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
                       <Grid.Row>
                         <Grid.Column>
                           <Form.Field>
-                            {/* <label>BKP/Folder</label>
-                            <Select placeholder='Select' className="small" options={countryOptions} clearable /> */}
-                            <BkpIndex bkp={BKPID} parentBKPSelect={setBKPIDChange}></BkpIndex>
-                            <Form.Field>
+                            {/* <label>BKP/Folder</label> */}
+                            {/* <Select placeholder='Select' className="small" options={countryOptions} clearable /> */}
+                            <BkpIndex bkp={BKPID}
+                              parentBKPSelect={setBKPIDChange}
+                              folderOpen={folderOpen}
+                            ></BkpIndex>
+                            {/* <Form.Field>
                               <a className="anchor-color" onClick={folderOpen}>+ {t("common.add_new_button")}</a>
-                            </Form.Field>
+                            </Form.Field> */}
                           </Form.Field>
                         </Grid.Column>
                         <Grid.Column>

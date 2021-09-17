@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { ModalAddProtocol } from '@cudo/shared-components'
 import { useHistory } from 'react-router';
 import { useSessionDetailQuery } from '../../services/useRequest';
-import { ADD_PROTOCOL, GET_PROTOCOLS, GET_SESSION_DETAIL } from '../../graphql/graphql';
+import { ADD_PROTOCOL, GET_PROTOCOLS, GET_SESSION_DETAIL,GET_INVITATIONS } from '../../graphql/graphql';
 import { useMutation } from '@apollo/client';
 import { IProtocol, IProtocolResults, IProtocols } from '../../interfaces/protocol';
 
@@ -31,6 +31,10 @@ export function ProtocolAdd(props: ProtocolAddProps) {
                 {
                     query: GET_PROTOCOLS,
                     variables: { sessionId: props?.sessionId }
+                },
+                {
+                    query: GET_INVITATIONS,
+                    variables: { sessionId: props?.sessionId }
                 }
             ]
         }
@@ -51,7 +55,8 @@ export function ProtocolAdd(props: ProtocolAddProps) {
                     protocolId: data.protocolId,
                     protocolFiles: data.protocolFiles,
                     protocolDuration: data.protocolDuration,
-                    status: data.status
+                    status: data.status,
+                    meetings:data.meetings
             },
             update: (
                 cache,

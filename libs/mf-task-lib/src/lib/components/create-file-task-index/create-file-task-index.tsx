@@ -21,13 +21,16 @@ export interface CreateFileTaskIndexProps {
   fileData?
   savePin?
   pinsaved?
+  getTaskToasterMessage?
+  getTaskErrorMessage?
 }
 
 export function CreateFileTaskIndex(props: CreateFileTaskIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <CreateFileTask pinsaved={props.pinsaved} savePin={props.savePin} close={props.close} onSuccess={props.onSuccess} cord={props.cord} fileData={props.fileData}></CreateFileTask>
+        <CreateFileTask pinsaved={props.pinsaved} savePin={props.savePin} close={props.close} onSuccess={props.onSuccess} cord={props.cord} fileData={props.fileData} getTaskToasterMessage={props.getTaskToasterMessage}
+          getTaskErrorMessage={props.getTaskErrorMessage}></CreateFileTask>
       </ApolloHooksProvider>
     </ApolloProvider>
   );

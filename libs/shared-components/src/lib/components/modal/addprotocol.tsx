@@ -1,3 +1,4 @@
+import { MembersIndex } from '@cudo/mf-account-app-lib';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import moment from 'moment';
 import React from 'react';
@@ -31,6 +32,12 @@ interface AddProtocolErrors {
   startTimeError?: string,
   endTimeError?: string,
   startEndTimeError?: string,
+  meetingTitleError?: string
+  meetingDateError?: string,
+  meetingStartTimeError?: string,
+  meetingEndTimeError?: string,
+  meetingMembersError?: string,
+  MeetingstartEndTimeError?: string
 }
 
 export function ModalAddProtocol(props: AddProtocolProps) {
@@ -46,7 +53,14 @@ export function ModalAddProtocol(props: AddProtocolProps) {
   const [protocolStartTime, setProtocolStartTime] = React.useState("");
   const [protocolEndTime, setProtocolEndTime] = React.useState("");
   const [protocolDescription, setProtocolDescription] = React.useState("");
+  const [meetingDate, setMeetingDate] = React.useState("");
+  const [meetingStartTime, setMeetingStartTime] = React.useState("");
+  const [meetingEndTime, setMeetingEndTime] = React.useState("");
+  const [members, setMembers] = React.useState<any>([]);
+
+
   const [errors, setErrors] = React.useState<AddProtocolErrors>({});
+  const [meetingErrors, setMeetingErrors] = React.useState<AddProtocolErrors>({});
   const { t } = useTranslation()
 
   React.useEffect(() => {
@@ -77,6 +91,19 @@ export function ModalAddProtocol(props: AddProtocolProps) {
   const hanleCheckbox = (event) => {
     setOpenAddInvitation(!openAddInvitation)
   }
+  const onClickMeetingStartTime = (e) => {
+    setMeetingStartTime(e.target.value)
+    if (meetingEndTime) {
+      checkMeetingTimeValidation(e.target.value, meetingEndTime)
+    }
+  }
+
+  const onClickMeetingEndTime = (e) => {
+    setMeetingEndTime(e.target.value)
+    if (meetingStartTime) {
+      checkMeetingTimeValidation(meetingStartTime, e.target.value)
+    }
+  }
 
   const checkTimeValidation = (startTime, endTime) => {
     if (!protocolDate) {
@@ -97,6 +124,25 @@ export function ModalAddProtocol(props: AddProtocolProps) {
     }
   }
 
+  const checkMeetingTimeValidation = (startTime, endTime) => {
+    if (!protocolDate) {
+      setErrors({ ...errors, dateError: "please provide date" })
+      return false
+    } else {
+      setErrors({ ...errors, dateError: "" })
+    }
+
+    const startMeetingDateTime = getDateTime(meetingDate, startTime)
+    const endMeetingDateTime = getDateTime(meetingDate, endTime)
+
+    if (startMeetingDateTime > endMeetingDateTime) {
+      setErrors({ ...errors, startEndTimeError: t("common.errors.start_end_time") })
+      return false
+    } else {
+      setErrors({ ...errors, startEndTimeError: "" })
+    }
+  }
+
   const getDateTime = (selectedDate, selectedTime) => {
 
     const momentObj = moment(selectedDate + selectedTime, 'YYYY-MM-DDLT');
@@ -107,6 +153,16 @@ export function ModalAddProtocol(props: AddProtocolProps) {
 
   const onDescription = (e) => {
     setProtocolDescription(e.target.value)
+  }
+
+  // const onInvitationTitleChange = (e) => {
+  //   setInvitationTitle(e.target.value)
+  //   setErrors({ ...errors, titleError: "" })
+  // }
+
+  const onMembers = (data) => {
+    setMembers(data)
+    setErrors({ ...errors, meetingMembersError: "" })
   }
 
   const openProtocolAddPopup = () => {
@@ -135,10 +191,34 @@ export function ModalAddProtocol(props: AddProtocolProps) {
     return errorResponse
   }
 
+  const meetingValidation = () => {
+    const errorResponse: AddProtocolErrors = {}
+
+    // if (!invitationTitle) {
+    //   errorResponse.meetingTitleError = t('invitation_add.error_title')
+    // }
+    if (!meetingDate) {
+      errorResponse.meetingDateError = t('invitation_add.error_date')
+    }
+    if (!meetingStartTime) {
+      errorResponse.meetingStartTimeError = t('invitation_add.error_start_time')
+    }
+    if (!meetingEndTime) {
+      errorResponse.meetingEndTimeError = t('invitation_add.error_end_time')
+    }
+    if (!members.length) {
+      errorResponse.meetingMembersError = t('invitation_add.error_members')
+    }
+
+    return errorResponse
+  }
+
   const createProtocol = () => {
     const validationResult = validation()
-    if (Object.keys(validationResult).length > 0) {
+    const meetingValidationResult = meetingValidation()
+    if ((Object.keys(validationResult).length > 0) || (openAddInvitation && Object.keys(meetingValidationResult).length > 0)) {
       setErrors(validationResult)
+      setMeetingErrors(meetingValidationResult)
       return false
     }
 
@@ -155,6 +235,46 @@ export function ModalAddProtocol(props: AddProtocolProps) {
     const protocolDurationSeconds = (endProtocolDateTime.getTime() - startProtocolDateTime.getTime()) / 1000
     const protocolDurationMinutes = `${protocolDurationSeconds / 60} min`
 
+    const startMeetingDateTime = getDateTime(meetingDate, meetingStartTime)
+    const endMeetingDateTime = getDateTime(meetingDate, meetingEndTime)
+
+    if (startMeetingDateTime > endMeetingDateTime) {
+      setErrors({ ...errors, MeetingstartEndTimeError: "must be greater than start time" })
+      return false
+    } else {
+      setErrors({ ...errors, MeetingstartEndTimeError: null })
+    }
+
+    const meetingDurationSeconds = (endMeetingDateTime.getTime() - startMeetingDateTime.getTime()) / 1000
+    const meetingDurationMinutes = `${meetingDurationSeconds / 60} min`
+
+    const memberList = members?.map((item, index) => {
+      return { memberID: item.userID, memberName: item.userName, image: "" }
+    })
+    const meetingsData = []
+    if(openAddInvitation) {
+      meetingsData.push({
+        meetingBasics: {
+          companyId: props.companyId,
+          projectTypeId: props.projectTypeId,
+          workTypeId: props.sessionDetail.SessionByID.worktypeID,
+          sessionId: props.sessionId,
+          protocolTitle,
+          meetingTitle: protocolTitle,
+          inviteGuests: "",
+          meetingDate,
+          meetingDuration: meetingDurationMinutes,
+          meetingEndTime: startMeetingDateTime,
+          meetingStartTime: endMeetingDateTime,
+          protocolId: "",
+          status: "SCHEDULED",
+        },
+        members:memberList,
+        meetingFiles:[]
+      });
+    }
+    
+
     const data = {
       companyId: props.companyId,
       projectTypeId: props.projectTypeId,
@@ -165,7 +285,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
       protocolStartTime: new Date(startProtocolDateTime),
       protocolEndTime: endProtocolDateTime,
       protocolDescription,
-      meetings: [],
+      meetings: meetingsData,
       protocolFiles: [],
       protocolDuration: protocolDurationMinutes,
       status: 'SCHEDULED'
@@ -192,6 +312,12 @@ export function ModalAddProtocol(props: AddProtocolProps) {
     setProtocolEndTime("")
     setProtocolDescription("")
     setErrors({})
+    // setInvitationTitle("")
+    setMeetingDate("")
+    setMeetingStartTime("")
+    setMeetingEndTime("")
+    setMembers([])
+    setMeetingErrors({})
   }
 
   return (
@@ -354,56 +480,75 @@ export function ModalAddProtocol(props: AddProtocolProps) {
               </Grid>
               {openAddInvitation && (
                 <>
-                  <Grid columns={1}>
+                  {/* <Grid columns={1}>
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
                           <label>
-                            {t("common.title")} <span className="danger">*</span>
+                            Title <span className="danger">*</span>
                           </label>
                           <Input
                             placeholder="Team onboarding"
                             size="small"
                             className="full-width"
                             type="text"
+                            value={invitationTitle}
+                            onChange={onInvitationTitleChange}
+                            error={meetingErrors.meetingTitleError && !invitationTitle}
                           />
+                          {meetingErrors?.meetingTitleError && !invitationTitle ? <span className="error-message">{meetingErrors.meetingTitleError}</span> : null}
                         </Form.Field>
                       </Grid.Column>
                     </Grid.Row>
-                  </Grid>
+                  </Grid> */}
                   <Grid columns={3}>
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <label>{t("common.date")} </label>
+                          <label>Date <span className="danger">*</span></label>
                           <Input
+                            name="meetingDate"
                             placeholder="Default"
                             size="small"
                             className="full-width"
                             type="date"
+                            value={meetingDate}
+                            onChange={(e) => setMeetingDate(e.target.value)}
+                            error={meetingErrors.meetingDateError && !meetingDate}
                           />
+                          {meetingErrors?.meetingDateError && !meetingDate ? <span className="error-message">{meetingErrors.meetingDateError}</span> : null}
                         </Form.Field>
                       </Grid.Column>
                       <Grid.Column>
                         <Form.Field>
-                          <label>{t("common.start_time")} </label>
+                          <label>Start time <span className="danger">*</span></label>
                           <Input
                             placeholder="Default"
                             size="small"
                             className="full-width"
                             type="time"
+                            name="time"
+                            value={meetingStartTime}
+                            onChange={onClickMeetingStartTime}
+                            error={meetingErrors.meetingStartTimeError && !meetingStartTime}
                           />
+                          {meetingErrors?.meetingStartTimeError && !meetingStartTime ? <span className="error-message">{meetingErrors.meetingStartTimeError}</span> : null}
                         </Form.Field>
                       </Grid.Column>
                       <Grid.Column>
                         <Form.Field>
-                          <label>{t("common.end_time")} </label>
+                          <label>End time <span className="danger">*</span></label>
                           <Input
                             placeholder="Default"
                             size="small"
                             className="full-width"
                             type="time"
+                            value={meetingEndTime}
+                            onChange={onClickMeetingEndTime}
+                            error={meetingErrors.meetingEndTimeError && !meetingEndTime}
                           />
+                          {meetingErrors?.meetingEndTimeError && !meetingEndTime ? <span className="error-message">{meetingErrors.meetingEndTimeError}</span> : null}
+                          {meetingErrors?.startEndTimeError ? <span className="error-message">{meetingErrors.startEndTimeError}</span> : null}
                         </Form.Field>
                       </Grid.Column>
                     </Grid.Row>
@@ -412,24 +557,30 @@ export function ModalAddProtocol(props: AddProtocolProps) {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <label>{t("project_tab_menu.meeting.members")}</label>
-
-                          <Dropdown
-                            className="small_drop"
-                            clearable
-                            fluid
-                            multiple
-                            search
-                            selection
-                            options={countryOptions}
-                            placeholder={t("common.select")}
-                          />
+                          <label>Members<span className="danger">*</span></label>
+                          <MembersIndex members={[]} parentMembersSelect={onMembers} error={meetingErrors?.meetingMembersError && !members.length} />
+                          {meetingErrors?.meetingMembersError && !members.length ? <span className="error-message">{meetingErrors.meetingMembersError}</span> : null}
                         </Form.Field>
                       </Grid.Column>
                     </Grid.Row>
                   </Grid>
+                  <div className="followers-label-area">
+                    <Form.Field>
+                      <div className="event top-event follower-listing-labels">
+                        {members?.map((p, id) => {
+                          const name = p.userName.split(" ").map((n) => n[0]).join("");
+                          return (
+                            <div className="label-light-purple-circle label-spacer" key={id}>
+                              <span className="white-text">{name}</span>
+                            </div>
+                          )
+                        })
+                        }
+                      </div>
+                    </Form.Field>
+                  </div>
 
-                  <Grid columns={5}>
+                  {/* <Grid columns={5}>
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
@@ -469,7 +620,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
                         </Form.Field>
                       </Grid.Column>
                     </Grid.Row>
-                  </Grid>
+                  </Grid> */}
 
                   <Grid columns={1}>
                     <Grid.Row>
@@ -477,7 +628,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
                         <Form.Field>
                           <label>{t("project_tab_menu.meeting.invite_guest")}</label>
 
-                          <Dropdown
+                          {/* <Dropdown
                             className="small_drop"
                             clearable
                             fluid
@@ -486,6 +637,14 @@ export function ModalAddProtocol(props: AddProtocolProps) {
                             selection
                             options={countryOptions}
                             placeholder="Select Country"
+                          /> */}
+                          <Input
+                            placeholder="Enter the email to add more... "
+                            size="small"
+                            className="full-width"
+                            type="text"
+                          // value={inviteGuests}
+                          // onChange={(e) => setInviteGuests(e.target.value)}
                           />
                         </Form.Field>
                       </Grid.Column>
