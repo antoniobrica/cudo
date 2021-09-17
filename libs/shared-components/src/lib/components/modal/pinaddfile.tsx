@@ -10,6 +10,7 @@ import axios from 'axios';
 import { CreateFileTaskIndex, PinTaskListIndex } from '@cudo/mf-task-lib';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { useTranslation } from 'react-i18next';
+import { ToastContainer, toast } from 'react-toastify';
 
 function exampleReducer(state, action) {
   switch (action.type) {
@@ -44,6 +45,74 @@ export const AddPinFile = (props: AddPinProps) => {
   const [fileId, setFileId] = React.useState('');
   const [saveNewPinOnCanvase, setSaveNewPinOnCanvase] = React.useState(false);
   const [pinSavedOnCanvase, setPinSavedOnCanvase] = React.useState(false);
+  const [activeErrorClass, setActiveErrorClass] = React.useState(false)
+  const [taskErrors, setTaskErrors] = React.useState("")
+
+
+  // set sucess value to toaster function
+  const getTaskToasterMessage = (data) => {
+    setActiveErrorClass(false)
+    toast(data)
+  }
+
+  // set error value to task error for toaster function
+  const getTaskErrorMessage = (data) => {
+    setActiveErrorClass(true)
+
+    let errorExeptionMessage: string;
+    switch (data) {
+      case 7001:
+        errorExeptionMessage = t("toaster.error.task.task_already_exists")
+        break
+      case 7002:
+        errorExeptionMessage = t("toaster.error.task.task_not_found")
+        break
+      case 7003:
+        errorExeptionMessage = t("toaster.error.task.task_not_created")
+        break
+      case 7004:
+        errorExeptionMessage = t("toaster.error.task.no_title")
+        break
+      case 7005:
+        errorExeptionMessage = t("toaster.error.task.no_worktype")
+        break
+      case 7006:
+        errorExeptionMessage = t("toaster.error.planning.no_phase")
+        break
+      case 7007:
+        errorExeptionMessage = t("toaster.error.task.no_assignee")
+        break
+      case 7008:
+        errorExeptionMessage = t("toaster.error.task.wrong_date")
+        break
+      case 7009:
+        errorExeptionMessage = t("toaster.error.planning.due_date")
+        break
+      case 7010:
+        errorExeptionMessage = t("toaster.error.task.no_referance")
+        break
+      case 7011:
+        errorExeptionMessage = t("toaster.error.task.subtask_not_found")
+        break
+      case 7012:
+        errorExeptionMessage = t("toaster.error.task.no_subtask_title")
+        break
+      case 500:
+        errorExeptionMessage = t("toaster.error.task.internal_server_error")
+        break
+      default:
+        errorExeptionMessage = ""
+    }
+    setTaskErrors(errorExeptionMessage)
+  }
+
+  // set error message to toaster
+  React.useEffect(() => {
+    if (taskErrors) {
+      toast(taskErrors)
+    }
+  }, [taskErrors])
+
 
   const { t } = useTranslation();
 
@@ -59,7 +128,6 @@ export const AddPinFile = (props: AddPinProps) => {
   const openM = () => {
     setOpen(true)
   }
-
   React.useEffect(() => {
     if (props.isOpen) {
       setOpen(props.isOpen)
@@ -78,7 +146,7 @@ export const AddPinFile = (props: AddPinProps) => {
       for (let i = 0; i < props.dowloadFilesData.length; i++) {
         if (props.dowloadFilesData[i].filename == props.filesData.fileTitle) {
           setimgUrl(props.dowloadFilesData[i].url);
-          
+
         }
       }
     }
@@ -108,6 +176,7 @@ export const AddPinFile = (props: AddPinProps) => {
         open={open}
         closeOnDimmerClick={false}
       >
+        <ToastContainer className={`${activeErrorClass ? "error" : "success"}`} position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
         <Modal.Header>
           <h3>
             {props.filesData?.fileTitle}
@@ -131,8 +200,8 @@ export const AddPinFile = (props: AddPinProps) => {
                 allowToCreateNewPin={allowToCreateNewPin}
                 isPinCreated={isPinCreated}
                 setIsPinCreated={setIsPinCreated}
-              ></CanvasImage>  
-              
+              ></CanvasImage>
+
             </div>
 
             <div className="right-side-file-details">
@@ -143,7 +212,15 @@ export const AddPinFile = (props: AddPinProps) => {
                     <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/grey_pin.png`} className="pinadd" />
                   </Form.Field>
                   :
-                  <CreateFileTaskIndex pinsaved={pinSavedOnCanvase} savePin={setSaveNewPinOnCanvase} close={taskClose} onSuccess={onSuccess} cord={cord} fileData={fileData}></CreateFileTaskIndex>
+                  <CreateFileTaskIndex
+                    pinsaved={pinSavedOnCanvase}
+                    savePin={setSaveNewPinOnCanvase}
+                    close={taskClose}
+                    onSuccess={onSuccess}
+                    cord={cord}
+                    fileData={fileData}
+                    getTaskToasterMessage={getTaskToasterMessage}
+                    getTaskErrorMessage={getTaskErrorMessage} />
                 }
                 {!isPinCreated ?
                   <PinTaskListIndex filesData={fileData} cord={cord}></PinTaskListIndex> : null}

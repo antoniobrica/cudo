@@ -1,5 +1,6 @@
 
 import React, { Component, useEffect, useRef, useState } from 'react'
+import LazyLoading from '../loader/lazyloader';
 import CanvasPins from './canvaspins';
 
 export interface CanvasImageProps {
@@ -13,7 +14,12 @@ export interface CanvasImageProps {
   pinSaved?
 }
 export function CanvasImage(props: CanvasImageProps) {
+  const [loading, setLoading] = useState(false)
   const canvasImage = useRef<HTMLCanvasElement>();
+
+  useEffect(() => {
+    setLoading(true)
+  },[])
   
   useEffect(() => {
     if (props.imgUrl) {
@@ -21,6 +27,7 @@ export function CanvasImage(props: CanvasImageProps) {
       imgagDraw.src = props.imgUrl;
       imgagDraw.onload = function () {
         const canvasImageElement = canvasImage.current
+        // setLoading(false)
         canvasImageElement.width = canvasImageElement.clientWidth
         canvasImageElement.height = canvasImageElement.clientHeight
         const hRatio = canvasImage.current.clientWidth / imgagDraw.width;
@@ -30,19 +37,27 @@ export function CanvasImage(props: CanvasImageProps) {
         const canvasImageContext = canvasImageElement.getContext('2d')
         canvasImageContext.drawImage(imgagDraw, 0, 0, imgagDraw.width, imgagDraw.height, 0, 0, imgagDraw.width * ratio, imgagDraw.height * ratio);
       }
+      setLoading(false)
     }
   }, [props.imgUrl]);
 
   return (
+
+
     <div className="outsideWrapper">
       <div className="insideWrapper">
-        <canvas id="canvasImage" className="coveringCanvas"
-          width="800" height="700"
-           ref={canvasImage}></canvas>
+        {
+          loading ? <LazyLoading /> : (
+            <canvas id="canvasImage" className="coveringCanvas"
+              width="800" height="700"
+              ref={canvasImage}></canvas>
+          )
+        }
+
 
         <CanvasPins
           pinSaved={props?.pinSaved}
-          savePin={props?.savePin}          
+          savePin={props?.savePin}
           coardinates={props?.coardinates}
           fileId={props?.fileId}
           allowToCreateNewPin={props?.allowToCreateNewPin}

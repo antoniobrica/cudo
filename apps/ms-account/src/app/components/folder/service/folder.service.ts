@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {  Repository } from 'typeorm';
+import {  Like, Repository } from 'typeorm';
 import { FolderEntity } from '../../../entities/folder.entity';
+import FolderTitleFilterParams from '../../../utils/types/folderTitleFilterParams';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
 import { CreateFolderInput } from '../dto/create-folder.input';
@@ -44,11 +45,14 @@ export class FolderService {
     throw new FolderNotFoundException(folder.folderID);
   }
 
-  public async findAllFolder(refFilter: ReferenceFilterParams): Promise<FolderEntity[]> {
+  public async findAllFolder(refFilter: ReferenceFilterParams,titleFilter:FolderTitleFilterParams): Promise<FolderEntity[]> {
     const selectedReference = await this.referenceService.getReferenceById(refFilter)
     return await this.FolderRepository.find({
-      "reference": {
-        id: selectedReference.id
+      where: {
+        folderTitle: Like(`%${titleFilter.folderTitle}%`),
+        reference: {
+          id: selectedReference.id
+        }
       }
     });
 

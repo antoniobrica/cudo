@@ -113,7 +113,7 @@ export function SelectFilePopup(props: FileStructureProps) {
       {/* {
         isPinFile && <AddPinFile isOpen={isPinFile} />
       } */}
-      {view && imgUrl.length > 0 ?
+      {view ?
         <div>
           <AddPinFile isOpen={view} cancel={cancel} filesData={filesData} dowloadFilesData={props.downloadedImg} savePin={props.savePins} onSuccess={""} />
         </div> : null}

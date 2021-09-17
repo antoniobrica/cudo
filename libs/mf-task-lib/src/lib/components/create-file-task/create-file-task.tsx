@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea, Checkbox } from 'semantic-ui-react';
+import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea, Checkbox, Dimmer, Loader } from 'semantic-ui-react';
 import { radios } from '@storybook/addon-knobs';
 import { ITask, ITasks, TaskMutation } from "../../interfaces/task";
 import { ApolloCache, FetchResult, useMutation, useQuery } from '@apollo/client';
@@ -22,6 +22,15 @@ export interface CreateFileTaskProps {
   fileData?
   savePin?
   pinsaved?
+  getTaskToasterMessage?
+  getTaskErrorMessage?
+}
+
+interface AddTaskErrors {
+  titleError?: string,
+  workTypeError?: string,
+  assigneeError?: string,
+  dateError?: string
 }
 
 export function CreateFileTask(props: CreateFileTaskProps) {
@@ -50,18 +59,39 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   const [taskTypeID, settaskTypeID] = React.useState('')
   const [assignees, setAssignees] = React.useState<any>([]);
   const [followers, setfollowers] = React.useState<any>([]);
+  const [errors, setErrors] = React.useState<AddTaskErrors>({})
+  const [addTaskLoading, setAddTaskLoading] = React.useState(false)
+
   const history = useHistory();
   const { t } = useTranslation()
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
 
-  const [addTask, { data }] = useMutation(ADD_TASK,
+  const [addTask, { loading, error, data }] = useMutation(ADD_TASK,
     {
       refetchQueries: [
         { query: GET_TASKS, variables: { referenceID } }
       ],
     }
   )
+
+  React.useEffect(() => {
+    if (!loading && data) {
+      setAddTaskLoading(false)
+      props.onSuccess();
+      props.savePin(false)
+      cancel()
+      props.getTaskToasterMessage(t("toaster.success.task.task_created"))
+    }
+    if (!loading && error) {
+      setAddTaskLoading(false)
+      props.onSuccess();
+      props.savePin(false)
+      cancel()
+      props.getTaskErrorMessage(error?.graphQLErrors[0]?.extensions?.exception?.status)
+    }
+  }, [data])
+
   React.useEffect(() => {
     if (referenceID) {
       getWorkType(referenceID)
@@ -151,10 +181,15 @@ export function CreateFileTask(props: CreateFileTaskProps) {
 
   }
   const setAsignee = (data) => {
-    const ppl = []
-    ppl.push(data)
-    setAssignees(ppl)
-    // setAsignis(data)
+
+    if (data.userID) {
+      const ppl = []
+      ppl.push(data)
+      setAssignees(ppl)
+      // setAsignis(data)
+    } else {
+      setAssignees([])
+    }
   }
 
 
@@ -180,15 +215,22 @@ export function CreateFileTask(props: CreateFileTaskProps) {
       worktypeID: '',
       worktypeName: ''
     };
-    for (let i = 0; i < workTypes.length; i++) {
-      if (workTypes[i]?.workTypeName === data.value) {
-        workT.worktypeID = workTypes[i].projectWorkTypeID;
-        workT.worktypeName = data.value;
-        setworktypeName(workT.worktypeName);
-        setworktypeID(workT.worktypeID);
-        setworkTypeD(workT)
+    if (data.value) {
+      for (let i = 0; i < workTypes.length; i++) {
+        if (workTypes[i]?.workTypeName === data.value) {
+          workT.worktypeID = workTypes[i].projectWorkTypeID;
+          workT.worktypeName = data.value;
+          setworktypeName(workT.worktypeName);
+          setworktypeID(workT.worktypeID);
+          setworkTypeD(workT)
+        }
       }
+    } else {
+      setworktypeName('');
+      setworktypeID('');
+      setworkTypeD('')
     }
+
     setworkTypeData(data.value);
 
   }
@@ -208,43 +250,72 @@ export function CreateFileTask(props: CreateFileTaskProps) {
     }
   }, [props.pinsaved])
 
-  const handleSaveTask = () => {
-    props.savePin(true);
+  const validation = () => {
+    const foundErrors: AddTaskErrors = {}
+    if (!taskTitle) {
+      foundErrors.titleError = t("common.errors.title_error")
+    }
+    if (!worktypeID) {
+      foundErrors.workTypeError = t("common.errors.worktype_error")
+    }
+    if (!assignees.length) {
+      foundErrors.assigneeError = t("common.errors.assignee_error")
+    }
+    if (startDate > endDate) {
+      foundErrors.dateError = t("common.errors.date_error")
+    }
+    return foundErrors
+  }
 
+  const handleSaveTask = () => {
+    const validationResult = validation()
+    if (Object.keys(validationResult).length > 0) {
+      setErrors(validationResult)
+      return false
+    }
+    setAddTaskLoading(true)
+    props.savePin(true);
   };
 
   const addTak = () => {
+    const variables = {
+      taskTitle, estimatedDays,
+      sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
+      fileID: fileData.uploadedFileID,
+      fileName: fileData.fileTitle,
+      taskTypeID,
+      taskType: taskType.PIN,
+      files,
+      assignees,
+      followers,
+      description,
+      subtasks: [],
+      referenceID,
+      workTypeID: worktypeID,
+      workTypeName: worktypeName
+    }
+    if (startDate) {
+      variables['startDate'] = startDate
+    }
+    if (startDate) {
+      variables['endDate'] = endDate
+    }
     addTask({
-      variables: {
-        taskTitle, startDate, endDate, estimatedDays,
-        sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
-        fileID: fileData.uploadedFileID,
-        fileName: fileData.fileTitle,
-        taskTypeID,
-        taskType: taskType.PIN,
-        files,
-        assignees,
-        followers,
-        description,
-        subtasks: [],
-        referenceID,
-        workTypeID: worktypeID,
-        workTypeName: worktypeName
-      },
+      variables,
       update: (
         cache,
         { data: { addTask } }: FetchResult<TaskMutation>
       ) => {
         const cacheData = cache.readQuery({ query: GET_TASKS, variables: { referenceID }, }) as ITasks;
-        props.onSuccess();
-        props.savePin(false);
-        cache.writeQuery({
-          query: GET_TASKS,
-          data: {
-            tasksD: [...cacheData.tasks, addTask]
-          },
-          variables: { referenceID },
-        });
+        // props.onSuccess();
+        // props.savePin(false);
+        // cache.writeQuery({
+        //   query: GET_TASKS,
+        //   data: {
+        //     tasksD: [...cacheData.tasks, addTask]
+        //   },
+        //   variables: { referenceID },
+        // });
 
       }
     });
@@ -263,6 +334,11 @@ export function CreateFileTask(props: CreateFileTaskProps) {
         trigger={<Button size='mini' className="grey-btn taskmargin">+ Add  New Task</Button>}      >
         <Modal.Header><h3>Add New Task </h3></Modal.Header>
         <Modal.Content body> */}
+      {addTaskLoading ?
+        <Dimmer active inverted Center inline>
+          <Loader size='big'>Loading</Loader>
+        </Dimmer>
+        : null}
       <div className="added-pin-number-con">
         <Form>
           <Grid columns={1}>
@@ -281,7 +357,10 @@ export function CreateFileTask(props: CreateFileTaskProps) {
                   <label>{t("project_tab_menu.task.task_title")} <span className="danger">*</span></label>
                   <Input placeholder={t("project_tab_menu.task.task_title")} size='small' className="full-width" type="text"
                     value={taskTitle}
-                    onChange={onTaskTitleChange} />
+                    onChange={onTaskTitleChange}
+                    error={errors?.titleError && !taskTitle}
+                  />
+                  {errors?.titleError && !taskTitle ? <span className="error-message">{errors.titleError}</span> : null}
                 </Form.Field>
               </Grid.Column>
             </Grid.Row>
@@ -311,7 +390,9 @@ export function CreateFileTask(props: CreateFileTaskProps) {
                     options={workType}
                     onChange={onMworkType}
                     clearable
+                    error={errors?.workTypeError && !worktypeID}
                   />
+                  {errors?.workTypeError && !worktypeID ? <span className="error-message">{errors.workTypeError}</span> : null}
                 </Form.Field>
               </Grid.Column>
             </Grid.Row>
@@ -332,7 +413,8 @@ export function CreateFileTask(props: CreateFileTaskProps) {
           <Grid columns={1}>
             <Grid.Row>
               <Grid.Column>
-                <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Assignee" />
+                <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Assignee"
+                  error={errors?.assigneeError && !assignees.length} />
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -369,7 +451,9 @@ export function CreateFileTask(props: CreateFileTaskProps) {
                     type="date"
                     value={startDate}
                     onChange={onStartDateChange}
+                    error={errors?.dateError && (startDate > endDate)}
                   />
+                  {errors?.dateError && (startDate > endDate) ? <span className="error-message">{errors.dateError}</span> : null}
                 </Form.Field>
               </Grid.Column>
               <Grid.Column>

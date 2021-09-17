@@ -1,4 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { MeetingModel } from '../../meeting/model/meeting.model';
 import { ProtocolFilesModel } from './protocol-files.model';
 
 @ObjectType()
@@ -54,6 +55,9 @@ export class ProtocolModel {
 
   // @Field()
   // public reference?: ReferenceModel
+
+  @Field(type => [MeetingModel], { nullable: true })
+  public meetings?: MeetingModel[]
 
   @Field(type => [ProtocolFilesModel], { nullable: true })
   public protocolFiles?: ProtocolFilesModel[]
