@@ -10,7 +10,9 @@ import { ContainerItem } from '@azure/storage-blob';
 import { useTokenQuery } from '../../services/useRequest';
 import { GET_TOKEN } from '../../graphql/graphql';
 
-export interface AddFileProps { }
+export interface AddFileProps { 
+  //
+}
 
 export function AddFile(props: AddFileProps) {
  

@@ -50,7 +50,6 @@ export function FileList(props: FileListProps) {
     variables: { projectId, fileId: selectedFileId },
   });
 
-  // set selected files
   React.useEffect(() => {
     if (props?.taskData?.fileID) {
       data?.uploadedFiles?.forEach(file => {
