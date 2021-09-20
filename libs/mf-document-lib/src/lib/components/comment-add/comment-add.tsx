@@ -183,7 +183,8 @@ console.log('---userDetail-in comment add-', props?.companyId, props?.loggedUser
           {errors?.commentError && !commentMessage ? <span className="error-message">{errors.commentError}</span> : null}
 
           <div className="comments-action">
-            <Button positive size='small' className="primary full-width" onClick={onClickCommentAdd}>Add Comment</Button>
+            <i className="ms-Icon ms-Icon--Send" onClick={onClickCommentAdd}></i>
+            {/* <Button positive size='small' className="primary full-width" onClick={onClickCommentAdd}>Add Comment</Button> */}
           </div>
         </>
       }
