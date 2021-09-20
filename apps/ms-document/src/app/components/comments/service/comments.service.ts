@@ -21,35 +21,52 @@ export class CommentsService {
         if (comments) {
             return comments;
         }
-        throw new FileCustomError(FileErrorTypeEnum.COMMENTS_NOT_FOUND)
+        throw new FileCustomError(FileErrorTypeEnum.COMMENT_NOT_FOUND)
     }
 
     async createComment(commentCreateInput: CommentsCreateInputDto): Promise<CommentsEntity> {
-        const newComment = await this.commentsRepository.create(new CommentsEntity({
-            ...commentCreateInput, isDeleted: false
-        }));
-        await this.commentsRepository.save(newComment);
-        return newComment;
+        try {
+            const newComment = await this.commentsRepository.create(new CommentsEntity({
+                ...commentCreateInput, isDeleted: false
+            }));
+            await this.commentsRepository.save(newComment);
+
+            return newComment;
+        } catch (error) {
+            throw new FileCustomError(FileErrorTypeEnum.COMMENT_NOT_ADDED)
+        }
     }
 
     async updateComment(commentFilter: CommentsFilterParams, commentUpdateInput: CommentsUpdateInputDto): Promise<CommentsEntity> {
         const { commentsID } = commentFilter
         if (!commentsID) {
-            throw new FileCustomError(FileErrorTypeEnum.COMMENTS_ID_NOT_PROVIDE)
+            throw new FileCustomError(FileErrorTypeEnum.COMMENT_ID_NOT_PROVIDE)
         }
         const commentDetail = await this.commentsRepository.findOne({ where: { commentsID } });
-        if (commentDetail) {
+        if (!commentDetail) {
+            throw new FileCustomError(FileErrorTypeEnum.COMMENT_NOT_FOUND)
+        }
+        try {
             await this.commentsRepository.update(commentDetail.id, { ...commentUpdateInput });
             const updatedComment = await this.commentsRepository.findOne(commentDetail.id);
             return updatedComment;
+        } catch (error) {
+            throw new FileCustomError(FileErrorTypeEnum.COMMENT_NOT_UPDATED)
         }
-        throw new FileCustomError(FileErrorTypeEnum.COMMENTS_NOT_FOUND)
 
     }
 
     async deleteComment(commentDeleteInputDto: CommentsDeleteInputDto): Promise<CommentsEntity> {
+        const { commentsID } = commentDeleteInputDto
+        if (!commentsID) {
+            throw new FileCustomError(FileErrorTypeEnum.COMMENT_ID_NOT_PROVIDE)
+        }
         const commentDetail = await this.commentsRepository.findOne({ where: { ...commentDeleteInputDto } });
-        if (commentDetail) {
+        if (!commentDetail) {
+            throw new FileCustomError(FileErrorTypeEnum.COMMENT_NOT_FOUND)
+        }
+
+        try {
             // const deleteResponse = await this.commentsRepository.delete(commentDetail.id);
             // if (deleteResponse) {
             //     return deleteResponse;
@@ -57,7 +74,8 @@ export class CommentsService {
             commentDetail.isDeleted = !(commentDetail.isDeleted)
             const updatedCommentDetail = await commentDetail.save()
             return updatedCommentDetail
+        } catch (error) {
+            throw new FileCustomError(FileErrorTypeEnum.COMMENT_NOT_DELETED)
         }
-        throw new FileCustomError(FileErrorTypeEnum.COMMENTS_NOT_FOUND)
     }
 }

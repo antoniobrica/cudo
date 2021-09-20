@@ -3,6 +3,7 @@ import { Button, Pagination, Modal, Input, Form, Grid, Image, Comment, Dropdown,
 import Canvas from './canvas';
 // import { Document, Page } from 'react-pdf';
 import { PinTaskListIndex } from '@cudo/mf-task-lib';
+import { CommentAdd, CommentList } from '@cudo/mf-document-lib'
 
 import { Document, Page, pdfjs } from "react-pdf";
 import { MS_SERVICE_URL } from '@cudo/mf-core';
@@ -372,11 +373,12 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <label>Comments (2)</label>
+                          {/* <label>Comments (2)</label>
                           <Input placeholder='click to add comment' size='small' className="full-width" type="text" />
                           <div className="comments-action">
                             <Button positive size='small' className="primary full-width">Add Comment</Button>
-                          </div>
+                          </div> */}
+                          <CommentAdd uploadedFileID={props?.filesData?.uploadedFileID} />
                         </Form.Field>
                       </Grid.Column>
                     </Grid.Row>
@@ -385,7 +387,8 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                   <Grid columns={1} className="comments-con">
                     <Grid.Row>
                       <Grid.Column>
-                        <div className="comments-section">
+                      <CommentList uploadedFileID={props?.filesData?.uploadedFileID} />
+                        {/* <div className="comments-section">
                           <div className="comment-user-img">
                             <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/people_1.png`} />
                           </div>
@@ -400,7 +403,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                             <h3>John Smith <span>20 Aug, 2021</span></h3>
                             <p>I have a query that exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p>
                           </div>
-                        </div>
+                        </div> */}
                       </Grid.Column>
                     </Grid.Row>
                   </Grid>

@@ -66,6 +66,7 @@ function ModalOldEditInvitation() {
                         size="small"
                         className="full-width"
                         type="date"
+                        max="9999-12-31"
                       />
                     </Form.Field>
                   </Grid.Column>
