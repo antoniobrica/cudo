@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux'
+import { documentAction } from '../../redux/actions'
 import { useHistory } from 'react-router';
 
 import './file-listing.module.scss';
@@ -14,8 +16,11 @@ import ItemsDownloaded from './../../../azure-storage/components/ItemsDownloaded
 import { useMutation } from '@apollo/react-hooks';
 import { IFiles } from '../../interfaces/document';
 
+import axios from 'axios';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
+
 /* eslint-disable-next-line */
-export interface FileListingProps { }
+export interface FileListingProps { companyId, loggedUserEmail }
 
 export function FileListing(props: FileListingProps) {
   const context = React.useContext(UploadsViewStateContext);
@@ -34,6 +39,11 @@ export function FileListing(props: FileListingProps) {
   const projectId = pathNames[3].toString();
   // const projectId = "13"
 
+  const dispatch = useDispatch()
+
+  dispatch({ type: documentAction.SELECT_PROJECT_ID, payload: projectId })
+
+
   const sharedContext = React.useContext(SharedViewStateContext);
   const downloadsContext = React.useContext(DownloadsViewStateContext);
   // const viewContext = React.useContext(DownloadsViewStateContext);
@@ -49,8 +59,8 @@ export function FileListing(props: FileListingProps) {
   const [imgUrl, setimgUrl] = React.useState('');
   const [filesData, setFilesData] = React.useState([]);
 
-// const [fileVersionLoading, setFileVersionLoading] = React.useState(null)
-// const [fileVersionData, setFileVersionData] = React.useState(null)
+  // const [fileVersionLoading, setFileVersionLoading] = React.useState(null)
+  // const [fileVersionData, setFileVersionData] = React.useState(null)
 
   const [addFile, { data: neVersionDta }] = useMutation(UPLOAD_FILE_VERSION,
     {
@@ -216,6 +226,62 @@ export function FileListing(props: FileListingProps) {
   // React.useEffect(getContainerItemsEffect, []);
 
 
+  // #region Get Logged in user detail
+  // query: `
+  // query userQuery {
+  //   userByEmail(email: "${props.loggedUserEmail}") {
+  //     references {
+  //       referenceID
+  //       referenceType
+  //       name
+  //       imageUrl
+  //       }
+  //     }
+  //   }
+  // `
+  enum ReferenceType {
+    COMPANY = "COMPANY"
+  }
+  useEffect(() => {
+    axios({
+      url: MS_SERVICE_URL['ms_account'].url,
+      method: 'post',
+      data: {
+        query: `query { 
+            references( 
+              referenceFilter: { referenceID: "${props.companyId}", referenceType:${ReferenceType.COMPANY} } 
+            ){ 
+              users{
+                userID
+                userName
+                imageUrl
+                email
+              }
+            } 
+        }`
+      }
+    }).then((result) => {
+
+      if (result.data.data.references.users) {
+        // console.log('----result.data?.data?.references.users---', result.data.data.references.users)
+        const userDetails = result.data.data.references.users.filter((user) => user.email === props.loggedUserEmail)
+        // console.log('---userDetails---', userDetails)
+        if (userDetails.length) {
+          dispatch({ type: documentAction.LOGGED_USER_ID, payload: userDetails[0].userID })
+          dispatch({ type: documentAction.LOGGED_USER_NAME, payload: userDetails[0].userName })
+          dispatch({ type: documentAction.LOGGED_USER_PROFILE_URL, payload: userDetails[0].imageUrl })
+
+        }
+      }
+
+    });
+  }, [])
+
+
+
+
+  // #endregion
+
   return (
     <div>
       {loading ?
@@ -227,9 +293,9 @@ export function FileListing(props: FileListingProps) {
               cancel={cancel}
               uploadNewVersion={uploadNewVersionFile}
               file={fileVersion} /> : null}
-          <FileStructure 
-            files={data?.uploadedFiles} 
-            downloadFiles={downloadFiles} 
+          <FileStructure
+            files={data?.uploadedFiles}
+            downloadFiles={downloadFiles}
             viewFiles={viewFiles}
             uploadNewVersion={uploadNewVersion}
             addPinTask={addPinTask}
@@ -253,4 +319,10 @@ export function FileListing(props: FileListingProps) {
   );
 }
 
-export default FileListing;
+// export default FileListing;
+const mapStateToProps = state => ({
+  companyId: state.app.selectedCompany.selectedCompanyId,
+  loggedUserEmail: state.app.loggedUserDetail.loggedUserEmail
+})
+
+export default connect(mapStateToProps)(FileListing)

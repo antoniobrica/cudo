@@ -59,8 +59,13 @@ export function CommentList(props: CommentListProps) {
     }
   }, [commentDeleteLoading])
 
-  const onChangeComment = (html) => {
-    setCommentMessage(html)
+  const onChangeComment = (html,editor) => {
+    const textLength = editor.getLength()
+    if(textLength>1){
+      setCommentMessage(html)
+    }else{
+      setCommentMessage('')
+    }
   }
 
   // #region Toast Success and Error Messages
@@ -139,11 +144,11 @@ export function CommentList(props: CommentListProps) {
     setCommentMessage(commentMessage)
   }
 
-  const onClickCommentUpdate = () => {
-
+  const onClickCommentUpdate = (e) => {
+    e.preventDefault()
     // Validation
     const foundErrors: EditCommentError = {}
-    if (commentMessage.length < 8) {
+    if (!commentMessage) {
       foundErrors.commentError = t("common.errors.comment_error")
       setErrors(foundErrors)
       return false
@@ -250,7 +255,7 @@ export function CommentList(props: CommentListProps) {
                               //   }
                               // }}
                               placeholder="click to edit comment"
-                              onChange={(content, delta, source, editor) => onChangeComment(content)}
+                              onChange={(content, delta, source, editor) => onChangeComment(content,editor)}
                               // onChange={(content, delta, source, editor) => setCommentMessage(content)}
                               // onKeyDown={onKeyPresDescription}
                               id="txtDescription"
@@ -258,7 +263,7 @@ export function CommentList(props: CommentListProps) {
                             {errors?.commentError && !commentMessage ? <span className="error-message">{errors.commentError}</span> : null}
           
                             <div className="comments-action">
-                              <Button positive size='small' className="primary full-width" onClick={() => onClickCommentUpdate()}>Save Comment</Button>
+                              <Button positive size='small' className="primary full-width" onClick={ onClickCommentUpdate}>Save Comment</Button>
                             </div>
                           </>
                         }
