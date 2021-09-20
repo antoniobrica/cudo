@@ -8,7 +8,6 @@ import useStyles from './style';
 
 
 const Product = ({ id, title, imageSrc, price, handleAddToCart }) => {
-  // classes
   const classes = useStyles();
 
   return (
