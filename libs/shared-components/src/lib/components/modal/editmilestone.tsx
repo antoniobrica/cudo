@@ -268,6 +268,7 @@ export function EditMileStonePopup(props: PlanningProps) {
                         size="small"
                         className="full-width"
                         type="date"
+                        max="9999-12-31"
                         value={dueDate}
                         onChange={onDueDateChange}
                         error={errors?.dateError && !dueDate}
