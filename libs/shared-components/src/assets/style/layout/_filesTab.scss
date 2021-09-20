@@ -971,3 +971,70 @@
     }
   }
 }
+
+// bkp dropdoen
+.bkp-main {
+  font-size: 0.92857143em;
+  border: 1px solid #d0d8df;
+  border-radius: 3px;
+  min-height: 4rem;
+  background: #fff !important;
+  font-family: $font-stack !important;
+  cursor: pointer;
+  height: 4rem;
+  .bkp-dropdown {
+    width: 100%;
+    .bkp-dropdown-header {
+      box-shadow: none;
+      margin: 0;
+      padding: 0.6em 2em 0.6em 1em;
+      min-height: 4rem !important;
+      color: #565264;
+      font-size: 1.5rem;
+      font-weight: 400 !important;
+    }
+    .bkp-dropdown-listing {
+      width: 100%;
+      background: #fff;
+      border: 1px solid #ededed;
+      padding: 10px;
+      max-height: 180px;
+      overflow-y: auto;
+      margin-top: 3px;
+      button {
+        background: none;
+        color: #2D62ED;
+        padding: 0;
+        margin: 0 0 5px;
+        float: right;
+        font-size: 14px;
+        i {
+          font-size: 12px;
+          font-weight: 600;
+          position: relative;
+          top: 1px;
+        }
+      }
+      .ui.icon.input {
+        margin-bottom: 5px;
+        margin-top: 5px;
+      }
+      ul.bkp-dropdown-options {
+        padding: 8px 2px;
+        border: medium none;
+        color: #1B1B40;
+        margin: 0 -10px;
+        li {
+          cursor: pointer;
+          padding: 7px 10px;
+          margin: 0;
+          font-weight: 400;
+          &:hover {
+            background-color: #F4F5F6;
+            color: #1B1B40;
+          }
+        }
+      }
+    }
+  }
+}

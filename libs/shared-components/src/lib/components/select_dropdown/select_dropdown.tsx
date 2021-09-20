@@ -164,16 +164,16 @@ export function SelectDropdown(props: selectWithAddNew) {
   // })
 
   return (
-    <Main>
-      <DropDownContainer>
-        <DropDownHeader onClick={toggling}>
+    <Main className="bkp-main">
+      <DropDownContainer className="bkp-dropdown">
+        <DropDownHeader onClick={toggling} className="bkp-dropdown-header">
           {selectedOption || "Select"}
         </DropDownHeader>
         {isOpen && (
-          <DropDownListContainer>
-            <Button onClick={() => props.folderOpen()} >Add new folder</Button>
+          <DropDownListContainer className="bkp-dropdown-listing">
+            <Button onClick={() => props.folderOpen()}> <i className="ms-Icon ms-Icon--Add"></i> Add new folder</Button>
             <Input icon='search' onChange={onSearchChange} placeholder='Search...' />
-            <DropDownList>
+            <DropDownList className="bkp-dropdown-options">
               {props?.options?.map(bkp => (
                 <ListItem onClick={onOptionClicked(bkp.text)} key={Math.random()}>
                   {bkp.text}
