@@ -235,6 +235,7 @@ export function ModalEditProtocol(props: EditProtocolProps) {
                                                 size="small"
                                                 className="full-width"
                                                 type="date"
+                                                max="9999-12-31"
                                                 value={protocolDate}
                                                 onChange={e => setProtocolDate(e.target.value)}
                                             // error={errors.dateError && !protocolDate}
