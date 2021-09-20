@@ -11,6 +11,7 @@ import FileListing from './components/file-listing/file-listing';
 import { initI18n } from '@cudo/mf-core';
 // const AddFile = React.lazy(()=> import('./components/add-file/add-file'));
 // const FileListing = React.lazy(() => import('./components/file-listing/file-listing'));
+
 const defaultLanguage = 'en-GB';
 const supportedLanguages = [defaultLanguage, 'en-GB'];
 initI18n('/assets/i18n/{{lng}}.json', defaultLanguage);
@@ -24,10 +25,8 @@ export function App() {
       </Suspense>
     </div>
 
-
-
   );  
 }
 
 export default App;
-// chagnes to update libs
+// chagnes to update libs for comment
