@@ -448,7 +448,7 @@ export function Planning(props: PlanningProps) {
 
                           {plan.status == "INPROGRESS" ?
                             <i className="ms-Icon ms-Icon--Completed" aria-hidden="true"></i>
-                            : <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/green_tick.png`} className=" mr-2 mr-10 " />
+                            : <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/green_tick.png`} />
                           }
 
                         </a>

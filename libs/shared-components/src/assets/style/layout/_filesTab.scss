@@ -698,6 +698,19 @@
           height: 3.3rem;
           line-height: 3.3rem;
         }
+        i {
+          background: #2D62ED;
+          padding: 2px 10px;
+          border-radius: 4px;
+          float: right;
+          cursor: pointer;
+          &:after {
+            color: #ffffff;
+            content: "\e163";
+            font-family: "Material Icons";
+            font-size: 18px;
+          }
+        }
       }
     }
     .comments-con {
@@ -730,10 +743,75 @@
             span {
               color: #718898;
               font-weight: 400;
+              .comments-action {
+                position: absolute;
+                top: 24px;
+                background: #fff;
+                width: 85px;
+                padding: 5px 0;
+                text-align: right;
+                display: none;
+                @include transition(all .25s);
+                .checklist-actions {
+                  i {
+                    cursor: pointer;
+                    margin-left: 5px;
+                    &.trash {
+                      color: red;
+                    }
+                    &.pencil {
+                      color: #37BA77;
+                    }
+                  }
+                }
+              }
             }
           }
           p {
             font-size: 13px;
+            #txtDescription {
+              .ql-container {
+                height: auto;
+                border: none;
+                .ql-editor {
+                  padding: 0;
+                  height: auto;
+                  ol {
+                    padding: 0;
+                  }
+                  ul {
+                    padding: 0;
+                  }
+                }
+              }
+            }
+          }
+          .save-comment {
+            margin-top: 10px;
+            i {
+              background: #2D62ED;
+              padding: 2px 10px;
+              border-radius: 4px;
+              float: right;
+              cursor: pointer;
+              &:after {
+                color: #ffffff;
+                content: "\e163";
+                font-family: "Material Icons";
+                font-size: 18px;
+              }
+            }
+          }
+        }
+        &:hover {
+          .comment-info {
+            h3 {
+              span {
+                .comments-action {
+                  display: block;
+                }
+              }
+            }
           }
         }
       }
