@@ -129,7 +129,9 @@ console.log('---userDetail-in comment add-', props?.companyId, props?.loggedUser
       variables: {
         uploadedFileID: props?.uploadedFileID,
         comment: commentMessage,
-        createdBy: "John Smith"
+        createdBy: "Mukut",
+        createdByEmail: "mkandar81@gmail.com",
+        createdByUrl: "check url"    
       },
       update: (cache, createdCommentData) => {
 

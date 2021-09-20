@@ -62,6 +62,8 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
   const [expand, setExpand] = React.useState(false)
   const [hoveredTaskTypeID, setHoveredTaskTypeID] = React.useState(null)
 
+  const [completedTaskShow, setCompletedTaskShow] = React.useState(false);
+
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
   }
@@ -69,7 +71,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
 
   React.useEffect(() => {
     // if (props.open) {
-      setOpen(props.open)
+    setOpen(props.open)
     // }
   }, [props.open]);
 
@@ -125,6 +127,10 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
 
   const onClickTaskExpand = () => {
     setExpand(!expand)
+  }
+
+  const onClickShowCompletedTask = () => {
+    setCompletedTaskShow(!completedTaskShow)
   }
 
   return (
@@ -202,7 +208,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                           <label>File name</label>
                           <div className="select-version-box">
                             <label>House map - </label>
-                            <Select className="small" options={versionOptions} selection clearable/>
+                            <Select className="small" options={versionOptions} selection clearable />
                           </div>
                           {/* <p className="form_desc">{props?.filesData?.fileTitle}</p> */}
                         </Form.Field>
@@ -244,7 +250,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     </Grid.Row>
                   </Grid>
 
-                 {/*  <Grid columns={1} className={expandVersion ? "file-versioning-box expand" : "file-versioning-box"}>
+                  {/*  <Grid columns={1} className={expandVersion ? "file-versioning-box expand" : "file-versioning-box"}>
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
@@ -259,7 +265,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                             <i className="ms-Icon ms-Icon--RedEye right_float" aria-hidden="true"></i>
                             <i className="ms-Icon ms-Icon--Delete" aria-hidden="true"></i>
                           </div> */}
-                          {/* <div className="file-version-list">
+                  {/* <div className="file-version-list">
                             <div className="version-wise-files">
                               <span>Version 1 -</span>
                               <h3>2302101_version_03647.pptx
@@ -279,7 +285,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <label>Tasks ({pinCount}) 
+                          <label>Tasks ({pinCount})
                             <span className="task-add-button"><Button size='small' className="icon-border" onClick={cancel}><i className="ms-Icon ms-font-xl ms-Icon--Add"></i> Add New</Button></span> <i className="ms-Icon ms-Icon--ChevronDown right_float" aria-hidden="true" onClick={() => { onClickTaskExpand() }}></i></label>
                           <PinTaskListIndex filesData={props.filesData} cord={cord} pinCount={getPinCount} taskHovered={getTaskHovered} ></PinTaskListIndex>
 
@@ -329,41 +335,43 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                         <Form.Field>
                           <div className="toggle-label">
                             <label>Show Completed Tasks (1)</label>
-                            <Radio toggle />
+                            <Radio toggle onChange={onClickShowCompletedTask} />
                           </div>
-                          <div className="pin-task-completed-card">
-                            <div className="pin-task-description-box">
-                              <div className="task-full-details">
-                                <div className="pin-task-info">
-                                  <h3 className="task-completed">
-                                    <i className="ms-Icon ms-font-xl ms-Icon--Completed"></i>
-                                    This is task name here
-                                  </h3>
-                                  <p>Starts Tomorrow ↦ Due Fri Aug 28th</p>
+                          {completedTaskShow ?
+                            <div className="pin-task-completed-card">
+                              <div className="pin-task-description-box">
+                                <div className="task-full-details">
+                                  <div className="pin-task-info">
+                                    <h3 className="task-completed">
+                                      <i className="ms-Icon ms-font-xl ms-Icon--Completed"></i>
+                                      This is task name here
+                                    </h3>
+                                    <p>Starts Tomorrow ↦ Due Fri Aug 28th</p>
+                                  </div>
+                                  <div className="user-img">
+                                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/people_1.png`} />
+                                  </div>
                                 </div>
-                                <div className="user-img">
-                                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/people_1.png`} />
-                                </div>
-                              </div>
-                              <div className="added-task-listing">
-                                <p>Strategic Planning - Paint Work</p>
-                                <div className="symbol-group">
-                                  <div className="symbol symbol-30">
-                                    <span className="">
-                                      <Dropdown icon='ellipsis horizontal' pointing="right">
-                                        <Dropdown.Menu>
-                                          <Dropdown.Item icon='eye' text='View detail' />
-                                          <Dropdown.Item icon='pencil' text='Edit' />
-                                          <Dropdown.Item icon='check circle outline' text='Mark as complete' />
-                                          <Dropdown.Item icon='trash alternate outline' text='Delete' />
-                                        </Dropdown.Menu>
-                                      </Dropdown>
-                                    </span>
+                                <div className="added-task-listing">
+                                  <p>Strategic Planning - Paint Work</p>
+                                  <div className="symbol-group">
+                                    <div className="symbol symbol-30">
+                                      <span className="">
+                                        <Dropdown icon='ellipsis horizontal' pointing="right">
+                                          <Dropdown.Menu>
+                                            <Dropdown.Item icon='eye' text='View detail' />
+                                            <Dropdown.Item icon='pencil' text='Edit' />
+                                            <Dropdown.Item icon='check circle outline' text='Mark as complete' />
+                                            <Dropdown.Item icon='trash alternate outline' text='Delete' />
+                                          </Dropdown.Menu>
+                                        </Dropdown>
+                                      </span>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
+                            : null}
                         </Form.Field>
                       </Grid.Column>
                     </Grid.Row>
@@ -387,7 +395,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                   <Grid columns={1} className="comments-con">
                     <Grid.Row>
                       <Grid.Column>
-                      <CommentList uploadedFileID={props?.filesData?.uploadedFileID} />
+                        <CommentList uploadedFileID={props?.filesData?.uploadedFileID} />
                         {/* <div className="comments-section">
                           <div className="comment-user-img">
                             <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/people_1.png`} />

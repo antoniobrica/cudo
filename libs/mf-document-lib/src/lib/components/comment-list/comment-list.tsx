@@ -235,10 +235,12 @@ export function CommentList(props: CommentListProps) {
                     <h3>{createdBy}
                       <span>
                         {commentedOn}
+                        {createdBy==="Mukut"?
                         <div className="comments-action">
                           <span className="checklist-actions" onClick={() => onClickEditComment(commentsID, commentDescription)}><Icon name="pencil" /></span>
                           <span className="checklist-actions" onClick={() => onClickDeleteComment(commentsID)}><Icon name="trash alternate outline" /> </span>
                         </div>
+                        :null}
                       </span>
                     </h3>
                     {/* <p>I have a query that exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p> */}

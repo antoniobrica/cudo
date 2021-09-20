@@ -28,6 +28,14 @@ export default class CommentsEntity extends BaseEntity {
     createdBy?: string;
 
     @Expose()
+    @Column({ nullable: true })
+    createdByEmail?: string;
+
+    @Expose()
+    @Column({ nullable: true })
+    createdByUrl?: string;
+
+    @Expose()
     @CreateDateColumn()
     createdAt?: Date;
 
