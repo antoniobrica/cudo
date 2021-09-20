@@ -22,7 +22,7 @@
     "format:check": "nx format:check",
     "update": "nx migrate latest",
     "workspace-generator": "nx workspace-generator",
-    "dep-graph": "nx dep-graph" ,
+    "dep-graph": "nx dep-graph",
     "help": "nx help"
   },
   "private": true,
@@ -110,6 +110,7 @@
     "rxjs": "^6.5.5",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.3",
+    "styled-components": "^5.3.1",
     "tslib": "^2.0.0",
     "typeorm": "^0.2.30",
     "typescript-optional": "^2.0.1",
