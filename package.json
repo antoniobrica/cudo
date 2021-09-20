@@ -103,6 +103,7 @@
     "react-semantic-toasts": "^0.6.5",
     "react-toastify": "^7.0.4",
     "react-toastr": "^3.0.0",
+    "reactjs-dropdown-component": "^1.2.0",
     "redux": "^4.1.0",
     "redux-persist": "^6.0.0",
     "reflect-metadata": "^0.1.13",

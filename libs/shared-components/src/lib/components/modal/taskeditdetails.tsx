@@ -11,6 +11,7 @@ import {
   TextArea,
   Dimmer,
   Loader,
+  Icon
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 import { FollowersIndex, AssigneeIndex, BkpIndex, BkpsIndex, PhaseIndex } from "@cudo/mf-account-app-lib";
@@ -133,11 +134,11 @@ export const ModalTaskEdit = (props: AlertProps) => {
       setworktypeName(props?.taskData?.workTypeName);
       setworkTypeData(props?.taskData?.workTypeName)
       setworktypeID(props?.taskData?.workTypeID)
-      if(props?.taskData?.files){
+      if (props?.taskData?.files) {
         setFileList(props?.taskData?.files)
         const filesFromTask = []
         props?.taskData?.files?.forEach(file => {
-          filesFromTask.push({uploadedFileID:file.fileID, fileTitle:file.fileName, fileURL: file.fileUrl})
+          filesFromTask.push({ uploadedFileID: file.fileID, fileTitle: file.fileName, fileURL: file.fileUrl })
         })
         setSelectedFiles(filesFromTask)
       }
@@ -385,7 +386,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
     <div id="navbar">
       <Modal
         className={props.editTaskLoading ? "modal_media right-side--fixed-modal edit-task-modal overflow-hidden" : "modal_media right-side--fixed-modal edit-task-modal"}
-        closeIcon
+        // closeIcon
         onClose={cancel}
         onOpen={openf}
         open={open}
@@ -401,7 +402,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
             <Loader size='big'>Loading</Loader>
           </Dimmer>
           : null}
-           {
+        {
           isOpenTaskFiles && (
             <FileListIndex
               isTaskFile={isOpenTaskFiles}
@@ -414,6 +415,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
         }
         <Modal.Header>
           <h3>{t("project_tab_menu.task.edit_task")} </h3>
+          <Icon name='close' onClick={cancel} />
         </Modal.Header>
         <Modal.Content body>
           <div>
@@ -684,7 +686,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
             <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> {t("common.cancel")}
           </Button>
         </Modal.Actions>
-      </Modal>
+       </Modal>
     </div>
   );
 }

@@ -51,10 +51,12 @@ export class AccordionExampleMenu extends Component<MyProps> {
     return (
       <div className="sidebar-wrapper sidebar-theme">
         <div className="sidebar-header-project-name">
-          <span className="project-name">Burj Khalifa</span>
+          {/* <span className="project-name">Burj Khalifa</span> */}
+          <span className="project-name">{this.props.workTypeData?.projectById[0]?.projectName}</span>
           <span className="summary"><span className="dot">...</span></span>
         </div>
         <div className="project-sub-heading">John &amp; co.</div>
+        {/* <div className="project-sub-heading">{this.props.workTypeData?.projectById[0]?.createdBy}</div> */}
         <Accordion className="ui-accordion accordion-top">
           {(this.state.worktypes || []).map((worktype, i) => {
             return (

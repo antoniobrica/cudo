@@ -9,6 +9,7 @@ export enum TaskErrorTypeEnum {
     NO_REFERANCE_TYPE,
     NO_TITLE,
     PROJECT_NOT_FOUND,
+    TASK_NOT_FOUND,
     NO_SUBTASK_TITLE,
     NO_ASSIGNEE,
     NO_WORKTYPE,

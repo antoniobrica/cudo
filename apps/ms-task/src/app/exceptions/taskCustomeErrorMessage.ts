@@ -58,6 +58,9 @@ export const TaskErrorData = (errorCode: number): ITaskErrorCode => {
         case TaskErrorTypeEnum.PLANNING_NOT_EXITST:
             return { message: "Planning not found", code: 7017 }
 
+        case TaskErrorTypeEnum.TASK_NOT_FOUND:
+            return { message: "Task not found", code: 7018 }
+
         default:
             return { message: "An internal server error occurred", code: 500 }
     }

@@ -64,7 +64,7 @@ export const ModalViewTask = (props: AlertProps) => {
     <div id="navbar">
       <Modal
         className="modal_media right-side--fixed-modal task-details-modal"
-        closeIcon
+        // closeIcon
         onClose={cancel}
         onOpen={openf}
         open={open}
@@ -75,6 +75,7 @@ export const ModalViewTask = (props: AlertProps) => {
         }
         closeOnDimmerClick={false}
       >
+      <div className="fixed-popup-inner-con">
         <Modal.Header>
           <h3 className="d-flex align-items-center">
             <i className="ms-Icon ms-Icon--CheckMark circle-checkmark" aria-hidden="true"></i>
@@ -326,6 +327,7 @@ export const ModalViewTask = (props: AlertProps) => {
             </Form>
           </div>
         </Modal.Content>
+        </div>
       </Modal>
     </div>
   );

@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux'
-import { projectAction } from '../../redux/actions'
 
 import './project-info.module.scss';
 import { GET_TODOS, GET_PROJECTS } from "../../graphql/graphql";
@@ -23,16 +21,14 @@ import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { useTranslation } from 'react-i18next';
 
 /* eslint-disable-next-line */
-export interface ProjectInfoProps {
-  companyId?
-}
+export interface ProjectInfoProps {}
 
 export function ProjectInfo(props: ProjectInfoProps) {
   const [activeErrorClass, setActiveErrorClass] = useState(false)
 
   const notify = () => toast("This is Warning Message");
+  const companyId = localStorage.getItem('selectedCompany')
 
-  const { companyId } = props
   const { loading, error, data } = useProjectQuery(GET_PROJECTS, { variables: { companyId }, });
   const [openForm, setopenForm] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -41,22 +37,13 @@ export function ProjectInfo(props: ProjectInfoProps) {
   const { t } = useTranslation()
 
   const history = useHistory();
-  const location = useLocation()
   
-  // @ts-ignore
-  const projectId = location?.state?.projectId ? location?.state?.projectId : null
-  
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
 
   const openProject = (projectId) => {
-    dispatch({ type: projectAction.SELECT_PROJECT_ID, payload: projectId })
     history.push(`/home/project/${projectId}`);
   }
 
-  dispatch({ type: projectAction.SELECT_PROJECT_ID, payload: null })
-  dispatch({ type: projectAction.SELECT_COMPANY_ID, payload: localStorage.getItem('selectedCompany') })
-
- 
   const refresh = (data) => {
     // console.log('refresh is called', data);
   }
@@ -151,7 +138,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
           <div className="project-listing-cards">
             <ul>
               {data?.projects?.map((project: IProject, i) => {
-                const { projectId, projectName, client, buildingType, description } = project
+                const { projectId, projectName, client, buildingType, description, createdBy } = project
                 const shortDescription = description.length > 94 ? description.substring(0, 94) + '...' : description
                 return (
                   <li key={projectId} >
@@ -211,8 +198,5 @@ export function ProjectInfo(props: ProjectInfoProps) {
     </div>
   );
 }
-const mapStateToProps = state => ({
-  companyId: state.app.selectedCompany.selectedCompanyId
-})
 
-export default connect(mapStateToProps)(ProjectInfo)
+export default ProjectInfo

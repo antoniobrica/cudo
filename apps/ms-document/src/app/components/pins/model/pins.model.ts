@@ -38,4 +38,7 @@ export class PinsModel {
 
     @Field()
     updatedAt?: Date;
+
+    @Field({ nullable: true, description: `Pin Status` })
+    status?: string;
 }

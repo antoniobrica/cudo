@@ -15,6 +15,7 @@ export interface PinTaskListProps {
   filesData?
   cord?
   pinCount?
+  taskHovered?
 }
 
 export function PinTaskList(props: PinTaskListProps) {
@@ -68,11 +69,17 @@ export function PinTaskList(props: PinTaskListProps) {
       userID
       userName
       imageUrl
-      }
-      followers{
+    }
+    followers{
       userID
       userName
       imageUrl
+    }
+    subtasks{
+        subtaskID 
+        subtaskTitle 
+        status
+        isDeleted
       }
     } 
    }`;
@@ -105,6 +112,10 @@ export function PinTaskList(props: PinTaskListProps) {
   const [taskDelete] = useTaskDeleteMutation(DELETE_TASK, {
     variables: { referenceID },
   });
+
+  const [addSubTaskApi, { loading: addSubTaskLoading, error: addSubTaskError, data: addedSubTaskData }] = useMutation(UPDATE_TASK);
+
+
   enum Status {
     INPROGRESS = 'INPROGRESS',
     COMPLETED = 'COMPLETED',
@@ -184,7 +195,7 @@ export function PinTaskList(props: PinTaskListProps) {
         cache.writeQuery({
           query: GET_TASKS,
           data: {
-            tasksD: [...cacheData?.tasks, data],
+            tasksD: [...cacheData?.tasks?.results, data],
           },
           variables: { referenceID },
         });
@@ -225,8 +236,8 @@ export function PinTaskList(props: PinTaskListProps) {
         sendNotification: false,
         BKPID: data.BKPID,
         BKPTitle: data.BKPTitle,
-        workTypeID:data.workTypeID,
-        workTypeName:data.workTypeName,
+        workTypeID: data.workTypeID,
+        workTypeName: data.workTypeName,
         saveTaskAsTemplate: data.saveTaskAsTemplate || ' ',
         phaseID: data.phaseID,
         phaseName: data.phaseName,
@@ -245,13 +256,90 @@ export function PinTaskList(props: PinTaskListProps) {
         cache.writeQuery({
           query: GET_TASKS,
           data: {
-            tasksD: [...cacheData?.tasks, data],
+            tasksD: [...cacheData?.tasks?.results, data],
           },
           variables: { referenceID },
         });
       },
     });
   };
+
+  const taskHovered = (taskTypeID) => {
+    // console.log('--pin-task-list--taskHovered--taskTypeID--', taskTypeID)
+    props.taskHovered(taskTypeID)
+  };
+
+
+  const subTaskAdd = (data, title) => {
+    console.log('----subtask add --title--', title, '--data--', data)
+    
+    const subtask = [];
+    const createSt = {
+      subtaskTitle: title,
+      status: Status.INPROGRESS,
+    };
+    const assignees = [];
+    data.assignees.map((data, i) => {
+      assignees.push({ userID: data.userID, userName: data.userName })
+    })
+    const followers = [];
+    data.followers.map((data, i) => {
+      followers.push({ userID: data.userID, userName: data.userName })
+    })
+    subtask.push(createSt);
+
+    addSubTaskApi({
+      variables: {
+        taskID: data.taskID,
+        status: data.status,
+        files: [],
+        taskTitle: data.taskTitle,
+        startDate: data.startDate,
+        endDate: data.endDate,
+        estimatedDays: data.estimatedDays,
+        sendNotification: false,
+        BKPID: data.BKPID,
+        BKPTitle: data.BKPTitle,
+        saveTaskAsTemplate: data.saveTaskAsTemplate,
+        phaseID: data.phaseID,
+        phaseName: data.phaseName,
+        referenceID: data.referenceID,
+        description: data.description,
+        subtasks: subtask,
+        assignees: assignees,
+        followers: followers,
+        workTypeName: data.workTypeName,
+        workTypeID: data.workTypeID,
+      },
+
+      update: (cache, updatedTaskData) => {
+
+        const cacheData = cache.readQuery({
+          query: GET_TASKS,
+          variables: { referenceID },
+        }) as ITasks;
+
+        const newTaskList = cacheData?.tasks?.results?.map((task) => {
+          if (task.taskID === data.taskID) {
+            const subTaskList = updatedTaskData?.data?.updateTask[0]?.subtasks
+            return { ...task, subtasks: subTaskList }
+          } else {
+            return task;
+          }
+        });
+
+        cache.writeQuery({
+          query: GET_TASKS,
+          variables: { referenceID },
+          data: {
+            tasks: newTaskList
+          },
+        });
+      },
+
+    });
+  };
+
   return (
     <div>
       {taskStatusConfirmation ? (
@@ -316,7 +404,10 @@ export function PinTaskList(props: PinTaskListProps) {
         updateTask={updateTask}
         deleteTask={deleteTask}
         veiwTask={viewTask}
-        editTask={editTask}></TaskListOnFilePins>}
+        editTask={editTask}
+        taskHovered={taskHovered}
+        subTaskAdd={subTaskAdd}
+      ></TaskListOnFilePins>}
     </div>
   );
 }
