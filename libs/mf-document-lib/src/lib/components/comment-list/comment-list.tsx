@@ -227,7 +227,15 @@ export function CommentList(props: CommentListProps) {
                   </div>
                   <div className="comment-info">
                     {/* <h3>John Smith <span>20 Aug, 2021</span></h3> */}
-                    <h3>{createdBy}<span>{commentedOn}</span></h3>
+                    <h3>{createdBy}
+                      <span>
+                        {commentedOn}
+                        <div className="comments-action">
+                          <span className="checklist-actions" onClick={() => onClickEditComment(commentsID, commentDescription)}><Icon name="pencil" /></span>
+                          <span className="checklist-actions" onClick={() => onClickDeleteComment(commentsID)}><Icon name="trash alternate outline" /> </span>
+                        </div>
+                      </span>
+                    </h3>
                     {/* <p>I have a query that exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p> */}
                     {openEditComment && (commentsID === selectedCommentID) ?
                       <>
@@ -257,8 +265,9 @@ export function CommentList(props: CommentListProps) {
                             />
                             {errors?.commentError && !commentMessage ? <span className="error-message">{errors.commentError}</span> : null}
           
-                            <div className="comments-action">
-                              <Button positive size='small' className="primary full-width" onClick={() => onClickCommentUpdate()}>Save Comment</Button>
+                            <div className="save-comment">
+                            <i className="ms-Icon ms-Icon--Send" onClick={() => onClickCommentUpdate()}></i>
+                              {/* <Button positive size='small' className="primary full-width">Save Comment</Button> */}
                             </div>
                           </>
                         }
@@ -268,8 +277,7 @@ export function CommentList(props: CommentListProps) {
                       <p><ReactQuill id="txtDescription" readOnly={true} value={commentDescription} modules={{ toolbar: null }} /></p>
                     }
                   </div>
-                  <span className="checklist-actions" onClick={() => onClickEditComment(commentsID, commentDescription)}> <Icon name="pencil" /></span>
-                  <span className="checklist-actions" onClick={() => onClickDeleteComment(commentsID)}>< Icon name="trash alternate outline" /> </span>
+                  
 
                 </div>
               }
