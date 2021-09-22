@@ -1,7 +1,6 @@
 import { Expose, plainToClass } from 'class-transformer';
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToMany, JoinTable, ManyToOne, Tree, TreeChildren, TreeParent } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn, ManyToMany, JoinTable, ManyToOne, Tree, TreeChildren, TreeParent } from 'typeorm';
 import * as uuid from 'uuid';
-import { BkpHierarchyEntity } from './bkphierarchy.entity';
 import { BkpLayerTwoEntity } from './bkpLayerTwo.entity';
 import ReferanceTypeEntity from './references.entity';
 
@@ -16,15 +15,15 @@ export class BkpLayerOneEntity extends BaseEntity {
 
     @Expose()
     @Column({ unique: true })
-    bkpUID: string;
-
-    @Expose()
-    @Column({unique: true})
-    bkpID: string;
+    bkpCostID: string;
 
     @Expose()
     @Column()
-    bkpTitle?: string;
+    BKPID: string;
+
+    @Expose()
+    @Column()
+    BKPTitle?: string;
     
     @Expose()
     @CreateDateColumn()
@@ -44,7 +43,7 @@ export class BkpLayerOneEntity extends BaseEntity {
 
     @Expose()
     @Column({ nullable: true, default: false })
-    isDeleted?: Boolean;
+    isDeleted?: boolean;
 
     @JoinTable() 
     @ManyToMany(type => BkpLayerTwoEntity, { cascade: true })
@@ -67,7 +66,7 @@ export class BkpLayerOneEntity extends BaseEntity {
                     excludeExtraneousValues: true
                 })
             )
-            this.bkpUID = this.bkpUID || uuid.v1();
+            this.bkpCostID = this.bkpCostID || uuid.v1();
         }
     }
 }
