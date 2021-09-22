@@ -5,7 +5,7 @@ import { BkpHierarchyFilterID } from '../dto/args/bkpId.fiolter';
 import { BKPFilterParam } from '../dto/bkp.filter';
 import { CreateBkpHierarchyInput } from '../dto/create-bkphierarchy.input';
 import { BkpDeleteInput } from '../dto/delete.bkp';
-import { AddLayerTwoBkpHierarchy } from '../dto/update-bkphierarchy.input';
+import { AddLayerTwoBkpHierarchyInput } from '../dto/update-bkphierarchy.input';
 import { bkpLayerTwoModel } from '../model/bkp-layerTwo.model';
 import { SearchModel } from '../model/bkp-serch.model';
 import { BkpHierarchyModel } from '../model/bkphierarchy.model';
@@ -53,7 +53,7 @@ export class BkpHierarchyResolver {
 
   @Mutation(() => [bkpLayerTwoModel])
   async addLayerTwoBkpHierarchy(
-    @Args('addLayerTwoBkpHierarchy') addLayerTwoBkpHierarchy: AddLayerTwoBkpHierarchy,
+    @Args('addLayerTwoBkpHierarchy') addLayerTwoBkpHierarchy: AddLayerTwoBkpHierarchyInput,
     @Args('referenceFilter') referenceFilter: ReferenceFilterParams
   ) {
     return this.bkpHierarchyService.addLayerTwoBkpHierarchy(addLayerTwoBkpHierarchy, referenceFilter)

@@ -11,7 +11,7 @@ import { BkpHierarchyFilterID } from '../dto/args/bkpId.fiolter';
 import { BKPFilterParam } from '../dto/bkp.filter';
 import { CreateBkpHierarchyInput } from '../dto/create-bkphierarchy.input';
 import { BkpDeleteInput } from '../dto/delete.bkp';
-import { AddLayerTwoBkpHierarchy } from '../dto/update-bkphierarchy.input';
+import { AddLayerTwoBkpHierarchyInput } from '../dto/update-bkphierarchy.input';
 
 
 @Injectable()
@@ -78,7 +78,7 @@ export class BkpHierarchyService {
   // }
 
   // add bkpCosts based on layer two bkpCostId
-  public async addLayerTwoBkpHierarchy(addLayerTwoBkpHierarchy: AddLayerTwoBkpHierarchy, referenceFilter: ReferenceFilterParams): Promise<BkpLayerTwoEntity[]> {
+  public async addLayerTwoBkpHierarchy(addLayerTwoBkpHierarchy: AddLayerTwoBkpHierarchyInput, referenceFilter: ReferenceFilterParams): Promise<BkpLayerTwoEntity[]> {
     const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
     const children = await this.BkpLayerOneRepository.findOne({
       where: { bkpCostID: addLayerTwoBkpHierarchy.bkpCostID },
@@ -98,14 +98,21 @@ export class BkpHierarchyService {
 
   public async getBkps(refFilter: ReferenceFilterParams) {
     const selectedReference = await this.referenceService.getReferenceById(refFilter)
-    const bkps = await this.bkpHierarchyRepository.find({
-      where: {
-        "isDeleted": false,
-        "references": {
-          id: selectedReference.id
-        }
-      }, relations: ['children', 'children.bkpChildrenLayerTwo']
-    });
+    // const bkps = await this.bkpHierarchyRepository.find({
+    //   where: {
+    //     "isDeleted": false,
+    //     "references": {
+    //       id: selectedReference.id
+    //     }
+    //   }, relations: ['children', 'children.bkpChildrenLayerTwo']
+    // });
+    const bkps = await this.bkpHierarchyRepository.createQueryBuilder('bkphierarchy')
+      .where('bkphierarchy.isDeleted = :isDeleted', {isDeleted: false})
+      .leftJoinAndSelect('bkphierarchy.children', 'children')
+      .where('children.isDeleted = :isDeleted', {isDeleted: false})
+      .leftJoinAndSelect('children.bkpChildrenLayerTwo','bkpChildrenLayerTwo')
+      .where('bkpChildrenLayerTwo.isDeleted = :isDeleted', {isDeleted: false})
+      .getMany()
     if (bkps) {
       return bkps;
     }

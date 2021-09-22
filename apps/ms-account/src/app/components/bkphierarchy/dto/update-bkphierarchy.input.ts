@@ -3,7 +3,7 @@ import { CreateBKPchildren } from './args/bkp.children.param';
 import { CreateBKPLayerTwo } from './args/bkp.childrenLayerTwo';
 
 @InputType()
-export class AddLayerTwoBkpHierarchy extends PartialType(CreateBKPchildren) {
+export class AddLayerTwoBkpHierarchyInput extends PartialType(CreateBKPchildren) {
   @Field({ description: `This is for bkpHierarchyLayerOne ID`})
   bkpCostID:string
 
