@@ -107,11 +107,13 @@ export class BkpHierarchyService {
     //   }, relations: ['children', 'children.bkpChildrenLayerTwo']
     // });
     const bkps = await this.bkpHierarchyRepository.createQueryBuilder('bkphierarchy')
-      .where('bkphierarchy.isDeleted = :isDeleted', {isDeleted: false})
+      .leftJoinAndSelect('bkphierarchy.references', 'references')
+      .where('references.id = :id', { id: selectedReference.id })
+      .andWhere('bkphierarchy.isDeleted = :deletedHierachy', { deletedHierachy: false })
       .leftJoinAndSelect('bkphierarchy.children', 'children')
-      .where('children.isDeleted = :isDeleted', {isDeleted: false})
-      .leftJoinAndSelect('children.bkpChildrenLayerTwo','bkpChildrenLayerTwo')
-      .where('bkpChildrenLayerTwo.isDeleted = :isDeleted', {isDeleted: false})
+      .andWhere('children.isDeleted = :deltedLayerOne', { deltedLayerOne: false })
+      .leftJoinAndSelect('children.bkpChildrenLayerTwo', 'bkpChildrenLayerTwo')
+      .andWhere('bkpChildrenLayerTwo.isDeleted = :deletedLayerTwo', { deletedLayerTwo: false })
       .getMany()
     if (bkps) {
       return bkps;
