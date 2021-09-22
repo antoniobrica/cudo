@@ -324,6 +324,7 @@ export function ModalAddProtocol(props: AddProtocolProps) {
     <div id="navbar">
       <Modal
         className="modal_media right-side--fixed-modal add-new-invitation-modal"
+        closeIcon
         onClose={() => setOpen(false)}
         onOpen={openProtocolAddPopup}
         open={open}

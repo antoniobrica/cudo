@@ -5,10 +5,10 @@ import { CreateBKPLayerTwo } from './bkp.childrenLayerTwo';
 export class CreateBKPchildren {
 
   @Field({ description: `Layer One BKP ID` })
-  bkpID: string;
+  BKPID: string;
 
   @Field({ description: `Layer One BKP Title` })
-  bkpTitle: string;
+  BKPTitle: string;
 
   @Field(type => [CreateBKPLayerTwo], {nullable:true, description: `BKP Children` })
   childrenLayerTwo?: CreateBKPLayerTwo[];

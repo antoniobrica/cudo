@@ -1,13 +1,12 @@
 import { Expose, plainToClass } from 'class-transformer';
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToMany, JoinTable, ManyToOne, Tree, TreeChildren, TreeParent } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn, ManyToOne, } from 'typeorm';
 import * as uuid from 'uuid';
-import { BkpHierarchyEntity } from './bkphierarchy.entity';
 import ReferanceTypeEntity from './references.entity';
 
 /**
  * 
  */
-@Entity({ name: 'bkphierarchyLayerTwo' })
+@Entity({ name: 'bkpCosts' })
 export class BkpLayerTwoEntity extends BaseEntity {
 
     @PrimaryGeneratedColumn()
@@ -15,15 +14,31 @@ export class BkpLayerTwoEntity extends BaseEntity {
 
     @Expose()
     @Column({ unique: true })
-    bkpUID: string;
-
-    @Expose()
-    @Column({ unique: true })
-    bkpID: string;
+    bkpCostID: string;
 
     @Expose()
     @Column()
-    bkpTitle?: string;
+    BKPID: string;
+
+    @Expose()
+    @Column()
+    BKPTitle?: string;
+    
+    @Expose()
+    @Column({ nullable: true })
+    description: string;
+
+    @Expose()
+    @Column({ nullable: true })
+    itemQuantity: number;
+
+    @Expose()
+    @Column({ nullable: true })
+    itemPrice: number;
+
+    @Expose()
+    @Column({ nullable: true })
+    itemTotalPrice: number;
     
     @Expose()
     @CreateDateColumn()
@@ -43,7 +58,7 @@ export class BkpLayerTwoEntity extends BaseEntity {
 
     @Expose()
     @Column({ nullable: true, default: false })
-    isDeleted?: Boolean;
+    isDeleted?: boolean;
 
     @Expose()
     @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.bkphierarchy)
@@ -58,7 +73,7 @@ export class BkpLayerTwoEntity extends BaseEntity {
                     excludeExtraneousValues: true
                 })
             )
-            this.bkpUID = this.bkpUID || uuid.v1();
+            this.bkpCostID = this.bkpCostID || uuid.v1();
         }
     }
 }
