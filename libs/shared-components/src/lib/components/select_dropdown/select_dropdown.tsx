@@ -89,6 +89,7 @@ export interface selectWithAddNew {
   value?
   onBkp?
   setSearchValue?
+  selectedFolder?
 }
 
 const Main = styled("div")`
@@ -144,15 +145,23 @@ export function SelectDropdown(props: selectWithAddNew) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [BkpId, setBkpId] = React.useState('Select')
+
+  React.useEffect(() => {
+    if(props.selectedFolder){
+      setSelectedOption(props.selectedFolder)
+      setIsOpen(false);
+    }
+  },[props.selectedFolder])
+
   const toggling = () => {
     setIsOpen(!isOpen);
     props.setSearchValue('')
   }
 
-  const onOptionClicked = value => () => {
-    setSelectedOption(value);
+  const onOptionClicked = data => () => {
+    setSelectedOption(data.text);
     setIsOpen(false);
-    console.log(selectedOption);
+    props.onBkp(data.value)
   };
 
   const onSearchChange = (e) => {
@@ -175,7 +184,7 @@ export function SelectDropdown(props: selectWithAddNew) {
             <Input icon='search' onChange={onSearchChange} placeholder='Search...' />
             <DropDownList className="bkp-dropdown-options">
               {props?.options?.map(bkp => (
-                <ListItem onClick={onOptionClicked(bkp.text)} key={Math.random()}>
+                <ListItem onClick={onOptionClicked(bkp)} key={Math.random()}>
                   {bkp.text}
                 </ListItem>
               ))}

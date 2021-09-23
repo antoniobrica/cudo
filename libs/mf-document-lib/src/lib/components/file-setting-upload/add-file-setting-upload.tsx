@@ -15,7 +15,7 @@ import { FileMutation, IFiles } from '../../interfaces/document';
 import { GET_FILES, UPLOAD_FILE } from '../../graphql/graphql';
 
 import { BkpIndex, PhaseIndex, FileTypeIndex, FileStructureIndex, AddFolderIndex, FollowersIndex } from "@cudo/mf-account-app-lib"
-import { UploadsViewStateContext, SharedViewStateContext, DownloadsViewStateContext } from './../../../azure-storage/contexts/viewStateContext';
+import { UploadsViewStateContext, SharedViewStateContext, DownloadsViewStateContext, DeletesViewStateContext } from './../../../azure-storage/contexts/viewStateContext';
 import { BlobItem, ContainerItem } from '@azure/storage-blob';
 import { tap } from 'rxjs/operators';
 // import { BlobItemUpload, BlobItemDownload } from './../../../azure-storage/types/azure-storage';
@@ -62,7 +62,7 @@ export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
   const { t } = useTranslation()
 
   // const [addFile] = useFileMutation(UPLOAD_FILE);
-  const [addFile, { data }] = useMutation(UPLOAD_FILE,
+  const [addFile, { loading, error, data }] = useMutation(UPLOAD_FILE,
     {
       refetchQueries: [
         { query: GET_FILES, variables: { projectId } }
@@ -70,6 +70,11 @@ export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
     }
   )
 
+  React.useEffect(() => {
+    if (!loading && data) {
+      cancel()
+    }
+  }, [data])
 
   const getContainerItemsEffect = () => {
     // setLoader(true);
@@ -121,7 +126,8 @@ export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
     if (data.isFolder) {
       setfolderName(data.folderTitle)
       setDirectory(data.folderTitle)
-
+      setBKPID(data.folderID)
+      setBKPIDTitle(data.folderTitle)
     }
     else {
       setBKPIDTitle(data.BKPIDTitle)
@@ -188,14 +194,14 @@ export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
         },
         update: (
           cache,
-          data
+          addedFileDatadata
         ) => {
-          const cacheData = cache.readQuery({ query: GET_FILES }) as IFiles;
+          const cacheData = cache.readQuery({ query: GET_FILES, variables: { projectId } }) as IFiles;
           cache.writeQuery({
             query: GET_FILES,
             variables: { projectId },
             data: {
-              tasks: [...cacheData.uploadedFiles, data['createFile']]
+              uploadedFiles: [...cacheData.uploadedFiles, addedFileDatadata?.data?.saveUploadedFile]
             }
           });
         }
@@ -228,6 +234,11 @@ export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
   //   props.onFileSubmit(file);
   // }
 
+  const cancel = () => {
+    setItems([])
+    setOpen(false)
+  }
+
   return (
     <div id=" " className="add-files-modal" >
       {/* {folderopen ?
@@ -237,7 +248,7 @@ export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
       <Modal className="modal_media modal_center add-file-setting-popup"
         closeIcon
         size="small"
-        onClose={() => setOpen(false)}
+        onClose={cancel}
         onOpen={() => setOpen(true)}
         open={open}
         trigger={<Button size='small' className="primary"><i className="ms-Icon ms-font-xl ms-Icon--Add"></i> {t("project_tab_menu.add_file")}</Button>}
@@ -341,7 +352,7 @@ export function AddFileSettingUpload(props: AddFileSettingUploadProps) {
                             {/* <Select placeholder='Select' className="small" options={countryOptions} clearable /> */}
                             <BkpIndex bkp={BKPID}
                               parentBKPSelect={setBKPIDChange}
-                              // folderOpen={folderOpen}
+                            // folderOpen={folderOpen}
                             ></BkpIndex>
                             {/* <Form.Field>
                               <a className="anchor-color" onClick={folderOpen}>+ {t("common.add_new_button")}</a>
