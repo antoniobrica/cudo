@@ -13,16 +13,19 @@ export interface AddFolderProps {
   open,
   cancel,
   folderData
+  parentBKPSelect
+  setSelectedFolderData
 }
 
 export function AddFolder(props: AddFolderProps) {
 
   const [folderTitle, setfolderTitle] = React.useState("");
-  const [addFolder] = useMutation(ADD_FOLDER, {
+  const [addFolder,{loading, error, data}] = useMutation(ADD_FOLDER, {
     refetchQueries: [
       { query: GET_FOLDER, variables: { referenceID: "dapr", referenceType: "COMPANY", folderTitle: "" } }
     ]
   });
+  console.log(data)
   const { t } = useTranslation()
   const [open, setOpen] = React.useState(false);
   const [folderName, setfolderName] = React.useState("");
@@ -51,6 +54,9 @@ export function AddFolder(props: AddFolderProps) {
         cache,
         { data }
       ) => {
+        // props.onBkp(data.folderTitle)
+        props.setSelectedFolderData(data.createFolder.folderTitle)
+        props.parentBKPSelect({ folderID: data.createFolder.folderID, folderTitle: data.createFolder.folderTitle, isFolder: true })
         const cacheData = cache.readQuery({ query: GET_FOLDER }) as IFolder;
         cache.writeQuery({
           query: GET_FOLDER,
