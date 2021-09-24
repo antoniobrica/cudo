@@ -263,14 +263,18 @@ export function FileListing(props: FileListingProps) {
     }).then((result) => {
 
       if (result.data.data.references.users) {
-        // console.log('----result.data?.data?.references.users---', result.data.data.references.users)
-        const userDetails = result.data.data.references.users.filter((user) => user.email === props.loggedUserEmail)
-        // console.log('---userDetails---', userDetails)
-        if (userDetails.length) {
+         const userDetails = result.data.data.references.users.filter((user) => user.email === props.loggedUserEmail)
+         if (userDetails.length) {
           dispatch({ type: documentAction.LOGGED_USER_ID, payload: userDetails[0].userID })
           dispatch({ type: documentAction.LOGGED_USER_NAME, payload: userDetails[0].userName })
           dispatch({ type: documentAction.LOGGED_USER_PROFILE_URL, payload: userDetails[0].imageUrl })
-
+          const loggedUserDetail = {
+            loggedUserEmail: userDetails[0].email,
+            loggedUserID: userDetails[0].userID,
+            loggedUserName: userDetails[0].userName,
+            loggedUserProfileURL: userDetails[0].imageUrl
+          }
+          localStorage.setItem('loggedUserDetail', JSON.stringify(loggedUserDetail));
         }
       }
 

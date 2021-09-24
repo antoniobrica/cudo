@@ -64,7 +64,13 @@ export interface ITask {
   taskType: string
   workTypeID: string
   workTypeName: string
-  subtasks: ISubTask[]
+  subtasks: ISubTask[] 
+  sequenceNumber: number 
+  // total: number
+  // next: string
+  // previous: string
+  // page_total: string
+  // hasNextPage: boolean
 }
 export interface ITodos {
   getTodos: ITodo[];
@@ -81,12 +87,16 @@ export interface TaskUpdateMutation {
 //   tasks: ITask[];
 // }
 
-export interface ITaskResults {
-  results: ITask[];
-}
+// export interface ITaskResults {
+//   results: ITask[];
+// }
+
+// export interface ITasks {
+//   tasks: ITaskResults;
+// }
 
 export interface ITasks {
-  tasks: ITaskResults;
+  tasksByTasktypes: ITask[]
 }
 
 export interface ISubTask {

@@ -6,38 +6,36 @@ import { LazyLoading, LoaderPage, ModalAlert, ModalTaskEdit, ModalViewTask, Task
 import axios from 'axios';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { ITasks } from '../../interfaces/task';
+import { ITask, ITasks } from '../../interfaces/task';
 import { GET_TASKS, GET_TASKS_BY_TYPES, UPDATE_TASK, DELETE_TASK, UPDATE_SUBTASK_STATUS, UPDATE_SUBTASK, DELETE_SUBTASK } from './../../graphql/graphql';
-import './pin-task-list.module.scss';
+
 import { useTaskUpdateMutation, useTaskDeleteMutation } from '../../services/useRequest';
 
 import { toast, ToastContainer } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { Dropdown, Label, Radio } from 'semantic-ui-react';
 
 /* eslint-disable-next-line */
-export interface PinTaskListProps {
+export interface PinCompletedTaskListProps {
   filesData?
-  cord?
-  pinCount?
-  taskHovered?
+  pinCompletedCount?
 }
 
-export function PinTaskList(props: PinTaskListProps) {
+export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
   const history = useHistory();
   const { t } = useTranslation();
 
-  const [activeTaskList, setActiveTaskList] = React.useState([])
-
   const [viewTaskOpen, setViewTaskOpen] = React.useState(false);
   const [editTaskOpen, setEditTaskOpen] = React.useState(false);
-  const [openTaskDelete, setOpenTaskDelete] = React.useState(false);
-  const [taskStatusConfirmation, setTaskStatusConfirmation] = React.useState(false);
+  const [updateTaskStatusConfirmOpen, setUpdateTaskStatusConfirmOpen] = React.useState(false);
+  const [deleteTaskConfirmOpen, setDeleteTaskConfirmOpen] = React.useState(false);
+
+
   const [pinTasks, setPinTasks] = React.useState([]);
   const [selectedTask, setSelectedTask] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
-
   const [workTypes, setWorkTypes] = React.useState([]);
-  const [taskData, setTaskData] = React.useState();
+  const [taskData, setTaskData] = React.useState<ITask>(null);
   const [idx, setId] = React.useState('');
   const [taskStatus, settaskStatus] = React.useState('');
 
@@ -46,157 +44,87 @@ export function PinTaskList(props: PinTaskListProps) {
   const [taskErrors, setTaskErrors] = React.useState("")
   const [activeErrorClass, setActiveErrorClass] = React.useState(false)
 
+  const [completedTaskShow, setCompletedTaskShow] = React.useState(false);
+  const [completedTaskList, setCompletedTaskList] = React.useState([])
+
   const res = history.location.pathname.split("/");
   const referenceID = res[3]?.toString();
-
-  // #region Old code for axios call====
-  // const getPinQuery = `query TasksByTasktypes(
-  //  $referenceID: String!,
-  // $fileID: String!
-  //   ) {
-  //   tasksByTasktypes(
-  //   referenceFilter:{referenceID: $referenceID ,referenceType:PROJECTTYPE} 
-  //   taskTypeFilter:{fileID: $fileID,taskType:PIN})
-  //   { 
-  //     taskID 
-  //   taskTitle 
-  //   startDate
-  //   endDate
-  //   estimatedDays
-  //   sendNotification
-  //   saveTaskAsTemplate
-  //   BKPID
-  //   BKPTitle
-  //   phaseID
-  //   description
-  //   phaseName
-  //   status
-  //   updatedAt
-  //   createdAt
-  //   updatedBy
-  //   createdBy
-  //   taskTypeID
-  //   fileID
-  //   taskType
-  //   workTypeID
-  //   workTypeName
-  //   fileName   
-  //   files{
-  //     fileID
-  //     fileName
-  //     fileUrl
-  //   }
-  //   assignees{
-  //     userID
-  //     userName
-  //     imageUrl
-  //   }
-  //   followers{
-  //     userID
-  //     userName
-  //     imageUrl
-  //   }
-  //   subtasks{
-  //       subtaskID 
-  //       subtaskTitle 
-  //       status
-  //       isDeleted
-  //     }
-  //   } 
-  //  }`;
-  // const getPins = async () => {
-  //   setLoading(true);
-  //   return axios.post(
-  //     MS_SERVICE_URL['ms_task'].url,
-  //     {
-  //       query: getPinQuery,
-  //       variables: {
-  //         fileID: props.filesData?.uploadedFileID,
-  //         referenceID: referenceID
-  //       }
-  //     }
-  //   ).then(res => {
-  //     setLoading(false);
-  //     setPinTasks(res.data.data.tasksByTasktypes)
-  //     props.pinCount(res.data.data.tasksByTasktypes?.length)
-  //   })
-  //     .catch(err => console.log(err))
-  // }
-
-  // React.useEffect(() => {
-  //   getPins();
-  // }, []);
-  // #endregion
 
   const { loading: taskListLoading, error: taskListError, data: taskListData } = useQuery(GET_TASKS_BY_TYPES, {
     variables: { fileID: props?.filesData?.uploadedFileID, referenceID },
   });
 
   React.useEffect(() => {
-    setActiveTaskList(taskListData?.tasksByTasktypes?.filter(task => task.status === Status.INPROGRESS))
-
-    props.pinCount(taskListData?.tasksByTasktypes.length)
+    setCompletedTaskList(taskListData?.tasksByTasktypes?.filter(task => task.status === Status.COMPLETED))
   }, [taskListData])
 
   React.useEffect(() => {
-    props.pinCount(activeTaskList?.length)
-  }, [activeTaskList])
+    props.pinCompletedCount(completedTaskList?.length)
+  }, [completedTaskList])
 
-  // const [editTaskApi, { data: editData }] = useMutation(UPDATE_TASK);
-  // const [taskDelete] = useMutation(DELETE_TASK);
-
-  const [updateTaskApi, { loading: updateTaskLoading, error: updateTaskError, data: editData }] = useMutation(UPDATE_TASK);
+  // #region  API CAll
+  // Task API
+  const [updateTaskApi, { loading: updateTaskLoading, error: updateTaskError, data: updateTaskData }] = useMutation(UPDATE_TASK);
   const [deleteTaskApi, { loading: deleteTaskLoading, error: deleteTaskError, data: deleteTaskData }] = useMutation(DELETE_TASK);
 
-
+  // Sub task API
   const [addSubTaskApi, { loading: addSubTaskLoading, error: addSubTaskError, data: addedSubTaskData }] = useMutation(UPDATE_TASK);
   const [subTaskUpdateApi, { loading: updateSubTaskLoading, error: updateSubTaskError, data: updateSubTaskData }] = useMutation(UPDATE_SUBTASK);
   const [subTaskStatusUpdateApi, { loading: updateSubTaskStatusLoading, error: updateSubTaskStatusError, data: updateSubTaskStatusData }] = useMutation(UPDATE_SUBTASK_STATUS);
   const [subTaskDeleteApi, { loading: deleteSubTaskLoading, error: deleteSubTaskError, data: deleteSubTaskData }] = useMutation(DELETE_SUBTASK);
+  // #endregion
 
   enum Status {
     INPROGRESS = 'INPROGRESS',
     COMPLETED = 'COMPLETED',
   }
 
+  const onClickShowCompletedTask = () => {
+    setCompletedTaskShow(!completedTaskShow)
+  }
+
   const cancel = () => {
     setViewTaskOpen(false);
     setEditTaskOpen(false);
-    setOpenTaskDelete(false);
-    setTaskStatusConfirmation(false);
+    setDeleteTaskConfirmOpen(false);
+    setUpdateTaskStatusConfirmOpen(false)
   };
 
-  // on click open view task modal
-  const viewTask = (task) => {
-    setTaskData(task);
+  //#region Task Feature
+
+  // #region open modal on click event
+  const onClickOpenViewTask = (task) => {
     setId(task.taskID)
+    setTaskData(task);
     setViewTaskOpen(true);
   };
 
-  // on click open edit task modal
-  const editTask = (task) => {
+  const onClickOpenEditTask = (task) => {
+    setId(task.taskID)
     setTaskData(task);
-    setEditTaskOpen(true);
+    setEditTaskOpen(true)
   };
 
-  // on click open delete task confirm modal
-  const deleteTaskConfirm = (task) => {
+  const onClickOpenDeleteTask = (task) => {
+    setId(task.taskID)
     setTaskData(task);
-    setOpenTaskDelete(true);
+    setDeleteTaskConfirmOpen(true);
   };
 
-  // on click open update task status confirm modal
-  const updateTaskStatusConfirm = (task) => {
-
-    const status = Status.COMPLETED
+  const onClickUpdateTaskStatus = (task) => {
+    const status = Status.INPROGRESS
+    settaskStatus('Re-open')
+    setId(task.taskID)
     setTaskData({ ...task, status });
-    settaskStatus('Mark as complete')
-    setTaskStatusConfirmation(true)
+    setUpdateTaskStatusConfirmOpen(true);
   };
+  // #endregion
 
-  // #region task api call
-  const updateTaskData = (data) => {
+  // #region on Api call methods
 
+  const updateTaskDetail = (data) => {
+
+    setEditTaskOpen(false)
     const assignees = [];
     data.assignees.map((data, i) => {
       assignees.push({ userID: data.userID, userName: data.userName })
@@ -214,12 +142,12 @@ export function PinTaskList(props: PinTaskListProps) {
         startDate: data.startDate,
         endDate: data.endDate,
         estimatedDays: data.estimatedDays,
-        sendNotification: false,
+        sendNotification: data.sendNotification,
         BKPID: data.BKPID,
         BKPTitle: data.BKPTitle,
         workTypeID: data.workTypeID,
         workTypeName: data.workTypeName,
-        saveTaskAsTemplate: data.saveTaskAsTemplate || ' ',
+        saveTaskAsTemplate: data.saveTaskAsTemplate,
         phaseID: data.phaseID,
         phaseName: data.phaseName,
         referenceID: data.referenceID,
@@ -253,10 +181,9 @@ export function PinTaskList(props: PinTaskListProps) {
     });
   };
 
-  const confirmationDelete = (data, task) => {
+  const deleteTaskDetail = (data, task) => {
 
-    setOpenTaskDelete(false);
-    // updateTask(taskData);
+    setDeleteTaskConfirmOpen(false);
     const taskID = task.taskID;
     deleteTaskApi({
       variables: {
@@ -282,8 +209,9 @@ export function PinTaskList(props: PinTaskListProps) {
     });
   };
 
-  const updateTaskStatus = (data, task) => {
-    setTaskStatusConfirmation(false)
+  const updateTaskStatusDetail = (data, task) => {
+
+    setUpdateTaskStatusConfirmOpen(false)
 
     const assignees = [];
     task.assignees.map((data, i) => {
@@ -293,52 +221,59 @@ export function PinTaskList(props: PinTaskListProps) {
     task.followers.map((data, i) => {
       followers.push({ userID: data.userID, userName: data.userName })
     })
+
     updateTaskApi({
       variables: {
         taskID: task.taskID,
         status: task.status,
-        files: [],
         taskTitle: task.taskTitle,
         startDate: task.startDate,
         endDate: task.endDate,
         estimatedDays: task.estimatedDays,
-        sendNotification: false,
+        sendNotification: task.sendNotification,
         BKPID: task.BKPID,
         BKPTitle: task.BKPTitle,
-        saveTaskAsTemplate: task.saveTaskAsTemplate || ' ',
+        saveTaskAsTemplate: task.saveTaskAsTemplate,
         phaseID: task.phaseID,
         phaseName: task.phaseName,
         referenceID: task.referenceID,
         description: task.description,
+        files: [],
         subtasks: [],
         assignees,
         followers,
         workTypeName: task.workTypeName,
         workTypeID: task.workTypeID,
       },
-      update: (cache, data) => {
+      update: (cache, updatedTaskData) => {
         const cacheData = cache.readQuery({
           query: GET_TASKS_BY_TYPES,
           variables: { fileID: props?.filesData?.uploadedFileID, referenceID },
         }) as ITasks;
 
+        const updatedTaskList = cacheData?.tasksByTasktypes?.map((item) => {
+          if (item.taskID === updatedTaskData?.data?.updateTask[0].taskID) {
+            item = updatedTaskData?.data?.updateTask[0]
+          }
+          return item
+        });
+
         cache.writeQuery({
           query: GET_TASKS_BY_TYPES,
           variables: { fileID: props?.filesData?.uploadedFileID, referenceID },
           data: {
-            tasksByTasktypes: [...cacheData?.tasksByTasktypes, data],
+            tasksByTasktypes: updatedTaskList,
           },
         });
       },
     });
   };
+
   // #endregion
 
-  const taskHovered = (taskTypeID) => {
-    props.taskHovered(taskTypeID)
-  };
+  // #endregion
 
-  // #region subtask api call
+  // #region Subtask feature
   const subTaskAdd = (data, title) => {
 
     const subtask = [];
@@ -450,10 +385,11 @@ export function PinTaskList(props: PinTaskListProps) {
   }
 
   const updateSubTaskStatus = (taskId, subtaskId, subtaskStatus) => {
+
     subTaskStatusUpdateApi({
       variables: {
         subtaskID: subtaskId,
-        status: subtaskStatus === 'COMPLETED' ? Status.COMPLETED : Status.INPROGRESS
+        status: subtaskStatus === 'Mark as Complete' ? Status.COMPLETED : Status.INPROGRESS
       },
       update: (cache, data) => {
 
@@ -508,9 +444,12 @@ export function PinTaskList(props: PinTaskListProps) {
           variables: { fileID: props?.filesData?.uploadedFileID, referenceID },
         }) as ITasks;
 
+
         const newTaskList = cacheData?.tasksByTasktypes?.map((task) => {
           if (task.taskID === taskId) {
+
             const subTaskList = task.subtasks.filter((subTask) => subTask.subtaskID !== subtaskId)
+
             return { ...task, subtasks: subTaskList }
           } else {
             return task;
@@ -528,12 +467,6 @@ export function PinTaskList(props: PinTaskListProps) {
     })
   };
   // #endregion
-
-  if (taskListLoading) return (<LazyLoading />)
-
-  if (updateTaskLoading) return (<LazyLoading />)
-
-  if (deleteTaskLoading) return (<LazyLoading />)
 
   // #region Task list toast message
   // set sucess value to toaster function
@@ -678,33 +611,16 @@ export function PinTaskList(props: PinTaskListProps) {
   // }, [taskErrors])
   // #endregion
 
+  if (taskListLoading) return (<LazyLoading />)
+
+  if (updateTaskLoading) return (<LazyLoading />)
+
+  if (deleteTaskLoading) return (<LazyLoading />)
+
   return (
     <div>
       <ToastContainer className={`${activeErrorClass ? "error" : "success"}`} position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
 
-      {taskStatusConfirmation ? (
-        <div className="pin_area">
-          <ModalAlert
-            name='task'
-            openAlertF={taskStatusConfirmation}
-            confirm={updateTaskStatus}
-            taskData={taskData}
-            taskStatus={taskStatus}
-            cancel={cancel}
-          ></ModalAlert>
-        </div>
-      ) : null}
-      {openTaskDelete ? (
-        <div className="pin_area">
-          <TaskDelete
-            openAlertF={openTaskDelete}
-            confirm={confirmationDelete}
-            taskData={taskData}
-            taskStatus={taskStatus}
-            cancel={cancel}
-          ></TaskDelete>
-        </div>
-      ) : null}
       {viewTaskOpen ? (
         <div className="pin_area">
           <ModalViewTask
@@ -713,10 +629,11 @@ export function PinTaskList(props: PinTaskListProps) {
             taskStatus={taskStatus}
             cancel={cancel}
             id={idx}
-            editTask={editTask}
+            editTask={onClickOpenEditTask}
           ></ModalViewTask>
         </div>
       ) : null}
+
       {editTaskOpen ? (
         <div className="pin_area">
           <ModalTaskEdit
@@ -724,27 +641,109 @@ export function PinTaskList(props: PinTaskListProps) {
             taskData={taskData}
             taskStatus={taskStatus}
             cancel={cancel}
-            editTaskData={updateTaskData}
+            editTaskData={updateTaskDetail}
           ></ModalTaskEdit>
         </div>
       ) : null}
-      {/* {loading ? <LoaderPage /> : <TaskListOnFilePins pinTasks={pinTasks} cord={props.cord} */}
+
+      {deleteTaskConfirmOpen ? (
+        <div className="pin_area">
+          <TaskDelete
+            openAlertF={deleteTaskConfirmOpen}
+            confirm={deleteTaskDetail}
+            taskData={taskData}
+            taskStatus={taskStatus}
+            cancel={cancel}
+          ></TaskDelete>
+        </div>
+      ) : null}
+
+      {updateTaskStatusConfirmOpen ? (
+        <div className="pin_area">
+          <ModalAlert
+            name='task'
+            openAlertF={updateTaskStatusConfirmOpen}
+            confirm={updateTaskStatusDetail}
+            taskData={taskData}
+            taskStatus={taskStatus}
+            cancel={cancel}
+          ></ModalAlert>
+        </div>
+      ) : null}
+
+
       {loading ? <LoaderPage /> :
-        <TaskListOnFilePins pinTasks={activeTaskList} cord={props.cord}
-          updateTask={updateTaskStatusConfirm}
-          deleteTask={deleteTaskConfirm}
-          veiwTask={viewTask}
-          editTask={editTask}
-          taskHovered={taskHovered}
-          subTaskAdd={subTaskAdd}
-          addSubTaskLoading={addSubTaskLoading}
-          updateSubTask={updateSubTask}
-          updateSubTaskLoading={updateSubTaskLoading}
-          updateSubTaskStatus={updateSubTaskStatus}
-          updateSubTaskStatusLoading={updateSubTaskStatusLoading}
-          deleteSubTask={deleteSubTask}
-          deleteSubTaskLoading={deleteSubTaskLoading}
-        ></TaskListOnFilePins>}
+        <>
+          <div className="toggle-label">
+            <label>Completed Tasks ({completedTaskList?.length})</label>
+            <Radio toggle onChange={onClickShowCompletedTask} />
+          </div>
+          {completedTaskShow ?
+            <>
+              {completedTaskList?.map((task) => {
+
+                return (
+                  <div className="pin-task-completed-card">
+                    <div className="pin-task-description-box">
+                      <div className="task-full-details">
+                        <div className="pin-task-info">
+                          <h3 className="task-completed">
+                            <i className="ms-Icon ms-font-xl ms-Icon--Completed"></i>
+                            {task?.taskTitle}
+                          </h3>
+                          {/* <p>Starts Tomorrow ↦ Due Fri Aug 28th</p> */}
+                          <p>{new Date(task?.startDate).toDateString()} ↦ Due {new Date(task?.endDate).toDateString()}</p>
+                        </div>
+                        {/* <div className="user-img">
+                              <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/people_1.png`} />
+                            </div> */}
+                        {task?.assignees?.length > 0 ?
+                          <div className="symbol-group symbol-hover text-right">
+                            <div className="symbol symbol-30">
+                              {task.assignees.map(({ userID, userName, imageUrl }, id) => {
+                                const name = userName.split(" ").map((n) => n[0]).join("");
+                                //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
+                                if (imageUrl) {
+                                  return (<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/people_1.png`} title={userName} />)
+                                } else {
+                                  return (
+                                    <Label circular color="green" key={`${id}${userID}`}>{name}</Label>
+                                  )
+                                }
+                              })
+                              }
+                            </div>
+                          </div>
+                          : null
+                        }
+                      </div>
+                      <div className="added-task-listing">
+                        {/* <p>Strategic Planning - Paint Work</p> */}
+                        <p>{task?.workTypeName} - {task?.phaseName}</p>
+                        <div className="symbol-group">
+                          <div className="symbol symbol-30">
+                            <span className="">
+                              <Dropdown icon='ellipsis horizontal' pointing="right">
+                                <Dropdown.Menu>
+                                  <Dropdown.Item icon='eye' text='View detail' onClick={() => onClickOpenViewTask(task)} />
+                                  <Dropdown.Item icon='pencil' text='Edit' onClick={() => onClickOpenEditTask(task)} />
+                                  <Dropdown.Item icon='check circle outline' text='Re-open' onClick={() => onClickUpdateTaskStatus(task)} />
+                                  <Dropdown.Item icon='trash alternate outline' text='Delete' onClick={() => onClickOpenDeleteTask(task)} />
+
+                                </Dropdown.Menu>
+                              </Dropdown>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </>
+            : null}
+        </>
+      }
     </div>
   );
 }

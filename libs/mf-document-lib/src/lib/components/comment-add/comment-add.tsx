@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux'
-// import { documentAction } from '../../redux/actions'
+import { documentAction } from '../../../../../../apps/mf-document-app/src/app/redux/actions'
 
 import ReactQuill, { Quill } from 'react-quill';
 import { Button, Input, Form, Grid } from 'semantic-ui-react';
@@ -18,11 +18,11 @@ import { useTranslation } from 'react-i18next';
 
 export interface CommentAddProps {
   uploadedFileID?,
-  companyId?,
-  loggedUserEmail?,
-  loggedUserID?,
-  loggedUserName?,
-  loggedUserProfileURL?
+  // companyId?,
+  // loggedUserEmail?,
+  // loggedUserID?,
+  // loggedUserName?,
+  // loggedUserProfileURL?
 }
 
 interface AddCommentError {
@@ -32,6 +32,9 @@ interface AddCommentError {
 export function CommentAdd(props: CommentAddProps) {
 
   const { t } = useTranslation();
+
+  // const dispatch = useDispatch()
+  // dispatch({ type: documentAction.LOGGED_USER_EMAIL, payload: "test value" })
 
   const [commentMessage, setCommentMessage] = useState('')
   const [commentAddLoadingState, setCommentAddLoadingState] = useState(false)
@@ -100,15 +103,15 @@ export function CommentAdd(props: CommentAddProps) {
   // #endregion
 
 
-  const onChangeComment = (html,editor) => {
+  const onChangeComment = (html, editor) => {
     const textLength = editor.getLength()
-    if(textLength>1){
+    if (textLength > 1) {
       setCommentMessage(html)
-    }else{
+    } else {
       setCommentMessage('')
     }
   }
-console.log('---userDetail-in comment add-', props?.companyId, props?.loggedUserEmail, props?.loggedUserID, props?.loggedUserName)
+   
   const onClickCommentAdd = (e) => {
     e.preventDefault()
 
@@ -123,15 +126,18 @@ console.log('---userDetail-in comment add-', props?.companyId, props?.loggedUser
     // show Loader
     setCommentAddLoadingState(true)
 
-    
+    // get logged user info
+    const loggedUserDetailRetrieve = localStorage.getItem('loggedUserDetail');
+    const loggedUserDetail = JSON.parse(loggedUserDetailRetrieve);
+
     // add comment Graphql
     addComment({
       variables: {
         uploadedFileID: props?.uploadedFileID,
         comment: commentMessage,
-        createdBy: "Mukut",
-        createdByEmail: "mkandar81@gmail.com",
-        createdByUrl: "check url"    
+        createdBy: loggedUserDetail.loggedUserName,
+        createdByEmail: loggedUserDetail.loggedUserEmail,
+        createdByUrl: loggedUserDetail.loggedUserProfileURL !== null ? loggedUserDetail.loggedUserProfileURL : ""
       },
       update: (cache, createdCommentData) => {
 
@@ -152,7 +158,7 @@ console.log('---userDetail-in comment add-', props?.companyId, props?.loggedUser
     })
     setCommentMessage('')
     setErrors({})
-    console.log('---end-comment-add--')
+    
   };
 
   return (
@@ -177,7 +183,7 @@ console.log('---userDetail-in comment add-', props?.companyId, props?.loggedUser
             //   }
             // }}
             placeholder="click to add comment"
-            onChange={(content, delta, source, editor) => onChangeComment(content,editor)}
+            onChange={(content, delta, source, editor) => onChangeComment(content, editor)}
             // onKeyDown={onKeyPresDescription}
             id="txtDescription"
           // errors={errors?.commentError && !commentMessage}
@@ -195,14 +201,14 @@ console.log('---userDetail-in comment add-', props?.companyId, props?.loggedUser
   )
 }
 
-// export default CommentAdd
+export default CommentAdd
 
-const mapStateToProps = state => ({
-  companyId: state.app.selectedCompany.selectedCompanyId,
-  loggedUserEmail: state.app.loggedUserDetail.loggedUserEmail,
-  loggedUserID: state.app.loggedUserDetail.loggedUserID,
-  loggedUserName: state.app.loggedUserDetail.loggedUserName,
-  loggedUserProfileURL: state.app.loggedUserDetail.loggedUserProfileURL
-})
+// const mapStateToProps = state => ({
+//   companyId: state.app.selectedCompany.selectedCompanyId,
+//   loggedUserEmail: state.app.loggedUserDetail.loggedUserEmail,
+//   loggedUserID: state.app.loggedUserDetail.loggedUserID,
+//   loggedUserName: state.app.loggedUserDetail.loggedUserName,
+//   loggedUserProfileURL: state.app.loggedUserDetail.loggedUserProfileURL
+// })
 
-export default connect(mapStateToProps)(CommentAdd)
+// export default connect(mapStateToProps)(CommentAdd)

@@ -39,6 +39,9 @@ export function CommentList(props: CommentListProps) {
 
   const [errors, setErrors] = React.useState<EditCommentError>({})
 
+  // get logged user info
+  const loggedUserDetailRetrieve = localStorage.getItem('loggedUserDetail');
+  const loggedUserDetail = JSON.parse(loggedUserDetailRetrieve);
 
   const { loading: commentListLoading, error: commentListError, data: commentListData } = useCommentQuery(GET_COMMENTS, {
     variables: { uploadedFileID: props?.uploadedFileID },
@@ -59,17 +62,17 @@ export function CommentList(props: CommentListProps) {
     }
   }, [commentDeleteLoading])
 
-  const onChangeComment = (html,editor) => {
+  const onChangeComment = (html, editor) => {
     const textLength = editor.getLength()
-    if(textLength>1){
+    if (textLength > 1) {
       setCommentMessage(html)
-    }else{
+    } else {
       setCommentMessage('')
     }
   }
 
   // #region Toast Success and Error Messages
-  
+
   // set error message to toaster
   useEffect(() => {
     if (commentErrors) {
@@ -97,7 +100,7 @@ export function CommentList(props: CommentListProps) {
         break
       case 3012:
         errorExeptionMessage = t("toaster.error.comment.comment_not_deleted")
-        break      
+        break
       default:
         errorExeptionMessage = ""
     }
@@ -110,11 +113,11 @@ export function CommentList(props: CommentListProps) {
     toast(data)
   }
 
-   // set toaster for edit comment
-   useEffect(() => {
+  // set toaster for edit comment
+  useEffect(() => {
     if (!commentUpdateLoading && commentUpdateData) {
       setCommentEditLoadingState(false)
-      getCommentToasterMessage(t("toaster.success.comment.comment_edit"))
+      getCommentToasterMessage(t("toaster.success.comment.comment_updated"))
     }
     if (!commentUpdateLoading && commentUpdateError) {
       setCommentEditLoadingState(false)
@@ -123,8 +126,8 @@ export function CommentList(props: CommentListProps) {
   }, [commentUpdateLoading])
 
 
-   // set toaster for delete comment
-   useEffect(() => {
+  // set toaster for delete comment
+  useEffect(() => {
     if (!commentDeleteLoading && commentDeleteData) {
       setCommentDeleteLoadingState(false)
       getCommentToasterMessage(t("toaster.success.comment.comment_deleted"))
@@ -235,12 +238,12 @@ export function CommentList(props: CommentListProps) {
                     <h3>{createdBy}
                       <span>
                         {commentedOn}
-                        {createdBy==="Mukut"?
-                        <div className="comments-action">
-                          <span className="checklist-actions" onClick={() => onClickEditComment(commentsID, commentDescription)}><Icon name="pencil" /></span>
-                          <span className="checklist-actions" onClick={() => onClickDeleteComment(commentsID)}><Icon name="trash alternate outline" /> </span>
-                        </div>
-                        :null}
+                        {createdBy === loggedUserDetail.loggedUserName ?
+                          <div className="comments-action">
+                            <span className="checklist-actions" onClick={() => onClickEditComment(commentsID, commentDescription)}><Icon name="pencil" /></span>
+                            <span className="checklist-actions" onClick={() => onClickDeleteComment(commentsID)}><Icon name="trash alternate outline" /> </span>
+                          </div>
+                          : null}
                       </span>
                     </h3>
                     {/* <p>I have a query that exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p> */}
@@ -265,15 +268,15 @@ export function CommentList(props: CommentListProps) {
                               //   }
                               // }}
                               placeholder="click to edit comment"
-                              onChange={(content, delta, source, editor) => onChangeComment(content,editor)}
+                              onChange={(content, delta, source, editor) => onChangeComment(content, editor)}
                               // onChange={(content, delta, source, editor) => setCommentMessage(content)}
                               // onKeyDown={onKeyPresDescription}
                               id="txtDescription"
                             />
                             {errors?.commentError && !commentMessage ? <span className="error-message">{errors.commentError}</span> : null}
-          
+
                             <div className="save-comment">
-                            <i className="ms-Icon ms-Icon--Send" onClick={onClickCommentUpdate}></i>
+                              <i className="ms-Icon ms-Icon--Send" onClick={onClickCommentUpdate}></i>
                               {/* <Button positive size='small' className="primary full-width">Save Comment</Button> */}
                             </div>
                           </>
@@ -284,7 +287,7 @@ export function CommentList(props: CommentListProps) {
                       <p><ReactQuill id="txtDescription" readOnly={true} value={commentDescription} modules={{ toolbar: null }} /></p>
                     }
                   </div>
-                  
+
 
                 </div>
               }
