@@ -166,6 +166,10 @@ export const AddPinFile = (props: AddPinProps) => {
     setAllowToCreateNewPin(false);
     setIsPinCreated(false);
   }
+
+  const getActivePinWiseTaskCount = () => {
+    
+  }
   return (
     <div >
       <Modal className="pin-add-file"
@@ -223,7 +227,7 @@ export const AddPinFile = (props: AddPinProps) => {
                     getTaskErrorMessage={getTaskErrorMessage} />
                 }
                 {!isPinCreated ?
-                  <PinTaskListIndex filesData={fileData} cord={cord}></PinTaskListIndex> : null}
+                  <PinTaskListIndex filesData={fileData} cord={cord} pinCount={getActivePinWiseTaskCount}></PinTaskListIndex> : null}
               </div>
             </div>
           </Form>
