@@ -16,6 +16,8 @@ export interface AddFolderIndexProps {
   open,
   cancel,
   folderData
+  parentBKPSelect?
+  setSelectedFolderData?
 }
 
 export function AddFolderIndex(props: AddFolderIndexProps) {
@@ -23,7 +25,7 @@ export function AddFolderIndex(props: AddFolderIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <AddFolder open={props.open} cancel={props.cancel} folderData={props.folderData} />
+        <AddFolder open={props.open} cancel={props.cancel} folderData={props.folderData} parentBKPSelect={props.parentBKPSelect} setSelectedFolderData={props.setSelectedFolderData} />
       </ApolloHooksProvider>
     </ApolloProvider>
   );

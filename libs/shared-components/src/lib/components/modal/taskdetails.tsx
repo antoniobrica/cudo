@@ -64,7 +64,7 @@ export const ModalViewTask = (props: AlertProps) => {
     <div id="navbar">
       <Modal
         className="modal_media right-side--fixed-modal task-details-modal"
-        // closeIcon
+        closeIcon
         onClose={cancel}
         onOpen={openf}
         open={open}

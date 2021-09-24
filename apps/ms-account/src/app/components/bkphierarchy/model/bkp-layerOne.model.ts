@@ -6,16 +6,16 @@ import { BkpHierarchyModel } from './bkphierarchy.model';
 export class BkpLayerOneModel {
 
   @Field({ nullable: true, description: `BKP ID` })
-  bkpUID: string;
+  bkpCostID: string;
 
   @Field({ nullable: true, description: `BKP ID` })
-  bkpID: string;
+  BKPID: string;
 
   @Field({ nullable: true, description: `BKP Title` })
-  bkpTitle: string;
+  BKPTitle: string;
 
   @Field({ nullable: true, description: `if BKP-Cost is Deleted` })
-  isDeleted?: Boolean;
+  isDeleted?: boolean;
 
   @Field({ nullable: true, description: `Created at` })
   createdAt?: Date;

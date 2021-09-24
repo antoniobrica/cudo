@@ -4,10 +4,22 @@ import { Field, InputType } from '@nestjs/graphql';
 export class CreateBKPLayerTwo {
 
   @Field({ description: `Layer Two BKP ID` })
-  bkpID: string;
+  BKPID: string;
 
   @Field({ description: `Layer Two BKP Title` })
-  bkpTitle: string;
+  BKPTitle: string;
+
+  @Field({ description: `Layer Two BKP description` })
+  description: string;
+
+  @Field({ description: `Layer Two BKP itemQuantity` })
+  itemQuantity: number;
+
+  @Field({ description: `Layer Two BKP itemPrice` })
+  itemPrice: number;
+
+  @Field({ description: `Layer Two BKP itemTotalPrice` })
+  itemTotalPrice: number;
 
 }
 

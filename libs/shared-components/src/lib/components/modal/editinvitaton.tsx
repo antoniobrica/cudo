@@ -343,6 +343,7 @@ export function ModalEditInvitation(props: EditInvitationProps) {
                         size="small"
                         className="full-width"
                         type="date" value={meetingDate}
+                        max="9999-12-31"
                         onChange={(e) => setMeetingDate(e.target.value)}
                         error={errors.dateError !== null && !meetingDate}
                       />

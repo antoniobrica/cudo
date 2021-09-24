@@ -17,6 +17,8 @@ export const setAuthenticated = () => localStorage.setItem(LSK_IS_AUTHENTICATED,
 export const unsetAuthenticated = () => localStorage.removeItem(LSK_IS_AUTHENTICATED)
 
 export const login = ({ setReferer = true } = {}) => {
+  unsetAuthenticated();
+  unsetAuthenticatedReferer();
   const { pathname } = window.location;
   if (setReferer) setAuthenticatedReferer(pathname)
   window.location.href = config.routes.login.path
@@ -47,7 +49,11 @@ export const profile = () => {
 }
 
 export const refresh = () => {
-  const base = config.kratos.browser
-  unsetAuthenticated()
-  window.location.href = `${base}/self-service/browser/flows/login?refresh=true&return_to=${config.baseUrl}/callback`
+  // const base = config.kratos.browser
+  // unsetAuthenticated()
+  // window.location.href = `${base}/self-service/browser/flows/login?refresh=true&return_to=${config.baseUrl}/callback`
+
+  unsetAuthenticated();
+  unsetAuthenticatedReferer();
+  logout();
 }

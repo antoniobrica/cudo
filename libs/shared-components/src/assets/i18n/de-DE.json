@@ -208,6 +208,7 @@
       "add_new_invitation": "Add New Invitation",
       "add_invitation": "Add  Invitation",
       "add_protocol": "Add Protocol",
+      "edit_protocol":"Edit Protocol",
       "add_new_protocol": "Add New Protocol",
       "name": "Name",
       "session_title": "Session Title",
@@ -330,6 +331,11 @@
         "reference_added": "Project reference added to File",
         "file_deleted": "File deleted successfully",
         "file_version_deleted": "File version deleted successfully"
+      },
+      "comment": {
+        "comment_added": "Comment added successfully",
+        "comment_updated": "Comment updated successfully",
+        "comment_deleted": "Comment deleted successfully"
       }
     },
     "error": {
@@ -433,6 +439,13 @@
         "version_not_created": "File version not created",
         "file_not_added": "File not added",
         "file_not_deleted": "File not deleted"
+      },
+      "comment" : {
+        "comment_not_found": "Comment not found",
+        "comment_id_not_provided":"Comment id not provided",
+        "comment_not_added": "Comment not added",
+        "comment_not_updated": "Comment not updated",
+        "comment_not_deleted": "Comment not deleted"
       }
     }
   },
@@ -500,7 +513,8 @@
       "no_building_type": "Please provide a building type",
       "start_end_time": "Must be greater than start time",
       "start_time": "Please provide start time",
-      "end_time": "Please Provide end time"
+      "end_time": "Please provide end time",
+      "comment_error": "Please provide comment message"
     }
   },
   "language": {

@@ -4,7 +4,7 @@ import { Field, InputType } from '@nestjs/graphql';
 export class BkpHierarchyFilterID {
 
   @Field({nullable: true, description: `BKP ID` })
-  bkpID?: string;
+  BKPID?: string;
 
 }
 

@@ -49,6 +49,7 @@ export * from './lib/components/tabs/meetingtabs'
 export * from './lib/components/invitation/invitation';
 export * from './lib/components/modal/addinvitaton'
 export * from './lib/components/modal/addprotocol'
+export * from './lib/components/modal/editprotocol'
 export * from './lib/components/loader/lazyloader';
 export * from './lib/components/modal/editinvitaton'
 export * from './lib/components/modal/editOldInvitation'

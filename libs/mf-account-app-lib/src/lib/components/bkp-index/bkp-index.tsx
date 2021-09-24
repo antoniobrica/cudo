@@ -15,6 +15,7 @@ const client = new ApolloClient({
 export interface BkpIndexProps {
   parentBKPSelect?
   bkp?
+  folderOpen?
 }
 
 export function BkpIndex(props: BkpIndexProps) {
@@ -24,7 +25,7 @@ export function BkpIndex(props: BkpIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <Bkp parentBKPSelect={onSelectBkp} bkp={props.bkp} />
+        <Bkp parentBKPSelect={onSelectBkp} bkp={props.bkp} folderOpen={props.folderOpen} />
       </ApolloHooksProvider>
     </ApolloProvider>
   );

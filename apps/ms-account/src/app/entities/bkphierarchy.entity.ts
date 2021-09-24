@@ -16,17 +16,24 @@ export class BkpHierarchyEntity extends BaseEntity {
 
     @Expose()
     @Column({ unique: true })
-    bkpUID: string;
+    bkpCostID: string;
 
     @Expose()
-    @Column({unique: true})
-    bkpID: string;
+    @Column({ nullable: true })
+    structureID: string;
 
     @Expose()
-    @Column({unique: true})
-    bkpTitle?: string;
+    @Column({ nullable: true })
+    structureName: string;
+
+    @Expose()
+    @Column()
+    BKPID: string;
+
+    @Expose()
+    @Column()
+    BKPTitle?: string;
     
-
     @Expose()
     @CreateDateColumn()
     createdAt?: Date;
@@ -70,7 +77,7 @@ export class BkpHierarchyEntity extends BaseEntity {
                     excludeExtraneousValues: true
                 })
             )
-            this.bkpUID = this.bkpUID || uuid.v1();
+            this.bkpCostID = this.bkpCostID || uuid.v1();
         }
     }
 }

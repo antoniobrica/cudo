@@ -8,16 +8,22 @@ export class BkpHierarchyModel {
   id: number;
 
   @Field({ description: `BKP Unique ID` })
-  bkpUID: string;
+  bkpCostID: string;
+
+  @Field({ description: `BKP Unique ID` })
+  structureID: string;
+
+  @Field({ description: `BKP Unique ID` })
+  structureName: string;
 
   @Field({ description: `BKP ID` })
-  bkpID: string;
+  BKPID: string;
 
   @Field({ description: `BKP Title` })
-  bkpTitle: string;
+  BKPTitle: string;
 
   @Field({ nullable: true, description: `Is BKP for the project deleted ?` })
-  isDeleted: Boolean;
+  isDeleted: boolean;
 
   @Field({ nullable: true, description: `Created At` })
   createdAt?: Date;

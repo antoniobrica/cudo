@@ -5,10 +5,16 @@ import { CreateBKPchildren } from './args/bkp.children.param';
 export class CreateBkpHierarchyInput {
 
   @Field()
-  bkpID?: string;
+  structureID?: string;
 
   @Field()
-  bkpTitle?: string;
+  structureName?: string;
+
+  @Field()
+  BKPID?: string;
+
+  @Field()
+  BKPTitle?: string;
 
   @Field(type => [CreateBKPchildren], {nullable:true, description: `BKP Children` })
   children?: CreateBKPchildren[];

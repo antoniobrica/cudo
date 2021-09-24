@@ -3,5 +3,5 @@ import { Field, InputType } from "@nestjs/graphql";
 export class BkpDeleteInput {
 
     @Field({ description: `This is for bkpUID` })
-    bkpUID: string;
+    bkpCostID: string;
 }

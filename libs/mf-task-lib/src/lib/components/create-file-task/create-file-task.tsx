@@ -22,6 +22,8 @@ export interface CreateFileTaskProps {
   fileData?
   savePin?
   pinsaved?
+  getTaskToasterMessage?
+  getTaskErrorMessage?
 }
 
 interface AddTaskErrors {
@@ -76,11 +78,17 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   React.useEffect(() => {
     if (!loading && data) {
       setAddTaskLoading(false)
+      props.onSuccess();
+      props.savePin(false)
       cancel()
+      props.getTaskToasterMessage(t("toaster.success.task.task_created"))
     }
     if (!loading && error) {
       setAddTaskLoading(false)
+      props.onSuccess();
+      props.savePin(false)
       cancel()
+      props.getTaskErrorMessage(error?.graphQLErrors[0]?.extensions?.exception?.status)
     }
   }, [data])
 
@@ -300,15 +308,15 @@ export function CreateFileTask(props: CreateFileTaskProps) {
         { data: { addTask } }: FetchResult<TaskMutation>
       ) => {
         const cacheData = cache.readQuery({ query: GET_TASKS, variables: { referenceID }, }) as ITasks;
-        props.onSuccess();
-        props.savePin(false);
-        cache.writeQuery({
-          query: GET_TASKS,
-          data: {
-            tasksD: [...cacheData.tasks?.results, addTask]
-          },
-          variables: { referenceID },
-        });
+        // props.onSuccess();
+        // props.savePin(false);
+        // cache.writeQuery({
+        //   query: GET_TASKS,
+        //   data: {
+        //     tasksD: [...cacheData.tasks, addTask]
+        //   },
+        //   variables: { referenceID },
+        // });
 
       }
     });
@@ -327,11 +335,11 @@ export function CreateFileTask(props: CreateFileTaskProps) {
         trigger={<Button size='mini' className="grey-btn taskmargin">+ Add  New Task</Button>}      >
         <Modal.Header><h3>Add New Task </h3></Modal.Header>
         <Modal.Content body> */}
-         {addTaskLoading ?
-          <Dimmer active inverted Center inline>
-            <Loader size='big'>Loading</Loader>
-          </Dimmer>
-          : null}
+      {addTaskLoading ?
+        <Dimmer active inverted Center inline>
+          <Loader size='big'>Loading</Loader>
+        </Dimmer>
+        : null}
       <div className="added-pin-number-con">
         <Form>
           <Grid columns={1}>
@@ -443,6 +451,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
                   <Input placeholder='Default' size='small' className="full-width"
                     type="date"
                     value={startDate}
+                    max="9999-12-31"
                     onChange={onStartDateChange}
                     error={errors?.dateError && (startDate > endDate)}
                   />
@@ -454,6 +463,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
                   <label>{t("common.end_date")} </label>
                   <Input placeholder='Default' size='small' className="full-width" type="date"
                     value={endDate}
+                    max="9999-12-31"
                     onChange={onEndDateChange}
                   />
                 </Form.Field>

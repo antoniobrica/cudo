@@ -505,6 +505,7 @@ export function CreateTask(props: CreateTaskProps) {
                         <Input placeholder='Default' size='small' className="full-width"
                           type="date"
                           value={startDate}
+                          max="9999-12-31"
                           onChange={onStartDateChange}
                           error={errors?.dateError && (startDate > endDate)}
                         />
@@ -518,6 +519,7 @@ export function CreateTask(props: CreateTaskProps) {
                         <Input placeholder='Default' size='small' className="full-width" type="date"
                           defaultValue={startDate}
                           value={endDate}
+                          max="9999-12-31"
                           onChange={onEndDateChange}
                         />
                       </Form.Field>

@@ -4,16 +4,28 @@ import { Field, ObjectType } from '@nestjs/graphql';
 export class bkpLayerTwoModel {
 
   @Field({ nullable: true, description: `BKP ID` })
-  bkpUID: string;
+  bkpCostID: string;
 
   @Field({ nullable: true, description: `BKP ID` })
-  bkpID: string;
+  BKPID: string;
 
   @Field({ nullable: true, description: `BKP Title` })
-  bkpTitle: string;
+  BKPTitle: string;
+
+  @Field({ nullable: true, description: `BKP description` })
+  description: string;
+
+  @Field({ nullable: true, description: `BKP itemQuantity` })
+  itemQuantity: number;
+
+  @Field({ nullable: true, description: `BKP itemPrice` })
+  itemPrice: number;
+
+  @Field({ nullable: true, description: `BKP itemTotalPrice` })
+  itemTotalPrice: number;
 
   @Field({ nullable: true, description: `if BKP-Cost is Deleted` })
-  isDeleted?: Boolean;
+  isDeleted?: boolean;
 
   @Field({ nullable: true, description: `Created at` })
   createdAt?: Date;

@@ -592,6 +592,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         size='small'
                         className="full-width"
                         type="date"
+                        max="9999-12-31"
                         value={startDate}
                         onChange={onStartDateChange}
                         error={errors?.dateError && (startDate > endDate)}
@@ -607,6 +608,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         size="small"
                         className="full-width"
                         type="date"
+                        max="9999-12-31"
                         value={endDate}
                         onChange={onEndDateChange}
                         error={errors?.dateError && (startDate > endDate)}

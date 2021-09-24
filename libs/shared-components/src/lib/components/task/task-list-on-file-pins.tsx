@@ -1,4 +1,6 @@
+import { useTranslation } from 'react-i18next';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { LazyLoading } from '@cudo/shared-components';
 import React, { Suspense, useEffect, useState } from 'react';
 import { Dropdown, Form, Label, Button, Input, Icon } from 'semantic-ui-react';
 /* eslint-disable-next-line */
@@ -11,9 +13,19 @@ export interface TaskListOnFilePinsProps {
   editTask?
   taskHovered?
   subTaskAdd?
+  addSubTaskLoading?
+  updateSubTask?
+  updateSubTaskLoading?
+  updateSubTaskStatus?
+  updateSubTaskStatusLoading?
+  deleteSubTask?
+  deleteSubTaskLoading?
 }
 
 export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
+
+  const { t, i18n } = useTranslation();
+
   const [taskHoveredId, setTaskHoveredId] = useState(null)
 
   const [selectedTaskId, setSelectedTaskId] = useState(null);
@@ -23,6 +35,16 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
   const [isOpenSubtaskAdd, setIsOpenSubtaskAdd] = useState(false)
 
   const [subtaskTitle, setSubtaskTitle] = React.useState('')
+
+  const [taskId, setTaskId] = React.useState(null);
+  const [subTaskId, setSubTaskId] = React.useState(null);
+
+  const [subtaskAddLoading, setSubTaskAddLoading] = useState(false)
+  const [subtaskEditLoading, setSubTaskEditLoading] = useState(false)
+  const [subtaskUpdateStatusLoading, setSubTaskUpdateStatusLoading] = useState(false)
+  const [subtaskDeleteLoading, setSubTaskDeleteLoading] = useState(false)
+
+  const [openSubTaskEdit, setOpenSubTaskEdit] = React.useState(false)
 
   // useEffect(() => {
   //   const filteredSubTasks = props?.pinTasks?.subtasks?.filter((item) => item.isDeleted !== true)
@@ -44,7 +66,24 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
     }
   }, [selectedTaskId, taskList])
 
-  const updateStatus = (task) => {
+  useEffect(() => {
+    if (!props.addSubTaskLoading) {
+      setSubTaskAddLoading(false)
+      setIsOpenSubtaskAdd(false)
+    }
+    if (!props.updateSubTaskLoading) {
+      setSubTaskEditLoading(false)
+      setOpenSubTaskEdit(false)
+    }
+    if (!props.updateSubTaskStatusLoading) {
+      setSubTaskUpdateStatusLoading(false)
+    }
+    if (!props.deleteSubTaskLoading) {
+      setSubTaskDeleteLoading(false)
+    }
+  }, [props?.pinTasks])
+
+  const updateTaskStatus = (task) => {
     props.updateTask(task)
   }
   const deleteTaskbyId = (task) => {
@@ -58,13 +97,11 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
   }
 
   const getTaskHovered = (task) => {
-    // console.log('--task-list-on-file-pins--getTaskHovered--task--', task)
     setTaskHoveredId(task.taskTypeID)
     props.taskHovered(task.taskTypeID)
   }
 
   const openSubTask = (taskID) => {
-    console.log('--taskID--', taskID)
     if (selectedTaskId === taskID) {
       setIsExpended(!isExpended)
     } else {
@@ -73,30 +110,114 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
     }
   }
 
-  const onClickOpenSubTaskAdd = () => {
-    // if (selectedTaskId !== null && openSubTaskEdit === true) {
-    //   setSubTaskId(null)
-    //   setOpenSubTaskEdit(false)
-    // }
-    // setSubtaskTitle('')
-    setIsOpenSubtaskAdd(true)
-  }
-
   const onChangeSubtaskTitle = (e) => {
     setSubtaskTitle(e.target.value);
   }
 
-  const createSubTask = (task) => {
-    console.log('--createSubTask--task--', task)
-    // setSubTaskAddLoading(true)
-    // props.subTaskAdd(task, subtaskTitle)
-    // setSubtaskTitle('')
+  const onClickOpenSubTaskAdd = () => {
+    if (selectedTaskId !== null && openSubTaskEdit === true) {
+      setSubTaskId(null)
+      setOpenSubTaskEdit(false)
+    }
+    setSubtaskTitle('')
+    setIsOpenSubtaskAdd(true)
+  }
+
+  const createSubTask = (e, task) => {
+    e.preventDefault()
+    setSubTaskAddLoading(true)
+    props.subTaskAdd(task, subtaskTitle)
+    setSubtaskTitle('')
   }
 
   const cancelSubtaskAdd = (task) => {
     setIsOpenSubtaskAdd(false)
   }
 
+  const onClickEditSubTask = (taskId, subTaskId, subTaskTitle) => {
+    setSelectedTaskId(taskId)
+    setSubTaskId(subTaskId)
+    setSubtaskTitle(subTaskTitle)
+    setOpenSubTaskEdit(true)
+  }
+
+  const onClickSubTaskUpdate = (taskId, subTaskId, subTaskTitle) => {
+    setSubTaskEditLoading(true)
+    if (isOpenSubtaskAdd === true) {
+      setIsOpenSubtaskAdd(false)
+    }
+    // setOpenSubTaskEdit(false)
+    props.updateSubTask(taskId, subTaskId, subTaskTitle)
+  }
+
+  const onClickCancelEditSubTask = () => {
+    setSubTaskId(null)
+    setSubtaskTitle('')
+    setOpenSubTaskEdit(false)
+  }
+
+  const onClickDeleteSubTask = (taskId, subTaskId) => {
+    setSubTaskDeleteLoading(true)
+    props.deleteSubTask(taskId, subTaskId)
+  }
+
+  const onClickSubTaskStatusUpdate = (taskId, subTaskId, status) => {
+    setSubTaskUpdateStatusLoading(true)
+    props.updateSubTaskStatus(taskId, subTaskId, status)
+  }
+
+
+  let renderSubTaskEditForm = null
+  const showEditForm = (subTaskStatus) => {
+    if (selectedTaskId !== null && subTaskId !== null) {
+
+      renderSubTaskEditForm =
+        <div key={`edit-form-${subTaskId}`} className="add-new-task-con">
+          {subtaskEditLoading ? <LazyLoading /> : <>
+            <span className="anchor_complete">
+              <i className={subTaskStatus === 'INPROGRESS' ? "ms-Icon ms-Icon--Accept" : "ms-Icon ms-Icon--Accept completed"} aria-hidden="true"></i>
+            </span>
+            <div className="classtop add-new-task-field">
+              <Form.Field className="fillarea">
+
+                <Input placeholder='Enter your text here....' size='small' className="full-width "
+                  type="text"
+                  value={subtaskTitle}
+                  onChange={onChangeSubtaskTitle}
+                />
+              </Form.Field>
+              <Form.Field className="d-flex">
+                <button className="greenbutton anchor_complete" onClick={() => onClickSubTaskUpdate(selectedTaskId, subTaskId, subtaskTitle)}>
+                  <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
+                </button> &nbsp;  <button className="redbutton anchor_complete" onClick={onClickCancelEditSubTask}>
+                  <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i> </button>
+              </Form.Field>
+            </div>
+          </>}
+        </div>
+    }
+    return renderSubTaskEditForm
+  }
+
+  let renderSubtaskItems = null
+  const showSubTaskItems = (taskId, subTaskId, subTaskTitle, subtaskStatus, index) => {
+    renderSubtaskItems =
+      <div id={subTaskId} className="d-flex align-items-center checklist-listing-main">
+        <span className="anchor_complete" onClick={() => onClickSubTaskStatusUpdate(taskId, subTaskId, subtaskStatus === 'INPROGRESS' ? 'COMPLETED' : 'INPROGRESS')}>
+
+          {subtaskStatus === 'INPROGRESS' ?
+            <a title={t("project_tab_menu.task.completed")}><i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i> </a>
+            :
+            <i className="ms-Icon ms-Icon--Accept completed" aria-hidden="true"></i>
+          }
+        </span>
+        <span className="task-checklisting-text">{index + 1}. {subTaskTitle}</span>
+        <span className="checklist-actions" onClick={() => onClickEditSubTask(taskId, subTaskId, subTaskTitle)} > <Icon name="pencil" /></span>
+        <span className="checklist-actions" onClick={() => onClickDeleteSubTask(taskId, subTaskId)} >< Icon name="trash alternate outline" /> </span>
+      </div>
+
+    return renderSubtaskItems
+  }
 
   return (
     <div className="detail-file-listing-box">
@@ -156,7 +277,7 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
                             <Dropdown.Menu>
                               <Dropdown.Item onClick={() => veiwTaskbyId(task)} icon='eye' text='View detail' />
                               <Dropdown.Item onClick={() => editTaskbyId(task)} icon='pencil' text='Edit' />
-                              <Dropdown.Item onClick={() => updateStatus(task)} icon='check circle outline' text='Mark as complete' />
+                              <Dropdown.Item onClick={() => updateTaskStatus(task)} icon='check circle outline' text='Mark as complete' />
                               <Dropdown.Item onClick={() => deleteTaskbyId(task)} icon='trash alternate outline' text='Delete' />
                             </Dropdown.Menu>
                           </Dropdown>
@@ -165,48 +286,52 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
                     </div>
                   </div>
 
-                  {subtaskList && isExpended && (selectedTaskId === task.taskID) ?
-                    <div className="add-task-checklist">
+                  {
+                    (subtaskDeleteLoading || subtaskUpdateStatusLoading) ? <LazyLoading /> : (
+                      <>
+                        {subtaskList && isExpended && (selectedTaskId === task.taskID) ?
+                          <div className="add-task-checklist">
 
-                      {subtaskList?.map((subtask, index) => {
+                            {subtaskList?.map((subtask, index) => {
 
-                        return (<div id={subtask?.subtaskID} className="d-flex align-items-center checklist-listing-main">
-                          <span className="anchor_complete">
-                            <i className="ms-Icon ms-Icon--Accept completed" aria-hidden="true"></i>
-                          </span>
-                          <span className="task-checklisting-text">{index + 1}. {subtask?.subtaskTitle}</span>
-                          <span className="checklist-actions"> <Icon name="pencil" /></span>
-                          <span className="checklist-actions">< Icon name="trash alternate outline" /> </span>
-                        </div>)
-                      })}
+                              const isSubTaskShowEdit = openSubTaskEdit === true && subtask.subtaskID === subTaskId
 
-                      {isOpenSubtaskAdd ?
-                        <div className="add-new-task-con">
-                          <span className="anchor_complete checklist-complete-box">
-                            <a title="Mark as complete"> <span><i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></span> </a>
-                          </span>
-                          <div className="classtop add-new-task-field">
-                            <Form.Field className="fillarea">
-                              <Input placeholder='Enter your text here....' size='small' className="full-width" type="text" value={subtaskTitle}
-                                onChange={onChangeSubtaskTitle} />
-                            </Form.Field>
-                            <Form.Field className="d-flex">
-                              <button className="greenbutton anchor_complete" onClick={() => createSubTask(task)}>
-                                <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
-                              </button>
-                              <button className="redbutton anchor_complete" onClick={cancelSubtaskAdd}>
-                                <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i>
-                              </button>
-                            </Form.Field>
+                              return isSubTaskShowEdit ? showEditForm(subtask?.status) : showSubTaskItems(task?.taskID, subtask?.subtaskID, subtask?.subtaskTitle, subtask?.status, index)
+
+                            })}
+
+                            {isOpenSubtaskAdd ?
+                              <div className="add-new-task-con">
+                                {subtaskAddLoading ? <LazyLoading /> :
+                                  <>
+                                    <span className="anchor_complete checklist-complete-box">
+                                      <a title="Mark as complete"> <span><i className="ms-Icon ms-Icon--Accept" aria-hidden="true"></i></span> </a>
+                                    </span>
+                                    <div className="classtop add-new-task-field">
+                                      <Form.Field className="fillarea">
+                                        <Input placeholder='Enter your text here....' size='small' className="full-width" type="text" value={subtaskTitle}
+                                          onChange={onChangeSubtaskTitle} />
+                                      </Form.Field>
+                                      <Form.Field className="d-flex">
+                                        <button className="greenbutton anchor_complete" onClick={(e) => createSubTask(e, task)}>
+                                          <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
+                                        </button>
+                                        <button className="redbutton anchor_complete" onClick={cancelSubtaskAdd}>
+                                          <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i>
+                                        </button>
+                                      </Form.Field>
+                                    </div>
+                                  </>}
+                              </div>
+                              :
+                              <div className="add-new-checklist-button">
+                                <div className="add-new-link" onClick={onClickOpenSubTaskAdd}> <span className="anchor_complete"><i className="ms-Icon ms-Icon--Add" aria-hidden="true"></i> Add new</span></div>
+                              </div>
+                            }
                           </div>
-                        </div>
-                        :
-                        <div className="add-new-checklist-button">
-                          <div className="add-new-link" onClick={onClickOpenSubTaskAdd}> <span className="anchor_complete"><i className="ms-Icon ms-Icon--Add" aria-hidden="true"></i> Add new</span></div>
-                        </div>
-                      }
-                    </div>
-                    : null}
+                          : null}
+                      </>)
+                  }
 
                 </div>
               </div>
@@ -215,6 +340,7 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
 
 
               {
+
                 // task.status === "COMPLETED" ?
                 // <div key={task?.taskTypeID}>
                 //   <div className="card-body d-flex align-items-center justify-content-between flex-wrap">
@@ -361,6 +487,7 @@ export function TaskListOnFilePins(props: TaskListOnFilePinsProps) {
                 //     </div>
                 //   </div>
                 // </div>
+
               }
             </div>
           )

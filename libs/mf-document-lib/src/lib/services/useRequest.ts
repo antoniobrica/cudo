@@ -1,4 +1,5 @@
 import { DocumentNode, useQuery, useMutation } from "@apollo/react-hooks";
+import { IComments } from "../interfaces/comment";
 import { FileMutation, IFiles, IToken, IFileVersion } from "../interfaces/document";
 
 export function useTokenQuery(gqlQuery: DocumentNode) {
@@ -18,5 +19,10 @@ export function useFileMutation(gqlQuery: DocumentNode){
 
 export function useFileVersionQuery(gqlQuery: DocumentNode, variable) {
   const { loading, error, data } = useQuery<IFileVersion>(gqlQuery, variable);
+  return { loading, error, data };
+}
+
+export function useCommentQuery(gqlQuery: DocumentNode, variable) {
+  const { loading, error, data } = useQuery<IComments>(gqlQuery, variable);
   return { loading, error, data };
 }
