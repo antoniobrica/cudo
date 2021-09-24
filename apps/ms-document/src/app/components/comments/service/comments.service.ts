@@ -17,7 +17,7 @@ export class CommentsService {
     ) { }
 
     async getComments(commentsFilter: CommentsFilterParams) {
-        const comments = await this.commentsRepository.find({ where: { ...commentsFilter } });
+        const comments = await this.commentsRepository.find({ where: { ...commentsFilter, isDeleted: false } });
         if (comments) {
             return comments;
         }

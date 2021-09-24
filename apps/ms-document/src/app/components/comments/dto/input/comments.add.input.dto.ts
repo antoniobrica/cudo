@@ -11,7 +11,13 @@ export class CommentsCreateInputDto {
     @Field({ description: `comment message` })
     comment: string;
 
-    @Field({ nullable: true, description: `Comment created by user` })
+    @Field({ nullable: true, description: `Comment created by user name` })
     createdBy?: string;
+
+    @Field({ nullable: true, description: `Comment created by user email` })
+    createdByEmail?: string;
+
+    @Field({ nullable: true, description: `Comment created by user profile url` })
+    createdByUrl?: string;
     
 }

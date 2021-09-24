@@ -331,6 +331,11 @@
         "reference_added": "Project reference added to File",
         "file_deleted": "File deleted successfully",
         "file_version_deleted": "File version deleted successfully"
+      },
+      "comment": {
+        "comment_added": "Comment added successfully",
+        "comment_updated": "Comment updated successfully",
+        "comment_deleted": "Comment deleted successfully"
       }
     },
     "error": {

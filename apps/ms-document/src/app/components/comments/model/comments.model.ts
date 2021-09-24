@@ -12,9 +12,15 @@ export class CommentsModel {
     @Field({ description: `comment of comments` })
     comment: string;
     
-    @Field({ nullable: true, description: `comment created by` })
+    @Field({ nullable: true, description: `comment created by name` })
     createdBy?: string;
 
+    @Field({ nullable: true, description: `Comment created by user email` })
+    createdByEmail?: string;
+
+    @Field({ nullable: true, description: `Comment created by user profile url` })
+    createdByUrl?: string;
+    
     @Field()
     createdAt?: Date;
 
