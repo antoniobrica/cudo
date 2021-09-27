@@ -4,11 +4,11 @@ import { CreateBKPLayerTwo } from './args/bkp.childrenLayerTwo';
 
 @InputType()
 export class AddLayerTwoBkpHierarchyInput extends PartialType(CreateBKPchildren) {
-  @Field({ description: `This is for bkpHierarchyLayerOne ID`})
-  bkpCostID:string
+  @Field({ description: `This is structure ID` })
+  structureID: string
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  @Field(type => [CreateBKPLayerTwo], {nullable:true, description: `BKP Children` })
+  @Field(type => [CreateBKPLayerTwo], { nullable: true, description: `BKP Children` })
   childrenLayerTwo?: CreateBKPLayerTwo[];
 }
 

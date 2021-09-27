@@ -12,6 +12,7 @@ import { useMutation } from '@apollo/client';
 import { ICosts } from './interfaces/cost';
 import { useHistory } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+import { BkpHierarchyIndex } from '@cudo/mf-account-app-lib';
 
 const defaultLanguage = 'de-DE';
 const supportedLanguages = [defaultLanguage, 'en-GB'];
@@ -143,14 +144,14 @@ export function App() {
     });
   }
 
-  if (loading) {
-    return <LoaderPage />
-  }
+  // if (loading) {
+  //   return <LoaderPage />
+  // }
 
-  if (data) {
-    console.log('cost-data', data);
+  // if (data) {
+  //   console.log('cost-data', data);
 
-  }
+  // }
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div>
@@ -160,7 +161,8 @@ export function App() {
         </div>
         {editCostLoading && <LoaderPage />}
         {openCostDelete && <CostDelete costId={costId} openAlertF={openCostDelete} cancel={closeDelete} confirm={confirmDeleteCost} />}
-        <CostList addNew={addNew} costs={data?.costs} delete={deleteCost} updateBkpCost={updateBkpCost}></CostList>
+        {/* <CostList addNew={addNew} costs={data?.costs} delete={deleteCost} updateBkpCost={updateBkpCost}></CostList> */}
+        <BkpHierarchyIndex />
         {/* <Button onClick={() => changeLanguage('en-GB')}>EN</Button>
         <Button onClick={() => changeLanguage('de-DE')}>DE</Button> */}
       </div>

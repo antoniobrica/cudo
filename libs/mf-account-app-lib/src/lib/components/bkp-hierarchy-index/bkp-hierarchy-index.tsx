@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
 import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
-import Bkps from '../bkps/bkps';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
+import BkpHierarchy from '../bkp-hierarchy/bkp-hierarchy';
 
 /* eslint-disable-next-line */
 const client = new ApolloClient({
@@ -12,24 +11,21 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 /* eslint-disable-next-line */
-export interface BkpsIndexProps {
-  parentBKPSelect?
-  bkp?
-  bkpCostFilter?
+export interface BkpHierarchyIndexProps {
+  // parentBKPSelect?
+  // bkp?
+  // folderOpen?
 }
 
-export function BkpsIndex(props: BkpsIndexProps) {
-  const onSelectBkp = (data) => {
-    props.parentBKPSelect(data)
-  }
+export function BkpHierarchyIndex(props: BkpHierarchyIndexProps) {
+
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <Bkps bkpCostFilter={props.bkpCostFilter} parentBKPSelect={onSelectBkp} bkp={props.bkp} />
+      <BkpHierarchy />
       </ApolloHooksProvider>
     </ApolloProvider>
   );
 }
 
-export default BkpsIndex;
-
+export default BkpHierarchyIndex;

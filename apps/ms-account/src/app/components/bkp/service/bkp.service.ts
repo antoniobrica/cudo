@@ -49,10 +49,12 @@ export class BkpService {
   }
 
   public async findAllBkp(refFilter: ReferenceFilterParams, titleFilter: BkpTitleFilterParams): Promise<BkpEntity[]> {
+    const bkpID = titleFilter.bkpId ? titleFilter.bkpId : ""
     const selectedReference = await this.referenceService.getReferenceById(refFilter)
     return await this.BkpRepository.find({
       where: {
         bkpTitle: Like(`%${titleFilter.bkpTitle}%`),
+        bkpID: Like(`${bkpID}%`),
         reference: {
           id: selectedReference.id
         }
