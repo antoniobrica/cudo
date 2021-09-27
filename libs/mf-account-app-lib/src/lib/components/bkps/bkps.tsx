@@ -12,6 +12,7 @@ import { useLocation } from 'react-router-dom';
 export interface BkpsProps {
   parentBKPSelect?,
   bkp?
+  bkpCostFilter?
 }
 
 export function Bkps(props: BkpsProps) {

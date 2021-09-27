@@ -1,3 +1,4 @@
+import { string } from '@hapi/joi';
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { BkpHierarchyFilterTitle } from '../dto/args/bkpHierarchy.param';
@@ -5,6 +6,7 @@ import { BkpHierarchyFilterID } from '../dto/args/bkpId.fiolter';
 import { BKPFilterParam } from '../dto/bkp.filter';
 import { CreateBkpHierarchyInput } from '../dto/create-bkphierarchy.input';
 import { BkpDeleteInput } from '../dto/delete.bkp';
+import { UpdateBKPLayerTwo } from '../dto/update-bkp-layer-two.input';
 import { AddLayerTwoBkpHierarchyInput } from '../dto/update-bkphierarchy.input';
 import { bkpLayerTwoModel } from '../model/bkp-layerTwo.model';
 import { SearchModel } from '../model/bkp-serch.model';
@@ -51,12 +53,19 @@ export class BkpHierarchyResolver {
     return this.bkpHierarchyService.deleteBkp(bkpDeleteInput);
   }
 
-  @Mutation(() => [bkpLayerTwoModel])
-  async addLayerTwoBkpHierarchy(
+  @Mutation(() => [BkpHierarchyModel])
+  async createBkpCost(
     @Args('addLayerTwoBkpHierarchy') addLayerTwoBkpHierarchy: AddLayerTwoBkpHierarchyInput,
     @Args('referenceFilter') referenceFilter: ReferenceFilterParams
   ) {
-    return this.bkpHierarchyService.addLayerTwoBkpHierarchy(addLayerTwoBkpHierarchy, referenceFilter)
+    return this.bkpHierarchyService.createBkpCost(addLayerTwoBkpHierarchy, referenceFilter)
+  }
+
+  @Mutation(() => bkpLayerTwoModel)
+  async updateBkpCost(
+    @Args('updateBKPLayerTwo') updateBKPLayerTwo: UpdateBKPLayerTwo
+  ) {
+    return this.bkpHierarchyService.updateBkpCost(updateBKPLayerTwo)
   }
 
 }

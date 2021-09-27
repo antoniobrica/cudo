@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 import { BkpHierarchyEntity } from '../../../entities/bkphierarchy.entity';
@@ -11,6 +11,7 @@ import { BkpHierarchyFilterID } from '../dto/args/bkpId.fiolter';
 import { BKPFilterParam } from '../dto/bkp.filter';
 import { CreateBkpHierarchyInput } from '../dto/create-bkphierarchy.input';
 import { BkpDeleteInput } from '../dto/delete.bkp';
+import { UpdateBKPLayerTwo } from '../dto/update-bkp-layer-two.input';
 import { AddLayerTwoBkpHierarchyInput } from '../dto/update-bkphierarchy.input';
 
 
@@ -78,34 +79,43 @@ export class BkpHierarchyService {
   // }
 
   // add bkpCosts based on layer two bkpCostId
-  public async addLayerTwoBkpHierarchy(addLayerTwoBkpHierarchy: AddLayerTwoBkpHierarchyInput, referenceFilter: ReferenceFilterParams): Promise<BkpLayerTwoEntity[]> {
-    const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
-    const children = await this.BkpLayerOneRepository.findOne({
-      where: { bkpCostID: addLayerTwoBkpHierarchy.bkpCostID },
-      relations: ['bkpChildrenLayerTwo']
-    });
-    for (let index = 0; index < addLayerTwoBkpHierarchy.childrenLayerTwo.length; index++) {
-      const layerTwo = new BkpLayerTwoEntity({ ...addLayerTwoBkpHierarchy.childrenLayerTwo[index] });
-      const newLayerTwo = await this.BkpLayerTwoRepository.create({ ...layerTwo, references: { id: selectedReference.id } });
-      const savedLayerTwo = await this.BkpLayerTwoRepository.save({ ...newLayerTwo });
+  public async createBkpCost(addLayerTwoBkpHierarchy: AddLayerTwoBkpHierarchyInput, referenceFilter: ReferenceFilterParams) {
+    const { childrenLayerTwo, structureID } = addLayerTwoBkpHierarchy
+    const selectedReference = await this.referenceService.getReferenceById(referenceFilter)
 
-      children.bkpChildrenLayerTwo.push(savedLayerTwo)
+    const savedBkpcosts: BkpLayerTwoEntity[] = []
 
+    for (let index = 0; index < childrenLayerTwo.length; index++) { // loop for added bkp costs
+      const BKPID = childrenLayerTwo[index].BKPID
+      const parantBkpId = BKPID[0]
+      const bkp = await this.bkpHierarchyRepository.findOne({
+        where: {
+          "isDeleted": false,
+          structureID,
+          BKPID: parantBkpId,
+          "references": {
+            id: selectedReference.id
+          }
+        }, relations: ['children', 'children.bkpChildrenLayerTwo']
+      });
+
+      const foundChild = bkp.children.find(item => item.BKPID === BKPID[0] + BKPID[1])
+      const child = await this.BkpLayerOneRepository.findOne({
+        where: { bkpCostID: foundChild.bkpCostID },
+        relations: ['bkpChildrenLayerTwo']
+      });
+      const layerTwo = new BkpLayerTwoEntity({ ...childrenLayerTwo[index] })
+      const newLayerTwo = await this.BkpLayerTwoRepository.create({ ...layerTwo, references: { id: selectedReference.id } })
+      const savedLayerTwo = await this.BkpLayerTwoRepository.save({ ...newLayerTwo })
+      child.bkpChildrenLayerTwo.push(savedLayerTwo)
+      savedBkpcosts.push(savedLayerTwo)
+      await this.BkpLayerOneRepository.save({ ...child })
     }
-    const savedLayerOne = await this.BkpLayerOneRepository.save({ ...children })
-    return savedLayerOne.bkpChildrenLayerTwo
+    return await this.getBkps(referenceFilter)
   }
 
   public async getBkps(refFilter: ReferenceFilterParams) {
     const selectedReference = await this.referenceService.getReferenceById(refFilter)
-    // const bkps = await this.bkpHierarchyRepository.find({
-    //   where: {
-    //     "isDeleted": false,
-    //     "references": {
-    //       id: selectedReference.id
-    //     }
-    //   }, relations: ['children', 'children.bkpChildrenLayerTwo']
-    // });
     const bkps = await this.bkpHierarchyRepository.createQueryBuilder('bkphierarchy')
       .leftJoinAndSelect('bkphierarchy.references', 'references')
       .where('references.id = :id', { id: selectedReference.id })
@@ -165,6 +175,22 @@ export class BkpHierarchyService {
       return bkp;
     }
     throw new HttpException('BKPUID Does Not Exists', HttpStatus.NOT_FOUND);
+  }
+
+  // update bkp cost
+  public async updateBkpCost(updateBKPLayerTwo: UpdateBKPLayerTwo):Promise<BkpLayerTwoEntity> {
+    const foundBkpCost = await this.BkpLayerTwoRepository.findOne({ where: { bkpCostID: updateBKPLayerTwo.bkpCostID } })
+
+    if (!foundBkpCost) {
+      throw new NotFoundException('Bkp cost not found')
+    }
+    updateBKPLayerTwo.BKPTitle ? foundBkpCost.BKPTitle = updateBKPLayerTwo.BKPTitle : null
+    updateBKPLayerTwo.description ? foundBkpCost.description = updateBKPLayerTwo.description : null
+    updateBKPLayerTwo.itemPrice ? foundBkpCost.itemPrice = updateBKPLayerTwo.itemPrice : null
+    updateBKPLayerTwo.itemQuantity ? foundBkpCost.itemQuantity = updateBKPLayerTwo.itemQuantity : null
+    updateBKPLayerTwo.itemPrice && updateBKPLayerTwo.itemQuantity ? foundBkpCost.itemTotalPrice = updateBKPLayerTwo.itemPrice * updateBKPLayerTwo.itemQuantity : null
+
+    return await this.BkpLayerTwoRepository.save(foundBkpCost)
   }
 
 

@@ -1,6 +1,6 @@
 import { radios } from '@storybook/addon-knobs';
 import React, { useState } from 'react';
-import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea, Dropdown, Segment, Label, Icon } from 'semantic-ui-react';
+import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea, Dropdown, Segment, Label, Icon, Dimmer, Loader } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import './../../../assets/style/index.scss'
 import { options, types } from '@hapi/joi';
@@ -8,16 +8,19 @@ import { BkpsIndex, HouseStructureIndex } from '@cudo/mf-account-app-lib';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { FileUpload } from '@cudo/mf-document-lib';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { CREATE_BKP_COSTS, GET_BKP_HIERARCHIES } from 'libs/mf-account-app-lib/src/lib/graphql/graphql';
+import { useMutation } from '@apollo/client';
+import { useLocation } from 'react-router-dom';
 export interface IHouse {
   option
   value
   onChange
 }
 export interface ModalCostProps {
-  house?: IHouse,
-  createCost?
+  house?
   openCost?
   cancel?
+  bkpCostFilter
 }
 type Iitem = {
   index?: number
@@ -44,6 +47,19 @@ export function ModalCost(props: ModalCostProps) {
   const [openFile, setOpenFile] = React.useState(false)
   const [files, setFileList] = React.useState<any>([]);
   const [items, setItems] = React.useState<Iitem[]>([])
+  const [loading, setLoading] = React.useState(false)
+
+  const location = useLocation()
+  const referenceID = location?.pathname?.split('/')[3]
+  // create bkp costs
+  const [addBkpCosts, { loading: addBkpLoading, error: addBkpError, data: addBkpData }] = useMutation(CREATE_BKP_COSTS, {
+    refetchQueries: [
+      { query: GET_BKP_HIERARCHIES, variables: { referenceID, referenceType: "COMPANY" } }
+    ]
+  }
+  )
+
+
   React.useEffect(() => {
     if (props.openCost) {
       setOpen(true);
@@ -54,6 +70,18 @@ export function ModalCost(props: ModalCostProps) {
     setItems([...items, {
     } as Iitem])
   }, [])
+
+  // loader and toaster
+  React.useEffect(() => {
+    if (!addBkpLoading && addBkpData) {
+      setLoading(false)
+      cancel()
+    }
+    if (!addBkpLoading && addBkpError) {
+      setLoading(false)
+      cancel()
+    }
+  }, [addBkpData,addBkpError])
 
   const cancel = () => {
     setOpen(false)
@@ -95,6 +123,23 @@ export function ModalCost(props: ModalCostProps) {
     setOpenFile(false)
 
   }
+
+  const createCostData = (items, hs) => {
+    const selectedItems = items?.map(item => {
+      return { ...item, itemQuantity: +item.itemQuantity, itemPrice: +item.itemPrice, itemTotalPrice: item.itemPrice * item.itemQuantity }
+    })
+    const addLayerTwoBkpHierarchy = { structureID: hs.structureID, childrenLayerTwo: selectedItems }
+
+    const variables = {
+      referenceID,
+      referenceType: "COMPANY",
+      addLayerTwoBkpHierarchy
+    }
+
+    addBkpCosts({
+      variables
+    })
+  }
   const createCost = () => {
     items.map((data) => {
       if (!data.BKPTitle) {
@@ -133,10 +178,15 @@ export function ModalCost(props: ModalCostProps) {
     //   props.createCost(items)
     //   cancel();
     // }
+    setLoading(true)
     const hs = houseStructure;
-    props.createCost(items, hs)
-    setOpen(false);
-    cancel();
+    if (props.house) {
+      createCostData(items, props.house)
+    } else {
+      createCostData(items, hs)
+    }
+    // setOpen(false);
+    // cancel();
   }
 
   const house = (data) => {
@@ -144,7 +194,7 @@ export function ModalCost(props: ModalCostProps) {
   }
   function CostItem() {
     return items.map((item, index) =>
-      <Table.Row>
+      <Table.Row key={index}>
         <Table.Cell className="row-icon">
           <span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} alt='' />  </span>
         </Table.Cell>
@@ -152,7 +202,7 @@ export function ModalCost(props: ModalCostProps) {
           {index + 1 || 0}
         </Table.Cell>
         <Table.Cell className="cost-bkp-field">
-          <BkpsIndex bkp={''} parentBKPSelect={e => handleChange(e, index)} ></BkpsIndex>
+          <BkpsIndex bkpCostFilter={props.bkpCostFilter} bkp={''} parentBKPSelect={e => handleChange(e, index)} ></BkpsIndex>
           {isValidBkp && <span>Please enter valid bkp</span>}
         </Table.Cell>
         <Table.Cell>
@@ -193,18 +243,38 @@ export function ModalCost(props: ModalCostProps) {
       }
       <Modal className="modal_media add-new-work  right-side--fixed-modal add-new-cost-modal"
         closeIcon
-        onClose={() => setOpen(false)}
+        onClose={cancel}
         onOpen={() => setOpen(true)}
         open={open}
         // trigger={<Button size='mini' className="grey-btn">+ {t('add_cost.add_new')} </Button>}
         closeOnDimmerClick={false}
       >
+
+        {loading &&
+          <Dimmer active inverted Center inline>
+            <Loader size='big'>Submitting</Loader>
+          </Dimmer>
+        }
+
         <Modal.Header><h3>{t('project_tab_menu.cost.add_new_item')} </h3></Modal.Header>
         <Modal.Content body>
           <div>
             <Modal.Header className="cost-modal-header">
               <h3 className="">{t('project_tab_menu.cost.select_house')} <span>({t('project_tab_menu.cost.this_house_contain')})</span></h3>
-              <HouseStructureIndex house={house}></HouseStructureIndex>
+              {
+                props?.house ? (
+                  <Form.Field>
+                    <Segment>
+                      <Input
+                        value={props?.house?.structureName}
+                      // searchInput={{ autoFocus: true }}
+                      />
+                    </Segment>
+                  </Form.Field>
+                ) : (
+                  <HouseStructureIndex house={house}></HouseStructureIndex>
+                )
+              }
             </Modal.Header>
             {/* <Form>
               <Grid columns={2}>
