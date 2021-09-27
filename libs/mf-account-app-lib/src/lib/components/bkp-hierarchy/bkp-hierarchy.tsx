@@ -178,9 +178,9 @@ export function BkpHierarchy(props: BkpHierarchyProps) {
             </div>
 
             <div className="sub-total-item">
-              <p>Sub Total <span>${subTotal}</span></p>
+              <p>{t("project_tab_menu.cost.sub_total")} <span>${subTotal}</span></p>
               <p>GST {gstRate}% <span>${gstCost}</span></p>
-              <p>Total <span>${total}</span></p>
+              <p>{t("project_tab_menu.cost.total")} <span>${total}</span></p>
             </div>
           </div>
 

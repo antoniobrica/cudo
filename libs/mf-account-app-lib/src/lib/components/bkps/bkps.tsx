@@ -21,13 +21,13 @@ export function Bkps(props: BkpsProps) {
   const location = useLocation()
   const referenceID = location.pathname.split('/')[3]
   // const { loading, error, data } = useBkpQuery(GET_BKP);
-  const {loading, error, data} = useQuery(GET_BKP, {
-    variables:{referenceID:"dapr",referenceType:"COMPANY",bkpTitle:""}
+  const { loading, error, data } = useQuery(GET_BKP, {
+    variables: { referenceID: "dapr", referenceType: "COMPANY", bkpTitle: "", bkpId: props.bkpCostFilter }
   })
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   // const { loading: folderL, error: folderE, data: FolderD } = useFolderQuery(GET_FOLDER)
   const { loading: folderL, error: folderE, data: FolderD } = useQuery(GET_FOLDER, {
-    variables:{referenceID:"dapr",referenceType:"COMPANY",folderTitle:""}
+    variables: { referenceID: "dapr", referenceType: "COMPANY", folderTitle: "" }
   })
   React.useEffect(() => {
     if (data) {
@@ -36,14 +36,14 @@ export function Bkps(props: BkpsProps) {
   }, [data, FolderD]);
   React.useEffect(() => {
     if (props.bkp) {
-     
+
       setBKPID(props.bkp)
     }
   }, [props.bkp])
 
   // React.useEffect(()=>{
   //   if(FolderD){
-  
+
   //       const arr = FolderD.Folders.map(({ folderTitle, folderID }) => ({ key: folderID, value: folderTitle, text: folderTitle }))
   //       setItems1(arr);
   //       if(items){
@@ -56,7 +56,7 @@ export function Bkps(props: BkpsProps) {
   // }, [FolderD]);
 
   const onBkp = (event, data) => {
-  
+
     const bkpID = { BKPID: '', BKPIDTitle: '' };
     for (let i = 0; i <= items.length; i++) {
       if (items[i]?.value === data.value) {

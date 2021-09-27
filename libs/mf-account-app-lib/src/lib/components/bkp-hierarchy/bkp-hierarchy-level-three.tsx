@@ -44,7 +44,7 @@ const BkpHierarchyLevelThree = (props: BkpHierarchyLevelThreeProps) => {
     return (
         <li>
             {
-                openAddCost && <ModalCost house={props?.house} openCost={openAddCost} cancel={cancel} bkpCostFilter={""}></ModalCost>
+                openAddCost && <ModalCost house={props?.house} openCost={openAddCost} cancel={cancel} bkpCostFilter={props?.layerThreeBKp?.BKPID}></ModalCost>
             }
             <div className="treeview__level show" data-level="B">
 

@@ -26,10 +26,10 @@ export const GET_USERS = gql`
 //     }
 
 export const GET_BKP = gql`
-query Bkp($referenceID:String!,$referenceType:ReferenceType!,$bkpTitle:String!)
+query Bkp($referenceID:String!,$referenceType:ReferenceType!,$bkpTitle:String!,$bkpId:String!)
 {
   Bkp(
-    titleFilter: { bkpTitle: $bkpTitle }
+    titleFilter: { bkpTitle: $bkpTitle,bkpId:$bkpId }
     referenceFilter: {
       referenceType: $referenceType
       referenceID: $referenceID

@@ -192,10 +192,11 @@
       "this_house_contain": "This house will contain all the BKP",
       "item_quality": "Item quality",
       "add_new_item": "Add new item",
-      "add_files" : "Add files for complete cost",
+      "add_files": "Add files for complete cost",
       "drag_and_drop": "Drag & drop or click here to upload file",
       "description": "Description",
-      "files": "Files"
+      "files": "Files",
+      "total": "Total"
     },
     "tender": {
       "title": "Tender"
