@@ -718,6 +718,7 @@
         display: flex;
         border-bottom: 1px solid #F1F5F8;
         padding: 15px 0;
+        position: relative;
         &:last-child {
           border-bottom: none;
         }
@@ -755,13 +756,7 @@
                 .checklist-actions {
                   i {
                     cursor: pointer;
-                    margin-left: 5px;
-                    &.trash {
-                      color: red;
-                    }
-                    &.pencil {
-                      color: #37BA77;
-                    }
+                    margin-left: 5px;                   
                   }
                 }
               }

@@ -179,6 +179,62 @@ query Tasks($referenceID: String!)
 }
 `;
 
+export const GET_TASKS_BY_TYPES = gql`
+query TasksByTasktypes(
+  $referenceID: String!,
+  $fileID: String!
+){
+   tasksByTasktypes(
+    referenceFilter:{referenceID: $referenceID ,referenceType:PROJECTTYPE} 
+    taskTypeFilter:{fileID: $fileID,taskType:PIN}
+  ){ 
+    taskID 
+    taskTitle 
+    startDate
+    endDate
+    estimatedDays
+    sendNotification
+    saveTaskAsTemplate
+    BKPID
+    BKPTitle
+    phaseID
+    description
+    phaseName
+    status
+    updatedAt
+    createdAt
+    updatedBy
+    createdBy
+    taskTypeID
+    fileID
+    taskType
+    workTypeID
+    workTypeName
+    fileName   
+    files{
+     fileID
+     fileName
+     fileUrl
+    }
+    assignees{
+      userID
+      userName
+      imageUrl
+    }
+    followers{
+      userID
+      userName
+      imageUrl
+    }
+    subtasks{
+      subtaskID 
+      subtaskTitle 
+      status
+      isDeleted
+    }
+  } 
+}`;
+
 
 export const ADD_TASK = gql`
 mutation CreateTask(
@@ -291,8 +347,42 @@ mutation UpdateTask(
       subtasks: $subtasks
 
    }){
-    taskID
-    status    
+      taskID
+      taskTitle
+      startDate
+      endDate
+      estimatedDays
+      sendNotification
+      saveTaskAsTemplate
+      BKPID
+      BKPTitle
+      phaseID
+      description
+      phaseName
+      status
+      updatedAt
+      createdAt
+      updatedBy
+      createdBy
+      taskTypeID
+      fileID
+      taskType
+      workTypeID
+      workTypeName
+      sequenceNumber
+      reference{
+        referenceID
+      }
+      assignees{
+        userID
+        userName
+      }
+      files{fileID,fileName,fileUrl} 
+      followers{
+        userID
+        userName
+      }
+      subtasks{subtaskID, subtaskTitle, status,isDeleted}
   }
 }`;
 
@@ -307,4 +397,79 @@ mutation DeleteTask(
   ){
       taskID
     }
+}`;
+
+// Added for Sub task
+export const UPDATE_TASK_STATUS = gql`
+mutation UpdateTask(
+  $taskID: String!,    
+  $status: TASKSTATUS!,
+){ 
+    updateTask(
+        taskDetailsUpdate: {
+        taskBasics:{
+          taskID: $taskID,
+          status: $status          
+        }      
+   }){
+    taskID
+    status    
+  }
+}`;
+
+
+export const UPDATE_SUBTASK_STATUS = gql`
+mutation UpdateSubTask(
+  $subtaskID: String!,    
+  $status: TASKSTATUS!  
+  ){ 
+  updateSubTask(
+    subTaskDetail: {
+      status:$status
+    }
+    subTaskFilter:{
+      subtaskID:$subtaskID
+     }    
+  ) {
+    subtaskID
+    subtaskTitle
+    status
+    isDeleted
+  }
+}`;
+
+export const UPDATE_SUBTASK = gql`
+mutation UpdateSubTask(
+    $subtaskID: String!,    
+    $subtaskTitle: String!  
+  ){ 
+    updateSubTask(
+      subTaskDetail: {
+        subtaskTitle:$subtaskTitle
+      }
+      subTaskFilter:{
+        subtaskID:$subtaskID
+      }    
+    ) {
+      subtaskID
+      subtaskTitle
+      status
+      isDeleted
+    }
+}`;
+
+export const DELETE_SUBTASK = gql`
+mutation DeleteSubTask(
+  $subtaskID: String!
+  ){ 
+    deleteSubTask(
+      subtaskDeleteInput:{
+        subtaskID:$subtaskID
+      }    
+  ) {
+    subtaskID
+    subtaskTitle
+    status
+    isDeleted
+  }
 }`;

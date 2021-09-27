@@ -247,6 +247,8 @@ export const GET_COMMENTS = gql`query GetComments($uploadedFileID:String!){
     uploadedFileID
     comment
     createdBy
+    createdByEmail
+    createdByUrl
     createdAt
     updatedAt
     isDeleted
@@ -256,19 +258,25 @@ export const GET_COMMENTS = gql`query GetComments($uploadedFileID:String!){
 export const ADD_COMMENT = gql`mutation CreateComment(
   $uploadedFileID:String!,
   $comment:String!,
-  $createdBy:String!
+  $createdBy:String!,
+  $createdByEmail: String!,
+  $createdByUrl: String!
 ){
   createComment(
     commentCreateDto: {
       uploadedFileID: $uploadedFileID # "ca813050-095f-11ec-b7f7-13a0db5fb508"
       comment: $comment # "test new comment message another abcd"
       createdBy: $createdBy # "Mukut"
+      createdByEmail: $createdByEmail
+      createdByUrl: $createdByUrl
     }
   ){
     commentsID
     uploadedFileID
     comment
     createdBy
+    createdByEmail
+    createdByUrl
     createdAt
     updatedAt
     isDeleted
@@ -293,6 +301,8 @@ export const UPDATE_COMMENT = gql`mutation UpdateComment(
     uploadedFileID
     comment
     createdBy
+    createdByEmail
+    createdByUrl
     createdAt
     updatedAt
     isDeleted
@@ -309,6 +319,8 @@ export const DELETE_COMMENT = gql`mutation DeleteComment($commentsID:String!){
     uploadedFileID
     comment
     createdBy
+    createdByEmail
+    createdByUrl
     createdAt
     updatedAt
     isDeleted

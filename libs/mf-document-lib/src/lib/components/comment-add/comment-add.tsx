@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux'
+import { documentAction } from '../../../../../../apps/mf-document-app/src/app/redux/actions'
+
 import ReactQuill, { Quill } from 'react-quill';
 import { Button, Input, Form, Grid } from 'semantic-ui-react';
 
@@ -14,7 +17,12 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
 export interface CommentAddProps {
-  uploadedFileID?
+  uploadedFileID?,
+  // companyId?,
+  // loggedUserEmail?,
+  // loggedUserID?,
+  // loggedUserName?,
+  // loggedUserProfileURL?
 }
 
 interface AddCommentError {
@@ -24,6 +32,9 @@ interface AddCommentError {
 export function CommentAdd(props: CommentAddProps) {
 
   const { t } = useTranslation();
+
+  // const dispatch = useDispatch()
+  // dispatch({ type: documentAction.LOGGED_USER_EMAIL, payload: "test value" })
 
   const [commentMessage, setCommentMessage] = useState('')
   const [commentAddLoadingState, setCommentAddLoadingState] = useState(false)
@@ -45,8 +56,8 @@ export function CommentAdd(props: CommentAddProps) {
     }
   }, [commentAddData])
 
-// #region Toast Success and Error Messages
-  
+  // #region Toast Success and Error Messages
+
   // set error message to toaster
   useEffect(() => {
     if (commentErrors) {
@@ -78,8 +89,8 @@ export function CommentAdd(props: CommentAddProps) {
     toast(data)
   }
 
-   // set toaster for Add comment success
-   useEffect(() => {
+  // set toaster for Add comment success
+  useEffect(() => {
     if (!commentAddLoading && commentAddData) {
       setCommentAddLoadingState(false)
       getCommentToasterMessage(t("toaster.success.comment.comment_added"))
@@ -92,15 +103,21 @@ export function CommentAdd(props: CommentAddProps) {
   // #endregion
 
 
-  const onChangeComment = (html) => {
-    setCommentMessage(html)
+  const onChangeComment = (html, editor) => {
+    const textLength = editor.getLength()
+    if (textLength > 1) {
+      setCommentMessage(html)
+    } else {
+      setCommentMessage('')
+    }
   }
-
-  const onClickCommentAdd = () => {
    
+  const onClickCommentAdd = (e) => {
+    e.preventDefault()
+
     // Validation
-    const foundErrors: AddCommentError = {}    
-    if (commentMessage.length < 8) {
+    const foundErrors: AddCommentError = {}
+    if (!commentMessage) {
       foundErrors.commentError = t("common.errors.comment_error")
       setErrors(foundErrors)
       return false
@@ -108,16 +125,22 @@ export function CommentAdd(props: CommentAddProps) {
 
     // show Loader
     setCommentAddLoadingState(true)
-    
+
+    // get logged user info
+    const loggedUserDetailRetrieve = localStorage.getItem('loggedUserDetail');
+    const loggedUserDetail = JSON.parse(loggedUserDetailRetrieve);
+
     // add comment Graphql
     addComment({
       variables: {
         uploadedFileID: props?.uploadedFileID,
         comment: commentMessage,
-        createdBy: "John Smith"
+        createdBy: loggedUserDetail.loggedUserName,
+        createdByEmail: loggedUserDetail.loggedUserEmail,
+        createdByUrl: loggedUserDetail.loggedUserProfileURL !== null ? loggedUserDetail.loggedUserProfileURL : ""
       },
       update: (cache, createdCommentData) => {
-        
+
         const cacheData = cache.readQuery({
           query: GET_COMMENTS,
           variables: { uploadedFileID: props?.uploadedFileID },
@@ -133,13 +156,14 @@ export function CommentAdd(props: CommentAddProps) {
 
       }
     })
-    // setCommentMessage('')
-    console.log('---end-comment-add--')
+    setCommentMessage('')
+    setErrors({})
+    
   };
 
   return (
     <Form.Field>
-      <label>Comments ({commentListData?.getComments?.filter((item)=>item.isDeleted!=true).length})</label>
+      <label>Comments ({commentListData?.getComments?.filter((item) => item.isDeleted != true).length})</label>
       {commentAddLoadingState ? <LazyLoading /> :
         <>
           {/* <Input placeholder='click to add comment' size='small' className="full-width" type="text" /> */}
@@ -159,13 +183,13 @@ export function CommentAdd(props: CommentAddProps) {
             //   }
             // }}
             placeholder="click to add comment"
-            onChange={(content, delta, source, editor) => onChangeComment(content)}
+            onChange={(content, delta, source, editor) => onChangeComment(content, editor)}
             // onKeyDown={onKeyPresDescription}
             id="txtDescription"
-            // errors={errors?.commentError && !commentMessage}
+          // errors={errors?.commentError && !commentMessage}
           />
-           {errors?.commentError && !commentMessage ? <span className="error-message">{errors.commentError}</span> : null}
-          
+          {errors?.commentError && !commentMessage ? <span className="error-message">{errors.commentError}</span> : null}
+
           <div className="comments-action">
             <i className="ms-Icon ms-Icon--Send" onClick={onClickCommentAdd}></i>
             {/* <Button positive size='small' className="primary full-width" onClick={onClickCommentAdd}>Add Comment</Button> */}
@@ -178,3 +202,13 @@ export function CommentAdd(props: CommentAddProps) {
 }
 
 export default CommentAdd
+
+// const mapStateToProps = state => ({
+//   companyId: state.app.selectedCompany.selectedCompanyId,
+//   loggedUserEmail: state.app.loggedUserDetail.loggedUserEmail,
+//   loggedUserID: state.app.loggedUserDetail.loggedUserID,
+//   loggedUserName: state.app.loggedUserDetail.loggedUserName,
+//   loggedUserProfileURL: state.app.loggedUserDetail.loggedUserProfileURL
+// })
+
+// export default connect(mapStateToProps)(CommentAdd)
