@@ -22,7 +22,7 @@ export function Bkps(props: BkpsProps) {
   const referenceID = location.pathname.split('/')[3]
   // const { loading, error, data } = useBkpQuery(GET_BKP);
   const { loading, error, data } = useQuery(GET_BKP, {
-    variables: { referenceID: "dapr", referenceType: "COMPANY", bkpTitle: "", bkpId: props.bkpCostFilter }
+    variables: { referenceID: "dapr", referenceType: "COMPANY", bkpTitle: "", bkpId: props.bkpCostFilter ? props.bkpCostFilter : "" }
   })
   const { t } = useTranslation()
   // const { loading: folderL, error: folderE, data: FolderD } = useFolderQuery(GET_FOLDER)
