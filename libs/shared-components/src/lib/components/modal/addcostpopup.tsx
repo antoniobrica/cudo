@@ -20,7 +20,10 @@ export interface ModalCostProps {
   house?
   openCost?
   cancel?
+  addBkpCosts?
   bkpCostFilter
+  addLoading?
+  addData?
 }
 type Iitem = {
   index?: number
@@ -47,17 +50,17 @@ export function ModalCost(props: ModalCostProps) {
   const [openFile, setOpenFile] = React.useState(false)
   const [files, setFileList] = React.useState<any>([]);
   const [items, setItems] = React.useState<Iitem[]>([])
-  const [loading, setLoading] = React.useState(false)
+  // const [loading, setLoading] = React.useState(false)
 
   const location = useLocation()
   const referenceID = location?.pathname?.split('/')[3]
   // create bkp costs
-  const [addBkpCosts, { loading: addBkpLoading, error: addBkpError, data: addBkpData }] = useMutation(CREATE_BKP_COSTS, {
-    refetchQueries: [
-      { query: GET_BKP_HIERARCHIES, variables: { referenceID, referenceType: "COMPANY" } }
-    ]
-  }
-  )
+  // const [addBkpCosts, { loading: addBkpLoading, error: addBkpError, data: addBkpData }] = useMutation(CREATE_BKP_COSTS, {
+  //   refetchQueries: [
+  //     { query: GET_BKP_HIERARCHIES, variables: { referenceID, referenceType: "COMPANY" } }
+  //   ]
+  // }
+  // )
 
 
   React.useEffect(() => {
@@ -71,21 +74,20 @@ export function ModalCost(props: ModalCostProps) {
     } as Iitem])
   }, [])
 
-  // loader and toaster
-  React.useEffect(() => {
-    if (!addBkpLoading && addBkpData) {
-      setLoading(false)
-      cancel()
-    }
-    if (!addBkpLoading && addBkpError) {
-      setLoading(false)
-      cancel()
-    }
-  }, [addBkpData,addBkpError])
+  // // loader and toaster
+  // React.useEffect(() => {
+  //   if (props.addLoading === false && props.addData) {
+  //     cancel()
+  //   }
+  //   // if (!props.loading && addBkpError) {
+  //   //   setLoading(false)
+  //   //   cancel()
+  //   // }
+  // }, [props.addLoading])
 
   const cancel = () => {
     setOpen(false)
-    props.cancel(false)
+    props.cancel()
   }
   const handleChange = (event, index) => {
     if (event.target == undefined) {
@@ -132,13 +134,14 @@ export function ModalCost(props: ModalCostProps) {
 
     const variables = {
       referenceID,
-      referenceType: "COMPANY",
+      referenceType: "PROJECTTYPE",
       addLayerTwoBkpHierarchy
     }
 
-    addBkpCosts({
+    props.addBkpCosts({
       variables
     })
+    cancel()
   }
   const createCost = () => {
     items.map((data) => {
@@ -178,7 +181,7 @@ export function ModalCost(props: ModalCostProps) {
     //   props.createCost(items)
     //   cancel();
     // }
-    setLoading(true)
+    // setLoading(true)
     const hs = houseStructure;
     if (props.house) {
       createCostData(items, props.house)
@@ -250,7 +253,7 @@ export function ModalCost(props: ModalCostProps) {
         closeOnDimmerClick={false}
       >
 
-        {loading &&
+        {props.addLoading &&
           <Dimmer active inverted Center inline>
             <Loader size='big'>Submitting</Loader>
           </Dimmer>

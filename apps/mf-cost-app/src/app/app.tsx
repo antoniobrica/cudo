@@ -13,6 +13,7 @@ import { ICosts } from './interfaces/cost';
 import { useHistory } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { BkpHierarchyIndex } from '@cudo/mf-account-app-lib';
+import BkpCostList from './cost-list/bkp-cost-list';
 
 const defaultLanguage = 'de-DE';
 const supportedLanguages = [defaultLanguage, 'en-GB'];
@@ -162,7 +163,7 @@ export function App() {
         {editCostLoading && <LoaderPage />}
         {openCostDelete && <CostDelete costId={costId} openAlertF={openCostDelete} cancel={closeDelete} confirm={confirmDeleteCost} />}
         {/* <CostList addNew={addNew} costs={data?.costs} delete={deleteCost} updateBkpCost={updateBkpCost}></CostList> */}
-        <BkpHierarchyIndex />
+        <BkpCostList />
         {/* <Button onClick={() => changeLanguage('en-GB')}>EN</Button>
         <Button onClick={() => changeLanguage('de-DE')}>DE</Button> */}
       </div>

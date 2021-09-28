@@ -10,6 +10,13 @@ import { DELETE_BKP_COST, GET_BKP_HIERARCHIES, UPDATE_BKP_COST } from '../../gra
 
 interface BkpCostProps {
     bkpCost
+    deleteBkp
+    updateBkpCost
+    deleteLoading?
+    deleteData?
+    updateLoading?
+    updateData?
+
 }
 
 const BkpCost = (props: BkpCostProps) => {
@@ -24,26 +31,26 @@ const BkpCost = (props: BkpCostProps) => {
 
     const location = useLocation()
     const referenceID = location?.pathname?.split('/')[3]
-    const [deleteBkp, { loading: deleteBkpLoading, error: deleteBkpError, data: deleteBkpData }] = useMutation(DELETE_BKP_COST, {
-        refetchQueries: [
-            { query: GET_BKP_HIERARCHIES, variables: { referenceID, referenceType: "COMPANY" } }
-        ]
-    })
+    // const [deleteBkp, { loading: deleteBkpLoading, error: deleteBkpError, data: deleteBkpData }] = useMutation(DELETE_BKP_COST, {
+    //     refetchQueries: [
+    //         { query: GET_BKP_HIERARCHIES, variables: { referenceID, referenceType: "COMPANY" } }
+    //     ]
+    // })
 
-    const [updateBkpCost, { loading: updateBkpLoading, error: updateBkpError, data: updateBkpData }] = useMutation(UPDATE_BKP_COST, {
-        refetchQueries: [
-            { query: GET_BKP_HIERARCHIES, variables: { referenceID, referenceType: "COMPANY" } }
-        ]
-    })
+    // const [updateBkpCost, { loading: updateBkpLoading, error: updateBkpError, data: updateBkpData }] = useMutation(UPDATE_BKP_COST, {
+    //     refetchQueries: [
+    //         { query: GET_BKP_HIERARCHIES, variables: { referenceID, referenceType: "COMPANY" } }
+    //     ]
+    // })
 
     React.useEffect(() => {
-        if (!updateBkpLoading && updateBkpData) {
+        if (!props.updateLoading && props.updateData) {
             cancel()
         }
-        if (!updateBkpLoading && updateBkpError) {
-            cancel()
-        }
-    }, [updateBkpData, updateBkpError])
+        // if (!updateBkpLoading && updateBkpError) {
+        //     cancel()
+        // }
+    }, [props.updateData])
 
     React.useEffect(() => {
         if (props.bkpCost) {
@@ -67,7 +74,7 @@ const BkpCost = (props: BkpCostProps) => {
     }
 
     const onSubmitEditBkp = (bkpCostID) => {
-        updateBkpCost({
+        props.updateBkpCost({
             variables: {
                 bkpCostID,
                 BKPTitle: bkpTitle,
@@ -80,7 +87,7 @@ const BkpCost = (props: BkpCostProps) => {
     }
 
     const onSubmitDeleteBkp = () => {
-        deleteBkp({
+        props.deleteBkp({
             variables: { bkpCostID: selectedCostID }
         })
     }
@@ -92,7 +99,7 @@ const BkpCost = (props: BkpCostProps) => {
 
     return (
         openEditCost ? (
-            updateBkpLoading ? (<LazyLoading />) :
+            props.updateLoading ? (<LazyLoading />) :
                 <Table.Row>
                     <Table.Cell><img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} alt='' /></Table.Cell>
                     <Table.Cell>{props.bkpCost.BKPID}</Table.Cell>
@@ -146,7 +153,10 @@ const BkpCost = (props: BkpCostProps) => {
                     <Table.Cell>
                         <div className="edit-estimated-price" >
                             <Form.Field className="d-flex">
-                                <button className="greenbutton anchor_complete" onClick={() => onSubmitEditBkp(props.bkpCost.bkpCostID)}>
+                                <button
+                                    className="greenbutton anchor_complete"
+                                    onClick={() => onSubmitEditBkp(props.bkpCost.bkpCostID)}
+                                >
                                     <i className="ms-Icon ms-Icon--CheckMark" aria-hidden="true"></i>
                                 </button> &nbsp;  <button className="redbutton anchor_complete" onClick={cancel}>
                                     <i className="ms-Icon ms-Icon--ChromeClose" aria-hidden="true"></i>
@@ -158,38 +168,46 @@ const BkpCost = (props: BkpCostProps) => {
         ) : (
             <>
                 {
-                    openDeleteBkpCost && <DeleteBkpCost open={openDeleteBkpCost} cancel={cancel} deleteBkpCost={onSubmitDeleteBkp} bkpCostID={selectedCostID} />
+                    openDeleteBkpCost && <DeleteBkpCost
+                        open={openDeleteBkpCost}
+                        cancel={cancel}
+                        deleteBkpCost={onSubmitDeleteBkp}
+                        bkpCostID={selectedCostID} />
                 }
-                <Table.Row>
-                    <Table.Cell><
-                        img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} alt='' />
-                    </Table.Cell>
-                    <Table.Cell>{props.bkpCost.BKPID}</Table.Cell>
-                    <Table.Cell>{props.bkpCost.BKPTitle}</Table.Cell>
-                    <Table.Cell>{props.bkpCost.description}</Table.Cell>
-                    <Table.Cell className="file-attached">
-                        <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>
-                        <Label horizontal>{props.bkpCost.bkpCostFiles?.length}</Label>
-                    </Table.Cell>
-                    <Table.Cell>{props.bkpCost.itemQuantity}</Table.Cell>
-                    <Table.Cell>${props.bkpCost.itemPrice}</Table.Cell>
-                    <Table.Cell>
-                        <Dropdown icon='ellipsis horizontal' pointing='right'>
-                            <Dropdown.Menu className="dropdowncomplete">
-                                <Dropdown.Item
-                                    icon='pencil'
-                                    text={t("common.edit")}
-                                    onClick={() => handleOpenEditBkp(props.bkpCost)}
-                                />
-                                <Dropdown.Item
-                                    icon='trash alternate outline'
-                                    text={t("common.delete")}
-                                    onClick={() => handleDeleteBKp(props.bkpCost.bkpCostID)}
-                                />
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </Table.Cell>
-                </Table.Row>
+                {
+                    props.deleteLoading ? (<LazyLoading />)
+                        :
+                        <Table.Row>
+                            <Table.Cell><
+                                img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} alt='' />
+                            </Table.Cell>
+                            <Table.Cell>{props.bkpCost.BKPID}</Table.Cell>
+                            <Table.Cell>{props.bkpCost.BKPTitle}</Table.Cell>
+                            <Table.Cell>{props.bkpCost.description}</Table.Cell>
+                            <Table.Cell className="file-attached">
+                                <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>
+                                <Label horizontal>{props.bkpCost.bkpCostFiles?.length}</Label>
+                            </Table.Cell>
+                            <Table.Cell>{props.bkpCost.itemQuantity}</Table.Cell>
+                            <Table.Cell>${props.bkpCost.itemPrice}</Table.Cell>
+                            <Table.Cell>
+                                <Dropdown icon='ellipsis horizontal' pointing='right'>
+                                    <Dropdown.Menu className="dropdowncomplete">
+                                        <Dropdown.Item
+                                            icon='pencil'
+                                            text={t("common.edit")}
+                                            onClick={() => handleOpenEditBkp(props.bkpCost)}
+                                        />
+                                        <Dropdown.Item
+                                            icon='trash alternate outline'
+                                            text={t("common.delete")}
+                                            onClick={() => handleDeleteBKp(props.bkpCost.bkpCostID)}
+                                        />
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                            </Table.Cell>
+                        </Table.Row>
+                }
             </>
         )
     )

@@ -13,6 +13,16 @@ export interface BkpHierarchyProps {
   // costs?,
   // delete?
   // updateBkpCost?
+  data?
+  addBkpCosts?
+  deleteBkp?
+  updateBkpCost?
+  addLoading?
+  addData?
+  deleteLoading?
+  deleteData?
+  updateLoading?
+  updateData?
 }
 
 
@@ -28,10 +38,10 @@ export function BkpHierarchy(props: BkpHierarchyProps) {
 
   const location = useLocation()
   const referenceID = location?.pathname?.split('/')[3]
-  // load bkp hierarchies 
-  const { loading, error, data } = useQuery(GET_BKP_HIERARCHIES, {
-    variables: { referenceID, referenceType: "COMPANY" } // ref type is project but need to keep company because getting data from DB only for company ref
-  })
+  // // load bkp hierarchies 
+  // const { loading, error, data } = useQuery(GET_BKP_HIERARCHIES, {
+  //   variables: { referenceID, referenceType: "COMPANY" } // ref type is project but need to keep company because getting data from DB only for company ref
+  // })
 
   // load house data
   const { loading: structureLoading, error: structureError, data: structureData } = useStructureQuery(GET_STRUCTURE);
@@ -40,7 +50,7 @@ export function BkpHierarchy(props: BkpHierarchyProps) {
   // get sub total
   React.useEffect(() => {
     let subTotalPrice = 0
-    data?.getBkps?.forEach(item => {
+    props?.data?.getBkps?.forEach(item => {
       item?.children?.forEach(levelTwoItem => {
         levelTwoItem?.bkpChildrenLayerTwo?.forEach(levelThreeItem => {
           subTotalPrice += levelThreeItem.itemTotalPrice
@@ -52,7 +62,7 @@ export function BkpHierarchy(props: BkpHierarchyProps) {
     setGstCost(gstPrice)
     setTotal(subTotalPrice + gstPrice)
 
-  }, [data])
+  }, [props.data])
 
   // toggle open-close edit estimated cost 
   const editCost = () => {
@@ -91,12 +101,20 @@ export function BkpHierarchy(props: BkpHierarchyProps) {
     setOpenAddCost(false)
   }
 
-  if (loading) return <LazyLoading />
+  // if (loading) return <LazyLoading />
 
   return (
     <div className="tabs-main-info-container">
       {
-        openAddCost && <ModalCost house={null} openCost={openAddCost} cancel={cancel} bkpCostFilter={""} />
+        openAddCost && <ModalCost
+          house={null}
+          openCost={openAddCost}
+          cancel={cancel}
+          bkpCostFilter={""}
+          addBkpCosts={props.addBkpCosts}
+          addLoading={props.addLoading}
+          addData={props.addData}
+        />
       }
 
       <div className="main-content-con cost-management-con">
@@ -164,8 +182,21 @@ export function BkpHierarchy(props: BkpHierarchyProps) {
               {/* house name layer */}
               {
                 structureData?.structureRoots?.map(house => (
-                  data?.getBkps?.filter(bkp => bkp.structureID === house.structureID).length > 0
-                  && <House key={house.structureID} house={house} bkpData={data} />
+                  props?.data?.getBkps?.filter(bkp => bkp.structureID === house.structureID).length > 0
+                  && <House
+                    key={house.structureID}
+                    house={house}
+                    bkpData={props.data}
+                    deleteBkp={props.deleteBkp}
+                    updateBkpCost={props.updateBkpCost}
+                    addBkpCosts={props.addBkpCosts}
+                    addLoading={props.addLoading}
+                    addData={props.addData}
+                    deleteLoading={props.deleteLoading}
+                    deleteData={props.deleteData}
+                    updateLoading={props.updateLoading}
+                    updateData={props.updateData}
+                  />
                 ))
               }
 

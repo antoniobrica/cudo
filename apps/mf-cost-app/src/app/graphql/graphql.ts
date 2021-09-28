@@ -122,3 +122,116 @@ DeleteCost(
   id
 }
 }`
+
+
+export const CREATE_BKP_COSTS = gql`
+mutation CreateBKpCost(
+  $referenceID: String!
+  $referenceType: ReferenceType!
+  $addLayerTwoBkpHierarchy: AddLayerTwoBkpHierarchyInput!
+  ) {
+    createBkpCost(
+      referenceFilter: {
+        referenceType: $referenceType
+        referenceID: $referenceID
+      }
+      addLayerTwoBkpHierarchy:$addLayerTwoBkpHierarchy
+    ) {
+      bkpCostID
+      BKPID
+      BKPTitle
+      structureID
+      structureName
+      children {
+        bkpCostID
+        BKPID
+        BKPTitle
+        bkpChildrenLayerTwo {
+          bkpCostID
+          BKPID
+          BKPTitle
+          itemPrice
+          itemQuantity
+          itemTotalPrice
+          description
+        }
+      }
+    }
+  }
+`
+
+export const GET_BKP_HIERARCHIES = gql`
+query GetBkps($referenceID:String!,$referenceType:ReferenceType!)
+{
+  getBkps(
+    refFilter:{referenceType:$referenceType,referenceID:$referenceID}
+  )
+  {
+    bkpCostID
+    BKPID
+    BKPTitle
+    structureID
+    structureName
+    children {
+      bkpCostID
+      BKPID
+      BKPTitle
+      bkpChildrenLayerTwo {
+        bkpCostID
+        BKPID
+        BKPTitle
+        itemPrice
+        itemQuantity
+        itemTotalPrice
+        description
+      }
+    }
+  }
+}
+`
+
+export const DELETE_BKP_COST = gql`
+mutation DeleteBkp(
+  $bkpCostID:String!
+) {
+  deleteBkp(
+    bkpDeleteInput :{
+      bkpCostID:$bkpCostID
+    }
+  ) {
+    BKPID
+    BKPTitle
+    bkpCostID
+  }
+}
+
+`
+export const UPDATE_BKP_COST = gql`
+mutation UpdateBkpCostById(
+  $bkpCostID:String!
+  $BKPTitle:String!
+  $itemPrice:Float!
+  $itemQuantity:Float!
+  $itemTotalPrice:Float!
+  $description:String!
+) {
+  updateBkpCostById(
+    updateBKPLayerTwo :{
+      bkpCostID: $bkpCostID
+      BKPTitle: $BKPTitle
+      description: $description
+      itemPrice: $itemPrice
+      itemTotalPrice: $itemTotalPrice
+      itemQuantity: $itemQuantity
+    }
+  ) {
+    BKPID
+    BKPTitle
+    description
+    itemPrice
+    itemQuantity
+    itemTotalPrice
+  }
+}
+
+`
