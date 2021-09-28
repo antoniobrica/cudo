@@ -39,4 +39,4 @@ export function App() {
 }
 
 export default App;
-// comment to update changed to libs in dev
+// comment to update changed to libs
