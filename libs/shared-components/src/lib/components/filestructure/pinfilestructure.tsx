@@ -18,6 +18,7 @@ export interface FileStructureProps {
 	selectedFileId?,
 	fileVersionDetail?,
 	fileVersionLoading?,
+	isVersionSelected?
 }
 
 export function PinFileStructure(props: FileStructureProps) {
@@ -34,15 +35,12 @@ export function PinFileStructure(props: FileStructureProps) {
 	const [fileId, setFileId] = React.useState('');
 	const [selectedFile, setSelectedFile] = React.useState(null)
 
-
 	const [fileFoldersList, setFileFoldersList] = useState([])
 	const [expand, setExpand] = useState(false);
 	const [selectedExpandId, setSelectedExpandId] = useState(null);
 
 	const [expandVersion, setExpandVersion] = useState(false);
 	const [selectedExpandVersionId, setSelectedExpandVersionId] = useState(null);
-
-
 
 	React.useEffect(() => {
 		if (props.isPinFile) {
@@ -60,6 +58,16 @@ export function PinFileStructure(props: FileStructureProps) {
 		setFtype(data.fileType);
 		setFilesData(data);
 		props.viewFiles(data)
+
+		// In data versionCount property only present 
+		// in parent file detail not in version file detail
+		// so identify by that if present then false for parent file selected 
+		// props?.isVersionSelected(data?.versionCount ? false : true)
+		if(Object(data).hasOwnProperty("versionCount")){
+			props?.isVersionSelected(false)
+		} else {
+			props?.isVersionSelected(true)
+		}
 	}
 
 	// const download = (data) => {

@@ -58,7 +58,7 @@ export class PinsResolver {
 
     @Mutation(() => [PinsModel])
     async updateTaskInfoInPinDetail(@Args("pinsFilter") refFilter: PinsFilterParams,
-        @Args('pinsShiftUpdateDto') pinsTaskInfoUpdateInput: PinsTaskInfoUpdateInputDto,
+        @Args('pinsTaskInfoUpdateDto') pinsTaskInfoUpdateInput: PinsTaskInfoUpdateInputDto,
     ) {
         return this.pinsService.updateTaskReferenceInPinDetail(refFilter, pinsTaskInfoUpdateInput);
     }

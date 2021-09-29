@@ -4,12 +4,16 @@ import Canvas from './canvas';
 // import { Document, Page } from 'react-pdf';
 import { PinTaskListIndex, PinCompletedTaskListIndex } from '@cudo/mf-task-lib';
 import { CommentAdd, CommentList } from '@cudo/mf-document-lib'
+import moment from 'moment';
 
 import { Document, Page, pdfjs } from "react-pdf";
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import CanvasImage from './canvasimage';
 import LazyLoading from '../loader/lazyloader';
 import { AddPinFile } from '@cudo/shared-components';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 function exampleReducer(state, action) {
@@ -22,16 +26,16 @@ function exampleReducer(state, action) {
       throw new Error('Unsupported action...')
   }
 }
-const countryOptions = [
-  { key: 'af', value: 'af', text: 'Afghanistan' },
-  { key: 'ax', value: 'ax', text: 'Aland Islands' },
+// const countryOptions = [
+//   { key: 'af', value: 'af', text: 'Afghanistan' },
+//   { key: 'ax', value: 'ax', text: 'Aland Islands' },
 
-]
+// ]
 
-const versionOptions = [
-  { key: 'af', value: 'map 1', text: 'Ver 1' },
-  { key: 'ax', value: 'map 2', text: 'Ver 2' },
-]
+// const versionOptions = [
+//   { key: 'af', value: 'map 1', text: 'Ver 1' },
+//   { key: 'ax', value: 'map 2', text: 'Ver 2' },
+// ]
 
 export interface FileDetailsProps {
   open?,
@@ -39,6 +43,10 @@ export interface FileDetailsProps {
   dowloadFilesData?,
   fType?
   cancel?
+  isVersionSelected?
+  selectedVersionFileId?
+  selectedFileVersionList?
+  onChangedFileVersion?
 }
 export const ViewFileDetail = (props: FileDetailsProps) => {
   // const [state, dispatch] = React.useReducer(exampleReducer, {
@@ -68,14 +76,100 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
 
   const [openNewTaskAdd, setOpenNewTaskAdd] = React.useState(false)
 
+  const [isVersionSelected, setIsVersionSelected] = React.useState(false)
+  const [selectedVersionFileId, setSelectedVersionFileId] = React.useState(null)
+  const [selectedFileVersionList, setSelectedFileVersionList] = React.useState([])
+  const [versionOptions, setVersionOptions] = React.useState([])
+
+  const [versionSelectChange, setVersionSelectChange] = React.useState(false)
+  const [onVersionChangeWiseSelectedFileTitle, setOnVersionChangeWiseSelectedFileTitle] = React.useState(null)
+  const [isShowCompletedPins, setIsShowCompletedPins] = React.useState(false)
+
+  const history = useHistory();
+  const pathNames = history.location.pathname.split("/");
+  const projectId = pathNames[3].toString();
+
+  const parentFileWiseVersionFilter = !props?.isVersionSelected && props?.selectedVersionFileId === null ?
+    { projectId, fileId: props?.filesData?.uploadedFileID } : null
+
+  const queryGetFileVersions = `query FileVersions($projectId:String!,$fileId:String!,){
+    fileVersions(
+      parentFile: {
+        referenceType: PROJECTTYPE
+        referenceID: $projectId # "04b9bb40-de6b-11eb-b34f-cd1f71d8908c"
+        uploadedFileID: $fileId # "e81f3f80-f91a-11eb-8f43-87a1cb82224b"
+      }
+    ) {
+      uploadedFileID
+      parentUploadedFileID
+      directory
+      structureID
+      structureTitle
+      BKPID
+      BKPIDTitle
+      phaseID
+      phaseName
+      generateFileName
+      fileTypeID
+      fileTypeName
+      isEveryOneAllowed
+      fileURL
+      fileTitle
+      fileType
+      fileVersion
+      createdBy 
+      createdAt 
+      updatedBy 
+      updatedAt
+      isDeleted
+      referenceID
+      referenceTitle
+      referenceType
+      children {
+        parentUploadedFileID
+        fileURL
+        fileTitle
+        fileType
+        fileVersion
+        fileTypeName
+        isEveryOneAllowed
+        uploadedFileID
+        BKPID
+        BKPIDTitle
+        phaseID
+        phaseName
+        fileTypeID
+        structureID
+        directory
+        structureTitle
+        createdBy 
+        createdAt 
+        updatedBy 
+        updatedAt
+      }
+      people {
+        userID
+        userName
+      }
+    }
+  }
+  `
+  const getParentWiseFileVersion = () => {
+    return axios.post(
+      MS_SERVICE_URL['ms_document'].url,
+      {
+        query: queryGetFileVersions,
+        variables: parentFileWiseVersionFilter
+      }
+    ).then(res => {
+      setSelectedFileVersionList(res.data?.data?.fileVersions?.children)
+    })
+      .catch(err => console.log(err))
+  }
+
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
   }
-
-  //   const versionList = props?.filesData.children.length && props?.filesData.children.map((item) => {
-  //     return {key:item.uploadedFileID, value: item.uploadedFileID, text:item.filename}
-  //   })
-  // console.log('----versionList---', versionList)
 
   React.useEffect(() => {
     // if (props.open) {
@@ -87,11 +181,12 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
   React.useEffect(() => {
     if (props.dowloadFilesData) {
       for (let i = 0; i < props.dowloadFilesData.length; i++) {
-        if (props.dowloadFilesData[i].filename == props.filesData.fileTitle) {
+
+        const fileTitle = versionSelectChange ? onVersionChangeWiseSelectedFileTitle : props.filesData.fileTitle
+        if (props.dowloadFilesData[i].filename == fileTitle) {
           setimgUrl(props.dowloadFilesData[i].url);
         }
       }
-
     }
   }, [props.dowloadFilesData])
 
@@ -100,6 +195,47 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
       setFiles(props.filesData)
     }
   }, [props.filesData])
+
+  // React.useEffect(() => {
+
+  // }, [props?.isVersionSelected])
+
+  // React.useEffect(() => {
+
+  // }, [props?.selectedVersionFileId])
+
+  React.useEffect(() => {
+    if (props?.isVersionSelected) {
+      setIsVersionSelected(true)
+    }
+    if (props?.selectedVersionFileId) {
+      setSelectedVersionFileId(props?.selectedVersionFileId)
+    }
+    if (!props?.isVersionSelected && props?.selectedVersionFileId === null) {
+      getParentWiseFileVersion()
+    }
+  }, [props.isVersionSelected, props?.selectedVersionFileId])
+
+  React.useEffect(() => {
+    if (props?.selectedFileVersionList) {
+      setSelectedFileVersionList(props?.selectedFileVersionList)
+    }
+  }, [props?.selectedFileVersionList])
+
+  React.useEffect(() => {
+    if (selectedFileVersionList?.length) {
+      const versionList = selectedFileVersionList.map((item) => {
+        return { key: item.uploadedFileID, value: item.uploadedFileID, text: `Ver ${item.fileVersion}` }
+      })
+      setVersionOptions(versionList)
+
+      // set max version default select in dropdown 
+      if (!isVersionSelected && !selectedVersionFileId) {
+        const maxVersionFileId = selectedFileVersionList[selectedFileVersionList.length - 1].uploadedFileID
+        setSelectedVersionFileId(maxVersionFileId)
+      }
+    }
+  }, [selectedFileVersionList])
 
   const cancel = () => {
     setOpen(false);
@@ -142,27 +278,50 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
     setExpandTaskList(!expandTaskList)
   }
 
-  // const onClickShowCompletedTask = () => {
-  //   setCompletedTaskShow(!completedTaskShow)
-  // }
-
-  const onClickNewTask = (e) => {
+  const onClickOpenAddTask = (e) => {
     e.preventDefault()
     setOpenNewTaskAdd(!openNewTaskAdd)
+  }
+
+  const cancelAddPinTask = () => {
+    setOpenNewTaskAdd(false)
+  }
+
+  const savePins = (data) => {
+    console.log('---viewdetailfiles----savePins==>', data);
+  }
+
+  const onClickVersionChange = (event, data) => {
+    setVersionSelectChange(true)
+    setIsVersionSelected(props?.isVersionSelected)
+
+    setSelectedVersionFileId(data.value)
+
+    const changedFileTitle = selectedFileVersionList.filter((version) => version.uploadedFileID === data.value)
+    setOnVersionChangeWiseSelectedFileTitle(changedFileTitle[0].fileTitle)
+    props?.onChangedFileVersion(changedFileTitle[0].fileTitle)
+  }
+
+  const getIsShowCompletedPins = (isShow) => {
+    setIsShowCompletedPins(isShow)
   }
 
   return (
     <div id="navbar">
 
-      {/* {
+      {
         openNewTaskAdd ?
-          <AddPinFile isOpen={addPinFromTask}
-            cancel={cancel}
-            filesData={selectedFileFromTask}
-            dowloadFilesData={itemsd}
-            savePin={savePins} />
+          <AddPinFile
+            isOpen={openNewTaskAdd}
+            cancel={cancelAddPinTask}
+            filesData={props?.filesData}
+            dowloadFilesData={props?.dowloadFilesData}
+            savePin={savePins}
+            onSuccess={""}
+            isVersionSelected={isVersionSelected}
+          />
           : null
-      } */}
+      }
 
       {/* <Button className="grey-btn" onClick={() => dispatch({ type: 'open', size: 'fullscreen' })}>
            view Files
@@ -199,6 +358,10 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                       isPinCreated={isPinCreated}
                       setIsPinCreated={setIsPinCreated}
                       hoveredTaskTypeID={hoveredTaskTypeID}
+                      parentWisePinFetch={true}
+                      parentFileId={props.filesData.parentUploadedFileID}
+                      isVersionSelected={isVersionSelected}
+                      showCompletedPins={isShowCompletedPins}
                     ></CanvasImage>
                   </div>
                   : <LazyLoading />}
@@ -234,10 +397,17 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
+
                           <label>File name</label>
                           <div className="select-version-box">
-                            <label>House map - </label>
-                            <Select className="small" options={versionOptions} selection clearable />
+                            {/* <label>House map - </label> */}
+                            <label>{props?.filesData?.fileTitle} - </label>
+                            {versionOptions?.length ?
+                              <Select className="small" selection clearable
+                                options={versionOptions}
+                                value={selectedVersionFileId}
+                                onChange={onClickVersionChange} />
+                              : null}
                           </div>
                           {/* <p className="form_desc">{props?.filesData?.fileTitle}</p> */}
                         </Form.Field>
@@ -267,7 +437,8 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                       <Grid.Column>
                         <Form.Field>
                           <label>Uploaded on</label>
-                          <p className="form_desc">20 Oct, 2020</p>
+                          {/* <p className="form_desc">20 Oct, 2020</p> */}
+                          <p className="form_desc">{moment(props?.filesData?.updatedAt).format('DD MMM, YYYY')}</p>
                         </Form.Field>
                       </Grid.Column>
                       <Grid.Column>
@@ -316,12 +487,19 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                         <Form.Field>
                           <label>Tasks ({pinCount})
                             <span className="task-add-button">
-                              <Button size='small' className="icon-border" onClick={onClickNewTask}>
+                              <Button size='small' className="icon-border" onClick={onClickOpenAddTask}>
                                 <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> Add New</Button>
                             </span>
                             <i className="ms-Icon ms-Icon--ChevronDown right_float" aria-hidden="true" onClick={onClickTaskExpand}></i>
                           </label>
-                          <PinTaskListIndex filesData={props.filesData} cord={cord} pinCount={getPinCount} taskHovered={getTaskHovered} ></PinTaskListIndex>
+                          <PinTaskListIndex
+                            filesData={props.filesData}
+                            cord={cord}
+                            pinCount={getPinCount}
+                            taskHovered={getTaskHovered}
+                            parentWiseTaskFetch={true}
+                            isVersionSelected={isVersionSelected}
+                          ></PinTaskListIndex>
 
                         </Form.Field>
                       </Grid.Column>
@@ -332,7 +510,13 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <PinCompletedTaskListIndex filesData={props.filesData} pinCompletedCount={getPinCompletedCount}  ></PinCompletedTaskListIndex>
+                          <PinCompletedTaskListIndex
+                            filesData={props.filesData}
+                            pinCompletedCount={getPinCompletedCount}
+                            parentWiseTaskFetch={true}
+                            isVersionSelected={isVersionSelected}
+                            isCompletedTaskShow={getIsShowCompletedPins}
+                          ></PinCompletedTaskListIndex>
                         </Form.Field>
                       </Grid.Column>
                     </Grid.Row>

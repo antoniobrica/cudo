@@ -16,6 +16,10 @@ export default class PinsTypeEntity extends BaseEntity {
     pinsID: string;
 
     @Expose()
+    @Column({ nullable: true })
+    parentUploadedFileID?: string;
+
+    @Expose()
     @Column()
     uploadedFileID: string;
 

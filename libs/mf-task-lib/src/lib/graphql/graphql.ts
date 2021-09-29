@@ -183,11 +183,16 @@ query Tasks($referenceID: String!)
 export const GET_TASKS_BY_TYPES = gql`
 query TasksByTasktypes(
   $referenceID: String!,
-  $fileID: String!
+  $fileID: String,
+  $parentFileID: String
 ){
    tasksByTasktypes(
-    referenceFilter:{referenceID: $referenceID ,referenceType:PROJECTTYPE} 
-    taskTypeFilter:{fileID: $fileID,taskType:PIN}
+    referenceFilter:{referenceID: $referenceID,referenceType:PROJECTTYPE} 
+    taskTypeFilter:{
+      parentFileID: $parentFileID,
+      fileID: $fileID,
+      taskType:PIN
+    }
   ){ 
     taskID 
     taskTitle 
@@ -262,43 +267,85 @@ mutation CreateTask(
   $subtasks: [SubTaskParams!]!
   $assignees: [PeopleParams!]!
   $followers: [PeopleParams!]!
-  ){ 
-    createTask(
-      referenceFilter: {
-        referenceType: PROJECTTYPE
-        referenceID: $referenceID
-      },
-      taskDetails: {
-        taskBasics:{
-          taskTitle: $taskTitle,
-          startDate: $startDate, 
-          endDate: $endDate,
-          estimatedDays: $estimatedDays,
-          sendNotification: $sendNotification,
-          BKPID: $BKPID,
-          BKPTitle: $BKPTitle,
-          saveTaskAsTemplate: $saveTaskAsTemplate,
-          phaseID: $phaseID,
-          phaseName: $phaseName,
-          status: INPROGRESS,
-          description: $description
-          parentFileID : $parentFileID
-          fileID : $fileID
-          fileName:$fileName
-          taskTypeID:$taskTypeID
-          taskType: $taskType
-          workTypeID: $workTypeID
-          workTypeName:$workTypeName
-        }
-        assignees: $assignees
-        followers: $followers
-        files: $files,
-        subtasks: $subtasks
+){ 
+  createTask(
+    referenceFilter: {
+      referenceType: PROJECTTYPE
+      referenceID: $referenceID
+    },
+    taskDetails: {
+      taskBasics:{
+        taskTitle: $taskTitle,
+        startDate: $startDate, 
+        endDate: $endDate,
+        estimatedDays: $estimatedDays,
+        sendNotification: $sendNotification,
+        BKPID: $BKPID,
+        BKPTitle: $BKPTitle,
+        saveTaskAsTemplate: $saveTaskAsTemplate,
+        phaseID: $phaseID,
+        phaseName: $phaseName,
+        status: INPROGRESS,
+        description: $description
+        parentFileID : $parentFileID
+        fileID : $fileID
+        fileName:$fileName
+        taskTypeID:$taskTypeID
+        taskType: $taskType
+        workTypeID: $workTypeID
+        workTypeName:$workTypeName
       }
-    ){
-    taskTitle
+      assignees: $assignees
+      followers: $followers
+      files: $files,
+      subtasks: $subtasks
+    }
+  ){
+    taskID 
+    taskTitle 
     startDate
     endDate
+    estimatedDays
+    sendNotification
+    saveTaskAsTemplate
+    BKPID
+    BKPTitle
+    phaseID
+    description
+    phaseName
+    status
+    updatedAt
+    createdAt
+    updatedBy
+    createdBy
+    taskTypeID
+    parentFileID
+    fileID
+    taskType
+    workTypeID
+    workTypeName
+    fileName   
+    files{
+      fileID
+      fileName
+      fileUrl
+    }
+    assignees{
+      userID
+      userName
+      imageUrl
+    }
+    followers{
+      userID
+      userName
+      imageUrl
+    }
+    subtasks{
+      subtaskID 
+      subtaskTitle 
+      status
+      isDeleted
+    }       
   }
 }`;
 

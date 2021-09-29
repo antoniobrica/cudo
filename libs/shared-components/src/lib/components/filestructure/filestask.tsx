@@ -39,6 +39,10 @@ export function FileStructure(props: FileStructureProps) {
 
 	const [designVersionExpand, setDesignVersionExpand] = useState(false)
 
+	const [isVersionSelected, setIsVersionSelected] = React.useState(false)
+	const [selectedVersionFileId, setSelectedVersionFileId] = React.useState(null)
+	const [selectedFileVersionList, setSelectedFileVersionList] = React.useState(null)
+	
 	useEffect(() => {
 		if (props.files) {
 			setFileFoldersList(props.files)
@@ -64,11 +68,15 @@ export function FileStructure(props: FileStructureProps) {
 		}
 	}, [props.downloadedImg])
 
-	const onClickViewFileDetail = (data) => {
+	const onClickViewFileDetail = (data, isFromVersion, selectedVersionFileId, versionList) => {
+		
 		setFtype(data.fileType);
 		setFileView(true);
 		setFilesData(data);
 
+		setIsVersionSelected(isFromVersion)
+		setSelectedVersionFileId(selectedVersionFileId)
+		setSelectedFileVersionList(versionList)
 		props.viewFiles(data.fileTitle)
 	}
 
@@ -90,7 +98,7 @@ export function FileStructure(props: FileStructureProps) {
 	}
 
 	const savePins = (data) => {
-	 	setOpenPinFile(false) 
+		setOpenPinFile(false)
 	}
 
 	const cancelOpenPinFile = () => {
@@ -118,85 +126,12 @@ export function FileStructure(props: FileStructureProps) {
 	}
 
 	const getCloseDetailView = (isOpenPopup) => {
-		console.log('--getFileViewOpen---isOpenPopup--', isOpenPopup)
 		setFileView(false)
 	}
 
-	// #region commented Old code
-	// const expandFolder = (data) => {
-	// 	setExpand(true);
-	// 	setFilesData(data)
-	// }
-
-	// const rootPanels = [
-	// 	{ key: 'panel-1', title: 'General', content: { content: <a href=''>+ Add item</a> }, },
-	// 	{ key: 'panel-2', title: 'Freehold Two Solar LLC', content: { content: <a href=''><i className="ms-Icon ms-font-xl ms-Icon--Add"></i> Add item</a> } },
-	// ]
-
-	// const renderItems = (data) => {
-
-
-	// 	const files = data.map((data) => {
-	// 		return (
-	// 			<div className="card1 card-custom gutter-b width_card">
-
-	// 				<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-
-	// 					<div className="d-flex align-items-center py-2">
-	// 						<span>
-	// 							{data.fileType == ("image/jpeg" || "image/png")
-	// 								?
-	// 								<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} className="  mr-10 " /> :
-	// 								<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} className="  mr-10 " />
-	// 							}
-
-	// 						</span>
-
-	// 						<span className="mb-0 mr-10 file-name-extension">{data.fileTitle}</span>
-	// 						{data.fileVersion > 0 ?
-	// 							<div className="d-flex mr-3">
-
-	// 								<div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
-
-	// 									<div className="navi-item mr-2">
-	// 										<button className="ui mini button primary">Ver {data.fileVersion}</button>
-	// 									</div>
-
-	// 								</div>
-
-	// 							</div> :
-	// 							null
-	// 						}
-
-	// 					</div>
-
-	// 					<div className="symbol-group symbol-hover py-2">
-	// 						<div className="symbol symbol-30">
-	// 							<a onClick={() => onClickFileDownload(data.fileTitle)}>  <i className="ms-Icon ms-Icon--Download mr-10" aria-hidden="true"></i></a>
-	// 							<a onClick={() => onClickViewFileDetail(data)}> <i className="ms-Icon ms-Icon--RedEye mr-10" aria-hidden="true"></i></a>
-
-	// 							<span className="mr-2"  >
-	// 								<Dropdown text='...' pointing='right'>
-	// 									<Dropdown.Menu>
-	// 										<Dropdown.Item icon='pencil' text='Edit file detail' />
-	// 										<Dropdown.Item onClick={() => uploadNewVersion(data)} icon='eye' text='Upload new version' />
-	// 										<Dropdown.Item onClick={() => addPinTask(data)} icon='check circle outline' text='Add task to this file' />
-	// 										<Dropdown.Item icon='trash alternate outline' text='Delete' />
-	// 									</Dropdown.Menu>
-	// 								</Dropdown>
-	// 							</span>
-
-	// 						</div>
-
-	// 					</div>
-
-	// 				</div>
-	// 			</div>
-	// 		)
-	// 	})
-	// 	return files;
-	// }
-	// #endregion
+	const getFileByVersion = (fileTitle)=> {
+		props.viewFiles(fileTitle)
+	}
 
 	const renderChildrenSingleFile = (singleFileItem) => {
 		const { uploadedFileID, fileType, fileTitle, fileVersion, versionCount } = singleFileItem
@@ -205,16 +140,17 @@ export function FileStructure(props: FileStructureProps) {
 				<div className="files-left-area">
 					<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
 					<h3 className="files-name">{fileTitle}</h3>
-					<span className="no-of-files" onClick={() => onClickViewFileDetail(singleFileItem)}><i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i> 2 comments</span>
-					<span className="no-of-files" onClick={() => onClickViewFileDetail(singleFileItem)}><i className="ms-Icon ms-Icon--CheckboxComposite" aria-hidden="true"></i> 2 tasks</span>
+					<span className="no-of-files" onClick={() => onClickViewFileDetail(singleFileItem, false,null,null)}><i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i> 2 comments</span>
+					<span className="no-of-files" onClick={() => onClickViewFileDetail(singleFileItem, false,null, null)}><i className="ms-Icon ms-Icon--CheckboxComposite" aria-hidden="true"></i> 2 tasks</span>
 					{versionCount > 0 ? <span className="version-files"><a onClick={() => onClickFileVersion(uploadedFileID)}>Ver {versionCount}</a></span> : null}
 				</div>
+
 				<div className="files-right-area">
 					<div className="symbol-group symbol-hover">
 						<div className="symbol symbol-30">
 							<a onClick={() => onClickFileDownload(fileTitle)}> <i className="ms-Icon ms-Icon--Download" aria-hidden="true"></i></a>
-							<a onClick={() => onClickViewFileDetail(singleFileItem)}> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
-
+							<a onClick={() => onClickViewFileDetail(singleFileItem, false,null,null)}> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
+ 
 							<span>
 								<Dropdown icon='ellipsis horizontal' pointing='right'>
 									<Dropdown.Menu>
@@ -252,13 +188,13 @@ export function FileStructure(props: FileStructureProps) {
 											<p>Version {fileVersion} - <span>{fileTitle}</span> <span className="small-text">(By: {updatedBy ? updatedBy : createdBy} - Uploaded on: {updatedAt ? formattedUpdatedAt : formattedCreatedAt})</span></p>
 											<div className="files-right-area symbol symbol-30">
 												<a onClick={() => onClickFileDownload(fileTitle)}> <i className="ms-Icon ms-Icon--Download" aria-hidden="true"></i></a>
-												<a onClick={() => onClickViewFileDetail(singleFileItem)}> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
+												<a onClick={() => onClickViewFileDetail(item, true, uploadedFileID, props?.fileVersionDetail?.children )}> <i className="ms-Icon ms-Icon--RedEye" aria-hidden="true"></i></a>
 												<span>
 													<Dropdown icon='ellipsis horizontal' pointing='right'>
 														<Dropdown.Menu>
 															<Dropdown.Item icon='pencil' text='Edit file detail' />
-															<Dropdown.Item icon='eye' text='Upload new version' onClick={() => uploadNewVersion(singleFileItem)} />
-															<Dropdown.Item icon='check circle outline' text='Add task to this file' onClick={() => addPinTask(singleFileItem)} />
+															{/* <Dropdown.Item icon='eye' text='Upload new version' onClick={() => uploadNewVersion(singleFileItem)} /> */}
+															<Dropdown.Item icon='check circle outline' text='Add task to this file' onClick={() => addPinTask(item)} />
 															<Dropdown.Item icon='trash alternate outline' text='Delete' />
 														</Dropdown.Menu>
 													</Dropdown>
@@ -576,11 +512,29 @@ export function FileStructure(props: FileStructureProps) {
 			{/* {fileView && imgUrl.length > 0 ? */}
 			{fileView ?
 				<div>
-					<ViewFileDetail open={fileView} fType={fType} filesData={filesData} dowloadFilesData={props.downloadedImg} cancel={getCloseDetailView} ></ViewFileDetail>
+					<ViewFileDetail
+						open={fileView}
+						fType={fType}
+						filesData={filesData}
+						dowloadFilesData={props.downloadedImg}
+						cancel={getCloseDetailView}
+						isVersionSelected={isVersionSelected}
+						selectedVersionFileId={selectedVersionFileId}
+						selectedFileVersionList={selectedFileVersionList}
+						onChangedFileVersion={getFileByVersion}
+					></ViewFileDetail>
 				</div> : null}
 			{openPinFile ?
 				<div>
-					<AddPinFile isOpen={openPinFile} cancel={cancelOpenPinFile} filesData={filesData} dowloadFilesData={props.downloadedImg} savePin={savePins} onSuccess={""} />
+					<AddPinFile
+						isOpen={openPinFile}
+						cancel={cancelOpenPinFile}
+						filesData={filesData}
+						dowloadFilesData={props.downloadedImg}
+						savePin={savePins}
+						onSuccess={""}
+						isVersionSelected={isVersionSelected}
+					/>
 				</div> : null}
 
 			<Tab className="ui-tabs work-tabs" menu={{ secondary: true, pointing: true }} panes={panes} />

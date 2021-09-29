@@ -34,6 +34,7 @@ export interface ITask {
   createdAt: string
   updatedBy: string
   createdBy: string
+  parentFileID: string
   fileID: string
   fileName: string
   taskTypeID: string
