@@ -69,7 +69,7 @@ export function AddNewItem(props: AddNewItemProps) {
     return <div><LoaderPage /></div>
   }
   return (
-    <ModalCost house={null} createCost={createCost} openCost={props.openCost} cancel={props.cancel}></ModalCost>
+    <ModalCost bkpCostFilter={""} house={null} openCost={props.openCost} cancel={props.cancel}></ModalCost>
   );
 }
 

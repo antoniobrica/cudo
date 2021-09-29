@@ -1,5 +1,7 @@
 export * from './lib/components/bkps-index/bkps-index';
 export * from './lib/components/bkps/bkps';
+export * from './lib/components/bkp-hierarchy-index/bkp-hierarchy-index'
+export * from './lib/components/bkp-hierarchy/bkp-hierarchy'
 export * from './lib/components/house-structure-index/house-structure-index';
 export * from './lib/components/house-structure/house-structure';
 export * from './lib/components/session-invitation-index/session-invitation-index';

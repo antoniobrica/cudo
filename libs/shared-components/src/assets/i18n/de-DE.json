@@ -187,11 +187,16 @@
       "print": "Print",
       "item_quantity": "Item Quantity",
       "item_price": "Item Price",
-      "add_house": "Add house",
+      "add_house": "Add House",
       "select_house": "Select house",
       "this_house_contain": "This house will contain all the BKP",
       "item_quality": "Item quality",
-      "add_new_item": "Add new item"
+      "add_new_item": "Add new item",
+      "add_files": "Add files for complete cost",
+      "drag_and_drop": "Drag & drop or click here to upload file",
+      "description": "Description",
+      "files": "Files",
+      "total": "Total"
     },
     "tender": {
       "title": "Tender"
@@ -208,7 +213,7 @@
       "add_new_invitation": "Add New Invitation",
       "add_invitation": "Add  Invitation",
       "add_protocol": "Add Protocol",
-      "edit_protocol":"Edit Protocol",
+      "edit_protocol": "Edit Protocol",
       "add_new_protocol": "Add New Protocol",
       "name": "Name",
       "session_title": "Session Title",
@@ -440,9 +445,9 @@
         "file_not_added": "File not added",
         "file_not_deleted": "File not deleted"
       },
-      "comment" : {
+      "comment": {
         "comment_not_found": "Comment not found",
-        "comment_id_not_provided":"Comment id not provided",
+        "comment_id_not_provided": "Comment id not provided",
         "comment_not_added": "Comment not added",
         "comment_not_updated": "Comment not updated",
         "comment_not_deleted": "Comment not deleted"
