@@ -1,7 +1,8 @@
 import { Expose, plainToClass } from 'class-transformer';
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn, ManyToOne, } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn, ManyToOne, ManyToMany, JoinTable, } from 'typeorm';
 import * as uuid from 'uuid';
 import ReferanceTypeEntity from './reference-type.entity';
+import BKPCostFilesEntity from './bkp-cost-files.entity'
 
 /**
  * 
@@ -23,7 +24,7 @@ export class BkpLayerTwoEntity extends BaseEntity {
     @Expose()
     @Column()
     BKPTitle?: string;
-    
+
     @Expose()
     @Column({ nullable: true })
     description: string;
@@ -39,7 +40,7 @@ export class BkpLayerTwoEntity extends BaseEntity {
     @Expose()
     @Column({ nullable: true })
     itemTotalPrice: number;
-    
+
     @Expose()
     @CreateDateColumn()
     createdAt?: Date;
@@ -63,6 +64,11 @@ export class BkpLayerTwoEntity extends BaseEntity {
     @Expose()
     @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.bkphierarchy)
     references: ReferanceTypeEntity;
+
+    @Expose()
+    @ManyToMany(() => BKPCostFilesEntity, { cascade: true })
+    @JoinTable()
+    files: BKPCostFilesEntity[];
 
     constructor(referanceTypeEntity: Partial<BkpLayerTwoEntity>) {
         super();

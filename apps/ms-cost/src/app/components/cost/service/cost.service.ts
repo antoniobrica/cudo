@@ -163,7 +163,17 @@ export class CostService {
         const childrenLayerOne = new BkpLayerOneEntity({ BKPID, BKPTitle })
         childrenLayerOne.bkpChildrenLayerTwo = [];
         for (let index = 0; index < childrenLayerTwo.length; index++) {
-          const LayerTwo = new BkpLayerTwoEntity({ ...childrenLayerTwo[index] })
+          const { BKPID, BKPTitle, itemPrice, itemTotalPrice, itemQuantity, files, description } = childrenLayerTwo[index]
+          const LayerTwo = new BkpLayerTwoEntity({ BKPID, BKPTitle, itemTotalPrice, itemPrice, description, itemQuantity })
+          LayerTwo.files = []
+          if (files && files.length > 0) {
+            for (let index = 0; index < files.length; index++) {
+              const fileEntity = new BKPCostFilesEntity(files[index])
+              const newFile = await this.BKPCostFilesRepository.create(fileEntity)
+              const savedFile = await this.BKPCostFilesRepository.save(newFile)
+              LayerTwo.files.push(savedFile)
+            }
+          }
           const newChildren = await this.BkpLayerTwoRepository.create({ ...LayerTwo, references: { id: selectedReference.id } });
           const savedPeople = await this.BkpLayerTwoRepository.save(newChildren);
           childrenLayerOne.bkpChildrenLayerTwo.push(savedPeople)
@@ -189,9 +199,8 @@ export class CostService {
     const selectedReference = await this.referenceService.getReferenceById(referenceFilter)
 
     const savedBkpcosts: BkpLayerTwoEntity[] = []
-
     for (let index = 0; index < childrenLayerTwo.length; index++) { // loop for added bkp costs
-      const BKPID = childrenLayerTwo[index].BKPID
+      const { BKPID, BKPTitle, itemPrice, itemTotalPrice, itemQuantity, files, description } = childrenLayerTwo[index]
       const parantBkpId = BKPID[0]
       const bkp = await this.bkpHierarchyRepository.findOne({
         where: {
@@ -201,7 +210,7 @@ export class CostService {
           "references": {
             id: selectedReference.id
           }
-        }, relations: ['children', 'children.bkpChildrenLayerTwo']
+        }, relations: ['children', 'children.bkpChildrenLayerTwo', 'children.bkpChildrenLayerTwo.files']
       });
 
       const foundChild = bkp.children.find(item => item.BKPID === BKPID[0] + BKPID[1])
@@ -209,7 +218,16 @@ export class CostService {
         where: { bkpCostID: foundChild.bkpCostID },
         relations: ['bkpChildrenLayerTwo']
       });
-      const layerTwo = new BkpLayerTwoEntity({ ...childrenLayerTwo[index] })
+      const layerTwo = new BkpLayerTwoEntity({ BKPID, BKPTitle, itemTotalPrice, itemPrice, description, itemQuantity })
+      layerTwo.files = []
+      if (files && files.length > 0) {
+        for (let index = 0; index < files.length; index++) {
+          const fileEntity = new BKPCostFilesEntity(files[index])
+          const newFile = await this.BKPCostFilesRepository.create(fileEntity)
+          const savedFile = await this.BKPCostFilesRepository.save(newFile)
+          layerTwo.files.push(savedFile)
+        }
+      }
       const newLayerTwo = await this.BkpLayerTwoRepository.create({ ...layerTwo, references: { id: selectedReference.id } })
       const savedLayerTwo = await this.BkpLayerTwoRepository.save({ ...newLayerTwo })
       child.bkpChildrenLayerTwo.push(savedLayerTwo)
@@ -230,6 +248,7 @@ export class CostService {
       .andWhere('children.isDeleted = :deltedLayerOne', { deltedLayerOne: false })
       .leftJoinAndSelect('children.bkpChildrenLayerTwo', 'bkpChildrenLayerTwo')
       .andWhere('bkpChildrenLayerTwo.isDeleted = :deletedLayerTwo', { deletedLayerTwo: false })
+      .leftJoinAndSelect('bkpChildrenLayerTwo.files', 'files')
       .getMany()
     if (bkps) {
       return bkps;
@@ -238,11 +257,27 @@ export class CostService {
   }
 
   // update bkp cost
-  public async updateBkpCost(updateBKPLayerTwo: UpdateBKPLayerTwo):Promise<BkpLayerTwoEntity> {
-    const foundBkpCost = await this.BkpLayerTwoRepository.findOne({ where: { bkpCostID: updateBKPLayerTwo.bkpCostID } })
+  public async updateBkpCost(updateBKPLayerTwo: UpdateBKPLayerTwo): Promise<BkpLayerTwoEntity> {
+    const { bkpCostID, files } = updateBKPLayerTwo;
+    const foundBkpCost = await this.BkpLayerTwoRepository.findOne({ where: { bkpCostID: bkpCostID } })
 
     if (!foundBkpCost) {
       throw new NotFoundException('Bkp cost not found')
+    }
+    console.log('fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',files)
+    if (files) {
+      if (foundBkpCost.files?.length > 0) {
+        const previousFilesIDs = foundBkpCost.files.map(file => file.id)
+        await this.BKPCostFilesRepository.delete(previousFilesIDs)
+      }
+      foundBkpCost.files = []
+      for (let index = 0; index < files.length; index++) {
+        const fileEntity = new BKPCostFilesEntity(files[index])
+        const newFile = await this.BKPCostFilesRepository.create(fileEntity)
+        const savedFile = await this.BKPCostFilesRepository.save(newFile)
+        foundBkpCost.files.push(savedFile)
+      }
+
     }
     updateBKPLayerTwo.BKPTitle ? foundBkpCost.BKPTitle = updateBKPLayerTwo.BKPTitle : null
     updateBKPLayerTwo.description ? foundBkpCost.description = updateBKPLayerTwo.description : null
@@ -280,8 +315,5 @@ export class CostService {
       return updatedPost
     }
   }
-
-
-
 
 }

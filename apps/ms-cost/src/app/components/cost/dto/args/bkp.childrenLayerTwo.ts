@@ -1,4 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
+import { CreateBkpCostFileInput } from '../create-bkp-cost-file.input';
 
 @InputType()
 export class CreateBKPLayerTwo {
@@ -20,6 +21,9 @@ export class CreateBKPLayerTwo {
 
   @Field({ description: `Layer Two BKP itemTotalPrice` })
   itemTotalPrice: number;
+
+  @Field(() => [CreateBkpCostFileInput], { description: `BKP files` })
+  files: [CreateBkpCostFileInput];
 
 }
 

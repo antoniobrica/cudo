@@ -1,4 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { bkpCostFileModel } from './bkp-cost-file.model';
 
 @ObjectType()
 export class bkpLayerTwoModel {
@@ -39,7 +40,8 @@ export class bkpLayerTwoModel {
   @Field({ nullable: true, description: `updated by` })
   updatedBy?: string;
 
-
+  @Field(() => [bkpCostFileModel],{nullable: true, description: 'Bkp cost files'})
+  files?: [bkpCostFileModel]
 }
 
 
