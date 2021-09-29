@@ -212,6 +212,7 @@ export const AddPinFile = (props: AddPinProps) => {
                 parentWisePinFetch={false}
                 parentFileId={props?.filesData?.parentUploadedFileID}
                 isVersionSelected={props?.isVersionSelected}
+                showCompletedPins={false}
               ></CanvasImage>
             </div>
 

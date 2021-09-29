@@ -33,6 +33,8 @@ export function CanvasPins(props: CanvasPinsProps) {
   let startX = null;
   let startY = null;
 
+  const [latestPinNumber, setLatestPinNumber] = React.useState<number>(0)
+
   const [isAllPinCanvasHide, setAllPinCanvasHide] = useState(true)
 
   enum Status {
@@ -143,7 +145,7 @@ export function CanvasPins(props: CanvasPinsProps) {
     uploadedFileID: props.fileId,
     status: Status.INPROGRESS
   }
-  console.log('---canvas--isVersionSelected--', props?.isVersionSelected, '--pinFetchFilter---', pinFetchFilter)
+  // console.log('---canvas--isVersionSelected--', props?.isVersionSelected, '--pinFetchFilter---', pinFetchFilter)
   const getPins = async () => {
     try {
       const res = await axios.post(
@@ -237,6 +239,32 @@ export function CanvasPins(props: CanvasPinsProps) {
       console.log(error)
     }
   }
+
+  const getLatestPinNumber = async () => {
+    try {
+      const res = await axios.post(
+        MS_SERVICE_URL['ms_document'].url,
+        {
+          query: getPinQuery,
+          variables:
+          {
+            parentUploadedFileID: props?.isVersionSelected === true ? props?.parentFileId : props.fileId
+          }
+        }
+      );
+
+      const latestPinDetail = res?.data?.data?.pins[res?.data?.data?.pins?.length - 1]
+      let latestPinNumber = 0
+      if (latestPinDetail) {
+        latestPinNumber = latestPinDetail?.pinNumber
+      }
+      // console.log('--getLatestPinNumber--latestPinNumber----', latestPinDetail?.pinNumber)
+      setLatestPinNumber(latestPinNumber)
+      return latestPinNumber;
+    } catch (error) {
+      console.log(error)
+    }
+  }
   // #endregion
 
   // initialize the canvasToDrawCircle context
@@ -252,6 +280,8 @@ export function CanvasPins(props: CanvasPinsProps) {
 
     getPins().then(() => {
     })
+
+    getLatestPinNumber().then(() => { })
 
   }, [props?.showCompletedPins]);
 
@@ -358,8 +388,6 @@ export function CanvasPins(props: CanvasPinsProps) {
     }
   }, [props?.hoveredTaskTypeID])
 
-
-
   const updateSetBoxes = (dragTargetTemp) => {
     let lastBoxes = [...pinList];
     lastBoxes = lastBoxes.map((box) => {
@@ -373,8 +401,6 @@ export function CanvasPins(props: CanvasPinsProps) {
     })
     setpinList([...lastBoxes]);
   }
-
-
 
   const drawImagesWithPins = () => {
     pinList.map(info => {
@@ -494,7 +520,7 @@ export function CanvasPins(props: CanvasPinsProps) {
     setpinList([...pinList, newPinDetail])
     props.setIsPinCreated(true);
   }
-
+  
   return (
     <>
       <canvas id="canvasCreatedPins" className="transparentCanvas"
@@ -509,7 +535,8 @@ export function CanvasPins(props: CanvasPinsProps) {
         <CanvasTransparentNewPin
           allowToCreateNewPin={props.allowToCreateNewPin}
           selectedNewTaskCoOrdinate={getSelectedNewTaskCoOrdinates}
-          lastPinDetail={pinList && pinList?.length > 0 && pinList[pinList?.length - 1]}
+          // lastPinDetail={pinList && pinList?.length > 0 && pinList[pinList?.length - 1]}
+          latestPinNumber={latestPinNumber}
         ></CanvasTransparentNewPin>
         : null}
     </>

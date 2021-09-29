@@ -89,8 +89,9 @@ export function FileStructure(props: FileStructureProps) {
 
 	}
 
-	const addPinTask = (data) => {
+	const addPinTask = (data, isFromVersion) => {
 
+		setIsVersionSelected(isFromVersion)
 		setFilesData(data)
 		setFtype(data.fileType);
 		setOpenPinFile(true)
@@ -156,7 +157,7 @@ export function FileStructure(props: FileStructureProps) {
 									<Dropdown.Menu>
 										<Dropdown.Item icon='pencil' text='Edit file detail' />
 										<Dropdown.Item icon='eye' text='Upload new version' onClick={() => uploadNewVersion(singleFileItem)} />
-										<Dropdown.Item icon='check circle outline' text='Add task to this file' onClick={() => addPinTask(singleFileItem)} />
+										<Dropdown.Item icon='check circle outline' text='Add task to this file' onClick={() => addPinTask(singleFileItem, false)} />
 										<Dropdown.Item icon='trash alternate outline' text='Delete' />
 									</Dropdown.Menu>
 								</Dropdown>
@@ -194,7 +195,7 @@ export function FileStructure(props: FileStructureProps) {
 														<Dropdown.Menu>
 															<Dropdown.Item icon='pencil' text='Edit file detail' />
 															{/* <Dropdown.Item icon='eye' text='Upload new version' onClick={() => uploadNewVersion(singleFileItem)} /> */}
-															<Dropdown.Item icon='check circle outline' text='Add task to this file' onClick={() => addPinTask(item)} />
+															<Dropdown.Item icon='check circle outline' text='Add task to this file' onClick={() => addPinTask(item, true)} />
 															<Dropdown.Item icon='trash alternate outline' text='Delete' />
 														</Dropdown.Menu>
 													</Dropdown>
