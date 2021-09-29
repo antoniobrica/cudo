@@ -184,6 +184,11 @@ query GetBkps($referenceID:String!,$referenceType:ReferenceType!)
         itemQuantity
         itemTotalPrice
         description
+        files {
+          bkpCostFileID
+          uploadedFileID
+          uploadedFileTitle
+        }
       }
     }
   }

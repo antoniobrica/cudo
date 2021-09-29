@@ -7,6 +7,7 @@ import { useStructureQuery } from '../../services/useRequest';
 import House from './house';
 import { LazyLoading, ModalCost } from '@cudo/shared-components';
 import { useTranslation } from 'react-i18next';
+import AddBkpCostPopUp from 'libs/shared-components/src/lib/components/modal/addbkpcostpopup';
 /* eslint-disable-next-line */
 export interface BkpHierarchyProps {
   // addNew?,
@@ -106,15 +107,26 @@ export function BkpHierarchy(props: BkpHierarchyProps) {
   return (
     <div className="tabs-main-info-container">
       {
-        openAddCost && <ModalCost
-          house={null}
-          openCost={openAddCost}
-          cancel={cancel}
-          bkpCostFilter={""}
-          addBkpCosts={props.addBkpCosts}
-          addLoading={props.addLoading}
-          addData={props.addData}
-        />
+        openAddCost && (
+          // <ModalCost
+          //   house={null}
+          //   openCost={openAddCost}
+          //   cancel={cancel}
+          //   bkpCostFilter={""}
+          //   addBkpCosts={props.addBkpCosts}
+          //   addLoading={props.addLoading}
+          //   addData={props.addData}
+          // />
+          <AddBkpCostPopUp
+            house={null}
+            openCost={openAddCost}
+            cancel={cancel}
+            bkpCostFilter={""}
+            addBkpCosts={props.addBkpCosts}
+            addLoading={props.addLoading}
+            addData={props.addData}
+          />
+        )
       }
 
       <div className="main-content-con cost-management-con">
@@ -178,6 +190,7 @@ export function BkpHierarchy(props: BkpHierarchyProps) {
 
           {/* bkp layers */}
           <div className="treeview-inner-con">
+            {props.addLoading && <LazyLoading />}
             <ul>
               {/* house name layer */}
               {

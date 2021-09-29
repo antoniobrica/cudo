@@ -264,7 +264,6 @@ export class CostService {
     if (!foundBkpCost) {
       throw new NotFoundException('Bkp cost not found')
     }
-    console.log('fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',files)
     if (files) {
       if (foundBkpCost.files?.length > 0) {
         const previousFilesIDs = foundBkpCost.files.map(file => file.id)

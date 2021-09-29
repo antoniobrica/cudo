@@ -186,7 +186,7 @@ const BkpCost = (props: BkpCostProps) => {
                             <Table.Cell>{props.bkpCost.description}</Table.Cell>
                             <Table.Cell className="file-attached">
                                 <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>
-                                <Label horizontal>{props.bkpCost.bkpCostFiles?.length}</Label>
+                                <Label horizontal>{props.bkpCost.files?.length || "0"}</Label>
                             </Table.Cell>
                             <Table.Cell>{props.bkpCost.itemQuantity}</Table.Cell>
                             <Table.Cell>${props.bkpCost.itemPrice}</Table.Cell>

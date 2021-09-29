@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { BkpHierarchyIndex } from '@cudo/mf-account-app-lib'
+import { LazyLoading } from '@cudo/shared-components'
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { CREATE_BKP_COSTS, DELETE_BKP_COST, GET_BKP_HIERARCHIES, UPDATE_BKP_COST } from '../graphql/graphql'
@@ -34,18 +35,19 @@ const BkpCostList = () => {
     })
 
     return (
-        <BkpHierarchyIndex
-            data={data}
-            addBkpCosts={addBkpCosts}
-            deleteBkp={deleteBkp}
-            updateBkpCost={updateBkpCost}
-            addLoading={addBkpLoading}
-            addData = {addBkpData}
-            deleteLoading={deleteBkpLoading}
-            deleteData={deleteBkpData}
-            updateLoading={updateBkpLoading}
-            updateData={updateBkpData}
-        />
+        loading ? <LazyLoading /> :
+            <BkpHierarchyIndex
+                data={data}
+                addBkpCosts={addBkpCosts}
+                deleteBkp={deleteBkp}
+                updateBkpCost={updateBkpCost}
+                addLoading={addBkpLoading}
+                addData={addBkpData}
+                deleteLoading={deleteBkpLoading}
+                deleteData={deleteBkpData}
+                updateLoading={updateBkpLoading}
+                updateData={updateBkpData}
+            />
     )
 }
 
