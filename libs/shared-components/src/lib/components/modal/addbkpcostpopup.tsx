@@ -195,6 +195,7 @@ const AddBkpCostPopUp = (props: AddBkpCostPopUpProps) => {
     )
 }
 
+// componet for bkp cost item
 interface CostItemProps {
     index
     onChangeSetItemData
@@ -209,7 +210,7 @@ const CostItem = (props: CostItemProps) => {
     const [selectedFiles, setSelectedFiles] = useState([])
     const [itemQuantity, setItemQuantity] = useState()
     const [itemPrice, setItemPrice] = useState()
-    const [item, setItem] = useState<IItem>()
+    const [item, setItem] = useState<IItem>({ files: [] }) // if files not selected sending empty object
 
     const onBkpChange = (bkp) => {
         setItem(pval => {
@@ -271,7 +272,7 @@ const CostItem = (props: CostItemProps) => {
                     <FileListIndex
                         isTaskFile={isOpenTaskFiles}
                         cancel={cancelIsTaskFileOpen}
-                        onlyAddFileToTask={true}
+                        onlyAddFileToTask={true} // set true to open select file if set false it will open add pin to file
                         selectedFiles={selectedFiles}
                         addSelectedFiles={addSelectedFiles}
                     />
