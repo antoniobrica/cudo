@@ -16,6 +16,10 @@ export default class PinsTypeEntity extends BaseEntity {
     pinsID: string;
 
     @Expose()
+    @Column({ nullable: true })
+    parentUploadedFileID?: string;
+
+    @Expose()
     @Column()
     uploadedFileID: string;
 
@@ -62,6 +66,14 @@ export default class PinsTypeEntity extends BaseEntity {
     @Expose()
     @Column({ nullable: true })
     status?: string;
+
+    @Expose()
+    @Column({ nullable: true })
+    taskID?: string;
+
+    @Expose()
+    @Column({ nullable: true })
+    taskTitle?: string;
 
     constructor(pinsTypeEntity: Partial<PinsTypeEntity>) {
         super();

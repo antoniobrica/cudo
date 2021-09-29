@@ -4,6 +4,9 @@ import { IsString } from 'class-validator';
 @InputType()
 class PinsFilterParams {
 
+  @Field({ nullable: true, description: `Parent File ID` })
+  parentUploadedFileID?: string;
+  
   @Field({ nullable: true, description: `File ID` })
   uploadedFileID?: string;
 

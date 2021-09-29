@@ -395,6 +395,7 @@ export class TasksService {
         taskBasics.taskID ? taskeDetail.taskID = taskBasics.taskID : null;
         taskBasics.taskTitle ? taskeDetail.taskTitle = taskBasics.taskTitle : null;
         taskBasics.description ? taskeDetail.description = taskBasics.description : null;
+        taskBasics.parentFileID ? taskeDetail.parentFileID = taskBasics.parentFileID : null;
         taskBasics.fileID ? taskeDetail.fileID = taskBasics.fileID : null;
         taskBasics.fileName ? taskeDetail.fileName = taskBasics.fileName : null;
         taskBasics.taskTypeID ? taskeDetail.taskTypeID = taskBasics.taskTypeID : null;
@@ -467,6 +468,7 @@ export class TasksService {
             },
             relations: ['reference', 'assignees', 'followers', 'files', 'subtasks'],
         };
+        if (taskTypeFilter.parentFileID) query.where.parentFileID = taskTypeFilter.parentFileID;
         if (taskTypeFilter.fileID) query.where.fileID = taskTypeFilter.fileID;
         if (taskTypeFilter.taskTypeID) query.where.taskTypeID = taskTypeFilter.taskTypeID;
         const result = await this.projectTasksRepository.find(query);

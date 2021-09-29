@@ -12,6 +12,8 @@ export interface PinTaskListIndexProps {
   cord?
   pinCount?
   taskHovered?
+  parentWiseTaskFetch?
+  isVersionSelected?
 }
 const client = new ApolloClient({
   uri: MS_SERVICE_URL['ms_task'].url,
@@ -24,7 +26,14 @@ export function PinTaskListIndex(props: PinTaskListIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <PinTaskList filesData={props.filesData} cord={props.cord} pinCount={props?.pinCount} taskHovered={getTaskHovered}></PinTaskList>
+        <PinTaskList
+          filesData={props.filesData}
+          cord={props.cord}
+          pinCount={props?.pinCount}
+          taskHovered={getTaskHovered}
+          parentWiseTaskFetch={props?.parentWiseTaskFetch}
+          isVersionSelected={props?.isVersionSelected}
+        ></PinTaskList>
       </ApolloHooksProvider>
     </ApolloProvider>
   );

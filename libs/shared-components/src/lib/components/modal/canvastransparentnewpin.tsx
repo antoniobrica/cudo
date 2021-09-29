@@ -4,7 +4,8 @@ import React, { useEffect, useRef, useState } from 'react'
 export interface CanvasTransparentNewPinProps {
   allowToCreateNewPin?
   selectedNewTaskCoOrdinate?
-  lastPinDetail?
+  // lastPinDetail?
+  latestPinNumber?
 }
 export function CanvasTransparentNewPin(props: CanvasTransparentNewPinProps) {
   const canvasToDrawCircle = useRef<HTMLCanvasElement>();
@@ -42,7 +43,8 @@ export function CanvasTransparentNewPin(props: CanvasTransparentNewPinProps) {
   }, [isCircleSelectedOnMouseHover]);
 
   useEffect(() => {
-     const newPinNumber = Number(props?.lastPinDetail?.pinNumber) > 0 ? Number(props?.lastPinDetail?.pinNumber) + 1 : 1
+    //  const newPinNumber = Number(props?.lastPinDetail?.pinNumber) > 0 ? Number(props?.lastPinDetail?.pinNumber) + 1 : 1
+     const newPinNumber = Number(props?.latestPinNumber) > 0 ? Number(props?.latestPinNumber) + 1 : 1
     const drawObj = {
       x: x_axis,
       y: y_axis,

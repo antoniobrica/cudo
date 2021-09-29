@@ -100,6 +100,87 @@ export function Tasks(props: TasksProps) {
     variables: { subtaskID: subTaskId },
   });
 
+  const mutationUpdatePinStatusComplete = `mutation UpdatePinStatus(
+    $uploadedFileID:String!,
+    $pinsID:String!
+  ){
+    updatePinStatus(
+      pinsStatusUpdateDto: { status: COMPLETED }
+      pinsFilter: {
+        uploadedFileID: $uploadedFileID # "ca813050-095f-11ec-b7f7-13a0db5fb508"
+        pinsID: $pinsID # "74c80bc0-1ef9-11ec-923a-794fe5586615"
+      }
+    ){
+      pinsID
+      uploadedFileID
+      x_axis
+      y_axis
+      z_axis
+      pinNumber
+      pageNumber
+      isDeleted
+      createdBy
+      createdAt
+      updatedBy
+      updatedAt
+      status
+      taskID
+      taskTitle
+    }
+  }`
+
+  const mutationUpdatePinStatusReOpen = `mutation UpdatePinStatus(
+    $uploadedFileID:String!,
+    $pinsID:String!
+  ){
+    updatePinStatus(
+      pinsStatusUpdateDto: { status: INPROGRESS }
+      pinsFilter: {
+        uploadedFileID: $uploadedFileID # "ca813050-095f-11ec-b7f7-13a0db5fb508"
+        pinsID: $pinsID # "74c80bc0-1ef9-11ec-923a-794fe5586615"
+      }
+    ){
+      pinsID
+      uploadedFileID
+      x_axis
+      y_axis
+      z_axis
+      pinNumber
+      pageNumber
+      isDeleted
+      createdBy
+      createdAt
+      updatedBy
+      updatedAt
+      status
+      taskID
+      taskTitle
+    }
+  }`
+
+  const updatePinStatus = (taskData) => {
+    
+    return axios.post(
+      MS_SERVICE_URL['ms_document'].url,
+      {
+        query: taskStatus === 'Mark as Complete' ? mutationUpdatePinStatusComplete : mutationUpdatePinStatusReOpen,
+        variables: {
+          uploadedFileID: taskData.fileID,
+          pinsID: taskData.taskTypeID
+        }
+      }
+    ).then(res => {
+      
+    })
+      .catch(err => console.log(err))
+  }
+
+  // React.useEffect(() => {
+  //   if (!loadingOnEditTaskStatus && updatedTaskStatusData) {
+  //     updatePinStatus(updatedTaskStatusData?.updateTask[0])
+  //   }
+  // }, [updatedTaskStatusData])
+
   // set sucess value to toaster function
   const getTaskToasterMessage = (data) => {
     setActiveErrorClass(false)
@@ -186,6 +267,7 @@ export function Tasks(props: TasksProps) {
     if (!editTaskStatusLoading && updatedTaskStatusData) {
       setLoadingOnEditTaskStatus(false)
       getTaskToasterMessage(t("toaster.success.task.task_status_updated"))
+      updatePinStatus(updatedTaskStatusData?.updateTask[0])
     }
     if (!editTaskStatusLoading && editTaskStatusError) {
       setLoadingOnEditTaskStatus(false)
@@ -305,7 +387,7 @@ export function Tasks(props: TasksProps) {
       status = Status.INPROGRESS;
       if (updatedTaskIndex === -1) {
         setCompletedTasks(completedTasks?.filter(item => item.taskID !== task.taskID))
-        const newUpdatedTaskFromCompletedTask = {...task,status}
+        const newUpdatedTaskFromCompletedTask = { ...task, status }
         newArray.push(newUpdatedTaskFromCompletedTask)
       } else {
         obj = {
@@ -772,7 +854,7 @@ export function Tasks(props: TasksProps) {
       },
     })
   }
-  
+
 
   return (
     <div className="tabs-main-info-container">

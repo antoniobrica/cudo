@@ -9,6 +9,7 @@ import { PinsUpdateInputDto } from '../dto/input/pins.upate.input.dto';
 import PinsFilterParams from '../dto/input/pinsFilter.input';
 import { PinsShiftUpdateInputDto } from '../dto/input/pinsShift.update.input.dto';
 import { PinsStatusUpdateInputDto } from '../dto/input/pinsStatus.upate.input.dto';
+import { PinsTaskInfoUpdateInputDto } from '../dto/input/pinsTaskInfo.update.input.dto';
 
 @Injectable()
 export class PinsService {
@@ -83,5 +84,15 @@ export class PinsService {
             return updatedPins;
         }
         // throw new FileCustomError(FileErrorTypeEnum.PINS_NOT_FOUND)
+    }
+
+    async updateTaskReferenceInPinDetail(refFilter: PinsFilterParams, pinsTaskInfoUpdateInput: PinsTaskInfoUpdateInputDto) {
+        const pinDetail = await this.referancesRepository.findOne({ where: { ...refFilter } });
+        if (pinDetail) {
+            await this.referancesRepository.update(pinDetail.id, { ...pinsTaskInfoUpdateInput });
+            const updatedPinDetail = await this.referancesRepository.find({ where: { ...refFilter } });
+            return updatedPinDetail;
+        }
+        throw new FileCustomError(FileErrorTypeEnum.PINS_NOT_FOUND)
     }
 }

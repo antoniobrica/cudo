@@ -40,6 +40,9 @@ export function FileList(props: FileListProps) {
 
   const [isLoading, setIsLoading] = React.useState(false);
 
+  const [isVersionSelected, setIsVersionSelected] = React.useState(false)
+
+
   const history = useHistory();
   const pathNames = history.location.pathname.split("/");
   const projectId = pathNames[3].toString();
@@ -152,6 +155,9 @@ export function FileList(props: FileListProps) {
     props.cancel()
   }
 
+  const getIsVersionSelected = (isSelected) => {
+    setIsVersionSelected(isSelected)    
+  }
 
   // if (loading) {
   //   return (<LazyLoading />)
@@ -159,28 +165,37 @@ export function FileList(props: FileListProps) {
   return (
     <div>
       {
-      loading ?
-        <LazyLoading />
-        :
-        addPinFromTask ? (
-          <AddPinFile isOpen={addPinFromTask} cancel={cancel} filesData={selectedFileFromTask} dowloadFilesData={itemsd} savePin={savePins} />
-        ) : (
-          <SelectFilePopup
-            isTaskFile={props.isTaskFile}
-            cancel={props.cancel}
-            files={data?.uploadedFiles}
-            downloadFiles={downloadFiles}
-            viewFiles={viewFiles}
-            downloadedImg={itemsd}
-            savePins={savePins}
-            selectedFileId={getSelectedFileId}
-            fileVersionDetail={selectedFileVersions?.fileVersions}
-            fileVersionLoading={fileVersionLoading}
-            onlyAddFileToTask={props.onlyAddFileToTask}
-            addSelectedFiles={props.addSelectedFiles}
-            selectedFiles={props.selectedFiles}
-          />
-        )
+        loading ?
+          <LazyLoading />
+          :
+          addPinFromTask ? (
+            <AddPinFile
+              isOpen={addPinFromTask}
+              cancel={cancel}
+              filesData={selectedFileFromTask}
+              dowloadFilesData={itemsd}
+              savePin={savePins}
+              onSuccess={""}
+              isVersionSelected={isVersionSelected}
+            />
+          ) : (
+            <SelectFilePopup
+              isTaskFile={props.isTaskFile}
+              cancel={props.cancel}
+              files={data?.uploadedFiles}
+              downloadFiles={downloadFiles}
+              viewFiles={viewFiles}
+              downloadedImg={itemsd}
+              savePins={savePins}
+              selectedFileId={getSelectedFileId}
+              fileVersionDetail={selectedFileVersions?.fileVersions}
+              fileVersionLoading={fileVersionLoading}
+              onlyAddFileToTask={props.onlyAddFileToTask}
+              addSelectedFiles={props.addSelectedFiles}
+              selectedFiles={props.selectedFiles}
+              isVersionSelected={getIsVersionSelected}
+            />
+          )
       }
 
     </div>

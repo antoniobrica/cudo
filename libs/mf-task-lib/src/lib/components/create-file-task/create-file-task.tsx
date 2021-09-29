@@ -3,7 +3,7 @@ import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, Te
 import { radios } from '@storybook/addon-knobs';
 import { ITask, ITasks, TaskMutation } from "../../interfaces/task";
 import { ApolloCache, FetchResult, useMutation, useQuery } from '@apollo/client';
-import { ADD_TASK, GET_TASKS } from "../../graphql/graphql";
+import { ADD_TASK, GET_TASKS, GET_TASKS_BY_TYPES } from "../../graphql/graphql";
 // import '../../../../../../libs/shared-components/src/style/index.scss';
 import moment, { calendarFormat } from 'moment';
 import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex, BkpsIndex } from "@cudo/mf-account-app-lib"
@@ -24,6 +24,7 @@ export interface CreateFileTaskProps {
   pinsaved?
   getTaskToasterMessage?
   getTaskErrorMessage?
+  isVersionSelected?
 }
 
 interface AddTaskErrors {
@@ -67,30 +68,25 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
 
-  const [addTask, { loading, error, data }] = useMutation(ADD_TASK,
-    {
-      refetchQueries: [
-        { query: GET_TASKS, variables: { referenceID } }
-      ],
-    }
-  )
+  const [addTask, { loading: taskAddLoading, error: taskAddError, data: taskAddedData }] = useMutation(ADD_TASK)
 
   React.useEffect(() => {
-    if (!loading && data) {
+    if (!taskAddLoading && taskAddedData) {
       setAddTaskLoading(false)
       props.onSuccess();
       props.savePin(false)
       cancel()
       props.getTaskToasterMessage(t("toaster.success.task.task_created"))
+      updateTaskInfoOnPin(taskAddedData?.createTask)
     }
-    if (!loading && error) {
+    if (!taskAddLoading && taskAddError) {
       setAddTaskLoading(false)
       props.onSuccess();
       props.savePin(false)
       cancel()
-      props.getTaskErrorMessage(error?.graphQLErrors[0]?.extensions?.exception?.status)
+      props.getTaskErrorMessage(taskAddError?.graphQLErrors[0]?.extensions?.exception?.status)
     }
-  }, [data])
+  }, [taskAddedData])
 
   React.useEffect(() => {
     if (referenceID) {
@@ -246,7 +242,7 @@ export function CreateFileTask(props: CreateFileTaskProps) {
   }
   React.useEffect(() => {
     if (props.pinsaved) {
-      addTak()
+      addNewTaskOnPin()
     }
   }, [props.pinsaved])
 
@@ -277,10 +273,12 @@ export function CreateFileTask(props: CreateFileTaskProps) {
     props.savePin(true);
   };
 
-  const addTak = () => {
+  const addNewTaskOnPin = () => {
+    // parentFileID: fileData?.versionCount && fileData?.versionCount > 0 && props?.isVersionSelected ? fileData.parentUploadedFileID : fileData.uploadedFileID,
     const variables = {
       taskTitle, estimatedDays,
       sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
+      parentFileID: props?.isVersionSelected ? fileData.parentUploadedFileID : fileData.uploadedFileID,
       fileID: fileData.uploadedFileID,
       fileName: fileData.fileTitle,
       taskTypeID,
@@ -302,11 +300,25 @@ export function CreateFileTask(props: CreateFileTaskProps) {
     }
     addTask({
       variables,
+      // update: (cache, addedTaskData) => {
+      //   const cacheData = cache.readQuery({
+      //     query: GET_TASKS_BY_TYPES,
+      //     variables: { fileID: fileData?.uploadedFileID, referenceID },
+      //   }) as ITasks;
+      //   console.log("------cachedat--addedTask--", cacheData)
+      //   cache.writeQuery({
+      //     query: GET_TASKS,
+      //     variables: { referenceID },
+      //     data: {
+      //       tasksByTasktypes: [...cacheData?.tasksByTasktypes, addedTaskData?.data?.createTask]
+      //     },
+      //   });
+      // }
       update: (
         cache,
         { data: { addTask } }: FetchResult<TaskMutation>
       ) => {
-        const cacheData = cache.readQuery({ query: GET_TASKS, variables: { referenceID }, }) as ITasks;
+        const cacheData = cache.readQuery({ query: GET_TASKS_BY_TYPES, variables: { fileID: fileData?.uploadedFileID, referenceID }, }) as ITasks;
         // props.onSuccess();
         // props.savePin(false);
         // cache.writeQuery({
@@ -324,6 +336,57 @@ export function CreateFileTask(props: CreateFileTaskProps) {
     setDescription(e.target.value);
   }
 
+  const mutationUpdateTaskInfoOnPin = `mutation UpdateTaskInfoInPinDetail(
+    $taskID:String!,
+    $taskTitle:String!,
+    $uploadedFileID:String!,
+    $pinsID:String!
+  ){
+    updateTaskInfoInPinDetail(
+      pinsTaskInfoUpdateDto: { 
+        taskID: $taskID # "5d012030-154e-11ec-bb00-a3885705ef72", 
+        taskTitle: $taskTitle # "Task 3 on File 157 ", 
+        status: INPROGRESS 
+      }
+      pinsFilter: { 
+        uploadedFileID: $uploadedFileID # "ca813050-095f-11ec-b7f7-13a0db5fb508", 
+        pinsID: $pinsID # "5cae6c50-154e-11ec-9fd2-cb6640933b51" 
+      }
+    ){
+      pinsID
+      uploadedFileID
+      x_axis
+      y_axis
+      z_axis
+      pinNumber
+      pageNumber
+      isDeleted
+      createdBy
+      createdAt
+      updatedBy
+      updatedAt
+      status
+      taskID
+      taskTitle
+    }
+  }`
+
+  const updateTaskInfoOnPin = (taskAddedData) => {
+
+    return axios.post(
+      MS_SERVICE_URL['ms_document'].url,
+      {
+        query: mutationUpdateTaskInfoOnPin,
+        variables: {
+          taskID: taskAddedData.taskID,
+          taskTitle: taskTitle,
+          uploadedFileID: taskAddedData.fileID,
+          pinsID: taskAddedData.taskTypeID
+        }
+      }
+    ).then(res => { })
+      .catch(err => console.log(err))
+  }
 
   return (
     <div >

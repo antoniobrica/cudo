@@ -6,6 +6,9 @@ export class PinsModel {
     @Field({ nullable: true, description: `pinsID` })
     pinsID?: string;
 
+    @Field({ nullable: true, description: `Parent FileID is for work and building` })
+    parentUploadedFileID?: string;
+
     @Field({ description: `FileID is for work and building` })
     uploadedFileID: string;
 
@@ -41,4 +44,10 @@ export class PinsModel {
 
     @Field({ nullable: true, description: `Pin Status` })
     status?: string;
+
+    @Field({ nullable: true, description: `task ID` })
+    taskID?: string;
+
+    @Field({ nullable: true, description: `task Title` })
+    taskTitle?: string;
 }

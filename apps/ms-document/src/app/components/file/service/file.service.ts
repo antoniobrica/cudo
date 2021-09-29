@@ -15,6 +15,8 @@ import { FileReferenceParams } from '../dto/args/param/file-reference.param';
 import { ParentFileParams } from '../dto/args/param/parent-file.param';
 import { UpdateFileInput } from '../dto/update-file.input';
 import { UploadFileInfoInput } from '../dto/upload-file-info.input';
+import { CommentsEntity } from '../../../entities/comments.entity';
+import { PinsTypeEntity } from '../../../entities/pins.entity';
 
 
 @Injectable()
@@ -28,7 +30,11 @@ export class FileService {
     @InjectRepository(FileReferencesEntity)
     private fileReferencesRepository: Repository<FileReferencesEntity>,
     @InjectRepository(UploadedFilesEntity)
-    private uploadedFilesRepository: TreeRepository<UploadedFilesEntity>
+    private uploadedFilesRepository: TreeRepository<UploadedFilesEntity>,
+    // @InjectRepository(PinsTypeEntity)
+    // private pinsRepository: Repository<PinsTypeEntity>,
+    // @InjectRepository(CommentsEntity)
+    // private commentsRepository: Repository<CommentsEntity>
 
   ) { }
 
