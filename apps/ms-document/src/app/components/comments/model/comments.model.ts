@@ -6,6 +6,9 @@ export class CommentsModel {
     @Field({ nullable: true, description: `commentsID` })
     commentsID?: string;
 
+    @Field({  nullable: true, description: `parent Uploaded File ID of comments for versions parent` })
+    parentUploadedFileID?: string;
+
     @Field({ description: `uploadedFileID of comments` })
     uploadedFileID: string;
 

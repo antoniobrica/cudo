@@ -135,14 +135,14 @@ export function FileStructure(props: FileStructureProps) {
 	}
 
 	const renderChildrenSingleFile = (singleFileItem) => {
-		const { uploadedFileID, fileType, fileTitle, fileVersion, versionCount } = singleFileItem
+		const { uploadedFileID, fileType, fileTitle, fileVersion, versionCount, taskCount, commentCount } = singleFileItem
 		return (
 			<div key={uploadedFileID} className={selectedExpandVersionId === uploadedFileID && expandVersion ? "single-files-list expand" : "single-files-list"}>
 				<div className="files-left-area">
 					<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/image2.png`} />
 					<h3 className="files-name">{fileTitle}</h3>
-					<span className="no-of-files" onClick={() => onClickViewFileDetail(singleFileItem, false,null,null)}><i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i> 2 comments</span>
-					<span className="no-of-files" onClick={() => onClickViewFileDetail(singleFileItem, false,null, null)}><i className="ms-Icon ms-Icon--CheckboxComposite" aria-hidden="true"></i> 2 tasks</span>
+					<span className="no-of-files" onClick={() => onClickViewFileDetail(singleFileItem, false,null,null)}><i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i> {commentCount} comments</span>
+					<span className="no-of-files" onClick={() => onClickViewFileDetail(singleFileItem, false,null, null)}><i className="ms-Icon ms-Icon--CheckboxComposite" aria-hidden="true"></i> {taskCount} tasks</span>
 					{versionCount > 0 ? <span className="version-files"><a onClick={() => onClickFileVersion(uploadedFileID)}>Ver {versionCount}</a></span> : null}
 				</div>
 

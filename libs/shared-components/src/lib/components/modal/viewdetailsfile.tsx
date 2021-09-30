@@ -531,7 +531,7 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                           <div className="comments-action">
                             <Button positive size='small' className="primary full-width">Add Comment</Button>
                           </div> */}
-                          <CommentAdd uploadedFileID={props?.filesData?.uploadedFileID} />
+                          <CommentAdd filesData={props?.filesData} isVersionSelected={isVersionSelected} />
                         </Form.Field>
                       </Grid.Column>
                     </Grid.Row>
