@@ -15,8 +15,8 @@ import { FileReferenceParams } from '../dto/args/param/file-reference.param';
 import { ParentFileParams } from '../dto/args/param/parent-file.param';
 import { UpdateFileInput } from '../dto/update-file.input';
 import { UploadFileInfoInput } from '../dto/upload-file-info.input';
-import { CommentsEntity } from '../../../entities/comments.entity';
-import { PinsTypeEntity } from '../../../entities/pins.entity';
+import CommentsEntity from '../../../entities/comments.entity';
+import PinsTypeEntity from '../../../entities/pins.entity';
 
 
 @Injectable()
@@ -31,10 +31,10 @@ export class FileService {
     private fileReferencesRepository: Repository<FileReferencesEntity>,
     @InjectRepository(UploadedFilesEntity)
     private uploadedFilesRepository: TreeRepository<UploadedFilesEntity>,
-    // @InjectRepository(PinsTypeEntity)
-    // private pinsRepository: Repository<PinsTypeEntity>,
-    // @InjectRepository(CommentsEntity)
-    // private commentsRepository: Repository<CommentsEntity>
+    @InjectRepository(PinsTypeEntity)
+    private pinsRepository: Repository<PinsTypeEntity>,
+    @InjectRepository(CommentsEntity)
+    private commentsRepository: Repository<CommentsEntity>
 
   ) { }
 
@@ -217,6 +217,8 @@ export class FileService {
           if (parent[i]?.children?.length > 0) {
             for (let j = 0; j < parent[i].children.length; j++) {
               const childUploadedFileId = parent[i].children[j].uploadedFileID
+
+              // Fetch version count by Parent file
               let versionCount = 0
               versionCount = await this.uploadedFilesRepository.count({
                 where: {
@@ -224,10 +226,29 @@ export class FileService {
                   isDeleted: false
                 }
               });
-              modifiedFiles.push({ ...parent[i].children[j], versionCount })
+
+              // Fetch task/pin count by Parent file
+              let taskCount = 0
+              taskCount = await this.pinsRepository.count({
+                where: {
+                  parentUploadedFileID: childUploadedFileId,
+                  isDeleted: false,
+                  status: 'INPROGRESS'
+                }
+              });
+
+              // Fetch Comments count by Parent file
+              let commentCount = 0
+              commentCount = await this.commentsRepository.count({
+                where: {
+                  parentUploadedFileID: childUploadedFileId,
+                  isDeleted: false
+                }
+              });
+              modifiedFiles.push({ ...parent[i].children[j], versionCount, taskCount, commentCount })
             }
           }
-          result.push({...parent[i], children: modifiedFiles})
+          result.push({ ...parent[i], children: modifiedFiles })
         }
       }
       // #endregion

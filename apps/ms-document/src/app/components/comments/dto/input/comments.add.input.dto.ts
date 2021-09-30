@@ -5,6 +5,9 @@ import { OneToMany } from "typeorm";
 @InputType()
 export class CommentsCreateInputDto {
 
+    @Field({ description: `comments in a parent file for versions parent` })
+    parentUploadedFileID: string;
+    
     @Field({ description: `comments in a file` })
     uploadedFileID: string;
 

@@ -45,6 +45,8 @@ export const GET_FILES = gql`query UploadedFiles($projectId:String!)
       directory
       structureTitle  
       versionCount
+      taskCount
+      commentCount
       createdBy 
       createdAt 
       updatedBy 
