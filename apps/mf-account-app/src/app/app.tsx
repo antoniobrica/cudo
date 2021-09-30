@@ -34,4 +34,4 @@ const App = props => {
 };
 
 export default App;
-// comment to update changed to libs
+// comment to update changed to libs and shared components

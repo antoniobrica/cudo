@@ -15,6 +15,16 @@ export interface BkpHierarchyIndexProps {
   // parentBKPSelect?
   // bkp?
   // folderOpen?
+  data?
+  addBkpCosts?
+  deleteBkp
+  updateBkpCost
+  addLoading?
+  addData?
+  deleteLoading?
+  deleteData?
+  updateLoading?
+  updateData?
 }
 
 export function BkpHierarchyIndex(props: BkpHierarchyIndexProps) {
@@ -22,7 +32,18 @@ export function BkpHierarchyIndex(props: BkpHierarchyIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-      <BkpHierarchy />
+        <BkpHierarchy
+          data={props.data}
+          addBkpCosts={props.addBkpCosts}
+          deleteBkp={props.deleteBkp}
+          updateBkpCost={props.updateBkpCost}
+          addLoading={props.addLoading}
+          addData={props.addData}
+          deleteLoading={props.deleteLoading}
+          deleteData={props.deleteData}
+          updateLoading={props.updateLoading}
+          updateData={props.updateData}
+        />
       </ApolloHooksProvider>
     </ApolloProvider>
   );
