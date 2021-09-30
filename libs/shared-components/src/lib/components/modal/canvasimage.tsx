@@ -13,6 +13,10 @@ export interface CanvasImageProps {
   savePin?
   pinSaved?
   hoveredTaskTypeID?
+  parentWisePinFetch?
+  parentFileId?
+  isVersionSelected?
+  showCompletedPins?
 }
 export function CanvasImage(props: CanvasImageProps) {
   const [loading, setLoading] = useState(false)
@@ -65,6 +69,10 @@ export function CanvasImage(props: CanvasImageProps) {
           isPinCreated={props?.isPinCreated}
           setIsPinCreated={props?.setIsPinCreated}
           hoveredTaskTypeID={props?.hoveredTaskTypeID}
+          parentWisePinFetch={props?.parentWisePinFetch}
+          parentFileId={props?.parentFileId}
+          isVersionSelected={props?.isVersionSelected}
+          showCompletedPins={props?.showCompletedPins}
         ></CanvasPins>
       </div>
     </div>

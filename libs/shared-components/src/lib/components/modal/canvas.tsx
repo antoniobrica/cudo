@@ -480,13 +480,13 @@ export function Canvas(props: CanvasProps) {
           onMouseOut={handleMouseOut}
           ref={canvasToDrawCircle}></canvas>
 
-        {props?.allowToCreateNewPin ?
+        {/* {props?.allowToCreateNewPin ?
           <CanvasTransparentNewPin
             allowToCreateNewPin={props.allowToCreateNewPin}
             selectedNewTaskCoOrdinate={getSelectedNewTaskCoOrdinates}
             lastPinDetail={pinList && pinList?.length && pinList[pinList?.length - 1]}
           ></CanvasTransparentNewPin>
-          : null}
+          : null} */}
 
       </div>
     </div>

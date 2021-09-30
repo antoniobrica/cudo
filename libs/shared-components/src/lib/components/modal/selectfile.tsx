@@ -36,6 +36,7 @@ export interface FileStructureProps {
   addSelectedFiles?
   selectedFiles?
   changeAdd?
+  isVersionSelected?
 }
 export function SelectFilePopup(props: FileStructureProps) {
   const countryOptions = [
@@ -53,7 +54,7 @@ export function SelectFilePopup(props: FileStructureProps) {
   const [view, setView] = React.useState(false);
   const { t } = useTranslation()
 
-
+  const [isVersionSelected, setIsVersionSelected] = React.useState(false)
 
   React.useEffect(() => {
     if (props.isTaskFile) {
@@ -93,7 +94,7 @@ export function SelectFilePopup(props: FileStructureProps) {
     if (props.downloadedImg) {
       for (let i = 0; i < props.downloadedImg.length; i++) {
         if (props.downloadedImg[i].filename == filesData['fileTitle']) {
-         
+
           setimgUrl(props.downloadedImg[i].url);
         }
       }
@@ -102,10 +103,15 @@ export function SelectFilePopup(props: FileStructureProps) {
   }, [props.downloadedImg])
 
   const viewFiles = (data) => {
-   
-    setFtype(data.fileType);   
+
+    setFtype(data.fileType);
     setFilesData(data);
     props.viewFiles(data)
+  }
+
+  const getIsVersionSelected = (isSelected) => {
+    setIsVersionSelected(isSelected)
+    props?.isVersionSelected(isSelected)
   }
 
   return (
@@ -115,7 +121,15 @@ export function SelectFilePopup(props: FileStructureProps) {
       } */}
       {view ?
         <div>
-          <AddPinFile isOpen={view} cancel={cancel} filesData={filesData} dowloadFilesData={props.downloadedImg} savePin={props.savePins} onSuccess={""} />
+          <AddPinFile
+            isOpen={view}
+            cancel={cancel}
+            filesData={filesData}
+            dowloadFilesData={props.downloadedImg}
+            savePin={props.savePins}
+            onSuccess={""}
+            isVersionSelected={isVersionSelected}
+          />
         </div> : null}
       <Modal className="modal_media right-side--fixed-modal select-file-modal"
         // closeIcon
@@ -130,72 +144,72 @@ export function SelectFilePopup(props: FileStructureProps) {
         // }
         closeOnDimmerClick={false}
       >
-      <div className="fixed-popup-inner-con">
-        <Modal.Header>
-          <h3>{t("project_tab_menu.files.select_file")}</h3> <Icon name='close' onClick={cancel} />
-        </Modal.Header>
-        <Modal.Content body>
-          <div>
-            <Form>
-              <div className="slect-file-search-box">
-                <Form.Field className="search-box-file">
-                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/search_white.png`}></img>
+        <div className="fixed-popup-inner-con">
+          <Modal.Header>
+            <h3>{t("project_tab_menu.files.select_file")}</h3> <Icon name='close' onClick={cancel} />
+          </Modal.Header>
+          <Modal.Content body>
+            <div>
+              <Form>
+                <div className="slect-file-search-box">
+                  <Form.Field className="search-box-file">
+                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/search_white.png`}></img>
 
-                  <Input
-                    placeholder={t("common.search")}
-                    size="small"
-                    className="full-width"
-                    type="search"
-                  />
-                </Form.Field>
-                <Form.Field className="filter-with-add-file">
+                    <Input
+                      placeholder={t("common.search")}
+                      size="small"
+                      className="full-width"
+                      type="search"
+                    />
+                  </Form.Field>
+                  <Form.Field className="filter-with-add-file">
 
-                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/filter.png`}></img>
-                  {/* <FilterPopup /> */} 
+                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/filter.png`}></img>
+                    {/* <FilterPopup /> */}
                     <Suspense fallback={<div>Loading...</div>}>
                       <AddFileSettingUpload />
 
                     </Suspense>
-                  {/* <Button size="small" className="primary" style={{ marginLeft: '50', }}>
+                    {/* <Button size="small" className="primary" style={{ marginLeft: '50', }}>
                     <Icon name='add' /> {t("common.add_new_button")}
                   </Button>  */}
-                </Form.Field>
-              </div>
-            </Form><br />
-            {
-              props?.onlyAddFileToTask ? (
-                <TaskFileStructure
-                  uploadNewVersion={null}
-                  files={props.files}
-                  downloadFiles={props.downloadFiles}
-                  viewFiles={viewFiles}
-                  downloadedImg={props.downloadedImg}
-                  isPinFile={isPinFile}
-                  selectedFileId={props.selectedFileId}
-                  fileVersionDetail={props.fileVersionDetail}
-                  fileVersionLoading={props.fileVersionLoading}
-                  addSelectedFiles={props.addSelectedFiles}
-                  selectedFiles={props.selectedFiles}
-                />
-              ) : (
-                <PinFileStructure
-                  uploadNewVersion={null}
-                  files={props.files}
-                  downloadFiles={props.downloadFiles}
-                  viewFiles={viewFiles}
-                  downloadedImg={props.downloadedImg}
-                  isPinFile={isPinFile}
-                  selectedFileId={props.selectedFileId}
-                  fileVersionDetail={props.fileVersionDetail}
-                  fileVersionLoading={props.fileVersionLoading}
-                ></PinFileStructure>
-              )
-            }
+                  </Form.Field>
+                </div>
+              </Form><br />
+              {
+                props?.onlyAddFileToTask ? (
+                  <TaskFileStructure
+                    uploadNewVersion={null}
+                    files={props.files}
+                    downloadFiles={props.downloadFiles}
+                    viewFiles={viewFiles}
+                    downloadedImg={props.downloadedImg}
+                    isPinFile={isPinFile}
+                    selectedFileId={props.selectedFileId}
+                    fileVersionDetail={props.fileVersionDetail}
+                    fileVersionLoading={props.fileVersionLoading}
+                    addSelectedFiles={props.addSelectedFiles}
+                    selectedFiles={props.selectedFiles}
+                  />
+                ) : (
+                  <PinFileStructure
+                    uploadNewVersion={null}
+                    files={props.files}
+                    downloadFiles={props.downloadFiles}
+                    viewFiles={viewFiles}
+                    downloadedImg={props.downloadedImg}
+                    isPinFile={isPinFile}
+                    selectedFileId={props.selectedFileId}
+                    fileVersionDetail={props.fileVersionDetail}
+                    fileVersionLoading={getIsVersionSelected}
+                  ></PinFileStructure>
+                )
+              }
 
 
 
 
-            {/* <div className="d-flex align-items-center py-2">
+              {/* <div className="d-flex align-items-center py-2">
               <span>
                 <img src={img4} className="  mr-10 " />
               </span>
@@ -211,7 +225,7 @@ export function SelectFilePopup(props: FileStructureProps) {
                 </span>
               </span>
             </div> */}
-            {/* <a
+              {/* <a
               href=" "
               className="navi-link active"
               style={{ float: 'right', marginTop: '-28px' }}
@@ -219,7 +233,7 @@ export function SelectFilePopup(props: FileStructureProps) {
               <img src={img3} />
             </a> */}
 
-            {/* <div className="d-flex align-items-center py-2">
+              {/* <div className="d-flex align-items-center py-2">
               <span>
                 <img src={img7} className="  mr-10 " />
               </span>
@@ -227,21 +241,21 @@ export function SelectFilePopup(props: FileStructureProps) {
               <span className="font-weight-bold mb-0 mr-10">
                 File 1
                 <br /> */}
-            {/* <span
+              {/* <span
                   className="navi-text"
                   style={{ color: '#9FB5C5', fontSize: '10px' }}
                 >
                   ( 5 files )
                 </span> */}
-            {/* </span>
+              {/* </span>
             </div>
             <a
               onClick={tick}
               className="navi-link active"
               style={{ float: 'right', marginTop: '-28px' }}
             > */}
-            {/* <img src={img8} /> */}
-            {/* {isTick ? <img src={img8} /> : <img src={img9} />}
+              {/* <img src={img8} /> */}
+              {/* {isTick ? <img src={img8} /> : <img src={img9} />}
 
             </a>
             <div className="d-flex align-items-center py-2">
@@ -252,13 +266,13 @@ export function SelectFilePopup(props: FileStructureProps) {
               <span className="font-weight-bold mb-0 mr-10">
                 File 2
                 <br /> */}
-            {/* <span
+              {/* <span
                   className="navi-text"
                   style={{ color: '#9FB5C5', fontSize: '10px' }}
                 >
                   ( 5 files )
                 </span> */}
-            {/* </span>
+              {/* </span>
             </div>
             <a
               href=" "
@@ -269,24 +283,24 @@ export function SelectFilePopup(props: FileStructureProps) {
             </a> */}
 
 
-          </div>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button
-            content={t("common.continue")}
-            onClick={goToAddPin}
-            positive
-            size="small"
-            className="primary"
-          />
-          <Button
-            size="small"
-            className="icon-border"
-            onClick={cancel}
-          >
-            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> {t("common.cancel")}
-          </Button>
-        </Modal.Actions>
+            </div>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button
+              content={t("common.continue")}
+              onClick={goToAddPin}
+              positive
+              size="small"
+              className="primary"
+            />
+            <Button
+              size="small"
+              className="icon-border"
+              onClick={cancel}
+            >
+              <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> {t("common.cancel")}
+            </Button>
+          </Modal.Actions>
         </div>
       </Modal>
     </div >

@@ -8,17 +8,26 @@ import { MS_SERVICE_URL } from '@cudo/mf-core';
 export interface PinCompletedTaskListIndexProps {
   filesData?
   pinCompletedCount?
+  parentWiseTaskFetch?
+  isVersionSelected?
+  isCompletedTaskShow?
 }
 const client = new ApolloClient({
   uri: MS_SERVICE_URL['ms_task'].url,
   cache: new InMemoryCache()
 });
 export function PinCompletedTaskListIndex(props: PinCompletedTaskListIndexProps) {
-  
+
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <PinCompletedTaskList filesData={props.filesData} pinCompletedCount={props?.pinCompletedCount} ></PinCompletedTaskList>
+        <PinCompletedTaskList
+          filesData={props.filesData}
+          pinCompletedCount={props?.pinCompletedCount}
+          parentWiseTaskFetch={props?.parentWiseTaskFetch}
+          isVersionSelected={props?.isVersionSelected}
+          isCompletedTaskShow={props?.isCompletedTaskShow}
+        ></PinCompletedTaskList>
       </ApolloHooksProvider>
     </ApolloProvider>
   );

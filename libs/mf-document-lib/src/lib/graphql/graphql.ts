@@ -326,3 +326,50 @@ export const DELETE_COMMENT = gql`mutation DeleteComment($commentsID:String!){
     isDeleted
   }
 }`
+
+
+export const UPDATE_PIN_STATUS = gql`mutation {
+  updateTaskInfoInPinDetail(
+    pinsTaskInfoUpdateDto: { taskID: "5d012030-154e-11ec-bb00-a3885705ef72", taskTitle: "Task 3 on File 157 ", status: COMPLETED }
+    pinsFilter: { uploadedFileID: "ca813050-095f-11ec-b7f7-13a0db5fb508", pinsID: "5cae6c50-154e-11ec-9fd2-cb6640933b51" }
+  ) {
+    pinsID
+    uploadedFileID
+    x_axis
+    y_axis
+    z_axis
+    pinNumber
+    pageNumber
+    isDeleted
+    createdBy
+    createdAt
+    updatedBy
+    updatedAt
+    status
+    taskID
+    taskTitle
+  }
+}`
+
+export const UPDATE_PIN_TASK_INFO = gql`mutation {
+  updateTaskInfoInPinDetail(
+    pinsTaskInfoUpdateDto: { taskID: "5d012030-154e-11ec-bb00-a3885705ef72", taskTitle: "Task 3 on File 157 ", status: COMPLETED }
+    pinsFilter: { uploadedFileID: "ca813050-095f-11ec-b7f7-13a0db5fb508", pinsID: "5cae6c50-154e-11ec-9fd2-cb6640933b51" }
+  ) {
+    pinsID
+    uploadedFileID
+    x_axis
+    y_axis
+    z_axis
+    pinNumber
+    pageNumber
+    isDeleted
+    createdBy
+    createdAt
+    updatedBy
+    updatedAt
+    status
+    taskID
+    taskTitle
+  }
+}`

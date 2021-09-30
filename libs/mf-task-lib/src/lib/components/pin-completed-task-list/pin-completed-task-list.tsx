@@ -19,6 +19,9 @@ import { Dropdown, Label, Radio } from 'semantic-ui-react';
 export interface PinCompletedTaskListProps {
   filesData?
   pinCompletedCount?
+  parentWiseTaskFetch?
+  isVersionSelected?
+  isCompletedTaskShow?
 }
 
 export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
@@ -50,8 +53,18 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
   const res = history.location.pathname.split("/");
   const referenceID = res[3]?.toString();
 
+  const taskFetchFilter = props?.parentWiseTaskFetch === true ? {
+    parentFileID: props?.isVersionSelected === true ?
+      props?.filesData?.parentUploadedFileID
+      : props?.filesData?.uploadedFileID,
+    referenceID
+  } : {
+    fileID: props?.filesData?.uploadedFileID,
+    referenceID
+  }
+
   const { loading: taskListLoading, error: taskListError, data: taskListData } = useQuery(GET_TASKS_BY_TYPES, {
-    variables: { fileID: props?.filesData?.uploadedFileID, referenceID },
+    variables: taskFetchFilter,
   });
 
   React.useEffect(() => {
@@ -65,6 +78,7 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
   // #region  API CAll
   // Task API
   const [updateTaskApi, { loading: updateTaskLoading, error: updateTaskError, data: updateTaskData }] = useMutation(UPDATE_TASK);
+  const [updateTaskStatusApi, { loading: updateTaskStatusLoading, error: updateTaskStatusError, data: updateTaskStatusData }] = useMutation(UPDATE_TASK);
   const [deleteTaskApi, { loading: deleteTaskLoading, error: deleteTaskError, data: deleteTaskData }] = useMutation(DELETE_TASK);
 
   // Sub task API
@@ -81,6 +95,7 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
 
   const onClickShowCompletedTask = () => {
     setCompletedTaskShow(!completedTaskShow)
+    props?.isCompletedTaskShow(!completedTaskShow)
   }
 
   const cancel = () => {
@@ -159,7 +174,7 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
       update: (cache, updatedTaskData) => {
         const cacheData = cache.readQuery({
           query: GET_TASKS_BY_TYPES,
-          variables: { fileID: props?.filesData?.uploadedFileID, referenceID },
+          variables: taskFetchFilter,
         }) as ITasks;
 
         const updatedTaskList = cacheData?.tasksByTasktypes?.map((item) => {
@@ -172,7 +187,7 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
 
         cache.writeQuery({
           query: GET_TASKS_BY_TYPES,
-          variables: { fileID: props?.filesData?.uploadedFileID, referenceID },
+          variables: taskFetchFilter,
           data: {
             tasksByTasktypes: updatedTaskList,
           },
@@ -193,14 +208,14 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
 
         const cacheData = cache.readQuery({
           query: GET_TASKS_BY_TYPES,
-          variables: { fileID: props?.filesData?.uploadedFileID, referenceID },
+          variables: taskFetchFilter,
         }) as ITasks;
 
         const newTaskList = cacheData?.tasksByTasktypes?.filter((task) => task.taskID !== taskID)
 
         cache.writeQuery({
           query: GET_TASKS_BY_TYPES,
-          variables: { fileID: props?.filesData?.uploadedFileID, referenceID },
+          variables: taskFetchFilter,
           data: {
             tasksByTasktypes: newTaskList,
           },
@@ -222,7 +237,7 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
       followers.push({ userID: data.userID, userName: data.userName })
     })
 
-    updateTaskApi({
+    updateTaskStatusApi({
       variables: {
         taskID: task.taskID,
         status: task.status,
@@ -248,7 +263,7 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
       update: (cache, updatedTaskData) => {
         const cacheData = cache.readQuery({
           query: GET_TASKS_BY_TYPES,
-          variables: { fileID: props?.filesData?.uploadedFileID, referenceID },
+          variables: taskFetchFilter,
         }) as ITasks;
 
         const updatedTaskList = cacheData?.tasksByTasktypes?.map((item) => {
@@ -260,7 +275,7 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
 
         cache.writeQuery({
           query: GET_TASKS_BY_TYPES,
-          variables: { fileID: props?.filesData?.uploadedFileID, referenceID },
+          variables: taskFetchFilter,
           data: {
             tasksByTasktypes: updatedTaskList,
           },
@@ -268,6 +283,60 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
       },
     });
   };
+
+  React.useEffect(() => {
+    if (!updateTaskStatusLoading && updateTaskStatusData) {
+      updatePinStatus(updateTaskStatusData?.updateTask[0])
+    }
+  }, [updateTaskStatusData])
+
+
+  const mutationUpdatePinStatus = `mutation UpdatePinStatus(
+    $uploadedFileID:String!,
+    $pinsID:String!
+  ){
+    updatePinStatus(
+      pinsStatusUpdateDto: { status: INPROGRESS }
+      pinsFilter: {
+        uploadedFileID: $uploadedFileID # "ca813050-095f-11ec-b7f7-13a0db5fb508"
+        pinsID: $pinsID # "74c80bc0-1ef9-11ec-923a-794fe5586615"
+      }
+    ){
+      pinsID
+      uploadedFileID
+      x_axis
+      y_axis
+      z_axis
+      pinNumber
+      pageNumber
+      isDeleted
+      createdBy
+      createdAt
+      updatedBy
+      updatedAt
+      status
+      taskID
+      taskTitle
+    }
+  }`
+
+  const updatePinStatus = (taskData) => {
+    
+    return axios.post(
+      MS_SERVICE_URL['ms_document'].url,
+      {
+        query: mutationUpdatePinStatus,
+        variables: {
+          uploadedFileID: taskData.fileID,
+          pinsID: taskData.taskTypeID
+        }
+      }
+    ).then(res => {
+      
+    })
+      .catch(err => console.log(err))
+  }
+
 
   // #endregion
 
@@ -319,7 +388,7 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
 
         const cacheData = cache.readQuery({
           query: GET_TASKS_BY_TYPES,
-          variables: { fileID: props?.filesData?.uploadedFileID, referenceID },
+          variables: taskFetchFilter,
         }) as ITasks;
 
         const newTaskList = cacheData?.tasksByTasktypes?.map((task) => {
@@ -333,7 +402,7 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
 
         cache.writeQuery({
           query: GET_TASKS_BY_TYPES,
-          variables: { fileID: props?.filesData?.uploadedFileID, referenceID },
+          variables: taskFetchFilter,
           data: {
             tasksByTasktypes: newTaskList
           },
@@ -353,7 +422,7 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
       update: (cache, data) => {
         const cacheData = cache.readQuery({
           query: GET_TASKS_BY_TYPES,
-          variables: { fileID: props?.filesData?.uploadedFileID, referenceID },
+          variables: taskFetchFilter,
         }) as ITasks;
 
         const newTaskList = cacheData?.tasksByTasktypes?.map((task) => {
@@ -375,7 +444,7 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
 
         cache.writeQuery({
           query: GET_TASKS_BY_TYPES,
-          variables: { fileID: props?.filesData?.uploadedFileID, referenceID },
+          variables: taskFetchFilter,
           data: {
             tasksByTasktypes: newTaskList,
           },
@@ -395,7 +464,7 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
 
         const cacheData = cache.readQuery({
           query: GET_TASKS_BY_TYPES,
-          variables: { fileID: props?.filesData?.uploadedFileID, referenceID },
+          variables: taskFetchFilter,
         }) as ITasks;
 
         const newTaskList = cacheData?.tasksByTasktypes?.map((task) => {
@@ -422,7 +491,7 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
 
         cache.writeQuery({
           query: GET_TASKS_BY_TYPES,
-          variables: { fileID: props?.filesData?.uploadedFileID, referenceID },
+          variables: taskFetchFilter,
           data: {
             tasksByTasktypes: newTaskList,
           },
@@ -441,7 +510,7 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
 
         const cacheData = cache.readQuery({
           query: GET_TASKS_BY_TYPES,
-          variables: { fileID: props?.filesData?.uploadedFileID, referenceID },
+          variables: taskFetchFilter,
         }) as ITasks;
 
 
@@ -458,7 +527,7 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
 
         cache.writeQuery({
           query: GET_TASKS_BY_TYPES,
-          variables: { fileID: props?.filesData?.uploadedFileID, referenceID },
+          variables: taskFetchFilter,
           data: {
             tasksByTasktypes: newTaskList,
           },

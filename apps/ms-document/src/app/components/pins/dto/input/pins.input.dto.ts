@@ -6,7 +6,10 @@ import { StatusEnum } from "../../../../enum/status.enum";
 @InputType()
 export class PinsInputDto {
 
-    @Field({ description: `FileID is for work and building` })
+    @Field({ nullable: true, description: `Parent File ID is for work and building` })
+    parentUploadedFileID?: string;
+
+    @Field({ description: `File ID is for work and building` })
     uploadedFileID: string;
 
     @Field({ description: `X-Axis of pin` })

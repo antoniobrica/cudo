@@ -225,23 +225,10 @@ export function FileListing(props: FileListingProps) {
   // };
   // React.useEffect(getContainerItemsEffect, []);
 
-
-  // #region Get Logged in user detail
-  // query: `
-  // query userQuery {
-  //   userByEmail(email: "${props.loggedUserEmail}") {
-  //     references {
-  //       referenceID
-  //       referenceType
-  //       name
-  //       imageUrl
-  //       }
-  //     }
-  //   }
-  // `
   enum ReferenceType {
     COMPANY = "COMPANY"
   }
+
   useEffect(() => {
     axios({
       url: MS_SERVICE_URL['ms_account'].url,
@@ -263,8 +250,8 @@ export function FileListing(props: FileListingProps) {
     }).then((result) => {
 
       if (result.data.data.references.users) {
-         const userDetails = result.data.data.references.users.filter((user) => user.email === props.loggedUserEmail)
-         if (userDetails.length) {
+        const userDetails = result.data.data.references.users.filter((user) => user.email === props.loggedUserEmail)
+        if (userDetails.length) {
           dispatch({ type: documentAction.LOGGED_USER_ID, payload: userDetails[0].userID })
           dispatch({ type: documentAction.LOGGED_USER_NAME, payload: userDetails[0].userName })
           dispatch({ type: documentAction.LOGGED_USER_PROFILE_URL, payload: userDetails[0].imageUrl })
@@ -282,10 +269,6 @@ export function FileListing(props: FileListingProps) {
   }, [])
 
 
-
-
-  // #endregion
-
   return (
     <div>
       {loading ?
@@ -296,7 +279,8 @@ export function FileListing(props: FileListingProps) {
               opennewF={true}
               cancel={cancel}
               uploadNewVersion={uploadNewVersionFile}
-              file={fileVersion} /> : null}
+              file={fileVersion}
+            /> : null}
           <FileStructure
             files={data?.uploadedFiles}
             downloadFiles={downloadFiles}

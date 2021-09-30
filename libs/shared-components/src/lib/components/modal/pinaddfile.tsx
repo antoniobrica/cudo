@@ -31,8 +31,7 @@ export interface AddPinProps {
   dowloadFilesData?,
   onSuccess?,
   savePin?,
-  taskData?
-
+  isVersionSelected?
 }
 export const AddPinFile = (props: AddPinProps) => {
   const [open, setOpen] = React.useState(false);
@@ -47,7 +46,7 @@ export const AddPinFile = (props: AddPinProps) => {
   const [pinSavedOnCanvase, setPinSavedOnCanvase] = React.useState(false);
   const [activeErrorClass, setActiveErrorClass] = React.useState(false)
   const [taskErrors, setTaskErrors] = React.useState("")
-
+  const [hoveredTaskTypeID, setHoveredTaskTypeID] = React.useState(null)
 
   // set sucess value to toaster function
   const getTaskToasterMessage = (data) => {
@@ -168,8 +167,13 @@ export const AddPinFile = (props: AddPinProps) => {
   }
 
   const getActivePinWiseTaskCount = () => {
-    
+
   }
+
+  const getTaskHovered = (taskTypeID) => {
+    setHoveredTaskTypeID(taskTypeID)
+  }
+
   return (
     <div >
       <Modal className="pin-add-file"
@@ -204,8 +208,12 @@ export const AddPinFile = (props: AddPinProps) => {
                 allowToCreateNewPin={allowToCreateNewPin}
                 isPinCreated={isPinCreated}
                 setIsPinCreated={setIsPinCreated}
+                hoveredTaskTypeID={hoveredTaskTypeID}
+                parentWisePinFetch={false}
+                parentFileId={props?.filesData?.parentUploadedFileID}
+                isVersionSelected={props?.isVersionSelected}
+                showCompletedPins={false}
               ></CanvasImage>
-
             </div>
 
             <div className="right-side-file-details">
@@ -224,10 +232,18 @@ export const AddPinFile = (props: AddPinProps) => {
                     cord={cord}
                     fileData={fileData}
                     getTaskToasterMessage={getTaskToasterMessage}
-                    getTaskErrorMessage={getTaskErrorMessage} />
+                    getTaskErrorMessage={getTaskErrorMessage}
+                    isVersionSelected={props?.isVersionSelected} />
                 }
                 {!isPinCreated ?
-                  <PinTaskListIndex filesData={fileData} cord={cord} pinCount={getActivePinWiseTaskCount}></PinTaskListIndex> : null}
+                  <PinTaskListIndex
+                    filesData={fileData}
+                    cord={cord}
+                    pinCount={getActivePinWiseTaskCount}
+                    taskHovered={getTaskHovered}
+                    parentWiseTaskFetch={false}
+                    isVersionSelected={props?.isVersionSelected}
+                  ></PinTaskListIndex> : null}
               </div>
             </div>
           </Form>
