@@ -1,6 +1,7 @@
 import { Expose, plainToClass } from 'class-transformer';
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import * as uuid from 'uuid';
+import { BkpHierarchyEntity } from './bkphierarchy.entity';
 import { CostEntity } from './cost.entity';
 
 /**
@@ -47,6 +48,10 @@ export default class ReferanceTypeEntity extends BaseEntity {
     @Expose()
     @OneToMany(() => CostEntity, (file: CostEntity) => file.references)
     costs: CostEntity[];
+
+    @Expose()
+    @OneToMany(() => BkpHierarchyEntity, (bkp: BkpHierarchyEntity) => bkp.references)
+    bkphierarchy: BkpHierarchyEntity[];
 
     constructor(referanceTypeEntity: Partial<ReferanceTypeEntity>) {
         super();

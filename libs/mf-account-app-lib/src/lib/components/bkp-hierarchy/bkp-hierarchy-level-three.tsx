@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client'
 import { MS_SERVICE_URL } from '@cudo/mf-core'
-import { ModalCost } from '@cudo/shared-components'
+import { LazyLoading, ModalCost } from '@cudo/shared-components'
+import AddBkpCostPopUp from 'libs/shared-components/src/lib/components/modal/addbkpcostpopup'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dropdown, Form, Icon, Input, ItemContent, Label, Table } from 'semantic-ui-react'
@@ -9,6 +10,17 @@ import BkpCost from './bkp-cost'
 interface BkpHierarchyLevelThreeProps {
     layerThreeBKp
     house
+    deleteBkp
+    updateBkpCost
+    addBkpCosts
+    data?
+    loading?
+    addLoading?
+    addData?
+    deleteLoading?
+    deleteData?
+    updateLoading?
+    updateData?
 }
 
 const BkpHierarchyLevelThree = (props: BkpHierarchyLevelThreeProps) => {
@@ -16,7 +28,7 @@ const BkpHierarchyLevelThree = (props: BkpHierarchyLevelThreeProps) => {
     const [expandLayerThree, setexpandLayerThree] = useState(false)
     const [totalItems, setTotalItems] = useState(0)
     const [totalPrice, setTotalPrice] = useState(0)
-    const {t} = useTranslation()
+    const { t } = useTranslation()
 
     React.useEffect(() => {
         let costPrice = 0;
@@ -33,9 +45,10 @@ const BkpHierarchyLevelThree = (props: BkpHierarchyLevelThreeProps) => {
         setOpenAddCost(true)
     }
 
-    const createCost = (items,hs) => {
-        console.log('house------------>',hs)
-        console.log('items------------>',items)    }
+    const createCost = (items, hs) => {
+        console.log('house------------>', hs)
+        console.log('items------------>', items)
+    }
 
     const cancel = () => {
         setOpenAddCost(false)
@@ -44,7 +57,26 @@ const BkpHierarchyLevelThree = (props: BkpHierarchyLevelThreeProps) => {
     return (
         <li>
             {
-                openAddCost && <ModalCost house={props?.house} openCost={openAddCost} cancel={cancel} bkpCostFilter={props?.layerThreeBKp?.BKPID}></ModalCost>
+                openAddCost && (
+                    // <ModalCost
+                    //     house={props?.house}
+                    //     addLoading={props.addLoading}
+                    //     openCost={openAddCost}
+                    //     cancel={cancel}
+                    //     bkpCostFilter={props?.layerThreeBKp?.BKPID}
+                    //     addBkpCosts={props.addBkpCosts}
+                    //     addData={props.addData}
+                    // />
+                    <AddBkpCostPopUp
+                        house={props?.house}
+                        openCost={openAddCost}
+                        cancel={cancel}
+                        bkpCostFilter={props?.layerThreeBKp?.BKPID}
+                        addBkpCosts={props.addBkpCosts}
+                        addLoading={props.addLoading}
+                        addData={props.addData}
+                    />
+                )
             }
             <div className="treeview__level show" data-level="B">
 
@@ -79,7 +111,16 @@ const BkpHierarchyLevelThree = (props: BkpHierarchyLevelThreeProps) => {
                             <Table.Body>
                                 {
                                     props?.layerThreeBKp?.bkpChildrenLayerTwo?.map(bkpCost => (
-                                        <BkpCost key={bkpCost.bkpCostID} bkpCost={bkpCost} />
+                                        <BkpCost
+                                            key={bkpCost.bkpCostID}
+                                            bkpCost={bkpCost}
+                                            deleteBkp={props.deleteBkp}
+                                            updateBkpCost={props.updateBkpCost}
+                                            deleteLoading={props.deleteLoading}
+                                            deleteData={props.deleteData}
+                                            updateLoading={props.updateLoading}
+                                            updateData={props.updateData}
+                                        />
                                     ))
                                 }
                             </Table.Body>

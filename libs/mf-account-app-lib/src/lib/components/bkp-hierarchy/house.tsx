@@ -6,13 +6,24 @@ import BkpHierarchyLevelTwo from './bkp-hierarchy-level-two';
 interface HouseProps {
     house?
     bkpData?
+    deleteBkp
+    updateBkpCost
+    addBkpCosts
+    data?
+    loading?
+    addLoading?
+    addData?
+    deleteLoading?
+    deleteData?
+    updateLoading?
+    updateData?
 }
 
 const House = (props: HouseProps) => {
     const [expandFirstLayer, setExpandFirstLayer] = useState(false)
     const [totalCost, setTotalCost] = useState(0);
     const [seletedBkpData, setSeletedBkpData] = useState([])
-    const {t} = useTranslation()
+    const { t } = useTranslation()
 
     // select bkps related to house data
     React.useEffect(() => {
@@ -58,7 +69,21 @@ const House = (props: HouseProps) => {
             {expandFirstLayer && (
                 <ul>
                     {seletedBkpData && seletedBkpData.map((layerTwoBkp) => (
-                        layerTwoBkp && <BkpHierarchyLevelTwo key={layerTwoBkp.bkpCostID} layerTwoBkp={layerTwoBkp} />
+                        layerTwoBkp && <BkpHierarchyLevelTwo
+                            key={layerTwoBkp.bkpCostID}
+                            layerTwoBkp={layerTwoBkp}
+                            deleteBkp={props.deleteBkp}
+                            updateBkpCost={props.updateBkpCost}
+                            addBkpCosts={props.addBkpCosts}
+                            loading={props.loading}
+                            data={props.data}
+                            addLoading={props.addLoading}
+                            addData={props.addData}
+                            deleteLoading={props.deleteLoading}
+                            deleteData={props.deleteData}
+                            updateLoading={props.updateLoading}
+                            updateData={props.updateData}
+                        />
                     ))}
 
                 </ul>
