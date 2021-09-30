@@ -256,6 +256,7 @@ export const GET_COMMENTS = gql`query GetComments($uploadedFileID:String!){
 }`
 
 export const ADD_COMMENT = gql`mutation CreateComment(
+  $parentUploadedFileID:String!,
   $uploadedFileID:String!,
   $comment:String!,
   $createdBy:String!,
@@ -264,6 +265,7 @@ export const ADD_COMMENT = gql`mutation CreateComment(
 ){
   createComment(
     commentCreateDto: {
+      parentUploadedFileID: $parentUploadedFileID # "ca813050-095f-11ec-b7f7-13a0db5fb508"
       uploadedFileID: $uploadedFileID # "ca813050-095f-11ec-b7f7-13a0db5fb508"
       comment: $comment # "test new comment message another abcd"
       createdBy: $createdBy # "Mukut"

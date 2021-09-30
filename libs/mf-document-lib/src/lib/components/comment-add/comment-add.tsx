@@ -17,7 +17,8 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
 export interface CommentAddProps {
-  uploadedFileID?,
+  filesData?,
+  isVersionSelected?
   // companyId?,
   // loggedUserEmail?,
   // loggedUserID?,
@@ -45,7 +46,7 @@ export function CommentAdd(props: CommentAddProps) {
   const [errors, setErrors] = React.useState<AddCommentError>({})
 
   const { loading: commentListLoading, error: commentListError, data: commentListData } = useQuery(GET_COMMENTS, {
-    variables: { uploadedFileID: props?.uploadedFileID },
+    variables: { uploadedFileID: props?.filesData?.uploadedFileID },
   });
 
   const [addComment, { loading: commentAddLoading, error: commentAddError, data: commentAddData }] = useMutation(ADD_COMMENT)
@@ -111,7 +112,7 @@ export function CommentAdd(props: CommentAddProps) {
       setCommentMessage('')
     }
   }
-   
+
   const onClickCommentAdd = (e) => {
     e.preventDefault()
 
@@ -133,7 +134,8 @@ export function CommentAdd(props: CommentAddProps) {
     // add comment Graphql
     addComment({
       variables: {
-        uploadedFileID: props?.uploadedFileID,
+        parentUploadedFileID: props?.isVersionSelected === true ? props?.filesData?.parentUploadedFileID : props?.filesData?.uploadedFileID,
+        uploadedFileID: props?.filesData?.uploadedFileID,
         comment: commentMessage,
         createdBy: loggedUserDetail.loggedUserName,
         createdByEmail: loggedUserDetail.loggedUserEmail,
@@ -143,12 +145,12 @@ export function CommentAdd(props: CommentAddProps) {
 
         const cacheData = cache.readQuery({
           query: GET_COMMENTS,
-          variables: { uploadedFileID: props?.uploadedFileID },
+          variables: { uploadedFileID: props?.filesData?.uploadedFileID },
         }) as IComments;
 
         cache.writeQuery({
           query: GET_COMMENTS,
-          variables: { uploadedFileID: props?.uploadedFileID },
+          variables: { uploadedFileID: props?.filesData?.uploadedFileID },
           data: {
             getComments: [...cacheData?.getComments, createdCommentData]
           },
@@ -158,7 +160,7 @@ export function CommentAdd(props: CommentAddProps) {
     })
     setCommentMessage('')
     setErrors({})
-    
+
   };
 
   return (

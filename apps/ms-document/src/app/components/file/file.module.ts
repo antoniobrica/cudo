@@ -3,14 +3,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { FileParamEntity } from '../../entities/file.param.entity';
 import FileReferencesEntity from '../../entities/fileReference.entity';
 import { PeopleEntity } from '../../entities/people.entity';
+import PinsTypeEntity from '../../entities/pins.entity';
 import { UploadedFilesEntity } from '../../entities/uploaded-files.entity';
 import { ReferenceModule } from '../reference/reference.module';
 import { FileResolver } from './resolver/file.resolver';
 import { FileService } from './service/file.service';
+import CommentsEntity from '../../entities/comments.entity';
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([FileParamEntity, PeopleEntity, FileReferencesEntity, UploadedFilesEntity]), ReferenceModule],
+  imports: [TypeOrmModule.forFeature([FileParamEntity, PeopleEntity, FileReferencesEntity, UploadedFilesEntity, PinsTypeEntity, CommentsEntity]), ReferenceModule],
   providers: [FileResolver, FileService],
   exports: [FileResolver, FileService]
 })

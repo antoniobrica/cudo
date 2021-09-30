@@ -16,6 +16,10 @@ export default class CommentsEntity extends BaseEntity {
     commentsID: string;
 
     @Expose()
+    @Column({ nullable: true })
+    parentUploadedFileID?: string;
+
+    @Expose()
     @Column()
     uploadedFileID: string;
 
