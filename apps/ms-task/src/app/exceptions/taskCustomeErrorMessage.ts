@@ -61,6 +61,21 @@ export const TaskErrorData = (errorCode: number): ITaskErrorCode => {
         case TaskErrorTypeEnum.TASK_NOT_FOUND:
             return { message: "Task not found", code: 7018 }
 
+        case TaskErrorTypeEnum.COMMENT_NOT_FOUND:
+            return { message: "Comment not found", code: 7019 }
+
+        case TaskErrorTypeEnum.COMMENT_NOT_ADDED:
+            return { message: "Comment not added", code: 7020 }
+
+        case TaskErrorTypeEnum.COMMENT_ID_NOT_PROVIDE:
+            return { message: "Comment id not provided", code: 7021 }
+
+        case TaskErrorTypeEnum.COMMENT_NOT_UPDATED:
+            return { message: "Comment not updated", code: 7022 }
+
+        case TaskErrorTypeEnum.COMMENT_NOT_DELETED:
+            return { message: "Comment not deleted", code: 7023 }
+
         default:
             return { message: "An internal server error occurred", code: 500 }
     }
