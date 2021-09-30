@@ -16,7 +16,7 @@ import { useCommentQuery } from '../../services/useRequest';
 import { useTranslation } from 'react-i18next';
 
 export interface CommentListProps {
-  uploadedFileID?
+  taskID?
 }
 
 interface EditCommentError {
@@ -44,7 +44,7 @@ export function CommentList(props: CommentListProps) {
   const loggedUserDetail = JSON.parse(loggedUserDetailRetrieve);
 
   const { loading: commentListLoading, error: commentListError, data: commentListData } = useCommentQuery(GET_COMMENTS, {
-    variables: { uploadedFileID: props?.uploadedFileID },
+    variables: { taskID: props?.taskID },
   });
 
   const [updateComment, { loading: commentUpdateLoading, error: commentUpdateError, data: commentUpdateData }] = useMutation(UPDATE_COMMENT)
@@ -161,7 +161,7 @@ export function CommentList(props: CommentListProps) {
     setCommentEditLoadingState(true)
     updateComment({
       variables: {
-        // uploadedFileID: props?.uploadedFileID,
+        // taskID: props?.taskID,
         commentsID: selectedCommentID,
         comment: commentMessage
       },
@@ -169,12 +169,12 @@ export function CommentList(props: CommentListProps) {
 
         const cacheData = cache.readQuery({
           query: GET_COMMENTS,
-          variables: { uploadedFileID: props?.uploadedFileID },
+          variables: { taskID: props?.taskID },
         }) as IComments;
 
         cache.writeQuery({
           query: GET_COMMENTS,
-          variables: { uploadedFileID: props?.uploadedFileID },
+          variables: { taskID: props?.taskID },
           data: {
             getComments: [...cacheData?.getComments, updatedCommentData],
           },
@@ -200,14 +200,14 @@ export function CommentList(props: CommentListProps) {
 
         const cacheData = cache.readQuery({
           query: GET_COMMENTS,
-          variables: { uploadedFileID: props?.uploadedFileID },
+          variables: { taskID: props?.taskID },
         }) as IComments;
 
         const newCommentList = cacheData?.getComments?.filter((item) => item.commentsID !== commentsID)
 
         cache.writeQuery({
           query: GET_COMMENTS,
-          variables: { uploadedFileID: props?.uploadedFileID },
+          variables: { taskID: props?.taskID },
           data: {
             getComments: newCommentList,
           },
@@ -276,8 +276,8 @@ export function CommentList(props: CommentListProps) {
                             {errors?.commentError && !commentMessage ? <span className="error-message">{errors.commentError}</span> : null}
 
                             <div className="save-comment">
-                              <i className="ms-Icon ms-Icon--Send" onClick={onClickCommentUpdate}></i>
-                              <Button positive size='small' className="primary full-width">Save Comment</Button>
+                              {/* <i className="ms-Icon ms-Icon--Send" onClick={onClickCommentUpdate}></i> */}
+                              <Button positive size='small' onClick={onClickCommentUpdate} className="primary full-width">Save Comment</Button>
                             </div>
                           </>
                         }

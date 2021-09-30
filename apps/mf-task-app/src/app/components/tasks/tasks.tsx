@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { connect, useDispatch } from 'react-redux'
 
 import './tasks.module.scss';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
@@ -25,8 +26,9 @@ import SubTaskDelete from '../delete-subtask/delete-subtask';
 import { FilterPopup, ToggleButton } from '@cudo/shared-components';
 import { FileListIndex } from '@cudo/mf-document-lib';
 import { toast, ToastContainer } from 'react-toastify';
+import { taskActions } from '../../redux/actions';
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface TasksProps { }
+export interface TasksProps { companyId, loggedUserEmail }
 enum Status {
   INPROGRESS = 'INPROGRESS',
   COMPLETED = 'COMPLETED',
@@ -100,6 +102,53 @@ export function Tasks(props: TasksProps) {
     variables: { subtaskID: subTaskId },
   });
 
+  const dispatch = useDispatch()
+
+  dispatch({ type: taskActions.SELECT_PROJECT_ID, payload: projectId })
+  // add user to redux store
+  enum ReferenceType {
+    COMPANY = "COMPANY"
+  }
+
+  useEffect(() => {
+    axios({
+      url: MS_SERVICE_URL['ms_account'].url,
+      method: 'post',
+      data: {
+        query: `query { 
+            references( 
+              referenceFilter: { referenceID: "${props.companyId}", referenceType:${ReferenceType.COMPANY} } 
+            ){ 
+              users{
+                userID
+                userName
+                imageUrl
+                email
+              }
+            } 
+        }`
+      }
+    }).then((result) => {
+
+      if (result.data.data.references.users) {
+        const userDetails = result.data.data.references.users.filter((user) => user.email === props.loggedUserEmail)
+        if (userDetails.length) {
+          dispatch({ type: taskActions.LOGGED_USER_ID, payload: userDetails[0].userID })
+          dispatch({ type: taskActions.LOGGED_USER_NAME, payload: userDetails[0].userName })
+          dispatch({ type: taskActions.LOGGED_USER_PROFILE_URL, payload: userDetails[0].imageUrl })
+          const loggedUserDetail = {
+            loggedUserEmail: userDetails[0].email,
+            loggedUserID: userDetails[0].userID,
+            loggedUserName: userDetails[0].userName,
+            loggedUserProfileURL: userDetails[0].imageUrl
+          }
+          localStorage.setItem('loggedUserDetail', JSON.stringify(loggedUserDetail));
+        }
+      }
+
+    });
+  }, [])
+
   const mutationUpdatePinStatusComplete = `mutation UpdatePinStatus(
     $uploadedFileID:String!,
     $pinsID:String!
@@ -159,7 +208,7 @@ export function Tasks(props: TasksProps) {
   }`
 
   const updatePinStatus = (taskData) => {
-    
+
     return axios.post(
       MS_SERVICE_URL['ms_document'].url,
       {
@@ -170,7 +219,7 @@ export function Tasks(props: TasksProps) {
         }
       }
     ).then(res => {
-      
+//
     })
       .catch(err => console.log(err))
   }
@@ -1167,5 +1216,9 @@ export function Tasks(props: TasksProps) {
     </div>
   );
 }
-
-export default Tasks;
+// export default FileListing;
+const mapStateToProps = state => ({
+  companyId: state.app.selectedCompany.selectedCompanyId,
+  loggedUserEmail: state.app.loggedUserDetail.loggedUserEmail
+})
+export default connect(mapStateToProps)(Tasks);
