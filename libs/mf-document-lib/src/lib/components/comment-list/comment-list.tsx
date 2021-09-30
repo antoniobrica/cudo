@@ -277,7 +277,7 @@ export function CommentList(props: CommentListProps) {
 
                             <div className="save-comment">
                               <i className="ms-Icon ms-Icon--Send" onClick={onClickCommentUpdate}></i>
-                              <Button positive size='small' className="primary full-width">Save Comment</Button>
+                              {/* <Button positive size='small' className="primary full-width">Save Comment</Button> */}
                             </div>
                           </>
                         }
