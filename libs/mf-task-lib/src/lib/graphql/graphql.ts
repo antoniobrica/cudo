@@ -540,6 +540,20 @@ export const GET_COMMENTS = gql`query GetComments($taskID:String!){
   }
 }`
 
+export const GET_ALL_COMMENTS = gql`query GetAllComments{
+  getAllComments{
+    commentsID
+    taskID
+    comment
+    createdBy
+    createdByEmail
+    createdByUrl
+    createdAt
+    updatedAt
+    isDeleted
+  }
+}`
+
 export const ADD_COMMENT = gql`mutation CreateComment(
   $taskID:String!,
   $comment:String!,

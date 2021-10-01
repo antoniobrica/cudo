@@ -9,6 +9,7 @@ import LazyLoading from '../loader/lazyloader';
 /* eslint-disable-next-line */
 export interface Tasks {
   task?,
+  comments?
   id?,
   updateTask?,
   veiwTask?,
@@ -37,11 +38,17 @@ export function TaskArea(props: Tasks) {
   const [subtaskAddLoading, setSubTaskAddLoading] = useState(false)
   const [subtaskEditLoading, setSubTaskEditLoading] = useState(false)
   const [subtaskDeleteLoading, setSubTaskDeleteLoading] = useState(false)
+  const [comments, setComments] = useState([])
 
   useEffect(() => {
     const filteredSubTasks = props?.task?.subtasks.filter((item) => item.isDeleted !== true)
     setSubtaskData(filteredSubTasks)
   }, [props?.task])
+
+  useEffect(() => {
+    const taskComments = props?.comments?.filter(comment => comment.taskID === props.task.taskID)
+    setComments(taskComments)
+  }, [props?.comments])
 
   useEffect(() => {
     if (!props.addSubTaskLoading) {
@@ -72,9 +79,9 @@ export function TaskArea(props: Tasks) {
     props.deleteTask(task, id)
   }
   const veiwTaskbyId = (task, id) => {
-    if(props.task?.taskType === 'PIN'){
-      props.viewAddPinFile(task,id)
-    } else{
+    if (props.task?.taskType === 'PIN') {
+      props.viewAddPinFile(task, id)
+    } else {
       props.veiwTask(task, id)
     }
   }
@@ -380,7 +387,7 @@ export function TaskArea(props: Tasks) {
                     {(props?.task.startDate || props?.task?.endDate) && (
                       <div className="navi-item">
                         <a className="navi-link active">
-                          <span className="navi-text">( {props?.task?.startDate && new Date(props?.task?.startDate).toDateString()} ↦ Due {props?.task?.endDate && new Date(props?.task?.endDate).toDateString()})</span>
+                          <span className="navi-text">( {props?.task?.startDate && new Date(props?.task?.startDate).toDateString()} ↦ {props?.task?.endDate && new Date(props?.task?.endDate).toDateString()})</span>
                         </a>
                       </div>)}
 
@@ -411,6 +418,15 @@ export function TaskArea(props: Tasks) {
                           <span className="navi-text"> {props?.task?.workTypeName}  </span>
                         </a>
                       </div>
+                    }
+                    {
+                      comments.length > 0 && (
+                        <div className="navi-item">
+                          <a className="navi-link">
+                            <span className="navi-text">- &nbsp; {comments.length} &nbsp; <i className="ms-Icon ms-Icon--Comment" aria-hidden="true"></i></span>
+                          </a>
+                        </div>
+                      )
                     }
                     {// props?.task?.subtasks?.length > 0 ?
                       subtaskData?.length > 0 ?

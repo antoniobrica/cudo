@@ -15,7 +15,7 @@ import {
 import { ModalAlert, ModalViewTask, ConfirmSubTaskStatus } from '@cudo/shared-components';
 import { useTranslation } from 'react-i18next';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
-import { ADD_TASK, GET_TASKS } from '../../graphql/graphql';
+import { ADD_TASK, GET_ALL_COMMENTS, GET_TASKS } from '../../graphql/graphql';
 import { ISubTask, ITasks } from '../../interfaces/task';
 import { useHistory } from 'react-router-dom';
 import { UPDATE_TASK, DELETE_TASK, UPDATE_SUBTASK_STATUS, UPDATE_SUBTASK, DELETE_SUBTASK } from '../../graphql/graphql';
@@ -27,6 +27,7 @@ import { FilterPopup, ToggleButton } from '@cudo/shared-components';
 import { FileListIndex } from '@cudo/mf-document-lib';
 import { toast, ToastContainer } from 'react-toastify';
 import { taskActions } from '../../redux/actions';
+import { compose } from 'redux';
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface TasksProps { companyId, loggedUserEmail }
 enum Status {
@@ -43,6 +44,8 @@ export function Tasks(props: TasksProps) {
   const { loading: taskListLoading, error: taskListError, data: taskListData } = useTaskQuery(GET_TASKS, {
     variables: { referenceID },
   });
+
+  const { loading: commentLoading, error: commentError, data: commentData } = useQuery(GET_ALL_COMMENTS)
 
   React.useEffect(() => {
     setCompletedTasks(taskListData?.tasks?.results?.filter(task => task.status === Status.COMPLETED))
@@ -219,7 +222,7 @@ export function Tasks(props: TasksProps) {
         }
       }
     ).then(res => {
-//
+      //
     })
       .catch(err => console.log(err))
   }
@@ -1022,6 +1025,7 @@ export function Tasks(props: TasksProps) {
             <div key={id} >
               <TaskArea
                 task={task}
+                comments={commentData?.getAllComments}
                 id={id}
                 updateTask={updateTask}
                 deleteTask={deleteTask}
@@ -1054,155 +1058,169 @@ export function Tasks(props: TasksProps) {
         <div className="completed-task-con expand">
           <h3 className="alltask">{t("project_tab_menu.task.completed_tasks")} <span className="ms-Icon" onClick={() => setShowCompletedTasks(!showCompletedTasks)}><span>({completedTasks?.length} {t("project_tab_menu.task.completed_tasks")})</span> <i className={`ms-Icon ${showCompletedTasks ? "ms-Icon--ChevronDown" : "ms-Icon--ChevronUp"}`} aria-hidden="true" ></i></span></h3>
           {
-            showCompletedTasks && completedTasks.map((task, id) => (
-              <div className="tasks-completed-listing">
-                <div className="card1 card-custom gutter-b card-complete">
-                  <div className="card-body">
-                    <div className="task-upper-con d-flex justify-content-between">
-                      <div className="d-flex align-items-center py-2">
-                        <span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} className="  mr-10 " />  </span>
-                        <span className="textt">T-{task?.sequenceNumber}</span>
-                        <span onClick={() => updateTask(task)}>
-                          <span className="anchor_complete">  <span className="check-it-complete task-completed mr-2 mr-10"><i className="ms-Icon ms-font-xl ms-Icon--Accept"></i></span>   </span></span>
-                        <span className="task-heading">{task?.taskTitle}</span>
-                        <div className="d-flex mr-3">
-                          <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row task-listing-desc">
-                            {(task.startDate || task?.endDate) && (
-                              <>
-                                ( {new Date(task?.startDate).toDateString()} ↦ Due {new Date(task?.endDate).toDateString()})
-                              </>
-                            )}
-                            {
-                              task?.files.length > 0 && (
-                                <div className="navi-item">
-                                  <a className="navi-link">
-                                    <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{task?.files?.length} files  -  </span>
-                                  </a>
-                                </div>
-                              )
-                            }
 
-                            {task?.estimatedDays && (
+            showCompletedTasks && completedTasks.map((task, id) => {
+              const taskComments = commentData.getAllComments?.filter(comment => comment.taskID === task.taskID)
+              console.log('task comments', taskComments)
+              return (
+                <div key={task.taskID} className="tasks-completed-listing">
+                  <div className="card1 card-custom gutter-b card-complete">
+                    <div className="card-body">
+                      <div className="task-upper-con d-flex justify-content-between">
+                        <div className="d-flex align-items-center py-2">
+                          <span> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`} className="  mr-10 " />  </span>
+                          <span className="textt">T-{task?.sequenceNumber}</span>
+                          <span onClick={() => updateTask(task)}>
+                            <span className="anchor_complete">  <span className="check-it-complete task-completed mr-2 mr-10"><i className="ms-Icon ms-font-xl ms-Icon--Accept"></i></span>   </span></span>
+                          <span className="task-heading">{task?.taskTitle}</span>
+                          <div className="d-flex mr-3">
+                            <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row task-listing-desc">
+                              {(task.startDate || task?.endDate) && (
+                                <>
+                                  ( {new Date(task?.startDate).toDateString()} ↦ {new Date(task?.endDate).toDateString()})
+                                </>
+                              )}
+                              {
+                                task?.files.length > 0 && (
+                                  <div className="navi-item">
+                                    <a className="navi-link">
+                                      <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{task?.files?.length} files  -  </span>
+                                    </a>
+                                  </div>
+                                )
+                              }
 
-                              <div className="navi-item">
-                                <a className="navi-link">
-                                  <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> {task?.estimatedDays} days <span className="dash-seperator">-</span> </span>
-                                </a>
-                              </div>
-                            )}
-                            {
-                              task?.phaseName && (
-                                <div className="navi-item">
-                                  <a className="navi-link">
-                                    <span className="navi-text">{task?.phaseName}  <span className="dash-seperator">-</span>  </span>
-                                  </a>
-                                </div>
-                              )
-                            }
-                            {
-                              task?.workTypeName && (
-                                <div className="navi-item">
-                                  <a className="navi-link">
-                                    <span className="navi-text">{task?.workTypeName}
-                                      {/* <span className="dash-seperator">-</span> */}
-                                    </span>
-                                  </a>
-                                </div>
-                              )
-                            }
-                            {
-                              task?.subtasks.filter((item) => item.isDeleted !== true)?.length > 0 && (
-                                <div className="navi-item">
-                                  <a className="navi-link">
-                                    <span className="navi-text">
-                                      - &nbsp;{task?.subtasks.filter((item) => item.isDeleted !== true)?.length} {t("project_tab_menu.task.check_points")}  </span>
-                                  </a>
-                                </div>
-                              )
-                            }
+                              {task?.estimatedDays && (
 
+                                <div className="navi-item">
+                                  <a className="navi-link">
+                                    <span className="navi-text"> <i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i> {task?.estimatedDays} days <span className="dash-seperator">-</span> </span>
+                                  </a>
+                                </div>
+                              )}
+                              {
+                                task?.phaseName && (
+                                  <div className="navi-item">
+                                    <a className="navi-link">
+                                      <span className="navi-text">{task?.phaseName}  <span className="dash-seperator">-</span>  </span>
+                                    </a>
+                                  </div>
+                                )
+                              }
+                              {
+                                task?.workTypeName && (
+                                  <div className="navi-item">
+                                    <a className="navi-link">
+                                      <span className="navi-text">{task?.workTypeName}
+                                        {/* <span className="dash-seperator">-</span> */}
+                                      </span>
+                                    </a>
+                                  </div>
+                                )
+                              }
+                              {
+                                taskComments?.length > 0 && (
+                                  <div className="navi-item">
+                                    <a className="navi-link">
+                                      <span className="navi-text">- &nbsp; {taskComments?.length} &nbsp; <i className="ms-Icon ms-Icon--Comment" aria-hidden="true"></i></span>
+                                    </a>
+                                  </div>
+                                )
+                              }
+                              {
+                                task?.subtasks.filter((item) => item.isDeleted !== true)?.length > 0 && (
+                                  <div className="navi-item">
+                                    <a className="navi-link">
+                                      <span className="navi-text">
+                                        - &nbsp;{task?.subtasks.filter((item) => item.isDeleted !== true)?.length} {t("project_tab_menu.task.check_points")}  </span>
+                                    </a>
+                                  </div>
+                                )
+                              }
+
+                            </div>
+
+                          </div>
+
+                          <div className="sub-task-list-toggle">
+                            <Icon name='tasks' />
                           </div>
 
                         </div>
 
-                        <div className="sub-task-list-toggle">
-                          <Icon name='tasks' />
-                        </div>
+                        <div className="tasks-action-area">
+                          <div className="navi-item  ">
+                            <a className="navi-link">
+                              <span className="navi-text">
+                                {
+                                  task.taskType === 'PIN' && (
+                                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pin_blue.png`} />
+                                  )
+                                }
 
-                      </div>
+                              </span>
+                            </a>
+                          </div>
 
-                      <div className="tasks-action-area">
-                        <div className="navi-item  ">
-                          <a className="navi-link">
-                            <span className="navi-text">
-                              {
-                                task.taskType === 'PIN' && (
-                                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pin_blue.png`} />
-                                )
-                              }
+                          {
+                            task?.assignees.length > 0 && (
+                              <div className="navi-item d-flex">
+                                <a className="navi-link">
+                                  <span className="navi-text pin-action"> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} /> </span>
+                                </a>
+                                <Popup trigger={<Button className="more-user-listing">3+</Button>} flowing hoverable>
+                                  <Grid>
+                                    <Grid.Column textAlign='center'>
+                                      <div className="user-tooltip-listing">
+                                        <Popup className="user-tooltip-name"
+                                          trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                          content='Mike'
+                                          size='mini'
+                                        />
+                                        <Popup className="user-tooltip-name"
+                                          trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                          content='John'
+                                          size='mini'
+                                        />
+                                        <Popup className="user-tooltip-name"
+                                          trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                          content='Hussy'
+                                          size='mini'
+                                        />
+                                        <Popup className="user-tooltip-name"
+                                          trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                                          content='Kevin'
+                                          size='mini'
+                                        />
+                                      </div>
+                                    </Grid.Column>
+                                  </Grid>
+                                </Popup>
+                              </div>
+                            )
+                          }
 
-                            </span>
-                          </a>
-                        </div>
-
-                        {
-                          task?.assignees.length > 0 && (
-                            <div className="navi-item d-flex">
-                              <a className="navi-link">
-                                <span className="navi-text pin-action"> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} /> </span>
-                              </a>
-                              <Popup trigger={<Button className="more-user-listing">3+</Button>} flowing hoverable>
-                                <Grid>
-                                  <Grid.Column textAlign='center'>
-                                    <div className="user-tooltip-listing">
-                                      <Popup className="user-tooltip-name"
-                                        trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
-                                        content='Mike'
-                                        size='mini'
-                                      />
-                                      <Popup className="user-tooltip-name"
-                                        trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
-                                        content='John'
-                                        size='mini'
-                                      />
-                                      <Popup className="user-tooltip-name"
-                                        trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
-                                        content='Hussy'
-                                        size='mini'
-                                      />
-                                      <Popup className="user-tooltip-name"
-                                        trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
-                                        content='Kevin'
-                                        size='mini'
-                                      />
-                                    </div>
-                                  </Grid.Column>
-                                </Grid>
-                              </Popup>
+                          <div className="symbol-group symbol-hover py-2" >
+                            <div className="symbol symbol-30 d-flex">
+                              <span>
+                                <Dropdown icon='ellipsis horizontal' pointing='right'>
+                                  <Dropdown.Menu>
+                                    <Dropdown.Item onClick={() => viewTaskById(task, id)} icon='eye' text={t("common.view_details")} />
+                                    <Dropdown.Item onClick={() => editTask(task)} icon='pencil' text={t("common.edit")} />
+                                    <Dropdown.Item onClick={() => updateTask(task)} icon='check circle outline' text={t("project_tab_menu.task.re_open")} />
+                                    <Dropdown.Item onClick={() => deleteTask(task)} icon='trash alternate outline' text={t("common.delete")} />
+                                  </Dropdown.Menu>
+                                </Dropdown>
+                              </span>
                             </div>
-                          )
-                        }
-
-                        <div className="symbol-group symbol-hover py-2" >
-                          <div className="symbol symbol-30 d-flex">
-                            <span>
-                              <Dropdown icon='ellipsis horizontal' pointing='right'>
-                                <Dropdown.Menu>
-                                  <Dropdown.Item onClick={() => viewTaskById(task, id)} icon='eye' text={t("common.view_details")} />
-                                  <Dropdown.Item onClick={() => editTask(task)} icon='pencil' text={t("common.edit")} />
-                                  <Dropdown.Item onClick={() => updateTask(task)} icon='check circle outline' text={t("project_tab_menu.task.re_open")} />
-                                  <Dropdown.Item onClick={() => deleteTask(task)} icon='trash alternate outline' text={t("common.delete")} />
-                                </Dropdown.Menu>
-                              </Dropdown>
-                            </span>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))
+              )
+            })
           }
 
         </div>

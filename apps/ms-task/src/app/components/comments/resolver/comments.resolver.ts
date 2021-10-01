@@ -14,7 +14,13 @@ export class CommentsResolver {
     ) { }
 
     @Query(() => [CommentsModel])
-    async getComments(@Args("commentsFilter") commentsFilter: CommentsFilterParams
+    async getAllComments() {
+        return await this.commentsService.getAllComments();
+    }
+
+    //get comments with filter
+    @Query(() => [CommentsModel])
+    async getComments(@Args("commentsFilter") commentsFilter?: CommentsFilterParams
     ) {
         const comments = await this.commentsService.getComments(commentsFilter);
         return comments;

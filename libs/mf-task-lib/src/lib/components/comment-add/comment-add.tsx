@@ -5,7 +5,7 @@ import { LazyLoading, LoaderPage } from "@cudo/shared-components"
 import { useQuery, useMutation } from '@apollo/client';
 import { toast, ToastContainer } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-import { ADD_COMMENT, GET_COMMENTS } from '../../graphql/graphql';
+import { ADD_COMMENT, GET_ALL_COMMENTS, GET_COMMENTS } from '../../graphql/graphql';
 import { IComments } from '../../interfaces/comment';
 
 export interface CommentAddProps {
@@ -40,7 +40,12 @@ export function CommentAdd(props: CommentAddProps) {
     variables: { taskID: props?.taskID },
   });
 
-  const [addComment, { loading: commentAddLoading, error: commentAddError, data: commentAddData }] = useMutation(ADD_COMMENT)
+  const [addComment, { loading: commentAddLoading, error: commentAddError, data: commentAddData }] = useMutation(ADD_COMMENT,
+    {
+      refetchQueries: [
+        { query: GET_ALL_COMMENTS }
+      ]
+    })
 
   useEffect(() => {
     if (commentAddData && !commentAddLoading) {
@@ -103,7 +108,7 @@ export function CommentAdd(props: CommentAddProps) {
       setCommentMessage('')
     }
   }
-   
+
   const onClickCommentAdd = (e) => {
     e.preventDefault()
 
@@ -150,7 +155,7 @@ export function CommentAdd(props: CommentAddProps) {
     })
     setCommentMessage('')
     setErrors({})
-    
+
   };
 
   return (

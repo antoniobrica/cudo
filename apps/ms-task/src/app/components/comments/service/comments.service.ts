@@ -24,6 +24,13 @@ export class CommentsService {
         throw new TaskCustomError(TaskErrorTypeEnum.COMMENT_NOT_FOUND)
     }
 
+    async getAllComments() {
+        const comments = await this.commentsRepository.find({ where: { isDeleted: false } });
+        if (comments) {
+            return comments;
+        }
+    }
+
     async createComment(commentCreateInput: CommentsCreateInputDto): Promise<TaskCommentsEntity> {
         try {
             const newComment = await this.commentsRepository.create(new TaskCommentsEntity({

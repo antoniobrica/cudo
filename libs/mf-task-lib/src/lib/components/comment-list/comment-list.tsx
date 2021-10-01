@@ -4,7 +4,7 @@ import { Button, Icon } from 'semantic-ui-react';
 
 import { LazyLoading, LoaderPage } from "@cudo/shared-components"
 import { IComments } from '../../interfaces/comment';
-import { GET_COMMENTS, DELETE_COMMENT, UPDATE_COMMENT } from '../../graphql/graphql';
+import { GET_COMMENTS, DELETE_COMMENT, UPDATE_COMMENT, GET_ALL_COMMENTS } from '../../graphql/graphql';
 import { useQuery, useMutation } from '@apollo/client';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import moment from 'moment';
@@ -47,8 +47,16 @@ export function CommentList(props: CommentListProps) {
     variables: { taskID: props?.taskID },
   });
 
-  const [updateComment, { loading: commentUpdateLoading, error: commentUpdateError, data: commentUpdateData }] = useMutation(UPDATE_COMMENT)
-  const [deleteComment, { loading: commentDeleteLoading, error: commentDeleteError, data: commentDeleteData }] = useMutation(DELETE_COMMENT)
+  const [updateComment, { loading: commentUpdateLoading, error: commentUpdateError, data: commentUpdateData }] = useMutation(UPDATE_COMMENT, {
+    refetchQueries: [
+      { query: GET_ALL_COMMENTS }
+    ]
+  })
+  const [deleteComment, { loading: commentDeleteLoading, error: commentDeleteError, data: commentDeleteData }] = useMutation(DELETE_COMMENT, {
+    refetchQueries: [
+      { query: GET_ALL_COMMENTS }
+    ]
+  })
 
   useEffect(() => {
     if (commentUpdateData && !commentUpdateLoading) {
