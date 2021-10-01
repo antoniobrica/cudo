@@ -31,8 +31,8 @@ export function CommentList(props: CommentListProps) {
   const [openEditComment, setOpenEditComment] = useState(false)
   const [selectedCommentID, setSelectedCommentID] = useState(null)
 
-  const [commentEditLoadingState, setCommentEditLoadingState] = useState(false)
-  const [commentDeleteLoadingState, setCommentDeleteLoadingState] = useState(false)
+  // const [commentEditLoadingState, setCommentEditLoadingState] = useState(false)
+  // const [commentDeleteLoadingState, setCommentDeleteLoadingState] = useState(false)
 
   const [commentErrors, setCommentErrors] = useState("")
   const [activeErrorClass, setActiveErrorClass] = useState(false)
@@ -50,17 +50,17 @@ export function CommentList(props: CommentListProps) {
   const [updateComment, { loading: commentUpdateLoading, error: commentUpdateError, data: commentUpdateData }] = useMutation(UPDATE_COMMENT)
   const [deleteComment, { loading: commentDeleteLoading, error: commentDeleteError, data: commentDeleteData }] = useMutation(DELETE_COMMENT)
 
-  useEffect(() => {
-    if (commentUpdateData && !commentUpdateLoading) {
-      setCommentEditLoadingState(false)
-    }
-  }, [commentUpdateData])
+  // useEffect(() => {
+  //   if (commentUpdateData && !commentUpdateLoading) {
+  //     setCommentEditLoadingState(false)
+  //   }
+  // }, [commentUpdateData])
 
-  useEffect(() => {
-    if (commentDeleteLoading && !commentDeleteData) {
-      setCommentDeleteLoadingState(false)
-    }
-  }, [commentDeleteLoading])
+  // useEffect(() => {
+  //   if (commentDeleteLoading && !commentDeleteData) {
+  //     setCommentDeleteLoadingState(false)
+  //   }
+  // }, [commentDeleteLoading])
 
   const onChangeComment = (html, editor) => {
     const textLength = editor.getLength()
@@ -116,11 +116,11 @@ export function CommentList(props: CommentListProps) {
   // set toaster for edit comment
   useEffect(() => {
     if (!commentUpdateLoading && commentUpdateData) {
-      setCommentEditLoadingState(false)
+      // setCommentEditLoadingState(false)
       getCommentToasterMessage(t("toaster.success.comment.comment_updated"))
     }
     if (!commentUpdateLoading && commentUpdateError) {
-      setCommentEditLoadingState(false)
+      // setCommentEditLoadingState(false)
       getCommentErrorMessage(commentUpdateError?.graphQLErrors[0]?.extensions.exception.status)
     }
   }, [commentUpdateLoading])
@@ -129,11 +129,11 @@ export function CommentList(props: CommentListProps) {
   // set toaster for delete comment
   useEffect(() => {
     if (!commentDeleteLoading && commentDeleteData) {
-      setCommentDeleteLoadingState(false)
+      // setCommentDeleteLoadingState(false)
       getCommentToasterMessage(t("toaster.success.comment.comment_deleted"))
     }
     if (!commentDeleteLoading && commentDeleteError) {
-      setCommentDeleteLoadingState(false)
+      // setCommentDeleteLoadingState(false)
       getCommentErrorMessage(commentDeleteError?.graphQLErrors[0]?.extensions.exception.status)
     }
   }, [commentDeleteLoading])
@@ -158,7 +158,7 @@ export function CommentList(props: CommentListProps) {
     }
 
     // show Loader
-    setCommentEditLoadingState(true)
+    // setCommentEditLoadingState(true)
     updateComment({
       variables: {
         // uploadedFileID: props?.uploadedFileID,
@@ -190,7 +190,7 @@ export function CommentList(props: CommentListProps) {
   const onClickDeleteComment = (commentsID) => {
 
     setOpenEditComment(!openEditComment)
-    setCommentDeleteLoadingState(true)
+    // setCommentDeleteLoadingState(true)
 
     deleteComment({
       variables: {
@@ -228,7 +228,7 @@ export function CommentList(props: CommentListProps) {
 
           return (
             <>
-              {commentDeleteLoadingState ? <LazyLoading /> :
+              {(commentUpdateLoading || commentDeleteLoading) ? <LazyLoading /> :
                 <div id={commentsID} className="comments-section">
                   <div className="comment-user-img">
                     <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/people_1.png`} />
@@ -248,8 +248,6 @@ export function CommentList(props: CommentListProps) {
                     </h3>
                     {/* <p>I have a query that exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p> */}
                     {openEditComment && (commentsID === selectedCommentID) ?
-                      <>
-                        {commentEditLoadingState ? <LazyLoading /> :
                           <>
                             <ReactQuill
                               value={commentMessage === '' ? commentDescription : commentMessage}
@@ -280,8 +278,6 @@ export function CommentList(props: CommentListProps) {
                               {/* <Button positive size='small' className="primary full-width">Save Comment</Button> */}
                             </div>
                           </>
-                        }
-                      </>
                       :
                       // <p>{commentDescription.length > 129 ? commentDescription.substr(0, 129) : commentDescription}</p>
                       <p><ReactQuill id="txtDescription" readOnly={true} value={commentDescription} modules={{ toolbar: null }} /></p>

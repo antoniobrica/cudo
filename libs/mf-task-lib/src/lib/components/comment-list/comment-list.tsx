@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { Button, Icon } from 'semantic-ui-react';
 
-import { LazyLoading, LoaderPage } from "@cudo/shared-components"
+import { LazyLoading } from "@cudo/shared-components"
 import { IComments } from '../../interfaces/comment';
 import { GET_COMMENTS, DELETE_COMMENT, UPDATE_COMMENT, GET_ALL_COMMENTS } from '../../graphql/graphql';
 import { useQuery, useMutation } from '@apollo/client';
@@ -31,9 +31,6 @@ export function CommentList(props: CommentListProps) {
   const [openEditComment, setOpenEditComment] = useState(false)
   const [selectedCommentID, setSelectedCommentID] = useState(null)
 
-  const [commentEditLoadingState, setCommentEditLoadingState] = useState(false)
-  const [commentDeleteLoadingState, setCommentDeleteLoadingState] = useState(false)
-
   const [commentErrors, setCommentErrors] = useState("")
   const [activeErrorClass, setActiveErrorClass] = useState(false)
 
@@ -57,18 +54,6 @@ export function CommentList(props: CommentListProps) {
       { query: GET_ALL_COMMENTS }
     ]
   })
-
-  useEffect(() => {
-    if (commentUpdateData && !commentUpdateLoading) {
-      setCommentEditLoadingState(false)
-    }
-  }, [commentUpdateData])
-
-  useEffect(() => {
-    if (commentDeleteLoading && !commentDeleteData) {
-      setCommentDeleteLoadingState(false)
-    }
-  }, [commentDeleteLoading])
 
   const onChangeComment = (html, editor) => {
     const textLength = editor.getLength()
@@ -124,11 +109,9 @@ export function CommentList(props: CommentListProps) {
   // set toaster for edit comment
   useEffect(() => {
     if (!commentUpdateLoading && commentUpdateData) {
-      setCommentEditLoadingState(false)
       getCommentToasterMessage(t("toaster.success.comment.comment_updated"))
     }
     if (!commentUpdateLoading && commentUpdateError) {
-      setCommentEditLoadingState(false)
       getCommentErrorMessage(commentUpdateError?.graphQLErrors[0]?.extensions.exception.status)
     }
   }, [commentUpdateLoading])
@@ -137,11 +120,9 @@ export function CommentList(props: CommentListProps) {
   // set toaster for delete comment
   useEffect(() => {
     if (!commentDeleteLoading && commentDeleteData) {
-      setCommentDeleteLoadingState(false)
       getCommentToasterMessage(t("toaster.success.comment.comment_deleted"))
     }
     if (!commentDeleteLoading && commentDeleteError) {
-      setCommentDeleteLoadingState(false)
       getCommentErrorMessage(commentDeleteError?.graphQLErrors[0]?.extensions.exception.status)
     }
   }, [commentDeleteLoading])
@@ -165,8 +146,6 @@ export function CommentList(props: CommentListProps) {
       return false
     }
 
-    // show Loader
-    setCommentEditLoadingState(true)
     updateComment({
       variables: {
         // taskID: props?.taskID,
@@ -198,8 +177,6 @@ export function CommentList(props: CommentListProps) {
   const onClickDeleteComment = (commentsID) => {
 
     setOpenEditComment(!openEditComment)
-    setCommentDeleteLoadingState(true)
-
     deleteComment({
       variables: {
         commentsID
@@ -236,7 +213,7 @@ export function CommentList(props: CommentListProps) {
 
           return (
             <>
-              {commentDeleteLoadingState ? <LazyLoading /> :
+              {(commentDeleteLoading || commentUpdateLoading) ? <LazyLoading /> :
                 <div id={commentsID} className="comments-section">
                   <div className="comment-user-img">
                     <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/people_1.png`} />
@@ -257,38 +234,35 @@ export function CommentList(props: CommentListProps) {
                     {/* <p>I have a query that exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p> */}
                     {openEditComment && (commentsID === selectedCommentID) ?
                       <>
-                        {commentEditLoadingState ? <LazyLoading /> :
-                          <>
-                            <ReactQuill
-                              value={commentMessage === '' ? commentDescription : commentMessage}
-                              // value={commentDescription}
-                              // modules={{
-                              //   toolbar: {
-                              //     container: [
-                              //       [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                              //       ['bold', 'italic', 'underline'],
-                              //       [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                              //       [{ 'align': [] }],
-                              //       ['link', 'image'],
-                              //       ['clean'],
-                              //       [{ 'color': [] }]
-                              //     ]
-                              //   }
-                              // }}
-                              placeholder="click to edit comment"
-                              onChange={(content, delta, source, editor) => onChangeComment(content, editor)}
-                              // onChange={(content, delta, source, editor) => setCommentMessage(content)}
-                              // onKeyDown={onKeyPresDescription}
-                              id="txtDescription"
-                            />
-                            {errors?.commentError && !commentMessage ? <span className="error-message">{errors.commentError}</span> : null}
+                        <ReactQuill
+                          value={commentMessage === '' ? commentDescription : commentMessage}
+                          // value={commentDescription}
+                          // modules={{
+                          //   toolbar: {
+                          //     container: [
+                          //       [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                          //       ['bold', 'italic', 'underline'],
+                          //       [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                          //       [{ 'align': [] }],
+                          //       ['link', 'image'],
+                          //       ['clean'],
+                          //       [{ 'color': [] }]
+                          //     ]
+                          //   }
+                          // }}
+                          placeholder="click to edit comment"
+                          onChange={(content, delta, source, editor) => onChangeComment(content, editor)}
+                          // onChange={(content, delta, source, editor) => setCommentMessage(content)}
+                          // onKeyDown={onKeyPresDescription}
+                          id="txtDescription"
+                        />
+                        {errors?.commentError && !commentMessage ? <span className="error-message">{errors.commentError}</span> : null}
 
-                            <div className="save-comment">
-                              {/* <i className="ms-Icon ms-Icon--Send" onClick={onClickCommentUpdate}></i> */}
-                              <Button positive size='small' onClick={onClickCommentUpdate} className="primary full-width">Save Comment</Button>
-                            </div>
-                          </>
-                        }
+                        <div className="save-comment">
+                          {/* <i className="ms-Icon ms-Icon--Send" onClick={onClickCommentUpdate}></i> */}
+                          <Button positive size='small' onClick={onClickCommentUpdate} className="primary full-width">Save Comment</Button>
+                        </div>
+
                       </>
                       :
                       // <p>{commentDescription.length > 129 ? commentDescription.substr(0, 129) : commentDescription}</p>

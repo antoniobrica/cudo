@@ -1122,7 +1122,7 @@ export function Tasks(props: TasksProps) {
                                 taskComments?.length > 0 && (
                                   <div className="navi-item">
                                     <a className="navi-link">
-                                      <span className="navi-text">- &nbsp; {taskComments?.length} &nbsp; <i className="ms-Icon ms-Icon--Comment" aria-hidden="true"></i></span>
+                                      <span className="navi-text" onClick={() => viewTaskById(task,id)}> - &nbsp;<i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i>  {taskComments?.length} &nbsp;</span>
                                     </a>
                                   </div>
                                 )

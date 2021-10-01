@@ -423,7 +423,7 @@ export function TaskArea(props: Tasks) {
                       comments.length > 0 && (
                         <div className="navi-item">
                           <a className="navi-link">
-                            <span className="navi-text">- &nbsp; {comments.length} &nbsp; <i className="ms-Icon ms-Icon--Comment" aria-hidden="true"></i></span>
+                            <span className="navi-text" onClick={() => veiwTaskbyId(props.task, props.id)}> - &nbsp;<i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i>  {comments?.length} &nbsp;</span>
                           </a>
                         </div>
                       )
