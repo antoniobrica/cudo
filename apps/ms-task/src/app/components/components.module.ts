@@ -4,8 +4,9 @@ import { TasksModule } from './tasks/tasks.module';
 import { ReferenceModule } from './reference/reference.module';
 import { BkpModule } from './tasks/module/bkp.module';
 import { MileStoneModule } from './milestone/milestone.module';
+import { CommentsModule } from './comments/comments.module';
 @Module({
-  imports: [TasksModule,ReferenceModule, PhasesModule, BkpModule, MileStoneModule],
+  imports: [TasksModule, ReferenceModule, PhasesModule, BkpModule, MileStoneModule, CommentsModule],
   providers: []
 })
 export class ComponentsModule { }

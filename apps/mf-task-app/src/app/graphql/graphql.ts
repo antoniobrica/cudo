@@ -385,3 +385,16 @@ mutation DeleteSubTask(
   }
 }`;
 
+export const GET_ALL_COMMENTS = gql`query GetAllComments{
+  getAllComments{
+    commentsID
+    taskID
+    comment
+    createdBy
+    createdByEmail
+    createdByUrl
+    createdAt
+    updatedAt
+    isDeleted
+  }
+}`
