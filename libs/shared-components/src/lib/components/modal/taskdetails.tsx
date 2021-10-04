@@ -7,6 +7,7 @@ import Moment from 'moment';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { useTranslation } from 'react-i18next';
 import { CommentAdd, CommentList } from '@cudo/mf-task-lib';
+import { FileListIndex } from '@cudo/mf-document-lib';
 function exampleReducer(state, action) {
   switch (action.type) {
     case 'close':
@@ -35,6 +36,9 @@ export const ModalViewTask = (props: AlertProps) => {
 
   const [open, setOpen] = React.useState(false)
   const [selectedFiles, setSelectedFiles] = React.useState([])
+  const [openViewFile, setOpenViewFile] = React.useState(false)
+  const [selectedViewFileId, setSelectedViewFileId] = React.useState(null)
+  const [showTaskFiles, setShowTaskFiles] = React.useState(false)
 
   const { t } = useTranslation()
   React.useEffect(() => {
@@ -56,6 +60,14 @@ export const ModalViewTask = (props: AlertProps) => {
   const openf = () => {
     setOpen(true)
   }
+
+  const onClickOpenViewFile = (id) => {
+    setSelectedViewFileId(id)
+    setOpenViewFile(true)
+  }
+  const closeOpenViewFile = () => {
+    setOpenViewFile(false)
+  }
   const cancel = () => {
     setOpen(false)
     props.cancel()
@@ -76,6 +88,11 @@ export const ModalViewTask = (props: AlertProps) => {
         }
         closeOnDimmerClick={false}
       >
+        {
+          openViewFile && (
+            <FileListIndex isTaskFile={openViewFile} cancel={closeOpenViewFile} viewFileIDFromTask={selectedViewFileId} />
+          )
+        }
         <div className="fixed-popup-inner-con">
           <Modal.Header>
             <h3 className="d-flex align-items-center">
@@ -84,7 +101,7 @@ export const ModalViewTask = (props: AlertProps) => {
               <span onClick={() => props.editTask(props.taskData)} className="edit-task-link"><Icon name="edit" /> {t("common.edit")}</span>
             </h3>
             <span className="task-created-date">
-              {t("common.created_on")}:{Moment(props?.taskData?.createdAt).format('DD-MM-YYYY')} - {t("common.created_by")}: {props?.taskData?.createdBy}
+              {t("common.create_on")}:{Moment(props?.taskData?.createdAt).format('DD-MM-YYYY')} - {t("common.created_by")}: {props?.taskData?.createdBy}
             </span>
           </Modal.Header>
           <Modal.Content body>
@@ -217,16 +234,17 @@ export const ModalViewTask = (props: AlertProps) => {
                   </Grid.Row>
                 </Grid>
 
-                {
-                  selectedFiles.length > 0 && (
-                    <Grid columns={1} className="add-extra-files">
-                      <Grid.Row>
-                        <Grid.Column>
-                          <Form.Field>
-                            <label>Files</label>
-                          </Form.Field>
-                        </Grid.Column>
-                      </Grid.Row>
+                <Grid columns={1} className="add-extra-files">
+                  <Grid.Row onClick={() => setShowTaskFiles(!showTaskFiles)} >
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>Files ({selectedFiles.length || 0})</label>
+                        <i className={`ms-Icon ${showTaskFiles ? "ms-Icon--ChevronDown" : "ms-Icon--ChevronUp"}`} aria-hidden="true" ></i>
+                      </Form.Field>
+                    </Grid.Column>
+                  </Grid.Row>
+                  {
+                    (selectedFiles.length > 0 && showTaskFiles) && (
                       <Grid.Row className="add-files-list">
                         <Grid.Column className="uploaded-files">
                           <ul>
@@ -237,16 +255,18 @@ export const ModalViewTask = (props: AlertProps) => {
                                     <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} />
                                     {file.fileTitle}
                                   </p>
-                                  <i className="eye icon"></i>
+                                  <i className="eye icon"
+                                  //  onClick={() => onClickOpenViewFile(file.uploadedFileID)}
+                                   ></i>
                                 </li>
                               ))
                             }
                           </ul>
                         </Grid.Column>
                       </Grid.Row>
-                    </Grid>
-                  )
-                }
+                    )
+                  }
+                </Grid>
 
                 <Grid columns={1} className="add-comments">
                   <Grid.Row>
