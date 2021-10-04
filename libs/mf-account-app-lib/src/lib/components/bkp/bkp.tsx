@@ -31,7 +31,7 @@ export function Bkp(props: BkpProps) {
   }
   // const { loading, error, data } = useBkpQuery(GET_BKP);
   const { loading, error, data } = useQuery(GET_BKP, {
-    variables: { referenceID: "dapr", referenceType: "COMPANY", bkpTitle: searchInput }
+    variables: { referenceID: "dapr", referenceType: "COMPANY", bkpId: BKPID, bkpTitle: searchInput }
   })
   // const { loading: folderL, error: folderE, data: FolderD } = useFolderQuery(GET_FOLDER)
   const { loading: folderL, error: folderE, data: FolderD } = useQuery(GET_FOLDER, {
@@ -49,10 +49,10 @@ export function Bkp(props: BkpProps) {
     }
   }, [data, FolderD]);
   React.useEffect(() => {
-    if (props.bkp) {
-      setBKPID(props.bkp)
+    if (props?.bkp) {
+      setBKPID(props?.bkp)
     }
-  }, [props.bkp])
+  }, [props?.bkp])
 
   // React.useEffect(()=>{
   //   if(FolderD){
@@ -131,7 +131,7 @@ export function Bkp(props: BkpProps) {
         <div>
           <AddFolderIndex open={folderopen} cancel={cancel} folderData={folderData} parentBKPSelect={props.parentBKPSelect} setSelectedFolderData={setSelectedFolderData} ></AddFolderIndex>
         </div> : null}
-      <SelectDropdown folderOpen={folderOpen} options={items2} value={props.bkp} onBkp={onBkp} setSearchValue={setSearchValue} selectedFolder={selectedFolder} />
+      <SelectDropdown folderOpen={folderOpen} options={items2} value={props?.bkp} onBkp={onBkp} setSearchValue={setSearchValue} selectedFolder={selectedFolder} />
 
     </Form.Field>
   );

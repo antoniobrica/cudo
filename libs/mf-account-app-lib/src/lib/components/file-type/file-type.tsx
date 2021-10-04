@@ -14,8 +14,10 @@ export interface FileTypeProps {
 export function FileType(props: FileTypeProps) {
   const [items, setItems] = React.useState([])
   const [fileType, setFileType] = React.useState("")
-  const {t} = useTranslation()
-  const { loading, error, data } = useFileTypeQuery(GET_FILE_TYPE);
+  const { t } = useTranslation()
+  const companyId = localStorage.getItem('selectedCompany')
+
+  const { loading, error, data } = useFileTypeQuery(GET_FILE_TYPE, { variables: { companyId } });
   React.useEffect(() => {
     if (data) {
       setItems(data.FileTypes.map(({ fileTypeTitle, fileTypeID }) => ({ key: fileTypeID, value: fileTypeTitle, text: fileTypeTitle })));

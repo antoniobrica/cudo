@@ -22,14 +22,14 @@ export function useFolderQuery(gqlQuery: DocumentNode) {
   return { loading, error, data };
 }
 
-export function usePhaseQuery(gqlQuery: DocumentNode) {
-  const { loading, error, data } = useQuery<Iphases>(gqlQuery);
+export function usePhaseQuery(gqlQuery: DocumentNode, variable) {
+  const { loading, error, data } = useQuery<Iphases>(gqlQuery, variable);
   return { loading, error, data };
 }
 
 
-export function useFileTypeQuery(gqlQuery: DocumentNode) {
-  const { loading, error, data } = useQuery<IFileTypes>(gqlQuery);
+export function useFileTypeQuery(gqlQuery: DocumentNode, variable) {
+  const { loading, error, data } = useQuery<IFileTypes>(gqlQuery, variable);
   return { loading, error, data };
 }
 
@@ -46,8 +46,8 @@ export function useInvitationQuery(gqlQuery: DocumentNode) {
   const { loading, error, data } = useQuery<IInvitations>(gqlQuery);
   return { loading, error, data };
 }
-export function useFileStructureQuery(gqlQuery: DocumentNode) {
-  const { loading, error, data } = useQuery<IFileStructures>(gqlQuery);
+export function useFileStructureQuery(gqlQuery: DocumentNode, variable) {
+  const { loading, error, data } = useQuery<IFileStructures>(gqlQuery, variable);
   return { loading, error, data };
 }
 

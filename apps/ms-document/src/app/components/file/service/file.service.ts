@@ -41,15 +41,25 @@ export class FileService {
   public async updateUploadedFile(updateFileInput: UpdateFileInput): Promise<UploadedFilesEntity> {
     try {
       const { peoples } = updateFileInput;
-      const fileDetail = await this.uploadedFilesRepository.findOne({ where: { uploadedFileID: updateFileInput.uploadedFileID }, relations: ['fileReferences', 'people'] });
+      const fileDetail = await this.uploadedFilesRepository.findOne({
+        where: { uploadedFileID: updateFileInput.uploadedFileID },
+        relations: ['fileReferences', 'people']
+      });
       if (!fileDetail) {
         throw new FileCustomError(FileErrorTypeEnum.FILE_NOT_FOUND)
       }
-
+     
       const res = new UploadedFilesEntity(updateFileInput);
       Object.keys(fileDetail)
         .forEach(k => res[k] = (updateFileInput[k] ?? fileDetail[k]));
+
       if (peoples) {
+        if (fileDetail.people.length > 0) {
+          const previousPeopleAccessIDs = fileDetail.people.map((item) => item.id)
+          await this.peopleRepository.delete(previousPeopleAccessIDs);
+        }
+
+        res.people = []
         for (let index = 0; index < peoples.length; index++) {
           const followersentity = new PeopleEntity(peoples[index])
           const newPeople = await this.peopleRepository.create({ ...followersentity });
@@ -57,6 +67,7 @@ export class FileService {
           res.people.push(savedPeople)
         }
       }
+
       await this.uploadedFilesRepository.save(res);
       const reference = await this.uploadedFilesRepository.findOne({ where: { uploadedFileID: updateFileInput.uploadedFileID }, relations: ['fileReferences', 'people'] });
       return reference;
@@ -245,10 +256,16 @@ export class FileService {
                   isDeleted: false
                 }
               });
-              modifiedFiles.push({ ...parent[i].children[j], versionCount, taskCount, commentCount })
+             
+              const fileDetail = await this.uploadedFilesRepository.findOne({
+                where: { uploadedFileID: childUploadedFileId },
+                relations: ['fileReferences', 'people']
+              });
+              modifiedFiles.push({ ...parent[i].children[j], versionCount, taskCount, commentCount, people:fileDetail.people })
+
             }
           }
-          result.push({ ...parent[i], children: modifiedFiles })
+          result.push({ ...parent[i], children: modifiedFiles  })
         }
       }
       // #endregion

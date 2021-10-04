@@ -16,7 +16,10 @@ export function FileStructure(props: FileStructureProps) {
   const [items, setItems] = React.useState([])
   const [fileStructure, setFileStructureTitle] = React.useState("")
   const {t} = useTranslation()
-  const { loading, error, data } = useFileStructureQuery(GET_FILE_STRUCTURE);
+
+  const companyId = localStorage.getItem('selectedCompany')
+
+  const { loading, error, data } = useFileStructureQuery(GET_FILE_STRUCTURE, { variables: { companyId } });
   React.useEffect(() => {
     if (props.structureTitle) {
       setFileStructureTitle(props.structureTitle)
