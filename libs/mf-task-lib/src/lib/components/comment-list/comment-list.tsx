@@ -259,8 +259,8 @@ export function CommentList(props: CommentListProps) {
                         {errors?.commentError && !commentMessage ? <span className="error-message">{errors.commentError}</span> : null}
 
                         <div className="save-comment">
-                          {/* <i className="ms-Icon ms-Icon--Send" onClick={onClickCommentUpdate}></i> */}
-                          <Button positive size='small' onClick={onClickCommentUpdate} className="primary full-width">Save Comment</Button>
+                          <i className="ms-Icon ms-Icon--Send" onClick={onClickCommentUpdate}></i>
+                          {/* <Button positive size='small' onClick={onClickCommentUpdate} className="primary full-width">Save Comment</Button> */}
                         </div>
 
                       </>
