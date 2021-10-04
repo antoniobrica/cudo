@@ -386,7 +386,7 @@ export function TaskArea(props: Tasks) {
 
                     {(props?.task.startDate || props?.task?.endDate) && (
                       <div className="navi-item">
-                        <a className="navi-link active">
+                        <a className="navi-link active" >
                           <span className="navi-text">( {props?.task?.startDate && new Date(props?.task?.startDate).toDateString()} ↦ {props?.task?.endDate && new Date(props?.task?.endDate).toDateString()})</span>
                         </a>
                       </div>)}
@@ -394,7 +394,7 @@ export function TaskArea(props: Tasks) {
                     {props?.task?.files.length > 0 && (
                       <div className="navi-item">
                         <a className="navi-link">
-                          <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props?.task?.files?.length} files  -  </span>
+                          <span className="navi-text"><i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{props?.task?.files?.length}</span>
                         </a>
                       </div>
                     )
@@ -421,29 +421,38 @@ export function TaskArea(props: Tasks) {
                     }
                     {
                       comments.length > 0 && (
-                        <div className="navi-item">
+                        <div className="navi-item" onClick={() => veiwTaskbyId(props.task, props.id)}>
                           <a className="navi-link">
-                            <span className="navi-text" onClick={() => veiwTaskbyId(props.task, props.id)}> - &nbsp;<i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i>  {comments?.length} &nbsp;</span>
+                            <span className="navi-text" > - &nbsp;<i className="ms-Icon ms-Icon--Comment" aria-hidden="true"></i>
+                              {comments?.length} </span>
                           </a>
                         </div>
                       )
                     }
-                    {// props?.task?.subtasks?.length > 0 ?
+                    {/* {// props?.task?.subtasks?.length > 0 ?
                       subtaskData?.length > 0 ?
                         <div className="navi-item">
                           <a className="navi-link">
                             <span className="navi-text"> - &nbsp;{subtaskData?.length} {t("project_tab_menu.task.check_points")}  </span>
                           </a>
                         </div> : null
-                    }
+                    } */}
 
+                    <div className="navi-item" onClick={() => !isExpended ? openSubTask(props.task, props.id) : closeSubTask()}>
+                      <a className="navi-link active">
+                        <span className="navi-text">
+                          <i className="ms-Icon ms-Icon--CheckList" aria-hidden="true"></i>
+                          {/* <Icon name='tasks' /> */}
+                          {subtaskData?.length || ""}</span>
+                      </a>
+                    </div>
                   </div>
 
                 </div>
 
-                <div className="sub-task-list-toggle" onClick={() => !isExpended ? openSubTask(props.task, props.id) : closeSubTask()}>
+                {/* <div className="sub-task-list-toggle" onClick={() => !isExpended ? openSubTask(props.task, props.id) : closeSubTask()}>
                   <Icon name='tasks' />
-                </div>
+                </div> */}
               </div>
 
               <div className="tasks-action-area">
@@ -463,29 +472,29 @@ export function TaskArea(props: Tasks) {
 
                   <div className="navi-item d-flex">
                     <a className="navi-link">
-                      <span className="navi-text"> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} /> </span>
+                      <span className="navi-text"> <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} alt="" /> </span>
                     </a>
                     <Popup trigger={<Button className="more-user-listing">3+</Button>} flowing hoverable>
                       <Grid>
                         <Grid.Column textAlign='center'>
                           <div className="user-tooltip-listing">
                             <Popup className="user-tooltip-name"
-                              trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                              trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} alt="" />}
                               content='Mike'
                               size='mini'
                             />
                             <Popup className="user-tooltip-name"
-                              trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                              trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} alt="" />}
                               content='John'
                               size='mini'
                             />
                             <Popup className="user-tooltip-name"
-                              trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                              trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} alt="" />}
                               content='Hussy'
                               size='mini'
                             />
                             <Popup className="user-tooltip-name"
-                              trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />}
+                              trigger={<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} alt="" />}
                               content='Kevin'
                               size='mini'
                             />

@@ -1084,7 +1084,7 @@ export function Tasks(props: TasksProps) {
                                 task?.files.length > 0 && (
                                   <div className="navi-item">
                                     <a className="navi-link">
-                                      <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{task?.files?.length} files  -  </span>
+                                      <span className="navi-text">  <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>{task?.files?.length} - </span>
                                     </a>
                                   </div>
                                 )
@@ -1122,12 +1122,12 @@ export function Tasks(props: TasksProps) {
                                 taskComments?.length > 0 && (
                                   <div className="navi-item">
                                     <a className="navi-link">
-                                      <span className="navi-text" onClick={() => viewTaskById(task,id)}> - &nbsp;<i className="ms-Icon ms-Icon--CommentPrevious" aria-hidden="true"></i>  {taskComments?.length} &nbsp;</span>
+                                      <span className="navi-text" onClick={() => viewTaskById(task, id)}> - &nbsp;<i className="ms-Icon ms-Icon--Comment" aria-hidden="true"></i>  {taskComments?.length} </span>
                                     </a>
                                   </div>
                                 )
                               }
-                              {
+                              {/* {
                                 task?.subtasks.filter((item) => item.isDeleted !== true)?.length > 0 && (
                                   <div className="navi-item">
                                     <a className="navi-link">
@@ -1136,15 +1136,25 @@ export function Tasks(props: TasksProps) {
                                     </a>
                                   </div>
                                 )
-                              }
+                              } */}
+
+                              <div className="navi-item" >
+                                <a className="navi-link">
+                                  <span className="navi-text">
+                                    <i className="ms-Icon ms-Icon--CheckList" aria-hidden="true"></i>
+                                    {task.subtasks.filter(item => item.isDeleted !== true)?.length || ""}
+                                    {/* <Icon name='tasks' /> */}
+                                  </span>
+                                </a>
+                              </div>
 
                             </div>
 
                           </div>
 
-                          <div className="sub-task-list-toggle">
+                          {/* <div className="sub-task-list-toggle">
                             <Icon name='tasks' />
-                          </div>
+                          </div> */}
 
                         </div>
 
