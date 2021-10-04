@@ -160,7 +160,7 @@ export function CommentAdd(props: CommentAddProps) {
 
   return (
     <Form.Field>
-      <label>Comments ({commentListData?.getComments?.filter((item) => item.isDeleted != true).length})</label>
+      <label>Comments ({commentListData?.getComments?.filter((item) => item.isDeleted != true).length || 0})</label>
       {commentAddLoadingState ? <LazyLoading /> :
         <>
           {/* <Input placeholder='click to add comment' size='small' className="full-width" type="text" /> */}
