@@ -77,7 +77,6 @@ export const ModalViewTask = (props: AlertProps) => {
     <div id="navbar">
       <Modal
         className="modal_media right-side--fixed-modal task-details-modal"
-        closeIcon
         onClose={cancel}
         onOpen={openf}
         open={open}
@@ -99,6 +98,7 @@ export const ModalViewTask = (props: AlertProps) => {
               <i className="ms-Icon ms-Icon--CheckMark circle-checkmark" aria-hidden="true"></i>
               {t("project_tab_menu.task.task_details")} <span className="textt task-s-number">T-00{props.id} </span>
               <span onClick={() => props.editTask(props.taskData)} className="edit-task-link"><Icon name="edit" /> {t("common.edit")}</span>
+              <i aria-hidden="true" className="close icon" onClick={cancel}></i>
             </h3>
             <span className="task-created-date">
               {t("common.create_on")}:{Moment(props?.taskData?.createdAt).format('DD-MM-YYYY')} - {t("common.created_by")}: {props?.taskData?.createdBy}
