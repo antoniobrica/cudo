@@ -27,11 +27,16 @@ export function Bkp(props: BkpProps) {
 
   const { t } = useTranslation()
   const setSearchValue = (data) => {
-    setSearchInput(data)
+    const selectedData = Number(data)
+    if (selectedData) {
+      setBKPID(data)
+    } else {
+      setSearchInput(data)
+    }
   }
   // const { loading, error, data } = useBkpQuery(GET_BKP);
   const { loading, error, data } = useQuery(GET_BKP, {
-    variables: { referenceID: "dapr", referenceType: "COMPANY", bkpTitle: searchInput }
+    variables: { referenceID: "dapr", referenceType: "COMPANY", bkpTitle: searchInput, bkpId: BKPID }
   })
   // const { loading: folderL, error: folderE, data: FolderD } = useFolderQuery(GET_FOLDER)
   const { loading: folderL, error: folderE, data: FolderD } = useQuery(GET_FOLDER, {

@@ -523,3 +523,105 @@ mutation DeleteSubTask(
     isDeleted
   }
 }`;
+
+export const GET_COMMENTS = gql`query GetComments($taskID:String!){
+  getComments(commentsFilter:{
+    taskID: $taskID # "ca813050-095f-11ec-b7f7-13a0db5fb508"
+  }) {
+    commentsID
+    taskID
+    comment
+    createdBy
+    createdByEmail
+    createdByUrl
+    createdAt
+    updatedAt
+    isDeleted
+  }
+}`
+
+export const GET_ALL_COMMENTS = gql`query GetAllComments{
+  getAllComments{
+    commentsID
+    taskID
+    comment
+    createdBy
+    createdByEmail
+    createdByUrl
+    createdAt
+    updatedAt
+    isDeleted
+  }
+}`
+
+export const ADD_COMMENT = gql`mutation CreateComment(
+  $taskID:String!,
+  $comment:String!,
+  $createdBy:String!,
+  $createdByEmail: String!,
+  $createdByUrl: String!
+){
+  createComment(
+    commentCreateDto: {
+      taskID: $taskID # "ca813050-095f-11ec-b7f7-13a0db5fb508"
+      comment: $comment # "test new comment message another abcd"
+      createdBy: $createdBy # "Mukut"
+      createdByEmail: $createdByEmail
+      createdByUrl: $createdByUrl
+    }
+  ){
+    commentsID
+    taskID
+    comment
+    createdBy
+    createdByEmail
+    createdByUrl
+    createdAt
+    updatedAt
+    isDeleted
+  }
+}`
+
+export const UPDATE_COMMENT = gql`mutation UpdateComment(
+  # $taskID:String!, 
+  $commentsID:String!,
+  $comment:String!
+){
+  updateComment(
+    commentFilter: {
+      # taskID: $taskID # "ca813050-095f-11ec-b7f7-13a0db5fb508"
+      commentsID: $commentsID # "ab028a70-16a8-11ec-b28d-2b111cca10d3"
+    }
+    commentUpdateDto: { 
+      comment: $comment # "test comment message updated" 
+    }
+  ){
+    commentsID
+    taskID
+    comment
+    createdBy
+    createdByEmail
+    createdByUrl
+    createdAt
+    updatedAt
+    isDeleted
+  }
+}`
+
+export const DELETE_COMMENT = gql`mutation DeleteComment($commentsID:String!){
+  deleteComment(
+    commentDeleteInput: { 
+      commentsID: $commentsID # "ab028a70-16a8-11ec-b28d-2b111cca10d3" 
+    }
+  ) {
+    commentsID
+    taskID
+    comment
+    createdBy
+    createdByEmail
+    createdByUrl
+    createdAt
+    updatedAt
+    isDeleted
+  }
+}`

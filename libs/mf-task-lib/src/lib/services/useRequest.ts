@@ -1,4 +1,5 @@
 import { DocumentNode, useQuery, useMutation } from "@apollo/react-hooks";
+import { IComments } from "../interfaces/comment";
 import { IMileStoneModel, IMileStones, MilestoneMutation, TaskUpdateMutation } from "../interfaces/task";
 
 export function useMilestonesQuery(gqlQuery: DocumentNode) {
@@ -31,4 +32,9 @@ export function useTaskUpdateMutation(gqlQuery: DocumentNode, variable) {
 export function useTaskDeleteMutation(gqlQuery: DocumentNode, variable) {
   const [updateTask] = useMutation<TaskUpdateMutation>(gqlQuery, variable);
   return [updateTask];
+}
+
+export function useCommentQuery(gqlQuery: DocumentNode, variable) {
+  const { loading, error, data } = useQuery<IComments>(gqlQuery, variable);
+  return { loading, error, data };
 }
