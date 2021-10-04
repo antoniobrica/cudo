@@ -39,4 +39,4 @@ export function App() {
 }
 
 export default App;
-// comment to update changed to libs and shared component
+// comment to update changed to libs shared
