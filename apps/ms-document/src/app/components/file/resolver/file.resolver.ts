@@ -17,11 +17,18 @@ export class FileResolver {
   constructor(
     private readonly fileService: FileService) { }
 
-  @Mutation(() => FileModel)
+  // @Mutation(() => FileModel)
+  // async updateUploadedFile(
+  //   @Args('updateUploadedfileDetails') createFileInput: UpdateFileInput
+  // ) {
+  //   return await this.fileService.updateUploadedFile(createFileInput);
+  // }
+
+  @Mutation(() => UploadedFileModel)
   async updateUploadedFile(
-    @Args('updateUploadedfileDetails') createFileInput: UpdateFileInput
+    @Args('updateUploadedfileDetails') updateFileInput: UpdateFileInput
   ) {
-    return await this.fileService.updateUploadedFile(createFileInput);
+    return await this.fileService.updateUploadedFile(updateFileInput);
   }
 
   @Mutation(() => UploadedFileModel)

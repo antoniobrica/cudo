@@ -167,21 +167,23 @@ query Folders($referenceID:String!,$referenceType:ReferenceType!,$folderTitle:St
 
 }`
 
-export const GET_FILE_TYPE = gql`{
-    FileTypes(referenceFilter: { referenceType: COMPANY, referenceID: "dapr" }
+export const GET_FILE_TYPE = gql`
+query FileTypes($companyId: String!)
+{
+  FileTypes(referenceFilter: { referenceType: COMPANY, referenceID: $companyId }
   ){
-      fileTypeID                      
-      fileTypeTitle
-      
-    }
+    fileTypeID                      
+    fileTypeTitle      
+  }
 }`
-export const GET_FILE_STRUCTURE = gql`{
-  FileStructure(referenceFilter: { referenceType: COMPANY, referenceID: "dapr" }
+export const GET_FILE_STRUCTURE = gql`
+query FileStructure($companyId: String!)
+{
+  FileStructure(referenceFilter: { referenceType: COMPANY, referenceID: $companyId }
   ){
-      fileStructureID
-      fileStructureTitle
-      
-    }
+    fileStructureID
+    fileStructureTitle      
+  }
 }`
 
 export const GET_STRUCTURE = gql`{
@@ -193,13 +195,14 @@ export const GET_STRUCTURE = gql`{
     }
 }`
 
-export const GET_PHASE = gql`{
-  Phase(referenceFilter:{referenceType:COMPANY,referenceID:"dapr"})
- {
-  id
-phaseTitle
-  }
-
+export const GET_PHASE = gql`
+query Phase($companyId: String!)
+{
+  Phase(referenceFilter:{referenceType:COMPANY,referenceID:$companyId})
+  {
+    id
+    phaseTitle
+  }  
 }`
 
 export const GET_CATAGORIES = gql`{

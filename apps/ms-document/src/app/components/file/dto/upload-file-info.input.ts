@@ -74,6 +74,12 @@ export class UploadFileInfoInput {
 
   @Field(type => [PeopleParams], { description: `People assigned for this file` })
   peoples?: PeopleParams[];
+
+  @Field({ nullable: true, description: `workTypeID attached with file` })
+  workTypeID?: string;
+
+  @Field({ nullable: true, description: `workTypeTitle attached with file` })
+  workTypeTitle?: string;
 }
 
 

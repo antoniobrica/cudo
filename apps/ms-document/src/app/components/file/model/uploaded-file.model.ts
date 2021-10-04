@@ -100,4 +100,10 @@ export class UploadedFileModel {
     @Field(type => [UploadedFileModel], { nullable: true, description: `Versions of File` })
     children: UploadedFileModel[];
 
+    @Field({ nullable: true, description: `workTypeID attached with file` })
+    workTypeID?: string;
+
+    @Field({ nullable: true, description: `workTypeTitle attached with file` })
+    workTypeTitle?: string;
+
 }

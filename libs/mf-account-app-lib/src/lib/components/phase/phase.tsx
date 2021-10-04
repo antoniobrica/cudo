@@ -16,8 +16,10 @@ export interface PhaseProps {
 export function Phase(props: PhaseProps) {
   const [items, setItems] = React.useState([])
   const [phase, setPhase] = React.useState("")
+
+  const companyId=localStorage.getItem('selectedCompany')
    
-  const { loading, error, data } = usePhaseQuery(GET_PHASE);
+  const { loading, error, data } = usePhaseQuery(GET_PHASE, {variables:{companyId}});
   const { t } = useTranslation()
   React.useEffect(() => {
     if (props.phaseName) {
