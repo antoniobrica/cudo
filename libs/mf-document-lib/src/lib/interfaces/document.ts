@@ -2,6 +2,8 @@ export interface IToken {
   accountSASToken: string
 }
 export interface IFile {
+  workTypeID: string
+  workTypeTitle: string
   isFolder: boolean
   uploadedFileID: string
   directory: string
@@ -29,6 +31,8 @@ export interface IFile {
   children: [IFileParam]
 }
 export interface IFileParam {
+  workTypeID: string
+  workTypeTitle: string
   fileURL: string
   fileTitle: string
   fileType: string

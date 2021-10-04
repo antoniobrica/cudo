@@ -54,10 +54,10 @@ export function Bkp(props: BkpProps) {
     }
   }, [data, FolderD]);
   React.useEffect(() => {
-    if (props.bkp) {
-      setBKPID(props.bkp)
+    if (props?.bkp) {
+      setBKPID(props?.bkp)
     }
-  }, [props.bkp])
+  }, [props?.bkp])
 
   // React.useEffect(()=>{
   //   if(FolderD){
@@ -136,7 +136,7 @@ export function Bkp(props: BkpProps) {
         <div>
           <AddFolderIndex open={folderopen} cancel={cancel} folderData={folderData} parentBKPSelect={props.parentBKPSelect} setSelectedFolderData={setSelectedFolderData} ></AddFolderIndex>
         </div> : null}
-      <SelectDropdown folderOpen={folderOpen} options={items2} value={props.bkp} onBkp={onBkp} setSearchValue={setSearchValue} selectedFolder={selectedFolder} />
+      <SelectDropdown folderOpen={folderOpen} options={items2} value={props?.bkp} onBkp={onBkp} setSearchValue={setSearchValue} selectedFolder={selectedFolder} />
 
     </Form.Field>
   );
