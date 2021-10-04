@@ -88,11 +88,11 @@ export const ModalViewTask = (props: AlertProps) => {
         }
         closeOnDimmerClick={false}
       >
-        {
+        {/* {
           openViewFile && (
-            <FileListIndex isTaskFile={openViewFile} cancel={closeOpenViewFile} viewFileIDFromTask={selectedViewFileId} />
+            <FileListIndex isTaskFile={openViewFile} cancel={closeOpenViewFile} />
           )
-        }
+        } */}
         <div className="fixed-popup-inner-con">
           <Modal.Header>
             <h3 className="d-flex align-items-center">
