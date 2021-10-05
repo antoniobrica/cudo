@@ -118,5 +118,5 @@ function App() {
 }
 
 export default App;
-// chagnes to update libs and design shared
+// chagnes to update libs and design shared componetes
 

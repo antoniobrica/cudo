@@ -11,6 +11,7 @@ import { DeletesViewStateContext, DownloadsViewStateContext, SharedViewStateCont
 import { BlobItem, ContainerItem } from '@azure/storage-blob';
 import { BlobItemDownload } from 'libs/mf-document-lib/src/azure-storage/types/azure-storage';
 import { tap } from 'rxjs/operators';
+import { useQuery } from '@apollo/client';
 
 /* eslint-disable-next-line */
 export interface FileListProps {
@@ -49,26 +50,34 @@ export function FileList(props: FileListProps) {
 
   const { loading, error, data } = useFileQuery(GET_FILES, { variables: { projectId } });
 
-  const { loading: fileVersionLoading, error: fileVersionError, data: fileVersionData } = useFileVersionQuery(GET_FILE_VERSIONS, {
-    variables: { projectId, fileId: selectedFileId },
+  const { loading: fileVersionLoading, error: fileVersionError, data: fileVersionData } = useQuery(GET_FILE_VERSIONS, {
+    variables: { projectId, fileId: selectedFileId || props?.taskData?.fileID },
   });
 
   React.useEffect(() => {
     if (props?.taskData?.fileID) {
-      data?.uploadedFiles?.forEach(file => {
-        file?.children?.forEach(child => {
-          if (child.uploadedFileID === props?.taskData?.fileID) {
-            getViewItems()
-            setSelectedFileFromTask(child)
-            setAddPinFromTask(true)
-            viewFiles(child)
-          }
+      if (data) {
+        data?.uploadedFiles?.forEach(file => {
+          file?.children?.forEach(child => {
+            if (child.uploadedFileID === props?.taskData?.fileID) {
+              getViewItems()
+              setSelectedFileFromTask(child)
+              setAddPinFromTask(true)
+              viewFiles(child)
+            }
+          })
         })
-      })
+      }
+      if (fileVersionData) {
+        getViewItems()
+        setSelectedFileFromTask(fileVersionData?.fileVersions)
+        setAddPinFromTask(true)
+        viewFiles(fileVersionData?.fileVersions)
+      }
     }
 
 
-  }, [data])
+  }, [data, fileVersionData])
 
   // React.useEffect(() => {
   //   setAddPinFromTask(true)
@@ -156,7 +165,7 @@ export function FileList(props: FileListProps) {
   }
 
   const getIsVersionSelected = (isSelected) => {
-    setIsVersionSelected(isSelected)    
+    setIsVersionSelected(isSelected)
   }
 
   // if (loading) {

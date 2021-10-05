@@ -7,7 +7,7 @@ import Moment from 'moment';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { useTranslation } from 'react-i18next';
 import { CommentAdd, CommentList } from '@cudo/mf-task-lib';
-import { FileListIndex } from '@cudo/mf-document-lib';
+import { FileImageIndex } from '@cudo/mf-document-lib';
 function exampleReducer(state, action) {
   switch (action.type) {
     case 'close':
@@ -37,7 +37,7 @@ export const ModalViewTask = (props: AlertProps) => {
   const [open, setOpen] = React.useState(false)
   const [selectedFiles, setSelectedFiles] = React.useState([])
   const [openViewFile, setOpenViewFile] = React.useState(false)
-  const [selectedViewFileId, setSelectedViewFileId] = React.useState(null)
+  const [selectedViewFile, setSelectedViewFile] = React.useState(null)
   const [showTaskFiles, setShowTaskFiles] = React.useState(false)
 
   const { t } = useTranslation()
@@ -61,8 +61,8 @@ export const ModalViewTask = (props: AlertProps) => {
     setOpen(true)
   }
 
-  const onClickOpenViewFile = (id) => {
-    setSelectedViewFileId(id)
+  const onClickOpenViewFile = (file) => {
+    setSelectedViewFile(file)
     setOpenViewFile(true)
   }
   const closeOpenViewFile = () => {
@@ -87,11 +87,6 @@ export const ModalViewTask = (props: AlertProps) => {
         }
         closeOnDimmerClick={false}
       >
-        {/* {
-          openViewFile && (
-            <FileListIndex isTaskFile={openViewFile} cancel={closeOpenViewFile} />
-          )
-        } */}
         <div className="fixed-popup-inner-con">
           <Modal.Header>
             <h3 className="d-flex align-items-center">
@@ -107,6 +102,11 @@ export const ModalViewTask = (props: AlertProps) => {
           <Modal.Content body>
             <div>
               <Form>
+                {
+                  openViewFile && (
+                    <FileImageIndex file={selectedViewFile} open={openViewFile} close={closeOpenViewFile} />
+                  )
+                }
                 <Grid columns={3}>
                   <Grid.Row>
                     <Grid.Column>
@@ -239,7 +239,7 @@ export const ModalViewTask = (props: AlertProps) => {
                     <Grid.Column>
                       <Form.Field>
                         <label>Files ({selectedFiles.length || 0})</label>
-                        <i className={`ms-Icon ${showTaskFiles ? "ms-Icon--ChevronDown" : "ms-Icon--ChevronUp"}`} aria-hidden="true" ></i>
+                        <i className={`ms-Icon ${showTaskFiles ? "ms-Icon--ChevronUp" : "ms-Icon--ChevronDown"}`} aria-hidden="true" ></i>
                       </Form.Field>
                     </Grid.Column>
                   </Grid.Row>
@@ -256,8 +256,8 @@ export const ModalViewTask = (props: AlertProps) => {
                                     {file.fileTitle}
                                   </p>
                                   <i className="eye icon"
-                                  //  onClick={() => onClickOpenViewFile(file.uploadedFileID)}
-                                   ></i>
+                                    onClick={() => onClickOpenViewFile(file)}
+                                  ></i>
                                 </li>
                               ))
                             }
