@@ -50,11 +50,15 @@ export const GET_FILES = gql`query UploadedFiles($projectId:String!)
       createdAt 
       updatedBy 
       updatedAt
+      workTypeID
+      workTypeTitle
     }
     people { 
       userID 
       userName 
     } 
+    workTypeID
+    workTypeTitle
   } 
   }
 `;
@@ -79,61 +83,67 @@ mutation SaveUploadedFile(
   $fileType: FileTypeEnum!,
   $fileVersion:Float!
   $people: [PeopleParams!]!
-
+  $workTypeID:String,
+  $workTypeTitle:String
   ){ 
     saveUploadedFile(
       referenceFilter:{ 
-      referenceType:PROJECTTYPE
-      referenceID:$projectId
-      referenceTitle:$projectTitle
+        referenceType:PROJECTTYPE
+        referenceID:$projectId
+        referenceTitle:$projectTitle
       }
       uploadedFileInfo:{
-      directory:$directory
-      structureID: $structureID
-      structureTitle:$structureTitle
-      BKPID:$BKPID
-      BKPIDTitle: $BKPIDTitle
-      phaseID:$phaseID
-      phaseName: $phaseName
-      generateFileName:true
-      fileTypeID: $fileTypeID
-      fileTypeName: $fileTypeName
-      isEveryOneAllowed: $isEveryOneAllowed
-      fileURL: $fileURL
-      fileTitle: $fileTitle
-      fileType: $fileType
-      fileVersion: $fileVersion
-      createdBy:"a1"
-      updatedBy:"s2"
-      isDeleted:false
-      referenceType:PROJECTTYPE
-      referenceID:$projectId
-      referenceTitle:$projectTitle
-      peoples:$people
-      }){
-      uploadedFileID
-      parentUploadedFileID
-      directory
-      structureID
-      structureTitle
-      BKPID
-      BKPIDTitle
-      phaseID
-      phaseName
-      generateFileName
-      fileTypeID
-      fileReferences{
-      fileReferenceID
-      referenceID
-      referenceType
-      referenceTitle
+        directory:$directory
+        structureID: $structureID
+        structureTitle:$structureTitle
+        BKPID:$BKPID
+        BKPIDTitle: $BKPIDTitle
+        phaseID:$phaseID
+        phaseName: $phaseName
+        generateFileName:true
+        fileTypeID: $fileTypeID
+        fileTypeName: $fileTypeName
+        isEveryOneAllowed: $isEveryOneAllowed
+        fileURL: $fileURL
+        fileTitle: $fileTitle
+        fileType: $fileType
+        fileVersion: $fileVersion
+        createdBy:"a1"
+        updatedBy:"s2"
+        isDeleted:false
+        referenceType:PROJECTTYPE
+        referenceID:$projectId
+        referenceTitle:$projectTitle
+        peoples:$people
+        workTypeID:$workTypeID,
+        workTypeTitle:$workTypeTitle
       }
-      people{
-      filePeopleID
-      userID
-      userName
-      imageUrl
-      }
+    ){
+        uploadedFileID
+        parentUploadedFileID
+        directory
+        structureID
+        structureTitle
+        BKPID
+        BKPIDTitle
+        phaseID
+        phaseName
+        generateFileName
+        fileTypeID
+        fileReferences{
+          fileReferenceID
+          referenceID
+          referenceType
+          referenceTitle
+        }
+        people{
+          filePeopleID
+          userID
+          userName
+          imageUrl
+        }
+        workTypeID
+        workTypeTitle
       }
 }`;
 
@@ -332,8 +342,15 @@ export const DELETE_COMMENT = gql`mutation DeleteComment($commentsID:String!){
 
 export const UPDATE_PIN_STATUS = gql`mutation {
   updateTaskInfoInPinDetail(
-    pinsTaskInfoUpdateDto: { taskID: "5d012030-154e-11ec-bb00-a3885705ef72", taskTitle: "Task 3 on File 157 ", status: COMPLETED }
-    pinsFilter: { uploadedFileID: "ca813050-095f-11ec-b7f7-13a0db5fb508", pinsID: "5cae6c50-154e-11ec-9fd2-cb6640933b51" }
+    pinsTaskInfoUpdateDto: { 
+      taskID: "5d012030-154e-11ec-bb00-a3885705ef72", 
+      taskTitle: "Task 3 on File 157 ", 
+      status: COMPLETED 
+    }
+    pinsFilter: { 
+      uploadedFileID: "ca813050-095f-11ec-b7f7-13a0db5fb508", 
+      pinsID: "5cae6c50-154e-11ec-9fd2-cb6640933b51" 
+    }
   ) {
     pinsID
     uploadedFileID
@@ -355,8 +372,15 @@ export const UPDATE_PIN_STATUS = gql`mutation {
 
 export const UPDATE_PIN_TASK_INFO = gql`mutation {
   updateTaskInfoInPinDetail(
-    pinsTaskInfoUpdateDto: { taskID: "5d012030-154e-11ec-bb00-a3885705ef72", taskTitle: "Task 3 on File 157 ", status: COMPLETED }
-    pinsFilter: { uploadedFileID: "ca813050-095f-11ec-b7f7-13a0db5fb508", pinsID: "5cae6c50-154e-11ec-9fd2-cb6640933b51" }
+    pinsTaskInfoUpdateDto: { 
+      taskID: "5d012030-154e-11ec-bb00-a3885705ef72", 
+      taskTitle: "Task 3 on File 157 ", 
+      status: COMPLETED 
+    }
+    pinsFilter: { 
+      uploadedFileID: "ca813050-095f-11ec-b7f7-13a0db5fb508", 
+      pinsID: "5cae6c50-154e-11ec-9fd2-cb6640933b51" 
+    }
   ) {
     pinsID
     uploadedFileID
@@ -375,3 +399,83 @@ export const UPDATE_PIN_TASK_INFO = gql`mutation {
     taskTitle
   }
 }`
+
+
+export const UPDATE_UPLOADED_FILE = gql`
+mutation UpdateUploadedFile(
+    
+  $directory: String!,
+  $structureID: String!,
+  $structureTitle: String!,
+  $BKPID: String!,
+  $BKPIDTitle: String!,
+  $phaseID: String!,
+  $phaseName: String!,
+  $fileTypeID: String!, 
+  $fileTypeName: String!,
+  $isEveryOneAllowed: Boolean!
+  $fileURL: String!,
+  $fileTitle: String!,
+  $fileType: FileTypeEnum!,
+  $fileVersion:Float!
+  $updatedBy:String!
+  $people: [PeopleParams!]!
+  $uploadedFileID:String!,
+  $workTypeID:String,
+  $workTypeTitle:String,
+  
+  ){ 
+  updateUploadedFile(
+    updateUploadedfileDetails:{
+            
+      directory:$directory
+      structureID: $structureID
+      structureTitle:$structureTitle
+      BKPID:$BKPID
+      BKPIDTitle: $BKPIDTitle
+      phaseID:$phaseID
+      phaseName: $phaseName
+      generateFileName:true
+      fileTypeID: $fileTypeID
+      fileTypeName: $fileTypeName
+      isEveryOneAllowed: $isEveryOneAllowed
+      fileURL: $fileURL
+      fileTitle: $fileTitle
+      fileType: $fileType
+      fileVersion: $fileVersion
+      updatedBy:$updatedBy
+      isDeleted:false
+      
+      peoples:$people
+      uploadedFileID:$uploadedFileID
+      workTypeID:$workTypeID,
+      workTypeTitle:$workTypeTitle
+    }
+  ){
+    uploadedFileID
+    parentUploadedFileID
+    directory
+    structureID
+    structureTitle
+    BKPID
+    BKPIDTitle
+    phaseID
+    phaseName
+    generateFileName
+    fileTypeID
+    fileReferences{
+      fileReferenceID
+      referenceID
+      referenceType
+      referenceTitle
+    }
+    people{
+      filePeopleID
+      userID
+      userName
+      imageUrl
+    }
+    workTypeID
+    workTypeTitle
+  }
+}`;

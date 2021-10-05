@@ -128,6 +128,14 @@ export class UploadedFilesEntity extends BaseEntity {
   @JoinTable()
   people: PeopleEntity[];
 
+  @Expose()
+  @Column({ nullable: true })
+  workTypeID?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  workTypeTitle?: string;
+
   constructor(uploadedFilesEntity: Partial<UploadedFilesEntity>) {
     super();
     if (uploadedFilesEntity) {

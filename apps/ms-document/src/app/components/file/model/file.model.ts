@@ -63,6 +63,13 @@ export class FileModel {
   @Field(type => [PeopleModel], { nullable: true })
   people?: PeopleModel[]
 
+  @Field({ nullable: true, description: `workTypeID attached with file` })
+  workTypeID?: string;
+
+  @Field({ nullable: true, description: `workTypeTitle attached with file` })
+  workTypeTitle?: string;
+
+
 }
 
 

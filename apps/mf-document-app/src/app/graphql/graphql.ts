@@ -51,11 +51,19 @@ export const GET_FILES = gql`query UploadedFiles($projectId:String!)
       createdAt 
       updatedBy 
       updatedAt
+      workTypeID
+      workTypeTitle
+      people { 
+        userID 
+        userName 
+      }
     }
     people { 
       userID 
       userName 
-    } 
+    }
+    workTypeID
+    workTypeTitle 
   } 
   }
 `;
@@ -80,14 +88,14 @@ mutation SaveUploadedFile(
   $fileType: FileTypeEnum!,
   $fileVersion:Float!
   $people: [PeopleParams!]!
-
+  $workTypeID:String,
+  $workTypeTitle:String
   ){ 
     saveUploadedFile(
       referenceFilter:{ 
       referenceType:PROJECTTYPE
       referenceID:$projectId
       referenceTitle:$projectTitle
-      # referenceTitle: "gamesoft"
       }
       uploadedFileInfo:{
       directory:$directory
@@ -112,6 +120,8 @@ mutation SaveUploadedFile(
       referenceID:$projectId
       referenceTitle:$projectTitle
       peoples:$people
+      workTypeID:$workTypeID,
+      workTypeTitle:$workTypeTitle
       }){
       uploadedFileID
       parentUploadedFileID
@@ -136,6 +146,8 @@ mutation SaveUploadedFile(
       userName
       imageUrl
       }
+      workTypeID
+      workTypeTitle
       }
 }`;
 

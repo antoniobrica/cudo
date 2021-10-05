@@ -10,5 +10,6 @@ export * from './lib/components/file-image-index/file-image-index';
 // export * from '../src/azure-storage/contexts/viewStateContext';
 // export * from '../src/azure-storage/types/azure-storage'
 export * from './lib/components/file-setting-upload/add-file-setting-upload'
+export * from './lib/components/file-setting-upload/edit-file-setting-upload'
 export * from './lib/components/comment-add/comment-add'
 export * from './lib/components/comment-list/comment-list'
