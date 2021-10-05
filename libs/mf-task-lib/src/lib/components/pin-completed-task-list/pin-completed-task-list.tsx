@@ -18,7 +18,9 @@ import { Dropdown, Label, Radio } from 'semantic-ui-react';
 /* eslint-disable-next-line */
 export interface PinCompletedTaskListProps {
   filesData?
+  cord?
   pinCompletedCount?
+  taskHovered?
   parentWiseTaskFetch?
   isVersionSelected?
   isCompletedTaskShow?
@@ -42,6 +44,7 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
   const [idx, setId] = React.useState('');
   const [taskStatus, settaskStatus] = React.useState('');
 
+  const [taskHoveredId, setTaskHoveredId] = React.useState(null)
 
   const [subTaskId, setSubTaskId] = React.useState();
   const [taskErrors, setTaskErrors] = React.useState("")
@@ -321,7 +324,7 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
   }`
 
   const updatePinStatus = (taskData) => {
-    
+
     return axios.post(
       MS_SERVICE_URL['ms_document'].url,
       {
@@ -332,7 +335,7 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
         }
       }
     ).then(res => {
-      
+
     })
       .catch(err => console.log(err))
   }
@@ -341,6 +344,15 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
   // #endregion
 
   // #endregion
+
+  // const taskHovered = (taskTypeID) => {
+  //   props.taskHovered(taskTypeID)
+  // };
+
+  const getTaskHovered = (task) => {
+    setTaskHoveredId(task.taskTypeID)
+    props.taskHovered(task.taskTypeID)
+  }
 
   // #region Subtask feature
   const subTaskAdd = (data, title) => {
@@ -752,7 +764,8 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
               {completedTaskList?.map((task) => {
 
                 return (
-                  <div className="pin-task-completed-card">
+                  <div className={props?.cord?.pinsID === task?.taskTypeID ? "pin-task-completed-card pin-task-hover" : "pin-task-completed-card"}
+                    onMouseOver={() => getTaskHovered(task)}>
                     <div className="pin-task-description-box">
                       <div className="task-full-details">
                         <div className="pin-task-info">

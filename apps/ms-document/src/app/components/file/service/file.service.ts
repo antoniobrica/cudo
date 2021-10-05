@@ -48,7 +48,7 @@ export class FileService {
       if (!fileDetail) {
         throw new FileCustomError(FileErrorTypeEnum.FILE_NOT_FOUND)
       }
-     
+
       const res = new UploadedFilesEntity(updateFileInput);
       Object.keys(fileDetail)
         .forEach(k => res[k] = (updateFileInput[k] ?? fileDetail[k]));
@@ -256,16 +256,16 @@ export class FileService {
                   isDeleted: false
                 }
               });
-             
+
               const fileDetail = await this.uploadedFilesRepository.findOne({
                 where: { uploadedFileID: childUploadedFileId },
                 relations: ['fileReferences', 'people']
               });
-              modifiedFiles.push({ ...parent[i].children[j], versionCount, taskCount, commentCount, people:fileDetail.people })
+              modifiedFiles.push({ ...parent[i].children[j], versionCount, taskCount, commentCount, people: fileDetail.people })
 
             }
           }
-          result.push({ ...parent[i], children: modifiedFiles  })
+          result.push({ ...parent[i], children: modifiedFiles })
         }
       }
       // #endregion
@@ -306,12 +306,16 @@ export class FileService {
 
   public async deleteFile(fileDeleteInput: FileDeleteInput): Promise<UploadedFilesEntity> {
     const file = await this.uploadedFilesRepository.findOne({ where: { uploadedFileID: fileDeleteInput.uploadedFileID } });
-    if (file) {
+    if (!file) {
+      throw new FileCustomError(FileErrorTypeEnum.FILE_NOT_FOUND)
+    }
+    try {
       file.isDeleted = !(file.isDeleted)
       const updatedPost = await file.save()
       return updatedPost
+    } catch (error) {
+      throw new FileCustomError(FileErrorTypeEnum.FILE_NOT_DELETED)
     }
-    throw new FileCustomError(FileErrorTypeEnum.FILE_NOT_FOUND)
   }
 
 

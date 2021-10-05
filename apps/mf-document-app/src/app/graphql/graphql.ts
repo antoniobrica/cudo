@@ -57,6 +57,7 @@ export const GET_FILES = gql`query UploadedFiles($projectId:String!)
         userID 
         userName 
       }
+      isDeleted
     }
     people { 
       userID 
@@ -291,3 +292,67 @@ export const GET_FILE_VERSIONS = gql`query FileVersions($projectId:String!,$file
   }
 }
 `
+export const DELETE_FILE = gql`
+mutation DeleteFile($uploadedFileID:String!){
+  deleteFile(fileDeleteInput:{
+    uploadedFileID:$uploadedFileID
+  }){
+    uploadedFileID 
+    parentUploadedFileID
+    fileURL 
+    fileTitle 
+    fileType 
+    BKPID 
+    BKPIDTitle 
+    phaseID 
+    phaseName 
+    fileTypeID 
+    fileTypeName 
+    structureID 
+    directory
+    structureTitle 
+    createdBy 
+    createdAt 
+    updatedBy 
+    updatedAt
+    isEveryOneAllowed 
+    children{
+      parentUploadedFileID
+      fileURL
+      fileTitle
+      fileType
+      fileVersion
+      fileTypeName
+      isEveryOneAllowed
+      uploadedFileID
+      BKPID 
+      BKPIDTitle 
+      phaseID 
+      phaseName 
+      fileTypeID  
+      structureID 
+      directory
+      structureTitle  
+      versionCount
+      taskCount
+      commentCount
+      createdBy 
+      createdAt 
+      updatedBy 
+      updatedAt
+      workTypeID
+      workTypeTitle
+      people { 
+        userID 
+        userName 
+      }
+      isDeleted
+    }
+    people { 
+      userID 
+      userName 
+    }
+    workTypeID
+    workTypeTitle
+  }
+}`

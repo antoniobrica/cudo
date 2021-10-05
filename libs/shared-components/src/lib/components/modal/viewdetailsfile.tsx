@@ -265,11 +265,16 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
     setPinCompletedCount(count)
   }
 
+
   const getCoardinates = (data) => {
     setCord(data);
   }
 
   const getTaskHovered = (taskTypeID) => {
+    setHoveredTaskTypeID(taskTypeID)
+  }
+
+  const getCompletedTaskHovered = (taskTypeID) => {
     setHoveredTaskTypeID(taskTypeID)
   }
 
@@ -512,7 +517,9 @@ export const ViewFileDetail = (props: FileDetailsProps) => {
                         <Form.Field>
                           <PinCompletedTaskListIndex
                             filesData={props.filesData}
+                            cord={cord}
                             pinCompletedCount={getPinCompletedCount}
+                            taskHovered={getCompletedTaskHovered}
                             parentWiseTaskFetch={true}
                             isVersionSelected={isVersionSelected}
                             isCompletedTaskShow={getIsShowCompletedPins}
