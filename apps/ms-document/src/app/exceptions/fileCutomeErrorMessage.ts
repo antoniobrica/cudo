@@ -38,6 +38,8 @@ export const FileErrorData = (errorCode: number): IFileErrorCode => {
             return { message: "Comment not updated", code: 3011 }
         case FileErrorTypeEnum.COMMENT_NOT_DELETED:
             return { message: "Comment not deleted", code: 3012 }
+        case FileErrorTypeEnum.FILE_NOT_DELETED:
+            return { message: "File not deleted", code: 3013 }
 
         default:
             return { message: "An internal server error occurred", code: 500 }

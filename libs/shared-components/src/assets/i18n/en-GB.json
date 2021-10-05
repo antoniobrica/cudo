@@ -258,7 +258,8 @@
       "folder_name_placeholder": "Enter folder name here...",
       "file_to_replace": "File to replace",
       "click_to_upload": "Click to upload new file",
-      "new_version": "New version"
+      "new_version": "New version",
+      "delete_file_confirm": "Are you sure you want to delete the file?"
     },
     "questions": "Questions",
     "setting": "Settings",
