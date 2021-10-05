@@ -30,4 +30,4 @@ export function App() {
 }
 
 export default App;
-// chagnes to update libs and shared
+// chagnes to update libs and shared componetes
