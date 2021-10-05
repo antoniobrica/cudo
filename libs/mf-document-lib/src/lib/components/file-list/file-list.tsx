@@ -51,7 +51,7 @@ export function FileList(props: FileListProps) {
   const { loading, error, data } = useFileQuery(GET_FILES, { variables: { projectId } });
 
   const { loading: fileVersionLoading, error: fileVersionError, data: fileVersionData } = useQuery(GET_FILE_VERSIONS, {
-    variables: { projectId, fileId: selectedFileId || props.taskData.fileID },
+    variables: { projectId, fileId: selectedFileId || props?.taskData?.fileID },
   });
 
   React.useEffect(() => {

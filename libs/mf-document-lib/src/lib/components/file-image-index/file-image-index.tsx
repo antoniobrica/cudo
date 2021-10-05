@@ -12,13 +12,15 @@ const client = new ApolloClient({
 /* eslint-disable-next-line */
 export interface FileImageIndexProps {
   file?
+  open?
+  close?
 }
 
 export function FileImageIndex(props: FileImageIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <FileImage file={props.file} />
+        <FileImage file={props.file} open={props.open} close={props.close} />
       </ApolloHooksProvider>
     </ApolloProvider>
   );

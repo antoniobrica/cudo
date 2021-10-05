@@ -75,11 +75,6 @@ export const ModalViewTask = (props: AlertProps) => {
 
   return (
     <div id="navbar">
-      {
-        openViewFile && (
-          <FileImageIndex file={selectedViewFile} />
-        )
-      }
       <Modal
         className="modal_media right-side--fixed-modal task-details-modal"
         onClose={cancel}
@@ -107,6 +102,11 @@ export const ModalViewTask = (props: AlertProps) => {
           <Modal.Content body>
             <div>
               <Form>
+                {
+                  openViewFile && (
+                    <FileImageIndex file={selectedViewFile} open={openViewFile} close={closeOpenViewFile} />
+                  )
+                }
                 <Grid columns={3}>
                   <Grid.Row>
                     <Grid.Column>

@@ -2,40 +2,29 @@ import React, { useRef } from 'react';
 import { useHistory } from 'react-router';
 
 import { GET_FILES, GET_FILE_VERSIONS } from '../../graphql/graphql';
-import { useFileQuery, useFileVersionQuery } from '../../services/useRequest';
-import { AddPinFile, LazyLoading, LoaderPage } from "@cudo/shared-components";
-import SelectFilePopup from 'libs/shared-components/src/lib/components/modal/selectfile';
-
-import { DeletesViewStateContext, DownloadsViewStateContext, SharedViewStateContext } from 'libs/mf-document-lib/src/azure-storage/contexts/viewStateContext';
-import { BlobItem, ContainerItem } from '@azure/storage-blob';
+import { useFileQuery } from '../../services/useRequest';
+import {  LazyLoading } from "@cudo/shared-components";
+import { DownloadsViewStateContext, SharedViewStateContext } from 'libs/mf-document-lib/src/azure-storage/contexts/viewStateContext';
 import { BlobItemDownload } from 'libs/mf-document-lib/src/azure-storage/types/azure-storage';
 import { tap } from 'rxjs/operators';
 import { useQuery } from '@apollo/client';
+import { Modal } from 'semantic-ui-react';
 
 /* eslint-disable-next-line */
 export interface FileImageProps {
   file?
+  open?
+  close?
 }
 
 export function FileImage(props: FileImageProps) {
-  // const [imgUrl, setImgUrl] = React.useState("")
-  // const [fileVersion, setFileVersion] = React.useState(null);
+  const [open, setOpen] = React.useState(false)
   const sharedContext = React.useContext(SharedViewStateContext);
   const downloadsContext = React.useContext(DownloadsViewStateContext);
   const [fileName, setFileName] = React.useState('');
   const [itemsd, setItemsd] = React.useState<BlobItemDownload[]>([]);
-  const [items, setItems] = React.useState<ContainerItem[]>([]);
+  // const [items, setItems] = React.useState<ContainerItem[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
-  // const viewContext = React.useContext(DownloadsViewStateContext);
-  // const deletesContext = React.useContext(DeletesViewStateContext);
-  // const [fileData, setFileData] = React.useState<BlobItem[]>([]);
-  // const [addPinFromTask, setAddPinFromTask] = React.useState(false)
-
-  // const [selectedFileId, setSelectedFileId] = React.useState(null)
-  // const [selectedFileVersions, setSelectedFileVersions] = React.useState(null)
-  // const [selectedFileFromTask, setSelectedFileFromTask] = React.useState(null)
-
-  // const [isVersionSelected, setIsVersionSelected] = React.useState(false)
 
   const canvasImage = useRef<HTMLCanvasElement>();
 
@@ -48,6 +37,14 @@ export function FileImage(props: FileImageProps) {
   const { loading: fileVersionLoading, error: fileVersionError, data: fileVersionData } = useQuery(GET_FILE_VERSIONS, {
     variables: { projectId, fileId: props?.file?.uploadedFileID },
   });
+
+  React.useEffect(() => {
+    props.open && setOpen(props.open)
+  }, [props.open])
+
+  React.useEffect(() => {
+    setIsLoading(true)
+  }, [])
 
   React.useEffect(() => {
     if (props?.file?.uploadedFileID) {
@@ -93,46 +90,12 @@ export function FileImage(props: FileImageProps) {
               const canvasImageContext = canvasImageElement.getContext('2d')
               canvasImageContext.drawImage(imgagDraw, 0, 0, imgagDraw.width, imgagDraw.height, 0, 0, imgagDraw.width * ratio, imgagDraw.height * ratio);
             }
-            // setLoading(false)
+            setIsLoading(false)
           }
         }
       }
     }
   }, [itemsd])
-
-
-  // React.useEffect(() => {
-  //   setAddPinFromTask(true)
-  // },[selectedFileFromTask])
-
-
-
-
-  // React.useEffect(() => {
-  //   if (fileVersionData) {
-  //     setSelectedFileVersions(fileVersionData)
-  //   }
-  // }, [fileVersionData]);
-
-  // const getDownloadedItems = () => {
-  //   setIsLoading(true)
-  //   const sub = downloadsContext.downloadedItems$
-  //     .pipe(tap(items => {
-  //       setItemsd(items)
-  //       for (let i = 0; i < items.length; i++) {
-  //         if (items[i].url != '') {
-  //           setIsLoading(false)
-  //         }
-  //       }
-  //     }
-
-  //     ))
-  //     .subscribe();
-  //   setIsLoading(false)
-
-  //   return () => sub.unsubscribe();
-  // };
-  // React.useEffect(getDownloadedItems, []);
 
   const getViewItems = () => {
     const sub = downloadsContext.viewItems$
@@ -147,16 +110,11 @@ export function FileImage(props: FileImageProps) {
 
 
   const getContainersEffect = () => {
-    setItems([{ name: "test" }] as ContainerItem[])
+    // setItems([{ name: "test" }] as ContainerItem[])
     sharedContext.getContainerItems("test");
     return
   };
   React.useEffect(getContainersEffect, []);
-
-  // const downloadFiles = (data) => {
-  //   setFileName(data);
-  //   downloadsContext.downloadItem(data)
-  // }
 
   const viewFiles = (data) => {
 
@@ -164,49 +122,41 @@ export function FileImage(props: FileImageProps) {
     downloadsContext.viewItem(data.fileTitle)
   }
 
-  // const uploadNewVersion = (data) => {
+  const cancel = () => {
+    setOpen(false)
+    props.close()
+  }
 
-  //   setFileVersion(data);
-  //   //setOpenNew(true)
-  // }
+  if (isLoading) {
+    return (<LazyLoading />)
+  }
 
-  // const savePins = (data) => {
-  //   console.log('savePins==>', data);
-
-  // }
-  // const cancel = () => {
-  //   //setOpenNew(false)
-  // }
-
-  // const getSelectedFileId = (fileId) => {
-  //   setSelectedFileId(fileId)
-  // }
-  // const cancel = () => {
-  //   setAddPinFromTask(false)
-  //   // props.cancel()
-  // }
-
-  // const getIsVersionSelected = (isSelected) => {
-  //   setIsVersionSelected(isSelected)
-  // }
-
-  // if (loading) {
-  //   return (<LazyLoading />)
-  // }
   return (
-    <div className="left-side-image-canvas">
-      <div className="outsideWrapper">
-        <div className="insideWrapper">
-          {
-            loading ? <LazyLoading /> : (
+    <Modal
+      className=" modal_center"
+      closeIcon
+      open={open}
+      onClose={cancel}
+      onOpen={() => setOpen(true)}
+    >
+      <Modal.Content>
+        {/* <div className="view-pin-detail-popup"> */}
+        {/* <div className="left-side-detail-file"> */}
+        <div className="outsideWrapper">
+          <div className="insideWrapper">
+            {
+              // isLoading ? <LazyLoading /> : (
               <canvas id="canvasImage" className="coveringCanvas"
                 width="800" height="700"
                 ref={canvasImage}></canvas>
-            )
-          }
+              // )
+            }
+          </div>
         </div>
-      </div>
-    </div>
+        {/* </div> */}
+        {/* </div> */}
+      </Modal.Content>
+    </Modal>
   );
 }
 

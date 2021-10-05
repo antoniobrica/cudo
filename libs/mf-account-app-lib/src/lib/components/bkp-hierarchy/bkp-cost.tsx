@@ -125,7 +125,7 @@ const BkpCost = (props: BkpCostProps) => {
                             </Form.Field>
                         </div>
                     </Table.Cell>
-                    <Table.Cell className="file-attached"><i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <Label horizontal> 2</Label></Table.Cell>
+                    <Table.Cell className="file-attached"><i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i> <Label horizontal>{props.bkpCost.files?.length || "0"}</Label></Table.Cell>
 
                     <Table.Cell>
                         <div className="edit-estimated-price" >
