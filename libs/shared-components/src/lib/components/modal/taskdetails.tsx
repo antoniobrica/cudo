@@ -239,7 +239,7 @@ export const ModalViewTask = (props: AlertProps) => {
                     <Grid.Column>
                       <Form.Field>
                         <label>Files ({selectedFiles.length || 0})</label>
-                        <i className={`ms-Icon ${showTaskFiles ? "ms-Icon--ChevronDown" : "ms-Icon--ChevronUp"}`} aria-hidden="true" ></i>
+                        <i className={`ms-Icon ${showTaskFiles ? "ms-Icon--ChevronUp" : "ms-Icon--ChevronDown"}`} aria-hidden="true" ></i>
                       </Form.Field>
                     </Grid.Column>
                   </Grid.Row>
