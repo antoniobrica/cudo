@@ -41,7 +41,9 @@ export function CanvasPins(props: CanvasPinsProps) {
     INPROGRESS = 'INPROGRESS',
     COMPLETED = 'COMPLETED',
   }
-
+  // console.log('-1-parentWisePinFetch---', props?.parentWisePinFetch, )
+  // console.log('-2-parentFileId---', props?.parentFileId, )
+  // console.log('-3-isVersionSelected---', props?.isVersionSelected, )
   // #region Query and API Call 
   const getPinQuery = `query Pins($parentUploadedFileID:String, $uploadedFileID: String, $status: String) {
   pins(
@@ -145,7 +147,7 @@ export function CanvasPins(props: CanvasPinsProps) {
     uploadedFileID: props.fileId,
     status: Status.INPROGRESS
   }
-  // console.log('---canvas--isVersionSelected--', props?.isVersionSelected, '--pinFetchFilter---', pinFetchFilter)
+  // console.log('-4--canvas----pinFetchFilter---', pinFetchFilter)
   const getPins = async () => {
     try {
       const res = await axios.post(
@@ -194,7 +196,8 @@ export function CanvasPins(props: CanvasPinsProps) {
           {
             query: createNewPinQuery,
             variables: {
-              parentUploadedFileID: props?.parentFileId,
+              // parentUploadedFileID: props?.parentFileId,
+              parentUploadedFileID: props?.isVersionSelected === true ? props?.parentFileId : props.fileId,
               uploadedFileID: props.fileId,
               x_axis: dragTargetTemp.x,
               y_axis: dragTargetTemp.y,
@@ -252,13 +255,15 @@ export function CanvasPins(props: CanvasPinsProps) {
           }
         }
       );
+// console.log('-5---query---getLatestPinNumber--props?.isVersionSelected--',props?.isVersionSelected, 
+// '--props?.parentFileId--', props?.parentFileId, '--props.fileId--', props.fileId)
 
       const latestPinDetail = res?.data?.data?.pins[res?.data?.data?.pins?.length - 1]
       let latestPinNumber = 0
       if (latestPinDetail) {
         latestPinNumber = latestPinDetail?.pinNumber
       }
-      // console.log('--getLatestPinNumber--latestPinNumber----', latestPinDetail?.pinNumber)
+      // console.log('-6--getLatestPinNumber--latestPinNumber----', latestPinDetail?.pinNumber)
       setLatestPinNumber(latestPinNumber)
       return latestPinNumber;
     } catch (error) {
@@ -284,6 +289,10 @@ export function CanvasPins(props: CanvasPinsProps) {
     getLatestPinNumber().then(() => { })
 
   }, [props?.showCompletedPins]);
+
+  // useEffect (() => {
+  //   getLatestPinNumber().then(() => { })
+  // }, [props?.showCompletedPins]);
 
   useEffect(() => {
     if (!props.isPinCreated)

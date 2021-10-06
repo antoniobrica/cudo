@@ -11,7 +11,7 @@ import moment from 'moment';
 import { truncate } from 'fs';
 
 /* eslint-disable-next-line */
-export interface FileStructureProps {
+export interface FileListingStructureProps {
 	files?,
 	downloadFiles?,
 	downloadedImg?,
@@ -21,9 +21,10 @@ export interface FileStructureProps {
 	selectedFileId?
 	fileVersionDetail?
 	fileVersionLoading?
+	openDeleteFile?
 }
 
-export function FileStructure(props: FileStructureProps) {
+export function FileListingStructure(props: FileListingStructureProps) {
 	const [filesData, setFilesData] = useState([]);
 	const [items, setItems] = useState([]);
 	const [imgUrl, setimgUrl] = useState('');
@@ -46,6 +47,7 @@ export function FileStructure(props: FileStructureProps) {
 	const [selectedFileVersionList, setSelectedFileVersionList] = useState(null)
 
 	const [openEditFile, setOpenEditFile] = useState(false)
+
 
 	useEffect(() => {
 		if (props.files) {
@@ -90,11 +92,9 @@ export function FileStructure(props: FileStructureProps) {
 
 	const uploadNewVersion = (file) => {
 		props.uploadNewVersion(file);
-
 	}
 
 	const addPinTask = (data, isFromVersion) => {
-
 		setIsVersionSelected(isFromVersion)
 		setFilesData(data)
 		setFtype(data.fileType);
@@ -147,6 +147,10 @@ export function FileStructure(props: FileStructureProps) {
 		setOpenEditFile(false)
 	}
 
+	const onClickDeleteFile = (fileData) => {
+		props?.openDeleteFile(fileData)
+	}
+
 
 	const renderChildrenSingleFile = (singleFileItem) => {
 		// const { uploadedFileID, fileType, fileTitle, fileVersion, versionCount, taskCount, commentCount } = singleFileItem
@@ -172,7 +176,7 @@ export function FileStructure(props: FileStructureProps) {
 										<Dropdown.Item icon='pencil' text='Edit file detail' onClick={() => onClickEditFile(singleFileItem)} />
 										<Dropdown.Item icon='eye' text='Upload new version' onClick={() => uploadNewVersion(singleFileItem)} />
 										<Dropdown.Item icon='check circle outline' text='Add task to this file' onClick={() => addPinTask(singleFileItem, false)} />
-										<Dropdown.Item icon='trash alternate outline' text='Delete' />
+										<Dropdown.Item icon='trash alternate outline' text='Delete' onClick={() => onClickDeleteFile(singleFileItem)} />
 									</Dropdown.Menu>
 								</Dropdown>
 							</span>
@@ -237,23 +241,23 @@ export function FileStructure(props: FileStructureProps) {
 	let renderedFileFoldersList = null
 	if (fileFoldersList && fileFoldersList.length) {
 		renderedFileFoldersList = fileFoldersList.map(({ parentUploadedFileID, uploadedFileID, directory, BKPIDTitle, children }) => {
-
+			const fileList = children.filter((item) => item.isDeleted === false)
 			return (
 				<div key={uploadedFileID} className={selectedExpandId === uploadedFileID && expand ? "multiple-files-box expand" : "multiple-files-box"}>
 					<div className="multiple-files-header">
 						<div className="files-left-area">
 							<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/folder.png`} />
-							<h3 className="files-name">{parentUploadedFileID === null && directory ? directory : BKPIDTitle} {/*(2) */}</h3>
-							{children && children?.length ? <span className="no-of-files">( {children?.length} files )</span> : null}
+							<h3 className="files-name">{parentUploadedFileID === null && directory ? directory : BKPIDTitle} </h3>
+							{fileList && fileList?.length ? <span className="no-of-files">( {fileList?.length} files )</span> : null}
 						</div>
-						{children && children?.length > 0 ?
+						{fileList && fileList?.length > 0 ?
 							<div className="files-arrows" onClick={() => onClickExpand(uploadedFileID)}>
 								<i className="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i>
 							</div> :
 							null}
 					</div>
 					<div className="multiple-files-listing">
-						{renderChildrenWise(children)}
+						{renderChildrenWise(fileList)}
 					</div>
 				</div>
 			)
@@ -561,4 +565,4 @@ export function FileStructure(props: FileStructureProps) {
 	);
 }
 
-export default FileStructure;
+export default FileListingStructure;

@@ -19,7 +19,7 @@ import ModalExamplePrinting from 'libs/shared-components/src/lib/components/moda
 import ListExampleFloated from 'libs/shared-components/src/lib/components/task/taskarea';
 // import AddFileUpload from 'libs/shared-components/src/lib/components/modal/addfile';
 import ModalAddFile from 'libs/shared-components/src/lib/components/modal/addedfile';
-import FileStructure from 'libs/shared-components/src/lib/components/filestructure/filestask';
+import FileListingStructure from 'libs/shared-components/src/lib/components/filestructure/filestask';
 import ModalExampleSize from 'libs/shared-components/src/lib/components/modal/viewdetailsfile';
 import UploadNewVersion from 'libs/shared-components/src/lib/components/modal/uploadnewversion';
 import AddNewFolder from 'libs/shared-components/src/lib/components/modal/addfolder';
@@ -88,7 +88,7 @@ export function App() {
         <ListExampleFloated></ListExampleFloated><br /><br />
         {/* <AddFileUpload></AddFileUpload><br /> */}
         <ModalAddFile></ModalAddFile><br />
-        <FileStructure></FileStructure><br />
+        <FileListingStructure></FileListingStructure><br />
         <ModalExampleSize></ModalExampleSize><br />
         <UploadNewVersion></UploadNewVersion><br />
         <AddNewFolder></AddNewFolder><br />

@@ -55,6 +55,7 @@ export interface IFileParam {
   updatedBy: string
   updatedAt:Date
   people: [IPeople]
+  isDeleted: boolean
 }
 
 export interface IPeople {
