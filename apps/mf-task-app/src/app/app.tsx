@@ -30,3 +30,4 @@ export function App() {
 }
 
 export default App;
+// modifying for shared component build

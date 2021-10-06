@@ -23,4 +23,4 @@ export function App() {
 }
 
 export default App;
-// chagnes to update libs
+// modifying for shared component build
