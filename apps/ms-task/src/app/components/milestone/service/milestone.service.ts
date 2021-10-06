@@ -66,35 +66,35 @@ export class MileStoneService {
     }
 
 
-    public async findAll(refFilter: ReferenceFilterParams): Promise<MileStoneEntity[]> {
-        const selectedReference = await this.referenceService.getReferenceById(refFilter)
-        return await this.mileStoneRepository.find({
-            where: {
-                "reference": {
-                    id: selectedReference.id
-                }
-            }
-            ,
-            relations: ['reference', 'files' ]
-        });
-    }
-
-
-    // public async findAll(refFilter: ReferenceFilterParams, filterOptions:MileStonesFilterParam): Promise<MileStoneEntity[]> {
+    // public async findAll(refFilter: ReferenceFilterParams): Promise<MileStoneEntity[]> {
     //     const selectedReference = await this.referenceService.getReferenceById(refFilter)
-    //     const {phaseID,worktypeID} = filterOptions
     //     return await this.mileStoneRepository.find({
     //         where: {
-    //             worktypeID,
-    //             phaseID,
     //             "reference": {
     //                 id: selectedReference.id
     //             }
     //         }
     //         ,
-    //         relations: ['reference', 'files']
+    //         relations: ['reference', 'files' ]
     //     });
     // }
+
+
+    public async findAll(refFilter: ReferenceFilterParams, filterOptions:MileStonesFilterParam): Promise<MileStoneEntity[]> {
+        const selectedReference = await this.referenceService.getReferenceById(refFilter)
+        const {phaseID,worktypeID} = filterOptions
+        return await this.mileStoneRepository.find({
+            where: {
+                worktypeID,
+                phaseID,
+                "reference": {
+                    id: selectedReference.id
+                }
+            }
+            ,
+            relations: ['reference', 'files']
+        });
+    }
 
 
     async getMileStoneByID(mileFilter: MileStoneFilterParam) {

@@ -69,11 +69,11 @@ export function ModalPlanningNew(props: PlanningProps) {
 
   const [loader, setLoader] = React.useState(false)
 
-  React.useEffect(() => {
-    if (!props.addLoading && props.addData) {
-      cancel()
-    }
-  }, [props.listData])
+  // React.useEffect(() => {
+  //   if (!props.addLoading && props.addData) {
+  //     cancel()
+  //   }
+  // }, [props.addData])
 
   React.useEffect(() => {
     if (props.openNew) {
@@ -190,6 +190,7 @@ export function ModalPlanningNew(props: PlanningProps) {
     props.getMilestoneData(data);
     // props.cancel()
     // resetAddData()
+    cancel()
   }
 
   return (

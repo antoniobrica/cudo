@@ -23,6 +23,7 @@ import PlanDelete from './delete-task';
 import moment, { calendarFormat } from 'moment';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 
 
 export interface PlanningProps {
@@ -42,7 +43,18 @@ export function Planning(props: PlanningProps) {
   const [updateStaus, setUpdateStatus] = React.useState('');
   const [milestoneStatus, setMilestoneStatus] = React.useState('')
   const [milestoneByID, setmilestoneByID] = React.useState({});
-  const { loading, error, data } = useMilestonesQuery(GET_MILESTONES);
+
+  // get project id from url
+  const location = useLocation()
+  const referenceID = location.pathname.split('/')[3]
+  const worktypeID = localStorage.getItem('worktypeID')
+  const phaseID = localStorage.getItem('phaseID')
+  const { loading, error, data } = useMilestonesQuery(GET_MILESTONES, {
+    variables: { referenceID, worktypeID, phaseID }
+  });
+  // React.useEffect(() => {
+  //   console.log('workTypeID', worktypeID, 'phaseID---->', phaseID)
+  // }, [worktypeID, phaseID])
   // const [addPlan] = useMilestoneMutation(ADD_MILESTONE);
   const { t } = useTranslation()
   enum Status {
@@ -52,7 +64,7 @@ export function Planning(props: PlanningProps) {
   const [addPlan, { loading: addPlanningLoading, error: addPlanningError, data: addPlanningData }] = useMutation(ADD_MILESTONE,
     {
       refetchQueries: [
-        { query: GET_MILESTONES }
+        { query: GET_MILESTONES, variables: { referenceID, worktypeID, phaseID } }
       ]
     }
   )
@@ -68,7 +80,7 @@ export function Planning(props: PlanningProps) {
     {
       variables: { milestoneID: milestoneIDd },
       refetchQueries: [
-        { query: GET_MILESTONES }
+        { query: GET_MILESTONES, variables: { referenceID, worktypeID, phaseID } }
       ]
     }
   )
@@ -142,9 +154,10 @@ export function Planning(props: PlanningProps) {
     milestoneUpdate({
       variables: updatedMilestone,
       update: (cache) => {
-        const cacheData = cache.readQuery({ query: GET_MILESTONES }) as IMileStones;
+        const cacheData = cache.readQuery({ query: GET_MILESTONES, variables: { referenceID, worktypeID, phaseID } }) as IMileStones;
         cache.writeQuery({
           query: GET_MILESTONES,
+          variables: { referenceID, worktypeID, phaseID },
           data: {
             tasks: [...cacheData.MileStones, milestoneUpdate]
           },
@@ -164,21 +177,22 @@ export function Planning(props: PlanningProps) {
   const getMilestoneData = (data) => {
     // setMilestoneLoading(true);
     addPlan({
-      variables: data,
-      update: (
-        cache,
-        data
-      ) => {
-        const cacheData = cache.readQuery({ query: GET_MILESTONES }) as IMileStones;
-        cache.writeQuery({
-          query: GET_MILESTONES,
-          data: {
-            getMileStones: [...cacheData.MileStones, data['createMileStone']]
-          },
-        });
-        // setMilestoneLoading(false);
+      variables: { ...data, referenceID },
+      // update: (
+      //   cache,
+      //   data
+      // ) => {
+      //   const cacheData = cache.readQuery({ query: GET_MILESTONES, variables: { referenceID, worktypeID, phaseID  } }) as IMileStones;
+      //   cache.writeQuery({
+      //     query: GET_MILESTONES,
+      //     variables: { referenceID, worktypeID, phaseID  },
+      //     data: {
+      //       getMileStones: [...cacheData.MileStones, data['createMileStone']]
+      //     }
+      //   });
+      //   // setMilestoneLoading(false);
 
-      }
+      // }
     });
 
 
@@ -199,14 +213,14 @@ export function Planning(props: PlanningProps) {
       update: (
         cache
       ) => {
-        const cacheData = cache.readQuery({ query: GET_MILESTONES, variables: { milestoneID } }) as IMileStones;
+        const cacheData = cache.readQuery({ query: GET_MILESTONES, variables: { referenceID, worktypeID, phaseID } }) as IMileStones;
         const newTask = cacheData.MileStones.filter(item => item.milestoneID !== milestoneID);
         cache.writeQuery({
           query: GET_MILESTONES,
+          variables: { referenceID, worktypeID, phaseID },
           data: {
             MileStones: newTask
           },
-          variables: { milestoneID },
         });
         // setMilestoneLoading(false);
 
@@ -236,9 +250,10 @@ export function Planning(props: PlanningProps) {
         cache,
         { data: { milestoneUpdate } }: FetchResult
       ) => {
-        const cacheData = cache.readQuery({ query: GET_MILESTONES }) as IMileStones;
+        const cacheData = cache.readQuery({ query: GET_MILESTONES, variables: { referenceID, worktypeID, phaseID } }) as IMileStones;
         cache.writeQuery({
           query: GET_MILESTONES,
+          variables: { referenceID, worktypeID, phaseID },
           data: {
             tasks: [...cacheData.MileStones, milestoneUpdate]
           },
@@ -249,13 +264,13 @@ export function Planning(props: PlanningProps) {
     });
 
   }
-  if (loading)
-    return (
-      <h1>
-        {' '}
-        <LazyLoading />
-      </h1>
-    );
+  // if (loading || addPlanningLoading)
+  //   return (
+  //     <h1>
+  //       {' '}
+  //       <LazyLoading />
+  //     </h1>
+  //   );
 
   if (error) return (
     <div>
@@ -329,7 +344,6 @@ export function Planning(props: PlanningProps) {
           ></EditMileStonePopup>
         </div>
         : null}
-
 
       <div className="tabs-main-info-container planning-outer-con">
         {/* <LazyLoading /> */}
@@ -438,8 +452,11 @@ export function Planning(props: PlanningProps) {
 
             {/* Html for milestone cards */}
             <div className="milestone-lisiting-cards">
+              {
+                (loading || addPlanningLoading || deletePlanningLoading || updatePlanningLoading) && <LazyLoading />
+              }
               <ul>
-                {data.MileStones.map((plan, i) => {
+                {data?.MileStones.map((plan, i) => {
                   return (
                     <li>
                       <div className="date-status">

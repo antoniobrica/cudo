@@ -26,22 +26,22 @@ export class MileStoneResolver {
         return this.mileStoneService.create(createMileStoneInput, getMileStoneArgs);
     }
 
-    @Query(() => [MileStoneModel], { nullable: true })
-    async MileStones(
-        @Args("referenceFilter") getTasksArgs: ReferenceFilterParams,
-    ): Promise<MileStoneModel[]> {
-        return await this.mileStoneService.findAll(getTasksArgs)
-    }
-
-    // modified code for filter
-    
     // @Query(() => [MileStoneModel], { nullable: true })
     // async MileStones(
     //     @Args("referenceFilter") getTasksArgs: ReferenceFilterParams,
-    //     @Args("filterOptions") filterOptions: MileStonesFilterParam
     // ): Promise<MileStoneModel[]> {
-    //     return await this.mileStoneService.findAll(getTasksArgs, filterOptions)
+    //     return await this.mileStoneService.findAll(getTasksArgs)
     // }
+
+    // modified code for filter
+    
+    @Query(() => [MileStoneModel], { nullable: true })
+    async MileStones(
+        @Args("referenceFilter") getTasksArgs: ReferenceFilterParams,
+        @Args("filterOptions") filterOptions: MileStonesFilterParam
+    ): Promise<MileStoneModel[]> {
+        return await this.mileStoneService.findAll(getTasksArgs, filterOptions)
+    }
 
 
     @Query(() => MileStoneModel)
