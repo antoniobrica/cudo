@@ -147,11 +147,20 @@ export function SelectDropdown(props: selectWithAddNew) {
   const [BkpId, setBkpId] = React.useState('Select')
 
   React.useEffect(() => {
-    if(props.selectedFolder){
+    if (props.selectedFolder) {
       setSelectedOption(props.selectedFolder)
       setIsOpen(false);
     }
-  },[props.selectedFolder])
+  }, [props.selectedFolder])
+
+  React.useEffect(() => {
+    if (props.options && props.value) {
+      const selectedItem = props.options?.filter((item) => item.key === props.value)
+
+      setSelectedOption(selectedItem[0]?.text)
+      setIsOpen(false);
+    }
+  }, [props.options, props.value])
 
   const toggling = () => {
     setIsOpen(!isOpen);

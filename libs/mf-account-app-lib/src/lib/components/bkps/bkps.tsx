@@ -20,14 +20,17 @@ export function Bkps(props: BkpsProps) {
   const [BKPID, setBKPID] = React.useState("")
   const location = useLocation()
   const referenceID = location.pathname.split('/')[3]
+
+  const { t } = useTranslation()
+  const companyId = localStorage.getItem("selectedCompany")
+
   // const { loading, error, data } = useBkpQuery(GET_BKP);
   const { loading, error, data } = useQuery(GET_BKP, {
-    variables: { referenceID: "dapr", referenceType: "COMPANY", bkpTitle: "", bkpId: props.bkpCostFilter ? props.bkpCostFilter : "" }
+    variables: { referenceID: companyId, referenceType: "COMPANY", bkpTitle: "", bkpId: props.bkpCostFilter ? props.bkpCostFilter : "" }
   })
-  const { t } = useTranslation()
   // const { loading: folderL, error: folderE, data: FolderD } = useFolderQuery(GET_FOLDER)
   const { loading: folderL, error: folderE, data: FolderD } = useQuery(GET_FOLDER, {
-    variables: { referenceID: "dapr", referenceType: "COMPANY", folderTitle: "" }
+    variables: { referenceID: companyId, referenceType: "COMPANY", folderTitle: "" }
   })
   React.useEffect(() => {
     if (data) {

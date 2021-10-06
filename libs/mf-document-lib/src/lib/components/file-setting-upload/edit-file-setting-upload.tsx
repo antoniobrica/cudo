@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
+
 import { Button, Checkbox, Modal, Input, Form, Grid, Select, Icon, Dimmer, Loader } from 'semantic-ui-react';
+import ProgressBar from 'libs/shared-components/src/lib/components/progress_bar/progressbar';
 
 import { BkpIndex, PhaseIndex, FileTypeIndex, FileStructureIndex, FollowersIndex } from "@cudo/mf-account-app-lib";
 import { ProjectWorkTypeIndex } from "@cudo/mf-project-lib";
@@ -15,7 +17,6 @@ import { tap } from 'rxjs/operators';
 
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { useTranslation } from 'react-i18next';
-import { LoaderPage } from "@cudo/shared-components"
 import { useHistory } from 'react-router-dom';
 
 interface EditFileSettingUploadProps {
@@ -84,7 +85,7 @@ export function EditFileSettingUpload(props: EditFileSettingUploadProps) {
 
   useEffect(() => {
     if (props?.filesData) {
-     
+
       const fileArr = [{ fileURL: props?.filesData?.fileTitle, fileTitle: props?.filesData?.fileTitle, fileType: props?.filesData?.fileType }]
       setFileList(fileArr)
 
@@ -92,8 +93,8 @@ export function EditFileSettingUpload(props: EditFileSettingUploadProps) {
       setWorkTypeName(props?.filesData?.workTypeTitle)
 
       setPhasesID((props?.filesData?.phaseID).toString());
-      setPhasesName(props?.filesData?.phaseName);
-
+      setPhasesName(props?.filesData?.phaseName); 
+      
       setBKPID(props?.filesData?.BKPID)
       setBKPIDTitle(props?.filesData?.BKPIDTitle)
 
@@ -191,8 +192,7 @@ export function EditFileSettingUpload(props: EditFileSettingUploadProps) {
     setfileTypeID(data.fileTypeID)
   }
   const setBKPIDChange = (data) => {
-
-    setisFolder(data.isFolder)
+      setisFolder(data.isFolder)
     if (data.isFolder) {
       setfolderName(data.folderTitle)
       setDirectory(data.folderTitle)
@@ -211,7 +211,19 @@ export function EditFileSettingUpload(props: EditFileSettingUploadProps) {
   }
   const onClickRemoveSelectedFile = () => {
     setFileList([]);
+    // setItems([]);
   }
+  const onClickRemoveUploadedFile = (removedFileName) => {
+     // const uploadedFileItems = items.filter(({filename})=> filename!==removedFileName)
+     setItems([])
+
+    // let fileArr = [];
+    //     for (let i = 0; i < uploadedFileItems.length; i++) {
+    //       fileArr = [{ fileURL: items[i].filename, fileTitle: items[i].filename, fileType: items[i].type }];
+    //     }
+      setFileList([]);
+  }
+
   const setSpecificPeople = (data) => {
     setFollowers(data)
   }
@@ -278,10 +290,12 @@ export function EditFileSettingUpload(props: EditFileSettingUploadProps) {
   }
 
   return (
-    <div>
+    <div id=" " className="add-files-modal" >
       <Modal
         // className="modal_media modal_center modal_media_1"
-        className={updateFileLoading ? "modal_media modal_center modal_media_1 overflow-hidden" : "modal_media modal_center modal_media_1"}
+        className={updateFileLoading ? "modal_media modal_center add-file-setting-popup overflow-hidden" : "modal_media modal_center add-file-setting-popup"}
+        closeIcon
+        size="small"
         onClose={cancel}
         onOpen={() => setOpen(true)}
         open={props?.open}
@@ -299,41 +313,18 @@ export function EditFileSettingUpload(props: EditFileSettingUploadProps) {
 
         <Modal.Content body>
           <div>
-            {isLoading && <div><LoaderPage /> </div>}
-
             <Form>
-
-              <Grid columns={1}>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>{t("project_tab_menu.files.file_to_replace")}:</label>
-                      {files?.length > 0 ?
-                        <>
-                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/default.png`} className="mr-10 " />
-                          {/* {props?.filesData?.fileTitle} &nbsp; */}
-                          {files[0]?.fileTitle} &nbsp;
-                          <span className="checklist-actions" onClick={onClickRemoveSelectedFile}>
-                            <Icon name="trash alternate outline" />
-                          </span>
-                        </>
-                        : null}
-                    </Form.Field>
-                  </Grid.Column>
-
-                </Grid.Row>
-              </Grid>
-
-
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
                       <div className="dashed_area">
                         <div className="file-upload-message">
+                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/upload.png`} className="mr-10 " />
                           <p className="file-upload-default-message">
-                            <i className="ms-Icon ms-Icon--Upload" aria-hidden="true"></i>  {t("project_tab_menu.files.click_to_upload")}</p>
-
+                            {/* <i className="ms-Icon ms-Icon--Upload" aria-hidden="true"></i>  {t("project_tab_menu.files.click_to_upload")} */}
+                            {t("common.drag_and_drop")}
+                          </p>
                         </div>
                         <Input type="file" className="file-upload-input"
                           multiple={false} onChange={e => uploadFiles(e.target.files)}
@@ -343,162 +334,155 @@ export function EditFileSettingUpload(props: EditFileSettingUploadProps) {
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
-              <Grid columns={2}>
+
+              {/* <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>{t("project_tab_menu.files.file_settings")}</label>
-                    </Form.Field>
-                  </Grid.Column>
-
-                </Grid.Row>
-              </Grid>
-
-              <Grid columns={1}>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Form.Field>
-                      <div className="content">
-                        <div className="description">{t("project_tab_menu.files.generate_file_number")}
-                          <p className="enable">{t("project_tab_menu.files.generate_file_number_check")}</p>
-                          <Checkbox toggle className="toggle_area" />
+                      <div className="content" onClick={openSetting}>
+                        <div className="description">{t("project_tab_menu.files.file_settings")}
+                          <span className="float_right"><i className="ms-Icon ms-Icon--ChevronRightMed" aria-hidden="true"></i> </span>
                         </div>
                       </div>
                     </Form.Field>
                   </Grid.Column>
-
                 </Grid.Row>
-              </Grid>
-              <Grid columns={3}>
+              </Grid> */}
+
+              <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    {/*<Form.Field>
-                      <label>{t("menu.project")}</label> 
-                      <Select clearable placeholder={t("common.select")} className="small" options={projectOptions} /> 
-                    </Form.Field> */}
-                    {/* <CompanyWorkTypeIndex label={t("menu.project")} workTypeID={workTypeId} parentWorkTypeSelect={onChangeWorType} /> */}
-                    <ProjectWorkTypeIndex label={t("menu.project")} workTypeID={workTypeId} parentWorkTypeSelect={onChangeWorkType} />
-                  </Grid.Column>
-                  {/* <Grid.Column>
-                    <Form.Field>
-                      <label>{t("project_list.add_new_project.worktype")}</label>
-                      <Select clearable placeholder={t("common.select")} className="small" options={projectOptions} />
+                    <div className="uploaded-files">
+                      {/* <h3>{files.length === 0 ? t("project_tab_menu.files.upload_files") : t("project_tab_menu.files.file_to_replace")}</h3> */}
+                      <h3>{t("project_tab_menu.files.file_to_replace")}</h3>
+                      <ul>
 
-                    </Form.Field>
-                  </Grid.Column> */}
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>{t("common.phase")} </label>
-                      <PhaseIndex phaseName={phaseName} parentPhaseSelect={onsetPhasesID} />
-                    </Form.Field>
-                  </Grid.Column>
+                        {files?.length > 0 ?
+                          <li key={files[0].fileTitle}>
+                            <p>
+                              <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/powerpoint.png`} alt="" />
+                              {files[0].fileTitle}
+                            </p>
+                            <i className="ms-Icon ms-Icon--CalculatorMultiply" aria-hidden="true" onClick={onClickRemoveSelectedFile}></i>
+                          </li>
+                          : null}
 
-                  <Grid.Column>
-                    {/* <Form.Field>
-                      <label>BKP/Folder</label>
-                      <Select clearable placeholder='Select' className="small" options={countryOptions} />
+                        {items.length > 0 && items.map((file, index) => {
 
-                    </Form.Field> */}
-                    <BkpIndex bkp={BKPID} parentBKPSelect={setBKPIDChange} />
-                  </Grid.Column>
+                          return (
+                            <>
+                              {file.progress < 100 ?
+                                <ProgressBar progress={file.progress}></ProgressBar> : null}
+                            </>
+                          )
+                        })
+                        }
+                      </ul>
 
-                </Grid.Row>
-              </Grid>
-              <Grid columns={3}>
-                <Grid.Row>
-
-                  <Grid.Column>
-                    {/* <Form.Field>
-                      <label>File type</label>
-                      <Select clearable placeholder='Select' className="small" options={countryOptions} />
-
-                    </Form.Field> */}
-                    <FileTypeIndex fileTypeName={fileTypeName} parentFileTypeSelect={setFileTypeChange} />
-
-                  </Grid.Column>
-                  <Grid.Column>
-                    {/* <Form.Field>
-                      <label>File structure</label>
-                      <Select clearable placeholder='Select' className="small" options={countryOptions} />
-
-                    </Form.Field> */}
-                    <FileStructureIndex structureTitle={structureTitle} parentFileStructureSelect={setFileStructureChange} />
-
+                    </div>
                   </Grid.Column>
                 </Grid.Row>
-              </Grid>
-              <Grid  >
+
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
-                      <label>{t("common.who_can_access")}</label>
+                    <div className="file-setting-option">
+                      <h3>{t("project_tab_menu.files.file_settings")}</h3>
+                      <div className="generate-file-number">
+                        {/* <p>Generate file number <span>Enable this option to generate file numbering</span></p> */}
+                        <p>{t("project_tab_menu.files.generate_file_number")} <span>{t("project_tab_menu.files.generate_file_number_check")}</span></p>
+                        <Checkbox toggle className="toggle_area" />
+                      </div>
+                    </div>
 
-                    </Form.Field>
+                    <Grid columns={2}>
+                      <Grid.Row>
+                        <Grid.Column>
+                          <ProjectWorkTypeIndex label={t("menu.project")} workTypeID={workTypeId} parentWorkTypeSelect={onChangeWorkType} />
+                        </Grid.Column>
 
+                        <Grid.Column>
+                          <Form.Field>
+                            <label>{t("common.phase")} </label>
+                            <PhaseIndex phaseName={phaseName} parentPhaseSelect={onsetPhasesID} />
+                          </Form.Field>
+                        </Grid.Column>
+
+                      </Grid.Row>
+                    </Grid>
+
+                    <Grid columns={3}>
+                      <Grid.Row>
+
+                        <Grid.Column>
+                          <BkpIndex bkp={BKPID} parentBKPSelect={setBKPIDChange} />
+                        </Grid.Column>
+
+                        <Grid.Column>
+                          <FileTypeIndex fileTypeName={fileTypeName} parentFileTypeSelect={setFileTypeChange} />
+                        </Grid.Column>
+
+                        <Grid.Column>
+                          <FileStructureIndex structureTitle={structureTitle} parentFileStructureSelect={setFileStructureChange} />
+                        </Grid.Column>
+
+                      </Grid.Row>
+                    </Grid>
+
+                    <Grid columns={1} className="select-access">
+                      <Grid.Row>
+                        <Grid.Column>
+                          <Form.Field>
+                            <label>{t("common.who_can_access")}</label>
+                          </Form.Field>
+                          <div className="access-radio">
+                            <div className="radio">
+                              <label>
+                                <input type="radio" name="accessRadioButtonGroup" value="everyOneInProject" onChange={() => setAccessPeople(false)} checked={accessPeople === true ? false : true} />
+                                {t("common.everyone_in_worktype")}
+                              </label>
+                            </div>
+                            <div className="radio">
+                              <label>
+                                <input type="radio" name="accessRadioButtonGroup" value="specificPeopleOnly" onChange={() => setAccessPeople(true)} checked={accessPeople === true ? true : false} />
+                                {t("common.specific_access")}
+                              </label>
+                            </div>
+                          </div>
+                        </Grid.Column>
+                      </Grid.Row>
+                    </Grid>
+                    {accessPeople === true ?
+                      <div>
+                        <Grid columns={1} >
+                          <Grid.Row>
+                            <Grid.Column>
+                              <FollowersIndex followers={[]} parentFollowersSelect={setSpecificPeople} label="Select people" />
+                            </Grid.Column>
+                          </Grid.Row>
+                        </Grid>
+                        <Grid columns={5} >
+                          <Grid.Row>
+                            {followers.map((item, i) => {
+                              return (
+                                <Grid.Column key={i}>
+                                  <Form.Field>
+                                    <div className="below_area">
+                                      <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_2.png`} className="avatar" />
+                                      <span className="span_name">{item.userName}</span>
+                                      <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
+                                    </div>
+                                  </Form.Field>
+                                </Grid.Column>
+                              )
+                            })}
+                          </Grid.Row>
+                        </Grid> </div>
+                      : null}
                   </Grid.Column>
-
                 </Grid.Row>
               </Grid>
-              <Grid columns={2} >
-                <Grid.Row>
-
-                  <Grid.Column>
-                    <Form.Field>
-                      {/* <Checkbox label={t("common.everyone_in_subproject")} className="small" /> */}
-                      <label>
-                        <input type="radio" name="accessRadioButtonGroup" value="everyOneInProject" onChange={() => setAccessPeople(false)} checked={accessPeople===true ? false : true} />
-                        {t("common.everyone_in_worktype")}
-                      </label>
-                    </Form.Field>
-
-                  </Grid.Column>
-
-                  <Grid.Column>
-                    <Form.Field>
-                      {/* <Checkbox label={t("common.specific_access")} className="small" /> */}
-                      <label>
-                        <input type="radio" name="accessRadioButtonGroup" value="specificPeopleOnly" onChange={() => setAccessPeople(true)} checked={accessPeople===true ? true : false} />
-                        {t("common.specific_access")}
-                      </label>
-                    </Form.Field>
-                  </Grid.Column>
-
-                </Grid.Row>
-              </Grid>
-
-              {accessPeople===true ?
-                <div>
-                  <Grid columns={1} >
-                    <Grid.Row>
-                      <Grid.Column>
-                        <FollowersIndex followers={[]} parentFollowersSelect={setSpecificPeople} label="Select people" />
-                      </Grid.Column>
-                    </Grid.Row>
-                  </Grid>
-                  <Grid columns={5} >
-                    <Grid.Row>
-                      {followers.map((item, i) => {
-                        return (
-                          <Grid.Column key={i}>
-                            <Form.Field>
-                              <div className="below_area">
-                                <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_2.png`} className="avatar" />
-                                <span className="span_name">{item.userName}</span>
-                                <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
-                              </div>
-                            </Form.Field>
-                          </Grid.Column>
-                        )
-                      })}
-                    </Grid.Row>
-                  </Grid> </div>
-                : null}
-
             </Form>
-
           </div>
-
-
         </Modal.Content>
         <Modal.Actions>
           <Button
@@ -508,7 +492,7 @@ export function EditFileSettingUpload(props: EditFileSettingUploadProps) {
             size='small' className="primary"
           />
           <Button size='small' className="icon-border" onClick={cancel}>
-            X  {t("common.cancel")}
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i>  {t("common.cancel")}
           </Button>
 
         </Modal.Actions>
