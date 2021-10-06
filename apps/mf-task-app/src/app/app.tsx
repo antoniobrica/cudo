@@ -30,4 +30,3 @@ export function App() {
 }
 
 export default App;
-// chagnes to update libs and shared components for completed task list

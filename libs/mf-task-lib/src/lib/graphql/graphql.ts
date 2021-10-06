@@ -1,21 +1,55 @@
 import gql from "graphql-tag";
-export const GET_MILESTONES = gql`{
 
-  MileStones(referenceFilter: {  
-    referenceType: PROJECTTYPE, referenceID: "d3f04920-a18e-11eb-bd3b-7597bc3ab7d7" 
-        }){ 
-         milestoneID 
-        milestoneTitle 
-        phaseName
-        dueDate
-        status
-        worktypeID
-        worktypeName
-        description
-        files{fileID,fileName,fileUrl} 
-      } 
+export const GET_MILESTONES = gql`
+query MileStones($referenceID: String!,$worktypeID:String!,$phaseID:String!) {
+  MileStones(
+    filterOptions: {
+      worktypeID: $worktypeID
+      phaseID: $phaseID
+    }
+    referenceFilter: {
+      referenceType: PROJECTTYPE
+      referenceID: $referenceID
+    }
+  ) {
+    milestoneID
+    milestoneTitle
+    phaseName
+    phaseID
+    dueDate
+    status
+    worktypeID
+    worktypeName
+    description
+    files {
+      fileID
+      fileName
+      fileUrl
+    }
+  }
     
 }`
+
+// export const GET_MILESTONES = gql`
+// query MileStones($referenceID: String!) {
+//   MileStones(referenceFilter: {  
+//     referenceType: PROJECTTYPE, referenceID: $referenceID 
+//         }){ 
+//          milestoneID 
+//         milestoneTitle 
+//         phaseName
+//         phaseID
+//         dueDate
+//         status
+//         worktypeID
+//         worktypeName
+//         description
+//         files{fileID,fileName,fileUrl} 
+//       } 
+
+// }`
+
+
 
 export const DELETE_MILESTONE = gql`
 mutation  Delete($milestoneID: String!){ 
@@ -61,10 +95,11 @@ mutation CreateMileStone(
   $phaseID: String!,
   $phaseName: String!,
   $worktypeName: String!,
-  $worktypeID: String!
+  $worktypeID: String!,
+  $referenceID:String!
   ){ 
     createMileStone(
-      referenceFilter: { referenceType: PROJECTTYPE, referenceID: "d3f04920-a18e-11eb-bd3b-7597bc3ab7d7" }
+      referenceFilter: { referenceType: PROJECTTYPE, referenceID: $referenceID }
       mileStoneDetails: {
         milestoneBasics: {
           milestoneTitle: $milestoneTitle

@@ -33,14 +33,18 @@ export class AccordionExampleMenu extends Component<MyProps> {
   componentDidMount() {
     this.setState({ worktypes: this.props.workTypeData?.projectById[0].projectWorkTypes })
     this.setState({ worktypeValue: this.props.workTypeData?.projectById[0].projectWorkTypes[0].workTypeName })
+    localStorage.setItem('worktypeID', this.props.workTypeData?.projectById[0].projectWorkTypes[0].projectWorkTypeID)
+    localStorage.setItem('phaseID', "12")
   }
   handleClick = (titleProps, worktype) => {
+    localStorage.setItem('worktypeID', worktype.projectWorkTypeID)
+    localStorage.setItem('phaseID', "12")
     const { index } = titleProps
     const { activeIndex } = this.state
     const newIndex = activeIndex === index ? -1 : index
 
     this.setState({ activeIndex: titleProps });
-    const value = this.state.worktypes[activeIndex + 1].workTypeName;
+    const value = this.state.worktypes[activeIndex + 1]?.workTypeName;
     this.setState({ worktypeValue: value });
     this.props.changeWorktypeName(value);
   }
