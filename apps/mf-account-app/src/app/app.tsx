@@ -34,4 +34,3 @@ const App = props => {
 };
 
 export default App;
-// comment to update changed to libs componetes

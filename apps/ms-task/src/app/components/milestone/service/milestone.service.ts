@@ -9,6 +9,7 @@ import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { Pagination, PaginationOptionsInterface } from '../../paginate';
 import { ReferenceService } from '../../reference/service/reference.service';
 import MileStoneFilterParam from '../dto/args/milestone.filter';
+import MileStonesFilterParam from '../dto/args/milestones.filter';
 import { MilestoneDetailsInput } from '../dto/input/milestone-details.input';
 import { MileStoneDetailsUpdateInput } from '../dto/input/milestone-update.input';
 
@@ -24,28 +25,28 @@ export class MileStoneService {
     public async create(milestoneDetailsInput: MilestoneDetailsInput, referenceFilter: ReferenceFilterParams): Promise<MileStoneEntity> {
         try {
             // handling client input errors
-            let errorType:number;
-            
-            if(!milestoneDetailsInput.milestoneBasics.dueDate){
+            let errorType: number;
+
+            if (!milestoneDetailsInput.milestoneBasics.dueDate) {
                 errorType = TaskErrorTypeEnum.NO_DUE_DATE
             }
-            if(!milestoneDetailsInput.milestoneBasics.phaseID){
+            if (!milestoneDetailsInput.milestoneBasics.phaseID) {
                 errorType = TaskErrorTypeEnum.NO_PHASE
             }
-            if(!milestoneDetailsInput.milestoneBasics.worktypeID){
-                errorType= TaskErrorTypeEnum.NO_PLANNING_WORKTYPE
+            if (!milestoneDetailsInput.milestoneBasics.worktypeID) {
+                errorType = TaskErrorTypeEnum.NO_PLANNING_WORKTYPE
             }
-            if(!milestoneDetailsInput.milestoneBasics.milestoneTitle){
+            if (!milestoneDetailsInput.milestoneBasics.milestoneTitle) {
                 errorType = TaskErrorTypeEnum.NO_PLANNING_TITLE
             }
-            
-            if(errorType){
+
+            if (errorType) {
                 throw new TaskCustomError(errorType)
             }
 
             const milestoneDetails = new MileStoneEntity({ ...milestoneDetailsInput.milestoneBasics });
             milestoneDetails.files = [];
-            const {  files } = milestoneDetailsInput;
+            const { files } = milestoneDetailsInput;
             for (let index = 0; index < files.length; index++) {
                 const taskfileEntity = new TaskFileEntity(files[index])
                 const newTaskFile = await this.taskFileRepository.create({ ...taskfileEntity });
@@ -65,16 +66,33 @@ export class MileStoneService {
     }
 
 
-    public async findAll(refFilter: ReferenceFilterParams): Promise<MileStoneEntity[]> {
+    // public async findAll(refFilter: ReferenceFilterParams): Promise<MileStoneEntity[]> {
+    //     const selectedReference = await this.referenceService.getReferenceById(refFilter)
+    //     return await this.mileStoneRepository.find({
+    //         where: {
+    //             "reference": {
+    //                 id: selectedReference.id
+    //             }
+    //         }
+    //         ,
+    //         relations: ['reference', 'files' ]
+    //     });
+    // }
+
+
+    public async findAll(refFilter: ReferenceFilterParams, filterOptions:MileStonesFilterParam): Promise<MileStoneEntity[]> {
         const selectedReference = await this.referenceService.getReferenceById(refFilter)
+        const {phaseID,worktypeID} = filterOptions
         return await this.mileStoneRepository.find({
             where: {
+                worktypeID,
+                phaseID,
                 "reference": {
                     id: selectedReference.id
                 }
             }
             ,
-            relations: ['reference', 'files' ]
+            relations: ['reference', 'files']
         });
     }
 
@@ -103,30 +121,30 @@ export class MileStoneService {
             relations: ['reference', 'files']
         });
         if (milestoneDetails.length <= 0)
-        throw new TaskCustomError(TaskErrorTypeEnum.PLANNING_NOT_EXITST);
+            throw new TaskCustomError(TaskErrorTypeEnum.PLANNING_NOT_EXITST);
 
         // handling client input errors
-        let errorType:number;
-            
-        if(!createMileStoneInput.milestoneBasics.dueDate){
+        let errorType: number;
+
+        if (!createMileStoneInput.milestoneBasics.dueDate) {
             errorType = TaskErrorTypeEnum.NO_DUE_DATE
         }
         // if(!createMileStoneInput.milestoneBasics.phaseID){
         //     errorType = TaskErrorTypeEnum.NO_PHASE
         // }
-        if(!createMileStoneInput.milestoneBasics.worktypeID){
-            errorType= TaskErrorTypeEnum.NO_PLANNING_WORKTYPE
+        if (!createMileStoneInput.milestoneBasics.worktypeID) {
+            errorType = TaskErrorTypeEnum.NO_PLANNING_WORKTYPE
         }
-        if(!createMileStoneInput.milestoneBasics.milestoneTitle){
+        if (!createMileStoneInput.milestoneBasics.milestoneTitle) {
             errorType = TaskErrorTypeEnum.NO_PLANNING_TITLE
         }
-        if(errorType){
+        if (errorType) {
             throw new TaskCustomError(errorType)
         }
 
         const milestoneDetail = milestoneDetails[0];
         milestoneDetail.files = [];
-       
+
         if (files)
             for (let index = 0; index < files.length; index++) {
                 const taskfileEntity = new TaskFileEntity(files[index])
@@ -134,47 +152,48 @@ export class MileStoneService {
                 const savedFiles = await this.taskFileRepository.save(newTaskFile);
                 milestoneDetail.files.push(savedFiles)
             }
-     
-        milestoneBasics.milestoneTitle? milestoneDetail.milestoneTitle = milestoneBasics.milestoneTitle : null;
-        milestoneBasics.dueDate? milestoneDetail.dueDate = milestoneBasics.dueDate : null;
-        milestoneBasics.description? milestoneDetail.description = milestoneBasics.description : null;
-        milestoneBasics.phaseID? milestoneDetail.phaseID = milestoneBasics.phaseID : null;
-        milestoneBasics.phaseName? milestoneDetail.phaseName = milestoneBasics.phaseName : null;
-        milestoneBasics.worktypeID? milestoneDetail.worktypeID = milestoneBasics.worktypeID : null;
-        milestoneBasics.worktypeName? milestoneDetail.worktypeName = milestoneBasics.worktypeName : null;
-        milestoneBasics.status? milestoneDetail.status = milestoneBasics.status : null;
+
+        milestoneBasics.milestoneTitle ? milestoneDetail.milestoneTitle = milestoneBasics.milestoneTitle : null;
+        milestoneBasics.dueDate ? milestoneDetail.dueDate = milestoneBasics.dueDate : null;
+        milestoneBasics.description ? milestoneDetail.description = milestoneBasics.description : null;
+        milestoneBasics.phaseID ? milestoneDetail.phaseID = milestoneBasics.phaseID : null;
+        milestoneBasics.phaseName ? milestoneDetail.phaseName = milestoneBasics.phaseName : null;
+        milestoneBasics.worktypeID ? milestoneDetail.worktypeID = milestoneBasics.worktypeID : null;
+        milestoneBasics.worktypeName ? milestoneDetail.worktypeName = milestoneBasics.worktypeName : null;
+        milestoneBasics.status ? milestoneDetail.status = milestoneBasics.status : null;
 
         await this.mileStoneRepository.save(milestoneDetail);
         const milestones = await this.mileStoneRepository.find({
             where: { milestoneID: milestoneBasics.milestoneID },
-            relations: ['reference', 'files' ]
+            relations: ['reference', 'files']
         });
         return milestones;
     }
 
-        async paginate(
-            options: PaginationOptionsInterface,
-            refFilter: ReferenceFilterParams
-        ): Promise<Pagination<MileStoneEntity>> {
+    async paginate(
+        options: PaginationOptionsInterface,
+        refFilter: ReferenceFilterParams
+    ): Promise<Pagination<MileStoneEntity>> {
 
-            const selectedReference = await this.referenceService.getReferenceById(refFilter)
+        const selectedReference = await this.referenceService.getReferenceById(refFilter)
 
-            
-            const [results, total] = await this.mileStoneRepository.findAndCount({ where: {
+
+        const [results, total] = await this.mileStoneRepository.findAndCount({
+            where: {
                 "reference": {
                     id: selectedReference.id
                 }
             },
-            relations:['reference','files'],
+            relations: ['reference', 'files'],
             take: options.limit,
             skip: options.page * options.limit,
-            }
-            );            
-            const pagination =  new Pagination({
-                results,
-                total,
-            });      
-            return pagination
         }
-        
+        );
+        const pagination = new Pagination({
+            results,
+            total,
+        });
+        return pagination
+    }
+
 }

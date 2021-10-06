@@ -37,7 +37,7 @@ interface PlanningErrors {
   phaseError?: string
 }
 export function EditMileStonePopup(props: PlanningProps) {
-  
+
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
@@ -64,17 +64,17 @@ export function EditMileStonePopup(props: PlanningProps) {
   const [worktypeID, setworktypeID] = React.useState("")
   const [worktypeName, setWorktypeName] = React.useState("")
   const [status, setStatus] = React.useState("null")
-  
+
   const { t } = useTranslation()
   const [errors, setErrors] = React.useState<PlanningErrors>({})
 
   const [loader, setLoader] = React.useState(false)
 
-  React.useEffect(() => {
-    if (!props.updateLoading && props.updateData) {
-      cancel()
-    }
-  }, [props.listData])
+  // React.useEffect(() => {
+  //   if (!props.updateLoading && props.updateData) {
+  //     cancel()
+  //   }
+  // }, [props.updateData])
 
   React.useEffect(() => {
     if (props.openEdit) {
@@ -82,7 +82,7 @@ export function EditMileStonePopup(props: PlanningProps) {
     }
   }, [props.openEdit]);
   React.useEffect(() => {
-    if (props.worktypes) {     
+    if (props.worktypes) {
       setworkType(props.worktypes.map(({ workTypeName, projectWorkTypeID }) => ({ key: projectWorkTypeID, value: workTypeName, text: workTypeName, id: projectWorkTypeID })));
     }
   }, [props.worktypes]);
@@ -92,10 +92,10 @@ export function EditMileStonePopup(props: PlanningProps) {
       worktypeID: '',
       worktypeName: ''
     };
-    if(data.value){
+    if (data.value) {
       for (let i = 0; i < props.worktypes.length; i++) {
         if (props.worktypes[i]?.workTypeName === data.value) {
-        
+
           workT.worktypeID = props.worktypes[i].projectWorkTypeID;
           workT.worktypeName = data.value;
           setWorktypeName(workT.worktypeName)
@@ -108,7 +108,7 @@ export function EditMileStonePopup(props: PlanningProps) {
       setworktypeID("")
       setworkTypeD(null)
     }
-    
+
     setworkTypeData(data.value)
 
   }
@@ -166,7 +166,7 @@ export function EditMileStonePopup(props: PlanningProps) {
     const date = moment.utc(moment(e.target.value).utc()).format();
     setDueDate(e.target.value)
   }
-  
+
   const onDescriptionChange = e => {
     setDescription(e.target.value);
   }
@@ -200,12 +200,12 @@ export function EditMileStonePopup(props: PlanningProps) {
       dueDate: dueDate,
       description: description,
       phaseName: phaseName,
-      status:status,
+      status: status,
       worktypeID: worktypeID,
       worktypeName: worktypeName
     }
     props.getMilestoneData(data);
-    // cancel()
+    cancel()
   }
 
 
