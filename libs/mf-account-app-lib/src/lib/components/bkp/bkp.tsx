@@ -26,6 +26,8 @@ export function Bkp(props: BkpProps) {
   const [searchInput, setSearchInput] = React.useState("")
 
   const { t } = useTranslation()
+  const companyId = localStorage.getItem("selectedCompany")
+
   const setSearchValue = (data) => {
     const selectedData = Number(data)
     if (selectedData) {
@@ -36,20 +38,20 @@ export function Bkp(props: BkpProps) {
   }
   // const { loading, error, data } = useBkpQuery(GET_BKP);
   const { loading, error, data } = useQuery(GET_BKP, {
-    variables: { referenceID: "dapr", referenceType: "COMPANY", bkpTitle: searchInput, bkpId: BKPID }
+    variables: { referenceID: companyId, referenceType: "COMPANY", bkpTitle: searchInput, bkpId: BKPID }
   })
   // const { loading: folderL, error: folderE, data: FolderD } = useFolderQuery(GET_FOLDER)
   const { loading: folderL, error: folderE, data: FolderD } = useQuery(GET_FOLDER, {
-    variables: { referenceID: "dapr", referenceType: "COMPANY", folderTitle: searchInput }
+    variables: { referenceID: companyId, referenceType: "COMPANY", folderTitle: searchInput }
   })
   React.useEffect(() => {
-    if (data && FolderD) {
+    if (data || FolderD) {
 
-      const bkps = data.Bkp.map(({ bkpTitle, bkpID }) => ({ key: bkpID, value: bkpTitle, text: bkpID + " - " + bkpTitle }))
-      setItems(data.Bkp.map(({ bkpTitle, bkpID }) => ({ key: bkpID, value: bkpTitle, text: bkpID + " - " + bkpTitle })));
-      const arr = FolderD.Folders.map(({ folderTitle, folderID }) => ({ key: folderID, value: folderTitle, text: folderTitle }))
+      const bkps = data?.Bkp?.map(({ bkpTitle, bkpID }) => ({ key: bkpID, value: bkpTitle, text: bkpID + " - " + bkpTitle }))
+      setItems(data?.Bkp?.map(({ bkpTitle, bkpID }) => ({ key: bkpID, value: bkpTitle, text: bkpID + " - " + bkpTitle })));
+      const arr = FolderD?.Folders?.map(({ folderTitle, folderID }) => ({ key: folderID, value: folderTitle, text: folderTitle }))
       setItems1(arr);
-      const bkpF = bkps.concat(arr);
+      const bkpF = bkps?.length?bkps?.concat(arr):arr;
       setItems2(bkpF);
     }
   }, [data, FolderD]);
@@ -104,7 +106,7 @@ export function Bkp(props: BkpProps) {
     let isFolder = false;
     if (bkpID.BKPIDTitle.length > 0) {
       // bkpFolder = bkpID;
-      props.parentBKPSelect(bkpID);
+       props.parentBKPSelect(bkpID);
 
     }
     else {

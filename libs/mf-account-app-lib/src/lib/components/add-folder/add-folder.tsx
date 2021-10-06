@@ -20,9 +20,12 @@ export interface AddFolderProps {
 export function AddFolder(props: AddFolderProps) {
 
   const [folderTitle, setfolderTitle] = React.useState("");
+
+  const referenceID = localStorage.getItem("selectedCompany")
+
   const [addFolder,{loading, error, data}] = useMutation(ADD_FOLDER, {
     refetchQueries: [
-      { query: GET_FOLDER, variables: { referenceID: "dapr", referenceType: "COMPANY", folderTitle: "" } }
+      { query: GET_FOLDER, variables: { referenceID, referenceType: "COMPANY", folderTitle: "" } }
     ]
   });
   console.log(data)
@@ -48,6 +51,7 @@ export function AddFolder(props: AddFolderProps) {
     props.cancel(false);
     addFolder({
       variables: {
+        referenceID,
         folderTitle
       },
       update: (

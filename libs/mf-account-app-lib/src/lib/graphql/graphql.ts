@@ -238,10 +238,11 @@ export const GET_INVITATION = gql`{
 
 export const ADD_FOLDER = gql`
 mutation CreateFolder(
+  $referenceID:String!,
   $folderTitle: String!, 
   ){ 
     createFolder( 
-      referenceFilter: { referenceID: "dapr", referenceType: COMPANY } 
+      referenceFilter: { referenceID: $referenceID, referenceType: COMPANY } 
       folderDetails: {folderTitle:  $folderTitle } 
     ) { 
       folderID 
