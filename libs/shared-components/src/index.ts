@@ -18,7 +18,7 @@ export * from './lib/components/modal/addedfile';
 export * from './lib/components/filestructure/filestask';
 export * from './lib/components/modal/viewdetailsfile';
 export * from './lib/components/modal/uploadnewversion';
-export * from './lib/components/modal/addfolder';
+// export * from './lib/components/modal/addfolder';
 export * from './lib/components/people/peoplelist';
 export * from './lib/components/people/deleteconfirm';
 export * from './lib/components/people/addnewpeople';

@@ -21,7 +21,7 @@ export function FileStructure(props: FileStructureProps) {
 	const [view, setView] = React.useState(false);
 	const [expand, setExpand] = React.useState(false);
 	const [isLoading, setIsLoading] = React.useState(false);
-	const [filesData, setFilesData] = React.useState([]);
+	const [filesData, setFilesData] = React.useState<any>();  // todo: add types for this
 	const [items, setItems] = React.useState([]);
 	const [imgUrl, setimgUrl] = React.useState('');
 	const [fname, setFname] = React.useState('');

@@ -1,0 +1,85 @@
+{
+  "name": "mf-document-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/mf-document-app/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/mf-document-app",
+        "index": "apps/mf-document-app/src/index.html",
+        "main": "apps/mf-document-app/src/main.tsx",
+        "polyfills": "apps/mf-document-app/src/polyfills.ts",
+        "tsConfig": "apps/mf-document-app/tsconfig.app.json",
+        "assets": [
+          "apps/mf-document-app/src/favicon.ico",
+          "apps/mf-document-app/src/assets",
+          {
+            "input": "libs/shared-components/src/assets",
+            "glob": "**/*",
+            "output": "assets"
+          }
+        ],
+        "styles": ["apps/mf-document-app/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "apps/mf-document-app/webpack.config.js"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/mf-document-app/src/environments/environment.ts",
+              "with": "apps/mf-document-app/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "extractCss": true,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "options": {
+        "buildTarget": "mf-document-app:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "mf-document-app:build:production"
+        },
+        "development": {
+          "buildTarget": "mf-document-app:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/mf-document-app/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/mf-document-app"],
+      "options": {
+        "jestConfig": "apps/mf-document-app/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

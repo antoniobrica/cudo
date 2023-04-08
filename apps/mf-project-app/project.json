@@ -1,0 +1,115 @@
+{
+  "name": "mf-project-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/mf-project-app/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/mf-project-app",
+        "index": "apps/mf-project-app/src/index.html",
+        "main": "apps/mf-project-app/src/main.tsx",
+        "polyfills": "apps/mf-project-app/src/polyfills.ts",
+        "tsConfig": "apps/mf-project-app/tsconfig.app.json",
+        "assets": [
+          "apps/mf-project-app/src/favicon.ico",
+          "apps/mf-project-app/src/assets",
+          {
+            "input": "libs/shared-components/src/assets",
+            "glob": "**/*",
+            "output": "assets"
+          }
+        ],
+        "styles": ["apps/mf-project-app/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "apps/mf-project-app/webpack.config.js"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/mf-project-app/src/environments/environment.ts",
+              "with": "apps/mf-project-app/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "extractCss": true,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "options": {
+        "buildTarget": "mf-project-app:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "mf-project-app:build:production"
+        },
+        "development": {
+          "buildTarget": "mf-project-app:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/mf-project-app/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/mf-project-app"],
+      "options": {
+        "jestConfig": "apps/mf-project-app/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "storybook": {
+      "executor": "@nrwl/storybook:storybook",
+      "options": {
+        "uiFramework": "@storybook/react",
+        "port": 4400,
+        "config": {
+          "configFolder": "apps/mf-project-app/.storybook"
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@nrwl/storybook:build",
+      "options": {
+        "uiFramework": "@storybook/react",
+        "outputPath": "dist/storybook/mf-project-app",
+        "config": {
+          "configFolder": "apps/mf-project-app/.storybook"
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    }
+  },
+  "tags": []
+}

@@ -9,13 +9,12 @@ export default class Canvas extends Component<MyProps> {
         // const canvas = this.refs.canvas
         // const ctx = canvas.getContext("2d")
 
-        let canvas = document.getElementById('canvas') as
-        HTMLCanvasElement;
-        let context = canvas.getContext("2d");
+        const canvas = document.getElementById('canvas') as HTMLCanvasElement;
+        const context = canvas.getContext("2d");
         console.log('context',context);
         console.log('canvas',canvas);
 
-        const img = this.refs.image;
+        const img = this.refs.image as any;
         console.log('img', img)
         // const img = document.getElementById('img')
         console.log('img',img);

@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
 import 'semantic-ui-css/semantic.min.css'
-import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
+import { ApolloProvider as ApolloHooksProvider } from '@apollo/client'
 import * as serviceWorker from "./serviceWorker";
 import "./SubscriberWidgetElement";
 import App from './app/app';

@@ -1,0 +1,80 @@
+{
+  "name": "ui-design",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/ui-design/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/ui-design",
+        "index": "apps/ui-design/src/index.html",
+        "main": "apps/ui-design/src/main.tsx",
+        "polyfills": "apps/ui-design/src/polyfills.ts",
+        "tsConfig": "apps/ui-design/tsconfig.app.json",
+        "assets": [
+          "apps/ui-design/src/favicon.ico",
+          "apps/ui-design/src/assets"
+        ],
+        "styles": ["apps/ui-design/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/ui-design/src/environments/environment.ts",
+              "with": "apps/ui-design/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "extractCss": true,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "ui-design:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "ui-design:build:production"
+        },
+        "development": {
+          "buildTarget": "ui-design:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/ui-design/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/ui-design"],
+      "options": {
+        "jestConfig": "apps/ui-design/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

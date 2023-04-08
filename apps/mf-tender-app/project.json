@@ -1,0 +1,115 @@
+{
+  "name": "mf-tender-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/mf-tender-app/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/mf-tender-app",
+        "index": "apps/mf-tender-app/src/index.html",
+        "main": "apps/mf-tender-app/src/main.tsx",
+        "polyfills": "apps/mf-tender-app/src/polyfills.ts",
+        "tsConfig": "apps/mf-tender-app/tsconfig.app.json",
+        "assets": [
+          "apps/mf-tender-app/src/favicon.ico",
+          "apps/mf-tender-app/src/assets",
+          {
+            "input": "libs/shared-components/src/assets",
+            "glob": "**/*",
+            "output": "assets"
+          }
+        ],
+        "styles": ["apps/mf-tender-app/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "apps/mf-tender-app/webpack.config.js"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/mf-tender-app/src/environments/environment.ts",
+              "with": "apps/mf-tender-app/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "extractCss": true,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "options": {
+        "buildTarget": "mf-tender-app:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "mf-tender-app:build:production"
+        },
+        "development": {
+          "buildTarget": "mf-tender-app:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/mf-tender-app/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/mf-tender-app"],
+      "options": {
+        "jestConfig": "apps/mf-tender-app/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "storybook": {
+      "executor": "@nrwl/storybook:storybook",
+      "options": {
+        "uiFramework": "@storybook/react",
+        "port": 4400,
+        "config": {
+          "configFolder": "apps/mf-tender-app/.storybook"
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@nrwl/storybook:build",
+      "options": {
+        "uiFramework": "@storybook/react",
+        "outputPath": "dist/storybook/mf-tender-app",
+        "config": {
+          "configFolder": "apps/mf-tender-app/.storybook"
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    }
+  },
+  "tags": []
+}

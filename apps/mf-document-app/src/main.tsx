@@ -7,7 +7,7 @@ import 'semantic-ui-css/semantic.min.css'
 
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
-import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
+import { ApolloProvider as ApolloHooksProvider } from '@apollo/client'
 import * as serviceWorker from "./serviceWorker";
 import App from './app/app';
 // import "./SubscriberWidgetElement";
