@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react';
 
-import { Loginbar } from '@cudo/shared-components';
+import { Loginbar } from '@cudo/shared-components/src';
 import './login.module.scss';
-import config from "../config/kratos"
-import { useHistory } from "react-router";
+import config from '../config/kratos';
 import { LoginFlow } from '@oryd/kratos-client';
 import { initialiseRequest } from '../services/kratos';
+import { useNavigate } from 'react-router-dom';
 /* eslint-disable-next-line */
-export interface LoginProps {
-}
+export interface LoginProps {}
 
 export function Email(props: LoginProps) {
-  const history = useHistory();
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const handleLogin = () => {
     // Need to implement using redux
     localStorage.setItem('email', email);
-    history.push(config.routes.login.path, { email });
+
+    navigate('/');
+
+    // history.push(config.routes.login.path, { email });
   };
   return (
     <div>
@@ -25,4 +28,4 @@ export function Email(props: LoginProps) {
   );
 }
 
-export default Email
+export default Email;
