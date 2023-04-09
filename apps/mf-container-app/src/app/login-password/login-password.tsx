@@ -20,25 +20,25 @@ export function LoginPassword(props: LoginPasswordProps) {
   const [email, setEmail] = useState('');
   const [requestResponse, setRequestResponse] = useState<LoginFlow>();
 
-  useEffect(() => {
-    // Need to implement using redux
-    setEmail(localStorage.getItem('email'));
-    const request = initialiseRequest(
-      { type: 'login' },
-      { filterid: 'flow' }
-    ) as Promise<LoginFlow>;
-    request
-      .then((request) => setRequestResponse(request))
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [setRequestResponse, navigate]);
+  // useEffect(() => {
+  //   // Need to implement using redux
+  //   setEmail(localStorage.getItem('email'));
+  //   const request = initialiseRequest(
+  //     { type: 'login' },
+  //     { filterid: 'flow' }
+  //   ) as Promise<LoginFlow>;
+  //   request
+  //     .then((request) => setRequestResponse(request))
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, [setRequestResponse, navigate]);
 
   const messages = requestResponse?.messages;
   const form = requestResponse?.methods?.password?.config;
   return (
     <div>
-      {messages && <KratosMessages messages={messages} />}
+      {/* {messages && <KratosMessages messages={messages} />} */}
       {form && (
         <Loginpassword
           action={form?.action}
@@ -46,14 +46,17 @@ export function LoginPassword(props: LoginPasswordProps) {
           messages={messages}
         ></Loginpassword>
       )}
+      <div id="login-password">
+        {/* <KratosForm
+          submitLabel="Sign in"
+          action={form.action}
+          fields={form.fields}
+          messages={form.messages}
+        /> */}
+      </div>
       {/* <div id="login-password">
         {messages && <KratosMessages messages={messages} />}
-        {form &&
-          <KratosForm
-            submitLabel="Sign in"
-            action={form.action}
-            fields={form.fields}
-            messages={form.messages} />}
+        }
       </div> */}
     </div>
   );

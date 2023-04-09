@@ -1,13 +1,19 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  Relation,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
-import ReferanceTypeEntity from './references.entity';
+import ReferanceTypeEntity from './reference.entity';
 import * as uuid from 'uuid';
 
-
 @Entity({ name: 'invitationTemplate' })
-
 export class InvitationTemplateEntity extends BaseEntity {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -18,7 +24,6 @@ export class InvitationTemplateEntity extends BaseEntity {
   @Column()
   @Expose()
   invitationTemplateTitle: string;
-
 
   @Expose()
   @CreateDateColumn()
@@ -41,9 +46,8 @@ export class InvitationTemplateEntity extends BaseEntity {
   isDeleted?: boolean;
 
   @Expose()
-  @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.folder)
-  reference: ReferanceTypeEntity;
-
+  @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.folders)
+  reference: Relation<ReferanceTypeEntity>;
 
   constructor(invitationTemplateEntity: Partial<InvitationTemplateEntity>) {
     super();
@@ -51,11 +55,10 @@ export class InvitationTemplateEntity extends BaseEntity {
       Object.assign(
         this,
         plainToClass(InvitationTemplateEntity, invitationTemplateEntity, {
-          excludeExtraneousValues: true
+          excludeExtraneousValues: true,
         })
-      )
+      );
       this.invitationTemplateID = this.invitationTemplateID || uuid.v1();
-
     }
   }
 }

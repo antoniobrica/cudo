@@ -1,6 +1,4 @@
-import { Expose, plainToClass } from "class-transformer";
 import { Entity, Tree, Column, PrimaryGeneratedColumn, TreeChildren, TreeParent, TreeLevelColumn, ManyToOne, BaseEntity, CreateDateColumn, UpdateDateColumn } from "typeorm";
-import ReferanceTypeEntity from "./references.entity";
 
 @Entity()
 @Tree("closure-table")

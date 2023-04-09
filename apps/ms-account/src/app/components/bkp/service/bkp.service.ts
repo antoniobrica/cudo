@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {  Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { BkpEntity } from '../../../entities/bkp.entity';
 import { FolderEntity } from '../../../entities/folder.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
@@ -17,16 +17,21 @@ export class BkpService {
     private BkpRepository: Repository<BkpEntity>,
     public referenceService: ReferenceService,
     @InjectRepository(FolderEntity)
-    private FolderRepository: Repository<FolderEntity>,
-  ) { }
+    private FolderRepository: Repository<FolderEntity>
+  ) {}
 
-  public async createBkp(createBkpInput: CreateBkpInput, referenceFilter: ReferenceFilterParams): Promise<BkpEntity> {
+  public async createBkp(
+    createBkpInput: CreateBkpInput,
+    referenceFilter: ReferenceFilterParams
+  ): Promise<BkpEntity> {
     try {
       const taskeDetails = new BkpEntity({ ...createBkpInput });
-      const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
+      const selectedReference = await this.referenceService.getReferenceById(
+        referenceFilter
+      );
       const newPost = await this.BkpRepository.create({
         ...taskeDetails,
-        reference: { id: selectedReference.id }
+        reference: { id: selectedReference.id },
       });
       await this.BkpRepository.save(newPost);
       return newPost;
@@ -35,36 +40,48 @@ export class BkpService {
     }
   }
 
-  public async updateBkp(createBkpInput: CreateBkpInput, referenceFilter: ReferenceFilterParams): Promise<BkpEntity> {
-
-    const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
-    const bkp = await this.BkpRepository.findOne({ where: { bkpID: createBkpInput.bkpID, reference: { id: selectedReference.id } } });
+  public async updateBkp(
+    createBkpInput: CreateBkpInput,
+    referenceFilter: ReferenceFilterParams
+  ): Promise<BkpEntity> {
+    const selectedReference = await this.referenceService.getReferenceById(
+      referenceFilter
+    );
+    const bkp = await this.BkpRepository.findOne({
+      where: {
+        bkpID: createBkpInput.bkpID,
+        reference: { id: selectedReference.id },
+      },
+    });
     if (bkp) {
       await this.BkpRepository.update(bkp.id, { ...createBkpInput });
-      const updatedPost = await this.BkpRepository.findOne(bkp.id);
+      const updatedPost = await this.BkpRepository.findOne({
+        where: { id: bkp.id },
+      });
       return updatedPost;
     }
     throw new BkpNotFoundException(bkp.bkpID);
   }
 
-  public async findAllBkp(refFilter: ReferenceFilterParams): Promise<BkpEntity[]> {
-    const selectedReference = await this.referenceService.getReferenceById(refFilter)
+  public async findAllBkp(
+    refFilter: ReferenceFilterParams
+  ): Promise<BkpEntity[]> {
+    const selectedReference = await this.referenceService.getReferenceById(
+      refFilter
+    );
     return await this.BkpRepository.find({
-      "reference": {
-        id: selectedReference.id
-      }
+      where: { reference: { id: selectedReference.id } },
     });
-
   }
-  
-  public async findAllFolder(refFilter: ReferenceFilterParams): Promise<FolderEntity[]> {
-    const selectedReference = await this.referenceService.getReferenceById(refFilter)
+
+  public async findAllFolder(
+    refFilter: ReferenceFilterParams
+  ): Promise<FolderEntity[]> {
+    const selectedReference = await this.referenceService.getReferenceById(
+      refFilter
+    );
     return await this.FolderRepository.find({
-      "reference": {
-        id: selectedReference.id
-      }
+      where: { reference: { id: selectedReference.id } },
     });
-
   }
-
 }

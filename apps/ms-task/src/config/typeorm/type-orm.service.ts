@@ -1,11 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { TypeOrmOptionsFactory, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { truncate } from 'fs';
-import {
-  getMetadataArgsStorage,
-  createConnection,
-  getConnection,
-} from 'typeorm';
+// import { truncate } from 'fs';
+import { getMetadataArgsStorage } from 'typeorm';
 
 import config from '../../config.orm';
 // import { logger } from '../../common'

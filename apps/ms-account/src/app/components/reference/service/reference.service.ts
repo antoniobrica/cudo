@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, MoreThan, Repository } from 'typeorm';
-import ReferanceTypeEntity from '../../../entities/references.entity';
+import ReferanceTypeEntity from '../../../entities/reference.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceInputDto } from '../dto/input/reference.input.dto';
 import ProjectNotFoundException from '../exceptions/projectNotFound.exception';

@@ -1,7 +1,7 @@
 import React from 'react';
-import { FormField, Message } from '@oryd/kratos-client';
+// import { FormField, Message } from '@oryd/kratos-client';
 import { FORM_LABELS } from '@cudo/mf-core';
-import { KratosMessages } from '../components/KratosMessages';
+// import { KratosMessages } from '../components/KratosMessages';
 import { Button, Form, Grid, Segment } from 'semantic-ui-react';
 import logo from '../../assets/images/slider.png';
 import img from '../../assets/images/Shape 2.png';
@@ -14,12 +14,13 @@ export const KratosForm = ({
   submitLabel = 'Submit',
 }: {
   action: string;
-  messages?: Message[];
-  fields: FormField[];
+  messages?: any[];
+  fields: any[];
   submitLabel: string;
 }) => {
   const fieldsSorted = sortFormFields({ fields });
   const login = () => {
+    console.log('trig');
     ToEmail();
   };
   return (
@@ -36,9 +37,9 @@ export const KratosForm = ({
                     <h2 className="login">{submitLabel}</h2>
                   </div>
                   <div className="form-inner">
-                    {!!messages?.length && (
+                    {/* {!!messages?.length && (
                       <KratosMessages messages={messages} />
-                    )}
+                    )} */}
                     {action && (
                       <Form
                         className="ln-form-outer"
@@ -67,7 +68,7 @@ export const KratosForm = ({
           <Grid.Row columns={2}>
             <div className="form-header">
               <Button
-                onClick={login}
+                onClick={() => login()}
                 size="large"
                 className="grey-btn btn-large"
               >
@@ -81,7 +82,7 @@ export const KratosForm = ({
   );
 };
 
-const sortFormFields = ({ fields }: { fields: FormField[] }) => {
+const sortFormFields = ({ fields }: { fields: any[] }) => {
   return fields.sort((current, next) => {
     const c = FORM_LABELS[current.name]?.priority || 0;
     const n = FORM_LABELS[next.name]?.priority || 0;
@@ -89,7 +90,7 @@ const sortFormFields = ({ fields }: { fields: FormField[] }) => {
   });
 };
 
-const renderFormFields = ({ fields = [] }: { fields: FormField[] }) =>
+const renderFormFields = ({ fields = [] }: { fields: any[] }) =>
   fields.map((field) => {
     const { name, type, required, value, messages = [] } = field;
     const _required = required ? { required } : {};
@@ -106,7 +107,7 @@ const renderFormFields = ({ fields = [] }: { fields: FormField[] }) =>
           />
           {_label && <span className="float-area">{_label}</span>}
         </label>
-        <KratosMessages messages={messages} />
+        {/* <KratosMessages messages={messages} /> */}
       </fieldset>
     );
   });

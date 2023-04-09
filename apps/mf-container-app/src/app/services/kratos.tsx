@@ -18,27 +18,27 @@ export const initialiseRequest = ({ type }: { type: "login" | "login1" | "regist
   }
 
   return new Promise((resolve, reject) => {
-    const params = new URLSearchParams(window.location.search);
-    const request = params.get("flow") || ""
-    const endpoint = endpoints[type]
-    // Ensure request exists in params.
-    if (!request) return window.location.href = endpoint
+    // const params = new URLSearchParams(window.location.search);
+    // const request = params.get("flow") || ""
+    // const endpoint = endpoints[type]
+    // // Ensure request exists in params.
+    // if (!request) return window.location.href = endpoint
 
-    let authRequest: Promise<any> | undefined
-    if (type === "login") authRequest = kratos.getSelfServiceLoginFlow(request)
-    else if (type === "register") authRequest = kratos.getSelfServiceRegistrationFlow(request)
-    else if (type === "settings") authRequest = kratos.getSelfServiceSettingsFlow(request)
-    else if (type === "verify") authRequest = kratos.getSelfServiceVerificationFlow(request)
-    else if (type === "recover") authRequest = kratos.getSelfServiceRecoveryFlow(request)
+    // let authRequest: Promise<any> | undefined
+    // if (type === "login") authRequest = kratos.getSelfServiceLoginFlow(request)
+    // else if (type === "register") authRequest = kratos.getSelfServiceRegistrationFlow(request)
+    // else if (type === "settings") authRequest = kratos.getSelfServiceSettingsFlow(request)
+    // else if (type === "verify") authRequest = kratos.getSelfServiceVerificationFlow(request)
+    // else if (type === "recover") authRequest = kratos.getSelfServiceRecoveryFlow(request)
 
 
-    if (!authRequest) return reject()
+    // if (!authRequest) return reject()
 
-    authRequest.then(({ data, status }) => {
-      if (status !== 200) return reject(data)
-      resolve(data)
-    }).catch(error => {
-      return window.location.href = endpoint
-    })
+    // authRequest.then(({ data, status }) => {
+    //   if (status !== 200) return reject(data)
+    //   resolve(data)
+    // }).catch(error => {
+    //   return window.location.href = endpoint
+    // })
   })
 }

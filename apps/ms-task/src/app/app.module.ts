@@ -16,10 +16,6 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
         connection ? { req: connection.context } : { req },
       autoSchemaFile: true,
     }),
-    // GraphQLModule.forRoot({
-    //   context: ({ req, connection }) => connection ? { req: connection.context } : { req },
-    //   autoSchemaFile: true,
-    // }),
 
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmService,

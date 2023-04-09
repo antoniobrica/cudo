@@ -89,6 +89,7 @@ export function RegisterPage(props: RegisterProps) {
       }
     });
   }, []);
+
   return (
     <div className="app-content-body ">
       <div className="main-outer-area">
@@ -101,193 +102,188 @@ export function RegisterPage(props: RegisterProps) {
                   <h2 className="login">Register your account</h2>
                 </div>
                 <div className="form-inner">
-                  {props.action && (
-                    <Form action={props.action} method="POST">
-                      <Grid columns={2}>
-                        <Grid.Row>
-                          <Grid.Column>
-                            <Form.Field key={firstName?.name}>
-                              <label>First Name </label>
-                              <Input
-                                placeholder="Firstname"
-                                size="small"
-                                className="full-width"
-                                type={firstName?.type}
-                                name={firstName?.name}
-                                defaultValue={firstName?.value as any}
-                                required
-                              />
-                            </Form.Field>
-                          </Grid.Column>
-                          <Grid.Column>
-                            <Form.Field key={lastName?.name}>
-                              <label>Last Name </label>
-                              <Input
-                                placeholder="Last Name "
-                                size="small"
-                                className="full-width"
-                                type={lastName?.type}
-                                name={lastName?.name}
-                                defaultValue={lastName?.value as any}
-                                required
-                              />
-                            </Form.Field>
-                          </Grid.Column>
-                        </Grid.Row>
-                      </Grid>
-                      <Grid columns={2}>
-                        <Grid.Row>
-                          <Grid.Column>
-                            <Form.Field key={email?.name}>
-                              <label>Email Address</label>
-                              <Input
-                                placeholder="Email Address"
-                                size="small"
-                                className="full-width  "
-                                type={email?.type}
-                                name={email?.name}
-                                defaultValue={email?.value as any}
-                                required
-                              />
-                            </Form.Field>
-                          </Grid.Column>
-                          <Grid.Column>
-                            <Form.Field>
-                              <label>Phone Number </label>
-                              <Grid columns={2}>
-                                <Grid.Row>
-                                  <Grid.Column>
-                                    <Form.Field key={country_code?.name}>
-                                      <Select
-                                        placeholder="Select"
-                                        className="small"
-                                        options={countryOptions}
-                                        type={country_code?.type}
-                                        name={country_code?.name}
-                                        defaultValue={
-                                          country_code?.value as any
-                                        }
-                                        required
-                                      />
-                                    </Form.Field>
-                                  </Grid.Column>
-                                  <Grid.Column>
-                                    <Form.Field key={phone_number?.name}>
-                                      <Input
-                                        placeholder="Phone Number "
-                                        size="small"
-                                        className="full-width"
-                                        type={phone_number?.type}
-                                        name={phone_number?.name}
-                                        defaultValue={
-                                          phone_number?.value as any
-                                        }
-                                        required
-                                      />
-                                    </Form.Field>
-                                  </Grid.Column>
-                                </Grid.Row>
-                              </Grid>
-                            </Form.Field>
-                          </Grid.Column>
-                        </Grid.Row>
-                      </Grid>
-                      <Grid columns={2}>
-                        <Grid.Row>
-                          <Grid.Column>
-                            <Form.Field key={password?.name}>
-                              <label>Password</label>
-                              <Input
-                                placeholder="Password"
-                                size="small"
-                                className="full-width  "
-                                type={password?.type}
-                                name={password?.name}
-                                defaultValue={password?.value as any}
-                                required
-                              />
-                            </Form.Field>
-                            <Form.Field key={csrf_token?.name}>
-                              <Input
-                                placeholder="Email Address"
-                                size="small"
-                                className="full-width  "
-                                type={csrf_token?.type}
-                                name={csrf_token?.name}
-                                defaultValue={csrf_token?.value as any}
-                                required
-                              />
-                            </Form.Field>
-                          </Grid.Column>
-                        </Grid.Row>
-                      </Grid>
-                      <Grid>
-                        <Grid.Row>
-                          <Grid.Column>
-                            <Form.Field>
-                              <label>Company Name</label>
-                              <Input
-                                placeholder="Company Name"
-                                size="small"
-                                className="full-width  "
-                                type={company_name?.type}
-                                name={company_name?.name}
-                                defaultValue={company_name?.value as any}
-                                required={company_name?.required}
-                              />
-                            </Form.Field>
-                          </Grid.Column>
-                        </Grid.Row>
-                      </Grid>
-                      <Grid columns={2}>
-                        <Grid.Row>
-                          <Grid.Column>
-                            <Form.Field>
-                              <label>Address Line 1</label>
-                              <Input
-                                placeholder="Address Line 1 "
-                                size="small"
-                                className="full-width"
-                                type={address_line_1?.type}
-                                name={address_line_1?.name}
-                                defaultValue={address_line_1?.value as any}
-                                required={address_line_1?.required}
-                              />
-                            </Form.Field>
-                          </Grid.Column>
-                          <Grid.Column>
-                            <Form.Field>
-                              <label>Address Line 2</label>
-                              <Input
-                                placeholder="Address Line 2"
-                                size="small"
-                                className="full-width"
-                                type={address_line_2?.type}
-                                name={address_line_2?.name}
-                                defaultValue={address_line_2?.value as any}
-                                required={address_line_2?.required}
-                              />
-                            </Form.Field>
-                          </Grid.Column>
-                        </Grid.Row>
-                      </Grid>
-                      <Grid columns={4}>
-                        <Grid.Row>
-                          <Grid.Column>
-                            <Form.Field>
-                              <label>City</label>
-                              <Input
-                                placeholder="City "
-                                size="small"
-                                className="full-width"
-                                type={city?.type}
-                                name={city?.name}
-                                defaultValue={city?.value as any}
-                                required={city?.required}
-                              />
-                            </Form.Field>
-                          </Grid.Column>
-                          {/* <Grid.Column>
+                  <Form action={props.action} method="POST">
+                    <Grid columns={2}>
+                      <Grid.Row>
+                        <Grid.Column>
+                          <Form.Field key={firstName?.name}>
+                            <label>First Name </label>
+                            <Input
+                              placeholder="Firstname"
+                              size="small"
+                              className="full-width"
+                              type={firstName?.type}
+                              name={firstName?.name}
+                              defaultValue={firstName?.value as any}
+                              required
+                            />
+                          </Form.Field>
+                        </Grid.Column>
+                        <Grid.Column>
+                          <Form.Field key={lastName?.name}>
+                            <label>Last Name </label>
+                            <Input
+                              placeholder="Last Name "
+                              size="small"
+                              className="full-width"
+                              type={lastName?.type}
+                              name={lastName?.name}
+                              defaultValue={lastName?.value as any}
+                              required
+                            />
+                          </Form.Field>
+                        </Grid.Column>
+                      </Grid.Row>
+                    </Grid>
+                    <Grid columns={2}>
+                      <Grid.Row>
+                        <Grid.Column>
+                          <Form.Field key={email?.name}>
+                            <label>Email Address</label>
+                            <Input
+                              placeholder="Email Address"
+                              size="small"
+                              className="full-width  "
+                              type={email?.type}
+                              name={email?.name}
+                              defaultValue={email?.value as any}
+                              required
+                            />
+                          </Form.Field>
+                        </Grid.Column>
+                        <Grid.Column>
+                          <Form.Field>
+                            <label>Phone Number </label>
+                            <Grid columns={2}>
+                              <Grid.Row>
+                                <Grid.Column>
+                                  <Form.Field key={country_code?.name}>
+                                    <Select
+                                      placeholder="Select"
+                                      className="small"
+                                      options={countryOptions}
+                                      type={country_code?.type}
+                                      name={country_code?.name}
+                                      defaultValue={country_code?.value as any}
+                                      required
+                                    />
+                                  </Form.Field>
+                                </Grid.Column>
+                                <Grid.Column>
+                                  <Form.Field key={phone_number?.name}>
+                                    <Input
+                                      placeholder="Phone Number "
+                                      size="small"
+                                      className="full-width"
+                                      type={phone_number?.type}
+                                      name={phone_number?.name}
+                                      defaultValue={phone_number?.value as any}
+                                      required
+                                    />
+                                  </Form.Field>
+                                </Grid.Column>
+                              </Grid.Row>
+                            </Grid>
+                          </Form.Field>
+                        </Grid.Column>
+                      </Grid.Row>
+                    </Grid>
+                    <Grid columns={2}>
+                      <Grid.Row>
+                        <Grid.Column>
+                          <Form.Field key={password?.name}>
+                            <label>Password</label>
+                            <Input
+                              placeholder="Password"
+                              size="small"
+                              className="full-width  "
+                              type={password?.type}
+                              name={password?.name}
+                              defaultValue={password?.value as any}
+                              required
+                            />
+                          </Form.Field>
+                          <Form.Field key={csrf_token?.name}>
+                            <Input
+                              placeholder="Email Address"
+                              size="small"
+                              className="full-width  "
+                              type={csrf_token?.type}
+                              name={csrf_token?.name}
+                              defaultValue={csrf_token?.value as any}
+                              required
+                            />
+                          </Form.Field>
+                        </Grid.Column>
+                      </Grid.Row>
+                    </Grid>
+                    <Grid>
+                      <Grid.Row>
+                        <Grid.Column>
+                          <Form.Field>
+                            <label>Company Name</label>
+                            <Input
+                              placeholder="Company Name"
+                              size="small"
+                              className="full-width  "
+                              type={company_name?.type}
+                              name={company_name?.name}
+                              defaultValue={company_name?.value as any}
+                              required={company_name?.required}
+                            />
+                          </Form.Field>
+                        </Grid.Column>
+                      </Grid.Row>
+                    </Grid>
+                    <Grid columns={2}>
+                      <Grid.Row>
+                        <Grid.Column>
+                          <Form.Field>
+                            <label>Address Line 1</label>
+                            <Input
+                              placeholder="Address Line 1 "
+                              size="small"
+                              className="full-width"
+                              type={address_line_1?.type}
+                              name={address_line_1?.name}
+                              defaultValue={address_line_1?.value as any}
+                              required={address_line_1?.required}
+                            />
+                          </Form.Field>
+                        </Grid.Column>
+                        <Grid.Column>
+                          <Form.Field>
+                            <label>Address Line 2</label>
+                            <Input
+                              placeholder="Address Line 2"
+                              size="small"
+                              className="full-width"
+                              type={address_line_2?.type}
+                              name={address_line_2?.name}
+                              defaultValue={address_line_2?.value as any}
+                              required={address_line_2?.required}
+                            />
+                          </Form.Field>
+                        </Grid.Column>
+                      </Grid.Row>
+                    </Grid>
+                    <Grid columns={4}>
+                      <Grid.Row>
+                        <Grid.Column>
+                          <Form.Field>
+                            <label>City</label>
+                            <Input
+                              placeholder="City "
+                              size="small"
+                              className="full-width"
+                              type={city?.type}
+                              name={city?.name}
+                              defaultValue={city?.value as any}
+                              required={city?.required}
+                            />
+                          </Form.Field>
+                        </Grid.Column>
+                        {/* <Grid.Column>
                           <Form.Field>
                             <label>State</label>
                             <Input placeholder='State' size='small' className="full-width" type={state?.type}
@@ -296,45 +292,44 @@ export function RegisterPage(props: RegisterProps) {
                               {...state_pin?.required} />
                           </Form.Field>
                         </Grid.Column> */}
-                          <Grid.Column>
-                            <Form.Field>
-                              <label>Zip</label>
-                              <Input
-                                placeholder="Zip"
-                                size="small"
-                                className="full-width"
-                                type={state_pin?.type}
-                                name={state_pin?.name}
-                                defaultValue={state_pin?.value as any}
-                                required={state_pin?.required}
-                              />
-                            </Form.Field>
-                          </Grid.Column>
-                          <Grid.Column>
-                            <Form.Field>
-                              <label>Country</label>
-                              <Select
-                                placeholder="Select"
-                                className="small"
-                                options={countryOptions}
-                                type={state_pin?.type}
-                                name={state_pin?.name}
-                                defaultValue={state_pin?.value as any}
-                                required={state_pin?.required}
-                              />
-                            </Form.Field>
-                          </Grid.Column>
-                        </Grid.Row>
-                      </Grid>
-                      <button
-                        type="submit"
-                        className="ui large button grey-btn btn-large"
-                      >
-                        Register{' '}
-                        <i aria-hidden="true" className="arrow right icon"></i>
-                      </button>
-                    </Form>
-                  )}
+                        <Grid.Column>
+                          <Form.Field>
+                            <label>Zip</label>
+                            <Input
+                              placeholder="Zip"
+                              size="small"
+                              className="full-width"
+                              type={state_pin?.type}
+                              name={state_pin?.name}
+                              defaultValue={state_pin?.value as any}
+                              required={state_pin?.required}
+                            />
+                          </Form.Field>
+                        </Grid.Column>
+                        <Grid.Column>
+                          <Form.Field>
+                            <label>Country</label>
+                            <Select
+                              placeholder="Select"
+                              className="small"
+                              options={countryOptions}
+                              type={state_pin?.type}
+                              name={state_pin?.name}
+                              defaultValue={state_pin?.value as any}
+                              required={state_pin?.required}
+                            />
+                          </Form.Field>
+                        </Grid.Column>
+                      </Grid.Row>
+                    </Grid>
+                    <button
+                      type="submit"
+                      className="ui large button grey-btn btn-large"
+                    >
+                      Register{' '}
+                      <i aria-hidden="true" className="arrow right icon"></i>
+                    </button>
+                  </Form>
                 </div>
                 <button
                   onClick={props.login}

@@ -1,13 +1,19 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  Relation,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
-import ReferanceTypeEntity from './references.entity';
+import ReferanceTypeEntity from './reference.entity';
 import * as uuid from 'uuid';
 
-
 @Entity({ name: 'folder' })
-
 export class FolderEntity extends BaseEntity {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -18,7 +24,6 @@ export class FolderEntity extends BaseEntity {
   @Column({ unique: true })
   @Expose()
   folderTitle: string;
-
 
   @Expose()
   @CreateDateColumn()
@@ -41,9 +46,11 @@ export class FolderEntity extends BaseEntity {
   isDeleted?: boolean;
 
   @Expose()
-  @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.folder)
-  reference: ReferanceTypeEntity;
-
+  @ManyToOne(
+    () => ReferanceTypeEntity,
+    (reference: ReferanceTypeEntity) => reference.folders
+  )
+  reference: Relation<ReferanceTypeEntity>;
 
   constructor(folderEntity: Partial<FolderEntity>) {
     super();
@@ -51,11 +58,10 @@ export class FolderEntity extends BaseEntity {
       Object.assign(
         this,
         plainToClass(FolderEntity, folderEntity, {
-          excludeExtraneousValues: true
+          excludeExtraneousValues: true,
         })
-      )
+      );
       this.folderID = this.folderID || uuid.v1();
-
     }
   }
 }
