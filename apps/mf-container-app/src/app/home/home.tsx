@@ -1,6 +1,6 @@
 import { Menubar } from '@cudo/shared-components/src';
 import React, { useEffect, useState } from 'react';
-import { Route, Link, useLocation, useNavigate } from 'react-router-dom';
+import { Route, Link, useLocation, useNavigate, Routes } from 'react-router-dom';
 import { environment } from '../../environments/environment';
 import { Settings } from '../containers/Settings';
 import { MfProjectAppMount } from '../mf-project-app-mount/mf-project-app-mount';
@@ -48,12 +48,11 @@ export function Home(props: HomeProps) {
     <div>
       <Menubar data={data} parentCallback={callbackFunction}></Menubar>
       <div>
-        <Route path={`/profile`} element={<UserProfile />} />
-        <Route path={`/settings`} element={<UserProfileEdit />} />
-        <Route
-          path={`/project`}
-          element={<MfProjectAppMount host={projectHost} />}
-        />
+        <Routes>
+          <Route path={`/profile`} element={<UserProfile />} />
+          <Route path={`/settings`} element={<UserProfileEdit />} />
+          <Route path={`/project`} element={<MfProjectAppMount host={projectHost} />} />
+        </Routes>
       </div>
     </div>
   );

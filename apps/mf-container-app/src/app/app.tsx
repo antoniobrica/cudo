@@ -18,56 +18,34 @@ import { Login } from './containers/Login';
 import config from './config/kratos';
 import LoginPassword from './login-password/login-password';
 import LoginSelect from './login-select/login-select';
-import {
-  isAuthenticated,
-  login,
-  logout,
-  profile,
-  ToEmail,
-} from './services/auth';
+import { isAuthenticated, login, logout, profile, ToEmail } from './services/auth';
 import UserProfile from './user-profile/user-profile';
 import { UserRegistration } from './user-registration/user-registration';
-import PropTypes from 'prop-types';
-import { renderRoutes } from 'react-router-config';
 import { Home } from './home/home';
-import MfProjectAppMount from './mf-project-app-mount/mf-project-app-mount';
-
-import { useTranslation } from 'react-i18next';
-// import { initI18n } from '@cudo/mf-core';
-// const defaultHistory = createBrowserHistory();
-
-// const defaultLanguage = 'en-GB';
-// const supportedLanguages = [defaultLanguage, 'en-GB'];
-// initI18n('./assets/i18n/{{lng}}.json', defaultLanguage);
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 function App() {
   return (
     <div className="App">
-      <SessionProvider>
-        <Routes>
-          <Route path="/" element={<LoginSelect />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/callback" element={<Callback />} />
-          <Route path={config.routes.loginEmail.path} element={<Email />} />
-          <Route
-            path={config.routes.loginPasswoord.path}
-            element={<LoginPassword />}
-          />
-          <Route
-            path={config.routes.loginSelect.path}
-            element={<LoginSelect />}
-          />
-          <Route path={config.routes.login.path} element={<LoginPassword />} />
-          <Route path={config.routes.verification.path} element={<Verify />} />
-          <Route path="/recovery" element={<Recover />} />
-          <Route
-            path={config.routes.registration.path}
-            element={<UserRegistration />}
-          />
-          <Route path={config.routes.error.path} element={<Error />} />
-        </Routes>
-        <Outlet />
-      </SessionProvider>
+      <Provider store={store}>
+        <SessionProvider>
+          <Routes>
+            <Route path="/" element={<LoginSelect />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/callback" element={<Callback />} />
+            <Route path={config.routes.loginEmail.path} element={<Email />} />
+            <Route path={config.routes.loginPasswoord.path} element={<LoginPassword />} />
+            <Route path={config.routes.loginSelect.path} element={<LoginSelect />} />
+            <Route path={config.routes.login.path} element={<LoginPassword />} />
+            <Route path={config.routes.verification.path} element={<Verify />} />
+            <Route path="/recovery" element={<Recover />} />
+            <Route path={config.routes.registration.path} element={<UserRegistration />} />
+            <Route path={config.routes.error.path} element={<Error />} />
+          </Routes>
+          <Outlet />
+        </SessionProvider>
+      </Provider>
     </div>
   );
 }

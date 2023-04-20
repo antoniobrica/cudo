@@ -16,17 +16,21 @@ export function LoginSelect(props: LoginSelectProps) {
   const [companies, setCompanies] = useState([]);
   const [selectedCompany, setselectedCompany] = useState('');
 
-  const handleLogin = () => {
+  const handleLogin = (e) => {
+    e.preventDefault();
     if (selectedCompany) {
       localStorage.setItem('selectedCompany', selectedCompany);
       navigate('/home/project');
     }
   };
+
   useEffect(() => {
     localStorage.setItem('selectedCompany', selectedCompany);
   }, [selectedCompany]);
+
   useEffect(() => {
     if (!isAuthenticated()) {
+      console.log('tooo mail');
       ToEmail();
     } else {
       // Need to handle with redux
@@ -52,28 +56,16 @@ export function LoginSelect(props: LoginSelectProps) {
         if (result.data?.data?.userByEmail?.length) {
           if (result.data?.data?.userByEmail?.length == 1) {
             const element = result.data?.data?.userByEmail[0];
-            const {
-              imageUrl: image,
-              referenceID: key,
-              name: value,
-            } = element.references[0];
+            const { imageUrl: image, referenceID: key, name: value } = element.references[0];
             setselectedCompany(key);
             localStorage.setItem('selectedCompany', key);
             navigate('/home/project');
             return;
           }
           const companiesList = [];
-          for (
-            let index = 0;
-            index < result.data?.data?.userByEmail.length;
-            index++
-          ) {
+          for (let index = 0; index < result.data?.data?.userByEmail.length; index++) {
             const element = result.data?.data?.userByEmail[index];
-            const {
-              imageUrl: image,
-              referenceID: key,
-              name: value,
-            } = element.references[0];
+            const { imageUrl: image, referenceID: key, name: value } = element.references[0];
             companiesList.push({
               image,
               value: key,
@@ -84,11 +76,7 @@ export function LoginSelect(props: LoginSelectProps) {
           setCompanies([...companiesList]);
           if (result.data?.data?.userByEmail.length == 1) {
             const element = result.data?.data?.userByEmail[0];
-            const {
-              imageUrl: image,
-              referenceID: key,
-              name: value,
-            } = element.references[0];
+            const { imageUrl: image, referenceID: key, name: value } = element.references[0];
             setselectedCompany(key);
             localStorage.setItem('selectedCompany', key);
             navigate('/home/project');
@@ -97,14 +85,10 @@ export function LoginSelect(props: LoginSelectProps) {
       });
     }
   }, []);
+
   return (
     <div>
-      <Logindrop
-        login={handleLogin}
-        email={email}
-        companies={companies}
-        selectedCompany={setselectedCompany}
-      />
+      <Logindrop login={handleLogin} email={email} companies={companies} selectedCompany={setselectedCompany} />
     </div>
   );
 }

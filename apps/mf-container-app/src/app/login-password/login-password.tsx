@@ -40,11 +40,7 @@ export function LoginPassword(props: LoginPasswordProps) {
     <div>
       {/* {messages && <KratosMessages messages={messages} />} */}
       {form && (
-        <Loginpassword
-          action={form?.action}
-          fields={form?.fields as FormField[]}
-          messages={messages}
-        ></Loginpassword>
+        <Loginpassword action={form?.action} fields={form?.fields as FormField[]} messages={messages}></Loginpassword>
       )}
       <div id="login-password">
         {/* <KratosForm

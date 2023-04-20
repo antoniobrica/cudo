@@ -1,36 +1,36 @@
 import React, { useState } from 'react';
-
 import '../../../style/index.scss';
-import { Select, Input, Segment, Form, Grid, Image, Checkbox, Button, Icon } from 'semantic-ui-react'
+import { Input, Segment, Form, Grid, Button, Icon } from 'semantic-ui-react';
 import logo from 'libs/shared-components/src/slider.png';
 import img from 'libs/shared-components/src/Shape 2.png';
 /* eslint-disable-next-line */
 export interface LoginProps {
-  emailSubmitHandle?
-  email?
+  emailSubmitHandle?;
+  email?;
 }
 
 export function Loginbar(props: LoginProps) {
   const [email, setEmail] = useState('');
-  const description = [
-  ]
+
   const handleLogin = () => {
     props.emailSubmitHandle();
-  }
-  const handleChange = e => {
-    const { name, value } = e.target;
+  };
+
+  const handleChange = (e) => {
+    const { value } = e.target;
     props.email(value);
     setEmail(value);
   };
+
   return (
     <div className=" ">
       <div className="main-outer-area">
         <Grid className="ui-login">
-          <Grid.Row columns={2}  >
+          <Grid.Row columns={2}>
             <Grid.Column>
               <Segment>
                 <div className="ln-form-outer">
-                  <img src={img} alt='' />
+                  <img src={img} alt="" />
                   <div className="form-header">
                     <span className="welcome">Welcome Back</span>
                     <h2 className="login">Login to your account</h2>
@@ -38,21 +38,41 @@ export function Loginbar(props: LoginProps) {
                   <div className="form-inner">
                     <Form>
                       <Form.Field>
-                        <Input placeholder='example@domain.com' className="full-width" icon='at' name="salary"
+                        <Input
+                          placeholder="example@domain.com"
+                          className="full-width"
+                          icon="at"
+                          name="salary"
                           onChange={handleChange}
                           type="email"
-                          value={email} />
+                          value={email}
+                        />
                       </Form.Field>
-                      <Button onClick={handleLogin} size='large' className="grey-btn btn-large">Continue <Icon name='arrow right' />   </Button>
-                      <span> <br /> <a href="/auth/registration" className="blue_color"> Register with us</a>  </span>
-                      <span className="float_right ">   <a href="/recovery" className="blue_color"> Forgot Password ?</a>  </span>
+                      <Button onClick={handleLogin} size="large" className="grey-btn btn-large">
+                        Continue <Icon name="arrow right" />{' '}
+                      </Button>
+                      <span>
+                        {' '}
+                        <br />{' '}
+                        <a href="/auth/registration" className="blue_color">
+                          {' '}
+                          Register with us
+                        </a>{' '}
+                      </span>
+                      <span className="float_right ">
+                        {' '}
+                        <a href="/recovery" className="blue_color">
+                          {' '}
+                          Forgot Password ?
+                        </a>{' '}
+                      </span>
                     </Form>
                   </div>
                 </div>
               </Segment>
             </Grid.Column>
             <Grid.Column>
-              <img src={logo} className="massive" alt='' />
+              <img src={logo} className="massive" alt="" />
             </Grid.Column>
           </Grid.Row>
         </Grid>
