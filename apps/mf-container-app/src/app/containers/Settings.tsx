@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { initialiseRequest } from '../services/kratos';
 import { Header } from '../components/Header';
-import { KratosMessages } from '../components/KratosMessages';
-import { KratosForm } from '../components/KratosForm';
+// import { KratosMessages } from '../components/KratosMessages';
+// import { KratosForm } from '../components/KratosForm';
 import UserRegistration from '../user-registration/user-registration';
 import { useNavigate } from 'react-router-dom';
 
@@ -39,17 +39,17 @@ export const Settings = () => {
       <div className="container">
         <h2>Settings</h2>
         {state === 'success' && <p>Your changes have been saved!</p>}
-        {messages && <KratosMessages messages={messages} />}
+        {/* {messages && <KratosMessages messages={messages} />} */}
         <div id="user-password">
           <h3>Profile</h3>
-          {formProfile && (
+          {/* {formProfile && (
             <KratosForm
               submitLabel="Save"
               action={formProfile.action}
               fields={formProfile.fields}
               messages={formProfile.messages}
             />
-          )}
+          )} */}
         </div>
         {/* <div id="user-password">
             <h3>Password</h3>

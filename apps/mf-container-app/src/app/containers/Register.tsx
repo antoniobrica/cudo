@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { initialiseRequest } from '../services/kratos';
-import { KratosMessages } from '../components/KratosMessages';
-import { KratosForm } from '../components/KratosForm';
+// import { KratosMessages } from '../components/KratosMessages';
+// import { KratosForm } from '../components/KratosForm';
 import { login } from '../services/auth';
 import {
   Button,
@@ -14,7 +14,7 @@ import {
 } from 'semantic-ui-react';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
 import { RegisterPage } from '@cudo/shared-components/src';
-import { FormField } from '@oryd/kratos-client';
+// import { FormField } from '@oryd/kratos-client';
 export const Register = () => {
   const [requestResponse, setRequestResponse] = useState<any>();
   const [open, setOpen] = React.useState(false);
@@ -37,14 +37,14 @@ export const Register = () => {
     <div className="auth">
       <div className="container">
         <div id="registration-password">
-          {messages && <KratosMessages messages={messages} />}
+          {/* {messages && <KratosMessages messages={messages} />}
           {form && (
             <RegisterPage
               action={form?.action}
               fields={form?.fields as FormField[]}
               messages={messages}
             ></RegisterPage>
-          )}
+          )} */}
         </div>
       </div>
     </div>

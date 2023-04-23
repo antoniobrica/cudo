@@ -1,20 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { initialiseRequest } from '../services/kratos';
-import { KratosMessages } from '../components/KratosMessages';
-import { KratosForm } from '../components/KratosForm';
 import { login, ToEmail } from '../services/auth';
-import {
-  Button,
-  Form,
-  Grid,
-  Header,
-  Input,
-  Modal,
-  TextArea,
-} from 'semantic-ui-react';
+import { Button, Form, Grid, Header, Input, Modal, TextArea } from 'semantic-ui-react';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
 import { RegisterPage } from '@cudo/shared-components/src';
-import { FormField } from '@oryd/kratos-client';
+// import { FormField } from '@oryd/kratos-client';
 /* eslint-disable-next-line */
 export interface UserRegistrationProps {}
 
@@ -22,10 +12,7 @@ export function UserRegistration(props: UserRegistrationProps) {
   const [requestResponse, setRequestResponse] = useState<any>();
   const [open, setOpen] = React.useState(false);
   useEffect(() => {
-    const request = initialiseRequest(
-      { type: 'register' },
-      { filterid: 'flow' }
-    ) as Promise<any>;
+    const request = initialiseRequest({ type: 'register' }, { filterid: 'flow' }) as Promise<any>;
     request
       .then((request) => setRequestResponse(request))
       .catch((error) => {
@@ -45,7 +32,7 @@ export function UserRegistration(props: UserRegistrationProps) {
           {/* {messages && <KratosMessages messages={messages} />} */}
           <RegisterPage
             action={form?.action}
-            fields={form?.fields as FormField[]}
+            fields={form?.fields as any[]}
             messages={messages}
             login={ToEmail}
           ></RegisterPage>
