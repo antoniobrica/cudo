@@ -1,16 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createRoot } from 'react-dom/client';
+import { createTheme } from '@mui/material/styles';
 import App from '../app/app';
 
-
-const theme = createMuiTheme({
-  palette: {
-    type: 'dark'
-  }
+const theme = createTheme({
+  palette: {},
 });
 
-ReactDOM.render(
-  <App theme={theme} />,
-  document.getElementById('root')
-);
+const rootElement = document.getElementById('root');
+if (rootElement) {
+  const root = createRoot(rootElement);
+  root.render(<App theme={theme} />);
+}

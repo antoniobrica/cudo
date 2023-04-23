@@ -1,26 +1,12 @@
 import React from 'react';
 import CreateTask from '../../app/components/create-task/create-task';
-
 import { DELETE_TASK, GET_TASKS, UPDATE_TASK } from '../../app/graphql/graphql';
-import {
-  useTaskDeleteMutation,
-  useTaskQuery,
-  useTaskUpdateMutation,
-} from '../../app/services/useRequest';
+import { useTaskDeleteMutation, useTaskQuery, useTaskUpdateMutation } from '../../app/services/useRequest';
 import './tasks.module.scss';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
-import {
-  LoaderPage,
-  ModalTaskEdit,
-  TaskArea,
-} from '@cudo/shared-components/src';
+import { LoaderPage, ModalTaskEdit, TaskArea } from '@cudo/shared-components/src';
 
-import {
-  ApolloCache,
-  FetchResult,
-  useMutation,
-  useQuery,
-} from '@apollo/client';
+import { ApolloCache, FetchResult, useMutation, useQuery } from '@apollo/client';
 import { ITask, ITasks, TaskUpdateMutation } from '../../app/interfaces/task';
 import { ModalAlert, ModalViewTask } from '@cudo/all-shared-components';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -184,9 +170,7 @@ export function Tasks(props: TasksProps) {
         //   }
         // });
 
-        const newTask = cacheData.tasks.filter(
-          (item) => item.taskID !== taskID
-        );
+        const newTask = cacheData.tasks.filter((item) => item.taskID !== taskID);
         cache.writeQuery({
           query: GET_TASKS,
           data: {
