@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from 'react';
 
 import '../../../style/index.scss';
-import {
-  Select,
-  Input,
-  Segment,
-  Form,
-  Grid,
-  Image,
-  Checkbox,
-  Button,
-  Icon,
-} from 'semantic-ui-react';
+import { Select, Input, Segment, Form, Grid, Image, Checkbox, Button, Icon } from 'semantic-ui-react';
 import logo from 'libs/shared-components/src/slider.png';
 import img from 'libs/shared-components/src/Shape 2.png';
-import { FormField, Message } from '@oryd/kratos-client';
+
+interface IFields {
+  name: string;
+  type: string;
+  value: string;
+  required: boolean;
+}
 
 export interface RegisterProps {
   action?;
-  fields?;
+  fields?: IFields[];
   messages?;
   login?;
 }
@@ -29,19 +25,20 @@ export function RegisterPage(props: RegisterProps) {
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
   ];
-  const [firstName, setFirstName] = useState({} as FormField);
-  const [lastName, setLastName] = useState({} as FormField);
-  const [csrf_token, setcsrf_token] = useState({} as FormField);
-  const [email, setEmail] = useState({} as FormField);
-  const [password, setPassword] = useState({} as FormField);
-  const [company_name, setCompany_name] = useState({} as FormField);
-  const [phone_number, setPhone_number] = useState({} as FormField);
-  const [address_line_1, setAddress_line_1] = useState({} as FormField);
-  const [address_line_2, setAddress_line_2] = useState({} as FormField);
-  const [city, setCity] = useState({} as FormField);
-  const [country_code, setCountry_code] = useState({} as FormField);
-  const [state_pin, setState_pin] = useState({} as FormField);
-  const [country, setCountry] = useState({} as FormField);
+  const [firstName, setFirstName] = useState<IFields>();
+  const [lastName, setLastName] = useState<IFields>();
+  const [csrf_token, setcsrf_token] = useState<IFields>();
+  const [email, setEmail] = useState<IFields>();
+  const [password, setPassword] = useState<IFields>();
+  const [company_name, setCompany_name] = useState<IFields>();
+  const [phone_number, setPhone_number] = useState<IFields>();
+  const [address_line_1, setAddress_line_1] = useState<IFields>();
+  const [address_line_2, setAddress_line_2] = useState<IFields>();
+  const [city, setCity] = useState<IFields>();
+  const [country_code, setCountry_code] = useState<IFields>();
+  const [state_pin, setState_pin] = useState<IFields>();
+  const [country, setCountry] = useState<IFields>();
+  
   useEffect(() => {
     props?.fields?.map((field) => {
       switch (field.name) {
@@ -322,19 +319,12 @@ export function RegisterPage(props: RegisterProps) {
                         </Grid.Column>
                       </Grid.Row>
                     </Grid>
-                    <button
-                      type="submit"
-                      className="ui large button grey-btn btn-large"
-                    >
-                      Register{' '}
-                      <i aria-hidden="true" className="arrow right icon"></i>
+                    <button type="submit" className="ui large button grey-btn btn-large">
+                      Register <i aria-hidden="true" className="arrow right icon"></i>
                     </button>
                   </Form>
                 </div>
-                <button
-                  onClick={props.login}
-                  className="ui large button grey-btn btn-large"
-                >
+                <button onClick={props.login} className="ui large button grey-btn btn-large">
                   Login <i aria-hidden="true" className="arrow right icon"></i>
                 </button>
               </div>

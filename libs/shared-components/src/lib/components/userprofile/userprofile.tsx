@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  Select,
-  Modal,
-  Tab,
-  Table,
-  Input,
-  Form,
-  Grid,
-  Image,
-  Segment,
-  TextArea,
-} from 'semantic-ui-react';
+import { Button, Select, Modal, Tab, Table, Input, Form, Grid, Image, Segment, TextArea } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 
 import img from 'libs/shared-components/src/user_profile.png';
-import { FormField } from '@oryd/kratos-client';
+// import  } from '@oryd/kratos-client';
+
+interface IFields {
+  name: string;
+  type: string;
+  value: string;
+  required: boolean;
+}
 
 export interface UserProfileProps {
   image?;
@@ -23,7 +18,7 @@ export interface UserProfileProps {
   cancel?;
   update?;
   action?;
-  fields?;
+  fields?: IFields[];
   messages?;
 }
 export function UserProfile(props: UserProfileProps) {
@@ -32,19 +27,19 @@ export function UserProfile(props: UserProfileProps) {
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
   ];
   const [open, setOpen] = React.useState(false);
-  const [firstName, setFirstName] = useState({} as FormField);
-  const [lastName, setLastName] = useState({} as FormField);
-  const [csrf_token, setcsrf_token] = useState({} as FormField);
-  const [email, setEmail] = useState({} as FormField);
-  const [password, setPassword] = useState({} as FormField);
-  const [company_name, setCompany_name] = useState({} as FormField);
-  const [phone_number, setPhone_number] = useState({} as FormField);
-  const [address_line_1, setAddress_line_1] = useState({} as FormField);
-  const [address_line_2, setAddress_line_2] = useState({} as FormField);
-  const [city, setCity] = useState({} as FormField);
-  const [country_code, setCountry_code] = useState({} as FormField);
-  const [state_pin, setState_pin] = useState({} as FormField);
-  const [country, setCountry] = useState({} as FormField);
+  const [firstName, setFirstName] = useState<IFields>();
+  const [lastName, setLastName] = useState<IFields>();
+  const [csrf_token, setcsrf_token] = useState<IFields>();
+  const [email, setEmail] = useState<IFields>();
+  const [password, setPassword] = useState<IFields>();
+  const [company_name, setCompany_name] = useState<IFields>();
+  const [phone_number, setPhone_number] = useState<IFields>();
+  const [address_line_1, setAddress_line_1] = useState<IFields>();
+  const [address_line_2, setAddress_line_2] = useState<IFields>();
+  const [city, setCity] = useState<IFields>();
+  const [country_code, setCountry_code] = useState<IFields>();
+  const [state_pin, setState_pin] = useState<IFields>();
+  const [country, setCountry] = useState<IFields>();
   useEffect(() => {
     props?.fields?.map((field) => {
       switch (field.name) {
@@ -107,11 +102,7 @@ export function UserProfile(props: UserProfileProps) {
               <img src={img} />
               <br />
               <label className="text-center">Change Picture</label>
-              <Input
-                type="file"
-                className="file-upload-input"
-                placeholder="Firstname"
-              />
+              <Input type="file" className="file-upload-input" placeholder="Firstname" />
             </div>
           </div>
         </Grid.Column>
@@ -132,7 +123,7 @@ export function UserProfile(props: UserProfileProps) {
                             type={firstName?.type}
                             name={firstName?.name}
                             defaultValue={firstName?.value as any}
-                            required={firstName?.required}
+                            required
                           />
                         </Form.Field>
                       </Grid.Column>
@@ -329,17 +320,8 @@ export function UserProfile(props: UserProfileProps) {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <Button
-                            type="submit"
-                            content="update"
-                            size="mini"
-                            className="grey-btn"
-                          />
-                          <Button
-                            onClick={props.cancel}
-                            size="mini"
-                            className="icon-border"
-                          >
+                          <Button type="submit" content="update" size="mini" className="grey-btn" />
+                          <Button onClick={props.cancel} size="mini" className="icon-border">
                             X Cancel{' '}
                           </Button>
                         </Form.Field>

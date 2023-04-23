@@ -2,17 +2,7 @@
 import React, { useEffect, useState } from 'react';
 
 import '../../../style/index.scss';
-import {
-  Select,
-  Input,
-  Segment,
-  Form,
-  Grid,
-  Image,
-  Checkbox,
-  Button,
-  Icon,
-} from 'semantic-ui-react';
+import { Select, Input, Segment, Form, Grid, Image, Checkbox, Button, Icon } from 'semantic-ui-react';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
@@ -26,20 +16,27 @@ import img3 from 'libs/shared-components/src/green_tick.png';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 import img4 from 'libs/shared-components/src/company2.png';
-import { FormField } from '@oryd/kratos-client';
 import Messagebar from '../messages/messages';
 /* eslint-disable-next-line */
+
+interface IFields {
+  name: string;
+  type: string;
+  value: string;
+  required: boolean;
+}
+
 export interface LoginPasswordProps {
   action?;
-  fields?;
+  fields?: IFields[];
   messages?;
 }
 
 export function Loginpassword(props: LoginPasswordProps) {
   const description = [];
-  const [csrf_token, setcsrf_token] = useState({} as FormField);
-  const [email, setEmail] = useState({} as FormField);
-  const [password, setPassword] = useState({} as FormField);
+  const [csrf_token, setcsrf_token] = useState<IFields>();
+  const [email, setEmail] = useState<IFields>();
+  const [password, setPassword] = useState<IFields>();
 
   useEffect(() => {
     props?.fields?.map((field) => {
@@ -88,10 +85,7 @@ export function Loginpassword(props: LoginPasswordProps) {
                             <img src={img3} className="img-src" />{' '}
                           </span>
                           <span className="float-area">
-                            <i
-                              className="ms-Icon ms-Icon--Accounts"
-                              aria-hidden="true"
-                            ></i>{' '}
+                            <i className="ms-Icon ms-Icon--Accounts" aria-hidden="true"></i>{' '}
                           </span>{' '}
                         </label>
                         <Input
@@ -125,11 +119,7 @@ export function Loginpassword(props: LoginPasswordProps) {
                           required
                         />
                       </Form.Field>
-                      <Button
-                        size="large"
-                        className="grey-btn btn-large"
-                        type="submit"
-                      >
+                      <Button size="large" className="grey-btn btn-large" type="submit">
                         Login <Icon name="arrow right" />{' '}
                       </Button>
 
