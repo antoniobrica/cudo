@@ -5,7 +5,6 @@ import { BrowserRouter } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 import * as serviceWorker from './serviceWorker';
 
-import App from './app/app';
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
@@ -29,7 +28,6 @@ if (rootElement) {
   root.render(
     <Provider store={store}>
       <BrowserRouter>
-        <App />
       </BrowserRouter>
     </Provider>
   );

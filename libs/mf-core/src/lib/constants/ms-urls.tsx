@@ -38,18 +38,6 @@ export const MS_SERVICE_URL: { [serviceName: string]: IURL } = {
   mf_document_app: {
     url: 'https://documentappdev.cudo.ch',
   },
-  kratos_BASE_URL: {
-    url: 'https://development.cudo.ch',
-  },
-  kratos_KRATOS_BROWSER_URL: {
-    url: 'https://development.cudo.ch/.ory/kratos/public',
-  },
-  kratos_KRATOS_PUBLIC_URL: {
-    url: 'https://development.cudo.ch/.ory/kratos/public',
-  },
-  kratos_KRATOS_ADMIN_URL: {
-    url: 'http://192.168.0.31:4434',
-  },
   ASSETS_CDN_URL: {
     url: 'https://cudodevcdn.azureedge.net',
   },
