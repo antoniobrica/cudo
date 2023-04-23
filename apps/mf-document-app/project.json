@@ -5,28 +5,30 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/web:build",
+      "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
+        "compiler": "babel",
         "outputPath": "dist/apps/mf-document-app",
         "index": "apps/mf-document-app/src/index.html",
+        "baseHref": "/",
         "main": "apps/mf-document-app/src/main.tsx",
         "polyfills": "apps/mf-document-app/src/polyfills.ts",
         "tsConfig": "apps/mf-document-app/tsconfig.app.json",
-        "assets": [
-          "apps/mf-document-app/src/favicon.ico",
-          "apps/mf-document-app/src/assets",
-          {
-            "input": "libs/shared-components/src/assets",
-            "glob": "**/*",
-            "output": "assets"
-          }
-        ],
+        "assets": ["apps/mf-document-app/src/favicon.ico", "apps/mf-document-app/src/assets"],
         "styles": ["apps/mf-document-app/src/styles.scss"],
         "scripts": [],
+        "isolatedConfig": true,
         "webpackConfig": "apps/mf-document-app/webpack.config.js"
       },
       "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
         "production": {
           "fileReplacements": [
             {
@@ -40,44 +42,52 @@
           "extractCss": true,
           "namedChunks": false,
           "extractLicenses": true,
-          "vendorChunk": false,
-          "budgets": [
-            {
-              "type": "initial",
-              "maximumWarning": "2mb",
-              "maximumError": "5mb"
-            }
-          ]
+          "vendorChunk": false
         }
       }
     },
     "serve": {
       "executor": "@nrwl/webpack:dev-server",
+      "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "mf-document-app:build"
+        "buildTarget": "mf-document-app:build",
+        "hmr": true
       },
       "configurations": {
-        "production": {
-          "buildTarget": "mf-document-app:build:production"
-        },
         "development": {
           "buildTarget": "mf-document-app:build:development"
+        },
+        "production": {
+          "buildTarget": "mf-document-app:build:production",
+          "hmr": false
         }
-      },
-      "defaultConfiguration": "development"
+      }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["apps/mf-document-app/**/*.{ts,tsx,js,jsx}"]
       }
     },
-    "test": {
+    "serve-static": {
+      "executor": "@nrwl/web:file-server",
+      "options": {
+        "buildTarget": "mf-document-app:build"
+      }
+    },
+    "document": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/apps/mf-document-app"],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "apps/mf-document-app/jest.config.ts",
-        "passWithNoTests": true
+        "passWithNotasks": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
       }
     }
   },
