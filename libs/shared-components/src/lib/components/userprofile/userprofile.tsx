@@ -3,6 +3,7 @@ import { Button, Select, Modal, Tab, Table, Input, Form, Grid, Image, Segment, T
 // import SampleModal from './sample-modal';
 
 import img from 'libs/shared-components/src/user_profile.png';
+// import  } from '@oryd/kratos-client';
 
 interface IFields {
   name: string;
