@@ -1,14 +1,23 @@
-FROM node:14.15-alpine
+FROM node:lts
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
 COPY workspace*.json ./
 COPY cypress*.json ./
+
+RUN apt-get update \
+&& apt-get install -y python3 \
+&& ln -s /usr/bin/python3 /usr/bin/python
+
 RUN npm install
+RUN npm install -g nx
+
 COPY . .
 #RUN npm run build ms-project
 #CMD ["node", "dist/main"]
 #RUN nohup npm start ms-project > stdout.txt 2> stderr.txt &
 EXPOSE 5005
-CMD ["npm", "start","ms-project"]
+
+ENV HOST 0.0.0.0
+CMD ["nx", "serve","ms-project"]
