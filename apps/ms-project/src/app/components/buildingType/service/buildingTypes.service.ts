@@ -1,12 +1,12 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
-import { v4 as uuidv4 } from 'uuid';
+import { Repository } from 'typeorm';
 import { BuildingTypeEntity } from '../../../entities/building-type.entity';
+import { ProjectErrorTypeEnum } from '../../../enums/project-error-type.enum';
+import ProjectCustomError from '../../../exceptions/projectCustomError.exception';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
 import { CreateBuildingTypeInput } from '../dto/create-buildingType.input';
-import BuildingTypeNotFoundException from '../exceptions/buildingTypeNotFound.exception';
 
 @Injectable()
 export class BuildingTypesService {
@@ -21,12 +21,8 @@ export class BuildingTypesService {
     referenceFilter: ReferenceFilterParams
   ): Promise<BuildingTypeEntity> {
     try {
-      const taskeDetails = new BuildingTypeEntity({
-        ...createBuildingTypeInput,
-      });
-      const selectedReference = await this.referenceService.getReferenceById(
-        referenceFilter
-      );
+      const taskeDetails = new BuildingTypeEntity({ ...createBuildingTypeInput });
+      const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
       const newbuildingType = await this.BuildingTypeRepository.create({
         ...taskeDetails,
         reference: { id: selectedReference.id },
@@ -42,33 +38,20 @@ export class BuildingTypesService {
     createBuildingTypeInput: CreateBuildingTypeInput,
     referenceFilter: ReferenceFilterParams
   ): Promise<BuildingTypeEntity> {
-    const selectedReference = await this.referenceService.getReferenceById(
-      referenceFilter
-    );
+    const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
     const buildingType = await this.BuildingTypeRepository.findOne({
-      where: {
-        buildingTypeID: createBuildingTypeInput.buildingTypeID,
-        reference: { id: selectedReference.id },
-      },
+      where: { buildingTypeID: createBuildingTypeInput.buildingTypeID, reference: { id: selectedReference.id } },
     });
     if (buildingType) {
-      await this.BuildingTypeRepository.update(buildingType.id, {
-        ...createBuildingTypeInput,
-      });
-      const updatedPost = await this.BuildingTypeRepository.findOne({
-        where: { id: buildingType.id },
-      });
+      await this.BuildingTypeRepository.update(buildingType.id, { ...createBuildingTypeInput });
+      const updatedPost = await this.BuildingTypeRepository.findOne({ where: { id: buildingType.id } });
       return updatedPost;
     }
-    throw new BuildingTypeNotFoundException(buildingType.buildingTypeID);
+    throw new ProjectCustomError(ProjectErrorTypeEnum.BUILDING_NOT_FOUND);
   }
 
-  public async findAllBuildingType(
-    refFilter: ReferenceFilterParams
-  ): Promise<BuildingTypeEntity[]> {
-    const selectedReference = await this.referenceService.getReferenceById(
-      refFilter
-    );
+  public async findAllBuildingType(refFilter: ReferenceFilterParams): Promise<BuildingTypeEntity[]> {
+    const selectedReference = await this.referenceService.getReferenceById(refFilter);
     return await this.BuildingTypeRepository.find({
       where: { reference: { id: selectedReference.id } },
     });

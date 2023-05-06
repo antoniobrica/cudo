@@ -4,7 +4,10 @@ import { Repository } from 'typeorm';
 import { ProjectWorkTypeEntity } from '../../../entities/project-WorkType.entity';
 import { ProjectEntity } from '../../../entities/project.entity';
 import { WorkTypeEntity } from '../../../entities/work-type.entity';
+import { ProjectErrorTypeEnum } from '../../../enums/project-error-type.enum';
+import ProjectCustomError from '../../../exceptions/projectCustomError.exception';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
+import WorkParams from '../../../utils/types/workParam';
 import { Pagination, PaginationOptionsInterface } from '../../paginate';
 import { ReferenceService } from '../../reference/service/reference.service';
 import { WorkTypesService } from '../../workTypes/service/workTypes.service';
@@ -25,11 +28,30 @@ export class ProjectService {
     ) { }
     public async create(createProjectInput: ProjectDetailsInput, referenceFilter: ReferenceFilterParams): Promise<ProjectEntity> {
         try {
+            const {projectBasics,projectWorkEstimates} = createProjectInput;
+
+            // handling client input errors
+            let errorType:number;
+            if(!projectBasics.client){
+                errorType = ProjectErrorTypeEnum.NO_BUILDING
+            }
+            if(!projectBasics.client){
+                errorType = ProjectErrorTypeEnum.NO_CLIENT
+            }
+            if(!projectBasics.projectNum){
+                errorType = ProjectErrorTypeEnum.NO_PROJECT_NUMBER
+            }
+            if(!projectBasics.projectName){
+                errorType = ProjectErrorTypeEnum.NO_PROJECT_NAME
+            }
+            if(errorType){
+                throw new ProjectCustomError(errorType)
+            }
+
             const proejctDetails = new ProjectEntity({ ...createProjectInput.projectBasics });
             proejctDetails.projectWorkTypes = [];
-            const { projectWorkEstimates } = createProjectInput;
-            for (let index = 0; index < projectWorkEstimates.length; index++) {
-                const selectedWorkType = await this.workTypeService.getWorktypeByWorkTypeID({ workTypeID: projectWorkEstimates[index].workTypeID, name: projectWorkEstimates[index].workTypeName })
+            for (let index = 0; index < projectWorkEstimates?.length; index++) {
+                const selectedWorkType = await this.workTypeService.getWorktypeByWorkTypeID({ workTypeID: projectWorkEstimates[index].workTypeID, name: projectWorkEstimates[index].workTypeName } as WorkParams)
                 const projectworkentity = new ProjectWorkTypeEntity({ estimatedCost: projectWorkEstimates[index].estimatedCost, workTypeName: projectWorkEstimates[index].workTypeName });
                 projectworkentity.workID = selectedWorkType.workTypeID;
                 const newProjectWork = await this.projectWorkRepository.create({ ...projectworkentity, workType: { id: selectedWorkType.id } });
@@ -62,12 +84,16 @@ export class ProjectService {
     }
 
     public async findProjectById(refFilter: GetProjectArgs): Promise<ProjectEntity[]> {
-        return await this.projectRepository.find({
+        const foundProjet =  await this.projectRepository.find({
             where: {
                 ...refFilter
             },
             relations: ['reference', 'projectWorkTypes']
         });
+        if(!foundProjet.length){
+            throw new ProjectCustomError(ProjectErrorTypeEnum.PROJECT_NOT_EXIST)
+        }
+        return foundProjet 
     }
 
     async paginate(
@@ -77,21 +103,22 @@ export class ProjectService {
 
         const selectedReference = await this.referenceService.getReferenceById(refFilter)
 
-        
-        const [results, total] = await this.projectRepository.findAndCount({ where: {
-            "reference": {
-                id: selectedReference.id
-            }
-        },
-        relations:['reference', 'projectWorkTypes'],
-        take: options.limit,
-        skip: options.page * options.limit,
+
+        const [results, total] = await this.projectRepository.findAndCount({
+            where: {
+                "reference": {
+                    id: selectedReference.id
+                }
+            },
+            relations: ['reference', 'projectWorkTypes'],
+            take: options.limit,
+            skip: options.page * options.limit,
         }
-        );            
-        const pagination =  new Pagination({
+        );
+        const pagination = new Pagination({
             results,
             total,
-        });      
+        });
         return pagination
     }
 

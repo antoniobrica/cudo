@@ -1,11 +1,12 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, MoreThan, Repository } from 'typeorm';
 import ReferanceTypeEntity from '../../../entities/reference-type.entity';
+import { ProjectErrorTypeEnum } from '../../../enums/project-error-type.enum';
+import ProjectCustomError from '../../../exceptions/projectCustomError.exception';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceInputDto } from '../dto/input/reference.input.dto';
 import { ReferenceUpdateInputDto } from '../dto/input/reference.upate.input.dto';
-import ProjectNotFoundException from '../exceptions/projectNotFound.exception';
 
 @Injectable()
 export class ReferenceService {
@@ -56,7 +57,7 @@ export class ReferenceService {
     if (reference) {
       return reference;
     }
-    throw new ProjectNotFoundException(refFilter.referenceID);
+    throw new ProjectCustomError(ProjectErrorTypeEnum.PROJECT_NOT_FOUND);
   }
 
   async updateReference(refFilter: ReferenceFilterParams, referenceDetails: ReferenceUpdateInputDto) {
@@ -66,7 +67,7 @@ export class ReferenceService {
       const updatedPost = await this.referancesRepository.findOne({ where: { id: reference.id } });
       return updatedPost;
     }
-    throw new ProjectNotFoundException(refFilter.referenceID);
+    throw new ProjectCustomError(ProjectErrorTypeEnum.PROJECT_NOT_FOUND);
   }
 
   async deleteReference(refFilter: ReferenceFilterParams) {
@@ -75,6 +76,6 @@ export class ReferenceService {
     if (deleteResponse) {
       return deleteResponse;
     }
-    throw new ProjectNotFoundException(refFilter.referenceID);
+    throw new ProjectCustomError(ProjectErrorTypeEnum.PROJECT_NOT_FOUND);
   }
 }

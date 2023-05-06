@@ -66,8 +66,32 @@ export class ProjectEntity extends BaseEntity {
   updatedBy?: string;
 
   @Expose()
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: false })
   isDeleted?: boolean;
+
+  @Expose()
+  @Column({ nullable: true })
+  addressLineOne?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  addressLineTwo?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  city?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  state?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  zip?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  country?: string;
 
   @Expose()
   @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.projects)
