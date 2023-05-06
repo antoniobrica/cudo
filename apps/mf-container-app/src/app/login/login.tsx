@@ -15,8 +15,6 @@ export function Email(props: LoginProps) {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [isEmailExist, setIsEmailExist] = useState(true);
-  
-  console.log(email)
 
   const handleLogin = () => {
     // Need to implement using redux
