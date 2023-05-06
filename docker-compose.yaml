@@ -7,70 +7,78 @@ services:
       - ACCEPT_EULA=Y
       - DATABASE_USERNAME=sa
       - SA_PASSWORD=YourStrong!Password
-
     ports:
       - '1433:1433'
     networks:
       - my-network
 
-  initdb:
-    build:
-      context: .
-      dockerfile: Dockerfile-initdb
-    depends_on:
-      - mssql
-    networks:
-      - my-network
+  # initdb:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile-initdb
+  #   depends_on:
+  #     - mssql
+  #   networks:
+  #     - my-network
 
   ms-account:
-    image: node:lts
     build:
       context: .
       dockerfile: Dockerfile-msaccount
-    volumes:
-      - ./:/usr/src/app/
+    container_name: ms-account
+    restart: always
+    environment:
+      - PORT=3000
     ports:
       - '5001:5001'
-    networks:
-      - my-network
-
-  ms-task:
-    image: node:lts
-    build:
-      context: .
-      dockerfile: Dockerfile-mstask
     volumes:
-      - ./:/usr/src/app/
-    ports:
-      - '5007:5007'
+       - ./:/usr/src/app/
+    # volumes:
+    #   - ./apps/ms-account:/usr/src/app
     networks:
       - my-network
 
-  ms-project:
-    image: node:lts
-    build:
-      context: .
-      dockerfile: Dockerfile-msproject
-    volumes:
-      - ./:/usr/src/app/
+  # ms-task:
+  #   image: node:lts
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile-mstask
+  #   volumes:
+  #       - ./apps/ms-task/src:/usr/src/app/
+  #   # volumes:
+  #   #   - ./:/usr/src/app/
+  #   ports:
+  #     - '5007:5007'
+  #   networks:
+  #     - my-network
 
-    ports:
-      - '5005:5005'
-    networks:
-      - my-network
+  # ms-project:
+  #   image: node:lts
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile-msproject
+  #   volumes:
+  #       - ./apps/ms-project/src:/usr/src/app/
+  #   # volumes:
+  #   #   - ./:/usr/src/app/
+  #   ports:
+  #     - '5005:5005'
+  #   networks:
+  #     - my-network
 
-  ms-document:
-    image: node:lts
-    build:
-      context: .
-      dockerfile: Dockerfile-msdocument
-    volumes:
-      - ./:/usr/src/app/
-
-    ports:
-      - '5003:5003'
-    networks:
-      - my-network
+  # ms-document:
+  #   image: node:lts
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile-msdocument
+  #   volumes:
+  #       - ./apps/ms-document/src:/usr/src/app/
+  #   # volumes:
+  #   #   - ./:/usr/src/app/
+  #   ports:
+  #     - '5003:5003'
+  #   networks:
+  #     - my-network
 
 networks:
   my-network:

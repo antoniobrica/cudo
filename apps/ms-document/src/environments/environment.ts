@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
   SERVER_TIMEOUT: 1080000,
-  DATABASE_HOST: '127.0.0.1',
+  DATABASE_HOST: 'mssql',
   DATABASE_PORT: 1433,
   DATABASE_USERNAME: 'sa',
   DATABASE_PASSWORD: 'YourStrong!Password',

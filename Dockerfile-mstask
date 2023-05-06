@@ -17,4 +17,5 @@ COPY . .
 EXPOSE 5007
 
 ENV HOST 0.0.0.0
-CMD ["nx", "serve","ms-task"]
+# CMD ["npm", "start","ms-task"]
+CMD ["npm", "run","nx","serve","ms-task","--host0.0.0.0"]

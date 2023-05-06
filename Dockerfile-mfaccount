@@ -6,9 +6,9 @@ COPY package*.json ./
 COPY workspace*.json ./
 COPY cypress*.json ./
 
-RUN apt-get update \
-    && apt-get install -y python3 \
-    && ln -s /usr/bin/python3 /usr/bin/python
+# RUN apt-get update \
+#     && apt-get install -y python3 \
+#     && ln -s /usr/bin/python3 /usr/bin/python
 
 RUN npm install
 RUN npm install -g nx
@@ -17,4 +17,4 @@ COPY . .
 #CMD ["node", "dist/main"]
 #RUN nohup npm start ms-task > stdout.txt 2> stderr.txt &
 EXPOSE 5007
-CMD ["nx", "serve", "mf-account-app", "--host", "0.0.0.0"]
+CMD ["npm", "run", "nx", "serve", "mf-account-app", "--host0.0.0.0"]

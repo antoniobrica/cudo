@@ -6,9 +6,9 @@ COPY package*.json ./
 COPY workspace*.json ./
 COPY cypress*.json ./
 
-RUN apt-get update \
-&& apt-get install -y python3 \
-&& ln -s /usr/bin/python3 /usr/bin/python
+# RUN apt-get update \
+# && apt-get install -y python3 \
+# && ln -s /usr/bin/python3 /usr/bin/python
 
 RUN npm install
 RUN npm install -g nx
@@ -19,6 +19,7 @@ COPY . .
 #RUN nohup npm start ms-task > stdout.txt 2> stderr.txt &
 EXPOSE 5003
 
-ENV HOST 0.0.0.0
-CMD ["nx", "serve","ms-document"]
+# CMD ["npm", "start","ms-document"]
+
+CMD ["npm", "run","nx","serve","ms-document","--host0.0.0.0"]
 

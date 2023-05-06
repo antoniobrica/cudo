@@ -2,12 +2,51 @@ version: '2.1'
 
 services:
 
+  mf-container:
+    build:
+      context: .
+      dockerfile: Dockerfile-mfcontainer
+    volumes:
+       - ./:/usr/src/app/
+
+    network_mode: host
+
 
   mf-account:
     build:
       context: .
       dockerfile: Dockerfile-mfaccount
     volumes:
-      - ./:/usr/src/app/
+       - ./:/usr/src/app/
 
     network_mode: host
+
+  mf-task:
+    build:
+      context: .
+      dockerfile: Dockerfile-mftask
+    volumes:
+       - ./:/usr/src/app/
+
+    network_mode: host
+
+
+  mf-project:
+    build:
+      context: .
+      dockerfile: Dockerfile-mfproject
+    volumes:
+       - ./:/usr/src/app/
+
+    network_mode: host
+
+
+  mf-document:
+    build:
+      context: .
+      dockerfile: Dockerfile-mfdocument
+    volumes:
+       - ./:/usr/src/app/
+
+    network_mode: host
+

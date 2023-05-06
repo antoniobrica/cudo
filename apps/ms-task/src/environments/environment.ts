@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
   NODE_ENV: 'development',
-  PORT: 5008,
+  PORT: 5007,
   SERVER_TIMEOUT: 1080000,
   DATABASE_HOST: 'mssql',
   DATABASE_PORT: 1433,

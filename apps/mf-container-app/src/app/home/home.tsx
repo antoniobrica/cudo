@@ -1,6 +1,6 @@
 import { Menubar } from '@cudo/shared-components/src';
 import React, { useEffect, useState } from 'react';
-import { Route, Link, useLocation, useNavigate, Routes } from 'react-router-dom';
+import { Route, Link, useLocation, useNavigate, Routes, useMatch } from 'react-router-dom';
 import { environment } from '../../environments/environment';
 import { Settings } from '../containers/Settings';
 import { MfProjectAppMount } from '../mf-project-app-mount/mf-project-app-mount';
@@ -17,24 +17,40 @@ export interface HomeProps {}
 export function Home(props: HomeProps) {
   const [input, setInput] = useState('');
   const [state, setState] = useState('');
-  const data = 'parrent';
+  const [pathByHistory, setPathByHistory] = useState('');
+  const [menuExpand, setMenuExpand] = useState(false);
 
+  const data = 'parrent';
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const match = useMatch('*');
+  const { pathname } = match;
+  // const routeMatch = useRouteMatch();
+  // const { url, path } = useRouteMatch();
 
   useEffect(() => {
     if (!isAuthenticated()) ToEmail();
   }, []);
+
   const callbackFunction = (childData) => {
     switch (childData) {
       case 'logout':
         logout();
         break;
-
+      case 'project':
+        // goToProjectDashboard();
+        navigate('/home/project');
+        break;
       default:
         break;
     }
-    // history.push('/project')
   };
+  useEffect(() => {
+    if (location?.pathname.includes('/home/project/')) {
+      setPathByHistory(location?.pathname);
+    }
+  }, []);
   const edit = (childData) => {
     navigate(`/settings`);
   };
@@ -44,14 +60,29 @@ export function Home(props: HomeProps) {
   const update = (childData) => {
     navigate('/home');
   };
+
+  const onClickMenuExpand = () => {
+    setMenuExpand(!menuExpand);
+  };
+
   return (
-    <div>
-      <Menubar data={data} parentCallback={callbackFunction}></Menubar>
+    <div className={menuExpand ? 'expand-main-menu' : 'collapsed-main-menu'}>
+      <div>
+        <Menubar
+          data={data}
+          parentCallback={callbackFunction}
+          mainMenuExpand={onClickMenuExpand}
+          history={navigate}
+        ></Menubar>
+      </div>
       <div>
         <Routes>
           <Route path={`/profile`} element={<UserProfile />} />
           <Route path={`/settings`} element={<UserProfileEdit />} />
-          <Route path={`/project`} element={<MfProjectAppMount host={projectHost} />} />
+          <Route
+            path={pathByHistory ? pathByHistory : `${pathname}/project`}
+            element={<MfProjectAppMount host={projectHost} history={navigate} />}
+          />
         </Routes>
       </div>
     </div>

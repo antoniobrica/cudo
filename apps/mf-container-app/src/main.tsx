@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
+import { LazyLoading } from '@cudo/shared-components/src/lib/components/loader/lazyloader';
 
 import { BrowserRouter } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
@@ -9,10 +10,7 @@ import App from './app/app';
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
-import {
-  CONTAINER_REDUX_FEATURE_KEY,
-  containerReduxReducer,
-} from './app/container-redux.slice';
+import { CONTAINER_REDUX_FEATURE_KEY, containerReduxReducer } from './app/container-redux.slice';
 
 const store = configureStore({
   reducer: { [CONTAINER_REDUX_FEATURE_KEY]: containerReduxReducer },
@@ -27,11 +25,13 @@ const rootElement = document.getElementById('root');
 if (rootElement) {
   const root = createRoot(rootElement);
   root.render(
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
+    <Suspense fallback={<LazyLoading />}>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
+    </Suspense>
   );
 }
 
