@@ -20,7 +20,7 @@ export function LoginSelect(props: LoginSelectProps) {
     e.preventDefault();
     if (selectedCompany) {
       localStorage.setItem('selectedCompany', selectedCompany);
-      navigate('/home/project');
+      // navigate('/home/project');
     }
   };
 
@@ -33,10 +33,11 @@ export function LoginSelect(props: LoginSelectProps) {
       console.log('tooo mail');
       ToEmail();
     } else {
+      console.log('ddfd');
       // Need to handle with redux
       setEmail(localStorage.getItem('email'));
       axios({
-        url: 'https://api.cudo.com/graphql',
+        url: environment.MS_ACCOUNT_URL,
         method: 'post',
         data: {
           query: `
@@ -59,7 +60,7 @@ export function LoginSelect(props: LoginSelectProps) {
             const { imageUrl: image, referenceID: key, name: value } = element.references[0];
             setselectedCompany(key);
             localStorage.setItem('selectedCompany', key);
-            navigate('/home/project');
+            // navigate('/home/project');
             return;
           }
           const companiesList = [];
@@ -79,7 +80,7 @@ export function LoginSelect(props: LoginSelectProps) {
             const { imageUrl: image, referenceID: key, name: value } = element.references[0];
             setselectedCompany(key);
             localStorage.setItem('selectedCompany', key);
-            navigate('/home/project');
+            // navigate('/home/project');
           }
         }
       });

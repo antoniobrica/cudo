@@ -35,9 +35,11 @@ export function LoginPassword(props: LoginPasswordProps) {
 
   const messages = requestResponse?.methods?.password?.config?.messages;
   const form = requestResponse?.methods?.password?.config;
+
+  console.log(requestResponse);
   return (
     <div>
-      <Loginpassword action={form?.action} fields={form?.fields as any[]} messages={messages}></Loginpassword>
+      {/* <Loginpassword action={form?.action} fields={form?.fields as any[]} messages={messages}></Loginpassword> */}
       {messages && <KratosMessages messages={messages} />}
       {form && <Loginpassword action={form?.action} fields={form?.fields as any[]} messages={messages}></Loginpassword>}
       {/* <div id="login-password">

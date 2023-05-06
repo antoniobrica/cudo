@@ -7,7 +7,7 @@ import { MfProjectAppMount } from '../mf-project-app-mount/mf-project-app-mount'
 import { isAuthenticated, logout, ToEmail } from '../services/auth';
 import { UserProfileEdit } from '../user-profile-edit/user-profile-edit';
 import { UserProfile } from '../user-profile/user-profile';
-import { UserRegistration } from '../user-registration/user-registration';
+// import { UserRegistration } from '../user-registration/user-registration';
 
 import './home.module.scss';
 const { REACT_APP_PROJECT_HOST: projectHost } = environment;
@@ -29,9 +29,9 @@ export function Home(props: HomeProps) {
   // const routeMatch = useRouteMatch();
   // const { url, path } = useRouteMatch();
 
-  useEffect(() => {
-    if (!isAuthenticated()) ToEmail();
-  }, []);
+  // useEffect(() => {
+  //   if (!isAuthenticated()) ToEmail();
+  // }, []);
 
   const callbackFunction = (childData) => {
     switch (childData) {
