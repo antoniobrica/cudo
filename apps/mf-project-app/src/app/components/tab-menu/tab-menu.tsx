@@ -1,15 +1,24 @@
 import React from 'react';
+
 import './tab-menu.module.scss';
 import { AccordionExampleMenu } from '@cudo/shared-components';
 import { environment } from '../../../environments/environment';
 import MicroFrontend from '../../../MicroFrontend';
 import { Tab, Image } from 'semantic-ui-react';
-import { NavLink, BrowserRouter as Router, Route, useLocation, useParams, useNavigate } from 'react-router-dom';
+import {
+  NavLink,
+  BrowserRouter as Router,
+  Route,
+  useLocation,
+  useParams,
+  useNavigate,
+  useMatch,
+} from 'react-router-dom';
 import { PlanningIndex } from '@cudo/mf-task-lib';
 import { useProjectByIdQuery } from '../../services/useRequest';
 import { GET_PROJECT_BY_ID } from '../../graphql/graphql';
 import { useQuery } from '@apollo/client';
-import { useMatch } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const {
   EACT_APP_COST_HOST: costHost,
@@ -26,10 +35,10 @@ type params = {
 function TabMenu(props: TabMenuProps) {
   const [worktypeName, setWorktype] = React.useState('');
   const [worktypes, setWorktypes] = React.useState();
+  const { t } = useTranslation();
 
   const history = useNavigate();
   const params = useParams<params>();
-  console.log('urlparams', params.projectId);
   const projectId = params.projectId;
 
   const { loading, error, data } = useQuery(GET_PROJECT_BY_ID, {
@@ -44,41 +53,36 @@ function TabMenu(props: TabMenuProps) {
   }, [data]);
 
   const changeWorktypeName = (data) => {
-    console.log('changeWorktypeName', data);
     setWorktype(data);
   };
-  function TaskApp(history: any) {
-    console.log('history---', history);
 
+  function TaskApp(history: any) {
+    console.log('--tabmenu--TaskApp--history--', history);
     return <MicroFrontend history={history} host={taskHost} name="TaskApp" />;
   }
 
-  function DocumentApp(history: any) {
-    return <MicroFrontend history={history} host={documentHost} name="DocumentApp" />;
+  function CostApp(history: any) {
+    return <MicroFrontend history={history} host={costHost} name="CostApp" />;
   }
 
   function MeetingApp(history: any) {
     return <MicroFrontend history={history} host={meetingHost} name="MeetingApp" />;
   }
 
-  function CostApp(history: any) {
-    return <MicroFrontend history={history} host={costHost} name="CostApp" />;
+  function DocumentApp(history: any) {
+    console.log('--tab-menu--DocumentApp--history--', history);
+    return <MicroFrontend history={history} host={documentHost} name="DocumentApp" />;
   }
+
   function Home() {
     const [input, setInput] = React.useState('');
 
     const [isTask, setIsTask] = React.useState(false);
+    const [activeIndex, setActiveIndex] = React.useState(null);
     const data = 'parrent';
 
-    // const { path, url } = useMatch('/:projectId/*');
-    //     const { url  } = useRouteMatch();
-    // const { url } = useMatch();
-    const match = useMatch('/projects/:projectId/*');
-    if (!match) {
-      return <div>No match</div>;
-    }
-
-    const { projectId } = match.params;
+    const location = useLocation();
+    const url = location.pathname;
 
     const callbackFunction = (childData) => {
       setInput(childData);
@@ -90,21 +94,221 @@ function TabMenu(props: TabMenuProps) {
     };
     const handleOpenProject = (item) => {
       // props.parentCallback(item)
+      console.log('--handleOpenProject--item--', item);
+    };
+    const onTabChange = (e, { activeIndex }) => {
+      setActiveIndex(activeIndex);
     };
     const panes = [
       {
         menuItem: {
           key: 'Overview',
           icon: 'file alternate outline',
-          content: 'Overview',
+          content: t('project_tab_menu.overview.title'),
           to: `${projectId}/overview`,
           as: NavLink,
           exact: true,
         },
-        render: () => (
+      },
+      {
+        menuItem: {
+          key: 'Task',
+          icon: 'shield alternate',
+          content: t('project_tab_menu.task.title'),
+          to: `${url}/task`,
+          as: NavLink,
+          exact: true,
+        },
+        // render: () => <Route
+        //   path={`${url}/task`}
+        //   exact
+        //  element={
+        //     <Tab.Pane onClick={handleOpenProject('task')}>
+        //       {/* <TaskApp id={params.projectId}></TaskApp> */}
+        //       <TaskApp id={projectId}></TaskApp>
+        //     </Tab.Pane>
+        //   )}
+        // />,
+      },
+      {
+        menuItem: {
+          key: 'Planning',
+          icon: 'flag outline',
+          to: `${url}/planning`,
+          as: NavLink,
+          exact: true,
+          content: t('project_tab_menu.planning.title'),
+        },
+      },
+      {
+        menuItem: {
+          key: 'Cost',
+          icon: 'money bill alternate outline',
+          content: t('project_tab_menu.cost.title'),
+          to: `${url}/cost`,
+          as: NavLink,
+          exact: true,
+        },
+        // render: () => <Route
+        //   path={`${url}/cost`}
+        //   exact
+        //  element={
+        //     <Tab.Pane attached={false} onClick={handleOpenProject('cost')}>
+        //       <CostApp />
+        //     </Tab.Pane>
+        //   )}
+        // />,
+      },
+      {
+        menuItem: {
+          key: 'Tender',
+          icon: 'gavel',
+          content: t('project_tab_menu.tender.title'),
+          to: `${url}/tender`,
+          as: NavLink,
+          exact: true,
+        },
+        // render: () => <Route
+        //   path={`${url}/tender`}
+        //   exact
+        //  element={
+        //     <Tab.Pane attached={false} onClick={handleOpenProject('tender')}>Tender</Tab.Pane>
+        //   )}
+        // />,
+      },
+      {
+        menuItem: {
+          key: 'Meetings',
+          icon: 'calendar outline',
+          content: t('project_tab_menu.meeting.title'),
+          to: `${url}/meetings`,
+          as: NavLink,
+          exact: true,
+        },
+        // render: () => <Route
+        //   path={`${url}/meetings`}
+        //   exact
+        //  element={
+
+        //     <Tab.Pane attached={false} onClick={handleOpenProject('meetings')}>
+        //       <MeetingApp />
+        //     </Tab.Pane>
+        //   )}
+        // />,
+      },
+      {
+        menuItem: {
+          key: ' ',
+          icon: 'folder open outline',
+          content: t('project_tab_menu.files.title'),
+          to: `${url}/files`,
+          as: NavLink,
+          exact: true,
+        },
+        // render: () =>
+        //   <Route
+        //     path={`${url}/files`}
+        //     exact
+        //    element={
+        //       <Tab.Pane attached={false} onClick={handleOpenProject('files')}>
+        //         <DocumentApp />
+        //       </Tab.Pane>
+        //     )}
+        //   />
+        // ,
+      },
+      {
+        menuItem: {
+          key: 'Questions',
+          icon: 'question circle outline',
+          content: t('project_tab_menu.questions'),
+          to: `${url}/questions`,
+          as: NavLink,
+          exact: true,
+        },
+        // render: () =>
+        //   <Route
+        //     path={`${url}/questions`}
+        //     exact
+        //    element={
+        //       <Tab.Pane attached={false} onClick={handleOpenProject('questions')}>Questions</Tab.Pane>
+        //     )}
+        //   />
+        // ,
+      },
+      {
+        menuItem: {
+          key: 'People',
+          icon: 'user outline',
+          content: t('project_list.add_new_project.people'),
+          to: `${url}/people`,
+          as: NavLink,
+          exact: true,
+        },
+        // render: () =>
+        //   <Route
+        //     path={`${url}/people`}
+        //     exact
+        //    element={
+
+        //       <Tab.Pane attached={false} onClick={handleOpenProject('people')}>People</Tab.Pane>)}
+        //   />
+        // ,
+      },
+      {
+        menuItem: {
+          key: 'Settings',
+          icon: 'setting',
+          content: t('project_tab_menu.setting'),
+          to: `${url}/settings`,
+          as: NavLink,
+          exact: true,
+        },
+        // render: () => <Route
+        //   path={`${url}/settings`}
+        //   exact
+        //  element={
+        //     <Tab.Pane attached={false} onClick={handleOpenProject('settings')}>Settings</Tab.Pane>)}
+        // />
+        // ,
+      },
+      {
+        menuItem: {
+          key: 'Messages',
+          icon: 'envelope open outline',
+          content: t('project_tab_menu.messages.title'),
+          to: `${url}/messages`,
+          as: NavLink,
+          exact: true,
+        },
+        // render: () => <Route
+        //   path={`${url}/messages`}
+        //   exact
+        //  element={
+        //     <Tab.Pane attached={false} onClick={handleOpenProject('messages')}>Messages</Tab.Pane>)}
+        // />
+        // ,
+      },
+    ];
+
+    return (
+      <Router>
+        <div className="app-content-body-dash navbar-collapse">
+          <div className="main-page-heading">
+            <span className="">{worktypeName ? worktypeName : 'WorktypeName'}</span>{' '}
+            <span className="preliminary-font">{t('project_tab_menu.preiminary_studies')}</span>
+          </div>
+          <Tab
+            renderActiveOnly={true}
+            activeIndex={activeIndex}
+            onTabChange={onTabChange}
+            className="ui-tabs"
+            menu={{ secondary: true, pointing: true }}
+            panes={panes}
+          />
+          <Route path={`${url}/planning`} element={<PlanningIndex worktypes={worktypes}></PlanningIndex>} />
           <Route
-            // path={`${projectId}/overview`}
-            path={`/overview`}
+            path={`${url}/overview`}
             element={
               <Tab.Pane attached={false} onClick={handleOpenProject('overview')}>
                 <div className="ui-tabs">
@@ -112,229 +316,49 @@ function TabMenu(props: TabMenuProps) {
                     <Image src="https://react.semantic-ui.com/images/wireframe/image.png" size="small" wrapped />
                   </div>
                   <div className="text-center margin-top">
-                    <span className="found">No Data Found</span>
+                    <span className="found">{t('common.data_not_found')}</span>
                     <p className="project-sub" style={{ color: '#9A9EA1' }}>
-                      Hey User, you don't have any active sub project lists on this project. Click the button <br />{' '}
-                      below to create a sub project list.
+                      {t('project_tab_menu.overview.desc_line1')} <br /> {t('project_tab_menu.overview.desc_line2')}
                     </p>
                   </div>
                 </div>
               </Tab.Pane>
             }
           />
-        ),
-      },
-      {
-        menuItem: {
-          key: 'Task',
-          icon: 'shield alternate',
-          content: 'Task',
-          to: `${projectId}/task`,
-          as: NavLink,
-          exact: true,
-        },
-        render: () => (
+          {/* start Added for router */}
           <Route
-            path={`${projectId}/task`}
+            path={`${url}/task`}
             element={
               <Tab.Pane onClick={handleOpenProject('task')}>
-                <TaskApp id={params.projectId}></TaskApp>
+                <TaskApp id={projectId}></TaskApp>
               </Tab.Pane>
             }
           />
-        ),
-      },
-      {
-        menuItem: {
-          key: 'Planning',
-          icon: 'flag outline',
-          to: `${projectId}/planning`,
-          as: NavLink,
-          exact: true,
-          content: 'Planning',
-        },
-        render: () => (
           <Route
-            path={`${projectId}/planning`}
+            path={`${url}/cost`}
             element={
-              <Tab.Pane attached={false} onClick={handleOpenProject('planning')}>
-                <PlanningIndex worktypes={worktypes}></PlanningIndex>
+              <Tab.Pane onClick={handleOpenProject('costs')}>
+                <CostApp id={projectId}></CostApp>
               </Tab.Pane>
             }
           />
-        ),
-      },
-      {
-        menuItem: {
-          key: 'Cost',
-          icon: 'money bill alternate outline',
-          content: 'Cost',
-          to: `${projectId}/cost`,
-          as: NavLink,
-          exact: true,
-        },
-        render: () => (
           <Route
-            path={`${projectId}/cost`}
+            path={`${url}/meetings`}
             element={
-              <Tab.Pane attached={false} onClick={handleOpenProject('cost')}>
-                <CostApp />
+              <Tab.Pane onClick={handleOpenProject('meetings')}>
+                <MeetingApp id={projectId}></MeetingApp>
               </Tab.Pane>
             }
           />
-        ),
-      },
-      {
-        menuItem: {
-          key: 'Tender',
-          icon: 'gavel',
-          content: 'Tender',
-          to: `${projectId}/tender`,
-          as: NavLink,
-          exact: true,
-        },
-        render: () => (
           <Route
-            path={`${projectId}/tender`}
+            path={`${url}/files`}
             element={
-              <Tab.Pane attached={false} onClick={handleOpenProject('tender')}>
-                Tender
+              <Tab.Pane onClick={handleOpenProject('files')}>
+                <DocumentApp id={projectId}></DocumentApp>
               </Tab.Pane>
             }
           />
-        ),
-      },
-      {
-        menuItem: {
-          key: 'Meetings',
-          icon: 'calendar outline',
-          content: 'Meetings',
-          to: `${projectId}/meetings`,
-          as: NavLink,
-          exact: true,
-        },
-        render: () => (
-          <Route
-            path={`${projectId}/meetings`}
-            element={
-              <Tab.Pane attached={false} onClick={handleOpenProject('meetings')}>
-                <MeetingApp />
-              </Tab.Pane>
-            }
-          />
-        ),
-      },
-      {
-        menuItem: {
-          key: ' ',
-          icon: 'folder open outline',
-          content: 'Files',
-          to: `${projectId}/files`,
-          as: NavLink,
-          exact: true,
-        },
-        render: () => (
-          <Route
-            element={
-              <Tab.Pane attached={false} onClick={handleOpenProject('files')}>
-                <DocumentApp />
-              </Tab.Pane>
-            }
-          />
-        ),
-      },
-      {
-        menuItem: {
-          key: 'Questions',
-          icon: 'question circle outline',
-          content: 'Questions',
-          to: `${projectId}/questions`,
-          as: NavLink,
-          exact: true,
-        },
-        render: () => (
-          <Route
-            path={`${projectId}/questions`}
-            element={
-              <Tab.Pane attached={false} onClick={handleOpenProject('questions')}>
-                Questions
-              </Tab.Pane>
-            }
-          />
-        ),
-      },
-      {
-        menuItem: {
-          key: 'People',
-          icon: 'user outline',
-          content: 'People',
-          to: `${projectId}/people`,
-          as: NavLink,
-          exact: true,
-        },
-        render: () => (
-          <Route
-            path={`${projectId}/people`}
-            element={
-              <Tab.Pane attached={false} onClick={handleOpenProject('people')}>
-                People
-              </Tab.Pane>
-            }
-          />
-        ),
-      },
-      {
-        menuItem: {
-          key: 'Settings',
-          icon: 'setting',
-          content: 'Settings',
-          to: `${projectId}/settings`,
-          as: NavLink,
-          exact: true,
-        },
-        render: () => (
-          <Route
-            path={`${projectId}/settings`}
-            element={
-              <Tab.Pane attached={false} onClick={handleOpenProject('settings')}>
-                Settings
-              </Tab.Pane>
-            }
-          />
-        ),
-      },
-      {
-        menuItem: {
-          key: 'Messages',
-          icon: 'envelope open outline',
-          content: 'Messages',
-          to: `${projectId}/messages`,
-          as: NavLink,
-          exact: true,
-        },
-        render: () => (
-          <Route
-            path={`${projectId}/messages`}
-            element={
-              <Tab.Pane attached={false} onClick={handleOpenProject('messages')}>
-                Messages
-              </Tab.Pane>
-            }
-          />
-        ),
-      },
-    ];
-
-    return (
-      <Router>
-        <div className="app-content-body-dash navbar-collapse box-shadow bg-white-only">
-          <div>
-            <span className="">{worktypeName ? worktypeName : 'WorktypeName'}</span> |{' '}
-            <span className="preliminary-font">Preliminary Studies</span>
-          </div>
-          <Route>
-            <Tab className="ui-tabs" menu={{ secondary: true, pointing: true }} panes={panes} />
-          </Route>
+          {/* end Added for router */},
         </div>
       </Router>
     );
@@ -357,7 +381,11 @@ function TabMenu(props: TabMenuProps) {
     <div>
       {data ? (
         <div>
-          <AccordionExampleMenu changeWorktypeName={changeWorktypeName} workTypeData={data}></AccordionExampleMenu>
+          <AccordionExampleMenu
+            t={t}
+            changeWorktypeName={changeWorktypeName}
+            workTypeData={data}
+          ></AccordionExampleMenu>
           <Home></Home>
         </div>
       ) : null}
