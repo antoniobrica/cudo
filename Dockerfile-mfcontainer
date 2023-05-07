@@ -1,18 +1,58 @@
-FROM node:lts
+# FROM node:lts-alpine3.16
 
+# WORKDIR /usr/src/app
+
+# COPY package*.json ./
+# COPY workspace*.json ./
+# COPY cypress*.json ./
+# # COPY apps/mf-container-app ./apps/mf-container-app
+# # COPY libs ./libs
+
+# RUN apk update \
+# && apk add --no-cache python3 \
+# && ln -s /usr/bin/python3 /usr/bin/python
+
+# RUN npm install
+# RUN npm install -g nx
+
+# COPY . .
+# #RUN npm run build ms-task
+# #CMD ["node", "dist/main"]
+# #RUN nohup npm start ms-task > stdout.txt 2> stderr.txt &
+# EXPOSE 5007
+
+# CMD ["npm", "run", "nx", "serve", "mf-container-app", "--host", "0.0.0.0"]
+
+
+# Use Node.js LTS version with Alpine Linux as a base image
+FROM node:lts-alpine3.16
+
+# Set the working directory for the app
 WORKDIR /usr/src/app
 
+# Copy package.json and package-lock.json
 COPY package*.json ./
+
+# Copy workspace.json and cypress.json
 COPY workspace*.json ./
 COPY cypress*.json ./
 
-RUN npm install
+# Install Python3 and create a symlink to `python`
+RUN apk update \
+&& apk add --no-cache python3 build-base \
+&& ln -s /usr/bin/python3 /usr/bin/python
+
+# Install npm dependencies
+RUN npm ci
+
+# Install Nx CLI globally
 RUN npm install -g nx
 
+# Copy the rest of the application files
 COPY . .
-#RUN npm run build ms-task
-#CMD ["node", "dist/main"]
-#RUN nohup npm start ms-task > stdout.txt 2> stderr.txt &
+
+# Expose the port that the application will run on
 EXPOSE 5007
 
-CMD ["npm", "run","nx","serve","mf-container-app","--host0.0.0.0"]
+# Run the application
+CMD ["npm", "run","nx","serve","mf-container-app", "--host", "0.0.0.0"]
