@@ -10,8 +10,7 @@ import {
 } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
 import * as uuid from 'uuid';
-import ReferanceTypeEntity from './reference.entity';
-
+import ReferanceTypeEntity from './references.entity';
 
 @Entity({ name: 'phase' })
 export class PhaseEntity extends BaseEntity {
@@ -47,10 +46,7 @@ export class PhaseEntity extends BaseEntity {
   isDeleted?: boolean;
 
   @Expose()
-  @ManyToOne(
-    () => ReferanceTypeEntity,
-    (reference: ReferanceTypeEntity) => reference.phases
-  )
+  @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.phase)
   reference: Relation<ReferanceTypeEntity>;
 
   constructor(phaseEntity: Partial<PhaseEntity>) {

@@ -9,7 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
-import ReferanceTypeEntity from './reference.entity';
+import ReferanceTypeEntity from './references.entity';
 import * as uuid from 'uuid';
 
 @Entity({ name: 'folder' })
@@ -46,10 +46,7 @@ export class FolderEntity extends BaseEntity {
   isDeleted?: boolean;
 
   @Expose()
-  @ManyToOne(
-    () => ReferanceTypeEntity,
-    (reference: ReferanceTypeEntity) => reference.folders
-  )
+  @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.folder)
   reference: Relation<ReferanceTypeEntity>;
 
   constructor(folderEntity: Partial<FolderEntity>) {

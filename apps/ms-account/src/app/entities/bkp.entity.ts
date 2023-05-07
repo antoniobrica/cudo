@@ -11,17 +11,12 @@ import {
   Relation,
   UpdateDateColumn,
 } from 'typeorm';
-import * as uuid from 'uuid';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Expose, plainToClass } from 'class-transformer';
-import ReferanceTypeEntity from './reference.entity';
-import { Field } from '@nestjs/graphql';
+import * as uuid from 'uuid';
+import ReferanceTypeEntity from './references.entity';
 
-@Entity({
-  name: 'bkp',
-  orderBy: {
-    createdAt: 'ASC',
-  },
-})
+@Entity({ name: 'bkp' })
 export class BkpEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -55,10 +50,7 @@ export class BkpEntity extends BaseEntity {
   isDeleted?: boolean;
 
   @Expose()
-  @ManyToOne(
-    () => ReferanceTypeEntity,
-    (reference: ReferanceTypeEntity) => reference.bkps
-  )
+  @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.bkp)
   reference: Relation<ReferanceTypeEntity>;
 
   constructor(bkpEntity: Partial<BkpEntity>) {

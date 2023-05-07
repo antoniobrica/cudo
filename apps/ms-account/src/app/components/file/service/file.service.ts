@@ -21,12 +21,10 @@ export class FileService {
   ): Promise<FileEntity> {
     try {
       const taskeDetails = new FileEntity({ ...createFileInput });
-      const selectedReference = await this.referenceService.getReferenceById(
-        referenceFilter
-      );
+      const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
       const newPost = await this.FileRepository.create({
         ...taskeDetails,
-        reference: { id: selectedReference.id },
+        // reference: { id: selectedReference.id }
       });
       await this.FileRepository.save(newPost);
       return newPost;
@@ -39,33 +37,23 @@ export class FileService {
     createFileInput: CreateFileInput,
     referenceFilter: ReferenceFilterParams
   ): Promise<FileEntity> {
-    const selectedReference = await this.referenceService.getReferenceById(
-      referenceFilter
-    );
+    const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
     const file = await this.FileRepository.findOne({
-      where: {
-        fileID: createFileInput.fileID,
-        reference: { id: selectedReference.id },
-      },
+      where: { fileID: createFileInput.fileID, reference: { id: selectedReference.id } },
     });
     if (file) {
       await this.FileRepository.update(file.id, { ...createFileInput });
-      const updatedPost = await this.FileRepository.findOne({
-        where: { id: file.id },
-      });
+      const updatedPost = await this.FileRepository.findOne({ where: { id: file.id } });
       return updatedPost;
     }
     throw new FileNotFoundException(file.fileID);
   }
 
-  public async findAllFile(
-    refFilter: ReferenceFilterParams
-  ): Promise<FileEntity[]> {
-    const selectedReference = await this.referenceService.getReferenceById(
-      refFilter
-    );
+  public async findAllFile(refFilter: ReferenceFilterParams): Promise<FileEntity[]> {
+    const selectedReference = await this.referenceService.getReferenceById(refFilter);
     return await this.FileRepository.find({
-      where: { reference: { id: selectedReference.id } },
+      // "reference": {
+      // id: selectedReference.id
     });
   }
 }

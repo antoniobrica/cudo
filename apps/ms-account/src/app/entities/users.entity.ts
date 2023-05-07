@@ -1,7 +1,7 @@
 import { Expose, plainToClass } from 'class-transformer';
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToMany, JoinTable } from 'typeorm';
 import * as uuid from 'uuid';
-import ReferanceTypeEntity from './reference.entity';
+import ReferanceTypeEntity from './references.entity';
 
 /**
  * 

@@ -1,4 +1,3 @@
-import { Expose, plainToClass } from 'class-transformer';
 import {
   BaseEntity,
   Column,
@@ -9,7 +8,8 @@ import {
   Relation,
   UpdateDateColumn,
 } from 'typeorm';
-import ReferanceTypeEntity from './reference.entity';
+import { Expose, plainToClass } from 'class-transformer';
+import ReferanceTypeEntity from './references.entity';
 
 @Entity({ name: 'filetype' })
 export class FileTypeEntity extends BaseEntity {
@@ -45,10 +45,7 @@ export class FileTypeEntity extends BaseEntity {
   isDeleted?: boolean;
 
   @Expose()
-  @ManyToOne(
-    () => ReferanceTypeEntity,
-    (reference: ReferanceTypeEntity) => reference.filetypes
-  )
+  @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.filetype)
   reference: Relation<ReferanceTypeEntity>;
 
   constructor(fileTypeEntity: Partial<FileTypeEntity>) {

@@ -20,12 +20,8 @@ export class FileStructureService {
     referenceFilter: ReferenceFilterParams
   ): Promise<FileStructureEntity> {
     try {
-      const taskeDetails = new FileStructureEntity({
-        ...createFileStructureInput,
-      });
-      const selectedReference = await this.referenceService.getReferenceById(
-        referenceFilter
-      );
+      const taskeDetails = new FileStructureEntity({ ...createFileStructureInput });
+      const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
       const newPost = await this.fileStructureRepository.create({
         ...taskeDetails,
         reference: { id: selectedReference.id },
@@ -41,19 +37,12 @@ export class FileStructureService {
     createFileStructureInput: CreateFileStructureInput,
     referenceFilter: ReferenceFilterParams
   ): Promise<FileStructureEntity> {
-    const selectedReference = await this.referenceService.getReferenceById(
-      referenceFilter
-    );
+    const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
     const filestructure = await this.fileStructureRepository.findOne({
-      where: {
-        fileStructureID: createFileStructureInput.fileStructureID,
-        reference: { id: selectedReference.id },
-      },
+      where: { fileStructureID: createFileStructureInput.fileStructureID, reference: { id: selectedReference.id } },
     });
     if (filestructure) {
-      await this.fileStructureRepository.update(filestructure.id, {
-        ...createFileStructureInput,
-      });
+      await this.fileStructureRepository.update(filestructure.id, { ...createFileStructureInput });
       const updatedPost = await this.fileStructureRepository.findOne({
         where: { id: filestructure.id },
       });
@@ -62,12 +51,8 @@ export class FileStructureService {
     throw new FileStructureNotFoundException(filestructure.fileStructureID);
   }
 
-  public async findAllFileStructure(
-    refFilter: ReferenceFilterParams
-  ): Promise<FileStructureEntity[]> {
-    const selectedReference = await this.referenceService.getReferenceById(
-      refFilter
-    );
+  public async findAllFileStructure(refFilter: ReferenceFilterParams): Promise<FileStructureEntity[]> {
+    const selectedReference = await this.referenceService.getReferenceById(refFilter);
     return await this.fileStructureRepository.find({
       where: { reference: { id: selectedReference.id } },
     });

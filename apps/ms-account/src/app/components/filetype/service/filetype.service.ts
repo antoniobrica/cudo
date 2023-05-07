@@ -21,9 +21,7 @@ export class FileTypeService {
   ): Promise<FileTypeEntity> {
     try {
       const taskeDetails = new FileTypeEntity({ ...createfileTypeInput });
-      const selectedReference = await this.referenceService.getReferenceById(
-        referenceFilter
-      );
+      const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
       const newPost = await this.FileTypeRepository.create({
         ...taskeDetails,
         reference: { id: selectedReference.id },
@@ -39,19 +37,12 @@ export class FileTypeService {
     createfileTypeInput: CreateFileTypeInput,
     referenceFilter: ReferenceFilterParams
   ): Promise<FileTypeEntity> {
-    const selectedReference = await this.referenceService.getReferenceById(
-      referenceFilter
-    );
+    const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
     const filetype = await this.FileTypeRepository.findOne({
-      where: {
-        fileTypeID: createfileTypeInput.fileTypeID,
-        reference: { id: selectedReference.id },
-      },
+      where: { fileTypeID: createfileTypeInput.fileTypeID, reference: { id: selectedReference.id } },
     });
     if (filetype) {
-      await this.FileTypeRepository.update(filetype.id, {
-        ...createfileTypeInput,
-      });
+      await this.FileTypeRepository.update(filetype.id, { ...createfileTypeInput });
       const updatedPost = await this.FileTypeRepository.findOne({
         where: { id: filetype.id },
       });
@@ -60,12 +51,8 @@ export class FileTypeService {
     throw new FileTypeNotFoundException(filetype.fileTypeID);
   }
 
-  public async findAllFileType(
-    refFilter: ReferenceFilterParams
-  ): Promise<FileTypeEntity[]> {
-    const selectedReference = await this.referenceService.getReferenceById(
-      refFilter
-    );
+  public async findAllFileType(refFilter: ReferenceFilterParams): Promise<FileTypeEntity[]> {
+    const selectedReference = await this.referenceService.getReferenceById(refFilter);
     return await this.FileTypeRepository.find({
       where: { reference: { id: selectedReference.id } },
     });

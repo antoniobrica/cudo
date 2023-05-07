@@ -10,7 +10,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
-import ReferanceTypeEntity from './reference.entity';
+import ReferanceTypeEntity from './references.entity';
+import * as uuid from 'uuid';
 
 @Entity({ name: 'filestructure' })
 export class FileStructureEntity extends BaseEntity {
@@ -46,10 +47,7 @@ export class FileStructureEntity extends BaseEntity {
   isDeleted?: boolean;
 
   @Expose()
-  @ManyToOne(
-    () => ReferanceTypeEntity,
-    (reference: ReferanceTypeEntity) => reference.filestructures
-  )
+  @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.filestructure)
   reference: Relation<ReferanceTypeEntity>;
 
   constructor(filestructureEntity: Partial<FileStructureEntity>) {
@@ -61,8 +59,7 @@ export class FileStructureEntity extends BaseEntity {
           excludeExtraneousValues: true,
         })
       );
-      // this.createdAt = this.createdAt || new Date(new Date().toUTCString());
-      // this.updatedAt = new Date(new Date().toUTCString());
+      this.fileStructureID = this.fileStructureID || uuid.v1();
     }
   }
 }

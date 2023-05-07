@@ -21,9 +21,7 @@ export class PhaseService {
   ): Promise<PhaseEntity> {
     try {
       const taskeDetails = new PhaseEntity({ ...createphaseInput });
-      const selectedReference = await this.referenceService.getReferenceById(
-        referenceFilter
-      );
+      const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
       const newPost = await this.PhaseRepository.create({
         ...taskeDetails,
         reference: { id: selectedReference.id },
@@ -35,12 +33,8 @@ export class PhaseService {
     }
   }
 
-  public async findAllPhase(
-    refFilter: ReferenceFilterParams
-  ): Promise<PhaseEntity[]> {
-    const selectedReference = await this.referenceService.getReferenceById(
-      refFilter
-    );
+  public async findAllPhase(refFilter: ReferenceFilterParams): Promise<PhaseEntity[]> {
+    const selectedReference = await this.referenceService.getReferenceById(refFilter);
     return await this.PhaseRepository.find({
       where: { reference: { id: selectedReference.id } },
     });

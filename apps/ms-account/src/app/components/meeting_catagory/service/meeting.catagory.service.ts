@@ -22,9 +22,7 @@ export class MeetingCatagoryService {
   ): Promise<MeetingCatagoryEntity> {
     try {
       const catagoryDetails = new MeetingCatagoryEntity({ ...createInput });
-      const selectedReference = await this.referenceService.getReferenceById(
-        referenceFilter
-      );
+      const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
       const newPost = await this.meetingCatagoryRepository.create({
         ...catagoryDetails,
         reference: { id: selectedReference.id },
@@ -44,9 +42,7 @@ export class MeetingCatagoryService {
       where: { meetingCatagoryID: updatefolder.meetingCatagoryID },
     });
     if (catagory) {
-      await this.meetingCatagoryRepository.update(catagory.id, {
-        ...createinput,
-      });
+      await this.meetingCatagoryRepository.update(catagory.id, { ...createinput });
       const updatedPost = await this.meetingCatagoryRepository.findOne({
         where: { id: catagory.id },
       });
@@ -55,24 +51,16 @@ export class MeetingCatagoryService {
     throw new CatagoryNotFoundException(catagory.meetingCatagoryID);
   }
 
-  public async findAllMeetingCatagory(
-    refFilter: ReferenceFilterParams
-  ): Promise<MeetingCatagoryEntity[]> {
-    const selectedReference = await this.referenceService.getReferenceById(
-      refFilter
-    );
+  public async findAllMeetingCatagory(refFilter: ReferenceFilterParams): Promise<MeetingCatagoryEntity[]> {
+    const selectedReference = await this.referenceService.getReferenceById(refFilter);
     return await this.meetingCatagoryRepository.find({
       where: { reference: { id: selectedReference.id } },
     });
   }
 
-  public async deleteMeetingCatagoryByID(
-    DeleteInput: UpdateMeetingCatagory
-  ): Promise<MeetingCatagoryEntity[]> {
+  public async deleteMeetingCatagoryByID(DeleteInput: UpdateMeetingCatagory): Promise<MeetingCatagoryEntity[]> {
     const { meetingCatagoryID } = DeleteInput;
-    const catagoryDetails = await this.meetingCatagoryRepository.delete({
-      meetingCatagoryID: meetingCatagoryID,
-    });
+    const catagoryDetails = await this.meetingCatagoryRepository.delete({ meetingCatagoryID: meetingCatagoryID });
     const catagory = await this.meetingCatagoryRepository.find({
       where: { meetingCatagoryID: meetingCatagoryID },
     });

@@ -10,19 +10,21 @@ import {
   UpdateDateColumn,
   Relation,
 } from 'typeorm';
-import UsersEntity from './users.entity';
-import { FileTypeEntity } from './file-type.entity';
+import * as uuid from 'uuid';
 import { BkpEntity } from './bkp.entity';
+import { BkpHierarchyEntity } from './bkphierarchy.entity';
+import { FileTypeEntity } from './file-type.entity';
 import { FileEntity } from './file.entity';
 import { FileStructureEntity } from './filestructure.entity';
 import { FolderEntity } from './folder.entity';
 import { PhaseEntity } from './phase.entity';
-import * as uuid from 'uuid';
+import UsersEntity from './users.entity';
+import { WorkTypeEntity } from './workType.entity';
 
 /**
  *
  */
-@Entity({ name: 'reference' })
+@Entity({ name: 'references' })
 export default class ReferanceTypeEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -65,37 +67,38 @@ export default class ReferanceTypeEntity extends BaseEntity {
 
   @Expose()
   @OneToMany(() => BkpEntity, (bkp: BkpEntity) => bkp.reference)
-  bkps: Relation<BkpEntity>[];
+  bkp: Relation<BkpEntity>[];
 
   @Expose()
   @OneToMany(() => FolderEntity, (folder: FolderEntity) => folder.reference)
-  folders: Relation<FolderEntity[]>;
+  folder: Relation<FolderEntity>[];
 
   @Expose()
-  @OneToMany(
-    () => FileTypeEntity,
-    (filetype: FileTypeEntity) => filetype.reference
-  )
-  filetypes: Relation<FileTypeEntity>[];
+  @OneToMany(() => FileTypeEntity, (filetype: FileTypeEntity) => filetype.reference)
+  filetype: Relation<FileTypeEntity>[];
 
   @Expose()
-  @OneToMany(
-    () => FileStructureEntity,
-    (filestructure: FileStructureEntity) => filestructure.reference
-  )
-  filestructures: Relation<FileStructureEntity>[];
+  @OneToMany(() => FileStructureEntity, (filestructure: FileStructureEntity) => filestructure.reference)
+  filestructure: Relation<FileStructureEntity>[];
 
   @Expose()
   @OneToMany(() => PhaseEntity, (phase: PhaseEntity) => phase.reference)
-  phases: Relation<PhaseEntity>[];
+  phase: Relation<PhaseEntity>[];
 
-  @Expose()
   @ManyToMany(() => UsersEntity, (usersEntity) => usersEntity.references)
   users: UsersEntity[];
 
   @Expose()
   @OneToMany(() => FileEntity, (file: FileEntity) => file.reference)
-  files: Relation<FileEntity>[];
+  file: Relation<FileEntity>[];
+
+  @Expose()
+  @OneToMany(() => WorkTypeEntity, (worktype: WorkTypeEntity) => worktype.reference)
+  worktype: Relation<WorkTypeEntity>[];
+
+  @Expose()
+  @OneToMany(() => BkpHierarchyEntity, (file: BkpHierarchyEntity) => file.references)
+  bkphierarchy: Relation<BkpHierarchyEntity>[];
 
   constructor(referanceTypeEntity: Partial<ReferanceTypeEntity>) {
     super();

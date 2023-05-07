@@ -22,9 +22,7 @@ export class InvitationTemplateService {
   ): Promise<InvitationTemplateEntity> {
     try {
       const catagoryDetails = new InvitationTemplateEntity({ ...createInput });
-      const selectedReference = await this.referenceService.getReferenceById(
-        referenceFilter
-      );
+      const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
       const newPost = await this.invitationTemplateRepository.create({
         ...catagoryDetails,
         reference: { id: selectedReference.id },
@@ -40,27 +38,19 @@ export class InvitationTemplateService {
     updatefolder: UpdateInvitationTemplate,
     createinput: CreateInvitationTemplateInput
   ): Promise<InvitationTemplateEntity> {
-    const catagory = await this.invitationTemplateRepository.findOne({
+    const invitation = await this.invitationTemplateRepository.findOne({
       where: { invitationTemplateID: updatefolder.invitationTemplateID },
     });
-    if (catagory) {
-      await this.invitationTemplateRepository.update(catagory.id, {
-        ...createinput,
-      });
-      const updatedPost = await this.invitationTemplateRepository.findOne({
-        where: { id: catagory.id },
-      });
+    if (invitation) {
+      await this.invitationTemplateRepository.update(invitation.id, { ...createinput });
+      const updatedPost = await this.invitationTemplateRepository.findOne({ where: { id: invitation.id } });
       return updatedPost;
     }
-    throw new InvitationNotFoundException(catagory.invitationTemplateID);
+    throw new InvitationNotFoundException(invitation.invitationTemplateID);
   }
 
-  public async findAllInvitationTemplate(
-    refFilter: ReferenceFilterParams
-  ): Promise<InvitationTemplateEntity[]> {
-    const selectedReference = await this.referenceService.getReferenceById(
-      refFilter
-    );
+  public async findAllInvitationTemplate(refFilter: ReferenceFilterParams): Promise<InvitationTemplateEntity[]> {
+    const selectedReference = await this.referenceService.getReferenceById(refFilter);
     return await this.invitationTemplateRepository.find({
       where: { reference: { id: selectedReference.id } },
     });
@@ -73,9 +63,9 @@ export class InvitationTemplateService {
     const catagoryDetails = await this.invitationTemplateRepository.delete({
       invitationTemplateID: invitationTemplateID,
     });
-    const catagory = await this.invitationTemplateRepository.find({
+    const invitation = await this.invitationTemplateRepository.find({
       where: { invitationTemplateID: invitationTemplateID },
     });
-    return catagory;
+    return invitation;
   }
 }

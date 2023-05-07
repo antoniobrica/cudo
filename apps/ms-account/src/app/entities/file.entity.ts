@@ -12,7 +12,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
-import ReferanceTypeEntity from './reference.entity';
+import ReferanceTypeEntity from './references.entity';
 
 @Entity({ name: 'file' })
 export class FileEntity extends BaseEntity {
@@ -52,11 +52,8 @@ export class FileEntity extends BaseEntity {
   isDeleted?: boolean;
 
   @Expose()
-  @ManyToOne(
-    () => ReferanceTypeEntity,
-    (reference: ReferanceTypeEntity) => reference.files
-  )
-  reference: Relation<ReferanceTypeEntity>;
+  @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.file)
+  reference: Relation<ReferanceTypeEntity>[];
 
   constructor(fileEntity: Partial<FileEntity>) {
     super();
