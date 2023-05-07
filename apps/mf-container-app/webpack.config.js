@@ -5,11 +5,12 @@ const { withReact } = require('@nrwl/react');
 module.exports = composePlugins(withNx(), withReact(), (config) => {
   // Update the webpack config as needed here.
   // e.g. `config.plugins.push(new MyPlugin())`
-  
+
   const newConfig = {
     ...config,
     devServer: {
       ...config.devServer,
+      host: '0.0.0.0',
       port: 6002,
     },
     resolve: {

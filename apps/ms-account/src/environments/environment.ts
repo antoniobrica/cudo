@@ -2,7 +2,7 @@ export const environment = {
     NODE_ENV:'development',
     PORT:5001,
     SERVER_TIMEOUT:1080000,
-    DATABASE_HOST: 'localhost',
+    DATABASE_HOST: 'mssql',
     DATABASE_PORT:1433,
     DATABASE_USERNAME:'sa',
     DATABASE_PASSWORD:'YourStrong!Password',

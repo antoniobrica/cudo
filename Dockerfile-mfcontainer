@@ -1,29 +1,3 @@
-# FROM node:lts-alpine3.16
-
-# WORKDIR /usr/src/app
-
-# COPY package*.json ./
-# COPY workspace*.json ./
-# COPY cypress*.json ./
-# # COPY apps/mf-container-app ./apps/mf-container-app
-# # COPY libs ./libs
-
-# RUN apk update \
-# && apk add --no-cache python3 \
-# && ln -s /usr/bin/python3 /usr/bin/python
-
-# RUN npm install
-# RUN npm install -g nx
-
-# COPY . .
-# #RUN npm run build ms-task
-# #CMD ["node", "dist/main"]
-# #RUN nohup npm start ms-task > stdout.txt 2> stderr.txt &
-# EXPOSE 5007
-
-# CMD ["npm", "run", "nx", "serve", "mf-container-app", "--host", "0.0.0.0"]
-
-
 # Use Node.js LTS version with Alpine Linux as a base image
 FROM node:lts-alpine3.16
 
@@ -52,7 +26,7 @@ RUN npm install -g nx
 COPY . .
 
 # Expose the port that the application will run on
-EXPOSE 5007
+EXPOSE 6002 
 
 # Run the application
-CMD ["npm", "run","nx","serve","mf-container-app", "--host", "0.0.0.0"]
+CMD ["npm", "run", "nx", "serve", "mf-container-app", "0.0.0.0"]

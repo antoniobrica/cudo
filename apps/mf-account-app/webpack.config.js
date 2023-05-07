@@ -11,6 +11,7 @@ module.exports = composePlugins(withNx(), withReact(), (config) => {
     devServer: {
       ...config.devServer,
       port: 6001,
+      host: '0.0.0.0',
     },
     resolve: {
       ...config.resolve,
