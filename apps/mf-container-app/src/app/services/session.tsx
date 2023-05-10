@@ -1,10 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { Configuration, PublicApi, Session } from '@oryd/kratos-client';
-import { isAuthenticated, unsetAuthenticated, login, refresh } from '../services/auth';
-import config from '../config/kratos';
+import { FrontendApi, Configuration, Session, Identity } from '@ory/client';
+import { useAppSelector } from '../hooks';
 
-const kratos = new PublicApi(new Configuration({ basePath: config.kratos.public }));
-const SessionContext = createContext<Session>({} as Session);
+interface SessionContextValue {
+  session?: Session;
+  logoutUrl?: string;
+}
+
+export const SessionContext = createContext<SessionContextValue>({} as SessionContextValue);
 
 export const useSession = () => useContext(SessionContext);
 
@@ -17,24 +20,54 @@ export const SessionProvider: React.FunctionComponent<SessionProviderProps> = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [session, setSession] = useState<Session>({} as Session);
+  const [session, setSession] = useState<Session | undefined>();
+  const [logoutUrl, setLogoutUrl] = useState<string | undefined>();
 
+  const { loggedIn } = useAppSelector((state) => state.user);
+
+  // const basePath = 'https://youthful-poitras-uhe0c70luy.projects.oryapis.com';
+  const basePath = process.env.REACT_APP_ORY_URL || 'http://localhost:4000';
+  const ory = new FrontendApi(
+    new Configuration({
+      basePath,
+      baseOptions: {
+        withCredentials: true,
+      },
+    })
+  );
+
+  // Returns either the email or the username depending on the user's Identity Schema
+  const getUserName = (identity: Identity) => identity.traits.email || identity.traits.username;
+
+  // Second, gather session data, if the user is not logged in, redirect to login
   useEffect(() => {
-    isAuthenticated() &&
-      kratos
-        .whoami()
+    // remove this future
+    if (!loggedIn) {
+      ory
+        .toSession()
         .then(({ data }) => {
-          const now = new Date();
-          const expiry = data.expires_at;
-          if (now.toISOString() > expiry) return refresh();
-          else setSession(data);
+          console.log(data);
+          // User has a session!
+          setSession(data);
+          ory.createBrowserLogoutFlow().then(({ data }) => {
+            // Get also the logout url
+            setLogoutUrl(data.logout_url);
+          });
         })
-        .catch((error) => {
-          // Request may fail due to an expired token.
-          unsetAuthenticated();
-          login({ setReferer: false });
+        .catch((err) => {
+          console.error(err);
+          // Redirect to login page
+          window.location.replace(`${basePath}/ui/login`);
         });
-  }, []);
+    }
+  }, [loggedIn]);
 
-  return <SessionContext.Provider value={session}>{children}</SessionContext.Provider>;
+  console.log(logoutUrl);
+
+  const value = {
+    session,
+    logoutUrl,
+  };
+
+  return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;
 };

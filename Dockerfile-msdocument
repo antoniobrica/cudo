@@ -30,5 +30,5 @@ EXPOSE 6010
 
 # Run the application
 
-CMD ["npm", "run","nx","serve","ms-document","0.0.0.0"]
+CMD ["nx","serve","ms-document","--host","0.0.0.0"]
 

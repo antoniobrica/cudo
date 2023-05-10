@@ -4,7 +4,6 @@ import './../../../assets/style/index.scss';
 import { Input, Segment, Form, Grid, Button, Icon, Message } from 'semantic-ui-react';
 import img from 'libs/shared-components/src/Shape 2.png';
 import logo from 'libs/shared-components/src/slider.png';
-import { MS_SERVICE_URL } from '@cudo/mf-core';
 // import EmailValidator from 'email-validator';
 import { useTranslation } from 'react-i18next';
 /* eslint-disable-next-line */

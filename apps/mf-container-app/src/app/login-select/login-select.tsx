@@ -6,6 +6,8 @@ import { isAuthenticated, ToEmail } from '../services/auth';
 import axios from 'axios';
 import { environment } from '../../environments/environment';
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../hooks';
+import { useSession } from '../services/session';
 
 /* eslint-disable-next-line */
 export interface LoginSelectProps {}
@@ -15,6 +17,8 @@ export function LoginSelect(props: LoginSelectProps) {
   const [email, setEmail] = useState('');
   const [companies, setCompanies] = useState([]);
   const [selectedCompany, setselectedCompany] = useState('');
+
+  const user = useAppSelector((state) => state.user);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -28,9 +32,21 @@ export function LoginSelect(props: LoginSelectProps) {
     localStorage.setItem('selectedCompany', selectedCompany);
   }, [selectedCompany]);
 
+  const { session } = useSession();
+
   useEffect(() => {
-    if (!isAuthenticated()) {
-      console.log('tooo mail');
+    if (!user.loggedIn && !session) {
+      console.log(session);
+      console.log('need to login');
+      
+
+
+
+      
+
+
+
+      // navigate('/login-email');
       ToEmail();
     } else {
       console.log('ddfd');
@@ -85,7 +101,7 @@ export function LoginSelect(props: LoginSelectProps) {
         }
       });
     }
-  }, []);
+  }, [user.loggedIn, session]);
 
   return (
     <div>

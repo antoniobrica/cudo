@@ -1,21 +1,31 @@
-FROM node:lts
+# Use Node.js LTS version with Alpine Linux as a base image
+FROM node:lts-alpine3.16
 
+# Set the working directory for the app
 WORKDIR /usr/src/app
 
+# Copy package.json and package-lock.json
 COPY package*.json ./
+
+# Copy workspace.json and cypress.json
 COPY workspace*.json ./
 COPY cypress*.json ./
 
+# Install Python3 and create a symlink to `python`
+RUN apk update \
+&& apk add --no-cache python3 build-base \
+&& ln -s /usr/bin/python3 /usr/bin/python
 
-RUN npm install
+
+# Install npm dependencies
+RUN npm ci
+
+# Install Nx CLI globally
 RUN npm install -g nx
 
+# Copy the rest of the application files
 COPY . .
-#RUN npm run build ms-task
-#CMD ["node", "dist/main"]
-#RUN nohup npm start ms-task > stdout.txt 2> stderr.txt &
+
 EXPOSE 5007
 
-ENV HOST 0.0.0.0
-# CMD ["npm", "start","ms-task"]
-CMD ["npm", "run","nx","serve","ms-task","--host0.0.0.0"]
+CMD ["nx","serve","ms-task","--host", "0.0.0.0"]

@@ -4,13 +4,13 @@ import type { RootState } from '../../app/store';
 import Cookies from 'js-cookie';
 import { CookieNames } from '../../constants';
 
-interface IUser {
-  id: number;
-  userId: string;
+export interface IUser {
+  userID: string;
   userName: string;
   imageUrl: string;
   email: string;
-  createdAt: Date;
+  createdAt?: Date;
+  logoutUrl: string;
 }
 
 interface UserState {

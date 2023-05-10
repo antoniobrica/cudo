@@ -12,15 +12,6 @@ services:
     networks:
       - my-network
 
-  # initdb:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile-initdb
-  #   depends_on:
-  #     - mssql
-  #   networks:
-  #     - my-network
-
   ms-account:
     build:
       context: .
@@ -32,53 +23,55 @@ services:
     ports:
       - '5001:5001'
     volumes:
-       - ./:/usr/src/app/
-    # volumes:
-    #   - ./apps/ms-account:/usr/src/app
+      - ./:/usr/src/app/
     networks:
       - my-network
 
-  # ms-task:
-  #   image: node:lts
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile-mstask
-  #   volumes:
-  #       - ./apps/ms-task/src:/usr/src/app/
-  #   # volumes:
-  #   #   - ./:/usr/src/app/
-  #   ports:
-  #     - '5007:5007'
-  #   networks:
-  #     - my-network
+  ms-task:
+    build:
+      context: .
+      dockerfile: Dockerfile-mstask
+    container_name: ms-task
+    environment:
+      - PORT=5007
+    ports:
+      - '5007:5007'
+    volumes:
+      - ./:/usr/src/app/
+    networks:
+      - my-network
 
-  # ms-project:
-  #   image: node:lts
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile-msproject
-  #   volumes:
-  #       - ./apps/ms-project/src:/usr/src/app/
-  #   # volumes:
-  #   #   - ./:/usr/src/app/
-  #   ports:
-  #     - '5005:5005'
-  #   networks:
-  #     - my-network
+  ms-project:
+    build:
+      context: .
+      dockerfile: Dockerfile-msproject
+    container_name: ms-project
+    restart: always
+    environment:
+      - PORT=5005
+    ports:
+      - '5005:5005'
+    volumes:
+      - ./:/usr/src/app/
+    networks:
+      - my-network
 
-  # ms-document:
-  #   image: node:lts
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile-msdocument
-  #   volumes:
-  #       - ./apps/ms-document/src:/usr/src/app/
-  #   # volumes:
-  #   #   - ./:/usr/src/app/
-  #   ports:
-  #     - '5003:5003'
-  #   networks:
-  #     - my-network
+  ms-document:
+    build:
+      context: .
+      dockerfile: Dockerfile-msdocument
+    container_name: ms-document
+    restart: always
+    environment:
+      - PORT=5003
+    ports:
+      - '5003:5003'
+    volumes:
+      - ./:/usr/src/app/
+    ports:
+      - '5003:5003'
+    networks:
+      - my-network
 
 networks:
   my-network:

@@ -2,8 +2,7 @@ import React from 'react';
 
 import '../../../style/index.scss';
 import { Header, Icon, Image, Menu, Segment, Sidebar, Button, Popup, Dropdown } from 'semantic-ui-react';
-import { NavLink, useLocation, useMatch } from 'react-router-dom';
-import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { NavLink, useLocation, useMatch, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import company from 'libs/shared-components/src/company2.png';
@@ -15,6 +14,8 @@ export interface MenuProps {
   data?;
   mainMenuExpand?;
   history?;
+  logoutUrl?;
+  username?;
 }
 
 const profileOption = [
@@ -69,7 +70,6 @@ export function Menubar(props: MenuProps) {
   const location = useLocation();
 
   const match = useMatch('*');
-  const { pathname } = match;
 
   // const { url, path } = useRouteMatch();
   const url = location.pathname;
@@ -108,14 +108,16 @@ export function Menubar(props: MenuProps) {
                 <img src={userProfile} />
               </div>
 
-              <Dropdown text="John Smith" floating labeled>
-                <Dropdown.Menu>
+              <Dropdown text={props.username} labeled>
+                <Dropdown.Menu 
+                // style={{ marginLeft: 0, marginRight: 0 }}
+                >
                   <Dropdown.Item>
                     <i className="ms-Icon ms-Icon--PlayerSettings" aria-hidden="true"></i>{' '}
-                    {/* {t('menu.profile.user_profile')} */}
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleOpenProject('logout')}>
-                    <i className="ms-Icon ms-Icon--PowerButton" aria-hidden="true"></i> 
+                  <Dropdown.Item onClick={() => (window.location.href = props.logoutUrl)}>
+                    Logout
+                    <i className="ms-Icon ms-Icon--PowerButton" aria-hidden="true"></i>
                     {/* {t('menu.logout')} */}
                   </Dropdown.Item>
                 </Dropdown.Menu>
@@ -141,20 +143,22 @@ export function Menubar(props: MenuProps) {
             <Menu.Item as="a" className="menu-dropdown-sidebar add-new-menu">
               <i className="ms-Icon ms-Icon--CirclePlus" aria-hidden="true"></i>
 
-              <Dropdown 
-              // text={t('common.add_new_button')} 
-              floating labeled>
+              <Dropdown
+                // text={t('common.add_new_button')}
+                floating
+                labeled
+              >
                 <Dropdown.Menu>
                   <Dropdown.Item>
-                    <i className="ms-Icon ms-Icon--NewTeamProject" aria-hidden="true"></i> 
+                    <i className="ms-Icon ms-Icon--NewTeamProject" aria-hidden="true"></i>
                     {/* {t('menu.project')} */}
                   </Dropdown.Item>
                   <Dropdown.Item>
-                    <i className="ms-Icon ms-Icon--AddNotes" aria-hidden="true"></i> 
+                    <i className="ms-Icon ms-Icon--AddNotes" aria-hidden="true"></i>
                     {/* {t('project_tab_menu.task.title')} */}
                   </Dropdown.Item>
                   <Dropdown.Item>
-                    <i className="ms-Icon ms-Icon--IconSetsFlag" aria-hidden="true"></i> 
+                    <i className="ms-Icon ms-Icon--IconSetsFlag" aria-hidden="true"></i>
                     {/* {t('menu.milestone')} */}
                   </Dropdown.Item>
                   <Dropdown.Item>
