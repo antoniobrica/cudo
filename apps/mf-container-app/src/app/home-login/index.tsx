@@ -27,8 +27,6 @@ function HomeLogin() {
 
   const dispatch = useAppDispatch();
 
-  console.log(userInfo?.userByEmail[0]);
-
   useEffect(() => {
     if (session) {
       fetchCurrentUser({ variables: { email: session.identity.traits.email } });

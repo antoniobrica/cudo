@@ -25,7 +25,7 @@ import { Home } from './home/home';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import Signup from './signup';
-import SignIn from './sign-in';
+// import SignIn from './sign-in';
 import HomeLogin from './home-login';
 import { ApolloProvider } from '@apollo/client';
 import { CudoApolloClient } from './services/apollo-client';
@@ -52,7 +52,7 @@ function App() {
               <Route path={config.routes.registration.path} element={<UserRegistration />} />
               <Route path={config.routes.error.path} element={<Error />} />
               <Route path="/sign-up" element={<Signup />} />
-              <Route path="/sign-in" element={<SignIn />} />
+              {/* <Route path="/sign-in" element={<SignIn />} /> */}
               {/* <Route path={config.routes.testmodal.path} element={<TestModel />} /> */}
             </Routes>
             <Outlet />

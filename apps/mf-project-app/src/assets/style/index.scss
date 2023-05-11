@@ -1,32 +1,99 @@
+// @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet');
+// @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+// @import url('https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/9.6.1/css/fabric.min.css');
+// @import 'sass-utils/color';
+// @import 'sass-utils/variable';
+// @import 'sass-utils/mixins';
+// @import 'pages/login';
+// @import 'pages/account';
+// @import 'pages/order';
+// @import 'layout/navigation';
+// @import 'layout/container';
+// @import 'layout/userProfile';
+// @import 'layout/header';
+// @import 'layout/footer';
+// @import 'layout/segment';
+// @import 'layout/color-pallete';
+// @import 'layout/filter';
+// @import 'layout/expert-card-profile';
+// @import 'layout/polls';
+// @import 'layout/form';
+// @import 'layout/fields';
+// @import 'layout/table';
+// @import 'components/buttons';
+// @import 'components/tabs';
+// @import 'components/rating';
+// @import 'components/modal';
+// @import 'components/images';
+// @import 'components/card-block';
+// @import 'base/base';
+// @import 'layout/sidebar';
+
+// // Global
+
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import url('https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/9.6.1/css/fabric.min.css');
-@import 'sass-utils/color';
-@import 'sass-utils/variable';
-@import 'sass-utils/mixins';
-@import 'pages/login';
-@import 'pages/account';
-@import 'pages/order';
-@import 'layout/navigation';
-@import 'layout/container';
-@import 'layout/userProfile';
-@import 'layout/header';
-@import 'layout/footer';
-@import 'layout/segment';
-@import 'layout/color-pallete';
-@import 'layout/filter';
-@import 'layout/expert-card-profile';
-@import 'layout/polls';
-@import 'layout/form';
-@import 'layout/fields';
-@import 'layout/table';
-@import 'components/buttons';
-@import 'components/tabs';
-@import 'components/rating';
-@import 'components/modal';
-@import 'components/images';
-@import 'components/card-block';
-@import 'base/base';
-@import 'layout/sidebar';
-
+@import "sass-utils/color";
+@import "sass-utils/variable";
+@import "sass-utils/mixins";
+@import "pages/login";
+@import "pages/account";
+@import "pages/order";
+@import "layout/navigation";
+@import "layout/container";
+@import "layout/userProfile";
+@import "layout/header";
+@import "layout/footer";
+@import "layout/segment";
+@import "layout/color-pallete";
+@import "layout/filter";
+@import "layout/expert-card-profile";
+@import "layout/polls";
+@import "layout/form";
+@import "layout/fields";
+@import "layout/table";
+@import "layout/filesTab";
+@import "components/buttons";
+@import "components/tabs";
+@import "components/rating";
+@import "components/modal";
+@import "components/images";
+@import "components/card-block";
+@import "components/icons";
+@import "base/base";
+@import "layout/sidebar";
+@import "layout/modal"; 
+@import "layout/message"; 
+@import "layout/task";
+@import "layout/costTab";
+@import "layout/meetingTab";
+@import "layout/projectListing";
+@import "layout/planningTab";
 // Global
+canvas.transparentCanvas {
+    position: absolute;
+  }
+
+.no-data-found-info {
+  button {
+    i {
+      font-size: 14px;
+    }
+  }
+}
+
+.task-full-details {
+  .ui.circular.label, .ui.circular.labels .label {
+    min-width: 2em;
+    min-height: 2em;
+    padding: .5em!important;
+    line-height: 1.5em;
+    text-align: center;
+    border-radius: 500rem;
+    width: 2.5em;
+    height: 2.5em;
+    font-size: 10px;
+    font-weight: 400;
+  }
+}

@@ -24,6 +24,7 @@ export const SessionProvider: React.FunctionComponent<SessionProviderProps> = ({
   const [logoutUrl, setLogoutUrl] = useState<string | undefined>();
 
   const { loggedIn } = useAppSelector((state) => state.user);
+ 
 
   // const basePath = 'https://youthful-poitras-uhe0c70luy.projects.oryapis.com';
   const basePath = process.env.REACT_APP_ORY_URL || 'http://localhost:4000';
