@@ -1,0 +1,273 @@
+a {
+  cursor: pointer;
+}
+.project-listing-page {
+  padding: 2.5rem 4.5rem;
+  top: 0 !important;
+  margin-left: 75px;
+  @include transition(all .25s);
+  .dashboard-header {
+    @include flex(flex);
+    @include justify-content(space-between);
+    h3 {
+      @include flex(flex);
+      @include flex-direction(column);
+      span {
+        line-height: 2;
+        color: #718898;
+        font-size: 14px;
+        font-weight: 400;
+      }
+    }
+    .add-project-area {
+      button {
+        i {
+          font-size: 16px;
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}
+
+.project-listing-cards {
+  ul {
+    list-style: none;
+    padding: 0;
+    @include flex(flex);
+    @include flex-wrap(wrap);
+    margin: 15px -15px;
+    li {
+      background: #fff;
+      box-shadow: 0px 1px 2px #00000029;
+      width: 350px;
+      margin: 0 15px 30px;
+      max-width: 100%;
+      padding: 25px 35px 35px;
+      .project-logo-action {
+        @include flex(flex);
+        @include justify-content(space-between);
+        .project-logo {
+          background: #f5f5f5;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          overflow: hidden;
+        }
+        .project-action {
+          .ui.dropdown {
+            background: #F1F5FF;
+            width: 30px;
+            height: 30px;
+            @include flex(flex);
+            align-items: center;
+            justify-content: center;
+            color: #2D62ED;
+            border-radius: 50%;
+            i.ellipsis.horizontal.icon {
+              line-height: 1;
+              margin: 0;
+            }
+          }
+        }
+      }
+      .project-name {
+        margin-top: 20px;
+        h4 {
+          font-size: 20px;
+          font-weight: 600;
+          @include flex(flex);
+          @include flex-direction(column);
+          cursor: pointer;
+          span {
+            font-size: 13px;
+            color: #718898;
+            font-weight: 400;
+          }
+        }
+      }
+      .project-info {
+        margin: 20px 0;
+        p {
+          @include flex(flex);
+          @include justify-content(space-between);
+          color: #718898;
+          font-size: 12px;
+          font-weight: 500;
+          span {
+            color: #1B1B40;
+            font-weight: 600;
+          }
+        }
+      }
+      .project-description {
+        border-top: 1px solid #E0E6EB;
+        padding-top: 25px;
+        p {
+          font-size: 12px;
+          color: #718898;
+          line-height: 20px;
+        }
+        .project-members {
+          @include flex(flex);
+          @include flex-wrap(wrap);
+          margin-top: 23px;
+          .ui.label {
+            width: 33px;
+            height: 33px;
+            text-align: center;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 33px;
+            max-height: 33px;
+            margin-right: 3px;
+          }
+        }
+        .ql-container.ql-snow.ql-disabled {
+          border: none;
+          padding: 0;
+          margin: 0;
+          height: auto;
+          .ql-editor {
+            padding: 0;
+            height: auto;
+          }
+        }
+      }
+    }
+  }
+}
+
+// add new project modal
+.ui.modal.add-new-project-modal {
+  width: 860px;
+  .header {
+    border-bottom: none;
+  }
+  .ui.pointing.secondary.menu {
+    padding: 0 30px;
+    margin: 0 -30px;
+    border-bottom: 1px solid #D0D8DF;
+  }
+  .ui.segment.tab {
+    padding: 0;
+  }
+  .content {
+    padding: 0 30px 20px 30px;
+    &.upload-client-logo {
+      padding: 27px 30px;
+      margin-top: 18px;
+      @include flex(flex);
+      @include justify-content(space-between);
+      .description {
+        color: #1B1B40;
+        font-weight: 500;
+        @include flex(flex);
+        @include flex-direction(column);
+        span {
+          font-size: 14px;
+          color: #718898;
+          font-weight: 400;
+          margin-top: 3px;
+        }
+      }
+      button.ui.button {
+        background: #9FB5C5;
+        border: 1px solid #9FB5C5;
+        font-size: 14px;
+        font-weight: 400;
+      }
+    }
+  }
+  .header {
+    padding: 25px ​30px 0 30px !important;
+  }
+  .ui.header {
+    padding: 0 !important;
+    font-size: 16px;
+    margin-top: 35px;
+    color: #1B1B40;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .ui.table.manage-work-table {
+    border: 1px solid #E0E6EB;
+    thead {
+      tr {
+        th {
+          background: #F1F5F8;
+          border-bottom: 1px solid #F1F5F8;
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          border-top: 1px solid #F1F5F8;
+          form {
+            margin: 0;
+          }
+          &.add-more-work {
+            padding: 12px 10px;
+            a {
+              color: #718898;
+              font-size: 14px;
+              font-weight: 500;
+              cursor: pointer;
+              @include flex(flex);
+              i {
+                font-size: 16px;
+                color: #718898;
+                margin-right: 8px;
+              }
+            }
+          }
+          
+          .estimated-cost-field {
+            margin: 0;
+            .ui.label {
+              max-height: 3rem;
+              padding: 0 10px;
+              background: none;
+              border: 1px solid #D0D8DF;
+              line-height: 100%;
+              font-size: 13px;
+              font-weight: 400;
+              color: #718898;
+              @include flex(flex);
+              @include align-items(center);
+            }
+            input {
+              height: 3rem;
+            }
+          }
+          .ui.selection.dropdown {
+            min-height: 3rem !important;
+            max-width: 300px;
+            > .text {
+              margin: 2px 0 0 0;
+              font-size: 13px;
+              font-weight: 500 !important;
+              color: #1B1B40;
+            }
+            > .dropdown.icon {
+              margin: 1px 0 0 0;
+              color: #718898;
+              opacity: 1;
+            }
+          }
+          i.ms-Icon.ms-Icon--Delete.delete-row {
+            position: absolute;
+            right: -30px;
+            top: 5px;
+            font-size: 16px;
+            color: red;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}

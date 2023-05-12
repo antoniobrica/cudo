@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import '../../../style/index.scss';
+import './../../../assets/style/index.scss';
 import { Header, Icon, Image, Menu, Segment, Sidebar, Button, Popup, Dropdown } from 'semantic-ui-react';
 import { NavLink, useLocation, useMatch, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -100,7 +100,7 @@ export function Menubar(props: MenuProps) {
           <div className="sidebar-top-menu">
             <Menu.Item as="a" className="app-logo-sidebar">
               <img src={company} />
-              {/* <span>{t('menu.title')}</span> */}
+              <span>{t('menu.title')}</span>
             </Menu.Item>
 
             <Menu.Item as="a" className="menu-dropdown-sidebar profile-dropdown-menu">
@@ -108,17 +108,14 @@ export function Menubar(props: MenuProps) {
                 <img src={userProfile} />
               </div>
 
-              <Dropdown text={props.username} labeled>
-                <Dropdown.Menu 
-                // style={{ marginLeft: 0, marginRight: 0 }}
-                >
+              <Dropdown text="John Smith" floating labeled>
+                <Dropdown.Menu>
                   <Dropdown.Item>
                     <i className="ms-Icon ms-Icon--PlayerSettings" aria-hidden="true"></i>{' '}
+                    {t('menu.profile.user_profile')}
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => (window.location.href = props.logoutUrl)}>
-                    Logout
-                    <i className="ms-Icon ms-Icon--PowerButton" aria-hidden="true"></i>
-                    {/* {t('menu.logout')} */}
+                  <Dropdown.Item onClick={() => handleOpenProject('logout')}>
+                    <i className="ms-Icon ms-Icon--PowerButton" aria-hidden="true"></i> {t('menu.logout')}
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
@@ -143,27 +140,20 @@ export function Menubar(props: MenuProps) {
             <Menu.Item as="a" className="menu-dropdown-sidebar add-new-menu">
               <i className="ms-Icon ms-Icon--CirclePlus" aria-hidden="true"></i>
 
-              <Dropdown
-                // text={t('common.add_new_button')}
-                floating
-                labeled
-              >
+              <Dropdown text={t('common.add_new_button')} floating labeled>
                 <Dropdown.Menu>
                   <Dropdown.Item>
-                    <i className="ms-Icon ms-Icon--NewTeamProject" aria-hidden="true"></i>
-                    {/* {t('menu.project')} */}
+                    <i className="ms-Icon ms-Icon--NewTeamProject" aria-hidden="true"></i> {t('menu.project')}
                   </Dropdown.Item>
                   <Dropdown.Item>
-                    <i className="ms-Icon ms-Icon--AddNotes" aria-hidden="true"></i>
-                    {/* {t('project_tab_menu.task.title')} */}
+                    <i className="ms-Icon ms-Icon--AddNotes" aria-hidden="true"></i> {t('project_tab_menu.task.title')}
                   </Dropdown.Item>
                   <Dropdown.Item>
-                    <i className="ms-Icon ms-Icon--IconSetsFlag" aria-hidden="true"></i>
-                    {/* {t('menu.milestone')} */}
+                    <i className="ms-Icon ms-Icon--IconSetsFlag" aria-hidden="true"></i> {t('menu.milestone')}
                   </Dropdown.Item>
                   <Dropdown.Item>
                     <i className="ms-Icon ms-Icon--DecisionSolid" aria-hidden="true"></i>{' '}
-                    {/* {t('project_tab_menu.tender.title')} */}
+                    {t('project_tab_menu.tender.title')}
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
@@ -190,7 +180,7 @@ export function Menubar(props: MenuProps) {
                 content='Search'
                 trigger={<i className="ms-Icon ms-Icon--Search" aria-hidden="true"></i>} size='small' position='right center'>
               </Popup> */}
-              {/* <span>{t('common.search')}</span> */}
+              <span>{t('common.search')}</span>
             </Menu.Item>
 
             <Menu.Item as="a" onClick={() => handleOpenProject('dashboard')}>
@@ -199,7 +189,7 @@ export function Menubar(props: MenuProps) {
                 content='Dashboard'
                 trigger={<i className="ms-Icon ms-Icon--ViewDashboard" aria-hidden="true"></i>} size='small' position='right center'>
               </Popup> */}
-              {/* <span>{t('menu.dashboard')}</span> */}
+              <span>{t('menu.dashboard')}</span>
             </Menu.Item>
 
             {/* <Menu.Item as={NavLink} to={`${url}/project`} */}
@@ -215,7 +205,7 @@ export function Menubar(props: MenuProps) {
                 trigger={<i className="ms-Icon ms-Icon--NewTeamProject" aria-hidden="true"></i>
               } size='small' position='right center'>
               </Popup> */}
-              {/* <span>{t('menu.projects')}</span> */}
+              <span>{t('menu.projects')}</span>
             </Menu.Item>
 
             <Menu.Item as="a" onClick={() => handleOpenProject('calendar')}>
@@ -225,7 +215,7 @@ export function Menubar(props: MenuProps) {
                 trigger={<i className="ms-Icon ms-Icon--CalendarAgenda" aria-hidden="true"></i>
               } size='small' position='right center'>
               </Popup> */}
-              {/* <span>{t('menu.calendar')}</span> */}
+              <span>{t('menu.calendar')}</span>
             </Menu.Item>
 
             <Menu.Item as="a" onClick={() => handleOpenProject('Notification')}>
@@ -235,7 +225,7 @@ export function Menubar(props: MenuProps) {
                 trigger={<i className="ms-Icon ms-Icon--Ringer" aria-hidden="true"></i>
               } size='small' position='right center'>
               </Popup> */}
-              {/* <span>{t('menu.notification')}</span> */}
+              <span>{t('menu.notification')}</span>
             </Menu.Item>
 
             <Menu.Item as="a" onClick={() => handleOpenProject('people')}>
@@ -245,7 +235,7 @@ export function Menubar(props: MenuProps) {
                 trigger={<i className="ms-Icon ms-Icon--People" aria-hidden="true"></i>
               } size='small' position='right center'>
               </Popup> */}
-              {/* <span>{t('project_list.add_new_project.people')}</span> */}
+              <span>{t('project_list.add_new_project.people')}</span>
             </Menu.Item>
 
             <Menu.Item as="a" onClick={() => handleOpenProject('message')}>
@@ -255,7 +245,7 @@ export function Menubar(props: MenuProps) {
                 trigger={<i className="ms-Icon ms-Icon--ChatInviteFriend" aria-hidden="true"></i>
               } size='small' position='right center'>
               </Popup> */}
-              {/* <span>{t('project_tab_menu.messages.title')}</span> */}
+              <span>{t('project_tab_menu.messages.title')}</span>
             </Menu.Item>
 
             <Menu.Item
@@ -271,7 +261,7 @@ export function Menubar(props: MenuProps) {
                 trigger={
               } size='small' position='right center'>
               </Popup> */}
-              {/* <span>{t('menu.profile.title')}</span> */}
+              <span>{t('menu.profile.title')}</span>
             </Menu.Item>
           </div>
 
@@ -283,7 +273,7 @@ export function Menubar(props: MenuProps) {
                 trigger={<i className="ms-Icon ms-Icon--Settings" aria-hidden="true"></i>
               } size='small' position='right center'>
               </Popup> */}
-              {/* <span>{t('menu.configuration')}</span> */}
+              <span>{t('menu.configuration')}</span>
             </Menu.Item>
             {/* <Menu.Item as='a' onClick={() => handleOpenProject('logout')}> */}
             {/* <Popup

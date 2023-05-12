@@ -8,7 +8,13 @@ import * as serviceWorker from './serviceWorker';
 
 import App from './app/app';
 import { Provider } from 'react-redux';
+import { initI18n } from '@cudo/mf-core';
 import { store } from './app/store';
+
+const defaultLanguage = 'en-GB';
+const supportedLanguages = [defaultLanguage, 'en-GB'];
+
+initI18n('./assets/i18n/en-GB.json', defaultLanguage);
 
 const rootElement = document.getElementById('root');
 if (rootElement) {

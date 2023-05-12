@@ -29,6 +29,13 @@ import Signup from './signup';
 import HomeLogin from './home-login';
 import { ApolloProvider } from '@apollo/client';
 import { CudoApolloClient } from './services/apollo-client';
+import { initI18n } from '@cudo/mf-core';
+
+const defaultLanguage = 'en-GB';
+const supportedLanguages = [defaultLanguage, 'en-GB'];
+initI18n('./assets/i18n/de-DE.json', defaultLanguage);
+
+// import Aasdf from './assets/i18n/en-GB.json';
 
 const client = new CudoApolloClient();
 
