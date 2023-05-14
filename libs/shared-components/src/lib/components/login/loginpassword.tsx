@@ -1,7 +1,7 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import React, { useEffect, useState } from 'react';
 
-import '../../../style/index.scss';
+import '../../../assets/style/index.scss';
 import { Select, Input, Segment, Form, Grid, Image, Checkbox, Button, Icon } from 'semantic-ui-react';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

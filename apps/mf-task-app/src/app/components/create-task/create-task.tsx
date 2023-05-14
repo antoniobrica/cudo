@@ -16,7 +16,6 @@ import { ITask, ITasks, TaskMutation } from '../../interfaces/task';
 import { useTaskMutation } from '../../services/useRequest';
 import { ApolloCache, FetchResult, useMutation } from '@apollo/client';
 import { ADD_TASK, GET_TASKS } from '../../graphql/graphql';
-import '@cudo/shared-components/src/style/index.scss';
 import './create-task.module.scss';
 import moment, { calendarFormat } from 'moment';
 import {
