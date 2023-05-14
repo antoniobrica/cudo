@@ -2,7 +2,6 @@ import React, { lazy, Suspense, useEffect, useState } from 'react';
 // import { LazyLoading } from '@cudo/shared-components'
 import { BrowserRouter as Router, Route, Link, useLocation, Routes, useParams, useNavigate } from 'react-router-dom';
 
-import { initI18n } from '@cudo/mf-core';
 // import { Loading } from '@cudo/ui'
 // import { TestComponent } from './test-component/test-component';
 // import MicroFrontend from "../MicroFrontend";
@@ -15,14 +14,19 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import config from './redux/store';
+import { initI18n } from '@cudo/mf-core';
+
+const defaultLanguage = 'en-GB';
+const supportedLanguages = [defaultLanguage, 'en-GB'];
+initI18n('./assets/i18n/de-DE.json', defaultLanguage);
 
 // const TabMenu = lazy(() => import('./components/tab-menu/tab-menu'))
 // const ProjectInfo = lazy(() => import('./components/project-info/project-info'))
 
-const defaultLanguage = 'en-GB';
+// const defaultLanguage = 'en-GB';
 // const supportedLanguages = [defaultLanguage, 'en-GB'];
-initI18n('./assets/i18n/{{lng}}.json', defaultLanguage);
-
+// initI18n('./assets/i18n/en-GB.json', defaultLanguage);
+// import something from './assets/i18n/en-GB.json';
 // const {
 //   EACT_APP_COST_HOST: costHost,
 //   REACT_APP_MEETING_HOST: meetingHost,

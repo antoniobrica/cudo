@@ -16,8 +16,13 @@ import 'react-toastify/dist/ReactToastify.css';
 //import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
 
 import ModalExampleModal from '../modal/modal';
-import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { MS_SERVICE_URL, initI18n } from '@cudo/mf-core';
 import { useTranslation } from 'react-i18next';
+import { useQuery } from '@apollo/client';
+
+const defaultLanguage = 'en-GB';
+const supportedLanguages = [defaultLanguage, 'en-GB'];
+// initI18n('./assets/i18n/en-GB.json', defaultLanguage);
 
 /* eslint-disable-next-line */
 export interface ProjectInfoProps {}
@@ -26,9 +31,11 @@ export function ProjectInfo(props: ProjectInfoProps) {
   const [activeErrorClass, setActiveErrorClass] = useState(false);
 
   const notify = () => toast('This is Warning Message');
-  const companyId = localStorage.getItem('selectedCompany');
+  const referenceID = localStorage.getItem('selectedCompany') ?? 'CUDO';
 
-  const { loading, error, data } = useProjectQuery(GET_PROJECTS, { variables: { companyId } });
+  console.log(referenceID);
+
+  const { loading, error, data } = useQuery(GET_PROJECTS, { variables: { referenceID: 'CUDO' } });
   const [openForm, setopenForm] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [projectErrors, setProjectErrors] = useState('');

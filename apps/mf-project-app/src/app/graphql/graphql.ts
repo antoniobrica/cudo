@@ -12,8 +12,8 @@ export const GET_TODOS = gql`
 `;
 
 export const GET_PROJECTS = gql`
-  query Projects($companyId: String!) {
-    projects(referenceFilter: { referenceType: COMPANY, referenceID: $companyId }) {
+  query Projects($referenceID: String!) {
+    projects(referenceFilter: { referenceType: COMPANY, referenceID: $referenceID }) {
       projectId
       projectName
       projectNum

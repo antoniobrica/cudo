@@ -71,7 +71,6 @@ export function Home(props: HomeProps) {
 
   const { information } = useAppSelector((state) => state.user);
 
-
   return (
     <div className={menuExpand ? 'expand-main-menu' : 'collapsed-main-menu'}>
       <div>
@@ -81,7 +80,7 @@ export function Home(props: HomeProps) {
           mainMenuExpand={onClickMenuExpand}
           history={navigate}
           logoutUrl={logoutUrl}
-          username={session?.identity?.traits?.username ?? information?.userName ?? "Fahim Arif"}
+          username={session?.identity?.traits?.username ?? information?.userName ?? 'Fahim Arif'}
         ></Menubar>
       </div>
       <div>
