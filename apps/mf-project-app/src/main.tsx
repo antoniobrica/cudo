@@ -42,6 +42,7 @@ if (!document.getElementById('ProjectApp-container')) {
     <BrowserRouter>
       <ApolloProvider client={client}>
         <ApolloHooksProvider client={client as any}>
+          Hello world
           <App />
         </ApolloHooksProvider>
       </ApolloProvider>

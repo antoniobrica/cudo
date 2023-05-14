@@ -23,9 +23,9 @@ import { useTranslation } from 'react-i18next';
 export interface ProjectInfoProps {}
 
 export function ProjectInfo(props: ProjectInfoProps) {
-  const [activeErrorClass, setActiveErrorClass] = useState(false);
-
   const notify = () => toast('This is Warning Message');
+  // const [activeErrorClass, setActiveErrorClass] = useState(false);
+
   const companyId = localStorage.getItem('selectedCompany');
 
   const { loading, error, data } = useProjectQuery(GET_PROJECTS, { variables: { companyId } });
@@ -49,13 +49,13 @@ export function ProjectInfo(props: ProjectInfoProps) {
 
   // set sucess value to toaster function
   const getTaskToasterMessage = (data) => {
-    setActiveErrorClass(false);
+    // setActiveErrorClass(false);
     toast(data);
   };
 
   // set error value to task error for toaster function
   const getTaskErrorMessage = (data) => {
-    setActiveErrorClass(true);
+    // setActiveErrorClass(true);
 
     let errorExeptionMessage: string;
     switch (data) {
@@ -102,21 +102,21 @@ export function ProjectInfo(props: ProjectInfoProps) {
   };
 
   // set error message to toaster
-  React.useEffect(() => {
-    if (projectErrors) {
-      toast(projectErrors);
-    }
-  }, [projectErrors]);
+  // React.useEffect(() => {
+  //   if (projectErrors) {
+  //     toast(projectErrors);
+  //   }
+  // }, [projectErrors]);
 
   if (loading) return <LazyLoading />;
   if (error)
     return (
       <div style={{ marginLeft: 900 }}>
-        <ModalExampleModal
+        {/* <ModalExampleModal
           onSuccess={refresh}
           getProjectToasterMessage={getTaskToasterMessage}
           getProjectErrorMessage={getTaskErrorMessage}
-        ></ModalExampleModal>
+        ></ModalExampleModal> */}
       </div>
     );
   return (
@@ -126,7 +126,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
         <ModalExampleModal onSuccess={refresh}></ModalExampleModal>
       </div> */}
       <ToastContainer
-        className={`${activeErrorClass ? 'error' : 'success'}`}
+        // className={`${activeErrorClass ? 'error' : 'success'}`}
         position="top-right"
         autoClose={5000}
         hideProgressBar={true}
@@ -148,11 +148,11 @@ export function ProjectInfo(props: ProjectInfoProps) {
               {t('project_list.header.header_line.project_added')}
             </span>
           </h3>
-          <ModalExampleModal
+          {/* <ModalExampleModal
             onSuccess={refresh}
             getProjectToasterMessage={getTaskToasterMessage}
             getProjectErrorMessage={getTaskErrorMessage}
-          ></ModalExampleModal>
+          ></ModalExampleModal> */}
         </div>
 
         <Form>

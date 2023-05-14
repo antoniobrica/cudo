@@ -14,13 +14,13 @@ export class ReferenceInputDto {
     @Field({ description: `Reference type name` })
     name: string;
 
-    @Field({ description: `Who Created the Reference` })
-    createdBy?: string;
+    // @Field({ description: `Who Created the Reference` })
+    // createdBy?: string;
 
-    @Field({ description: `Who Updated the Reference` })
-    updatedBy?: string;
+    // @Field({ description: `Who Updated the Reference` })
+    // updatedBy?: string;
 
-    @Field({ description: `Reference Deleted or not` })
-    isDeleted?: boolean;
+    // @Field({ description: `Reference Deleted or not` })
+    // isDeleted?: boolean;
 
 }

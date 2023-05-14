@@ -36,7 +36,7 @@ export default class ReferanceTypeEntity extends BaseEntity {
 
   @Expose()
   @CreateDateColumn()
-  createdAt?: Date;
+  createdAt: Date;
 
   @Expose()
   @Column({ nullable: true })
@@ -51,7 +51,7 @@ export default class ReferanceTypeEntity extends BaseEntity {
   updatedBy?: string;
 
   @Expose()
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: false })
   isDeleted?: boolean;
 
   // 1:n relation with TasksEntity
