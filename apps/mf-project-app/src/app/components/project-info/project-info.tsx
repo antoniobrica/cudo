@@ -119,11 +119,11 @@ export function ProjectInfo(props: ProjectInfoProps) {
   if (error)
     return (
       <div style={{ marginLeft: 900 }}>
-        {/* <ModalExampleModal
+        <ModalExampleModal
           onSuccess={refresh}
           getProjectToasterMessage={getTaskToasterMessage}
           getProjectErrorMessage={getTaskErrorMessage}
-        ></ModalExampleModal> */}
+        ></ModalExampleModal>
       </div>
     );
   return (
@@ -155,11 +155,11 @@ export function ProjectInfo(props: ProjectInfoProps) {
               {t('project_list.header.header_line.project_added')}
             </span>
           </h3>
-          {/* <ModalExampleModal
+          <ModalExampleModal
             onSuccess={refresh}
             getProjectToasterMessage={getTaskToasterMessage}
             getProjectErrorMessage={getTaskErrorMessage}
-          ></ModalExampleModal> */}
+          ></ModalExampleModal>
         </div>
 
         <Form>

@@ -18,7 +18,7 @@ import { initI18n } from '@cudo/mf-core';
 
 const defaultLanguage = 'en-GB';
 const supportedLanguages = [defaultLanguage, 'en-GB'];
-initI18n('./assets/i18n/de-DE.json', defaultLanguage);
+initI18n('./assets/i18n/en-GB.json', defaultLanguage);
 
 // const TabMenu = lazy(() => import('./components/tab-menu/tab-menu'))
 // const ProjectInfo = lazy(() => import('./components/project-info/project-info'))
