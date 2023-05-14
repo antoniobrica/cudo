@@ -97,6 +97,7 @@ function App() {
       navigate(location.pathname);
     }
   }, []);
+
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>

@@ -6,6 +6,12 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
   },
+  "paths": {
+    "@cudo/shared-components/*": ["libs/shared-components/*"],
+    "@cudo/mf-account-app-lib": ["libs/mf-account-app-lib/src/index.ts"],
+    "@cudo/all-shared-components": ["libs/shared-components/src/index.ts"],
+    "@cudo/mf-core": ["libs/mf-core/src/index.ts"]
+  },
   "files": [],
   "include": [],
   "references": [

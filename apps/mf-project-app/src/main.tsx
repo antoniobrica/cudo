@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
@@ -8,6 +8,13 @@ import { ApolloProvider as ApolloHooksProvider } from '@apollo/client';
 import * as serviceWorker from './serviceWorker';
 import './SubscriberWidgetElement';
 import App from './app/app';
+import { Dimmer, Loader } from 'semantic-ui-react';
+
+const LazyLoading = () => (
+  <Dimmer active inverted>
+    <Loader inverted>Loading</Loader>
+  </Dimmer>
+);
 
 declare global {
   interface Window {
@@ -20,33 +27,31 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-window.renderProjectApp = (containerId, history) => {
-  createRoot(document.getElementById(containerId)).render(
-    <BrowserRouter>
-      <ApolloProvider client={client}>
-        <ApolloHooksProvider client={client as any}>
-          <App />
-        </ApolloHooksProvider>
-      </ApolloProvider>
-    </BrowserRouter>
-  );
-  serviceWorker.unregister();
-};
+const rootElement = document.getElementById('root');
 
-window.unmountProjectApp = (containerId) => {
-  createRoot(document.getElementById(containerId)).unmount();
-};
-
-if (!document.getElementById('ProjectApp-container')) {
-  createRoot(document.getElementById('root')).render(
-    <BrowserRouter>
-      <ApolloProvider client={client}>
-        <ApolloHooksProvider client={client as any}>
-          Hello world
+if (rootElement) {
+  const root = createRoot(rootElement);
+  root.render(
+    <Suspense fallback={<LazyLoading />}>
+      <BrowserRouter>
+        <ApolloProvider client={client}>
           <App />
-        </ApolloHooksProvider>
-      </ApolloProvider>
-    </BrowserRouter>
+        </ApolloProvider>
+      </BrowserRouter>
+    </Suspense>
   );
-  serviceWorker.unregister();
 }
+serviceWorker.unregister();
+
+// window.renderProjectApp = (containerId, history) => {
+//   createRoot(document.getElementById(containerId)).render(
+//     <BrowserRouter>
+//       <ApolloProvider client={client}>
+//         <ApolloHooksProvider client={client as any}>
+//           <App />
+//         </ApolloHooksProvider>
+//       </ApolloProvider>
+//     </BrowserRouter>
+//   );
+//   serviceWorker.unregister();
+// };

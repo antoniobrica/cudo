@@ -23,9 +23,9 @@ import { useTranslation } from 'react-i18next';
 export interface ProjectInfoProps {}
 
 export function ProjectInfo(props: ProjectInfoProps) {
-  const notify = () => toast('This is Warning Message');
-  // const [activeErrorClass, setActiveErrorClass] = useState(false);
+  const [activeErrorClass, setActiveErrorClass] = useState(false);
 
+  const notify = () => toast('This is Warning Message');
   const companyId = localStorage.getItem('selectedCompany');
 
   const { loading, error, data } = useProjectQuery(GET_PROJECTS, { variables: { companyId } });
@@ -49,13 +49,13 @@ export function ProjectInfo(props: ProjectInfoProps) {
 
   // set sucess value to toaster function
   const getTaskToasterMessage = (data) => {
-    // setActiveErrorClass(false);
+    setActiveErrorClass(false);
     toast(data);
   };
 
   // set error value to task error for toaster function
   const getTaskErrorMessage = (data) => {
-    // setActiveErrorClass(true);
+    setActiveErrorClass(true);
 
     let errorExeptionMessage: string;
     switch (data) {
@@ -126,7 +126,7 @@ export function ProjectInfo(props: ProjectInfoProps) {
         <ModalExampleModal onSuccess={refresh}></ModalExampleModal>
       </div> */}
       <ToastContainer
-        // className={`${activeErrorClass ? 'error' : 'success'}`}
+        className={`${activeErrorClass ? 'error' : 'success'}`}
         position="top-right"
         autoClose={5000}
         hideProgressBar={true}
