@@ -54,7 +54,7 @@ export const GET_PROJECT_BY_ID = gql`
 
 export const GET_WORKTYPES = gql`
   {
-    workTypes(referenceFilter: { referenceType: COMPANY, referenceID: "Sftobiz_1234" }) {
+    workTypes(referenceFilter: { referenceType: COMPANY, referenceID: "CUDO" }) {
       name
       workTypeID
     }
@@ -63,7 +63,7 @@ export const GET_WORKTYPES = gql`
 
 export const GET_BUILDINGTYPES = gql`
   {
-    buildingTypes(referenceFilter: { referenceType: COMPANY, referenceID: "Sftobiz_1234" }) {
+    buildingTypes(referenceFilter: { referenceType: COMPANY, referenceID: "CUDO" }) {
       name
       buildingTypeID
     }
@@ -72,7 +72,7 @@ export const GET_BUILDINGTYPES = gql`
 
 export const GET_PRINTING_COMPANY = gql`
   {
-    company(referenceFilter: { referenceType: COMPANY, referenceID: "Sftobiz_1234" }, companyType: PRINTING) {
+    company(referenceFilter: { referenceType: COMPANY, referenceID: "CUDO" }, companyType: PRINTING) {
       companyID
       companyName
       companyType
@@ -82,7 +82,7 @@ export const GET_PRINTING_COMPANY = gql`
 
 export const GET_CLIENT_COMPANY = gql`
   {
-    company(referenceFilter: { referenceType: COMPANY, referenceID: "Sftobiz_1234" }, companyType: CLIENT) {
+    company(referenceFilter: { referenceType: COMPANY, referenceID: "CUDO" }, companyType: CLIENT) {
       companyID
       companyName
       companyType
@@ -102,18 +102,27 @@ export const ADD_TODO = gql`
 `;
 
 export const CREATE_COMPANY = gql`
-  mutation CreateCompany($companyName: String!, $companyType: String!) {
+  mutation CreateCompany($companyName: String!, $companyType: CompanyType!) {
     createCompany(
-      referenceFilter: { referenceType: COMPANY, referenceID: "Sftobiz_1234" }
-      companyDetails: { companyName: $companyName, companyType: CLIENT }
+      referenceFilter: { referenceType: COMPANY, referenceID: "CUDO" }
+      companyDetails: { companyName: $companyName, companyType: $companyType }
     ) {
-      id
-      title
-      description
-      status
+      companyID
     }
   }
 `;
+
+export const CREATE_BUILDING = gql`
+  mutation CreateBuilding($name: String!, $buildingTypeID: String!) {
+    createBuildingType(
+      referenceFilter: { referenceType: COMPANY, referenceID: "CUDO" }
+      buildingTypeDetails: { name: $name, buildingTypeID: $buildingTypeID }
+    ) {
+      buildingTypeID
+    }
+  }
+`;
+
 
 export const ADD_PROJECT = gql`
   mutation CreateProject(
@@ -151,7 +160,7 @@ export const ADD_PROJECT = gql`
         }
         projectWorkEstimates: $projectWorkEstimates
       }
-      referenceFilter: { referenceType: COMPANY, referenceID: "Sftobiz_1234" }
+      referenceFilter: { referenceType: COMPANY, referenceID: "CUDO" }
     ) {
       projectId
       projectName

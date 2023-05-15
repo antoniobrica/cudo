@@ -53,10 +53,12 @@ export class ReferenceService {
   }
 
   async getReferenceById(refFilter: ReferenceFilterParams) {
+
     const reference = await this.referancesRepository.findOne({ where: { ...refFilter } });
     if (reference) {
       return reference;
     }
+    
     throw new ProjectCustomError(ProjectErrorTypeEnum.PROJECT_NOT_FOUND);
   }
 

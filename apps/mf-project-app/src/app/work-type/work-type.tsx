@@ -112,7 +112,7 @@ export function WorkType(props: WorkTypeProps) {
           }
           <Table.Row>
             <Table.Cell>
-              <a onClick={() => handleAddInput()}>+ Add more </a>
+              <a onClick={() => handleAddInput()}>+ Add more sss</a>
 
             </Table.Cell>
             <Table.Cell></Table.Cell>

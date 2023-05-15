@@ -5,15 +5,7 @@ import { AccordionExampleMenu } from '@cudo/shared-components';
 import { environment } from '../../../environments/environment';
 import MicroFrontend from '../../../MicroFrontend';
 import { Tab, Image } from 'semantic-ui-react';
-import {
-  NavLink,
-  BrowserRouter as Router,
-  Route,
-  useLocation,
-  useParams,
-  useNavigate,
-  useMatch,
-} from 'react-router-dom';
+import { NavLink, Route, useLocation, useParams, useNavigate, useMatch, Routes } from 'react-router-dom';
 import { PlanningIndex } from '@cudo/mf-task-lib';
 import { useProjectByIdQuery } from '../../services/useRequest';
 import { GET_PROJECT_BY_ID } from '../../graphql/graphql';
@@ -292,20 +284,20 @@ function TabMenu(props: TabMenuProps) {
     ];
 
     return (
-      <Router>
-        <div className="app-content-body-dash navbar-collapse">
-          <div className="main-page-heading">
-            <span className="">{worktypeName ? worktypeName : 'WorktypeName'}</span>{' '}
-            <span className="preliminary-font">{t('project_tab_menu.preiminary_studies')}</span>
-          </div>
-          <Tab
-            renderActiveOnly={true}
-            activeIndex={activeIndex}
-            onTabChange={onTabChange}
-            className="ui-tabs"
-            menu={{ secondary: true, pointing: true }}
-            panes={panes}
-          />
+      <div className="app-content-body-dash navbar-collapse">
+        <div className="main-page-heading">
+          <span className="">{worktypeName ? worktypeName : 'WorktypeName'}</span>{' '}
+          <span className="preliminary-font">{t('project_tab_menu.preiminary_studies')}</span>
+        </div>
+        <Tab
+          renderActiveOnly={true}
+          activeIndex={activeIndex}
+          onTabChange={onTabChange}
+          className="ui-tabs"
+          menu={{ secondary: true, pointing: true }}
+          panes={panes}
+        />
+        <Routes>
           <Route path={`${url}/planning`} element={<PlanningIndex worktypes={worktypes}></PlanningIndex>} />
           <Route
             path={`${url}/overview`}
@@ -325,7 +317,7 @@ function TabMenu(props: TabMenuProps) {
               </Tab.Pane>
             }
           />
-          {/* start Added for router */}
+          {/* start Added for  */}
           <Route
             path={`${url}/task`}
             element={
@@ -358,9 +350,9 @@ function TabMenu(props: TabMenuProps) {
               </Tab.Pane>
             }
           />
-          {/* end Added for router */},
-        </div>
-      </Router>
+        </Routes>
+        {/* end Added for  */},
+      </div>
     );
     // return (
     //   <div>

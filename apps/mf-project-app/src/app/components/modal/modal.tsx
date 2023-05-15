@@ -19,6 +19,7 @@ import {
 import { ApolloCache, FetchResult, useMutation } from '@apollo/client';
 import {
   ADD_PROJECT,
+  CREATE_COMPANY,
   GET_BUILDINGTYPES,
   GET_CLIENT_COMPANY,
   GET_PRINTING_COMPANY,
@@ -43,6 +44,10 @@ export interface AddProjectErrors {
   numberError?: string;
   companyError?: string;
   buildingError?: string;
+}
+
+interface CreateCompanyTypes {
+  createCompany: any;
 }
 
 export function ModalExampleModal(props: ProjectInfoProps) {
@@ -117,6 +122,9 @@ export function ModalExampleModal(props: ProjectInfoProps) {
   const [dataList, setDataList] = React.useState(null);
   const [errors, setErrors] = React.useState<AddProjectErrors>({});
 
+  const [companyName, setCompanyName] = React.useState('');
+  const [companyType, setCompanyType] = React.useState('');
+
   const [companyCountry, setCompanyCountry] = React.useState(null);
   const { t } = useTranslation();
 
@@ -137,6 +145,8 @@ export function ModalExampleModal(props: ProjectInfoProps) {
   const { loading: companyLoading, data: printingCompany } = useCompanyQuery(GET_PRINTING_COMPANY);
   const { loading: clientLoading, data: clientCompany } = useCompanyQuery(GET_CLIENT_COMPANY);
   const { loading: buildingTypesloading, data: buildingTypesData } = useBuildingTypesQuery(GET_BUILDINGTYPES);
+
+  const [createCompany, { data: createCompanyData }] = useMutation<CreateCompanyTypes>(CREATE_COMPANY);
 
   React.useEffect(() => {
     if (worktypeData) {
@@ -315,6 +325,21 @@ export function ModalExampleModal(props: ProjectInfoProps) {
     });
   };
 
+  const handleCreateCompany = () => {
+    console.log(companyName);
+    console.log(companyType.toUpperCase());
+
+    const companyTypeEnum = companyType === 'client' ? 0 : 1;
+
+    createCompany({
+      variables: {
+        companyName,
+        companyType: companyType.toUpperCase(),
+      },
+    });
+    setSecondOpen(false);
+  };
+
   const panes = [
     {
       menuItem: t('project_list.add_new_project.info'),
@@ -386,7 +411,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                 <Grid.Column>
                   <Form.Field>
                     <label>
-                      {t('project_list.add_new_project.client_label')} <span className="danger">*</span>
+                      {t('project_list.add_new_project.client_label')} <span className="danger">*lalal</span>
                     </label>
                     <Select
                       placeholder={t('common.select')}
@@ -403,7 +428,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                   </Form.Field>
                   <Form.Field>
                     <a className="anchor-color" onClick={() => setSecondOpen(true)}>
-                      + {t('common.add_new_button')}
+                      editing + {t('common.add_new_button')}
                     </a>
                   </Form.Field>
                 </Grid.Column>
@@ -733,7 +758,13 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                         <label>
                           {t('project_list.add_new_project.company_name_label')}? <span className="danger">*</span>
                         </label>
-                        <Input placeholder="Al Hamra Company" size="small" className="full-width" type="text" />
+                        <Input
+                          onChange={(e, data) => setCompanyName(data.value)}
+                          placeholder="Al Hamra Company"
+                          size="small"
+                          className="full-width"
+                          type="text"
+                        />
                       </Form.Field>
                     </Grid.Column>
                   </Grid.Row>
@@ -749,6 +780,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                           className="small"
                           options={companyTypeOptions}
                           clearable
+                          onChange={(e, data) => setCompanyType(data.value as string)}
                         />
                       </Form.Field>
                     </Grid.Column>
@@ -900,7 +932,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
               </Form>
               <Button
                 content={t('project_list.add_new_project.add_comapany_button')}
-                onClick={() => setOpen(false)}
+                onClick={handleCreateCompany}
                 positive
                 size="small"
                 className="primary"

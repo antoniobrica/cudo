@@ -9,6 +9,7 @@ import { Card, Icon, Form, Grid, Button, Dropdown, Label } from 'semantic-ui-rea
 import { useLocation, useNavigate } from 'react-router-dom';
 import { LoaderPage, LazyLoading } from '@cudo/shared-components';
 import ReactQuill, { Quill } from 'react-quill';
+import Logo from '../../../assets/images/Shape 2.png';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,7 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 //import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
 
 import ModalExampleModal from '../modal/modal';
-import { MS_SERVICE_URL, initI18n } from '@cudo/mf-core';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 
@@ -171,11 +172,8 @@ export function ProjectInfo(props: ProjectInfoProps) {
                 return (
                   <li key={projectId}>
                     <div className="project-logo-action">
-                      <div className="project-logo">
-                        <img
-                          src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/default-logo.png`}
-                          alt="Logo"
-                        />
+                      <div style={{ width: '40px', height: '44px' }} className="project-logo">
+                        <img src={Logo} alt="Logo" />
                       </div>
 
                       <div className="project-action">
