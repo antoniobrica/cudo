@@ -7,7 +7,7 @@ import { ITodo, IProject } from '../../interfaces/project';
 import Modal from 'react-modal';
 import { Card, Icon, Form, Grid, Button, Dropdown, Label } from 'semantic-ui-react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { LoaderPage, LazyLoading } from '@cudo/shared-components';
+import { LoaderPage, LazyLoading, Menubar } from '@cudo/shared-components';
 import ReactQuill, { Quill } from 'react-quill';
 import Logo from '../../../assets/images/Shape 2.png';
 
@@ -34,12 +34,11 @@ export function ProjectInfo(props: ProjectInfoProps) {
   const notify = () => toast('This is Warning Message');
   const referenceID = localStorage.getItem('selectedCompany') ?? 'CUDO';
 
-  console.log(referenceID);
-
   const { loading, error, data } = useQuery(GET_PROJECTS, { variables: { referenceID: 'CUDO' } });
   const [openForm, setopenForm] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [projectErrors, setProjectErrors] = useState('');
+  const [menuExpand, setMenuExpand] = useState(false);
 
   const { t } = useTranslation();
 
@@ -116,6 +115,24 @@ export function ProjectInfo(props: ProjectInfoProps) {
   //   }
   // }, [projectErrors]);
 
+  const onClickMenuExpand = () => {
+    setMenuExpand(!menuExpand);
+  };
+
+  const callbackFunction = (childData) => {
+    switch (childData) {
+      case 'logout':
+        // logout();
+        break;
+      case 'project':
+        // goToProjectDashboard();
+        navigate('/home/project');
+        break;
+      default:
+        break;
+    }
+  };
+
   if (loading) return <LazyLoading />;
   if (error)
     return (
@@ -129,10 +146,9 @@ export function ProjectInfo(props: ProjectInfoProps) {
     );
   return (
     <div>
-      {/* <h1>Projects</h1> */}
-      {/* <div>
-        <ModalExampleModal onSuccess={refresh}></ModalExampleModal>
-      </div> */}
+      <div className={menuExpand ? 'expand-main-menu' : 'collapsed-main-menu'}>
+        <Menubar data={data} parentCallback={callbackFunction} mainMenuExpand={onClickMenuExpand} history={navigate} />
+      </div>
       <ToastContainer
         className={`${activeErrorClass ? 'error' : 'success'}`}
         position="top-right"
