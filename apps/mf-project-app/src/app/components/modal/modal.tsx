@@ -411,7 +411,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                 <Grid.Column>
                   <Form.Field>
                     <label>
-                      {t('project_list.add_new_project.client_label')} <span className="danger">*lalal</span>
+                      {t('project_list.add_new_project.client_label')} <span className="danger">*</span>
                     </label>
                     <Select
                       placeholder={t('common.select')}
