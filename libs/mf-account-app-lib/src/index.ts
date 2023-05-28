@@ -1,3 +1,16 @@
+export * from './lib/components/bkps-index/bkps-index';
+export * from  "./lib/components/bkp-index/bkp-index"
+export * from './lib/components/bkps/bkps';
+// export * from './lib/components/bkp-hierarchy-index/bkp-hierarchy-index'
+// export * from './lib/components/bkp-hierarchy/bkp-hierarchy'
+// export * from './lib/components/house-structure-index/house-structure-index';
+// export * from './lib/components/house-structure/house-structure';
+// export * from './lib/components/session-invitation-index/session-invitation-index';
+// export * from './lib/components/session-invitation/session-invitation';
+// export * from './lib/components/session-protocol/session-protocol';
+// export * from './lib/components/session-protocol-index/session-protocol-index';
+// export * from './lib/components/meeting-category-index/meeting-category-index';
+// export * from './lib/components/meeting-category/meeting-category';
 export * from './lib/components/add-folder-index/add-folder-index';
 export * from './lib/components/add-folder/add-folder';
 export * from './lib/components/file-structure-index/file-structure-index';
@@ -15,3 +28,7 @@ export * from './lib/components/followers-index/followers-index';
 export * from './lib/components/followers/followers';
 export * from './lib/components/country/country';
 export * from './lib/mf-account-app-lib';
+// export * from './lib/components/admins/admins';
+// export * from './lib/components/admins-index/admins-index';
+// export * from './lib/components/members/members';
+// export * from './lib/components/members-index/members-index';

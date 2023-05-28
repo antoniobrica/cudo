@@ -16,12 +16,22 @@ import { useTranslation } from 'react-i18next';
 // initI18n('./assets/i18n/{{lng}}.json', defaultLanguage);
 
 export interface Tasks {
-  task?;
-  id?;
-  updateTask?;
-  veiwTask?;
-  deleteTask?;
-  editTask?;
+  task?,
+  comments?
+  id?,
+  updateTask?,
+  veiwTask?,
+  deleteTask?,
+  editTask?
+  subTask?
+  updateSubTaskStatus?
+  updateSubTask?
+  deleteSubTask?
+  addSubTaskLoading?
+  editSubTaskLoading?
+  taskListData?
+  taskDeleteUpdateStatusLoading?
+  viewAddPinFile?
 }
 export function TaskArea(props: Tasks) {
   const { t, i18n } = useTranslation();

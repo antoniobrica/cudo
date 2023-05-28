@@ -7,17 +7,24 @@ import { useFileStructureQuery } from '../../services/useRequest';
 
 /* eslint-disable-next-line */
 export interface FileStructureProps {
-  parentFileStructureSelect
+  parentFileStructureSelect?;
+  structureTitle?;
 }
 
 export function FileStructure(props: FileStructureProps) {
-  const [items, setItems] = React.useState([])
-  const [fileStructure, setFileStructureTitle] = React.useState("")
+  const [items, setItems] = React.useState([]);
+  const [fileStructure, setFileStructureTitle] = React.useState('');
 
   const { loading, error, data } = useFileStructureQuery(GET_FILE_STRUCTURE);
   React.useEffect(() => {
     if (data) {
-      setItems(data.FileStructure.map(({ fileStructureTitle, fileStructureID }) => ({ key: fileStructureID, value: fileStructureTitle, text: fileStructureTitle })));
+      setItems(
+        data.FileStructure.map(({ fileStructureTitle, fileStructureID }) => ({
+          key: fileStructureID,
+          value: fileStructureTitle,
+          text: fileStructureTitle,
+        }))
+      );
     }
   }, [data]);
 
@@ -29,22 +36,15 @@ export function FileStructure(props: FileStructureProps) {
         file.structureTitle = data.value;
       }
     }
-    setFileStructureTitle(data.value)
-    props.parentFileStructureSelect(file)
-  }
-
+    setFileStructureTitle(data.value);
+    props.parentFileStructureSelect(file);
+  };
 
   return (
     <Form.Field>
       <label>File Structure</label>
-      <Select placeholder='Select' className="small"
-        options={items}
-        value={fileStructure}
-        onChange={onFile}
-      />
-
+      <Select placeholder="Select" className="small" options={items} value={fileStructure} onChange={onFile} />
     </Form.Field>
   );
 }
 export default FileStructure;
-

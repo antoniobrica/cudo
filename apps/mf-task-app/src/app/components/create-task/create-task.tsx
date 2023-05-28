@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Header,
@@ -11,26 +11,46 @@ import {
   Image,
   Select,
   TextArea,
+  Checkbox,
+  Loader,
+  Dimmer,
+  Icon,
 } from 'semantic-ui-react';
-import { ITask, ITasks, TaskMutation } from '../../interfaces/task';
+// import { radios } from '@storybook/addon-knobs';
+import { IPeople, IPeoples, ITask, ITasks, TaskMutation } from '../../interfaces/task';
 import { useTaskMutation } from '../../services/useRequest';
 import { ApolloCache, FetchResult, useMutation } from '@apollo/client';
 import { ADD_TASK, GET_TASKS } from '../../graphql/graphql';
 import './create-task.module.scss';
+import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import moment, { calendarFormat } from 'moment';
-import {
-  FollowersIndex,
-  AssigneeIndex,
-  BkpIndex,
-  PhaseIndex,
-} from '@cudo/mf-account-app-lib';
+import { FollowersIndex, AssigneeIndex, BkpsIndex, PhaseIndex } from '@cudo/mf-account-app-lib';
+import { start } from 'repl';
+import { useTranslation } from 'react-i18next';
 
-// Check add task mutation and its functionality
+import { LazyLoading } from '@cudo/shared-components';
+import { FileListIndex } from '@cudo/mf-document-lib';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { useLocation } from 'react-router-dom';
 
-import { useLocation, useNavigate } from 'react-router-dom';
 /* eslint-disable-next-line */
 export interface CreateTaskProps {
   onSuccess?;
+  workTypes?;
+  isNewTask?;
+  cancel?;
+  getTaskToasterMessage?;
+  getTaskErrorMessage?;
+  taskListData?;
+  // stopLoading?
+}
+
+interface AddTaskErrors {
+  titleError?: string;
+  workTypeError?: string;
+  assigneeError?: string;
+  dateError?: string;
 }
 
 export function CreateTask(props: CreateTaskProps) {
@@ -38,7 +58,7 @@ export function CreateTask(props: CreateTaskProps) {
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
   ];
-
+  let quillObj: any;
   const phaseOptions = [
     { key: 'Phase_1', value: 'Phase_1', text: 'Phase 1' },
     { key: 'Phase_2', value: 'Phase_2', text: 'Phase 2' },
@@ -64,72 +84,107 @@ export function CreateTask(props: CreateTaskProps) {
   const [saveTaskAsTemplate, setSaveTaskAsTemplate] = React.useState('');
   const [phaseID, setPhasesID] = React.useState('');
   const [status, setStatus] = React.useState('');
-  const [followers, setfollowers] = React.useState('');
   const [phaseName, setPhasesName] = React.useState('');
   const [BKPTitle, setBKPIDTitle] = React.useState('');
   const [files, setFileList] = React.useState<any>([]);
   const [description, setDescription] = React.useState('');
+  const [isOpenTaskFiles, setisOpenTaskFiles] = useState(false);
+  const [onlyAddFileToTask, setOnlyAddFileToTask] = useState(true);
+  const [selectedFiles, setSelectedFiles] = useState([]);
+
+  const [workType, setworkType] = React.useState(null);
+  const [workTypeD, setworkTypeD] = React.useState(null);
+  const [workTypeData, setworkTypeData] = React.useState('');
+  const [workTypeID, setworktypeID] = React.useState('');
+  const [workTypeName, setworktypeName] = React.useState('');
+  const [assignees, setAssignees] = React.useState<any>([]);
+  const [followers, setfollowers] = React.useState<any>([]);
+  const [date, setDate] = React.useState(null);
+  const [addTaskLoading, setAddTaskLoading] = useState(false);
+  const { t } = useTranslation();
 
   const location = useLocation();
-  const navigate = useNavigate();
 
   const res = location.pathname.split('/');
   const referenceID = res[3].toString();
-  // const [addTask] = useTaskMutation(ADD_TASK, {
-  //   variables: { referenceID },
-  // });
 
-  const [addTask, { data }] = useMutation(ADD_TASK, {
-    refetchQueries: [
-      {
-        query: GET_TASKS,
-        variables: {
-          referenceID,
-          taskTitle,
-          startDate,
-          endDate,
-          estimatedDays,
-          sendNotification,
-          BKPID,
-          saveTaskAsTemplate,
-          phaseID,
-          phaseName,
-          BKPTitle,
-          files,
-          description,
-        },
-      },
-    ],
-    variables: {
-      referenceID,
-      taskTitle,
-      startDate,
-      endDate,
-      estimatedDays,
-      sendNotification,
-      BKPID,
-      saveTaskAsTemplate,
-      phaseID,
-      phaseName,
-      BKPTitle,
-      files,
-      description,
-    },
-  });
+  const [errors, setErrors] = React.useState<AddTaskErrors>({});
+
+  React.useEffect(() => {
+    if (props.isNewTask) {
+      setOpen(props.isNewTask);
+    }
+  }, [props.isNewTask]);
+
+  const [addTask, { loading, error, data }] = useMutation(
+    ADD_TASK //,
+    // {
+    //   refetchQueries: [
+    //     { query: GET_TASKS, variables: { referenceID } }
+    //   ],
+
+    // }
+  );
+
+  useEffect(() => {
+    if (!loading && data) {
+      setAddTaskLoading(false);
+      cancel();
+      props.getTaskToasterMessage(t('toaster.success.task.task_created'));
+    }
+    if (!loading && error) {
+      setAddTaskLoading(false);
+      cancel();
+      props.getTaskErrorMessage(error?.graphQLErrors[0]?.extensions?.exception);
+    }
+  }, [props.taskListData]);
 
   const onTaskTitleChange = (e) => {
     setTaskTitle(e.target.value);
   };
   const onStartDateChange = (e) => {
-    const date = moment.utc(moment(e.target.value).utc()).format();
+    setDate(e.target.value);
+    if (endDate) {
+      const date1 = new Date(e.target.value);
+      const date2 = new Date(endDate);
+      const Difference_In_Time = date2.getTime() - date1.getTime();
+      const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      setEstimatedDays(Difference_In_Days <= 0 ? '' : Difference_In_Days.toString());
+    }
+    // const date = moment.utc(moment(e.target.value).utc()).format();
     setStartDate(e.target.value);
   };
   const onEndDateChange = (e) => {
-    const date = moment.utc(moment(e.target.value).utc()).format();
+    // const date = moment.utc(moment(e.target.value).utc()).format();
+    if (startDate) {
+      const date1 = new Date(e.target.value);
+      const date2 = new Date(date);
+      const Difference_In_Time = date1.getTime() - date2.getTime();
+
+      // To calculate the no. of days between two dates
+      const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      setEstimatedDays(Difference_In_Days <= 0 ? '' : Difference_In_Days.toString());
+    }
     setEndDate(e.target.value);
   };
   const onsetEstimatedDays = (event, data) => {
+    // To calculate the time difference of two dates
+
     setEstimatedDays(data.value);
+  };
+  const addSelectedFiles = (data) => {
+    setSelectedFiles(data);
+    const seletedFilesData = [];
+    data.map((file) => {
+      seletedFilesData.push({ fileID: file.uploadedFileID, fileName: file.fileTitle, fileUrl: file.fileURL });
+    });
+    setFileList(seletedFilesData);
+  };
+
+  const removeSeletedFile = (file) => {
+    const newSelectedFiles = selectedFiles.filter((item) => item.fileURL !== file.fileURL);
+    setSelectedFiles(newSelectedFiles);
+    setFileList(newSelectedFiles);
   };
 
   const sendNotificationChange = (event) => {
@@ -137,15 +192,21 @@ export function CreateTask(props: CreateTaskProps) {
   };
 
   const onFollowers = (data) => {
-    setfollowers(data.value);
+    setfollowers(data);
   };
   const setBKPIDChange = (data) => {
     setBKPIDTitle(data.BKPIDTitle);
     setBKPID(data.BKPID);
-    console.log('bkp==>', data);
   };
   const setAsignee = (data) => {
-    // setAsignis(data)
+    if (data.userID) {
+      const ppl = [];
+      ppl.push(data);
+      setAssignees(ppl);
+      // setAsignis(data)
+    } else {
+      setAssignees([]);
+    }
   };
 
   const setSaveTaskAsTemplateChange = (event, data) => {
@@ -160,229 +221,447 @@ export function CreateTask(props: CreateTaskProps) {
     setStatus(e.target.value);
   };
 
-  const handleSaveTask = () => {
+  React.useEffect(() => {
+    if (props.workTypes) {
+      setworkType(
+        props.workTypes.map(({ workTypeName, projectWorkTypeID }) => ({
+          key: projectWorkTypeID,
+          value: workTypeName,
+          text: workTypeName,
+          id: projectWorkTypeID,
+        }))
+      );
+    }
+  }, [props.workTypes]);
+
+  const onMworkType = (event, data) => {
+    const workT = {
+      worktypeID: '',
+      worktypeName: '',
+    };
+    if (data.value) {
+      for (let i = 0; i < props.workTypes.length; i++) {
+        if (props.workTypes[i]?.workTypeName === data.value) {
+          workT.worktypeID = props.workTypes[i].projectWorkTypeID;
+          workT.worktypeName = data.value;
+          setworktypeName(workT.worktypeName);
+          setworktypeID(workT.worktypeID);
+          setworkTypeD(workT);
+        }
+      }
+    } else {
+      setworktypeName('');
+      setworktypeID('');
+      setworkTypeD('');
+    }
+    setworkTypeData(data.value);
+  };
+
+  const onDescriptionChange = (e) => {
+    setDescription(e.target.value);
+  };
+
+  const cancelIsTaskFileOpen = () => {
+    setisOpenTaskFiles(false);
+  };
+
+  const cancel = () => {
     setOpen(false);
+    setAddTaskLoading(false);
+    props.cancel(false);
+    resetAddData();
+  };
+
+  const resetAddData = () => {
+    setTaskTitle('');
+    setStartDate('');
+    setEndDate('');
+    setDescription('');
+    setEstimatedDays('');
+    setAsignee([]);
+    setfollowers([]);
+    setEendNotification(false);
+    setBKPID('');
+    setSaveTaskAsTemplate('');
+    setPhasesID('');
+    setStatus('');
+    setPhasesName('');
+    setPhasesID('');
+    setBKPIDTitle('');
+    setworkTypeD(null);
+    setworktypeName('');
+    setworktypeID('');
+    setworkType(null);
+    setworkTypeData('');
+    setDate(null);
+    setErrors({});
+    setSelectedFiles([]);
+  };
+
+  const validation = () => {
+    const foundErrors: AddTaskErrors = {};
+    if (!taskTitle) {
+      foundErrors.titleError = t('common.errors.title_error');
+    }
+    if (!workTypeID) {
+      foundErrors.workTypeError = t('common.errors.worktype_error');
+    }
+    if (!assignees.length) {
+      foundErrors.assigneeError = t('common.errors.assignee_error');
+    }
+    if (startDate > endDate) {
+      foundErrors.dateError = t('common.errors.date_error');
+    }
+    return foundErrors;
+  };
+
+  const handleSaveTask = () => {
+    //  setIsLoading(true);
+    const validationResult = validation();
+    if (Object.keys(validationResult).length > 0) {
+      setErrors(validationResult);
+      return false;
+    }
+    setAddTaskLoading(true);
+
+    const variables = {
+      taskTitle,
+      estimatedDays,
+      sendNotification,
+      BKPID,
+      saveTaskAsTemplate,
+      phaseID,
+      phaseName,
+      BKPTitle,
+      parentFileID: '',
+      fileID: '',
+      fileName: '$fileName',
+      taskTypeID: '$taskTypeID',
+      files,
+      assignees,
+      followers,
+      description,
+      subtasks: [],
+      referenceID,
+      workTypeID,
+      workTypeName,
+    };
+    if (startDate) {
+      variables['startDate'] = startDate;
+    }
+    if (startDate) {
+      variables['endDate'] = endDate;
+    }
+
     addTask({
-      variables: {
-        taskTitle,
-        startDate,
-        endDate,
-        estimatedDays,
-        sendNotification,
-        BKPID,
-        saveTaskAsTemplate,
-        phaseID,
-        phaseName,
-        BKPTitle,
-        files,
-        description,
-        referenceID,
-      },
-      update: (cache, { data: { addTask } }: FetchResult<TaskMutation>) => {
-        const cacheData = cache.readQuery({
-          query: GET_TASKS,
-          variables: { referenceID },
-        }) as ITasks;
+      variables,
+      // update: ( cache, { data: { addTask } }: FetchResult<TaskMutation>
+      update: (cache, addedTaskData) => {
+        const cacheData = cache.readQuery({ query: GET_TASKS, variables: { referenceID } }) as ITasks;
         cache.writeQuery({
           query: GET_TASKS,
-          data: {
-            tasksD: [...cacheData.tasks, addTask],
-          },
           variables: { referenceID },
+          data: {
+            tasks: [...cacheData?.tasks?.results, addedTaskData?.data?.createTask],
+          },
         });
       },
     });
   };
-  const onDescriptionChange = (e) => {
-    console.log('des=>', e.target.value);
-    setDescription(e.target.value);
-  };
+
+  // if (loading) return (<LazyLoading />);
+  // if (error) return <p>Task not added. An internal server error occured</p>;
 
   return (
     <div>
+      {/* <Modal className= "modal_media right-side--fixed-modal add-new-task-modal overflow-hidden"  */}
       <Modal
-        className="modal_media"
-        style={{ width: '800px', marginLeft: '155px' }}
-        onClose={() => setOpen(false)}
+        className={
+          loading
+            ? 'modal_media right-side--fixed-modal add-new-task-modal disabled-fields'
+            : 'modal_media right-side--fixed-modal add-new-task-modal'
+        }
+        // closeIcon
+        onClose={cancel}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={
-          <Button size="mini" className="grey-btn taskmargin">
-            + Add New Task
-          </Button>
-        }
+        // trigger={<Button size='mini' className="grey-btn taskmargin">+ Add  New Task</Button>}
+        closeOnDimmerClick={false}
       >
-        <Modal.Header>
-          <h3>Add New Task </h3>
-        </Modal.Header>
-        <Modal.Content body>
-          <div>
-            <Form>
-              <Grid columns={1}>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>
-                        Task Title <span className="danger">*</span>
-                      </label>
-                      <Input
-                        placeholder="Task title"
-                        size="small"
-                        className="full-width"
-                        type="text"
-                        value={taskTitle}
-                        onChange={onTaskTitleChange}
+        {addTaskLoading ? (
+          <Dimmer active inverted Center inline>
+            <Loader size="big">Submitting</Loader>
+          </Dimmer>
+        ) : null}
+
+        {isOpenTaskFiles && (
+          <FileListIndex
+            isTaskFile={isOpenTaskFiles}
+            cancel={cancelIsTaskFileOpen}
+            onlyAddFileToTask={onlyAddFileToTask}
+            selectedFiles={selectedFiles}
+            addSelectedFiles={addSelectedFiles}
+          />
+        )}
+        <div className="fixed-popup-inner-con">
+          <Modal.Header>
+            <h3>{t('project_tab_menu.task.add_new_task')} </h3> <Icon name="close" onClick={cancel} />
+          </Modal.Header>
+
+          <Modal.Content body>
+            <div>
+              <Form>
+                <Grid columns={1}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>
+                          {t('project_tab_menu.task.task_title')} <span className="danger">*</span>
+                        </label>
+                        <Input
+                          placeholder={t('project_tab_menu.task.task_title')}
+                          size="small"
+                          className="full-width"
+                          type="text"
+                          value={taskTitle}
+                          onChange={onTaskTitleChange}
+                          error={errors?.titleError && !taskTitle}
+                        />
+                        {errors?.titleError && !taskTitle ? (
+                          <span className="error-message">{errors.titleError}</span>
+                        ) : null}
+                      </Form.Field>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+                <Grid columns={1}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>{t('common.desc')} </label>
+                        <TextArea
+                          placeholder={t('common.desc_placeholder')}
+                          value={description}
+                          onChange={onDescriptionChange}
+                        />
+                        {/* <ReactQuill
+                          value={description}
+                          modules={{
+                            toolbar: {
+                              container: [
+                                [{ 'size': ['small', false, 'large'] }],
+                                // ['bold', 'italic', 'underline'],
+                                // [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                // [{ 'align': [] }],
+                                // ['link', 'image'],
+                                // ['clean'],
+                                // [{ 'color': [] }]
+                              ]
+                            }
+                          }}
+                          placeholder={t("common.desc_placeholder")}
+                          onChange={(content, delta, source, editor) => onDescriptionChange(content, editor)}
+                          id="txtDescription"
+                        /> */}
+                      </Form.Field>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+                <Grid columns={1}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>
+                          {t('project_tab_menu.task.work_type')} <span className="danger">*</span>
+                        </label>
+                        {/* <Select placeholder='Select' className="small" options={workTypes} /> */}
+                        <Select
+                          placeholder={t('common.select')}
+                          className="small"
+                          value={workTypeData}
+                          options={workType}
+                          onChange={onMworkType}
+                          selection
+                          clearable
+                          error={errors?.workTypeError && !workTypeID}
+                        />
+                        {errors?.workTypeError && !workTypeID ? (
+                          <span className="error-message">{errors.workTypeError}</span>
+                        ) : null}
+                      </Form.Field>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+                <Grid columns={2}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>{t('common.select_phase')} </label>
+                        <PhaseIndex parentPhaseSelect={onsetPhasesID} />
+                      </Form.Field>
+                    </Grid.Column>
+                    <Grid.Column>
+                      <BkpsIndex bkp={''} parentBKPSelect={setBKPIDChange} />
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+                <Grid columns={1}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <AssigneeIndex
+                        assignees={[]}
+                        parentAsigneeSelect={setAsignee}
+                        name="Assignee"
+                        error={errors?.assigneeError && !assignees.length}
                       />
-                    </Form.Field>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-              <Grid columns={1}>
-                <Grid.Row>
-                  <Grid.Column>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+                <Grid>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <FollowersIndex followers={[]} parentFollowersSelect={onFollowers} />
+                    </Grid.Column>
+                  </Grid.Row>
+                  <div className="followers-label-area">
                     <Form.Field>
-                      <label>Description </label>
-                      <TextArea
-                        placeholder="Tell us more"
-                        value={description}
-                        onChange={onDescriptionChange}
-                      />
-                    </Form.Field>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-              <Grid columns={1}>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>
-                        Associate with work type{' '}
-                        <span className="danger">*</span>
-                      </label>
-                      <Select
-                        placeholder="Select"
-                        className="small"
-                        options={workTypes}
-                      />
-                    </Form.Field>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-              <Grid columns={2}>
-                <Grid.Row>
-                  <Grid.Column>
-                    <PhaseIndex parentPhaseSelect={onsetPhasesID} />
-                  </Grid.Column>
-                  <Grid.Column>
-                    <BkpIndex bkp={BKPID} parentBKPSelect={setBKPIDChange} />
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-              <Grid columns={1}>
-                <Grid.Row>
-                  <Grid.Column>
-                    <AssigneeIndex parentAsigneeSelect={setAsignee} />
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-              <Grid columns={2}>
-                <Grid.Row>
-                  <Grid.Column>
-                    <FollowersIndex parentFollowersSelect={onFollowers} />
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Form.Field>
-                      <div className="event top-event">
-                        <div className="label-light-purple-circle label-spacer">
-                          <span className="white-text">AB</span>
-                        </div>
-                        <div className="label-light-black-circle label-spacer">
+                      <div className="event top-event follower-listing-labels">
+                        {followers.map((p, id) => {
+                          const name = p.userName
+                            .split(' ')
+                            .map((n) => n[0])
+                            .join('');
+                          //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
+                          return (
+                            <div className="label-light-purple-circle label-spacer" key={id}>
+                              <span className="white-text">{name}</span>
+                            </div>
+                          );
+                        })}
+
+                        {/* <div className="label-light-black-circle label-spacer">
                           <span className="white-text ">RJ</span>
                         </div>
                         <div className="label-light-blue-circle label-spacer">
                           <span className="white-text">JB</span>
+                        </div> */}
+                      </div>
+                    </Form.Field>
+                  </div>
+                </Grid>
+
+                <Grid columns={3}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>{t('common.start_date')} </label>
+                        {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
+                        <Input
+                          placeholder="Default"
+                          size="small"
+                          className="full-width"
+                          type="date"
+                          value={startDate}
+                          max="9999-12-31"
+                          onChange={onStartDateChange}
+                          error={errors?.dateError && startDate > endDate}
+                        />
+                        {errors?.dateError && startDate > endDate ? (
+                          <span className="error-message">{errors.dateError}</span>
+                        ) : null}
+                      </Form.Field>
+                    </Grid.Column>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>{t('common.end_date')} </label>
+                        {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
+                        <Input
+                          placeholder="Default"
+                          size="small"
+                          className="full-width"
+                          type="date"
+                          defaultValue={startDate}
+                          value={endDate}
+                          max="9999-12-31"
+                          onChange={onEndDateChange}
+                        />
+                      </Form.Field>
+                    </Grid.Column>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>{t('common.estimated_days')} </label>
+                        <Input
+                          placeholder={t('project_tab_menu.task.enter_days')}
+                          className="small"
+                          value={estimatedDays}
+                          onChange={onsetEstimatedDays}
+                        />
+                      </Form.Field>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+
+                <Grid columns={1} className="add-extra-files">
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>Select Files</label>
+                        <Button className="icon-border" size="small" onClick={() => setisOpenTaskFiles(true)}>
+                          <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> Add Files
+                        </Button>
+                      </Form.Field>
+                    </Grid.Column>
+                  </Grid.Row>
+                  {selectedFiles.length > 0 && (
+                    <Grid.Row className="add-files-list">
+                      <Grid.Column className="uploaded-files">
+                        <ul>
+                          {selectedFiles.map((file) => (
+                            <li>
+                              <p>
+                                <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/pdf.png`} />
+                                {file.fileURL}
+                              </p>
+                              <i onClick={() => removeSeletedFile(file)} className="close icon"></i>
+                            </li>
+                          ))}
+                        </ul>
+                      </Grid.Column>
+                    </Grid.Row>
+                  )}
+                </Grid>
+
+                <Grid columns={1}>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>{t('common.task_configuration')} </label>
+                        <div className="content configuration-toggle">
+                          <p className="paragraph task-configuration">
+                            {t('common.notification_for_task')} <Checkbox toggle className="task-toggle" />
+                          </p>
                         </div>
-                      </div>
-                    </Form.Field>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-              <Grid columns={3}>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>Start Date </label>
-                      {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
-                      <Input
-                        placeholder="Default"
-                        size="small"
-                        className="full-width"
-                        type="date"
-                        value={startDate}
-                        onChange={onStartDateChange}
-                      />
-                    </Form.Field>
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>End Date </label>
-                      {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
-                      <Input
-                        placeholder="Default"
-                        size="small"
-                        className="full-width"
-                        type="date"
-                        value={endDate}
-                        onChange={onEndDateChange}
-                      />
-                    </Form.Field>
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>Estimated Days </label>
-                      <Input
-                        placeholder="Enter days"
-                        className="small"
-                        value={estimatedDays}
-                        onChange={onsetEstimatedDays}
-                      />
-                    </Form.Field>
-                  </Grid.Column>
-                </Grid.Row>
-                <Grid.Row></Grid.Row>
-              </Grid>
-              <Grid columns={1}>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>Task Configuration </label>
-                      <div className="content">
-                        <p className="paragraph">
-                          Send notification to assignee/followers for the task
-                        </p>
-                      </div>
-                    </Form.Field>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-            </Form>
+                      </Form.Field>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+              </Form>
+            </div>
+          </Modal.Content>
+          <Modal.Actions>
             <Button
-              content="Submit"
+              content={t('common.submit')}
               onClick={handleSaveTask}
               positive
-              size="mini"
-              className="grey-btn"
+              // loading
+              size="small"
+              className="primary"
             />
-            <Button
-              size="mini"
-              className="icon-border"
-              onClick={() => setOpen(false)}
-            >
-              X Cancel
+            <Button size="small" className="icon-border" onClick={cancel}>
+              <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> {t('common.cancel')}
             </Button>
-          </div>
-        </Modal.Content>
-        <Modal.Actions></Modal.Actions>
+          </Modal.Actions>
+        </div>
       </Modal>
     </div>
   );

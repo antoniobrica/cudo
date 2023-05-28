@@ -14,7 +14,10 @@ const client = new ApolloClient({
 });
 /* eslint-disable-next-line */
 export interface AssigneeIndexProps {
-  parentAsigneeSelect
+  parentAsigneeSelect,
+  name?,
+  assignees?
+  error?
 }
 
 export function AssigneeIndex(props: AssigneeIndexProps) {
