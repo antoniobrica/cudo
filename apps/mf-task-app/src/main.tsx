@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
@@ -22,13 +22,15 @@ const client = new ApolloClient({
 });
 
 const RootComponent = () => (
-  <BrowserRouter>
-    <ApolloProvider client={client}>
-      <ApolloHooksProvider client={client as any}>
-        <App />
-      </ApolloHooksProvider>
-    </ApolloProvider>
-  </BrowserRouter>
+  <Suspense fallback={<div>Loading...</div>}>
+    <BrowserRouter>
+      <ApolloProvider client={client}>
+        <ApolloHooksProvider client={client as any}>
+          <App />
+        </ApolloHooksProvider>
+      </ApolloProvider>
+    </BrowserRouter>
+  </Suspense>
 );
 
 window.renderTaskApp = (containerId, history) => {

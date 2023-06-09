@@ -1,34 +1,49 @@
 import { useMutation, useQuery } from '@apollo/client';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
-import { TaskDelete } from '@cudo/mf-task-lib';
+import { TaskDelete } from '../delete-task/delete-task';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { LazyLoading, LoaderPage, ModalAlert, ModalTaskEdit, ModalViewTask, TaskListOnFilePins } from '@cudo/shared-components';
+import {
+  LazyLoading,
+  LoaderPage,
+  ModalAlert,
+  ModalTaskEdit,
+  ModalViewTask,
+  TaskListOnFilePins,
+} from '@cudo/shared-components';
 import axios from 'axios';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { ITasks } from '../../interfaces/task';
-import { GET_TASKS, GET_TASKS_BY_TYPES, UPDATE_TASK, DELETE_TASK, UPDATE_SUBTASK_STATUS, UPDATE_SUBTASK, DELETE_SUBTASK } from './../../graphql/graphql';
+import {
+  GET_TASKS,
+  GET_TASKS_BY_TYPES,
+  UPDATE_TASK,
+  DELETE_TASK,
+  UPDATE_SUBTASK_STATUS,
+  UPDATE_SUBTASK,
+  DELETE_SUBTASK,
+} from './../../graphql/graphql';
 import './pin-task-list.module.scss';
 import { useTaskUpdateMutation, useTaskDeleteMutation } from '../../services/useRequest';
 
 import { toast, ToastContainer } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 
 /* eslint-disable-next-line */
 export interface PinTaskListProps {
-  filesData?
-  cord?
-  pinCount?
-  taskHovered?
-  parentWiseTaskFetch?
-  isVersionSelected?
+  filesData?;
+  cord?;
+  pinCount?;
+  taskHovered?;
+  parentWiseTaskFetch?;
+  isVersionSelected?;
 }
 
 export function PinTaskList(props: PinTaskListProps) {
-  const history = useHistory();
+  const location = useLocation();
   const { t } = useTranslation();
 
-  const [activeTaskList, setActiveTaskList] = React.useState([])
+  const [activeTaskList, setActiveTaskList] = React.useState([]);
 
   const [viewTaskOpen, setViewTaskOpen] = React.useState(false);
   const [editTaskOpen, setEditTaskOpen] = React.useState(false);
@@ -43,50 +58,67 @@ export function PinTaskList(props: PinTaskListProps) {
   const [idx, setId] = React.useState('');
   const [taskStatus, settaskStatus] = React.useState('');
 
-
   const [subTaskId, setSubTaskId] = React.useState();
-  const [taskErrors, setTaskErrors] = React.useState("")
-  const [activeErrorClass, setActiveErrorClass] = React.useState(false)
+  const [taskErrors, setTaskErrors] = React.useState('');
+  const [activeErrorClass, setActiveErrorClass] = React.useState(false);
 
-  const res = history.location.pathname.split("/");
+  const res = location.pathname.split('/');
   const referenceID = res[3]?.toString();
 
-  const taskFetchFilter = props?.parentWiseTaskFetch === true ? {
-    parentFileID: props?.isVersionSelected === true ?
-      props?.filesData?.parentUploadedFileID
-      : props?.filesData?.uploadedFileID,
-    referenceID
-  } : {
-    fileID: props?.filesData?.uploadedFileID,
-    referenceID
-  }
-  
-  const { loading: taskListLoading, error: taskListError, data: taskListData } = useQuery(GET_TASKS_BY_TYPES, {
+  const taskFetchFilter =
+    props?.parentWiseTaskFetch === true
+      ? {
+          parentFileID:
+            props?.isVersionSelected === true
+              ? props?.filesData?.parentUploadedFileID
+              : props?.filesData?.uploadedFileID,
+          referenceID,
+        }
+      : {
+          fileID: props?.filesData?.uploadedFileID,
+          referenceID,
+        };
+
+  const {
+    loading: taskListLoading,
+    error: taskListError,
+    data: taskListData,
+  } = useQuery(GET_TASKS_BY_TYPES, {
     variables: taskFetchFilter,
   });
 
   React.useEffect(() => {
-    setActiveTaskList(taskListData?.tasksByTasktypes?.filter(task => task.status === Status.INPROGRESS))
+    setActiveTaskList(taskListData?.tasksByTasktypes?.filter((task) => task.status === Status.INPROGRESS));
 
-    props.pinCount(taskListData?.tasksByTasktypes.length)
-  }, [taskListData])
+    props.pinCount(taskListData?.tasksByTasktypes.length);
+  }, [taskListData]);
 
   React.useEffect(() => {
-    props.pinCount(activeTaskList?.length)
-  }, [activeTaskList])
+    props.pinCount(activeTaskList?.length);
+  }, [activeTaskList]);
 
   // const [editTaskApi, { data: editData }] = useMutation(UPDATE_TASK);
   // const [taskDelete] = useMutation(DELETE_TASK);
 
-  const [updateTaskApi, { loading: updateTaskLoading, error: updateTaskError, data: editData }] = useMutation(UPDATE_TASK);
-  const [updateTaskStatusApi, { loading: updateTaskStatusLoading, error: updateTaskStatusError, data: updateTaskStatusData }] = useMutation(UPDATE_TASK);
-  const [deleteTaskApi, { loading: deleteTaskLoading, error: deleteTaskError, data: deleteTaskData }] = useMutation(DELETE_TASK);
+  const [updateTaskApi, { loading: updateTaskLoading, error: updateTaskError, data: editData }] =
+    useMutation(UPDATE_TASK);
+  const [
+    updateTaskStatusApi,
+    { loading: updateTaskStatusLoading, error: updateTaskStatusError, data: updateTaskStatusData },
+  ] = useMutation(UPDATE_TASK);
+  const [deleteTaskApi, { loading: deleteTaskLoading, error: deleteTaskError, data: deleteTaskData }] =
+    useMutation(DELETE_TASK);
 
-
-  const [addSubTaskApi, { loading: addSubTaskLoading, error: addSubTaskError, data: addedSubTaskData }] = useMutation(UPDATE_TASK);
-  const [subTaskUpdateApi, { loading: updateSubTaskLoading, error: updateSubTaskError, data: updateSubTaskData }] = useMutation(UPDATE_SUBTASK);
-  const [subTaskStatusUpdateApi, { loading: updateSubTaskStatusLoading, error: updateSubTaskStatusError, data: updateSubTaskStatusData }] = useMutation(UPDATE_SUBTASK_STATUS);
-  const [subTaskDeleteApi, { loading: deleteSubTaskLoading, error: deleteSubTaskError, data: deleteSubTaskData }] = useMutation(DELETE_SUBTASK);
+  const [addSubTaskApi, { loading: addSubTaskLoading, error: addSubTaskError, data: addedSubTaskData }] =
+    useMutation(UPDATE_TASK);
+  const [subTaskUpdateApi, { loading: updateSubTaskLoading, error: updateSubTaskError, data: updateSubTaskData }] =
+    useMutation(UPDATE_SUBTASK);
+  const [
+    subTaskStatusUpdateApi,
+    { loading: updateSubTaskStatusLoading, error: updateSubTaskStatusError, data: updateSubTaskStatusData },
+  ] = useMutation(UPDATE_SUBTASK_STATUS);
+  const [subTaskDeleteApi, { loading: deleteSubTaskLoading, error: deleteSubTaskError, data: deleteSubTaskData }] =
+    useMutation(DELETE_SUBTASK);
 
   enum Status {
     INPROGRESS = 'INPROGRESS',
@@ -103,7 +135,7 @@ export function PinTaskList(props: PinTaskListProps) {
   // on click open view task modal
   const viewTask = (task) => {
     setTaskData(task);
-    setId(task.taskID)
+    setId(task.taskID);
     setViewTaskOpen(true);
   };
 
@@ -121,24 +153,22 @@ export function PinTaskList(props: PinTaskListProps) {
 
   // on click open update task status confirm modal
   const updateTaskStatusConfirm = (task) => {
-
-    const status = Status.COMPLETED
+    const status = Status.COMPLETED;
     setTaskData({ ...task, status });
-    settaskStatus('Mark as complete')
-    setTaskStatusConfirmation(true)
+    settaskStatus('Mark as complete');
+    setTaskStatusConfirmation(true);
   };
 
   // #region task api call
   const updateTaskData = (data) => {
-
     const assignees = [];
     data.assignees.map((data, i) => {
-      assignees.push({ userID: data.userID, userName: data.userName })
-    })
+      assignees.push({ userID: data.userID, userName: data.userName });
+    });
     const followers = [];
     data.followers.map((data, i) => {
-      followers.push({ userID: data.userID, userName: data.userName })
-    })
+      followers.push({ userID: data.userID, userName: data.userName });
+    });
     updateTaskApi({
       variables: {
         taskID: data.taskID,
@@ -160,7 +190,7 @@ export function PinTaskList(props: PinTaskListProps) {
         description: data.description,
         subtasks: [],
         assignees: assignees,
-        followers: followers
+        followers: followers,
       },
       update: (cache, updatedTaskData) => {
         const cacheData = cache.readQuery({
@@ -169,11 +199,10 @@ export function PinTaskList(props: PinTaskListProps) {
         }) as ITasks;
 
         const updatedTaskList = cacheData?.tasksByTasktypes?.map((item) => {
-
           if (item.taskID === updatedTaskData?.data?.updateTask[0].taskID) {
-            item = updatedTaskData?.data?.updateTask[0]
+            item = updatedTaskData?.data?.updateTask[0];
           }
-          return item
+          return item;
         });
 
         cache.writeQuery({
@@ -188,7 +217,6 @@ export function PinTaskList(props: PinTaskListProps) {
   };
 
   const confirmationDelete = (data, task) => {
-
     setOpenTaskDelete(false);
     // updateTask(taskData);
     const taskID = task.taskID;
@@ -197,13 +225,12 @@ export function PinTaskList(props: PinTaskListProps) {
         taskID,
       },
       update: (cache, data) => {
-
         const cacheData = cache.readQuery({
           query: GET_TASKS_BY_TYPES,
           variables: taskFetchFilter,
         }) as ITasks;
 
-        const newTaskList = cacheData?.tasksByTasktypes?.filter((task) => task.taskID !== taskID)
+        const newTaskList = cacheData?.tasksByTasktypes?.filter((task) => task.taskID !== taskID);
 
         cache.writeQuery({
           query: GET_TASKS_BY_TYPES,
@@ -217,16 +244,16 @@ export function PinTaskList(props: PinTaskListProps) {
   };
 
   const updateTaskStatus = (data, task) => {
-    setTaskStatusConfirmation(false)
+    setTaskStatusConfirmation(false);
 
     const assignees = [];
     task.assignees.map((data, i) => {
-      assignees.push({ userID: data.userID, userName: data.userName })
-    })
+      assignees.push({ userID: data.userID, userName: data.userName });
+    });
     const followers = [];
     task.followers.map((data, i) => {
-      followers.push({ userID: data.userID, userName: data.userName })
-    })
+      followers.push({ userID: data.userID, userName: data.userName });
+    });
     updateTaskStatusApi({
       variables: {
         taskID: task.taskID,
@@ -269,10 +296,9 @@ export function PinTaskList(props: PinTaskListProps) {
 
   React.useEffect(() => {
     if (!updateTaskStatusLoading && updateTaskStatusData) {
-      updatePinStatus(updateTaskStatusData?.updateTask[0])
+      updatePinStatus(updateTaskStatusData?.updateTask[0]);
     }
-  }, [updateTaskStatusData])
-
+  }, [updateTaskStatusData]);
 
   const mutationUpdatePinStatus = `mutation UpdatePinStatus(
     $uploadedFileID:String!,
@@ -301,33 +327,28 @@ export function PinTaskList(props: PinTaskListProps) {
       taskID
       taskTitle
     }
-  }`
+  }`;
 
   const updatePinStatus = (taskData) => {
-
-    return axios.post(
-      MS_SERVICE_URL['ms_document'].url,
-      {
+    return axios
+      .post(MS_SERVICE_URL['ms_document'].url, {
         query: mutationUpdatePinStatus,
         variables: {
           uploadedFileID: taskData.fileID,
-          pinsID: taskData.taskTypeID
-        }
-      }
-    ).then(res => {
-
-    })
-      .catch(err => console.log(err))
-  }
+          pinsID: taskData.taskTypeID,
+        },
+      })
+      .then((res) => {})
+      .catch((err) => console.log(err));
+  };
   // #endregion
 
   const taskHovered = (taskTypeID) => {
-    props.taskHovered(taskTypeID)
+    props.taskHovered(taskTypeID);
   };
 
   // #region subtask api call
   const subTaskAdd = (data, title) => {
-
     const subtask = [];
     const createSt = {
       subtaskTitle: title,
@@ -335,12 +356,12 @@ export function PinTaskList(props: PinTaskListProps) {
     };
     const assignees = [];
     data.assignees.map((data, i) => {
-      assignees.push({ userID: data.userID, userName: data.userName })
-    })
+      assignees.push({ userID: data.userID, userName: data.userName });
+    });
     const followers = [];
     data.followers.map((data, i) => {
-      followers.push({ userID: data.userID, userName: data.userName })
-    })
+      followers.push({ userID: data.userID, userName: data.userName });
+    });
     subtask.push(createSt);
 
     addSubTaskApi({
@@ -368,7 +389,6 @@ export function PinTaskList(props: PinTaskListProps) {
       },
 
       update: (cache, updatedTaskData) => {
-
         const cacheData = cache.readQuery({
           query: GET_TASKS_BY_TYPES,
           variables: taskFetchFilter,
@@ -376,50 +396,8 @@ export function PinTaskList(props: PinTaskListProps) {
 
         const newTaskList = cacheData?.tasksByTasktypes?.map((task) => {
           if (task.taskID === data.taskID) {
-            const subTaskList = updatedTaskData?.data?.updateTask[0]?.subtasks
-            return { ...task, subtasks: subTaskList }
-          } else {
-            return task;
-          }
-        });
-
-        cache.writeQuery({
-          query: GET_TASKS_BY_TYPES,
-          variables: taskFetchFilter,
-          data: {
-            tasksByTasktypes: newTaskList
-          },
-        });
-      },
-
-    });
-  };
-
-  const updateSubTask = (taskId, subtaskId, title) => {
-
-    subTaskUpdateApi({
-      variables: {
-        subtaskID: subtaskId,
-        subtaskTitle: title
-      },
-      update: (cache, data) => {
-        const cacheData = cache.readQuery({
-          query: GET_TASKS_BY_TYPES,
-          variables: taskFetchFilter,
-        }) as ITasks;
-
-        const newTaskList = cacheData?.tasksByTasktypes?.map((task) => {
-          if (task.taskID === taskId) {
-
-            const subTaskList = task.subtasks.map((subTask) => {
-              if (subTask.subtaskID === subtaskId) {
-                return { ...subTask, subtaskTitle: title };
-              } else {
-                return subTask
-              }
-            })
-
-            return { ...task, subtasks: subTaskList }
+            const subTaskList = updatedTaskData?.data?.updateTask[0]?.subtasks;
+            return { ...task, subtasks: subTaskList };
           } else {
             return task;
           }
@@ -433,17 +411,16 @@ export function PinTaskList(props: PinTaskListProps) {
           },
         });
       },
-    })
-  }
+    });
+  };
 
-  const updateSubTaskStatus = (taskId, subtaskId, subtaskStatus) => {
-    subTaskStatusUpdateApi({
+  const updateSubTask = (taskId, subtaskId, title) => {
+    subTaskUpdateApi({
       variables: {
         subtaskID: subtaskId,
-        status: subtaskStatus === 'COMPLETED' ? Status.COMPLETED : Status.INPROGRESS
+        subtaskTitle: title,
       },
       update: (cache, data) => {
-
         const cacheData = cache.readQuery({
           query: GET_TASKS_BY_TYPES,
           variables: taskFetchFilter,
@@ -451,21 +428,58 @@ export function PinTaskList(props: PinTaskListProps) {
 
         const newTaskList = cacheData?.tasksByTasktypes?.map((task) => {
           if (task.taskID === taskId) {
-
             const subTaskList = task.subtasks.map((subTask) => {
               if (subTask.subtaskID === subtaskId) {
+                return { ...subTask, subtaskTitle: title };
+              } else {
+                return subTask;
+              }
+            });
 
+            return { ...task, subtasks: subTaskList };
+          } else {
+            return task;
+          }
+        });
+
+        cache.writeQuery({
+          query: GET_TASKS_BY_TYPES,
+          variables: taskFetchFilter,
+          data: {
+            tasksByTasktypes: newTaskList,
+          },
+        });
+      },
+    });
+  };
+
+  const updateSubTaskStatus = (taskId, subtaskId, subtaskStatus) => {
+    subTaskStatusUpdateApi({
+      variables: {
+        subtaskID: subtaskId,
+        status: subtaskStatus === 'COMPLETED' ? Status.COMPLETED : Status.INPROGRESS,
+      },
+      update: (cache, data) => {
+        const cacheData = cache.readQuery({
+          query: GET_TASKS_BY_TYPES,
+          variables: taskFetchFilter,
+        }) as ITasks;
+
+        const newTaskList = cacheData?.tasksByTasktypes?.map((task) => {
+          if (task.taskID === taskId) {
+            const subTaskList = task.subtasks.map((subTask) => {
+              if (subTask.subtaskID === subtaskId) {
                 if (subTask.status === 'INPROGRESS') {
                   return { ...subTask, status: Status.COMPLETED };
                 } else {
                   return { ...subTask, status: Status.INPROGRESS };
                 }
               } else {
-                return subTask
+                return subTask;
               }
-            })
+            });
 
-            return { ...task, subtasks: subTaskList }
+            return { ...task, subtasks: subTaskList };
           } else {
             return task;
           }
@@ -479,17 +493,15 @@ export function PinTaskList(props: PinTaskListProps) {
           },
         });
       },
-    })
-  }
+    });
+  };
 
   const deleteSubTask = (taskId, subtaskId) => {
-
     subTaskDeleteApi({
       variables: {
-        subtaskID: subtaskId
+        subtaskID: subtaskId,
       },
       update: (cache, data) => {
-
         const cacheData = cache.readQuery({
           query: GET_TASKS_BY_TYPES,
           variables: taskFetchFilter,
@@ -497,8 +509,8 @@ export function PinTaskList(props: PinTaskListProps) {
 
         const newTaskList = cacheData?.tasksByTasktypes?.map((task) => {
           if (task.taskID === taskId) {
-            const subTaskList = task.subtasks.filter((subTask) => subTask.subtaskID !== subtaskId)
-            return { ...task, subtasks: subTaskList }
+            const subTaskList = task.subtasks.filter((subTask) => subTask.subtaskID !== subtaskId);
+            return { ...task, subtasks: subTaskList };
           } else {
             return task;
           }
@@ -512,75 +524,75 @@ export function PinTaskList(props: PinTaskListProps) {
           },
         });
       },
-    })
+    });
   };
   // #endregion
 
-  if (taskListLoading) return (<LazyLoading />)
+  if (taskListLoading) return <LazyLoading />;
 
-  if (updateTaskLoading) return (<LazyLoading />)
+  if (updateTaskLoading) return <LazyLoading />;
 
-  if (updateTaskStatusLoading) return (<LazyLoading />)
+  if (updateTaskStatusLoading) return <LazyLoading />;
 
-  if (deleteTaskLoading) return (<LazyLoading />)
+  if (deleteTaskLoading) return <LazyLoading />;
 
   // #region Task list toast message
   // set sucess value to toaster function
   const getTaskToasterMessage = (data) => {
-    setActiveErrorClass(false)
-    toast(data)
-  }
+    setActiveErrorClass(false);
+    toast(data);
+  };
 
   // set error value to task error for toaster function
   const getTaskErrorMessage = (data) => {
-    setActiveErrorClass(true)
+    setActiveErrorClass(true);
 
     let errorExeptionMessage: string;
     switch (data) {
       case 7001:
-        errorExeptionMessage = t("toaster.error.task.task_already_exists")
-        break
+        errorExeptionMessage = t('toaster.error.task.task_already_exists');
+        break;
       case 7002:
-        errorExeptionMessage = t("toaster.error.task.task_not_found")
-        break
+        errorExeptionMessage = t('toaster.error.task.task_not_found');
+        break;
       case 7003:
-        errorExeptionMessage = t("toaster.error.task.task_not_created")
-        break
+        errorExeptionMessage = t('toaster.error.task.task_not_created');
+        break;
       case 7004:
-        errorExeptionMessage = t("toaster.error.task.no_title")
-        break
+        errorExeptionMessage = t('toaster.error.task.no_title');
+        break;
       case 7005:
-        errorExeptionMessage = t("toaster.error.task.no_worktype")
-        break
+        errorExeptionMessage = t('toaster.error.task.no_worktype');
+        break;
       case 7006:
-        errorExeptionMessage = t("toaster.error.planning.no_phase")
-        break
+        errorExeptionMessage = t('toaster.error.planning.no_phase');
+        break;
       case 7007:
-        errorExeptionMessage = t("toaster.error.task.no_assignee")
-        break
+        errorExeptionMessage = t('toaster.error.task.no_assignee');
+        break;
       case 7008:
-        errorExeptionMessage = t("toaster.error.task.wrong_date")
-        break
+        errorExeptionMessage = t('toaster.error.task.wrong_date');
+        break;
       case 7009:
-        errorExeptionMessage = t("toaster.error.planning.due_date")
-        break
+        errorExeptionMessage = t('toaster.error.planning.due_date');
+        break;
       case 7010:
-        errorExeptionMessage = t("toaster.error.task.no_referance")
-        break
+        errorExeptionMessage = t('toaster.error.task.no_referance');
+        break;
       case 7011:
-        errorExeptionMessage = t("toaster.error.task.subtask_not_found")
-        break
+        errorExeptionMessage = t('toaster.error.task.subtask_not_found');
+        break;
       case 7012:
-        errorExeptionMessage = t("toaster.error.task.no_subtask_title")
-        break
+        errorExeptionMessage = t('toaster.error.task.no_subtask_title');
+        break;
       case 500:
-        errorExeptionMessage = t("toaster.error.task.internal_server_error")
-        break
+        errorExeptionMessage = t('toaster.error.task.internal_server_error');
+        break;
       default:
-        errorExeptionMessage = ""
+        errorExeptionMessage = '';
     }
-    setTaskErrors(errorExeptionMessage)
-  }
+    setTaskErrors(errorExeptionMessage);
+  };
 
   // set toaster for edit task
   // React.useEffect(() => {
@@ -648,7 +660,6 @@ export function PinTaskList(props: PinTaskListProps) {
   //   }
   // }, [deleteSubTaskLoading])
 
-
   // set toaster for edit sub task status
   // React.useEffect(() => {
   //   if (!updateSubTaskStatusLoading && updateSubTaskStatusData) {
@@ -669,12 +680,20 @@ export function PinTaskList(props: PinTaskListProps) {
 
   return (
     <div>
-      <ToastContainer className={`${activeErrorClass ? "error" : "success"}`} position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
+      <ToastContainer
+        className={`${activeErrorClass ? 'error' : 'success'}`}
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={true}
+        closeOnClick
+        pauseOnFocusLoss
+        pauseOnHover
+      />
 
       {taskStatusConfirmation ? (
         <div className="pin_area">
           <ModalAlert
-            name='task'
+            name="task"
             openAlertF={taskStatusConfirmation}
             confirm={updateTaskStatus}
             taskData={taskData}
@@ -718,8 +737,12 @@ export function PinTaskList(props: PinTaskListProps) {
         </div>
       ) : null}
       {/* {loading ? <LoaderPage /> : <TaskListOnFilePins pinTasks={pinTasks} cord={props.cord} */}
-      {loading ? <LoaderPage /> :
-        <TaskListOnFilePins pinTasks={activeTaskList} cord={props.cord}
+      {loading ? (
+        <LoaderPage />
+      ) : (
+        <TaskListOnFilePins
+          pinTasks={activeTaskList}
+          cord={props.cord}
           updateTask={updateTaskStatusConfirm}
           deleteTask={deleteTaskConfirm}
           veiwTask={viewTask}
@@ -733,9 +756,8 @@ export function PinTaskList(props: PinTaskListProps) {
           updateSubTaskStatusLoading={updateSubTaskStatusLoading}
           deleteSubTask={deleteSubTask}
           deleteSubTaskLoading={deleteSubTaskLoading}
-        ></TaskListOnFilePins>}
+        ></TaskListOnFilePins>
+      )}
     </div>
   );
 }
-
-

@@ -5,7 +5,6 @@ import ProgressBar from 'libs/shared-components/src/lib/components/progress_bar/
 
 import { BkpIndex, PhaseIndex, FileTypeIndex, FileStructureIndex, FollowersIndex } from '@cudo/mf-account-app-lib';
 import { ProjectWorkTypeIndex } from '@cudo/mf-project-lib';
-
 import { useMutation } from '@apollo/client';
 import { IFiles } from '../../interfaces/document';
 import { GET_FILES, UPDATE_UPLOADED_FILE } from '../../graphql/graphql';

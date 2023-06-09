@@ -18,6 +18,7 @@ const client = new ApolloClient({
 export interface PhaseIndexProps {
   parentPhaseSelect
   phaseName?
+  error?
 }
 
 export function PhaseIndex(props: PhaseIndexProps) {

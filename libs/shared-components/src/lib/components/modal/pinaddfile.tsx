@@ -15,7 +15,10 @@ import {
 
 // import Canvas from './canvas';
 import CanvasImage from './canvasimage';
-import { CreateFileTaskIndex, PinTaskListIndex } from '@cudo/mf-task-lib';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { CreateFileTaskIndex } from '../../../../../mf-task-lib/src/lib/components/create-file-task-index/create-file-task-index';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { PinTaskListIndex } from '../../../../../mf-task-lib/src/lib/components/pin-task-list-index/pin-task-list-index';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';

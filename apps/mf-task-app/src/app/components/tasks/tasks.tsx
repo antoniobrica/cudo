@@ -63,10 +63,12 @@ export function Tasks(props: TasksProps) {
     setTasksForTaskArea(taskListData?.tasks?.results?.filter((task) => task.status === Status.INPROGRESS));
   }, [taskListData]);
 
-  React.useEffect(() => {
-    const res = location.pathname.split('/');
-    setReferenceID(res[3].toString());
-  }, [location]);
+  // issue is here
+  // React.useEffect(() => {
+  //   const res = location.pathname.split('/');
+  //   setReferenceID(res[3].toString());
+  // }, [location]);
+
   React.useEffect(() => {
     if (referenceID) {
       getWorkType(referenceID);
@@ -134,42 +136,44 @@ export function Tasks(props: TasksProps) {
     COMPANY = 'COMPANY',
   }
 
-  useEffect(() => {
-    axios({
-      url: MS_SERVICE_URL['ms_account'].url,
-      method: 'post',
-      data: {
-        query: `query { 
-            references( 
-              referenceFilter: { referenceID: "${props.companyId}", referenceType:${ReferenceType.COMPANY} } 
-            ){ 
-              users{
-                userID
-                userName
-                imageUrl
-                email
-              }
-            } 
-        }`,
-      },
-    }).then((result) => {
-      if (result.data.data.references.users) {
-        const userDetails = result.data.data.references.users.filter((user) => user.email === props.loggedUserEmail);
-        if (userDetails.length) {
-          dispatch({ type: taskActions.LOGGED_USER_ID, payload: userDetails[0].userID });
-          dispatch({ type: taskActions.LOGGED_USER_NAME, payload: userDetails[0].userName });
-          dispatch({ type: taskActions.LOGGED_USER_PROFILE_URL, payload: userDetails[0].imageUrl });
-          const loggedUserDetail = {
-            loggedUserEmail: userDetails[0].email,
-            loggedUserID: userDetails[0].userID,
-            loggedUserName: userDetails[0].userName,
-            loggedUserProfileURL: userDetails[0].imageUrl,
-          };
-          localStorage.setItem('loggedUserDetail', JSON.stringify(loggedUserDetail));
-        }
-      }
-    });
-  }, []);
+  // issue is here
+
+  // useEffect(() => {
+  //   axios({
+  //     url: MS_SERVICE_URL['ms_account'].url,
+  //     method: 'post',
+  //     data: {
+  //       query: `query {
+  //           references(
+  //             referenceFilter: { referenceID: "${props.companyId}", referenceType:${ReferenceType.COMPANY} }
+  //           ){
+  //             users{
+  //               userID
+  //               userName
+  //               imageUrl
+  //               email
+  //             }
+  //           }
+  //       }`,
+  //     },
+  //   }).then((result) => {
+  //     if (result.data.data.references.users) {
+  //       const userDetails = result.data.data.references.users.filter((user) => user.email === props.loggedUserEmail);
+  //       if (userDetails.length) {
+  //         dispatch({ type: taskActions.LOGGED_USER_ID, payload: userDetails[0].userID });
+  //         dispatch({ type: taskActions.LOGGED_USER_NAME, payload: userDetails[0].userName });
+  //         dispatch({ type: taskActions.LOGGED_USER_PROFILE_URL, payload: userDetails[0].imageUrl });
+  //         const loggedUserDetail = {
+  //           loggedUserEmail: userDetails[0].email,
+  //           loggedUserID: userDetails[0].userID,
+  //           loggedUserName: userDetails[0].userName,
+  //           loggedUserProfileURL: userDetails[0].imageUrl,
+  //         };
+  //         localStorage.setItem('loggedUserDetail', JSON.stringify(loggedUserDetail));
+  //       }
+  //     }
+  //   });
+  // }, []);
 
   const mutationUpdatePinStatusComplete = `mutation UpdatePinStatus(
     $uploadedFileID:String!,
@@ -246,9 +250,9 @@ export function Tasks(props: TasksProps) {
 
   // React.useEffect(() => {
   //   if (!loadingOnEditTaskStatus && updatedTaskStatusData) {
-  //     updatePinStatus(updatedTaskStatusData?.updateTask[0])
+  //     updatePinStatus(updatedTaskStatusData?.updateTask[0]);
   //   }
-  // }, [updatedTaskStatusData])
+  // }, [updatedTaskStatusData]);
 
   // set sucess value to toaster function
   const getTaskToasterMessage = (data) => {
@@ -673,7 +677,6 @@ export function Tasks(props: TasksProps) {
       followers.push({ userID: data.userID, userName: data.userName });
     });
     subtask.push(createSt);
-
     addSubTaskApi({
       variables: {
         taskID: data.taskID,
@@ -697,13 +700,11 @@ export function Tasks(props: TasksProps) {
         workTypeName: data.workTypeName,
         workTypeID: data.workTypeID,
       },
-
       update: (cache, updatedTaskData) => {
         const cacheData = cache.readQuery({
           query: GET_TASKS,
           variables: { referenceID },
         }) as ITasks;
-
         const newTaskList = cacheData?.tasks?.results?.map((task) => {
           if (task.taskID === data.taskID) {
             const subTaskList = updatedTaskData?.data?.updateTask[0]?.subtasks;
@@ -712,7 +713,6 @@ export function Tasks(props: TasksProps) {
             return task;
           }
         });
-
         cache.writeQuery({
           query: GET_TASKS,
           variables: { referenceID },
@@ -767,7 +767,6 @@ export function Tasks(props: TasksProps) {
           query: GET_TASKS,
           variables: { referenceID },
         }) as ITasks;
-
         const newTaskList = cacheData?.tasks?.results?.map((task) => {
           if (task.taskID === taskId) {
             const subTaskList = task.subtasks.map((subTask) => {
@@ -781,13 +780,11 @@ export function Tasks(props: TasksProps) {
                 return subTask;
               }
             });
-
             return { ...task, subtasks: subTaskList };
           } else {
             return task;
           }
         });
-
         cache.writeQuery({
           query: GET_TASKS,
           data: {
@@ -824,17 +821,14 @@ export function Tasks(props: TasksProps) {
           query: GET_TASKS,
           variables: { referenceID },
         }) as ITasks;
-
         const newTaskList = cacheData?.tasks?.results?.map((task) => {
           if (task.taskID === taskId) {
             const subTaskList = task.subtasks.filter((subTask) => subTask.subtaskID !== subtaskId);
-
             return { ...task, subtasks: subTaskList };
           } else {
             return task;
           }
         });
-
         cache.writeQuery({
           query: GET_TASKS,
           data: {
@@ -857,7 +851,6 @@ export function Tasks(props: TasksProps) {
   const updateSubTask = (taskId, subtaskId, title) => {
     setTaskId(taskId);
     setSubTaskId(subtaskId);
-
     subTaskUpdateApi({
       variables: {
         subtaskID: subtaskId,
@@ -868,7 +861,6 @@ export function Tasks(props: TasksProps) {
           query: GET_TASKS,
           variables: { referenceID },
         }) as ITasks;
-
         const newTaskList = cacheData?.tasks?.results?.map((task) => {
           if (task.taskID === taskId) {
             const subTaskList = task.subtasks.map((subTask) => {
@@ -878,13 +870,11 @@ export function Tasks(props: TasksProps) {
                 return subTask;
               }
             });
-
             return { ...task, subtasks: subTaskList };
           } else {
             return task;
           }
         });
-
         cache.writeQuery({
           query: GET_TASKS,
           variables: { referenceID },
@@ -911,7 +901,8 @@ export function Tasks(props: TasksProps) {
       <div className="pin_area">
         <FilterPopup />
         <ToggleButton changeAdd={changeAdd}></ToggleButton>
-        {isNewTask ? (
+        {/* issue is here */}
+        {/* {isNewTask ? (
           <CreateTask
             workTypes={workTypes}
             onSuccess={refresh}
@@ -921,9 +912,10 @@ export function Tasks(props: TasksProps) {
             getTaskErrorMessage={getTaskErrorMessage}
             taskListData={taskListData}
           />
-        ) : null}
+        ) : null} */}
       </div>
-      {isTaskFile ? (
+      {/* issue is here */}
+      {/* {isTaskFile ? (
         <div className="pin_area" style={{ marginLeft: 804 }}>
           <FileListIndex isTaskFile={isTaskFile} cancel={cancelNew} taskData={taskData} />
         </div>
@@ -939,7 +931,7 @@ export function Tasks(props: TasksProps) {
             cancel={cancel}
           ></ModalAlert>
         </div>
-      ) : null}
+      ) : null} */}
       {openD ? (
         <div className="pin_area">
           <TaskDelete

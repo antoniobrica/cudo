@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import Tasks from './components/tasks/tasks';
 import { initI18n } from '@cudo/mf-core';
-import "@cudo/all-shared-components"
+import '@cudo/all-shared-components';
 
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -17,11 +17,9 @@ export function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <Suspense fallback={<div>Loading...</div>}>
-          <div>
-            <Tasks />
-          </div>
-        </Suspense>
+        <div>
+          <Tasks />
+        </div>
       </PersistGate>
     </Provider>
   );
