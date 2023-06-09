@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import './login-password.module.scss';
-import { Loginpassword, Messagebar } from '@cudo/shared-components/src';
+import { Loginpassword, Messagebar } from '@cudo/shared-components';
 // import { useHistory } from 'react-router';
 import { LoginFlow } from '@oryd/kratos-client';
 import { initialiseRequest } from '../services/kratos';

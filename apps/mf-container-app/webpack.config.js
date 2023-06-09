@@ -1,11 +1,7 @@
 const { composePlugins, withNx } = require('@nrwl/webpack');
 const { withReact } = require('@nrwl/react');
 
-// Nx plugins for webpack.
 module.exports = composePlugins(withNx(), withReact(), (config) => {
-  // Update the webpack config as needed here.
-  // e.g. `config.plugins.push(new MyPlugin())`
-
   const newConfig = {
     ...config,
     devServer: {
@@ -17,9 +13,18 @@ module.exports = composePlugins(withNx(), withReact(), (config) => {
       ...config.resolve,
       fallback: {
         ...config.resolve.fallback,
-        url: require.resolve('url/'),
+        buffer: false,
+        url: require.resolve('url/'), // Use the url fallback from `mf-project-app`
+        assert: false,
+        https: false,
+        http: false,
+        stream: false,
+        crypto: false,
+        os: false,
+        timers: false,
       },
     },
   };
+
   return newConfig;
 });

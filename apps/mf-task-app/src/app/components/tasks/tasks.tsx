@@ -24,7 +24,7 @@ import { ADD_TASK, GET_ALL_COMMENTS, GET_TASKS } from '../../graphql/graphql';
 import { ISubTask, ITasks } from '../../interfaces/task';
 import { UPDATE_TASK, DELETE_TASK, UPDATE_SUBTASK_STATUS, UPDATE_SUBTASK, DELETE_SUBTASK } from '../../graphql/graphql';
 import { useTaskQuery, useTaskUpdateMutation, useTaskDeleteMutation } from '../../services/useRequest';
-import CreateTask from '../create-task/create-task';
+// import CreateTask from '../create-task/create-task';
 import TaskDelete from '../delete-task/delete-task';
 import SubTaskDelete from '../delete-subtask/delete-subtask';
 import { FileListIndex } from '@cudo/mf-document-lib';

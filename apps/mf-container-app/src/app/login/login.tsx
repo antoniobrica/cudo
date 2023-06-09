@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Loginbar } from '@cudo/shared-components/src';
+import { Loginbar } from '@cudo/shared-components';
 import './login.module.scss';
 import config from '../config/kratos';
 import { useNavigate } from 'react-router-dom';

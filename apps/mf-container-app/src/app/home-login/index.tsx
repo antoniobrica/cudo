@@ -1,4 +1,4 @@
-import { LazyLoading } from '@cudo/shared-components/src';
+import { LazyLoading } from '@cudo/shared-components';
 import React, { useEffect } from 'react';
 import { useSession } from '../services/session';
 import { useLazyQuery, useMutation } from '@apollo/client';

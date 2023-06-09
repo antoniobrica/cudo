@@ -26,7 +26,7 @@ import {
   GET_PROJECTS,
   GET_WORKTYPES,
 } from '../../graphql/graphql';
-import { ModalExamplePrinting, ModalExampleCompany } from '@cudo/shared-components';
+// import { ModalExamplePrinting, ModalExampleCompany } from '@cudo/shared-components';
 import WorkType from '../../work-type/work-type';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
 import ReactQuill, { Quill } from 'react-quill';

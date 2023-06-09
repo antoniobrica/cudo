@@ -1,4 +1,4 @@
-import { UserProfile } from '@cudo/shared-components/src';
+import { UserProfile } from '@cudo/shared-components';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { initialiseRequest } from '../services/kratos';
@@ -13,10 +13,7 @@ export function UserProfileEdit(props: UserProfileEditProps) {
 
   const [requestResponse, setRequestResponse] = useState<any>();
   useEffect(() => {
-    const request = initialiseRequest(
-      { type: 'settings' },
-      { filterid: 'flow' }
-    ) as Promise<any>;
+    const request = initialiseRequest({ type: 'settings' }, { filterid: 'flow' }) as Promise<any>;
     request
       .then((request) => setRequestResponse(request))
       .catch((error) => {

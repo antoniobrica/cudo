@@ -1,4 +1,4 @@
-import { Menubar } from '@cudo/shared-components/src';
+import { Menubar } from '@cudo/shared-components';
 import React, { useEffect, useState } from 'react';
 import { Route, Link, useLocation, useNavigate, Routes, useMatch } from 'react-router-dom';
 import { environment } from '../../environments/environment';

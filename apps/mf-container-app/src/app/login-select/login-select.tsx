@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import './login-select.module.scss';
-import { Logindrop } from '@cudo/shared-components/src';
+import { Logindrop } from '@cudo/shared-components';
 import { isAuthenticated, ToEmail } from '../services/auth';
 import axios from 'axios';
 import { environment } from '../../environments/environment';
@@ -38,13 +38,6 @@ export function LoginSelect(props: LoginSelectProps) {
     if (!user.loggedIn && !session) {
       console.log(session);
       console.log('need to login');
-      
-
-
-
-      
-
-
 
       // navigate('/login-email');
       ToEmail();

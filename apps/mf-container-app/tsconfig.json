@@ -6,10 +6,22 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@cudo/shared-components/*": ["libs/shared-components/*"],
+      "@cudo/mf-project-app/*": ["apps/mf-project-app/*"],
+      "@cudo/mf-task-app/*": ["apps/mf-task-app/*"],
+      "@cudo/data": ["libs/data/src/index.ts"],
+      "@cudo/data-access": ["libs/data-access/src/index.ts"],
+      "@cudo/interfaces": ["libs/interfaces/src/index.ts"],
       "@cudo/mf-account-app-lib": ["libs/mf-account-app-lib/src/index.ts"],
-      "@cudo/all-shared-components": ["libs/shared-components/src/index.ts"],
-      "@cudo/mf-core": ["libs/mf-core/src/index.ts"]
+      "@cudo/mf-core": ["libs/mf-core/src/index.ts"],
+      "@cudo/mf-document-lib": ["libs/mf-document-lib/src/index.ts"],
+      "@cudo/mf-task-lib": ["libs/mf-task-lib/src/index.ts"],
+      "@cudo/ms-core": ["libs/ms-core/src/index.ts"],
+      "@cudo/shared": ["libs/shared/src/index.ts"],
+      "@cudo/shared-components": ["libs/shared-components/src/index.ts"],
+      "@cudo/ui": ["libs/ui/src/index.ts"],
+      "@root/shared-components": ["libs/shared-components/*"],
+      "@cudo/libs": ["libs/"],
+      "@cudo/mf-project-lib": ["libs/mf-project-lib/src/index.ts"]
     }
   },
   "files": [],

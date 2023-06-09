@@ -3,26 +3,15 @@ import { initialiseRequest } from '../services/kratos';
 // import { KratosMessages } from '../components/KratosMessages';
 // import { KratosForm } from '../components/KratosForm';
 import { login } from '../services/auth';
-import {
-  Button,
-  Form,
-  Grid,
-  Header,
-  Input,
-  Modal,
-  TextArea,
-} from 'semantic-ui-react';
+import { Button, Form, Grid, Header, Input, Modal, TextArea } from 'semantic-ui-react';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
-import { RegisterPage } from '@cudo/shared-components/src';
+import { RegisterPage } from '@cudo/shared-components';
 // import { FormField } from '@oryd/kratos-client';
 export const Register = () => {
   const [requestResponse, setRequestResponse] = useState<any>();
   const [open, setOpen] = React.useState(false);
   useEffect(() => {
-    const request = initialiseRequest(
-      { type: 'register' },
-      { filterid: 'flow' }
-    ) as Promise<any>;
+    const request = initialiseRequest({ type: 'register' }, { filterid: 'flow' }) as Promise<any>;
     request
       .then((request) => setRequestResponse(request))
       .catch((error) => {

@@ -15,6 +15,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import config from './redux/store';
 import { initI18n } from '@cudo/mf-core';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { LazyLoading } from '@cudo/shared-components';
 
 const defaultLanguage = 'en-GB';
 const supportedLanguages = [defaultLanguage, 'en-GB'];
@@ -102,15 +104,24 @@ function App() {
     }
   }, []);
 
+  const client = new ApolloClient({
+    uri: 'http://localhost:5005/graphql',
+    cache: new InMemoryCache(),
+  });
+
   return (
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <Routes>
-          <Route path="/home/project" element={<ProjectInfo />} />
-          <Route path="/home/project/:projectId" element={<TabMenu />} />
-        </Routes>
-      </PersistGate>
-    </Provider>
+    <ApolloProvider client={client}>
+      <Suspense fallback={<LazyLoading />}>
+        <Provider store={store}>
+          <PersistGate persistor={persistor}>
+            <Routes>
+              <Route path="/home/project" element={<ProjectInfo />} />
+              <Route path="/home/project/:projectId" element={<TabMenu />} />{' '}
+            </Routes>
+          </PersistGate>
+        </Provider>
+      </Suspense>
+    </ApolloProvider>
   );
 }
 

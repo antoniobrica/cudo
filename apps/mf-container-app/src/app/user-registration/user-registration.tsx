@@ -3,7 +3,7 @@ import { initialiseRequest } from '../services/kratos';
 import { login, ToEmail } from '../services/auth';
 import { Button, Form, Grid, Header, Input, Modal, TextArea } from 'semantic-ui-react';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
-import { RegisterPage } from '@cudo/shared-components/src';
+import { RegisterPage } from '@cudo/shared-components';
 // import { FormField } from '@oryd/kratos-client';
 /* eslint-disable-next-line */
 export interface UserRegistrationProps {}

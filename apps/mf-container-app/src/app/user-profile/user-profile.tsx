@@ -1,4 +1,4 @@
-import { UserProfileView } from '@cudo/shared-components/src';
+import { UserProfileView } from '@cudo/shared-components';
 import React from 'react';
 import { Link, Route, useNavigate } from 'react-router-dom';
 import { UserRegistration } from '../user-registration/user-registration';
