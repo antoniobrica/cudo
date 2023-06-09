@@ -16,7 +16,6 @@ import {
   Dimmer,
   Icon,
 } from 'semantic-ui-react';
-// import { radios } from '@storybook/addon-knobs';
 import { IPeople, IPeoples, ITask, ITasks, TaskMutation } from '../../interfaces/task';
 import { useTaskMutation } from '../../services/useRequest';
 import { ApolloCache, FetchResult, useMutation } from '@apollo/client';
@@ -30,9 +29,9 @@ import { start } from 'repl';
 import { useTranslation } from 'react-i18next';
 
 import { LazyLoading } from '@cudo/shared-components';
-import { FileListIndex } from '@cudo/mf-document-lib';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { useLocation } from 'react-router-dom';
+// import { FileListIndex } from '@cudo/mf-document-lib';
 
 /* eslint-disable-next-line */
 export interface CreateTaskProps {
@@ -102,7 +101,6 @@ export function CreateTask(props: CreateTaskProps) {
   const [date, setDate] = React.useState(null);
   const [addTaskLoading, setAddTaskLoading] = useState(false);
   const { t } = useTranslation();
-
   const location = useLocation();
 
   const res = location.pathname.split('/');
@@ -393,7 +391,8 @@ export function CreateTask(props: CreateTaskProps) {
             <Loader size="big">Submitting</Loader>
           </Dimmer>
         ) : null}
-
+        {/* issue is here */}
+        {/* 
         {isOpenTaskFiles && (
           <FileListIndex
             isTaskFile={isOpenTaskFiles}
@@ -402,7 +401,7 @@ export function CreateTask(props: CreateTaskProps) {
             selectedFiles={selectedFiles}
             addSelectedFiles={addSelectedFiles}
           />
-        )}
+        )} */}
         <div className="fixed-popup-inner-con">
           <Modal.Header>
             <h3>{t('project_tab_menu.task.add_new_task')} </h3> <Icon name="close" onClick={cancel} />

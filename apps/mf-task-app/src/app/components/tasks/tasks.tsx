@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
+import img from 'libs/shared-components/src/dots.png';
 
 import './tasks.module.scss';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
@@ -31,6 +32,7 @@ import { FileListIndex } from '@cudo/mf-document-lib';
 import { toast, ToastContainer } from 'react-toastify';
 import { taskActions } from '../../redux/actions';
 import { useLocation } from 'react-router-dom';
+import CreateTask from '../create-task/create-task';
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface TasksProps {
   companyId;
@@ -887,7 +889,7 @@ export function Tasks(props: TasksProps) {
   };
 
   return (
-    <div className="tabs-main-info-container">
+    <div style={{ marginLeft: '325px' }} className="tabs-main-info-container">
       <ToastContainer
         className={`${activeErrorClass ? 'error' : 'success'}`}
         position="top-right"
@@ -902,7 +904,7 @@ export function Tasks(props: TasksProps) {
         <FilterPopup />
         <ToggleButton changeAdd={changeAdd}></ToggleButton>
         {/* issue is here */}
-        {/* {isNewTask ? (
+        {isNewTask ? (
           <CreateTask
             workTypes={workTypes}
             onSuccess={refresh}
@@ -912,7 +914,7 @@ export function Tasks(props: TasksProps) {
             getTaskErrorMessage={getTaskErrorMessage}
             taskListData={taskListData}
           />
-        ) : null} */}
+        ) : null}
       </div>
       {/* issue is here */}
       {/* {isTaskFile ? (
@@ -1070,10 +1072,7 @@ export function Tasks(props: TasksProps) {
                         <div className="d-flex align-items-center py-2">
                           <span>
                             {' '}
-                            <img
-                              src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/dots.png`}
-                              className="  mr-10 "
-                            />{' '}
+                            <img src={img} className="  mr-10 " />{' '}
                           </span>
                           <span className="textt">T-{task?.sequenceNumber}</span>
                           <span onClick={() => updateTask(task)}>

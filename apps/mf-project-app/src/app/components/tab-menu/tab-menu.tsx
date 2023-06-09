@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
 import MicroFrontend from '../../../MicroFrontend';
 import { Tab, Image } from 'semantic-ui-react';
 import { NavLink, Route, useLocation, useParams, useNavigate, useMatch, Routes } from 'react-router-dom';
-import { PlanningIndex } from '@cudo/mf-task-lib';
+// import { PlanningIndex } from '@cudo/mf-task-lib';
 import { useProjectByIdQuery } from '../../services/useRequest';
 import { GET_PROJECT_BY_ID } from '../../graphql/graphql';
 import { useQuery } from '@apollo/client';
@@ -286,7 +286,7 @@ function TabMenu(props: TabMenuProps) {
     return (
       <div className="app-content-body-dash navbar-collapse">
         <div className="main-page-heading">
-          <span className="">{worktypeName ? worktypeName : 'WorktypeName'}</span>{' '}
+          <span className="">{worktypeName ? worktypeName : 'WorktypeName'}</span>
           <span className="preliminary-font">{t('project_tab_menu.preiminary_studies')}</span>
         </div>
         <Tab
@@ -298,7 +298,8 @@ function TabMenu(props: TabMenuProps) {
           panes={panes}
         />
         <Routes>
-          <Route path={`${url}/planning`} element={<PlanningIndex worktypes={worktypes}></PlanningIndex>} />
+          {/* issue is here */}
+          {/* <Route path={`${url}/planning`} element={<PlanningIndex worktypes={worktypes}></PlanningIndex>} /> */}
           <Route
             path={`${url}/overview`}
             element={
@@ -351,7 +352,7 @@ function TabMenu(props: TabMenuProps) {
             }
           />
         </Routes>
-        {/* end Added for  */},
+        {/* end Added for  */}
       </div>
     );
     // return (

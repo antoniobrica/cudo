@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button, Header, Modal, Input, Form, Grid, Select, TextArea } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
-import { MS_SERVICE_URL } from '@cudo/mf-core';
+import img from 'libs/shared-components/src/filter.png';
+
 import { useTranslation } from 'react-i18next';
 export function FilterPopup() {
   const countryOptions = [
@@ -25,10 +26,7 @@ export function FilterPopup() {
           // <Button size="mini" className="grey-btn">
           //   Filter
           // </Button>
-          <img
-            src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/filter.png`}
-            className="filter-icon mr-10 "
-          />
+          <img src={img} className="filter-icon mr-10 " />
         }
         closeOnDimmerClick={false}
       >

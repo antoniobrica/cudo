@@ -4,7 +4,7 @@ import { Button, Checkbox, Modal, Input, Form, Grid, Select, Icon, Dimmer, Loade
 import ProgressBar from 'libs/shared-components/src/lib/components/progress_bar/progressbar';
 
 import { BkpIndex, PhaseIndex, FileTypeIndex, FileStructureIndex, FollowersIndex } from '@cudo/mf-account-app-lib';
-import { ProjectWorkTypeIndex } from '@cudo/mf-project-lib';
+// import { ProjectWorkTypeIndex } from '@cudo/mf-project-lib';
 import { useMutation } from '@apollo/client';
 import { IFiles } from '../../interfaces/document';
 import { GET_FILES, UPDATE_UPLOADED_FILE } from '../../graphql/graphql';
@@ -414,11 +414,12 @@ export function EditFileSettingUpload(props: EditFileSettingUploadProps) {
                     <Grid columns={2}>
                       <Grid.Row>
                         <Grid.Column>
-                          <ProjectWorkTypeIndex
+                          {/* issue is here */}
+                          {/* <ProjectWorkTypeIndex
                             label={t('menu.project')}
                             workTypeID={workTypeId}
                             parentWorkTypeSelect={onChangeWorkType}
-                          />
+                          /> */}
                         </Grid.Column>
 
                         <Grid.Column>

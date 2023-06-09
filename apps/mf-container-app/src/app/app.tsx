@@ -79,20 +79,9 @@ import Microfrontend2 from '@cudo/mf-task-app/src/app/App';
 const App = () => {
   return (
     <Router>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/mf-project-app">Microfrontend 1</Link>
-          </li>
-          <li>
-            <Link to="/mf-task-app/task">Microfrontend 2 Task</Link>
-          </li>
-        </ul>
-      </nav>
-
       <Routes>
-        <Route path="/mf-project-app" element={<Microfrontend1 />} />
-        <Route path="/mf-task-app" element={<Microfrontend2 />} />
+        <Route path="/home/project/:projectId/task/*" element={<Microfrontend2 />} />
+        <Route path="/*" element={<Microfrontend1 />} />
       </Routes>
     </Router>
   );
