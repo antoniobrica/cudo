@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 import { Button, Input, Form, Grid } from 'semantic-ui-react';
-import { LazyLoading, LoaderPage } from "@cudo/shared-components"
+import { LazyLoading, LoaderPage } from '@cudo/shared-components';
 import { useQuery, useMutation } from '@apollo/client';
 import { toast, ToastContainer } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +9,7 @@ import { ADD_COMMENT, GET_ALL_COMMENTS, GET_COMMENTS } from '../../graphql/graph
 import { IComments } from '../../interfaces/comment';
 
 export interface CommentAddProps {
-  taskID?,
+  taskID?;
   // companyId?,
   // loggedUserEmail?,
   // loggedUserID?,
@@ -18,110 +18,112 @@ export interface CommentAddProps {
 }
 
 interface AddCommentError {
-  commentError?: string
+  commentError?: string;
 }
 
 export function CommentAdd(props: CommentAddProps) {
-
   const { t } = useTranslation();
 
   // const dispatch = useDispatch()
   // dispatch({ type: documentAction.LOGGED_USER_EMAIL, payload: "test value" })
 
-  const [commentMessage, setCommentMessage] = useState('')
-  const [commentAddLoadingState, setCommentAddLoadingState] = useState(false)
+  const [commentMessage, setCommentMessage] = useState('');
+  const [commentAddLoadingState, setCommentAddLoadingState] = useState(false);
 
-  const [commentErrors, setCommentErrors] = useState("")
-  const [activeErrorClass, setActiveErrorClass] = useState(false)
+  const [commentErrors, setCommentErrors] = useState('');
+  const [activeErrorClass, setActiveErrorClass] = useState(false);
 
-  const [errors, setErrors] = React.useState<AddCommentError>({})
+  const [errors, setErrors] = React.useState<AddCommentError>({});
 
-  const { loading: commentListLoading, error: commentListError, data: commentListData } = useQuery(GET_COMMENTS, {
+  const {
+    loading: commentListLoading,
+    error: commentListError,
+    data: commentListData,
+  } = useQuery(GET_COMMENTS, {
     variables: { taskID: props?.taskID },
   });
 
-  const [addComment, { loading: commentAddLoading, error: commentAddError, data: commentAddData }] = useMutation(ADD_COMMENT,
+  const [addComment, { loading: commentAddLoading, error: commentAddError, data: commentAddData }] = useMutation(
+    ADD_COMMENT,
     {
-      refetchQueries: [
-        { query: GET_ALL_COMMENTS }
-      ]
-    })
+      refetchQueries: [{ query: GET_ALL_COMMENTS }],
+    }
+  );
 
   useEffect(() => {
     if (commentAddData && !commentAddLoading) {
-      setCommentAddLoadingState(false)
+      setCommentAddLoadingState(false);
     }
-  }, [commentAddData])
+  }, [commentAddData]);
 
   // #region Toast Success and Error Messages
 
   // set error message to toaster
   useEffect(() => {
     if (commentErrors) {
-      toast(commentErrors)
+      toast(commentErrors);
     }
-  }, [commentErrors])
+  }, [commentErrors]);
 
   // set error value to comment error for toaster function
   const getCommentErrorMessage = (data) => {
-    setActiveErrorClass(true)
+    setActiveErrorClass(true);
 
     let errorExeptionMessage: string;
     switch (data) {
       case 3008:
-        errorExeptionMessage = t("toaster.error.comment.comment_not_found")
-        break
+        errorExeptionMessage = t('toaster.error.comment.comment_not_found');
+        break;
       case 3010:
-        errorExeptionMessage = t("toaster.error.comment.comment_not_added")
-        break
+        errorExeptionMessage = t('toaster.error.comment.comment_not_added');
+        break;
       default:
-        errorExeptionMessage = ""
+        errorExeptionMessage = '';
     }
-    setCommentErrors(errorExeptionMessage)
-  }
+    setCommentErrors(errorExeptionMessage);
+  };
 
   // set sucess value to toaster function
   const getCommentToasterMessage = (data) => {
-    setActiveErrorClass(false)
-    toast(data)
-  }
+    setActiveErrorClass(false);
+    toast(data);
+  };
 
   // set toaster for Add comment success
   useEffect(() => {
     if (!commentAddLoading && commentAddData) {
-      setCommentAddLoadingState(false)
-      getCommentToasterMessage(t("toaster.success.comment.comment_added"))
+      setCommentAddLoadingState(false);
+      getCommentToasterMessage(t('toaster.success.comment.comment_added'));
     }
     if (!commentAddLoading && commentAddError) {
-      setCommentAddLoadingState(false)
-      getCommentErrorMessage(commentAddError?.graphQLErrors[0]?.extensions.exception.status)
+      setCommentAddLoadingState(false);
+      getCommentErrorMessage(commentAddError?.graphQLErrors[0]?.extensions.exception);
     }
-  }, [commentAddLoading])
+  }, [commentAddLoading]);
   // #endregion
 
-
   const onChangeComment = (html, editor) => {
-    const textLength = editor.getLength()
+    const textLength = editor.getLength();
     if (textLength > 1) {
-      setCommentMessage(html)
+      setCommentMessage(html);
     } else {
-      setCommentMessage('')
+      setCommentMessage('');
     }
-  }
+  };
 
   const onClickCommentAdd = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     // Validation
-    const foundErrors: AddCommentError = {}
+    const foundErrors: AddCommentError = {};
     if (!commentMessage) {
-      foundErrors.commentError = t("common.errors.comment_error")
-      setErrors(foundErrors)
-      return false
+      foundErrors.commentError = t('common.errors.comment_error');
+      setErrors(foundErrors);
+      return false;
     }
 
     // show Loader
-    setCommentAddLoadingState(true)
+    setCommentAddLoadingState(true);
 
     // get logged user info
     const loggedUserDetailRetrieve = localStorage.getItem('loggedUserDetail');
@@ -134,10 +136,9 @@ export function CommentAdd(props: CommentAddProps) {
         comment: commentMessage,
         createdBy: loggedUserDetail.loggedUserName,
         createdByEmail: loggedUserDetail.loggedUserEmail,
-        createdByUrl: loggedUserDetail.loggedUserProfileURL !== null ? loggedUserDetail.loggedUserProfileURL : ""
+        createdByUrl: loggedUserDetail.loggedUserProfileURL !== null ? loggedUserDetail.loggedUserProfileURL : '',
       },
       update: (cache, createdCommentData) => {
-
         const cacheData = cache.readQuery({
           query: GET_COMMENTS,
           variables: { taskID: props?.taskID },
@@ -147,21 +148,21 @@ export function CommentAdd(props: CommentAddProps) {
           query: GET_COMMENTS,
           variables: { taskID: props?.taskID },
           data: {
-            getComments: [...cacheData?.getComments, createdCommentData]
+            getComments: [...cacheData?.getComments, createdCommentData],
           },
         });
-
-      }
-    })
-    setCommentMessage('')
-    setErrors({})
-
+      },
+    });
+    setCommentMessage('');
+    setErrors({});
   };
 
   return (
     <Form.Field>
       <label>Comments ({commentListData?.getComments?.filter((item) => item.isDeleted != true).length || 0})</label>
-      {commentAddLoadingState ? <LazyLoading /> :
+      {commentAddLoadingState ? (
+        <LazyLoading />
+      ) : (
         <>
           {/* <Input placeholder='click to add comment' size='small' className="full-width" type="text" /> */}
           <ReactQuill
@@ -183,22 +184,23 @@ export function CommentAdd(props: CommentAddProps) {
             onChange={(content, delta, source, editor) => onChangeComment(content, editor)}
             // onKeyDown={onKeyPresDescription}
             id="txtDescription"
-          // errors={errors?.commentError && !commentMessage}
+            // errors={errors?.commentError && !commentMessage}
           />
-          {errors?.commentError && !commentMessage ? <span className="error-message">{errors.commentError}</span> : null}
+          {errors?.commentError && !commentMessage ? (
+            <span className="error-message">{errors.commentError}</span>
+          ) : null}
 
           <div className="comments-action">
             <i className="ms-Icon ms-Icon--Send" onClick={onClickCommentAdd}></i>
             {/* <Button positive size='small' className="primary full-width" onClick={onClickCommentAdd}>Add Comment</Button> */}
           </div>
         </>
-      }
+      )}
     </Form.Field>
-
-  )
+  );
 }
 
-export default CommentAdd
+export default CommentAdd;
 
 // const mapStateToProps = state => ({
 //   companyId: state.app.selectedCompany.selectedCompanyId,

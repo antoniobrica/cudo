@@ -2,39 +2,53 @@ import { useMutation, useQuery } from '@apollo/client';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { TaskDelete } from '@cudo/mf-task-lib';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { LazyLoading, LoaderPage, ModalAlert, ModalTaskEdit, ModalViewTask, TaskListOnFilePins } from '@cudo/shared-components';
+import {
+  LazyLoading,
+  LoaderPage,
+  ModalAlert,
+  ModalTaskEdit,
+  ModalViewTask,
+  TaskListOnFilePins,
+} from '@cudo/shared-components';
 import axios from 'axios';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { ITask, ITasks } from '../../interfaces/task';
-import { GET_TASKS, GET_TASKS_BY_TYPES, UPDATE_TASK, DELETE_TASK, UPDATE_SUBTASK_STATUS, UPDATE_SUBTASK, DELETE_SUBTASK } from './../../graphql/graphql';
+import {
+  GET_TASKS,
+  GET_TASKS_BY_TYPES,
+  UPDATE_TASK,
+  DELETE_TASK,
+  UPDATE_SUBTASK_STATUS,
+  UPDATE_SUBTASK,
+  DELETE_SUBTASK,
+} from './../../graphql/graphql';
 
 import { useTaskUpdateMutation, useTaskDeleteMutation } from '../../services/useRequest';
 
 import { toast, ToastContainer } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { Dropdown, Label, Radio } from 'semantic-ui-react';
+import { useLocation } from 'react-router-dom';
 
 /* eslint-disable-next-line */
 export interface PinCompletedTaskListProps {
-  filesData?
-  cord?
-  pinCompletedCount?
-  taskHovered?
-  parentWiseTaskFetch?
-  isVersionSelected?
-  isCompletedTaskShow?
+  filesData?;
+  cord?;
+  pinCompletedCount?;
+  taskHovered?;
+  parentWiseTaskFetch?;
+  isVersionSelected?;
+  isCompletedTaskShow?;
 }
 
 export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
-  const history = useHistory();
+  const location = useLocation();
   const { t } = useTranslation();
 
   const [viewTaskOpen, setViewTaskOpen] = React.useState(false);
   const [editTaskOpen, setEditTaskOpen] = React.useState(false);
   const [updateTaskStatusConfirmOpen, setUpdateTaskStatusConfirmOpen] = React.useState(false);
   const [deleteTaskConfirmOpen, setDeleteTaskConfirmOpen] = React.useState(false);
-
 
   const [pinTasks, setPinTasks] = React.useState([]);
   const [selectedTask, setSelectedTask] = React.useState(null);
@@ -44,51 +58,70 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
   const [idx, setId] = React.useState('');
   const [taskStatus, settaskStatus] = React.useState('');
 
-  const [taskHoveredId, setTaskHoveredId] = React.useState(null)
+  const [taskHoveredId, setTaskHoveredId] = React.useState(null);
 
   const [subTaskId, setSubTaskId] = React.useState();
-  const [taskErrors, setTaskErrors] = React.useState("")
-  const [activeErrorClass, setActiveErrorClass] = React.useState(false)
+  const [taskErrors, setTaskErrors] = React.useState('');
+  const [activeErrorClass, setActiveErrorClass] = React.useState(false);
 
   const [completedTaskShow, setCompletedTaskShow] = React.useState(false);
-  const [completedTaskList, setCompletedTaskList] = React.useState([])
+  const [completedTaskList, setCompletedTaskList] = React.useState([]);
 
-  const res = history.location.pathname.split("/");
+  const res = location.pathname.split('/');
   const referenceID = res[3]?.toString();
 
-  const taskFetchFilter = props?.parentWiseTaskFetch === true ? {
-    parentFileID: props?.isVersionSelected === true ?
-      props?.filesData?.parentUploadedFileID
-      : props?.filesData?.uploadedFileID,
-    referenceID
-  } : {
-    fileID: props?.filesData?.uploadedFileID,
-    referenceID
-  }
+  const taskFetchFilter =
+    props?.parentWiseTaskFetch === true
+      ? {
+          parentFileID:
+            props?.isVersionSelected === true
+              ? props?.filesData?.parentUploadedFileID
+              : props?.filesData?.uploadedFileID,
+          referenceID,
+        }
+      : {
+          fileID: props?.filesData?.uploadedFileID,
+          referenceID,
+        };
 
-  const { loading: taskListLoading, error: taskListError, data: taskListData } = useQuery(GET_TASKS_BY_TYPES, {
+  const {
+    loading: taskListLoading,
+    error: taskListError,
+    data: taskListData,
+  } = useQuery(GET_TASKS_BY_TYPES, {
     variables: taskFetchFilter,
   });
 
   React.useEffect(() => {
-    setCompletedTaskList(taskListData?.tasksByTasktypes?.filter(task => task.status === Status.COMPLETED))
-  }, [taskListData])
+    setCompletedTaskList(taskListData?.tasksByTasktypes?.filter((task) => task.status === Status.COMPLETED));
+  }, [taskListData]);
 
   React.useEffect(() => {
-    props.pinCompletedCount(completedTaskList?.length)
-  }, [completedTaskList])
+    props.pinCompletedCount(completedTaskList?.length);
+  }, [completedTaskList]);
 
   // #region  API CAll
   // Task API
-  const [updateTaskApi, { loading: updateTaskLoading, error: updateTaskError, data: updateTaskData }] = useMutation(UPDATE_TASK);
-  const [updateTaskStatusApi, { loading: updateTaskStatusLoading, error: updateTaskStatusError, data: updateTaskStatusData }] = useMutation(UPDATE_TASK);
-  const [deleteTaskApi, { loading: deleteTaskLoading, error: deleteTaskError, data: deleteTaskData }] = useMutation(DELETE_TASK);
+  const [updateTaskApi, { loading: updateTaskLoading, error: updateTaskError, data: updateTaskData }] =
+    useMutation(UPDATE_TASK);
+  const [
+    updateTaskStatusApi,
+    { loading: updateTaskStatusLoading, error: updateTaskStatusError, data: updateTaskStatusData },
+  ] = useMutation(UPDATE_TASK);
+  const [deleteTaskApi, { loading: deleteTaskLoading, error: deleteTaskError, data: deleteTaskData }] =
+    useMutation(DELETE_TASK);
 
   // Sub task API
-  const [addSubTaskApi, { loading: addSubTaskLoading, error: addSubTaskError, data: addedSubTaskData }] = useMutation(UPDATE_TASK);
-  const [subTaskUpdateApi, { loading: updateSubTaskLoading, error: updateSubTaskError, data: updateSubTaskData }] = useMutation(UPDATE_SUBTASK);
-  const [subTaskStatusUpdateApi, { loading: updateSubTaskStatusLoading, error: updateSubTaskStatusError, data: updateSubTaskStatusData }] = useMutation(UPDATE_SUBTASK_STATUS);
-  const [subTaskDeleteApi, { loading: deleteSubTaskLoading, error: deleteSubTaskError, data: deleteSubTaskData }] = useMutation(DELETE_SUBTASK);
+  const [addSubTaskApi, { loading: addSubTaskLoading, error: addSubTaskError, data: addedSubTaskData }] =
+    useMutation(UPDATE_TASK);
+  const [subTaskUpdateApi, { loading: updateSubTaskLoading, error: updateSubTaskError, data: updateSubTaskData }] =
+    useMutation(UPDATE_SUBTASK);
+  const [
+    subTaskStatusUpdateApi,
+    { loading: updateSubTaskStatusLoading, error: updateSubTaskStatusError, data: updateSubTaskStatusData },
+  ] = useMutation(UPDATE_SUBTASK_STATUS);
+  const [subTaskDeleteApi, { loading: deleteSubTaskLoading, error: deleteSubTaskError, data: deleteSubTaskData }] =
+    useMutation(DELETE_SUBTASK);
   // #endregion
 
   enum Status {
@@ -97,42 +130,42 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
   }
 
   const onClickShowCompletedTask = () => {
-    setCompletedTaskShow(!completedTaskShow)
-    props?.isCompletedTaskShow(!completedTaskShow)
-  }
+    setCompletedTaskShow(!completedTaskShow);
+    props?.isCompletedTaskShow(!completedTaskShow);
+  };
 
   const cancel = () => {
     setViewTaskOpen(false);
     setEditTaskOpen(false);
     setDeleteTaskConfirmOpen(false);
-    setUpdateTaskStatusConfirmOpen(false)
+    setUpdateTaskStatusConfirmOpen(false);
   };
 
   //#region Task Feature
 
   // #region open modal on click event
   const onClickOpenViewTask = (task) => {
-    setId(task.taskID)
+    setId(task.taskID);
     setTaskData(task);
     setViewTaskOpen(true);
   };
 
   const onClickOpenEditTask = (task) => {
-    setId(task.taskID)
+    setId(task.taskID);
     setTaskData(task);
-    setEditTaskOpen(true)
+    setEditTaskOpen(true);
   };
 
   const onClickOpenDeleteTask = (task) => {
-    setId(task.taskID)
+    setId(task.taskID);
     setTaskData(task);
     setDeleteTaskConfirmOpen(true);
   };
 
   const onClickUpdateTaskStatus = (task) => {
-    const status = Status.INPROGRESS
-    settaskStatus('Re-open')
-    setId(task.taskID)
+    const status = Status.INPROGRESS;
+    settaskStatus('Re-open');
+    setId(task.taskID);
     setTaskData({ ...task, status });
     setUpdateTaskStatusConfirmOpen(true);
   };
@@ -141,16 +174,15 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
   // #region on Api call methods
 
   const updateTaskDetail = (data) => {
-
-    setEditTaskOpen(false)
+    setEditTaskOpen(false);
     const assignees = [];
     data.assignees.map((data, i) => {
-      assignees.push({ userID: data.userID, userName: data.userName })
-    })
+      assignees.push({ userID: data.userID, userName: data.userName });
+    });
     const followers = [];
     data.followers.map((data, i) => {
-      followers.push({ userID: data.userID, userName: data.userName })
-    })
+      followers.push({ userID: data.userID, userName: data.userName });
+    });
     updateTaskApi({
       variables: {
         taskID: data.taskID,
@@ -172,7 +204,7 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
         description: data.description,
         subtasks: [],
         assignees: assignees,
-        followers: followers
+        followers: followers,
       },
       update: (cache, updatedTaskData) => {
         const cacheData = cache.readQuery({
@@ -181,11 +213,10 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
         }) as ITasks;
 
         const updatedTaskList = cacheData?.tasksByTasktypes?.map((item) => {
-
           if (item.taskID === updatedTaskData?.data?.updateTask[0].taskID) {
-            item = updatedTaskData?.data?.updateTask[0]
+            item = updatedTaskData?.data?.updateTask[0];
           }
-          return item
+          return item;
         });
 
         cache.writeQuery({
@@ -200,7 +231,6 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
   };
 
   const deleteTaskDetail = (data, task) => {
-
     setDeleteTaskConfirmOpen(false);
     const taskID = task.taskID;
     deleteTaskApi({
@@ -208,13 +238,12 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
         taskID,
       },
       update: (cache, data) => {
-
         const cacheData = cache.readQuery({
           query: GET_TASKS_BY_TYPES,
           variables: taskFetchFilter,
         }) as ITasks;
 
-        const newTaskList = cacheData?.tasksByTasktypes?.filter((task) => task.taskID !== taskID)
+        const newTaskList = cacheData?.tasksByTasktypes?.filter((task) => task.taskID !== taskID);
 
         cache.writeQuery({
           query: GET_TASKS_BY_TYPES,
@@ -228,17 +257,16 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
   };
 
   const updateTaskStatusDetail = (data, task) => {
-
-    setUpdateTaskStatusConfirmOpen(false)
+    setUpdateTaskStatusConfirmOpen(false);
 
     const assignees = [];
     task.assignees.map((data, i) => {
-      assignees.push({ userID: data.userID, userName: data.userName })
-    })
+      assignees.push({ userID: data.userID, userName: data.userName });
+    });
     const followers = [];
     task.followers.map((data, i) => {
-      followers.push({ userID: data.userID, userName: data.userName })
-    })
+      followers.push({ userID: data.userID, userName: data.userName });
+    });
 
     updateTaskStatusApi({
       variables: {
@@ -271,9 +299,9 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
 
         const updatedTaskList = cacheData?.tasksByTasktypes?.map((item) => {
           if (item.taskID === updatedTaskData?.data?.updateTask[0].taskID) {
-            item = updatedTaskData?.data?.updateTask[0]
+            item = updatedTaskData?.data?.updateTask[0];
           }
-          return item
+          return item;
         });
 
         cache.writeQuery({
@@ -289,10 +317,9 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
 
   React.useEffect(() => {
     if (!updateTaskStatusLoading && updateTaskStatusData) {
-      updatePinStatus(updateTaskStatusData?.updateTask[0])
+      updatePinStatus(updateTaskStatusData?.updateTask[0]);
     }
-  }, [updateTaskStatusData])
-
+  }, [updateTaskStatusData]);
 
   const mutationUpdatePinStatus = `mutation UpdatePinStatus(
     $uploadedFileID:String!,
@@ -321,25 +348,20 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
       taskID
       taskTitle
     }
-  }`
+  }`;
 
   const updatePinStatus = (taskData) => {
-
-    return axios.post(
-      MS_SERVICE_URL['ms_document'].url,
-      {
+    return axios
+      .post(MS_SERVICE_URL['ms_document'].url, {
         query: mutationUpdatePinStatus,
         variables: {
           uploadedFileID: taskData.fileID,
-          pinsID: taskData.taskTypeID
-        }
-      }
-    ).then(res => {
-
-    })
-      .catch(err => console.log(err))
-  }
-
+          pinsID: taskData.taskTypeID,
+        },
+      })
+      .then((res) => {})
+      .catch((err) => console.log(err));
+  };
 
   // #endregion
 
@@ -350,13 +372,12 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
   // };
 
   const getTaskHovered = (task) => {
-    setTaskHoveredId(task.taskTypeID)
-    props.taskHovered(task.taskTypeID)
-  }
+    setTaskHoveredId(task.taskTypeID);
+    props.taskHovered(task.taskTypeID);
+  };
 
   // #region Subtask feature
   const subTaskAdd = (data, title) => {
-
     const subtask = [];
     const createSt = {
       subtaskTitle: title,
@@ -364,12 +385,12 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
     };
     const assignees = [];
     data.assignees.map((data, i) => {
-      assignees.push({ userID: data.userID, userName: data.userName })
-    })
+      assignees.push({ userID: data.userID, userName: data.userName });
+    });
     const followers = [];
     data.followers.map((data, i) => {
-      followers.push({ userID: data.userID, userName: data.userName })
-    })
+      followers.push({ userID: data.userID, userName: data.userName });
+    });
     subtask.push(createSt);
 
     addSubTaskApi({
@@ -397,7 +418,6 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
       },
 
       update: (cache, updatedTaskData) => {
-
         const cacheData = cache.readQuery({
           query: GET_TASKS_BY_TYPES,
           variables: taskFetchFilter,
@@ -405,50 +425,8 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
 
         const newTaskList = cacheData?.tasksByTasktypes?.map((task) => {
           if (task.taskID === data.taskID) {
-            const subTaskList = updatedTaskData?.data?.updateTask[0]?.subtasks
-            return { ...task, subtasks: subTaskList }
-          } else {
-            return task;
-          }
-        });
-
-        cache.writeQuery({
-          query: GET_TASKS_BY_TYPES,
-          variables: taskFetchFilter,
-          data: {
-            tasksByTasktypes: newTaskList
-          },
-        });
-      },
-
-    });
-  };
-
-  const updateSubTask = (taskId, subtaskId, title) => {
-
-    subTaskUpdateApi({
-      variables: {
-        subtaskID: subtaskId,
-        subtaskTitle: title
-      },
-      update: (cache, data) => {
-        const cacheData = cache.readQuery({
-          query: GET_TASKS_BY_TYPES,
-          variables: taskFetchFilter,
-        }) as ITasks;
-
-        const newTaskList = cacheData?.tasksByTasktypes?.map((task) => {
-          if (task.taskID === taskId) {
-
-            const subTaskList = task.subtasks.map((subTask) => {
-              if (subTask.subtaskID === subtaskId) {
-                return { ...subTask, subtaskTitle: title };
-              } else {
-                return subTask
-              }
-            })
-
-            return { ...task, subtasks: subTaskList }
+            const subTaskList = updatedTaskData?.data?.updateTask[0]?.subtasks;
+            return { ...task, subtasks: subTaskList };
           } else {
             return task;
           }
@@ -462,18 +440,16 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
           },
         });
       },
-    })
-  }
+    });
+  };
 
-  const updateSubTaskStatus = (taskId, subtaskId, subtaskStatus) => {
-
-    subTaskStatusUpdateApi({
+  const updateSubTask = (taskId, subtaskId, title) => {
+    subTaskUpdateApi({
       variables: {
         subtaskID: subtaskId,
-        status: subtaskStatus === 'Mark as Complete' ? Status.COMPLETED : Status.INPROGRESS
+        subtaskTitle: title,
       },
       update: (cache, data) => {
-
         const cacheData = cache.readQuery({
           query: GET_TASKS_BY_TYPES,
           variables: taskFetchFilter,
@@ -481,21 +457,58 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
 
         const newTaskList = cacheData?.tasksByTasktypes?.map((task) => {
           if (task.taskID === taskId) {
-
             const subTaskList = task.subtasks.map((subTask) => {
               if (subTask.subtaskID === subtaskId) {
+                return { ...subTask, subtaskTitle: title };
+              } else {
+                return subTask;
+              }
+            });
 
+            return { ...task, subtasks: subTaskList };
+          } else {
+            return task;
+          }
+        });
+
+        cache.writeQuery({
+          query: GET_TASKS_BY_TYPES,
+          variables: taskFetchFilter,
+          data: {
+            tasksByTasktypes: newTaskList,
+          },
+        });
+      },
+    });
+  };
+
+  const updateSubTaskStatus = (taskId, subtaskId, subtaskStatus) => {
+    subTaskStatusUpdateApi({
+      variables: {
+        subtaskID: subtaskId,
+        status: subtaskStatus === 'Mark as Complete' ? Status.COMPLETED : Status.INPROGRESS,
+      },
+      update: (cache, data) => {
+        const cacheData = cache.readQuery({
+          query: GET_TASKS_BY_TYPES,
+          variables: taskFetchFilter,
+        }) as ITasks;
+
+        const newTaskList = cacheData?.tasksByTasktypes?.map((task) => {
+          if (task.taskID === taskId) {
+            const subTaskList = task.subtasks.map((subTask) => {
+              if (subTask.subtaskID === subtaskId) {
                 if (subTask.status === 'INPROGRESS') {
                   return { ...subTask, status: Status.COMPLETED };
                 } else {
                   return { ...subTask, status: Status.INPROGRESS };
                 }
               } else {
-                return subTask
+                return subTask;
               }
-            })
+            });
 
-            return { ...task, subtasks: subTaskList }
+            return { ...task, subtasks: subTaskList };
           } else {
             return task;
           }
@@ -509,29 +522,25 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
           },
         });
       },
-    })
-  }
+    });
+  };
 
   const deleteSubTask = (taskId, subtaskId) => {
-
     subTaskDeleteApi({
       variables: {
-        subtaskID: subtaskId
+        subtaskID: subtaskId,
       },
       update: (cache, data) => {
-
         const cacheData = cache.readQuery({
           query: GET_TASKS_BY_TYPES,
           variables: taskFetchFilter,
         }) as ITasks;
 
-
         const newTaskList = cacheData?.tasksByTasktypes?.map((task) => {
           if (task.taskID === taskId) {
+            const subTaskList = task.subtasks.filter((subTask) => subTask.subtaskID !== subtaskId);
 
-            const subTaskList = task.subtasks.filter((subTask) => subTask.subtaskID !== subtaskId)
-
-            return { ...task, subtasks: subTaskList }
+            return { ...task, subtasks: subTaskList };
           } else {
             return task;
           }
@@ -545,67 +554,67 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
           },
         });
       },
-    })
+    });
   };
   // #endregion
 
   // #region Task list toast message
   // set sucess value to toaster function
   const getTaskToasterMessage = (data) => {
-    setActiveErrorClass(false)
-    toast(data)
-  }
+    setActiveErrorClass(false);
+    toast(data);
+  };
 
   // set error value to task error for toaster function
   const getTaskErrorMessage = (data) => {
-    setActiveErrorClass(true)
+    setActiveErrorClass(true);
 
     let errorExeptionMessage: string;
     switch (data) {
       case 7001:
-        errorExeptionMessage = t("toaster.error.task.task_already_exists")
-        break
+        errorExeptionMessage = t('toaster.error.task.task_already_exists');
+        break;
       case 7002:
-        errorExeptionMessage = t("toaster.error.task.task_not_found")
-        break
+        errorExeptionMessage = t('toaster.error.task.task_not_found');
+        break;
       case 7003:
-        errorExeptionMessage = t("toaster.error.task.task_not_created")
-        break
+        errorExeptionMessage = t('toaster.error.task.task_not_created');
+        break;
       case 7004:
-        errorExeptionMessage = t("toaster.error.task.no_title")
-        break
+        errorExeptionMessage = t('toaster.error.task.no_title');
+        break;
       case 7005:
-        errorExeptionMessage = t("toaster.error.task.no_worktype")
-        break
+        errorExeptionMessage = t('toaster.error.task.no_worktype');
+        break;
       case 7006:
-        errorExeptionMessage = t("toaster.error.planning.no_phase")
-        break
+        errorExeptionMessage = t('toaster.error.planning.no_phase');
+        break;
       case 7007:
-        errorExeptionMessage = t("toaster.error.task.no_assignee")
-        break
+        errorExeptionMessage = t('toaster.error.task.no_assignee');
+        break;
       case 7008:
-        errorExeptionMessage = t("toaster.error.task.wrong_date")
-        break
+        errorExeptionMessage = t('toaster.error.task.wrong_date');
+        break;
       case 7009:
-        errorExeptionMessage = t("toaster.error.planning.due_date")
-        break
+        errorExeptionMessage = t('toaster.error.planning.due_date');
+        break;
       case 7010:
-        errorExeptionMessage = t("toaster.error.task.no_referance")
-        break
+        errorExeptionMessage = t('toaster.error.task.no_referance');
+        break;
       case 7011:
-        errorExeptionMessage = t("toaster.error.task.subtask_not_found")
-        break
+        errorExeptionMessage = t('toaster.error.task.subtask_not_found');
+        break;
       case 7012:
-        errorExeptionMessage = t("toaster.error.task.no_subtask_title")
-        break
+        errorExeptionMessage = t('toaster.error.task.no_subtask_title');
+        break;
       case 500:
-        errorExeptionMessage = t("toaster.error.task.internal_server_error")
-        break
+        errorExeptionMessage = t('toaster.error.task.internal_server_error');
+        break;
       default:
-        errorExeptionMessage = ""
+        errorExeptionMessage = '';
     }
-    setTaskErrors(errorExeptionMessage)
-  }
+    setTaskErrors(errorExeptionMessage);
+  };
 
   // set toaster for edit task
   // React.useEffect(() => {
@@ -673,7 +682,6 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
   //   }
   // }, [deleteSubTaskLoading])
 
-
   // set toaster for edit sub task status
   // React.useEffect(() => {
   //   if (!updateSubTaskStatusLoading && updateSubTaskStatusData) {
@@ -692,15 +700,23 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
   // }, [taskErrors])
   // #endregion
 
-  if (taskListLoading) return (<LazyLoading />)
+  if (taskListLoading) return <LazyLoading />;
 
-  if (updateTaskLoading) return (<LazyLoading />)
+  if (updateTaskLoading) return <LazyLoading />;
 
-  if (deleteTaskLoading) return (<LazyLoading />)
+  if (deleteTaskLoading) return <LazyLoading />;
 
   return (
     <div>
-      <ToastContainer className={`${activeErrorClass ? "error" : "success"}`} position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
+      <ToastContainer
+        className={`${activeErrorClass ? 'error' : 'success'}`}
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={true}
+        closeOnClick
+        pauseOnFocusLoss
+        pauseOnHover
+      />
 
       {viewTaskOpen ? (
         <div className="pin_area">
@@ -742,7 +758,7 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
       {updateTaskStatusConfirmOpen ? (
         <div className="pin_area">
           <ModalAlert
-            name='task'
+            name="task"
             openAlertF={updateTaskStatusConfirmOpen}
             confirm={updateTaskStatusDetail}
             taskData={taskData}
@@ -752,20 +768,26 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
         </div>
       ) : null}
 
-
-      {loading ? <LoaderPage /> :
+      {loading ? (
+        <LoaderPage />
+      ) : (
         <>
           <div className="toggle-label">
             <label>Completed Tasks ({completedTaskList?.length})</label>
             <Radio toggle onChange={onClickShowCompletedTask} />
           </div>
-          {completedTaskShow ?
+          {completedTaskShow ? (
             <>
               {completedTaskList?.map((task) => {
-
                 return (
-                  <div className={props?.cord?.pinsID === task?.taskTypeID ? "pin-task-completed-card pin-task-hover" : "pin-task-completed-card"}
-                    onMouseOver={() => getTaskHovered(task)}>
+                  <div
+                    className={
+                      props?.cord?.pinsID === task?.taskTypeID
+                        ? 'pin-task-completed-card pin-task-hover'
+                        : 'pin-task-completed-card'
+                    }
+                    onMouseOver={() => getTaskHovered(task)}
+                  >
                     <div className="pin-task-description-box">
                       <div className="task-full-details">
                         <div className="pin-task-info">
@@ -774,44 +796,67 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
                             {task?.taskTitle}
                           </h3>
                           {/* <p>Starts Tomorrow ↦ Due Fri Aug 28th</p> */}
-                          <p>{new Date(task?.startDate).toDateString()} ↦ Due {new Date(task?.endDate).toDateString()}</p>
+                          <p>
+                            {new Date(task?.startDate).toDateString()} ↦ Due {new Date(task?.endDate).toDateString()}
+                          </p>
                         </div>
                         {/* <div className="user-img">
                               <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/people_1.png`} />
                             </div> */}
-                        {task?.assignees?.length > 0 ?
+                        {task?.assignees?.length > 0 ? (
                           <div className="symbol-group symbol-hover text-right">
                             <div className="symbol symbol-30">
                               {task.assignees.map(({ userID, userName, imageUrl }, id) => {
-                                const name = userName.split(" ").map((n) => n[0]).join("");
+                                const name = userName
+                                  .split(' ')
+                                  .map((n) => n[0])
+                                  .join('');
                                 //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
                                 if (imageUrl) {
-                                  return (<img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/people_1.png`} title={userName} />)
+                                  return (
+                                    <img
+                                      src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/people_1.png`}
+                                      title={userName}
+                                    />
+                                  );
                                 } else {
                                   return (
-                                    <Label circular color="green" key={`${id}${userID}`}>{name}</Label>
-                                  )
+                                    <Label circular color="green" key={`${id}${userID}`}>
+                                      {name}
+                                    </Label>
+                                  );
                                 }
-                              })
-                              }
+                              })}
                             </div>
                           </div>
-                          : null
-                        }
+                        ) : null}
                       </div>
                       <div className="added-task-listing">
                         {/* <p>Strategic Planning - Paint Work</p> */}
-                        <p>{task?.workTypeName} - {task?.phaseName}</p>
+                        <p>
+                          {task?.workTypeName} - {task?.phaseName}
+                        </p>
                         <div className="symbol-group">
                           <div className="symbol symbol-30">
                             <span className="">
-                              <Dropdown icon='ellipsis horizontal' pointing="right">
+                              <Dropdown icon="ellipsis horizontal" pointing="right">
                                 <Dropdown.Menu>
-                                  <Dropdown.Item icon='eye' text='View detail' onClick={() => onClickOpenViewTask(task)} />
-                                  <Dropdown.Item icon='pencil' text='Edit' onClick={() => onClickOpenEditTask(task)} />
-                                  <Dropdown.Item icon='check circle outline' text='Re-open' onClick={() => onClickUpdateTaskStatus(task)} />
-                                  <Dropdown.Item icon='trash alternate outline' text='Delete' onClick={() => onClickOpenDeleteTask(task)} />
-
+                                  <Dropdown.Item
+                                    icon="eye"
+                                    text="View detail"
+                                    onClick={() => onClickOpenViewTask(task)}
+                                  />
+                                  <Dropdown.Item icon="pencil" text="Edit" onClick={() => onClickOpenEditTask(task)} />
+                                  <Dropdown.Item
+                                    icon="check circle outline"
+                                    text="Re-open"
+                                    onClick={() => onClickUpdateTaskStatus(task)}
+                                  />
+                                  <Dropdown.Item
+                                    icon="trash alternate outline"
+                                    text="Delete"
+                                    onClick={() => onClickOpenDeleteTask(task)}
+                                  />
                                 </Dropdown.Menu>
                               </Dropdown>
                             </span>
@@ -820,14 +865,12 @@ export function PinCompletedTaskList(props: PinCompletedTaskListProps) {
                       </div>
                     </div>
                   </div>
-                )
+                );
               })}
             </>
-            : null}
+          ) : null}
         </>
-      }
+      )}
     </div>
   );
 }
-
-
