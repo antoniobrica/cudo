@@ -12,15 +12,14 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      context: ({ req, connection }) =>
-        connection ? { req: connection.context } : { req },
+      context: ({ req, connection }) => (connection ? { req: connection.context } : { req }),
       autoSchemaFile: true,
     }),
 
+    ComponentsModule,
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmService,
     }),
-    ComponentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

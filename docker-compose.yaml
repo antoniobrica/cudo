@@ -2,7 +2,7 @@ version: '2.2'
 
 services:
   mssql:
-    image: mcr.microsoft.com/azure-sql-edge:latest
+    image: mcr.microsoft.com/azure-sql-edge
     environment:
       - ACCEPT_EULA=Y
       - DATABASE_USERNAME=sa
@@ -12,20 +12,20 @@ services:
     networks:
       - my-network
 
-  ms-account:
-    build:
-      context: .
-      dockerfile: Dockerfile-msaccount
-    container_name: ms-account
-    restart: always
-    environment:
-      - PORT=5001
-    ports:
-      - '5001:5001'
-    volumes:
-      - ./:/usr/src/app/
-    networks:
-      - my-network
+    # ms-account:
+    #   build:
+    #     context: .
+    #     dockerfile: Dockerfile-msaccount
+    #   container_name: ms-account
+    #   restart: always
+    #   environment:
+    #     - PORT=5001
+    #   ports:
+    #     - '5001:5001'
+    #   volumes:
+    #     - ./:/usr/src/app/
+    #   networks:
+    #     - my-network
 
   ms-task:
     build:
@@ -56,22 +56,22 @@ services:
     networks:
       - my-network
 
-  ms-document:
-    build:
-      context: .
-      dockerfile: Dockerfile-msdocument
-    container_name: ms-document
-    restart: always
-    environment:
-      - PORT=5003
-    ports:
-      - '5003:5003'
-    volumes:
-      - ./:/usr/src/app/
-    ports:
-      - '5003:5003'
-    networks:
-      - my-network
+  # ms-document:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile-msdocument
+  #   container_name: ms-document
+  #   restart: always
+  #   environment:
+  #     - PORT=5003
+  #   ports:
+  #     - '5003:5003'
+  #   volumes:
+  #     - ./:/usr/src/app/
+  #   ports:
+  #     - '5003:5003'
+  #   networks:
+  #     - my-network
 
 networks:
   my-network:

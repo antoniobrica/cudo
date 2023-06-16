@@ -10,41 +10,41 @@ services:
     volumes:
       - ./:/usr/src/app/
 
-  mf-account:
-    build:
-      context: .
-      dockerfile: Dockerfile-mfaccount
-    ports:
-      - '6001:6001'
-    volumes:
-       - ./:/usr/src/app/
+  # mf-account:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile-mfaccount
+  #   ports:
+  #     - '6001:6001'
+  #   volumes:
+  #      - ./:/usr/src/app/
 
 
-  mf-task:
-    build:
-      context: .
-      dockerfile: Dockerfile-mftask
-    ports: 
-      - '6005:6005'
-    volumes:
-       - ./:/usr/src/app/
+  # mf-task:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile-mftask
+  #   ports: 
+  #     - '6005:6005'
+  #   volumes:
+  #      - ./:/usr/src/app/
 
 
-  mf-project:
-    build:
-      context: .
-      dockerfile: Dockerfile-mfproject
-    ports:
-      - '6006:6006'
-    volumes:
-      - ./:/usr/src/app/
+  # mf-project:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile-mfproject
+  #   ports:
+  #     - '6006:6006'
+  #   volumes:
+  #     - ./:/usr/src/app/
 
-  mf-document:
-    build:
-      context: .
-      dockerfile: Dockerfile-mfdocument
-    ports:
-      - '6010:6010'
-    volumes:
-       - ./:/usr/src/app/
+  # mf-document:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile-mfdocument
+  #   ports:
+  #     - '6010:6010'
+  #   volumes:
+  #      - ./:/usr/src/app/
 
