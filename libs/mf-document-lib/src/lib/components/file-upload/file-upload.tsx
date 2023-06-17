@@ -3,7 +3,7 @@ import React, { useContext, useRef } from 'react';
 import { Button, Checkbox, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import ProgressBar from 'libs/shared-components/src/lib/components/progress_bar/progressbar';
 import {
   FollowersIndex,

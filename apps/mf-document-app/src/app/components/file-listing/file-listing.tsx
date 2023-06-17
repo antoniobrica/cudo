@@ -2,14 +2,14 @@ import React from 'react';
 
 import './file-listing.module.scss';
 // import { FileStructure } from '@cudo/shared-components';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import {
   DeletesViewStateContext,
   DownloadsViewStateContext,
   SharedViewStateContext,
   UploadsViewStateContext,
 } from 'apps/mf-document-app/src/azure-storage/contexts/viewStateContext';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { BlobItemDownload } from 'apps/mf-document-app/src/azure-storage/types/azure-storage';
 import { tap } from 'rxjs/operators';
 import { BlobItem, ContainerItem } from '@azure/storage-blob';

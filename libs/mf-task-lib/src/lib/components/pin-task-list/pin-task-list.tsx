@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client';
 import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { TaskDelete } from '../delete-task/delete-task';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import {
   LazyLoading,
   LoaderPage,

@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import Tasks from './components/tasks/tasks';
 // import { initI18n } from '@cudo/mf-core';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import TabMenu from '../../../mf-project-app/src/app/components/tab-menu/tab-menu';
 
 import { Provider } from 'react-redux';

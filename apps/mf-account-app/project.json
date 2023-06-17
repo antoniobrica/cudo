@@ -5,7 +5,7 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/webpack:webpack",
+      "executor": "@nx/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
@@ -15,10 +15,7 @@
         "baseHref": "/",
         "main": "apps/mf-account-app/src/main.tsx",
         "tsConfig": "apps/mf-account-app/tsconfig.app.json",
-        "assets": [
-          "apps/mf-account-app/src/favicon.ico",
-          "apps/mf-account-app/src/assets"
-        ],
+        "assets": ["apps/mf-account-app/src/favicon.ico", "apps/mf-account-app/src/assets"],
         "styles": [],
         "scripts": [],
         "isolatedConfig": true,
@@ -48,7 +45,7 @@
       }
     },
     "serve": {
-      "executor": "@nrwl/webpack:dev-server",
+      "executor": "@nx/webpack:dev-server",
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "mf-account-app:build",
@@ -65,20 +62,20 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["apps/mf-account-app/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "serve-static": {
-      "executor": "@nrwl/web:file-server",
+      "executor": "@nx/web:file-server",
       "options": {
         "buildTarget": "mf-account-app:build"
       }
     },
     "account": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "apps/mf-account-app/jest.config.ts",

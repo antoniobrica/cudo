@@ -6,7 +6,7 @@
   "prefix": "ms-project",
   "targets": {
     "build": {
-      "executor": "@nrwl/webpack:webpack",
+      "executor": "@nx/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/ms-project",
@@ -32,19 +32,19 @@
       }
     },
     "serve": {
-      "executor": "@nrwl/node:node",
+      "executor": "@nx/node:node",
       "options": {
         "buildTarget": "ms-project:build"
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
         "lintFilePatterns": ["apps/ms-project/**/*.ts"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/apps/ms-project"],
       "options": {
         "jestConfig": "apps/ms-project/jest.config.ts",
@@ -64,9 +64,7 @@
     "migration-run": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": [
-          "node --require ts-node/register ../../node_modules/typeorm/cli.js migration:run -c {args.mode}"
-        ],
+        "commands": ["node --require ts-node/register ../../node_modules/typeorm/cli.js migration:run -c {args.mode}"],
         "cwd": "apps/ms-project",
         "parallel": false
       }
