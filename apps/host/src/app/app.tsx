@@ -5,6 +5,7 @@ import NxWelcome from './nx-welcome';
 import { Link, Route, Routes } from 'react-router-dom';
 
 const Container = React.lazy(() => import('mf-container-app/Module'));
+const Project = React.lazy(() => import('mf-project-app/Module'));
 
 export function App() {
   return (
@@ -14,7 +15,7 @@ export function App() {
           <Link to="/">kkk</Link>
         </li>
         <li>
-          <Link to="/shop">Shop</Link>
+          <Link to="/project">project</Link>
         </li>
         <li>
           <Link to="/home">Home</Link>
@@ -23,6 +24,7 @@ export function App() {
       <Routes>
         <Route path="/" element={<NxWelcome title="host" />} />
         <Route path="/home/*" element={<Container />} />
+        <Route path="/project/*" element={<Project />} />
       </Routes>
     </React.Suspense>
   );

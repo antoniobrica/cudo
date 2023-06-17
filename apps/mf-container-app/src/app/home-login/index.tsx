@@ -1,5 +1,5 @@
-import { LazyLoading } from '@cudo/shared-components';
 import React, { useEffect } from 'react';
+// import { LazyLoading } from '@cudo/shared-components';
 import { useSession } from '../services/session';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { IUser, loginUser } from '../store/user';
@@ -17,6 +17,7 @@ interface IGetRegistrationData {
 }
 
 function HomeLogin() {
+  console.log('kkjvcx˝');
   const { session, logoutUrl } = useSession();
 
   const [fetchCurrentUser, { data: userInfo }] = useLazyQuery<IGetUserData>(QUERY_USER_BY_EMAIL, {});
@@ -82,7 +83,7 @@ function HomeLogin() {
           </a>
         </div>
       )}
-      <LazyLoading />
+      {/* <LazyLoading /> */}
     </div>
   );
 }

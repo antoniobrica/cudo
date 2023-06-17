@@ -1,4 +1,4 @@
 module.exports = {
   name: 'host',
-  remotes: ['mf-container-app'],
+  remotes: ['mf-container-app', 'mf-project-app'],
 };

@@ -111,16 +111,14 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
-      <Suspense fallback={<LazyLoading />}>
-        <Provider store={store}>
-          <PersistGate persistor={persistor}>
-            <Routes>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <Routes>
               <Route path="/home/project" element={<ProjectInfo />} />
-              <Route path="/home/project/:projectId" element={<TabMenu />} />{' '}
+              {/* <Route path="/home/project/:projectId" element={<TabMenu />} />{' '} */}
             </Routes>
-          </PersistGate>
-        </Provider>
-      </Suspense>
+        </PersistGate>
+      </Provider>
     </ApolloProvider>
   );
 }

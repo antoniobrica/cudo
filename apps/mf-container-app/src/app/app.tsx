@@ -52,7 +52,8 @@ function App() {
             <Routes>
               <Route path="/home" element={<Home />} />
               <Route path="/" element={<HomeLogin />} />
-              {/* <Route path="/" element={<LoginSelect />} /> */}
+              {/* <Route path="/" element={<HomeLogin />} />
+              <Route path="/" element={<LoginSelect />} />
               <Route path="/callback" element={<Callback />} />
               <Route path={config.routes.loginEmail.path} element={<Email />} />
               <Route path={config.routes.loginPasswoord.path} element={<LoginPassword />} />
@@ -62,9 +63,7 @@ function App() {
               <Route path={config.routes.recovery.path} element={<Recover />} />
               <Route path={config.routes.registration.path} element={<UserRegistration />} />
               <Route path={config.routes.error.path} element={<Error />} />
-              <Route path="/sign-up" element={<Signup />} />
-              {/* <Route path="/sign-in" element={<SignIn />} /> */}
-              {/* <Route path={config.routes.testmodal.path} element={<TestModel />} /> */}
+              <Route path="/sign-up" element={<Signup />} /> */}
             </Routes>
             <Outlet />
           </SessionProvider>

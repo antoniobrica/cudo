@@ -7,8 +7,9 @@ import { ITodo, IProject } from '../../interfaces/project';
 import Modal from 'react-modal';
 import { Card, Icon, Form, Grid, Button, Dropdown, Label } from 'semantic-ui-react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { LoaderPage, LazyLoading, Menubar } from '@cudo/shared-components';
-import ReactQuill, { Quill } from 'react-quill';
+import Menubar from '@shared-components/lib/components/menu';
+import LazyLoading from '@shared-components/lib/components/loader/lazyloader';
+// import ReactQuill, { Quill } from 'react-quill';
 import Logo from '../../../assets/images/Shape 2.png';
 
 import { ToastContainer, toast } from 'react-toastify';

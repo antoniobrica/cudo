@@ -29,7 +29,8 @@
       "@cudo/ms-core": ["libs/ms-core/src/index.ts"],
       "@cudo/shared": ["libs/shared/src/index.ts"],
       "@cudo/shared-components": ["libs/shared-components/src/index.ts"],
-      "@cudo/ui": ["libs/ui/src/index.ts"]
+      "@cudo/ui": ["libs/ui/src/index.ts"],
+      "@shared-components/*": ["libs/shared-components/src/*"],
     }
   },
   "exclude": ["node_modules", "tmp"]

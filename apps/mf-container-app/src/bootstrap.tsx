@@ -13,7 +13,7 @@ const rootElement = document.getElementById('root');
 if (rootElement) {
   const root = createRoot(rootElement);
   root.render(
-    <Suspense fallback={<LazyLoading />}>
+    <Suspense fallback={<>Loading...</>}>
       <BrowserRouter>
         <App />
       </BrowserRouter>

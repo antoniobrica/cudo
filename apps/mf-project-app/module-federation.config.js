@@ -10,13 +10,5 @@ module.exports = {
         strictVersion: false,
       };
     }
-
-    if (libraryName === 'react-quill') {
-      console.log('react-quill sdsdsdsd');
-      return {
-        ...defaultConfig,
-        strictVersion: false,
-      };
-    }
   },
 };

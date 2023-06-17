@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Menubar } from '@cudo/shared-components';
+import Menubar from '@shared-components/lib/components/menu';
 import { Route, Link, useLocation, useNavigate, Routes, useMatch } from 'react-router-dom';
 import { environment } from '../../environments/environment';
 import { Settings } from '../containers/Settings';
@@ -83,7 +83,7 @@ export function Home(props: HomeProps) {
           username={session?.identity?.traits?.username ?? information?.userName ?? 'Fahim Arif'}
         ></Menubar>
       </div>
-      <div>
+      {/* <div>
         <Routes>
           <Route path={`/profile`} element={<UserProfile />} />
           <Route path={`/settings`} element={<UserProfileEdit />} />
@@ -92,7 +92,7 @@ export function Home(props: HomeProps) {
             element={<MfProjectAppMount host={projectHost} history={navigate} />}
           />
         </Routes>
-      </div>
+      </div> */}
     </div>
   );
 }
