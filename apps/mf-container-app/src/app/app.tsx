@@ -26,7 +26,7 @@ import { store } from './store';
 import Signup from './signup';
 // import SignIn from './sign-in';
 import HomeLogin from './home-login';
-import { ApolloProvider } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { CudoApolloClient } from './services/apollo-client';
 import { initI18n } from '@cudo/mf-core';
 
@@ -34,7 +34,14 @@ const defaultLanguage = 'en-GB';
 const supportedLanguages = [defaultLanguage, 'en-GB'];
 initI18n('./assets/i18n/de-DE.json', defaultLanguage);
 
-const client = new CudoApolloClient();
+// const client = new CudoApolloClient();
+
+const GRAPHQL_ENDPOINT = (process.env.NEXT_PUBLIC_GRAPHQL as string) || 'http://localhost:5001/graphql';
+
+const client = new ApolloClient({
+  uri: GRAPHQL_ENDPOINT,
+  cache: new InMemoryCache(),
+});
 
 function App() {
   return (
@@ -68,23 +75,3 @@ function App() {
 }
 
 export default App;
-
-// import React from 'react';
-// import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-
-// // Import the root components from each microfrontend
-// import Microfrontend1 from '@cudo/mf-project-app/src/app/App';
-// import Microfrontend2 from '@cudo/mf-task-app/src/app/App';
-
-// const App = () => {
-//   return (
-//     <Router>
-//       <Routes>
-//         <Route path="/home/project/:projectId/task/*" element={<Microfrontend2 />} />
-//         <Route path="/*" element={<Microfrontend1 />} />
-//       </Routes>
-//     </Router>
-//   );
-// };
-
-// export default App;

@@ -1,5 +1,5 @@
-import { Menubar } from '@cudo/shared-components';
 import React, { useEffect, useState } from 'react';
+import { Menubar } from '@cudo/shared-components';
 import { Route, Link, useLocation, useNavigate, Routes, useMatch } from 'react-router-dom';
 import { environment } from '../../environments/environment';
 import { Settings } from '../containers/Settings';

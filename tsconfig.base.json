@@ -9,7 +9,8 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "es2015",
-    "lib": ["es2017", "dom"],
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
@@ -28,8 +29,7 @@
       "@cudo/ms-core": ["libs/ms-core/src/index.ts"],
       "@cudo/shared": ["libs/shared/src/index.ts"],
       "@cudo/shared-components": ["libs/shared-components/src/index.ts"],
-      "@cudo/ui": ["libs/ui/src/index.ts"],
-      "@root/shared-components": ["libs/shared-components/*"]
+      "@cudo/ui": ["libs/ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

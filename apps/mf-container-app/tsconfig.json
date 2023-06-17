@@ -19,7 +19,6 @@
       "@cudo/shared": ["libs/shared/src/index.ts"],
       "@cudo/shared-components": ["libs/shared-components/src/index.ts"],
       "@cudo/ui": ["libs/ui/src/index.ts"],
-      "@root/shared-components": ["libs/shared-components/*"],
       "@cudo/libs": ["libs/"],
       "@cudo/mf-project-lib": ["libs/mf-project-lib/src/index.ts"]
     }
