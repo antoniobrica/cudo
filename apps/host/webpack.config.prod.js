@@ -24,9 +24,9 @@ const prodConfig = {
    * ]
    */
   remotes: [
-    ['mf-container-app', 'http://localhost:3000/'],
-    ['mf-project-app', 'http://localhost:3000/project'],
-    ['mf-task-app', 'http://localhost:3000/task'],
+    ['mf-container-app', 'http://localhost:3000/mf-container-app'],
+    ['mf-project-app', 'http://localhost:3000/mf-project-app'],
+    ['mf-task-app', 'http://localhost:3000/mf-task-app'],
   ],
   // remotes: [
   //   ['shop', 'http://localhost:3000/shop'],

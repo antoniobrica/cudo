@@ -4,7 +4,6 @@ module.exports = {
     './Module': './src/remote-entry.ts',
   },
   shared: (libraryName, defaultConfig) => {
-    console.log(libraryName);
     if (libraryName === '@ory/client') {
       return {
         ...defaultConfig,

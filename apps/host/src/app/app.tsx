@@ -13,20 +13,23 @@ export function App() {
     <React.Suspense fallback={null}>
       <ul>
         <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/container">Container</Link>
+        </li>
+        <li>
           <Link to="/task">Tasks</Link>
         </li>
         <li>
           <Link to="/project">Projects</Link>
         </li>
-        <li>
-          <Link to="/home">Home</Link>
-        </li>
       </ul>
       <Routes>
         <Route path="/" element={<NxWelcome title="host" />} />
-        <Route path="/home/*" element={<Container />} />
-        <Route path="/project/*" element={<Project />} />
-        <Route path="/task/*" element={<Task />} />
+        <Route path="/container" element={<Container />} />
+        <Route path="/project" element={<Project />} />
+        <Route path="/task" element={<Task />} />
       </Routes>
     </React.Suspense>
   );

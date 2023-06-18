@@ -100,6 +100,13 @@
           "codeCoverage": true
         }
       }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "rm -rf production && mkdir production && cp -r dist/apps/host/* production && cp -r dist/apps/{mf-container-app,mf-project-app,mf-task-app} production && http-server -p 3000 -a localhost production"
+      }
     }
   },
   "tags": []
