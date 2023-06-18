@@ -51,7 +51,7 @@
       "options": {
         "buildTarget": "ui-design:build",
         "hmr": true,
-        "port": 4202
+        "port": 4209 
       },
       "configurations": {
         "development": {
@@ -75,7 +75,7 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "ui-design:build",
-        "port": 4202
+        "port": 4209 
       },
       "configurations": {
         "development": {

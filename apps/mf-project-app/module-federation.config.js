@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'mf-container-app',
+  name: 'mf-project-app',
   exposes: {
     './Module': './src/remote-entry.ts',
   },

@@ -33,9 +33,7 @@ if (rootElement) {
   root.render(
     <Suspense fallback={<LazyLoading />}>
       <BrowserRouter>
-        {/* <ApolloProvider client={client}> */}
-          <App />
-        {/* </ApolloProvider> */}
+        <App />
       </BrowserRouter>
     </Suspense>
   );

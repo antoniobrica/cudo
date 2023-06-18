@@ -2,20 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import img from 'libs/shared-components/src/dots.png';
 
-import './tasks.module.scss';
-import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
-import {
-  AddPinFile,
-  LazyLoading,
-  LoaderPage,
-  ModalTaskEdit,
-  TaskArea,
-  ModalAlert,
-  ModalViewTask,
-  ConfirmSubTaskStatus,
-  FilterPopup,
-  ToggleButton,
-} from '@cudo/shared-components';
+// import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
+
+import LazyLoading from '@shared-components/lib/components/loader/loader';
+import TaskArea from '@shared-components/lib/components/task/taskarea';
+import { ModalViewTask } from '@shared-components/lib/components/modal/taskdetails';
+import { ModalTaskEdit } from '@shared-components/lib/components/modal/taskeditdetails';
+import ConfirmSubTaskStatus from '@shared-components/lib/components/modal/confirmsubtaskstatus';
+import FilterPopup from '@shared-components/lib/components/modal/fliter';
+import ToggleButton from '@shared-components/lib/components/tabs/togglebutton';
+
 import { Dropdown, Grid, Popup, Button, Icon } from 'semantic-ui-react';
 import axios from 'axios';
 import { ApolloCache, FetchResult, useMutation, useQuery } from '@apollo/client';
@@ -28,7 +24,7 @@ import { useTaskQuery, useTaskUpdateMutation, useTaskDeleteMutation } from '../.
 // import CreateTask from '../create-task/create-task';
 import TaskDelete from '../delete-task/delete-task';
 import SubTaskDelete from '../delete-subtask/delete-subtask';
-import { FileListIndex } from '@cudo/mf-document-lib';
+// import { FileListIndex } from '@cudo/mf-document-lib';
 import { toast, ToastContainer } from 'react-toastify';
 import { taskActions } from '../../redux/actions';
 import { useLocation } from 'react-router-dom';
@@ -1009,7 +1005,7 @@ export function Tasks(props: TasksProps) {
       /> */}
 
       <div className="TaskApp-container">
-        <h3 className="alltask" style={{ marginBottom: '20px;' }}>
+        <h3 className="alltask" style={{ marginBottom: '20px' }}>
           {t('project_tab_menu.task.heading')}
         </h3>
         {tasksForTaskArea?.map((task, id) => {

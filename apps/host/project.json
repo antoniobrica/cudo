@@ -3,7 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/host/src",
   "projectType": "application",
-  "implicitDependencies": ["mf-project-app", "mf-container-app"],
+  "implicitDependencies": ["mf-project-app", "mf-container-app", "mf-task-app"],
   "targets": {
     "build": {
       "executor": "@nx/webpack:webpack",

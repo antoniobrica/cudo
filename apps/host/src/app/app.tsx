@@ -6,16 +6,17 @@ import { Link, Route, Routes } from 'react-router-dom';
 
 const Container = React.lazy(() => import('mf-container-app/Module'));
 const Project = React.lazy(() => import('mf-project-app/Module'));
+const Task = React.lazy(() => import('mf-task-app/Module'));
 
 export function App() {
   return (
     <React.Suspense fallback={null}>
       <ul>
         <li>
-          <Link to="/">kkk</Link>
+          <Link to="/task">Tasks</Link>
         </li>
         <li>
-          <Link to="/project">project</Link>
+          <Link to="/project">Projects</Link>
         </li>
         <li>
           <Link to="/home">Home</Link>
@@ -25,6 +26,7 @@ export function App() {
         <Route path="/" element={<NxWelcome title="host" />} />
         <Route path="/home/*" element={<Container />} />
         <Route path="/project/*" element={<Project />} />
+        <Route path="/task/*" element={<Task />} />
       </Routes>
     </React.Suspense>
   );

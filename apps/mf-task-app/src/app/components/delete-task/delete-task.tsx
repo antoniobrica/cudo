@@ -1,4 +1,4 @@
-import { LazyLoading } from '@cudo/shared-components'
+// import { LazyLoading } from '@cudo/shared-components'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button, Icon, Modal } from 'semantic-ui-react'
