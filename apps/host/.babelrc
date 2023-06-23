@@ -1,11 +1,19 @@
 {
   "presets": [
     [
-      "@nx/react/babel",
+      "@babel/preset-env",
       {
-        "runtime": "automatic"
+        "targets": {
+          "browsers": "last 2 versions"
+        }
       }
-    ]
+    ],
+    "@babel/preset-typescript",
+    "@babel/preset-react"
   ],
-  "plugins": []
+  "plugins": [
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-object-rest-spread"
+  ]
 }

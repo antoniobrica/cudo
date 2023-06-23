@@ -12,20 +12,20 @@ services:
     networks:
       - my-network
 
-    # ms-account:
-    #   build:
-    #     context: .
-    #     dockerfile: Dockerfile-msaccount
-    #   container_name: ms-account
-    #   restart: always
-    #   environment:
-    #     - PORT=5001
-    #   ports:
-    #     - '5001:5001'
-    #   volumes:
-    #     - ./:/usr/src/app/
-    #   networks:
-    #     - my-network
+  ms-account:
+    build:
+      context: .
+      dockerfile: Dockerfile-msaccount
+    container_name: ms-account
+    restart: always
+    environment:
+      - PORT=5001
+    ports:
+      - '5001:5001'
+    volumes:
+      - ./:/usr/src/app/
+    networks:
+      - my-network
 
   ms-task:
     build:

@@ -5,6 +5,8 @@
  Delete this file and get started with your project!
  * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
+import React from 'react';
+
 export function NxWelcome({ title }: { title: string }) {
   return (
     <>

@@ -1,7 +1,8 @@
 import React from 'react';
 
 import './tab-menu.module.scss';
-import { AccordionExampleMenu } from '@cudo/shared-components';
+// import { AccordionExampleMenu } from '@cudo/shared-components';
+import { AccordionExampleMenu } from '@shared-components/lib/components/menu/sidebar';
 import { environment } from '../../../environments/environment';
 import MicroFrontend from '../../../MicroFrontend';
 import { Tab, Image } from 'semantic-ui-react';
@@ -25,6 +26,8 @@ type params = {
   projectId: string;
 };
 function TabMenu(props: TabMenuProps) {
+  console.log('tab menu');
+
   const [worktypeName, setWorktype] = React.useState('');
   const [worktypes, setWorktypes] = React.useState();
   const { t } = useTranslation();
