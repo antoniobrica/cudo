@@ -105,7 +105,7 @@ function App() {
   }, []);
 
   const client = new ApolloClient({
-    uri: 'http://20.199.178.58/graphql',
+    uri: 'http://20.199.178.58:5005/graphql',
     // uri: 'http://localhost:5005/graphql',
     cache: new InMemoryCache(),
   });
