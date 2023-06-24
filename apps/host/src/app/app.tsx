@@ -77,8 +77,8 @@ export function App() {
       </Provider>
 
       <Routes>
-        <Route path="/" element={<Container />} />
-        <Route path="/project/*" element={<Project />} />
+        <Route path="/mf-container-app" element={<Container />} />
+        <Route path="/" element={<Project />} />
         <Route path="/home/project/*" element={<Task />} />
       </Routes>
     </React.Suspense>

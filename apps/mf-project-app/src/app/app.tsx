@@ -114,10 +114,10 @@ function App() {
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <TabMenu />
-          <Routes>
+          {/* <Routes>
             <Route path="/home" element={<ProjectInfo />} />
-            {/* <Route path="/home/project/:projectId" element={<TabMenu />} />{' '} */}
-          </Routes>
+          </Routes> */}
+          <ProjectInfo />
         </PersistGate>
       </Provider>
     </ApolloProvider>
