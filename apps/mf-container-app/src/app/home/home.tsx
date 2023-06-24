@@ -10,7 +10,6 @@ import { UserProfile } from '../user-profile/user-profile';
 // import { UserRegistration } from '../user-registration/user-registration';
 
 import './home.module.scss';
-import { useSession } from '../services/session';
 import { useAppSelector } from '../hooks';
 const { REACT_APP_PROJECT_HOST: projectHost } = environment;
 /* eslint-disable-next-line */
@@ -67,8 +66,6 @@ export function Home(props: HomeProps) {
     setMenuExpand(!menuExpand);
   };
 
-  const { logoutUrl, session } = useSession();
-
   const { information } = useAppSelector((state) => state.user);
 
   return (
@@ -79,8 +76,7 @@ export function Home(props: HomeProps) {
           parentCallback={callbackFunction}
           mainMenuExpand={onClickMenuExpand}
           history={navigate}
-          logoutUrl={logoutUrl}
-          username={session?.identity?.traits?.username ?? information?.userName ?? 'Fahim Arif'}
+          username={information?.userName ?? 'Fahim Arif'}
         ></Menubar>
       </div>
       {/* <div>

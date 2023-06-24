@@ -7,7 +7,6 @@ import axios from 'axios';
 import { environment } from '../../environments/environment';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../hooks';
-import { useSession } from '../services/session';
 
 /* eslint-disable-next-line */
 export interface LoginSelectProps {}
@@ -32,11 +31,8 @@ export function LoginSelect(props: LoginSelectProps) {
     localStorage.setItem('selectedCompany', selectedCompany);
   }, [selectedCompany]);
 
-  const { session } = useSession();
-
   useEffect(() => {
-    if (!user.loggedIn && !session) {
-      console.log(session);
+    if (!user.loggedIn) {
       console.log('need to login');
 
       // navigate('/login-email');
@@ -94,7 +90,7 @@ export function LoginSelect(props: LoginSelectProps) {
         }
       });
     }
-  }, [user.loggedIn, session]);
+  }, [user.loggedIn]);
 
   return (
     <div>

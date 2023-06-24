@@ -25,7 +25,6 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import Signup from './signup';
 // import SignIn from './sign-in';
-import HomeLogin from './home-login';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { CudoApolloClient } from './services/apollo-client';
 import { initI18n } from '@cudo/mf-core';
@@ -51,7 +50,6 @@ function App() {
           {/* <SessionProvider> */}
             <Routes>
               <Route path="/home" element={<Home />} />
-              <Route path="/" element={<HomeLogin />} />
               {/* <Route path="/" element={<HomeLogin />} />
               <Route path="/" element={<LoginSelect />} />
               <Route path="/callback" element={<Callback />} />
