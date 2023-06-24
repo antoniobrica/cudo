@@ -6,8 +6,8 @@ import './app.module.scss';
 import { environment } from '../environments/environment';
 import { Email } from './login/login';
 // import { Menubar, UserProfileView } from '@cudo/shared-components/src';
-import { SessionProvider } from './services/session';
-import { Callback } from './containers/Callback';
+// import { SessionProvider } from './services/session';
+// import { Callback } from './containers/Callback';
 import { Settings } from './containers/Settings';
 import { Verify } from './containers/Verify';
 import { Recover } from './containers/Recover';
@@ -48,7 +48,7 @@ function App() {
     <div className="App">
       <ApolloProvider client={client}>
         <Provider store={store}>
-          <SessionProvider>
+          {/* <SessionProvider> */}
             <Routes>
               <Route path="/home" element={<Home />} />
               <Route path="/" element={<HomeLogin />} />
@@ -66,7 +66,7 @@ function App() {
               <Route path="/sign-up" element={<Signup />} /> */}
             </Routes>
             <Outlet />
-          </SessionProvider>
+          {/* </SessionProvider> */}
         </Provider>
       </ApolloProvider>
     </div>
