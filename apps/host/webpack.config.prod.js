@@ -23,16 +23,18 @@ const prodConfig = {
    *   ['app2', 'http://example.com/path/to/app2/remoteEntry.js'],
    * ]
    */
-  remotes: [
-    ['mf-container-app', 'http://localhost:3000/mf-container-app'],
-    ['mf-project-app', 'http://localhost:3000/mf-project-app'],
-    ['mf-task-app', 'http://localhost:3000/mf-task-app'],
-  ],
+  // Locally deployed remotes for development.
   // remotes: [
-  //   ['shop', 'http://localhost:3000/shop'],
-  //   ['cart', 'http://localhost:3000/cart'],
-  //   ['about', 'http://localhost:3000/about'],
+  //   ['mf-container-app', 'http://localhost:3000/mf-container-app'],
+  //   ['mf-project-app', 'http://localhost:3000/mf-project-app'],
+  //   ['mf-task-app', 'http://localhost:3000/mf-task-app'],
   // ],
+  // Deployed remotes for production.
+  remotes: [
+    ['mf-container-app', 'http://20.199.178.58/mf-container-app'],
+    ['mf-project-app', 'http://20.199.178.58/mf-project-app'],
+    ['mf-task-app', 'http://20.199.178.58/mf-task-app'],
+  ],
 };
 
 // Nx plugins for webpack to build config object from Nx options and context.
