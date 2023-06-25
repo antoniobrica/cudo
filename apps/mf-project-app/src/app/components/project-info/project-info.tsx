@@ -7,9 +7,7 @@ import { ITodo, IProject } from '../../interfaces/project';
 import Modal from 'react-modal';
 import { Card, Icon, Form, Grid, Button, Dropdown, Label } from 'semantic-ui-react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Menubar from '@shared-components/lib/components/menu';
-import LazyLoading from '@shared-components/lib/components/loader/lazyloader';
-// import ReactQuill, { Quill } from 'react-quill';
+import LazyLoading from '@shared-components/lib/components/loader/lazyloader'; // import ReactQuill, { Quill } from 'react-quill';
 import Logo from '../../../assets/images/Shape 2.png';
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -39,12 +37,10 @@ export function ProjectInfo(props: ProjectInfoProps) {
   const [openForm, setopenForm] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [projectErrors, setProjectErrors] = useState('');
-  const [menuExpand, setMenuExpand] = useState(false);
 
   const { t } = useTranslation();
 
   const navigate = useNavigate();
-
   // const dispatch = useDispatch()
 
   const openProject = (projectId) => {
@@ -110,29 +106,11 @@ export function ProjectInfo(props: ProjectInfoProps) {
   };
 
   // set error message to toaster
-  // React.useEffect(() => {
-  //   if (projectErrors) {
-  //     toast(projectErrors);
-  //   }
-  // }, [projectErrors]);
-
-  const onClickMenuExpand = () => {
-    setMenuExpand(!menuExpand);
-  };
-
-  const callbackFunction = (childData) => {
-    switch (childData) {
-      case 'logout':
-        // logout();
-        break;
-      case 'project':
-        // goToProjectDashboard();
-        navigate('/home/project');
-        break;
-      default:
-        break;
+  React.useEffect(() => {
+    if (projectErrors) {
+      toast(projectErrors);
     }
-  };
+  }, [projectErrors]);
 
   if (loading) return <LazyLoading />;
   if (error)
@@ -147,9 +125,10 @@ export function ProjectInfo(props: ProjectInfoProps) {
     );
   return (
     <div>
-      <div className={menuExpand ? 'expand-main-menu' : 'collapsed-main-menu'}>
-        <Menubar data={data} parentCallback={callbackFunction} mainMenuExpand={onClickMenuExpand} history={navigate} />
-      </div>
+      {/* <h1>Projects</h1> */}
+      {/* <div>
+        <ModalExampleModal onSuccess={refresh}></ModalExampleModal>
+      </div> */}
       <ToastContainer
         className={`${activeErrorClass ? 'error' : 'success'}`}
         position="top-right"

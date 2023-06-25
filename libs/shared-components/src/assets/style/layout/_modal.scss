@@ -206,7 +206,7 @@ div.ui.toggle.checkbox label:before {
 
 // modal fixed right side
 .right-side--fixed-modal.ui.modal {
-  @include absolute(right 0 top -10px);
+  @include absolute(right 0 top 0px);
   width: 700px;
   transform: translate(0);
   height: 100%;
@@ -415,6 +415,7 @@ img.filter-icon {
 .ui.modals {
   .ui.modal {
     i.close.icon {
+      position: absolute;
       display: inline-block;
       font-family: FabricMDL2Icons;
       font-style: normal;

@@ -1,4 +1,5 @@
 import React from 'react';
+import 'semantic-ui-css/semantic.min.css';
 import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Select, TextArea } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 import {
@@ -19,7 +20,6 @@ import {
 import { ApolloCache, FetchResult, useMutation } from '@apollo/client';
 import {
   ADD_PROJECT,
-  CREATE_COMPANY,
   GET_BUILDINGTYPES,
   GET_CLIENT_COMPANY,
   GET_PRINTING_COMPANY,
@@ -29,7 +29,7 @@ import {
 // import { ModalExamplePrinting, ModalExampleCompany } from '@cudo/shared-components';
 import WorkType from '../../work-type/work-type';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
-import ReactQuill, { Quill } from 'react-quill';
+// import ReactQuill, { Quill } from 'react-quill';
 import { TEXT_MAXLENGTHS } from '@cudo/mf-core';
 import { useTranslation } from 'react-i18next';
 
@@ -44,10 +44,6 @@ export interface AddProjectErrors {
   numberError?: string;
   companyError?: string;
   buildingError?: string;
-}
-
-interface CreateCompanyTypes {
-  createCompany: any;
 }
 
 export function ModalExampleModal(props: ProjectInfoProps) {
@@ -122,9 +118,6 @@ export function ModalExampleModal(props: ProjectInfoProps) {
   const [dataList, setDataList] = React.useState(null);
   const [errors, setErrors] = React.useState<AddProjectErrors>({});
 
-  const [companyName, setCompanyName] = React.useState('');
-  const [companyType, setCompanyType] = React.useState('');
-
   const [companyCountry, setCompanyCountry] = React.useState(null);
   const { t } = useTranslation();
 
@@ -145,8 +138,6 @@ export function ModalExampleModal(props: ProjectInfoProps) {
   const { loading: companyLoading, data: printingCompany } = useCompanyQuery(GET_PRINTING_COMPANY);
   const { loading: clientLoading, data: clientCompany } = useCompanyQuery(GET_CLIENT_COMPANY);
   const { loading: buildingTypesloading, data: buildingTypesData } = useBuildingTypesQuery(GET_BUILDINGTYPES);
-
-  const [createCompany, { data: createCompanyData }] = useMutation<CreateCompanyTypes>(CREATE_COMPANY);
 
   React.useEffect(() => {
     if (worktypeData) {
@@ -291,53 +282,43 @@ export function ModalExampleModal(props: ProjectInfoProps) {
       return false;
     }
 
-    setOpen(false);
-    addProject({
-      variables: {
-        projectName,
-        projectNum,
-        client,
-        buildingType,
-        printingCompany: printing,
-        description,
-        projectWorkEstimates,
-        addressLineOne: adressLine1,
-        addressLineTwo: adressLine2,
-        city,
-        state,
-        zip,
-        country,
-        createdBy: 'dev',
-      },
-      update: (cache, data) => {
-        const cacheData = cache.readQuery({ query: GET_PROJECTS }) as IProjects;
+    try {
+      setOpen(false);
+      addProject({
+        variables: {
+          projectName,
+          projectNum,
+          client,
+          buildingType,
+          printingCompany: printing,
+          description,
+          projectWorkEstimates,
+          addressLineOne: adressLine1,
+          addressLineTwo: adressLine2,
+          city,
+          state,
+          zip,
+          country,
+          createdBy: 'dev',
+        },
+        update: (cache, data) => {
+          const cacheData = cache.readQuery({ query: GET_PROJECTS }) as IProjects;
 
-        setDataList(data);
-        cache.writeQuery({
-          query: GET_PROJECTS,
-          data: {
-            getProjects: [...cacheData?.projects, data['createProject']],
-          },
-        });
+          setDataList(data);
+          // cache.writeQuery({
+          //   query: GET_PROJECTS,
+          //   data: {
+          //     getProjects: [...cacheData?.projects, data['createProject']],
+          //   },
+          // });
 
-        props.onSuccess(data);
-      },
-    });
-  };
-
-  const handleCreateCompany = () => {
-    console.log(companyName);
-    console.log(companyType.toUpperCase());
-
-    const companyTypeEnum = companyType === 'client' ? 0 : 1;
-
-    createCompany({
-      variables: {
-        companyName,
-        companyType: companyType.toUpperCase(),
-      },
-    });
-    setSecondOpen(false);
+          props.onSuccess(data);
+          window.location.reload();
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const panes = [
@@ -428,7 +409,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                   </Form.Field>
                   <Form.Field>
                     <a className="anchor-color" onClick={() => setSecondOpen(true)}>
-                      editing + {t('common.add_new_button')}
+                      + {t('common.add_new_button')}
                     </a>
                   </Form.Field>
                 </Grid.Column>
@@ -758,13 +739,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                         <label>
                           {t('project_list.add_new_project.company_name_label')}? <span className="danger">*</span>
                         </label>
-                        <Input
-                          onChange={(e, data) => setCompanyName(data.value)}
-                          placeholder="Al Hamra Company"
-                          size="small"
-                          className="full-width"
-                          type="text"
-                        />
+                        <Input placeholder="Al Hamra Company" size="small" className="full-width" type="text" />
                       </Form.Field>
                     </Grid.Column>
                   </Grid.Row>
@@ -780,7 +755,6 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                           className="small"
                           options={companyTypeOptions}
                           clearable
-                          onChange={(e, data) => setCompanyType(data.value as string)}
                         />
                       </Form.Field>
                     </Grid.Column>
@@ -932,7 +906,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
               </Form>
               <Button
                 content={t('project_list.add_new_project.add_comapany_button')}
-                onClick={handleCreateCompany}
+                onClick={() => setOpen(false)}
                 positive
                 size="small"
                 className="primary"
