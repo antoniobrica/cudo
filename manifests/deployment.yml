@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: mfcontainer 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mfcontainer
+  template:
+    metadata:
+      labels:
+        app: mfcontainer 
+    spec:
+      containers:
+        - name: mfcontainer 
+          image: cudoacr.azurecr.io/mfcontainer
+          ports:
+          - containerPort: 6002
