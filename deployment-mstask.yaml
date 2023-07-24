@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-task
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ms-task
+  template:
+    metadata:
+      labels:
+        app: ms-task
+    spec:
+      containers:
+      - name: ms-task
+        image: cudoacr.azurecr.io/ms-task:v1
+        ports:
+        - containerPort: 5007
+        envFrom:
+        - configMapRef:
+            name: ms-task-config
+      imagePullSecrets:
+      - name: acr-auth

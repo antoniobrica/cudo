@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mfproject
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mfproject
+  template:
+    metadata:
+      labels:
+        app: mfproject
+    spec:
+      containers:
+      - name: mfproject
+        image: cudoacr.azurecr.io/mfproject:v1
+        ports:
+        - containerPort: 6006
+      imagePullSecrets:
+      - name: acr-auth

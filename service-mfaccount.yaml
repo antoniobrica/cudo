@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mfaccount
+spec:
+  selector:
+    app: mfaccount
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 6001
+  type: LoadBalancer
