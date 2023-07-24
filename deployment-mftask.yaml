@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mftask
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mftask
+  template:
+    metadata:
+      labels:
+        app: mftask
+    spec:
+      containers:
+      - name: mftask
+        image: cudoacr.azurecr.io/mftask:v1
+        ports:
+        - containerPort: 6005
+      imagePullSecrets:
+      - name: acr-auth

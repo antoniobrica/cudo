@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-project
+spec:
+  selector:
+    app: ms-project
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5005
+  type: LoadBalancer
