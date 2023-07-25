@@ -1,21 +1,33 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: mftask
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: mftask
-  template:
-    metadata:
-      labels:
-        app: mftask
-    spec:
-      containers:
-      - name: mftask
-        image: cudoacr.azurecr.io/mftask:v1
-        ports:
-        - containerPort: 6005
-      imagePullSecrets:
-      - name: acr-auth
+# Use Node.js LTS version with Alpine Linux as a base image
+FROM node:lts-alpine3.16
+
+# Set the working directory for the app
+WORKDIR /usr/src/app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Copy workspace.json and cypress.json
+COPY cudo-ch/Cudo/Cudo/apps/mf-task-app/project.json
+COPY cypress*.json ./
+
+# Install Python3 and create a symlink to `python`
+RUN apk update \
+&& apk add --no-cache python3 build-base \
+&& ln -s /usr/bin/python3 /usr/bin/python
+
+# Install npm dependencies
+RUN npm ci
+
+# Install Nx CLI globally
+RUN npm install -g nx
+
+# Copy the rest of the application files
+COPY . .
+
+# Expose the port that the application will run on
+EXPOSE 6005
+
+# Run the application
+CMD ["npm", "run","nx","serve","mf-task-app","0.0.0.0"]
+
