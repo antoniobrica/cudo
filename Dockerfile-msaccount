@@ -4,7 +4,7 @@ FROM node:lts-alpine3.16
 WORKDIR /usr/src/app
 
 COPY package*.json ./
-COPY cudo-ch/Cudo/Cudo/apps/ms-account/project.json
+COPY cudo-ch/Cudo/Cudo/apps/ms-account/project.json ./
 COPY cypress*.json ./
 
 # Install Python3 and create a symlink to `python`
