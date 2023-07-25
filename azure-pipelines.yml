@@ -1,7 +1,3 @@
-# Deploy to Azure Kubernetes Service
-# Build and push image to Azure Container Registry; Deploy to Azure Kubernetes Service
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
 trigger:
 - fahim-arif/Microfrontend-Latest
 
@@ -9,61 +5,16 @@ resources:
 - repo: self
 
 variables:
-
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '563bf2b8-e2b4-4dde-8b2b-64a7b53befdc'
   imageRepository: 'cudo'
   containerRegistry: 'cudoacr.azurecr.io'
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
-  imagePullSecret: 'cudoacr90723ab9-auth'
-
+  imagePullSecret: 'cudo-secret'
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
-
-    - upload: manifests
-      artifact: manifests
-
-- stage: Deploy
-  displayName: Deploy stage
-  dependsOn: Build
-
-  jobs:
-  - deployment: Deploy
-    displayName: Deploy
-    pool:
-      vmImage: $(vmImageName)
-    environment: 'Cudo-1062.cudospace'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: KubernetesManifest@0
-            displayName: Create imagePullSecret
-            inputs:
-              action: createSecret
-              secretName: $(imagePullSecret)
-              dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
-
-          - task: KubernetesManifest@0
-            displayName: Deploy to Kubernetes cluster
-            inputs:
-              action: deploy
-              manifests: |
-                $(Pipeline.Workspace)/manifests/deployment.yml
-                $(Pipeline.Workspace)/manifests/service.yml
-              imagePullSecrets: |
-                $(imagePullSecret)
-              containers: |
-                $(containerRegistry)/$(imageRepository):$(tag)
-
-
-
-
-variables:
-  dockerRegistryServiceConnection: 'cudoacr'
-  containerRegistry: 'cudoacr.azurecr.io'
-  tag: '$(Build.BuildId)'
+  # Kubernetes namespace
   namespace: 'cudospace'
 
 stages:
@@ -144,9 +95,12 @@ stages:
               tags: '$(tag)'
 
   - stage: Deploy
+    displayName: Deploy stage
+    dependsOn: BuildAndPush
     jobs:
       - deployment: Deploy
-        environment: 'cudoaks'
+        displayName: Deploy
+        environment: 'Cudo-1062.cudospace'
         strategy:
           runOnce:
             deploy:
@@ -183,7 +137,7 @@ stages:
                       service-msdocument.yaml
                       service-msproject.yaml
                       service-mstask.yaml
-                    imagePullSecrets: 'cudoacr-pull-secret'
+                    imagePullSecrets: '$(imagePullSecret)'
                     containers: |
                       $(containerRegistry)/mfaccount:$(tag)
                       $(containerRegistry)/mfcontainer:$(tag)
@@ -194,4 +148,3 @@ stages:
                       $(containerRegistry)/msdocument:$(tag)
                       $(containerRegistry)/msproject:$(tag)
                       $(containerRegistry)/mstask:$(tag)
-
