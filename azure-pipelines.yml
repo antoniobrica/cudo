@@ -1,0 +1,197 @@
+# Deploy to Azure Kubernetes Service
+# Build and push image to Azure Container Registry; Deploy to Azure Kubernetes Service
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- fahim-arif/Microfrontend-Latest
+
+resources:
+- repo: self
+
+variables:
+
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: '563bf2b8-e2b4-4dde-8b2b-64a7b53befdc'
+  imageRepository: 'cudo'
+  containerRegistry: 'cudoacr.azurecr.io'
+  dockerfilePath: '**/Dockerfile'
+  tag: '$(Build.BuildId)'
+  imagePullSecret: 'cudoacr90723ab9-auth'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+    - upload: manifests
+      artifact: manifests
+
+- stage: Deploy
+  displayName: Deploy stage
+  dependsOn: Build
+
+  jobs:
+  - deployment: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: $(vmImageName)
+    environment: 'Cudo-1062.cudospace'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: KubernetesManifest@0
+            displayName: Create imagePullSecret
+            inputs:
+              action: createSecret
+              secretName: $(imagePullSecret)
+              dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
+
+          - task: KubernetesManifest@0
+            displayName: Deploy to Kubernetes cluster
+            inputs:
+              action: deploy
+              manifests: |
+                $(Pipeline.Workspace)/manifests/deployment.yml
+                $(Pipeline.Workspace)/manifests/service.yml
+              imagePullSecrets: |
+                $(imagePullSecret)
+              containers: |
+                $(containerRegistry)/$(imageRepository):$(tag)
+
+
+
+
+variables:
+  dockerRegistryServiceConnection: 'cudoacr'
+  containerRegistry: 'cudoacr.azurecr.io'
+  tag: '$(Build.BuildId)'
+  namespace: 'cudospace'
+
+stages:
+  - stage: BuildAndPush
+    jobs:
+      - job: DockerBuildAndPush
+        steps:
+          - task: Docker@2
+            inputs:
+              command: 'buildAndPush'
+              repository: 'mfaccount'
+              dockerfile: 'Dockerfile-mfaccount'
+              containerRegistry: '$(dockerRegistryServiceConnection)'
+              tags: '$(tag)'
+
+          - task: Docker@2
+            inputs:
+              command: 'buildAndPush'
+              repository: 'mfcontainer'
+              dockerfile: 'Dockerfile-mfcontainer'
+              containerRegistry: '$(dockerRegistryServiceConnection)'
+              tags: '$(tag)'
+
+          - task: Docker@2
+            inputs:
+              command: 'buildAndPush'
+              repository: 'mfdocument'
+              dockerfile: 'Dockerfile-mfdocument'
+              containerRegistry: '$(dockerRegistryServiceConnection)'
+              tags: '$(tag)'
+
+          - task: Docker@2
+            inputs:
+              command: 'buildAndPush'
+              repository: 'mfproject'
+              dockerfile: 'Dockerfile-mfproject'
+              containerRegistry: '$(dockerRegistryServiceConnection)'
+              tags: '$(tag)'
+
+          - task: Docker@2
+            inputs:
+              command: 'buildAndPush'
+              repository: 'mftask'
+              dockerfile: 'Dockerfile-mftask'
+              containerRegistry: '$(dockerRegistryServiceConnection)'
+              tags: '$(tag)'
+
+          - task: Docker@2
+            inputs:
+              command: 'buildAndPush'
+              repository: 'msaccount'
+              dockerfile: 'Dockerfile-msaccount'
+              containerRegistry: '$(dockerRegistryServiceConnection)'
+              tags: '$(tag)'
+
+          - task: Docker@2
+            inputs:
+              command: 'buildAndPush'
+              repository: 'msdocument'
+              dockerfile: 'Dockerfile-msdocument'
+              containerRegistry: '$(dockerRegistryServiceConnection)'
+              tags: '$(tag)'
+
+          - task: Docker@2
+            inputs:
+              command: 'buildAndPush'
+              repository: 'msproject'
+              dockerfile: 'Dockerfile-msproject'
+              containerRegistry: '$(dockerRegistryServiceConnection)'
+              tags: '$(tag)'
+
+          - task: Docker@2
+            inputs:
+              command: 'buildAndPush'
+              repository: 'mstask'
+              dockerfile: 'Dockerfile-mstask'
+              containerRegistry: '$(dockerRegistryServiceConnection)'
+              tags: '$(tag)'
+
+  - stage: Deploy
+    jobs:
+      - deployment: Deploy
+        environment: 'cudoaks'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: |
+                    kubectl create namespace $(namespace)
+                  displayName: 'Create namespace'
+
+                - task: KubernetesManifest@0
+                  inputs:
+                    action: 'deploy'
+                    kubernetesServiceConnection: 'cudoaks'
+                    namespace: '$(namespace)'
+                    manifests: |
+                      configmap-msaccount.yaml
+                      configmap-msdocument.yaml
+                      configmap-msproject.yaml
+                      configmap-mstask.yaml
+                      deployment-mfaccount.yaml
+                      deployment-mfcontainer.yaml
+                      deployment-mfdocument.yaml
+                      deployment-mfproject.yaml
+                      deployment-mftask.yaml
+                      deployment-msaccount.yaml
+                      deployment-msdocument.yaml
+                      deployment-msproject.yaml
+                      deployment-mstask.yaml
+                      service-mfaccount.yaml
+                      service-mfcontainer.yaml
+                      service-mfdocument.yaml
+                      service-mfproject.yaml
+                      service-mftask.yaml
+                      service-msaccount.yaml
+                      service-msdocument.yaml
+                      service-msproject.yaml
+                      service-mstask.yaml
+                    imagePullSecrets: 'cudoacr-pull-secret'
+                    containers: |
+                      $(containerRegistry)/mfaccount:$(tag)
+                      $(containerRegistry)/mfcontainer:$(tag)
+                      $(containerRegistry)/mfdocument:$(tag)
+                      $(containerRegistry)/mfproject:$(tag)
+                      $(containerRegistry)/mftask:$(tag)
+                      $(containerRegistry)/msaccount:$(tag)
+                      $(containerRegistry)/msdocument:$(tag)
+                      $(containerRegistry)/msproject:$(tag)
+                      $(containerRegistry)/mstask:$(tag)
+
