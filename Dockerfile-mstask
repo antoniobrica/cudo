@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Copy workspace.json and cypress.json
-COPY cudo-ch/Cudo/Cudo/apps/ms-task/project.json ./
+COPY /apps/ms-task/project.json ./
 COPY cypress*.json ./
 
 # Install Python3 and create a symlink to `python`
