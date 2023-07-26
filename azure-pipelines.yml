@@ -121,10 +121,7 @@ stages:
           runOnce:
             deploy:
               steps:
-                - script: |
-                    kubectl create namespace $(namespace)
-                  displayName: 'Create namespace'
-
+              
                 - task: KubernetesManifest@0
                   inputs:
                     action: 'deploy'
