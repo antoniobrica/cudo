@@ -6,7 +6,7 @@ resources:
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: 'cudoaks'
+  dockerRegistryServiceConnection: 'cudoacr'  # Replace this with your Docker Registry service connection
   imageRepository: 'cudo'
   containerRegistry: 'cudoacr.azurecr.io'
   dockerfilePath: '**/Dockerfile'
