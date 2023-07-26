@@ -122,6 +122,13 @@ stages:
             deploy:
               steps:
               
+                - task: Kubernetes@1
+                  inputs:
+                    connectionType: 'Kubernetes Service Connection'
+                    kubernetesServiceEndpoint: 'cudoaks'
+                    command: 'apply'
+                    arguments: '-f $(namespace)'
+
                 - task: KubernetesManifest@0
                   inputs:
                     action: 'deploy'
