@@ -15,16 +15,21 @@ export class WorkTypesService {
   constructor(
     @InjectRepository(WorkTypeEntity)
     private WorkTypeRepository: Repository<WorkTypeEntity>,
-    private referenceService: ReferenceService,
-  ) { }
+    private referenceService: ReferenceService
+  ) {}
 
-  public async createWorkType(createWorkTypeInput: CreateWorkTypeInput, referenceFilter: ReferenceFilterParams): Promise<WorkTypeEntity> {
+  public async createWorkType(
+    createWorkTypeInput: CreateWorkTypeInput,
+    referenceFilter: ReferenceFilterParams
+  ): Promise<WorkTypeEntity> {
     try {
       const taskeDetails = new WorkTypeEntity({ ...createWorkTypeInput });
-      const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
+      const selectedReference = await this.referenceService.getReferenceById(
+        referenceFilter
+      );
       const newWorkType = await this.WorkTypeRepository.create({
         ...taskeDetails,
-        reference: { id: selectedReference.id }
+        reference: { id: selectedReference.id },
       });
       await this.WorkTypeRepository.save(newWorkType);
       return newWorkType;
@@ -33,34 +38,49 @@ export class WorkTypesService {
     }
   }
 
-  public async updateWorkType(createWorkTypeInput: CreateWorkTypeInput, referenceFilter: ReferenceFilterParams): Promise<WorkTypeEntity> {
-
-    const selectedReference = await this.referenceService.getReferenceById(referenceFilter);
-    const workType = await this.WorkTypeRepository.findOne({ where: { workTypeID: createWorkTypeInput.workTypeID, reference: { id: selectedReference.id } } });
+  public async updateWorkType(
+    createWorkTypeInput: CreateWorkTypeInput,
+    referenceFilter: ReferenceFilterParams
+  ): Promise<WorkTypeEntity> {
+    const selectedReference = await this.referenceService.getReferenceById(
+      referenceFilter
+    );
+    const workType = await this.WorkTypeRepository.findOne({
+      where: {
+        workTypeID: createWorkTypeInput.workTypeID,
+        reference: { id: selectedReference.id },
+      },
+    });
     if (workType) {
-      await this.WorkTypeRepository.update(workType.id, { ...createWorkTypeInput });
-      const updatedPost = await this.WorkTypeRepository.findOne(workType.id);
+      await this.WorkTypeRepository.update(workType.id, {
+        ...createWorkTypeInput,
+      });
+      const updatedPost = await this.WorkTypeRepository.findOne({
+        where: { id: workType.id },
+      });
       return updatedPost;
     }
     throw new WorkTypeNotFoundException(workType.workTypeID);
   }
 
-  public async findAllWorkType(refFilter: ReferenceFilterParams): Promise<WorkTypeEntity[]> {
-    const selectedReference = await this.referenceService.getReferenceById(refFilter)
+  public async findAllWorkType(
+    refFilter: ReferenceFilterParams
+  ): Promise<WorkTypeEntity[]> {
+    const selectedReference = await this.referenceService.getReferenceById(
+      refFilter
+    );
     return await this.WorkTypeRepository.find({
-      "reference": {
-        id: selectedReference.id
-      }
+      where: { reference: { id: selectedReference.id } },
     });
-
   }
 
   async getWorktypeByWorkTypeID(workFilter: WorkParams) {
-    const worktype = await this.WorkTypeRepository.findOne({ where: { ...workFilter} });
+    const worktype = await this.WorkTypeRepository.findOne({
+      where: { ...workFilter },
+    });
     if (worktype) {
-        return worktype;
+      return worktype;
     }
     throw new WorkTypeNotFoundException(worktype.workTypeID);
-}
-
+  }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import './file-type-index.module.scss';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
-import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
+import { ApolloProvider as ApolloHooksProvider } from '@apollo/client'
 import FileType from '../file-type/file-type';
  
 /* eslint-disable-next-line */

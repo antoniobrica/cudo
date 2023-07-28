@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-document
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ms-document
+  template:
+    metadata:
+      labels:
+        app: ms-document
+    spec:
+      containers:
+      - name: ms-document
+        image: cudoacr.azurecr.io/ms-document:v1
+        ports:
+        - containerPort: 5003
+        envFrom:
+        - configMapRef:
+            name: ms-document-config
+      imagePullSecrets:
+      - name: acr-auth

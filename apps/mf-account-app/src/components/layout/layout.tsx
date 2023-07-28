@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
+import CssBaseline from '@mui/material/CssBaseline';
 import useStyles from './style';
 
 const Layout = ({ children }) => {
-  const classes = useStyles();
+  // const classes = useStyles();
   return (
-    <Container className={classes.root}>
+    <Container style={{ padding: 20 }}>
       <Grid container>
         <CssBaseline />
         {children}
@@ -18,7 +18,7 @@ const Layout = ({ children }) => {
 };
 
 Layout.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 export default Layout;

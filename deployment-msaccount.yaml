@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-account
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ms-account
+  template:
+    metadata:
+      labels:
+        app: ms-account
+    spec:
+      containers:
+      - name: ms-account
+        image: cudoacr.azurecr.io/ms-account:v1
+        ports:
+        - containerPort: 5001
+        envFrom:
+        - configMapRef:
+            name: ms-account-config
+      imagePullSecrets:
+      - name: acr-auth

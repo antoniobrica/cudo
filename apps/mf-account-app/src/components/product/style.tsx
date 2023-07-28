@@ -1,9 +1,9 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = styled('div')({
   root: {
-    padding: theme.spacing(2)
-  }
-}));
+    padding: '20px',
+  },
+});
 
 export default useStyles;
