@@ -8,7 +8,7 @@ export class ProjectDetailsInput {
     @Field(type => ProjectBasicDetailsInput)
     projectBasics?: ProjectBasicDetailsInput;
 
-    @Field(type => [ProjectWorkParams], { description: `` })
+    @Field(type => [ProjectWorkParams], {nullable: true, description: `` })
     projectWorkEstimates?: ProjectWorkParams[];
 
 }

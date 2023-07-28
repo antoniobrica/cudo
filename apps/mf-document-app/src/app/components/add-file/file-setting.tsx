@@ -1,20 +1,13 @@
 import React, { useContext, useRef } from 'react';
+import { useHistory } from 'react-router';
 import { Button, Checkbox, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
-
-import img from 'libs/shared-components/src/upload.png';
-import img2 from 'libs/shared-components/src/avatar_1.png';
-import img3 from 'libs/shared-components/src/avatar_2.png';
-import img4 from 'libs/shared-components/src/avatar_3.png';
-import img5 from 'libs/shared-components/src/file_1.png';
-import img6 from 'libs/shared-components/src/file_2.png';
 import ProgressBar from 'libs/shared-components/src/lib/components/progress_bar/progressbar';
 import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex, FileTypeIndex, FileStructureIndex, AddFolderIndex } from "@cudo/mf-account-app-lib"
-import { UploadsViewStateContext, SharedViewStateContext, DownloadsViewStateContext } from 'apps/mf-document-app/src/azure-storage/contexts/viewStateContext';
+import { UploadsViewStateContext, SharedViewStateContext, DownloadsViewStateContext } from './../../../azure-storage/contexts/viewStateContext';
 import { BlobItem } from '@azure/storage-blob';
 import { tap } from 'rxjs/operators';
-import { BlobItemUpload, BlobItemDownload } from 'apps/mf-document-app/src/azure-storage/types/azure-storage';
-import '../../../../../../libs/shared-components/src/style/index.scss';
+import { BlobItemUpload, BlobItemDownload } from './../../../azure-storage/types/azure-storage';
 
 import { LoaderPage } from "@cudo/shared-components"
 import { useFileMutation } from '../../services/useRequest';
@@ -22,6 +15,8 @@ import { GET_FILES, UPLOAD_FILE } from '../../graphql/graphql';
 import { FileMutation, IFiles } from '../../interfaces/document';
 import { FetchResult, useMutation } from '@apollo/client';
 import { AddNewFolder } from '@cudo/shared-components';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { useTranslation } from 'react-i18next';
 export interface FileProps {
   openSettingF
 }
@@ -43,22 +38,24 @@ export function FileSetting(props: FileProps) {
   const [phaseName, setPhasesName] = React.useState("");
   const [phaseID, setPhasesID] = React.useState("");
   const [folderName, setfolderName] = React.useState("");
+  const [directory, setDirectory] = React.useState("");
 
-
-
+  const history = useHistory();
+  const pathNames = history.location.pathname.split("/");
+  const projectId = pathNames[3].toString();
 
   // const [addFile] = useFileMutation(UPLOAD_FILE);
   const [addFile, { data }] = useMutation(UPLOAD_FILE,
     {
       refetchQueries: [
-        { query: GET_FILES }
+        { query: GET_FILES, variables: { projectId } }
       ]
     }
   )
 
   const [items, setItems] = React.useState<BlobItemUpload[]>([]);
   const [download, setDownload] = React.useState<BlobItemDownload[]>([]);
-
+  const { t } = useTranslation()
   const sharedContext = React.useContext(SharedViewStateContext);
 
   const getContainerItemsEffect = () => {
@@ -102,14 +99,15 @@ export function FileSetting(props: FileProps) {
     setisFolder(data.isFolder)
     if (data.isFolder) {
       setfolderName(data.folderTitle)
+      setDirectory(data.folderTitle)
       console.log('folderName', folderName);
     }
     else {
       setBKPIDTitle(data.BKPIDTitle)
+      setDirectory(data.BKPIDTitle)
+
       setBKPID(data.BKPID)
     }
-    console.log('folderName2', folderName);
-
   }
   const setFileStructureChange = (data) => {
     // setfileStructureID()
@@ -152,26 +150,47 @@ export function FileSetting(props: FileProps) {
 
     // setFileList(fileArr);
   }
-
+  enum fileType {
+    IMAGE = "IMAGE",
+    PDF = "PDF",
+    BIM = "BIM"
+  }
   const handleSaveFile = () => {
     setOpen(false);
-    addFile({
-      variables: {
-        fileTypeName, folderName, people, BKPIDTitle, files, phaseName, fileTypeID, phaseID, structureTitle, structureID, isFolder, isEveryOneAllowed: false, BKPID
-      },
-      update: (
-        cache,
-        data
-      ) => {
-        const cacheData = cache.readQuery({ query: GET_FILES }) as IFiles;
-        cache.writeQuery({
-          query: GET_FILES,
-          data: {
-            tasks: [...cacheData.File, data?.createFile]
-          }
-        });
-      }
-    });
+    files.map((file, i) => {
+      console.log('file==', file);
+      addFile({
+        variables: {
+          projectId,
+          projectTitle: "gamesoft",
+          
+          directory,
+          fileURL: file.fileURL,
+          fileTitle: file.fileTitle,
+          fileType: file.fileType === "image/png" ? fileType.IMAGE : fileType.PDF,
+          fileVersion: 1,
+          fileTypeName, people, BKPIDTitle,
+          phaseName, fileTypeID, phaseID,
+          structureTitle, structureID,
+          isFolder, isEveryOneAllowed: false,
+          BKPID
+        },
+        update: (
+          cache,
+          data
+        ) => {
+          const cacheData = cache.readQuery({ query: GET_FILES }) as IFiles;
+          cache.writeQuery({
+            query: GET_FILES,
+            variables: { projectId },
+            data: {
+              tasks: [...cacheData.uploadedFiles, data['createFile']]
+            }
+          });
+        }
+      });
+    })
+
 
   };
 
@@ -198,9 +217,10 @@ export function FileSetting(props: FileProps) {
         onClose={() => setOpen(false)}
         onOpen={openf}
         open={open}
-        trigger={<Button size='mini' className="grey-btn">Uploaded File</Button>}
+        trigger={<Button size='mini' className="grey-btn">{t("project_tab_menu.files.uploaded_file")}</Button>}
+        closeOnDimmerClick={false}
       >
-        <Modal.Header><h3>Add File </h3></Modal.Header>
+        <Modal.Header><h3>{t("project_tab_menu.add_file")} </h3></Modal.Header>
         <Modal.Content body>
           <div>
             <Form>
@@ -210,8 +230,8 @@ export function FileSetting(props: FileProps) {
                     <Form.Field>
                       <div className="dashed_area" style={{ paddingTop: 15 }}>
                         <div className="file-upload-message">
-                          <img src={img} className="mr-10 " />
-                          <p className="file-upload-default-message">Drag & drop or click here to upload file</p>
+                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/upload.png`} className="mr-10 " />
+                          <p className="file-upload-default-message">{t("common.drag_and_drop")}</p>
 
                         </div>
                         <Input type="file" className="file-upload-input" multiple={true} onChange={e => uploadFiles(e.target.files)} />
@@ -227,7 +247,7 @@ export function FileSetting(props: FileProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Upload files</label>
+                      <label>{t("project_tab_menu.files.upload_files")}</label>
 
 
                     </Form.Field>
@@ -244,7 +264,7 @@ export function FileSetting(props: FileProps) {
                           <Grid.Column>
                             <Form.Field>
 
-                              <img src={img6} />
+                              <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/file_2.png`} />
 
                             </Form.Field>
                           </Grid.Column>
@@ -310,8 +330,8 @@ export function FileSetting(props: FileProps) {
                   <Grid.Column>
                     <Form.Field>
                       <div className="content">
-                        <div className="description">Generate file number
-                  <p className="enable">Enable this option to generate file numbering</p>
+                        <div className="description">{t("project_tab_menu.files.generate_file_number")}
+                          <p className="enable">{t("project_tab_menu.files.generate_file_number_check")}</p>
                           <Checkbox toggle className="toggle_area" />
                         </div>
                       </div>
@@ -323,22 +343,25 @@ export function FileSetting(props: FileProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Project</label>
-                      <Select placeholder='Select' className="small" options={projectOptions} />
+                      <label>{t("menu.project")}</label>
+                      <Select clearable placeholder={t("common.select")} className="small" options={projectOptions} />
 
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
-                    <PhaseIndex parentPhaseSelect={onsetPhasesID} />
+                    <Form.Field>
+                      <label>{t("common.phase")} </label>
+                      <PhaseIndex parentPhaseSelect={onsetPhasesID} />
+                    </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
               <Grid columns={3}>
                 <Grid.Row>
                   <Grid.Column>
-                    <BkpIndex parentBKPSelect={setBKPIDChange}></BkpIndex>
+                    <BkpIndex bkp={BKPID} parentBKPSelect={setBKPIDChange}></BkpIndex>
                     <Form.Field>
-                      <a className="anchor-color" onClick={folderOpen}>+ Add New</a>
+                      <a className="anchor-color" onClick={folderOpen}>+ {t("common.add_new_button")}</a>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
@@ -349,7 +372,7 @@ export function FileSetting(props: FileProps) {
                     <FileTypeIndex parentFileTypeSelect={setFileTypeChange} />
                   </Grid.Column>
                   <Grid.Column>
-                    <FileStructureIndex parentFileStructureSelect={setFileStructureChange} />
+                    <FileStructureIndex structureTitle={structureTitle} parentFileStructureSelect={setFileStructureChange} />
                     {/* <Form.Field>
                       <label>File structure</label>
                       <Select placeholder='Select' className="small" options={fileOptions} />
@@ -362,7 +385,7 @@ export function FileSetting(props: FileProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Who can access</label>
+                      <label>{t("common.who_can_access")}</label>
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -371,12 +394,12 @@ export function FileSetting(props: FileProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <Checkbox label='Everyone in the Project/Work type' className="small" />
+                      <Checkbox label={t("common.everyone_in_worktype")} className="small" />
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
-                      <Checkbox label='Specify People only' className="small" onChange={specifyPeople} />
+                      <Checkbox label={t("common.specific_access")} className="small" onChange={specifyPeople} />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -386,7 +409,7 @@ export function FileSetting(props: FileProps) {
                   <Grid columns={1} >
                     <Grid.Row>
                       <Grid.Column>
-                        <AssigneeIndex parentAsigneeSelect={setAsignee} />
+                        <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Select people" />
                       </Grid.Column>
                     </Grid.Row>
                   </Grid>
@@ -397,7 +420,7 @@ export function FileSetting(props: FileProps) {
                           <Grid.Column key={i}>
                             <Form.Field>
                               <div className="below_area">
-                                <img src={img3} className="avatar" />
+                                <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_2.png`} className="avatar" />
                                 <span className="span_name">{asign.userName}</span>
                                 <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
                               </div>
@@ -411,7 +434,7 @@ export function FileSetting(props: FileProps) {
                         <Form.Field>
 
                           <div className="below_area">
-                            <img src={img3} className="avatar" />
+                            <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_2.png`} className="avatar" />
                             <span className="span_name">Barthelemy Chalvet</span>
                             <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
 
@@ -423,7 +446,7 @@ export function FileSetting(props: FileProps) {
                         <Form.Field>
 
                           <div className="below_area">
-                            <img src={img4} className="avatar" />
+                            <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/avatar_3.png`} className="avatar" />
                             <span className="span_name">Barthelemy Chalvet</span>
                             <i className="ms-Icon ms-Icon--CalculatorMultiply right_float" aria-hidden="true"></i>
 
@@ -444,14 +467,14 @@ export function FileSetting(props: FileProps) {
         <Modal.Actions>
 
           <Button
-            content="Submit"
+            content={t("common.submit")}
             onClick={handleSaveFile}
             positive
-            size='mini' className="grey-btn"
+            size='small' className="primary"
           />
-          <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
-            X  Cancel
-        </Button>
+          <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
+            X  {t("common.cancel")}
+          </Button>
 
         </Modal.Actions>
       </Modal>

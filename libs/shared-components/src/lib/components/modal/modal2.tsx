@@ -1,6 +1,6 @@
 import { radios } from '@storybook/addon-knobs';
 import React from 'react';
-import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
+import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea, Checkbox } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 
 
@@ -23,6 +23,7 @@ export function ModalExampleModal2() {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={<Button size='mini' className="grey-btn">+ Add  New Task</Button>}
+        closeOnDimmerClick={false}
       >
         <Modal.Header><h3>Add New Task </h3></Modal.Header>
         <Modal.Content body>
@@ -72,7 +73,7 @@ export function ModalExampleModal2() {
                   <Grid.Column>
                     <Form.Field>
                       <label>Select Phase </label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select clearable placeholder='Select' className="small" options={countryOptions} />
 
                     </Form.Field>
                   </Grid.Column>
@@ -80,7 +81,7 @@ export function ModalExampleModal2() {
                   <Grid.Column>
                     <Form.Field>
                       <label>Select BKP   </label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select clearable placeholder='Select' className="small" options={countryOptions} />
 
                     </Form.Field>
                   </Grid.Column>
@@ -103,7 +104,7 @@ export function ModalExampleModal2() {
                   <Grid.Column>
                     <Form.Field>
                       <label>Followers  </label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select clearable placeholder='Select' className="small" options={countryOptions} />
 
                     </Form.Field>
                   </Grid.Column>
@@ -145,7 +146,7 @@ export function ModalExampleModal2() {
                   <Grid.Column>
                     <Form.Field>
                       <label>Estimated Days  </label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select clearable placeholder='Select' className="small" options={countryOptions} />
 
                     </Form.Field>
                   </Grid.Column>
@@ -163,8 +164,8 @@ export function ModalExampleModal2() {
                     <Form.Field>
                       <label>Task Configuration  </label>
 
-                      <div className="content">
-                        <p className="paragraph">Send notification to assignee/followers for the task</p></div>
+                      <div className="content configuration-toggle">
+                        <p className="paragraph task-configuration">Send notification to assignee/followers for the task <Checkbox toggle className="task-toggle" /></p></div>
                     </Form.Field>
                   </Grid.Column>
 
@@ -187,10 +188,10 @@ export function ModalExampleModal2() {
             content="Submit"
             onClick={() => setOpen(false)}
             positive
-            size='mini' className="grey-btn"
+            size='small' className="primary"
           />
-          <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
-            X  Cancel
+          <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i>  Cancel
         </Button>
 
         </Modal.Actions>

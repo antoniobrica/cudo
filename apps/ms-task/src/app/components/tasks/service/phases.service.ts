@@ -1,8 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import {  Repository } from "typeorm";
-import { v4 as uuidv4 } from 'uuid';
 import { Phases } from "../../../entities/phases.entity";
+import { TaskErrorTypeEnum } from "../../../enums/task-error-type.enum";
+import TaskCustomError from "../../../exceptions/taskCustomError.execption";
 import { CreatePhaseInput } from "../dto/input/create-phases.input";
 
 
@@ -24,16 +25,20 @@ export class PhasesService {
   // }
 
 
-    create(createPhaseData: CreatePhaseInput): Promise<Phases>{
-        return this.phaseRepository.save(createPhaseData);
+    async create(createPhaseData: CreatePhaseInput): Promise<Phases>{
+        return await this.phaseRepository.save(createPhaseData);
     }
 
-    findAll(): Promise<Phases[]> {
-        return this.phaseRepository.find();
+    async findAll(): Promise<Phases[]> {
+        return await this.phaseRepository.find();
       }
 
-    findOne(id: number): Promise<Phases> {
-        return this.phaseRepository.findOne(id);
+    async findOne(id: number): Promise<Phases> {
+        const phase = await this.phaseRepository.findOne(id);
+        if(!phase){
+          throw new TaskCustomError(TaskErrorTypeEnum.RECORD_NOT_EXIST)
+        }
+        return phase
       }
 
 }

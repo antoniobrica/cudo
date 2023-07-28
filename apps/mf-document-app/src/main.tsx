@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 
 import { BrowserRouter } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css'
-
+import { MS_SERVICE_URL } from '@cudo/mf-core'
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
 import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
@@ -19,19 +19,19 @@ declare global {
   }
 }
 const client = new ApolloClient({
-  uri: 'http://localhost:5003/graphql',
+  uri: MS_SERVICE_URL['ms_document'].url,
   cache: new InMemoryCache()
 });
 
 window.renderDocumentApp = (containerId, history) => {
   ReactDOM.render(
-      <BrowserRouter>
-        <ApolloProvider client={client}>
-          <ApolloHooksProvider client={client as any}>
-            <App />
-          </ApolloHooksProvider>
-        </ApolloProvider>
-      </BrowserRouter>,
+    <BrowserRouter>
+      <ApolloProvider client={client}>
+        <ApolloHooksProvider client={client as any}>
+          <App />
+        </ApolloHooksProvider>
+      </ApolloProvider>
+    </BrowserRouter>,
     document.getElementById(containerId)
   );
   serviceWorker.unregister();
@@ -44,13 +44,13 @@ window.unmountMeetingApp = (containerId) => {
 if (!document.getElementById("DocumentApp-container")) {
   // ReactDOM.render(<App />, document.getElementById("root"));
   ReactDOM.render(
-      <BrowserRouter>
-        <ApolloProvider client={client}>
-          <ApolloHooksProvider  client={client as any}>
-            <App />
-          </ApolloHooksProvider>
-        </ApolloProvider>
-      </BrowserRouter>
+    <BrowserRouter>
+      <ApolloProvider client={client}>
+        <ApolloHooksProvider client={client as any}>
+          <App />
+        </ApolloHooksProvider>
+      </ApolloProvider>
+    </BrowserRouter>
     ,
     document.getElementById("root")
   );

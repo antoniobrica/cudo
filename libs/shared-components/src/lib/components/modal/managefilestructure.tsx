@@ -23,6 +23,7 @@ function ManageFileStructure() {
       onOpen={() => setOpen(true)}
       open={open}
       trigger={<Button size='mini' className="grey-btn">Manage naming</Button> }
+      closeOnDimmerClick={false}
     >
       <Modal.Header><h3>Manage file naming structure </h3></Modal.Header>
       <Modal.Content body>
@@ -114,9 +115,9 @@ function ManageFileStructure() {
           content="Submit" 
           onClick={() => setOpen(false)}
           positive
-          size='mini' className="grey-btn"
+          size='small' className="primary"
         />
-        <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+        <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
         X  Cancel
         </Button>
         

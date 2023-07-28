@@ -9,9 +9,6 @@ import { UpdateInvitationTemplate } from '../dto/update-invitation.input';
 import InvitationNotFoundException from '../exceptions/invitationNotFound.exception';
 
 
-
-
-
 @Injectable()
 export class InvitationTemplateService {
   constructor(
@@ -36,13 +33,13 @@ export class InvitationTemplateService {
   }
 
   public async updateInvitationTemplate(updatefolder: UpdateInvitationTemplate, createinput: CreateInvitationTemplateInput): Promise<InvitationTemplateEntity> {
-    const catagory = await this.invitationTemplateRepository.findOne({ where: { invitationTemplateID: updatefolder.invitationTemplateID } });
-    if (catagory) {
-      await this.invitationTemplateRepository.update(catagory.id, { ...createinput });
-      const updatedPost = await this.invitationTemplateRepository.findOne(catagory.id);
+    const invitation = await this.invitationTemplateRepository.findOne({ where: { invitationTemplateID: updatefolder.invitationTemplateID } });
+    if (invitation) {
+      await this.invitationTemplateRepository.update(invitation.id, { ...createinput });
+      const updatedPost = await this.invitationTemplateRepository.findOne(invitation.id);
       return updatedPost;
     }
-    throw new InvitationNotFoundException(catagory.invitationTemplateID);
+    throw new InvitationNotFoundException(invitation.invitationTemplateID);
   }
 
   public async findAllInvitationTemplate(refFilter: ReferenceFilterParams): Promise<InvitationTemplateEntity[]> {
@@ -58,10 +55,10 @@ export class InvitationTemplateService {
   public async deleteInvitationTemplateByID(DeleteInput: UpdateInvitationTemplate): Promise<InvitationTemplateEntity[]> {
     const { invitationTemplateID } = DeleteInput;
     const catagoryDetails = await this.invitationTemplateRepository.delete({ invitationTemplateID: invitationTemplateID });
-    const catagory = await this.invitationTemplateRepository.find({
-        where: { meetingCatagoryID: invitationTemplateID },
+    const invitation = await this.invitationTemplateRepository.find({
+        where: { invitationTemplateID: invitationTemplateID },
     });
-    return catagory;
+    return invitation;
 }
 
 }

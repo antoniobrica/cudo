@@ -1,11 +1,12 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, MoreThan, Repository } from 'typeorm';
 import ReferanceTypeEntity from '../../../entities/reference-type.entity';
+import { MeetingErrorTypeEnum } from '../../../enums/meeting-error-type.enum';
+import MeetingCustomError from '../../../exceptions/meetingCustomError.exception';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceInputDto } from '../dto/input/reference.input.dto';
 import { ReferenceUpdateInputDto } from '../dto/input/reference.upate.input.dto';
-import ProjectNotFoundException from '../exceptions/projectNotFound.exception';
 
 @Injectable()
 export class ReferenceService {
@@ -50,7 +51,7 @@ export class ReferenceService {
         if (reference) {
             return reference;
         }
-        throw new ProjectNotFoundException(refFilter.referenceID);
+        throw new MeetingCustomError(MeetingErrorTypeEnum.PROJECT_NOT_FOUND)
     }
 
 
@@ -62,7 +63,7 @@ export class ReferenceService {
             const updatedPost = await this.referancesRepository.findOne(reference.id);
             return updatedPost;
         }
-        throw new ProjectNotFoundException(refFilter.referenceID);
+        throw new MeetingCustomError(MeetingErrorTypeEnum.PROJECT_NOT_FOUND)
     }
 
     async deleteReference(refFilter: ReferenceFilterParams) {
@@ -71,7 +72,7 @@ export class ReferenceService {
         if (deleteResponse) {
             return deleteResponse;
         }
-        throw new ProjectNotFoundException(refFilter.referenceID);
+        throw new MeetingCustomError(MeetingErrorTypeEnum.PROJECT_NOT_FOUND);
     }
 
 }
