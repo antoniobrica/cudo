@@ -23,7 +23,7 @@ export const Register = () => {
   return (
 
     <div className="auth">
-      <div className="container">
+      <div className="register-con">
         <div id="registration-password">
           {messages && <KratosMessages messages={messages} />}
           {

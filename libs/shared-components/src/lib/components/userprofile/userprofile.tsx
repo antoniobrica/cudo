@@ -2,9 +2,9 @@ import { radios } from '@storybook/addon-knobs';
 import React, { useEffect, useState } from 'react';
 import { Button, Select, Modal, Tab, Table, Input, Form, Grid, Image, Segment, TextArea } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
-
-import img from 'libs/shared-components/src/user_profile.png';
 import { FormField } from '@oryd/kratos-client';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { useTranslation } from 'react-i18next';
 
 export interface UserProfileProps {
   image?
@@ -34,6 +34,7 @@ export function UserProfile(props: UserProfileProps) {
   const [country_code, setCountry_code] = useState({} as FormField);
   const [state_pin, setState_pin] = useState({} as FormField);
   const [country, setCountry] = useState({} as FormField);
+  const {t} = useTranslation()
   useEffect(() => {
     props?.fields?.map(field => {
       switch (field.name) {
@@ -85,14 +86,14 @@ export function UserProfile(props: UserProfileProps) {
   return (
     <div className="app-content-body-dash dash_area navbar-collapse box-shadow bg-white-only" style={{ background: '#e6e6e6' }}>
       <div style={{ background: '#fff', padding: '10px' }}>
-        <span className="preliminary-font">User Profile</span>
+        <span className="preliminary-font">>{t('menu.profile.user_profile')}</span>
       </div>
       <Grid columns={2}>
         <Grid.Column>
           <div className="card card-custom gutter-b">
             <div className="card-body">
-              <img src={img} /><br />
-              <label className="text-center">Change Picture</label>
+              <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user_profile.png`} /><br />
+              <label className="text-center">{t("menu.profile.change_picture")}</label>
               <Input type="file" className="file-upload-input" placeholder='Firstname' />
             </div>
           </div>
@@ -106,8 +107,8 @@ export function UserProfile(props: UserProfileProps) {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field key={firstName?.name}>
-                          <label>First Name </label>
-                          <Input placeholder='Firstname' size='small' className="full-width" type={firstName?.type}
+                          <label>{t('register.first_name')} </label>
+                          <Input placeholder={t('register.first_name')} size='small' className="full-width" type={firstName?.type}
                             name={firstName?.name}
                             defaultValue={firstName?.value as any}
                             {...firstName?.required} />
@@ -115,8 +116,8 @@ export function UserProfile(props: UserProfileProps) {
                       </Grid.Column>
                       <Grid.Column>
                         <Form.Field key={lastName?.name}>
-                          <label>Last Name </label>
-                          <Input placeholder='Last Name ' size='small' className="full-width" type={lastName?.type}
+                          <label>{t('register.last_name')} </label>
+                          <Input placeholder={t('register.last_name')} size='small' className="full-width" type={lastName?.type}
                             name={lastName?.name}
                             defaultValue={lastName?.value as any}
                             {...lastName?.required} />
@@ -128,8 +129,8 @@ export function UserProfile(props: UserProfileProps) {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field key={email?.name}>
-                          <label>Email Address</label>
-                          <Input placeholder='Email Address' size='small' className="full-width  " type={email?.type}
+                          <label>{t('register.email')}</label>
+                          <Input placeholder={t('register.email')} size='small' className="full-width  " type={email?.type}
                             name={email?.name}
                             defaultValue={email?.value as any}
                             {...email?.required} />
@@ -137,12 +138,12 @@ export function UserProfile(props: UserProfileProps) {
                       </Grid.Column>
                       <Grid.Column>
                         <Form.Field>
-                          <label>Phone Number </label>
+                          <label>{t('register.phone')} </label>
                           <Grid columns={2}>
                             <Grid.Row>
                               <Grid.Column>
                                 <Form.Field key={country_code?.name}>
-                                  <Select placeholder='Select' className="small" options={countryOptions} type={country_code?.type}
+                                  <Select clearable placeholder={t('common.select')} className="small" options={countryOptions} type={country_code?.type}
                                     name={country_code?.name}
                                     defaultValue={country_code?.value as any}
                                     {...country_code?.required} />
@@ -150,7 +151,7 @@ export function UserProfile(props: UserProfileProps) {
                               </Grid.Column>
                               <Grid.Column>
                                 <Form.Field key={phone_number?.name}>
-                                  <Input placeholder='Phone Number ' size='small' className="full-width" type={phone_number?.type}
+                                  <Input placeholder={t('register.phone')} size='small' className="full-width" type={phone_number?.type}
                                     name={phone_number?.name}
                                     defaultValue={phone_number?.value as any}
                                     {...phone_number?.required} />
@@ -166,7 +167,7 @@ export function UserProfile(props: UserProfileProps) {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field key={csrf_token?.name}>
-                          <Input placeholder='Email Address' size='small' className="full-width  " type={csrf_token?.type}
+                          <Input placeholder={t('register.email')} size='small' className="full-width  " type={csrf_token?.type}
                             name={csrf_token?.name}
                             defaultValue={csrf_token?.value as any}
                             {...csrf_token?.required} />
@@ -178,8 +179,8 @@ export function UserProfile(props: UserProfileProps) {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <label>Company Name</label>
-                          <Input placeholder='Company Name' size='small' className="full-width  " type={company_name?.type}
+                          <label>{t("register.company_name")}</label>
+                          <Input placeholder={t("register.company_name")} size='small' className="full-width  " type={company_name?.type}
                             name={company_name?.name}
                             defaultValue={company_name?.value as any}
                             {...company_name?.required} />
@@ -191,8 +192,8 @@ export function UserProfile(props: UserProfileProps) {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <label>Address Line 1</label>
-                          <Input placeholder='Address Line 1 ' size='small' className="full-width" type={address_line_1?.type}
+                          <label>{t("register.address1")}</label>
+                          <Input placeholder={t("register.address1")} size='small' className="full-width" type={address_line_1?.type}
                             name={address_line_1?.name}
                             defaultValue={address_line_1?.value as any}
                             {...address_line_1?.required} />
@@ -200,8 +201,8 @@ export function UserProfile(props: UserProfileProps) {
                       </Grid.Column>
                       <Grid.Column>
                         <Form.Field>
-                          <label>Address Line 2</label>
-                          <Input placeholder='Address Line 2' size='small' className="full-width" type={address_line_2?.type}
+                          <label>{t("register.address2")}</label>
+                          <Input placeholder={t("register.address2")} size='small' className="full-width" type={address_line_2?.type}
                             name={address_line_2?.name}
                             defaultValue={address_line_2?.value as any}
                             {...address_line_2?.required} />
@@ -213,8 +214,8 @@ export function UserProfile(props: UserProfileProps) {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <label>City</label>
-                          <Input placeholder='City ' size='small' className="full-width" type={city?.type}
+                          <label>{t("register.city")}</label>
+                          <Input placeholder={t("register.city")} size='small' className="full-width" type={city?.type}
                             name={city?.name}
                             defaultValue={city?.value as any}
                             {...city?.required} />
@@ -231,8 +232,8 @@ export function UserProfile(props: UserProfileProps) {
                         </Grid.Column> */}
                       <Grid.Column>
                         <Form.Field>
-                          <label>Zip</label>
-                          <Input placeholder='Zip' size='small' className="full-width" type={state_pin?.type}
+                          <label>{t("register.zip")}</label>
+                          <Input placeholder={t("register.zip")} size='small' className="full-width" type={state_pin?.type}
                             name={state_pin?.name}
                             defaultValue={state_pin?.value as any}
                             {...state_pin?.required} />
@@ -240,8 +241,8 @@ export function UserProfile(props: UserProfileProps) {
                       </Grid.Column>
                       <Grid.Column>
                         <Form.Field>
-                          <label>Country</label>
-                          <Select placeholder='Select' className="small" options={countryOptions} type={state_pin?.type}
+                          <label>{t("register.country")}</label>
+                          <Select clearable placeholder={t("common.select")} className="small" options={countryOptions} type={state_pin?.type}
                             name={state_pin?.name}
                             defaultValue={state_pin?.value as any}
                             {...state_pin?.required} />
@@ -254,11 +255,11 @@ export function UserProfile(props: UserProfileProps) {
                       <Grid.Column>
                         <Form.Field>
                           <Button type="submit"
-                            content="update"
-                            size='mini' className="grey-btn"
+                            content={t("project_tab_menu.task.update")}
+                            size='small' className="primary"
                           />
-                          <Button onClick={props.cancel} size='mini' className="icon-border"  >
-                            X  Cancel </Button>
+                          <Button onClick={props.cancel} size='small' className="icon-border"  >
+                            X  {t("common.cancel")} </Button>
                         </Form.Field>
                       </Grid.Column>
                     </Grid.Row>

@@ -9,13 +9,13 @@ export const Callback = () => {
   useEffect(() => {
     kratos.whoami()
       .then(({ data }) => {
-        setAuthenticated()
-        unsetAuthenticatedReferer()
+        setAuthenticated();
+        unsetAuthenticatedReferer();
         window.location.href = getAuthenticatedReferer() || "/"
       })
       .catch(error => {
-        unsetAuthenticated()
-        unsetAuthenticatedReferer()
+        unsetAuthenticated();
+        unsetAuthenticatedReferer();
         console.log(error)
       })
   }, [])

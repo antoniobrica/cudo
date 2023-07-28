@@ -2,8 +2,11 @@ import React from 'react';
 
 import './project.module.scss';
 import { ITodo, IProject } from "../../interfaces/project";
-import '../../../assets/style/index.scss'
+import './../../../assets/style/index.scss'
 import { Card, Icon,Form, Grid } from 'semantic-ui-react'
+
+
+
 
 /* eslint-disable-next-line */
 export interface ProjectProps {
@@ -11,6 +14,7 @@ export interface ProjectProps {
 }
 
 export function Project(props: ProjectProps) {
+  
   const {  projectId,
     projectName,
     projectNum,buildingType } = props.project;

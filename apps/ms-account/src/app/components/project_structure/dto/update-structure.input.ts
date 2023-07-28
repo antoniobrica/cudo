@@ -4,10 +4,10 @@ import { CreateStructureInput } from './create-structure.input';
 @InputType()
 export class UpdateStructureInput {
 
-  @Field()
-  parentStructureID?: number;
+  @Field({ nullable: true, description: 'Parent Structure ID' })
+  parentStructureID?: string;
 
-  @Field()
+  @Field({ nullable: true, description: 'Child Structure Name' })
   childStructureName?: string;
 }
 
