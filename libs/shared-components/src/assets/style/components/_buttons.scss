@@ -79,24 +79,30 @@
 .ui.primary.button {
   background: color('blue', 'base');
   &:hover {
-    background-color: color('blue', 'dark');
+    background-color: color('blue', 'darken-2');
     color: color('shades', 'white');
   }
   &:focus {
-    background-color: color('blue', 'dark-1');
+    background-color: color('blue', 'darken-2');
     color: color('shades', 'white');
   }
 }
 
-.ui.basic.primary.button {
-  background: color('shades', 'white');
+.ui.basic.primary.button, .ui.primary.button {
+  background: color('blue', 'base');
   border: 1px solid color('blue', 'base');
-  color: color('blue', 'base');
+  color: #fff;
   box-shadow: none;
   &:hover,
   &:focus {
     background-color: color('blue', 'base');
     color: color('shades', 'white');
+  }
+  i {
+    color: #fff !important;
+    opacity: 1 !important;
+    font-size: 14px;
+    margin-right: 8px;
   }
 }
 
@@ -124,6 +130,17 @@
   &:focus {
     background-color: color('green', 'dark-1');
     color: color('shades', 'white') !important;
+  }
+}
+
+.ui.basic.button, .ui.basic.buttons .button {
+  background: transparent none!important;
+  color: #323130!important;
+  font-weight: 500;
+  box-shadow: none;
+  border: 1px solid #8A8886;
+  &:hover {
+    box-shadow: none;
   }
 }
 
@@ -161,10 +178,10 @@
 .ui.small.buttons .or {
   font-weight: 500;
   @include flex(inline-flex);
-  font-size: 1.5rem;
-  padding: 0 2em;
-  height: 3.6rem;
-  line-height: 3.6rem;
+  font-size: 1.4rem;
+  padding: 0 1.8rem;
+  height: 3rem;
+  line-height: 3rem;
   border-radius: 3px;
 }
 
@@ -376,8 +393,12 @@ div.ui.toggle.checkbox label:after {
 
 div.ui.toggle.checkbox input:checked ~ .box:after,
 div.ui.toggle.checkbox input:checked ~ label:after {
-  left: 2.35rem;
+  left: 2.25rem;
   box-shadow: none;
+  // background: color('shades', 'white');
+}
+
+div.ui.toggle.checkbox input:checked ~ label:after {
   background: color('shades', 'white');
 }
 
@@ -405,12 +426,6 @@ div.ui.toggle.checkbox label:before {
   border: 1px solid color('grey', 'base');
 }
 
-div.ui.toggle.checkbox input:focus ~ .box:before,
-div.ui.toggle.checkbox input:focus ~ label:before {
-  background-color: color('shades', 'white');
-  border: 1px solid color('grey', 'base');
-}
-
 div.ui.toggle.checkbox {
   min-height: 1.8rem;
 }
@@ -435,7 +450,7 @@ div.ui.radio.checkbox label:before {
 
 .ui.button.grey-btn,
 .ui.button.icon-border {
-  border-radius: 0px;
+  border-radius: 3px;
 }
 .ui.button.icon-border {
   background: none;

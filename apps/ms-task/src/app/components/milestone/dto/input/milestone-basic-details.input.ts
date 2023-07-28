@@ -10,7 +10,7 @@ export class MilestoneBasicDetailsInput {
     @Field({ description: `Due Date of MileStone in UTC` })
     dueDate?: Date;
 
-    @Field({ description: `description of milestone created` })
+    @Field({ nullable:true, description: `description of milestone created` })
     description?: string;
 
     @Field({ description: `PhaseID attached with milestone` })
@@ -25,7 +25,7 @@ export class MilestoneBasicDetailsInput {
     @Field({ description: `PhaseID attached with milestone` })
     worktypeName?: string;
 
-    @Field(type => StatusEnum, {description: `PhaseID attached with milestone` })
+    @Field(type => StatusEnum, { nullable:true, description: `PhaseID attached with milestone` })
     status?: StatusEnum;
 
 }

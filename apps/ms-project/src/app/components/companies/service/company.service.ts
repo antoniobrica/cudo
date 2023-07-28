@@ -1,7 +1,6 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
-import { v4 as uuidv4 } from 'uuid';
+import { Repository } from 'typeorm';
 import { CompanyEntity } from '../../../entities/company.entity';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
@@ -9,7 +8,8 @@ import { CompanyFilterArgs } from '../dto/args/company-filter.args';
 import { GetCompanyFilterArgs } from '../dto/args/get-company-filter.args';
 import { CreateCompanyInput } from '../dto/input/create-company.input';
 import { UpdateCompanyInput } from '../dto/input/update-company.input';
-import CompanyNotFoundException from '../../companies/exceptions/companyNotFound.exception';
+import ProjectCustomError from '../../../exceptions/projectCustomError.exception';
+import { ProjectErrorTypeEnum } from '../../../enums/project-error-type.enum';
 
 @Injectable()
 export class CompanyService {
@@ -53,7 +53,7 @@ export class CompanyService {
       const updatedPost = await this.CompanyRepository.findOne(company.id);
       return updatedPost;
     }
-    throw new CompanyNotFoundException(company.companyID);
+    throw new ProjectCustomError(ProjectErrorTypeEnum.COMPANY_NOT_FOUND);
   }
 
   public async findCompany(getCompanyFilterArgs: GetCompanyFilterArgs, refFilter: ReferenceFilterParams): Promise<CompanyEntity[]> {

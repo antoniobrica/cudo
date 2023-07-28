@@ -8,21 +8,20 @@ export const GET_COUNTRY = gql`
   }
 `;
 
-export const GET_USERS= gql`
+export const GET_USERS = gql`
 {
-  users(userID:"1") {
-  userID
-  userName
-  references {
-  referenceID
-  referenceType
-  }
-  }
+  userByEmail( 
+    email:"vipin11july1995@gmail.com",
+  ) { 
+     userID
+     userName
+     email
+  } 
   }
 `;
 
 export const GET_BKP = gql`{
-    Bkp(referenceFilter:{referenceType:COMPANY,referenceID:"3"})
+    Bkp(referenceFilter:{referenceType:COMPANY,referenceID:"dapr"})
    {
     bkpID
     bkpTitle
@@ -39,7 +38,7 @@ export const GET_FOLDER = gql`{
 }`
 
 export const GET_FILE_TYPE = gql`{
-    FileTypes(referenceFilter: { referenceType: COMPANY, referenceID: "3" }
+    FileTypes(referenceFilter: { referenceType: COMPANY, referenceID: "dapr" }
   ){
       fileTypeID                      
       fileTypeTitle
@@ -47,7 +46,7 @@ export const GET_FILE_TYPE = gql`{
     }
 }`
 export const GET_FILE_STRUCTURE = gql`{
-  FileStructure(referenceFilter: { referenceType: COMPANY, referenceID: "3" }
+  FileStructure(referenceFilter: { referenceType: COMPANY, referenceID: "dapr" }
   ){
       fileStructureID
       fileStructureTitle
@@ -55,14 +54,55 @@ export const GET_FILE_STRUCTURE = gql`{
     }
 }`
 
+export const GET_STRUCTURE = gql`{
+  structureRoots(referenceFilter: {referenceType:COMPANY,referenceID:"Sftobiz_1234" }) {
+    structureID
+    referenceID
+    referenceType
+    structureName
+    }
+}`
+
 export const GET_PHASE = gql`{
-  Phase(referenceFilter:{referenceType:COMPANY,referenceID:"3"})
+  Phase(referenceFilter:{referenceType:COMPANY,referenceID:"dapr"})
  {
   id
 phaseTitle
   }
 
 }`
+
+export const GET_CATAGORIES = gql`{
+  MeetingCatagories( 
+    referenceFilter: { referenceID: "Sftobiz_1234", referenceType: COMPANY } 
+  ) { 
+    meetingCatagoryID 
+    meetingCatagoryTitle 
+  } 
+}`
+
+export const GET_PROTOCOL = gql`{
+  ProtocoleTemplates( 
+    referenceFilter: { referenceID: "Sftobiz_1234", referenceType: COMPANY } 
+  ) { 
+    protocolTemplateID 
+    protocolTemplateTitle 
+
+  } 
+}`
+
+export const GET_INVITATION = gql`{
+  invitationTemplates( 
+    referenceFilter: { referenceID: "dapr", referenceType: COMPANY } 
+  ) { 
+    invitationTemplateID 
+    invitationTemplateTitle 
+
+  } 
+}`
+
+
+
 export const ADD_FOLDER = gql`
 mutation CreateFolder(
   $folderTitle: String!, 
@@ -76,42 +116,22 @@ mutation CreateFolder(
     } 
 }`;
 
-
-export const ADD_TASK = gql`
-mutation CreateTask(
-  $taskTitle: String!, 
-  $startDate: DateTime!,
-  $endDate: DateTime!,
-  $estimatedDays: String!,
-  $sendNotification: String!,
-  $BKPID: String!,
-  $saveTaskAsTemplate: String!,
-  $phasesID: String!,
-  $status: String!,
+export const GET_REFERENCES = gql`
+query references(
+  $referenceID: String!, 
+  $referenceType: ReferenceType!,
   ){ 
-    createTask(
-      referenceFilter:{
-        referenceID: "Sftobiz_1234"
-        referenceType: "project"
-        projectID: "33"
-        companyID: "click"
-        },
-      taskDetails: {
-      taskTitle: $taskTitle,
-      startDate: $startDate, 
-      endDate: $endDate,
-      estimatedDays: $estimatedDays,
-      sendNotification: $sendNotification,
-      BKPID: $BKPID,
-      saveTaskAsTemplate: $saveTaskAsTemplate,
-      phasesID: $phasesID,
-      status: $status,
-   }){
-    taskTitle
-  }
+    references( 
+      referenceFilter: { referenceID: $referenceID, referenceType:$referenceType } 
+    ) { 
+      users{
+      userID
+      userName
+      imageUrl
+      email
+    }
+    } 
 }`;
-
-
 
 //dummy data
 

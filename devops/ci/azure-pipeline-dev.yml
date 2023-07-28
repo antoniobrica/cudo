@@ -1,0 +1,435 @@
+name: $(Date:yyyyMMdd).$(Rev:r).$(Build.BuildId)
+
+trigger:
+  branches:
+    include:
+      - dev
+  paths:
+    include:
+      - package/*
+      - apps/ms-account/*
+      - apps/ms-document/*
+      - apps/ms-project/*
+      - apps/ms-task/*
+      - apps/ms-cost/*
+      - apps/ms-meeting/*
+      - apps/mf-account-app/*
+      - apps/mf-container-app/*
+      - apps/mf-task-app/*
+      - apps/mf-document-app/*
+      - apps/mf-project-app/*
+      - apps/mf-cost-app/*
+      - apps/mf-meeting-app/*
+      - deploy/docker-compose-ory/*
+      - libs/*
+variables:
+  - group: dev
+jobs:
+- job: cudogetchp
+  pool: cudo-selfhosted-agent
+  steps: 
+    - checkout: self
+      clean: false
+      lfs: false
+    - powershell: |
+            $url="$(System.CollectionUri)/$(System.TeamProject)/_apis/git/repositories/$(Build.Repository.ID)/commits/$(Build.SourceVersion)/changes?api-version=5.1"
+            $result = Invoke-RestMethod -Uri $url -Headers @{Authorization = "Bearer $(System.AccessToken)"} -Method GET
+                       
+            $changesFolder = $result.changes | Where-Object{$_.item.gitObjectType -match "tree"} | Select-Object -Property {$_.item.path}
+            ######################################################common####################################################################            
+            foreach($path in $changesFolder){
+              if($path -match '/package'){
+             echo "##vso[task.setvariable variable=packages;isOutput=true]$True"
+            break
+            }
+            }
+            foreach($path in $changesFolder){
+              if($path -match '/deploy/docker-compose-ory'){
+             echo "##vso[task.setvariable variable=orydev;isOutput=true]$True"
+            break
+            }
+            }
+            ######################################################Frontend####################################################################            
+            foreach($path in $changesFolder){
+              if($path -match '/mf-account-app'){
+             echo "##vso[task.setvariable variable=mfaccountapp;isOutput=true]$True"
+            break
+            }
+            }
+            foreach($path in $changesFolder){
+              if($path -match '/mf-container-app'){
+             echo "##vso[task.setvariable variable=mfcontainerapp;isOutput=true]$True"
+            break
+            }
+            }
+            foreach($path in $changesFolder){
+              if($path -match '/mf-task-app'){
+             echo "##vso[task.setvariable variable=mftaskapp;isOutput=true]$True"
+            break
+            }
+            }
+            foreach($path in $changesFolder){
+              if($path -match '/mf-document-app'){
+             echo "##vso[task.setvariable variable=mfdocumentapp;isOutput=true]$True"
+            break
+            }
+            }
+            foreach($path in $changesFolder){
+              if($path -match '/mf-project-app'){
+             echo "##vso[task.setvariable variable=mfprojectapp;isOutput=true]$True"
+            break
+            }
+            }
+            foreach($path in $changesFolder){
+              if($path -match '/mf-cost-app'){
+             echo "##vso[task.setvariable variable=mfcostapp;isOutput=true]$True"
+            break
+            }
+            }
+            foreach($path in $changesFolder){
+              if($path -match '/mf-meeting-app'){
+             echo "##vso[task.setvariable variable=mfmeetingapp;isOutput=true]$True"
+            break
+            }
+            }
+            ######################################################Backend####################################################################            
+            foreach($path in $changesFolder){
+              if($path -match '/apps/ms-account'){
+             echo "##vso[task.setvariable variable=msaccount;isOutput=true]$True"
+            break
+            }
+            }
+            foreach($path in $changesFolder){
+              if($path -match '/apps/ms-document'){
+             echo "##vso[task.setvariable variable=msdocument;isOutput=true]$True"
+            break
+            }
+            }
+            foreach($path in $changesFolder){
+              if($path -match '/apps/ms-project'){
+             echo "##vso[task.setvariable variable=msproject;isOutput=true]$True"
+            break
+            }
+            }
+            foreach($path in $changesFolder){
+              if($path -match '/apps/ms-task'){
+             echo "##vso[task.setvariable variable=mstask;isOutput=true]$True"
+            break
+            }
+            }
+            foreach($path in $changesFolder){
+              if($path -match '/apps/ms-cost'){
+             echo "##vso[task.setvariable variable=mscost;isOutput=true]$True"
+            break
+            }
+            }
+            foreach($path in $changesFolder){
+              if($path -match '/apps/ms-meeting'){
+             echo "##vso[task.setvariable variable=msmeeting;isOutput=true]$True"
+            break
+            }
+            }
+      name: cudovars
+      ##################################################Common#####################################################################################
+- job: packages
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.packages'],  'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  rm -f package-lock.json
+                  rm -f package.json
+                  cp package/package.json .
+                  npm install
+- job: orydev
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.orydev'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: ory-dev
+              dockerfile: deploy/docker-compose-ory/Dockerfile
+              containerRegistry: dev-docker-registry
+              tags: $(tag)
+      ###################################################Frontend###############################################################################
+- job: mfaccountapp
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.mfaccountapp'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='mf-account-app' --with-deps --generatePackageJson=true
+                  cp devops/docker/mf-dockerfile dist/apps/mf-account-app/Dockerfile
+                  cp devops/docker/nginx.conf dist/apps/mf-account-app/
+                  echo $(tag)
+                  az storage blob upload-batch --account-name mfaccountappdev -s ./dist/apps/mf-account-app/ -d '$web' --account-key $(mf-account-app-storage) --auth-mode key
+          - task: AzureCLI@2
+            displayName: Azure CLI
+            inputs:
+              azureSubscription: dev-cudo
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az cdn endpoint purge -g rg-cudo-dev-001 -n mfaccountappdev --profile-name mfaccountappdev --content-paths '/*' 
+- job: mfcontainerapp
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.mfcontainerapp'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='mf-container-app' --with-deps --generatePackageJson=true
+                  cp devops/docker/mf-contain-dockerfile dist/apps/mf-container-app/Dockerfile
+                  cp devops/docker/mf-contain-nginx.conf dist/apps/mf-container-app/
+                  az storage blob upload-batch --account-name mfcontainerappdev -s ./dist/apps/mf-container-app/ -d '$web' --account-key $(mf-container-app-storage) --auth-mode key
+          - task: AzureCLI@2
+            displayName: Azure CLI
+            inputs:
+              azureSubscription: dev-cudo
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az cdn endpoint purge -g rg-cudo-dev-001 -n mfcontainerappdev --profile-name mfcontainerappdev --content-paths '/*' 
+
+- job: mftaskapp
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.mftaskapp'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='mf-task-app' --with-deps --generatePackageJson=true
+                  cp devops/docker/mf-dockerfile dist/apps/mf-task-app/Dockerfile
+                  az storage blob upload-batch --account-name mftaskappdev -s ./dist/apps/mf-task-app/ -d '$web' --account-key $(mf-task-app-storage) --auth-mode key
+          - task: AzureCLI@2
+            displayName: Azure CLI
+            inputs:
+              azureSubscription: dev-cudo
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az cdn endpoint purge -g rg-cudo-dev-001 -n mftaskappdev --profile-name mftaskappdev --content-paths '/*' 
+- job: mfdocumentapp
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.mfdocumentapp'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='mf-document-app' --with-deps --generatePackageJson=true
+                  cp devops/docker/mf-dockerfile dist/apps/mf-document-app/Dockerfile
+                  cp devops/docker/nginx.conf dist/apps/mf-document-app/
+                  az storage blob upload-batch --account-name mfdocumentappdev -s ./dist/apps/mf-document-app/ -d '$web' --account-key $(mf-document-app-storage) --auth-mode key
+          - task: AzureCLI@2
+            displayName: Azure CLI
+            inputs:
+              azureSubscription: dev-cudo
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az cdn endpoint purge -g rg-cudo-dev-001 -n mfdocumentappdev --profile-name mfdocumentappdev --content-paths '/*' 
+- job: mfprojectapp
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.mfprojectapp'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='mf-project-app' --with-deps --generatePackageJson=true
+                  cp devops/docker/mf-dockerfile dist/apps/mf-project-app/Dockerfile
+                  cp devops/docker/nginx.conf dist/apps/mf-project-app/
+                  az storage blob upload-batch --account-name mfprojectappdev -s ./dist/apps/mf-project-app/ -d '$web' --account-key $(mf-project-app-storage) --auth-mode key
+          - task: AzureCLI@2
+            displayName: Azure CLI
+            inputs:
+              azureSubscription: dev-cudo
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az cdn endpoint purge -g rg-cudo-dev-001 -n mfprojectappdev --profile-name mfprojectappdev --content-paths '/*' 
+
+- job: mfcostapp
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.mfcostapp'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='mf-cost-app' --with-deps --generatePackageJson=true
+                  cp devops/docker/mf-dockerfile dist/apps/mf-cost-app/Dockerfile
+                  cp devops/docker/nginx.conf dist/apps/mf-cost-app/
+                  az storage blob upload-batch --account-name mfcostappdev -s ./dist/apps/mf-cost-app/ -d '$web' --account-key $(mf-cost-app-storage) --auth-mode key
+          - task: AzureCLI@2
+            displayName: Azure CLI
+            inputs:
+              azureSubscription: dev-cudo
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az cdn endpoint purge -g rg-cudo-dev-001 -n mfcostappdev --profile-name mfcostappdev --content-paths '/*' 
+
+- job: mfmeetingapp
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.mfmeetingapp'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='mf-meeting-app' --with-deps --generatePackageJson=true
+                  cp devops/docker/mf-dockerfile dist/apps/mf-meeting-app/Dockerfile
+                  cp devops/docker/nginx.conf dist/apps/mf-meeting-app/
+                  az storage blob upload-batch --account-name mfmeetingappdev -s ./dist/apps/mf-meeting-app/ -d '$web' --account-key $(mf-meeting-app-storage) --auth-mode key
+          - task: AzureCLI@2
+            displayName: Azure CLI
+            inputs:
+              azureSubscription: dev-cudo
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az cdn endpoint purge -g rg-cudo-dev-001 -n mfmeetingappdev --profile-name mfmeetingappdev --content-paths '/*' 
+###################################################Backend####################################################################################
+- job: msaccount
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.msaccount'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='ms-account' --with-deps --generatePackageJson=true
+                  cp devops/docker/ms-dockerfile dist/apps/ms-account/Dockerfile
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: ms-account-dev
+              dockerfile: dist/apps/ms-account/Dockerfile
+              containerRegistry: dev-docker-registry
+              tags: $(tag)
+          - bash : helm upgrade  --namespace cudo-b-dev --install --wait cudo-acc-ms --set image.tag=$(tag) /home/softobiz/charts/cudo-helm/dev/ms-account-dev/ms-account-dev-0.1.0.tgz
+- job: msdocument
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.msdocument'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='ms-document' --with-deps --generatePackageJson=true
+                  cp devops/docker/ms-dockerfile dist/apps/ms-document/Dockerfile
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: ms-document-dev
+              dockerfile: dist/apps/ms-document/Dockerfile
+              containerRegistry: dev-docker-registry
+              tags: $(tag)
+          - bash : helm upgrade  --namespace cudo-b-dev --install --wait cudo-ms-docu --set image.tag=$(tag) /home/softobiz/charts/cudo-helm/dev/ms-document-dev/ms-document-dev-0.1.0.tgz
+- job: msproject
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.msproject'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='ms-project' --with-deps --generatePackageJson=true
+                  cp devops/docker/ms-dockerfile dist/apps/ms-project/Dockerfile
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: ms-project-dev
+              dockerfile: dist/apps/ms-project/Dockerfile
+              containerRegistry: dev-docker-registry
+              tags: $(tag)
+          - bash : helm upgrade  --namespace cudo-b-dev --install --wait cudo-ms-project --set image.tag=$(tag) /home/softobiz/charts/cudo-helm/dev/ms-project-dev/ms-project-dev-0.1.0.tgz
+- job: mstask
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.mstask'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='ms-task' --with-deps --generatePackageJson=true
+                  cp devops/docker/ms-dockerfile dist/apps/ms-task/Dockerfile
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: ms-task-dev
+              dockerfile: dist/apps/ms-task/Dockerfile
+              containerRegistry: dev-docker-registry
+              tags: $(tag)
+          - bash : helm upgrade  --namespace cudo-b-dev --install --wait cudo-ms-tas --set image.tag=$(tag) /home/softobiz/charts/cudo-helm/dev/ms-task-dev/ms-task-dev-0.1.0.tgz
+- job: mscost
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.mscost'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='ms-cost' --with-deps --generatePackageJson=true
+                  cp devops/docker/ms-dockerfile dist/apps/ms-cost/Dockerfile
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: ms-cost-dev
+              dockerfile: dist/apps/ms-cost/Dockerfile
+              containerRegistry: dev-docker-registry
+              tags: $(tag)
+          - bash : helm upgrade  --namespace cudo-b-dev --install --wait cudo-ms-cos --set image.tag=$(tag) /home/softobiz/charts/cudo-helm/dev/ms-cost-dev/ms-cost-dev-0.1.0.tgz
+- job: msmeeting
+  pool: cudo-selfhosted-agent
+  dependsOn: cudogetchp
+  condition: eq(dependencies.cudogetchp.outputs['cudovars.msmeeting'], 'true')
+  steps:
+          - checkout: self
+            clean: false
+            lfs: false
+          - bash : |
+                  npm run nx run-many -- --target=build --projects='ms-meeting' --with-deps --generatePackageJson=true
+                  cp devops/docker/ms-dockerfile dist/apps/ms-meeting/Dockerfile
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: ms-meeting-dev
+              dockerfile: dist/apps/ms-meeting/Dockerfile
+              containerRegistry: dev-docker-registry
+              tags: $(tag)
+          - bash : helm upgrade  --namespace cudo-b-dev --install --wait cudo-ms-meet --set image.tag=$(tag) /home/softobiz/charts/cudo-helm/dev/ms-meeting-dev/ms-meeting-dev-0.1.0.tgz

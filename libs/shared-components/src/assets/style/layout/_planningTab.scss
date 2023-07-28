@@ -1,0 +1,171 @@
+
+.planning-outer-con {
+  h3 {
+    border-bottom: 1px solid #EEEEEE;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+  }
+}
+
+.active-milestone {
+  h4.headingactive {
+    font-weight: 600;
+  }
+}
+
+.milestone-lisiting-cards {
+  ul {
+    list-style: none;
+    padding: 0;
+    @include flex(flex);
+    @include flex-wrap(wrap);
+    margin: 15px -15px;
+    li {
+      background: #fff;
+      box-shadow: 0px 1px 2px #00000029;
+      width: 350px;
+      margin: 0 15px 30px;
+      max-width: 100%;
+      padding: 25px 35px 35px;
+      .date-status {
+        @include flex(flex);
+        @include justify-content(space-between);
+        @include align-items(center);
+        label {
+          font-size: 12px;
+          background: #2D62ED;
+          color: #fff;
+          padding: 2px 10px;
+          &.close-date {
+            background: #FF6161;
+          }
+        }
+        i {
+          font-size: 24px;
+          color: #9A9EA1;
+        }
+      }
+      .milestone-info {
+        margin-top: 25px;
+        h3 {
+          font-size: 16px;
+          font-weight: 500;
+          color: #1B1B40;
+          margin-bottom: 0;
+          border: none;
+          @include flex(flex);
+          @include flex-direction(column);
+          span {
+            font-size: 13px;
+            font-weight: 400;
+            color: #718898;
+            margin-top: 5px;
+          }
+        }
+        p {
+          font-size: 12px;
+          color: #718898;
+          line-height: 20px;
+        }
+      }
+      .milestone-details {
+        margin-top: 20px;
+        p {
+          @include flex(flex);
+          @include justify-content(space-between);
+          @include align-items(center);
+          color: #718898;
+          font-size: 12px;
+          font-weight: 500;
+          margin: 0 0 5px;
+        }
+      }
+      .how-many-days {
+        @include flex(flex);
+        @include justify-content(space-between);
+        @include align-items(center);
+        margin-top: 30px;
+        > span {
+          background: #D0D8DF;
+          font-size: 12px;
+          font-weight: 500;
+          color: #718898;
+          padding: 2px 11px
+        }
+        .milestone-action {
+          .dropdown-action {
+            background: none;
+            padding: 0;
+            .dropdown {
+              > i {
+              color: #9FB5C5;
+              height: 1.6em;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.compltete-phase {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background: #37BA77;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  height: 52px;
+  width: 52px;
+  border-radius: 50px;
+  transition: all 0.25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 3px 10px #00000029;
+  a {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    i {
+      font-size: 18px;
+      margin-right: 0;
+    }
+    span {
+      display: none;
+      width: 0;
+    }
+  }
+  &:hover {
+    width: 222px;
+    a {
+      i {
+        margin-right: 10px;
+      }
+      span {
+        width: 147px;
+        display: block;
+      }
+    }
+  }
+}
+
+h3.header-w-icon {
+  i {
+    margin-right: 10px;
+    color: #9FB5C5;
+  }
+  .symbol {
+    position: absolute;
+    right: 65px;
+    span.dropdown-action {
+      .menu.transition.visible.dropdowncomplete {
+        margin-left: -120px;
+        min-width: 150px;
+      }
+    }
+  }
+}

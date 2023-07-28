@@ -5,14 +5,13 @@ import { map } from 'rxjs/operators';
 import { GET_TOKEN } from '../../app/graphql/graphql';
 import { useTokenQuery } from '../../app/services/useRequest';
 import { BlobStorageRequest } from '../types/azure-storage';
-
+import { MS_SERVICE_URL } from '@cudo/mf-core'
 export class SasGeneratorService {
 
   getSasToken(): Observable<BlobStorageRequest> {
-    console.log('sasstoken');
-    
+   
     return Axios.post<BlobStorageRequest>(
-      'http://localhost:5003/graphql',
+      MS_SERVICE_URL['ms_document'].url,
       {
         query: `
      {

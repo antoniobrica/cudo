@@ -177,14 +177,14 @@ storiesOf('components/Form', module)
                 <Grid.Column>
                   <Form.Field className="w-100">
                     <label>Default Select</label>
-                    <Select placeholder='Select' options={countryOptions} />
+                    <Select clearable placeholder='Select' options={countryOptions} />
                   </Form.Field>
                 </Grid.Column>
 
                 <Grid.Column>
                   <Form.Field className="w-100">
                     <label>Disabled Input</label>
-                    <Select placeholder='Select' disabled options={countryOptions} />
+                    <Select clearable placeholder='Select' disabled options={countryOptions} />
                   </Form.Field>
                 </Grid.Column>
               </Grid.Row>
@@ -193,14 +193,14 @@ storiesOf('components/Form', module)
                 <Grid.Column>
                   <Form.Field className="w-100">
                     <label>Default Select</label>
-                    <Select placeholder='Select' className="small" options={countryOptions} />
+                    <Select clearable placeholder='Select' className="small" options={countryOptions} />
                   </Form.Field>
                 </Grid.Column>
 
                 <Grid.Column>
                   <Form.Field className="w-100">
                     <label>Disabled Input</label>
-                    <Select placeholder='Select' className="small" disabled options={countryOptions} />
+                    <Select clearable placeholder='Select' className="small" disabled options={countryOptions} />
                   </Form.Field>
                 </Grid.Column>
               </Grid.Row>
@@ -210,7 +210,7 @@ storiesOf('components/Form', module)
                 <Grid.Column>
                   <Form.Field className="w-100">
                     <label>Default Active</label>
-                    <Select placeholder='Select' className="small" options={countryOptions} />
+                    <Select clearable placeholder='Select' className="small" options={countryOptions} />
                   </Form.Field>
                 </Grid.Column>
  

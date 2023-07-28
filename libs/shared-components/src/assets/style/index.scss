@@ -20,15 +20,47 @@
 @import "layout/form";
 @import "layout/fields";
 @import "layout/table";
+@import "layout/filesTab";
 @import "components/buttons";
 @import "components/tabs";
 @import "components/rating";
 @import "components/modal";
 @import "components/images";
 @import "components/card-block";
+@import "components/icons";
 @import "base/base";
 @import "layout/sidebar";
 @import "layout/modal"; 
 @import "layout/message"; 
-@import "layout/task"; 
+@import "layout/task";
+@import "layout/costTab";
+@import "layout/meetingTab";
+@import "layout/projectListing";
+@import "layout/planningTab";
 // Global
+canvas.transparentCanvas {
+    position: absolute;
+  }
+
+.no-data-found-info {
+  button {
+    i {
+      font-size: 14px;
+    }
+  }
+}
+
+.task-full-details {
+  .ui.circular.label, .ui.circular.labels .label {
+    min-width: 2em;
+    min-height: 2em;
+    padding: .5em!important;
+    line-height: 1.5em;
+    text-align: center;
+    border-radius: 500rem;
+    width: 2.5em;
+    height: 2.5em;
+    font-size: 10px;
+    font-weight: 400;
+  }
+}

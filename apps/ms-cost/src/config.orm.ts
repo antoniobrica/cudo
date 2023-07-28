@@ -1,5 +1,6 @@
 import { environment } from './environments/environment'
 
+
 const orm = {
 	development: {
 		type: environment.DATABASE_TYPE,
@@ -13,7 +14,7 @@ const orm = {
 		url: environment.DATABASE_HOST
 	},
 	staging: {
-		host: 'localhost',
+		host: '192.168.0.31',
 		port: environment.DATABASE_PORT,
 		username: '',
 		password: '',

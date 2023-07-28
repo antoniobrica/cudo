@@ -12,10 +12,12 @@ export const GET_TODOS = gql`
 `;
 
 export const GET_PROJECTS = gql`
-  {
+  query Projects(
+    $companyId:String!
+  ){
     projects(referenceFilter:{
-      referenceType:"Company",
-      referenceID:"Sftobiz_123"
+      referenceType:COMPANY,
+      referenceID:$companyId
       })
     {
       projectId
@@ -23,14 +25,15 @@ export const GET_PROJECTS = gql`
       projectNum
       client
       buildingType
-      printingCom
+      printingCompany
       projectWorkTypes{
         workTypeName
         projectWorkTypeID
-              workTypeName
+        workTypeName
         estimatedCost
-        }
+      }
       description
+      createdBy
     }
   }
 `;
@@ -44,14 +47,15 @@ query ProjectById($projectId: String!)
       projectNum
       client
       buildingType
-      printingCom
+      printingCompany
       projectWorkTypes{
         workTypeName
         projectWorkTypeID
-              workTypeName
+        workTypeName
         estimatedCost
-        }
+      }
       description
+      createdBy
     }
   }
 `;
@@ -60,8 +64,8 @@ query ProjectById($projectId: String!)
 export const GET_WORKTYPES = gql`
   {
     workTypes(referenceFilter:{
-      referenceType:"Company",
-      referenceID:"Sftobiz_123"
+      referenceType:COMPANY,
+      referenceID:"Sftobiz_1234"
       })
     {
       name
@@ -74,8 +78,8 @@ export const GET_WORKTYPES = gql`
 export const GET_BUILDINGTYPES = gql`
   {
     buildingTypes(referenceFilter:{
-      referenceType:"Company",
-      referenceID:"Sftobiz_123"
+      referenceType:COMPANY,
+      referenceID:"Sftobiz_1234"
       }){
       name
       buildingTypeID
@@ -86,8 +90,8 @@ export const GET_BUILDINGTYPES = gql`
 export const GET_PRINTING_COMPANY = gql`
   {
     company(referenceFilter:{
-      referenceType:"Company",
-      referenceID:"Sftobiz_123"
+      referenceType:COMPANY,
+      referenceID:"Sftobiz_1234"
 }, companyType:PRINTING)
     {
      companyID
@@ -100,8 +104,8 @@ export const GET_PRINTING_COMPANY = gql`
 export const GET_CLIENT_COMPANY = gql`
   {
     company(referenceFilter:{
-      referenceType:"Company",
-      referenceID:"Sftobiz_123"
+      referenceType:COMPANY,
+      referenceID:"Sftobiz_1234"
 }, companyType:CLIENT)
     {
      companyID
@@ -127,8 +131,8 @@ export const CREATE_COMPANY = gql`
   mutation CreateCompany($companyName: String!, $companyType: String!) {
     createCompany(
       referenceFilter:{
-      referenceType:"Company",
-      referenceID:"Sftobiz_123"
+      referenceType:COMPANY,
+      referenceID:"Sftobiz_1234"
       },companyDetails:{
       companyName: $companyName
       companyType: CLIENT
@@ -147,31 +151,51 @@ mutation CreateProject(
   $projectNum: Float!,
   $client: String!,
   $buildingType: String!,
-  $printingCom: String!,
+  $printingCompany: String!,
   $description: String!,
-  $projectWorkEstimates: [ProjectWorkParams!]!
-  ){ 
+  $projectWorkEstimates: [ProjectWorkParams!]!,
+  $addressLineOne: String!,
+  $addressLineTwo: String!,
+  $city: String!,
+  $state: String!,
+  $zip: String!,
+  $country: String!
+  $createdBy: String!
+){ 
     createProject(
     projectDetails: {
-    projectBasics:{
-    projectName: $projectName,
-    projectNum: $projectNum, 
-    client: $client,
-    buildingType: $buildingType,
-    printingCom: $printingCom,
-    description: $description
+      projectBasics:{
+        projectName: $projectName,
+        projectNum: $projectNum, 
+        client: $client,
+        buildingType: $buildingType,
+        printingCompany: $printingCompany,
+        description: $description
+        addressLineOne: $addressLineOne
+        addressLineTwo: $addressLineTwo
+        city: $city
+        state: $state
+        zip: $zip
+        country: $country
+        createdBy: $createdBy
+      }
+      projectWorkEstimates: $projectWorkEstimates
    }
-   projectWorkEstimates: $projectWorkEstimates
-   }
-   referenceFilter: { referenceType: "Company", referenceID: "Sftobiz_123" }
+   referenceFilter: { referenceType: COMPANY, referenceID: "Sftobiz_1234" }
    ){
-    projectId
-    projectName
-    projectNum
-    client
-    buildingType
-    printingCom
-    description
+      projectId
+      projectName
+      projectNum
+      client
+      buildingType
+      printingCompany
+      projectWorkTypes{
+        workTypeName
+        projectWorkTypeID
+        workTypeName
+        estimatedCost
+      }
+      description
   }
 }`;
 

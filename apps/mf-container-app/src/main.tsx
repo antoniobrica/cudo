@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom';
+// import Modal from 'react-modal'
+import { LazyLoading } from '@cudo/shared-components'
 
 import { BrowserRouter } from 'react-router-dom';
-import 'semantic-ui-css/semantic.min.css';
 import * as serviceWorker from './serviceWorker';
 
 import App from './app/app';
@@ -23,12 +24,17 @@ const store = configureStore({
   enhancers: [],
 });
 
+// const App = lazy(() => import('./app/app'))
+
 ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>,
+  <Suspense fallback={<LazyLoading />}>
+    <Provider store={store}>
+      <BrowserRouter forceRefresh={true} >
+        <App />
+      </BrowserRouter>
+    </Provider>
+  </Suspense>
+  ,
   document.getElementById('root')
 );
 
