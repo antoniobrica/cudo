@@ -1,156 +1,221 @@
 import React from 'react';
-import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
-import { radios } from '@storybook/addon-knobs';
-import { ITask, ITasks, TaskMutation } from "../../interfaces/task";
+import {
+  Button,
+  Header,
+  Modal,
+  Tab,
+  Table,
+  Input,
+  Form,
+  Grid,
+  Image,
+  Select,
+  TextArea,
+} from 'semantic-ui-react';
+import { ITask, ITasks, TaskMutation } from '../../interfaces/task';
 import { useTaskMutation } from '../../services/useRequest';
 import { ApolloCache, FetchResult, useMutation } from '@apollo/client';
-import { ADD_TASK, GET_TASKS } from "../../graphql/graphql";
-import '../../../../../../libs/shared-components/src/style/index.scss';
+import { ADD_TASK, GET_TASKS } from '../../graphql/graphql';
+import '@cudo/shared-components/src/style/index.scss';
 import './create-task.module.scss';
 import moment, { calendarFormat } from 'moment';
-import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex } from "@cudo/mf-account-app-lib"
-import { useHistory } from 'react-router';
+import {
+  FollowersIndex,
+  AssigneeIndex,
+  BkpIndex,
+  PhaseIndex,
+} from '@cudo/mf-account-app-lib';
+
+// Check add task mutation and its functionality
+
+import { useLocation, useNavigate } from 'react-router-dom';
 /* eslint-disable-next-line */
 export interface CreateTaskProps {
-  onSuccess?
+  onSuccess?;
 }
 
 export function CreateTask(props: CreateTaskProps) {
   const countryOptions = [
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
-  ]
+  ];
 
   const phaseOptions = [
     { key: 'Phase_1', value: 'Phase_1', text: 'Phase 1' },
     { key: 'Phase_2', value: 'Phase_2', text: 'Phase 2' },
-  ]
+  ];
   const bkpOptions = [
     { key: 'BKP_1', value: 'BKP_1', text: 'BKP 1' },
     { key: 'BKP_2', value: 'BKP_2', text: 'BKP 2' },
-  ]
+  ];
   const workTypes = [
     { key: 'w1', value: 'w1', text: 'Electrical Work' },
     { key: 'w2', value: 'w2', text: 'HVAC work' },
     { key: 'w3', value: 'w3', text: 'Pipelines work' },
     { key: 'w4', value: 'w4', text: 'Plumbing Work' },
-  ]
+  ];
 
-  const [open, setOpen] = React.useState(false)
-  const [taskTitle, setTaskTitle] = React.useState("")
-  const [startDate, setStartDate] = React.useState('')
-  const [endDate, setEndDate] = React.useState("")
-  const [estimatedDays, setEstimatedDays] = React.useState("")
-  const [sendNotification, setEendNotification] = React.useState(false)
-  const [BKPID, setBKPID] = React.useState("")
-  const [saveTaskAsTemplate, setSaveTaskAsTemplate] = React.useState("")
-  const [phaseID, setPhasesID] = React.useState("")
-  const [status, setStatus] = React.useState("")
-  const [followers, setfollowers] = React.useState("")
-  const [phaseName, setPhasesName] = React.useState("");
-  const [BKPTitle, setBKPIDTitle] = React.useState("");
+  const [open, setOpen] = React.useState(false);
+  const [taskTitle, setTaskTitle] = React.useState('');
+  const [startDate, setStartDate] = React.useState('');
+  const [endDate, setEndDate] = React.useState('');
+  const [estimatedDays, setEstimatedDays] = React.useState('');
+  const [sendNotification, setEendNotification] = React.useState(false);
+  const [BKPID, setBKPID] = React.useState('');
+  const [saveTaskAsTemplate, setSaveTaskAsTemplate] = React.useState('');
+  const [phaseID, setPhasesID] = React.useState('');
+  const [status, setStatus] = React.useState('');
+  const [followers, setfollowers] = React.useState('');
+  const [phaseName, setPhasesName] = React.useState('');
+  const [BKPTitle, setBKPIDTitle] = React.useState('');
   const [files, setFileList] = React.useState<any>([]);
-  const [description, setDescription] = React.useState("")
+  const [description, setDescription] = React.useState('');
 
-  const history = useHistory();
-  const res = history.location.pathname.split("/");
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const res = location.pathname.split('/');
   const referenceID = res[3].toString();
   // const [addTask] = useTaskMutation(ADD_TASK, {
   //   variables: { referenceID },
   // });
 
-  const [addTask, { data }] = useMutation(ADD_TASK, 
-    {
-      refetchQueries: [
-        {query: GET_TASKS, variables: { referenceID }}
-      ],
-      variables: { referenceID },
-    }
-  )
+  const [addTask, { data }] = useMutation(ADD_TASK, {
+    refetchQueries: [
+      {
+        query: GET_TASKS,
+        variables: {
+          referenceID,
+          taskTitle,
+          startDate,
+          endDate,
+          estimatedDays,
+          sendNotification,
+          BKPID,
+          saveTaskAsTemplate,
+          phaseID,
+          phaseName,
+          BKPTitle,
+          files,
+          description,
+        },
+      },
+    ],
+    variables: {
+      referenceID,
+      taskTitle,
+      startDate,
+      endDate,
+      estimatedDays,
+      sendNotification,
+      BKPID,
+      saveTaskAsTemplate,
+      phaseID,
+      phaseName,
+      BKPTitle,
+      files,
+      description,
+    },
+  });
 
-  const onTaskTitleChange = e => {
-    setTaskTitle(e.target.value)
-  }
-  const onStartDateChange = e => {
+  const onTaskTitleChange = (e) => {
+    setTaskTitle(e.target.value);
+  };
+  const onStartDateChange = (e) => {
     const date = moment.utc(moment(e.target.value).utc()).format();
-    setStartDate(e.target.value)
-  }
-  const onEndDateChange = e => {
+    setStartDate(e.target.value);
+  };
+  const onEndDateChange = (e) => {
     const date = moment.utc(moment(e.target.value).utc()).format();
     setEndDate(e.target.value);
-  }
+  };
   const onsetEstimatedDays = (event, data) => {
-    setEstimatedDays(data.value)
-  }
+    setEstimatedDays(data.value);
+  };
 
   const sendNotificationChange = (event) => {
-    setEendNotification(event.target.value)
-  }
+    setEendNotification(event.target.value);
+  };
 
   const onFollowers = (data) => {
     setfollowers(data.value);
-  }
+  };
   const setBKPIDChange = (data) => {
-    setBKPIDTitle(data.BKPIDTitle)
-    setBKPID(data.BKPID)
+    setBKPIDTitle(data.BKPIDTitle);
+    setBKPID(data.BKPID);
     console.log('bkp==>', data);
-  }
+  };
   const setAsignee = (data) => {
     // setAsignis(data)
-  }
-
+  };
 
   const setSaveTaskAsTemplateChange = (event, data) => {
-    setSaveTaskAsTemplate(data.value)
-  }
+    setSaveTaskAsTemplate(data.value);
+  };
 
   const onsetPhasesID = (data) => {
-    setPhasesID((data.phaseID).toString());
-    setPhasesName(data.phaseName)
-  }
-  const onsetStatus = e => {
-    setStatus(e.target.value)
-  }
+    setPhasesID(data.phaseID.toString());
+    setPhasesName(data.phaseName);
+  };
+  const onsetStatus = (e) => {
+    setStatus(e.target.value);
+  };
 
   const handleSaveTask = () => {
     setOpen(false);
     addTask({
       variables: {
-        taskTitle, startDate, endDate, estimatedDays,
-        sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
+        taskTitle,
+        startDate,
+        endDate,
+        estimatedDays,
+        sendNotification,
+        BKPID,
+        saveTaskAsTemplate,
+        phaseID,
+        phaseName,
+        BKPTitle,
         files,
         description,
+        referenceID,
       },
-      update: (
-        cache,
-        { data: { addTask } }: FetchResult<TaskMutation>
-      ) => {
-        const cacheData = cache.readQuery({ query: GET_TASKS, variables: { referenceID }, }) as ITasks;
+      update: (cache, { data: { addTask } }: FetchResult<TaskMutation>) => {
+        const cacheData = cache.readQuery({
+          query: GET_TASKS,
+          variables: { referenceID },
+        }) as ITasks;
         cache.writeQuery({
           query: GET_TASKS,
           data: {
-            tasksD: [...cacheData.tasks, addTask]
+            tasksD: [...cacheData.tasks, addTask],
           },
           variables: { referenceID },
         });
-      }
+      },
     });
-
   };
-  const onDescriptionChange = e => {
+  const onDescriptionChange = (e) => {
     console.log('des=>', e.target.value);
     setDescription(e.target.value);
-  }
-
+  };
 
   return (
-    <div >
-      <Modal className="modal_media" style={{ width: '800px', marginLeft: '155px' }}
+    <div>
+      <Modal
+        className="modal_media"
+        style={{ width: '800px', marginLeft: '155px' }}
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button size='mini' className="grey-btn taskmargin">+ Add  New Task</Button>}      >
-        <Modal.Header><h3>Add New Task </h3></Modal.Header>
+        trigger={
+          <Button size="mini" className="grey-btn taskmargin">
+            + Add New Task
+          </Button>
+        }
+      >
+        <Modal.Header>
+          <h3>Add New Task </h3>
+        </Modal.Header>
         <Modal.Content body>
           <div>
             <Form>
@@ -158,10 +223,17 @@ export function CreateTask(props: CreateTaskProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Task Title <span className="danger">*</span></label>
-                      <Input placeholder='Task title' size='small' className="full-width" type="text"
+                      <label>
+                        Task Title <span className="danger">*</span>
+                      </label>
+                      <Input
+                        placeholder="Task title"
+                        size="small"
+                        className="full-width"
+                        type="text"
                         value={taskTitle}
-                        onChange={onTaskTitleChange} />
+                        onChange={onTaskTitleChange}
+                      />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -171,9 +243,11 @@ export function CreateTask(props: CreateTaskProps) {
                   <Grid.Column>
                     <Form.Field>
                       <label>Description </label>
-                      <TextArea placeholder='Tell us more'
+                      <TextArea
+                        placeholder="Tell us more"
                         value={description}
-                        onChange={onDescriptionChange} />
+                        onChange={onDescriptionChange}
+                      />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -182,8 +256,15 @@ export function CreateTask(props: CreateTaskProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Associate with work type <span className="danger">*</span></label>
-                      <Select placeholder='Select' className="small" options={workTypes} />
+                      <label>
+                        Associate with work type{' '}
+                        <span className="danger">*</span>
+                      </label>
+                      <Select
+                        placeholder="Select"
+                        className="small"
+                        options={workTypes}
+                      />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -194,7 +275,7 @@ export function CreateTask(props: CreateTaskProps) {
                     <PhaseIndex parentPhaseSelect={onsetPhasesID} />
                   </Grid.Column>
                   <Grid.Column>
-                    <BkpIndex parentBKPSelect={setBKPIDChange} />
+                    <BkpIndex bkp={BKPID} parentBKPSelect={setBKPIDChange} />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
@@ -231,9 +312,12 @@ export function CreateTask(props: CreateTaskProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Start Date  </label>
+                      <label>Start Date </label>
                       {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
-                      <Input placeholder='Default' size='small' className="full-width"
+                      <Input
+                        placeholder="Default"
+                        size="small"
+                        className="full-width"
                         type="date"
                         value={startDate}
                         onChange={onStartDateChange}
@@ -244,7 +328,11 @@ export function CreateTask(props: CreateTaskProps) {
                     <Form.Field>
                       <label>End Date </label>
                       {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
-                      <Input placeholder='Default' size='small' className="full-width" type="date"
+                      <Input
+                        placeholder="Default"
+                        size="small"
+                        className="full-width"
+                        type="date"
                         value={endDate}
                         onChange={onEndDateChange}
                       />
@@ -252,24 +340,28 @@ export function CreateTask(props: CreateTaskProps) {
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Estimated Days  </label>
-                      <Input placeholder='Enter days' className="small"
+                      <label>Estimated Days </label>
+                      <Input
+                        placeholder="Enter days"
+                        className="small"
                         value={estimatedDays}
                         onChange={onsetEstimatedDays}
                       />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
-                <Grid.Row>
-                </Grid.Row>
+                <Grid.Row></Grid.Row>
               </Grid>
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Task Configuration  </label>
+                      <label>Task Configuration </label>
                       <div className="content">
-                        <p className="paragraph">Send notification to assignee/followers for the task</p></div>
+                        <p className="paragraph">
+                          Send notification to assignee/followers for the task
+                        </p>
+                      </div>
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -279,19 +371,22 @@ export function CreateTask(props: CreateTaskProps) {
               content="Submit"
               onClick={handleSaveTask}
               positive
-              size='mini' className="grey-btn"
+              size="mini"
+              className="grey-btn"
             />
-            <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
-              X  Cancel
-        </Button>
+            <Button
+              size="mini"
+              className="icon-border"
+              onClick={() => setOpen(false)}
+            >
+              X Cancel
+            </Button>
           </div>
         </Modal.Content>
-        <Modal.Actions>
-        </Modal.Actions>
+        <Modal.Actions></Modal.Actions>
       </Modal>
     </div>
   );
 }
 
 export default CreateTask;
-

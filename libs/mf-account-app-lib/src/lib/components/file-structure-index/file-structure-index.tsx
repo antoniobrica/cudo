@@ -3,7 +3,7 @@ import React from 'react';
 import './file-structure-index.module.scss';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
-import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
+import { ApolloProvider as ApolloHooksProvider } from '@apollo/client'
 import FileStructure from '../file-structure/file-structure';
  
 /* eslint-disable-next-line */

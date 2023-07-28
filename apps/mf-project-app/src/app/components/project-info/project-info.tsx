@@ -1,47 +1,45 @@
 import React, { useEffect } from 'react';
 
 import './project-info.module.scss';
-import { GET_TODOS, GET_PROJECTS } from "../../graphql/graphql";
-import { useTodoQuery, useProjectQuery } from "../../services/useRequest";
-import { ITodo, IProject } from "../../interfaces/project";
+import { GET_TODOS, GET_PROJECTS } from '../../graphql/graphql';
+import { useTodoQuery, useProjectQuery } from '../../services/useRequest';
+import { ITodo, IProject } from '../../interfaces/project';
 import Modal from 'react-modal';
-import { Card, Icon, Form, Grid } from 'semantic-ui-react'
-import { useHistory } from "react-router";
+import { Card, Icon, Form, Grid } from 'semantic-ui-react';
 import '../../../../../../libs/shared-components/src/style/index.scss';
-import { LoaderPage } from "@cudo/shared-components"
+import { LoaderPage } from '@cudo/shared-components';
 
 //import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
 
-import ModalExampleModal from '../modal/modal'
+import ModalExampleModal from '../modal/modal';
+import { useNavigate } from 'react-router-dom';
 
 /* eslint-disable-next-line */
-export interface ProjectInfoProps { }
+export interface ProjectInfoProps {}
 
 export function ProjectInfo(props: ProjectInfoProps) {
   const { loading, error, data } = useProjectQuery(GET_PROJECTS);
   const [openForm, setopenForm] = React.useState(false);
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
-  const history = useHistory();
+  const navigate = useNavigate();
   if (loading) return <LoaderPage />;
   if (error) return <h1>Something went wrong!</h1>;
 
   const addProject = () => {
     setopenForm(!openForm);
-  }
+  };
 
   const openTask = (project) => {
-    console.log('task open==>', history)
-    history.push(`/home/project/${project.projectId}`);
-  }
+    console.log('task open==>', navigate);
+    navigate(`/home/project/${project.projectId}`);
+  };
   function openModal() {
     setIsOpen(true);
   }
-  const refresh =(data)=>{
-    console.log('refresh is called', data); 
-
-    
-  }
+  const refresh = (data) => {
+    console.log('refresh is called', data);
+  };
   return (
     <div>
       {/* <h1>Projects</h1> */}
@@ -57,28 +55,33 @@ export function ProjectInfo(props: ProjectInfoProps) {
 
         <Form>
           <Grid columns={4}>
-
             <Grid.Row>
               {data.projects.map((project: IProject, i) => (
                 <Grid.Column className="card-margin" key={i} onClick={() => openTask(project)}>
                   <Card>
                     <div className="ui card">
                       <div className="content">
-                        <div className="description"><img src="" alt="Logo"></img>
-                          <span className="summary"><span className="dot">...</span>
+                        <div className="description">
+                          <img src="" alt="Logo"></img>
+                          <span className="summary">
+                            <span className="dot">...</span>
                           </span>
                         </div>
-                        {project.projectName ? <div className="header font-header">
-                          {project.projectName}</div> : <div className="header font-header">
-                          NA</div>}
+                        {project.projectName ? (
+                          <div className="header font-header">{project.projectName}</div>
+                        ) : (
+                          <div className="header font-header">NA</div>
+                        )}
 
-                        {project.client ? <div className="description">{project.client}</div> :
-                          <div className="description">NA</div>}
+                        {project.client ? (
+                          <div className="description">{project.client}</div>
+                        ) : (
+                          <div className="description">NA</div>
+                        )}
 
-                        <div className="data-built">Type of building
-            <span className="summary">{project.buildingType}
-
-                          </span>
+                        <div className="data-built">
+                          Type of building
+                          <span className="summary">{project.buildingType}</span>
                         </div>
 
                         {/* <div className="data-built">Level of building
@@ -86,15 +89,10 @@ export function ProjectInfo(props: ProjectInfoProps) {
                 
                 </span>
             </div> */}
-
                       </div>
                       <div className="content">
                         <div className="data-built">
-                          {project.description ?
-                            <p>{project.description}
-                            </p> :
-                            <p>NA</p>}
-
+                          {project.description ? <p>{project.description}</p> : <p>NA</p>}
                         </div>
                         <div className="event">
                           <div className="label-green label-spacer">
@@ -109,21 +107,15 @@ export function ProjectInfo(props: ProjectInfoProps) {
                         </div>
                       </div>
                     </div>
-
                   </Card>
-
                 </Grid.Column>
               ))}
             </Grid.Row>
-
           </Grid>
-
         </Form>
-
       </div>
 
-
-      <div style={{ flexDirection: 'row', display: 'flex', flexWrap: "wrap" }}>
+      <div style={{ flexDirection: 'row', display: 'flex', flexWrap: 'wrap' }}>
         {/* {data.getProjects.map((project: IProject) => (
       <Project key={project.projectId} project={project} />
     ))} */}

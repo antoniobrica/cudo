@@ -1,13 +1,12 @@
 import React, { Suspense, useState } from 'react';
 
-import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch, useHistory, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, useLocation, Routes, useParams, useNavigate } from 'react-router-dom';
 import ProjectInfo from './components/project-info/project-info';
 
 import { initI18n } from '@cudo/mf-core';
-import { Loading } from '@cudo/ui'
+import { Loading } from '@cudo/ui';
 import { TestComponent } from './test-component/test-component';
-import { createBrowserHistory } from "history";
-import MicroFrontend from "../MicroFrontend";
+import MicroFrontend from '../MicroFrontend';
 import { environment } from '../environments/environment';
 import TabMenu from './components/tab-menu/tab-menu';
 
@@ -15,14 +14,11 @@ const defaultLanguage = 'de-DE';
 const supportedLanguages = [defaultLanguage, 'en-GB'];
 initI18n('./assets/i18n/{{lng}}.json', defaultLanguage);
 
-const defaultHistory = createBrowserHistory();
-
 const {
   EACT_APP_COST_HOST: costHost,
   REACT_APP_MEETING_HOST: meetingHost,
   REACT_APP_TASK_HOST: taskHost,
 } = environment;
-
 
 function Header() {
   return (
@@ -33,25 +29,19 @@ function Header() {
 }
 
 function MeetingApp(history: any) {
-  return (
-    <MicroFrontend history={history} host={meetingHost} name="MeetingApp" />
-  );
+  return <MicroFrontend history={history} host={meetingHost} name="MeetingApp" />;
 }
 
 function CostApp(history: any) {
-  return (
-    <MicroFrontend history={history} host={costHost} name="CostApp" />
-  );
+  return <MicroFrontend history={history} host={costHost} name="CostApp" />;
 }
 
 function TaskApp(history: any) {
-  return (
-    <MicroFrontend history={history} host={taskHost} name="TaskApp" />
-  );
+  return <MicroFrontend history={history} host={taskHost} name="TaskApp" />;
 }
 
 function Home({ history }) {
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
 
   return (
     <div>
@@ -67,7 +57,6 @@ function Home({ history }) {
             <CostApp></CostApp>
           </div>
         </div>
-
       </div>
     </div>
   );
@@ -76,25 +65,23 @@ function Home({ history }) {
 function loadApp() {
   return (
     <div>
-      <ProjectInfo ></ProjectInfo>
+      <ProjectInfo></ProjectInfo>
     </div>
   );
 }
 
 function App() {
-  const history = useHistory()
+  const navigate = useNavigate();
   const location = useLocation();
-  const { url, path } = useRouteMatch();
-  console.log('path-project-app',history.location.pathname)
+  const { projectId } = useParams();
+
+  console.log('path-project-app', location.pathname);
   return (
-    <Router>
-      <Switch>
-        <Route exact path={`${history.location.pathname}/:projectId`} render={() => <TabMenu />} />
-        <Route exact path={`${history.location.pathname}`}  render={() => <ProjectInfo />}/>
-      </Switch>
-      </Router>
+    <Routes>
+      <Route path={`/${projectId}`} element={<TabMenu />} />
+      <Route path="/" element={<ProjectInfo />} />
+    </Routes>
   );
 }
 
 export default App;
-

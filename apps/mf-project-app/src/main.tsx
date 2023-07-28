@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
-import 'semantic-ui-css/semantic.min.css'
-import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
-import * as serviceWorker from "./serviceWorker";
-import "./SubscriberWidgetElement";
+import 'semantic-ui-css/semantic.min.css';
+import { ApolloProvider as ApolloHooksProvider } from '@apollo/client';
+import * as serviceWorker from './serviceWorker';
+import './SubscriberWidgetElement';
 import App from './app/app';
 
 declare global {
@@ -18,41 +18,35 @@ declare global {
 }
 const client = new ApolloClient({
   uri: 'http://localhost:5005/graphql',
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
 
-
 window.renderProjectApp = (containerId, history) => {
-  ReactDOM.render(
+  createRoot(document.getElementById(containerId)).render(
     <BrowserRouter>
       <ApolloProvider client={client}>
         <ApolloHooksProvider client={client as any}>
           <App />
         </ApolloHooksProvider>
       </ApolloProvider>
-    </BrowserRouter>,
-    document.getElementById(containerId)
+    </BrowserRouter>
   );
   serviceWorker.unregister();
 };
+
 window.unmountProjectApp = (containerId) => {
-  ReactDOM.unmountComponentAtNode(document.getElementById(containerId));
+  createRoot(document.getElementById(containerId)).unmount();
 };
 
-if (!document.getElementById("ProjectApp-container")) {
-  // ReactDOM.render(<App />, document.getElementById("root"));
-  ReactDOM.render(
-    // <React.StrictMode>
-      <BrowserRouter>
-        <ApolloProvider client={client}>
-          <ApolloHooksProvider client={client as any}>
-            <App />
-          </ApolloHooksProvider>
-        </ApolloProvider>
-      </BrowserRouter>
-    // </React.StrictMode>
-    ,
-    document.getElementById("root")
+if (!document.getElementById('ProjectApp-container')) {
+  createRoot(document.getElementById('root')).render(
+    <BrowserRouter>
+      <ApolloProvider client={client}>
+        <ApolloHooksProvider client={client as any}>
+          <App />
+        </ApolloHooksProvider>
+      </ApolloProvider>
+    </BrowserRouter>
   );
   serviceWorker.unregister();
 }

@@ -1,12 +1,19 @@
-import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  BaseEntity,
+  BeforeInsert,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  Relation,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
-import ReferanceTypeEntity from './references.entity';
-
+import ReferanceTypeEntity from './reference.entity';
 
 @Entity({ name: 'filestructure' })
-
 export class FileStructureEntity extends BaseEntity {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -39,9 +46,11 @@ export class FileStructureEntity extends BaseEntity {
   isDeleted?: boolean;
 
   @Expose()
-  @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.filestructure)
-  reference: ReferanceTypeEntity;
-
+  @ManyToOne(
+    () => ReferanceTypeEntity,
+    (reference: ReferanceTypeEntity) => reference.filestructures
+  )
+  reference: Relation<ReferanceTypeEntity>;
 
   constructor(filestructureEntity: Partial<FileStructureEntity>) {
     super();
@@ -49,9 +58,9 @@ export class FileStructureEntity extends BaseEntity {
       Object.assign(
         this,
         plainToClass(FileStructureEntity, filestructureEntity, {
-          excludeExtraneousValues: true
+          excludeExtraneousValues: true,
         })
-      )
+      );
       // this.createdAt = this.createdAt || new Date(new Date().toUTCString());
       // this.updatedAt = new Date(new Date().toUTCString());
     }

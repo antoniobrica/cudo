@@ -4,7 +4,7 @@ import './followers-index.module.scss';
 
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
-import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
+import { ApolloProvider as ApolloHooksProvider } from '@apollo/client'
 import Followers from '../followers/followers';
 
 /* eslint-disable-next-line */

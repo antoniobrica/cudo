@@ -1,4 +1,4 @@
-import { DocumentNode, useQuery, useMutation } from "@apollo/react-hooks";
+import { DocumentNode, useQuery, useMutation } from "@apollo/client";
 import { ITodos, ITodoMutation, ProjectMutation, IProject, IProjects, IWorkType, IWorkTypes, ICompanies, IBuildingTypes } from "../interfaces/project";
 
 export function useTodoQuery(gqlQuery: DocumentNode) {

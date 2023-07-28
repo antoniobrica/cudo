@@ -1,6 +1,6 @@
-import { Menubar } from '@cudo/shared-components';
+import { Menubar } from '@cudo/shared-components/src';
 import React, { useEffect, useState } from 'react';
-import { Switch, Route, Link, useHistory, useRouteMatch, Redirect, useLocation } from "react-router-dom";
+import { Route, Link, useLocation, useNavigate, Routes } from 'react-router-dom';
 import { environment } from '../../environments/environment';
 import { Settings } from '../containers/Settings';
 import { MfProjectAppMount } from '../mf-project-app-mount/mf-project-app-mount';
@@ -10,25 +10,20 @@ import { UserProfile } from '../user-profile/user-profile';
 import { UserRegistration } from '../user-registration/user-registration';
 
 import './home.module.scss';
-const {
-  REACT_APP_PROJECT_HOST: projectHost,
-} = environment;
+const { REACT_APP_PROJECT_HOST: projectHost } = environment;
 /* eslint-disable-next-line */
-export interface HomeProps { }
+export interface HomeProps {}
 
 export function Home(props: HomeProps) {
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
   const [state, setState] = useState('');
-  const data = "parrent"
-  const history = useHistory()
-  const location = useLocation();
-  // const routeMatch = useRouteMatch();
-  const { url, path } = useRouteMatch();
-  console.log('path==>', path);
-  
+  const data = 'parrent';
+
+  const navigate = useNavigate();
+
   useEffect(() => {
-    if (!isAuthenticated()) ToEmail()
-  }, [])
+    if (!isAuthenticated()) ToEmail();
+  }, []);
   const callbackFunction = (childData) => {
     switch (childData) {
       case 'logout':
@@ -41,26 +36,25 @@ export function Home(props: HomeProps) {
     // history.push('/project')
   };
   const edit = (childData) => {
-    history.push(`/settings`);
-  }
+    navigate(`/settings`);
+  };
   const cancel = (childData) => {
-    history.push('/home');
-  }
+    navigate('/home');
+  };
   const update = (childData) => {
-    history.push('/home');
-  }
+    navigate('/home');
+  };
   return (
     <div>
       <Menubar data={data} parentCallback={callbackFunction}></Menubar>
       <div>
-        <Switch>
-          <Route exact path={`${path}/profile`} render={() => <UserProfile />} />
-          <Route exact path={`${path}/settings`} render={() => <UserProfileEdit />} />
-          <Route exact path={`${path}/project`} render={() => <MfProjectAppMount host={projectHost} />} />
-        </Switch>
+        <Routes>
+          <Route path={`/profile`} element={<UserProfile />} />
+          <Route path={`/settings`} element={<UserProfileEdit />} />
+          <Route path={`/project`} element={<MfProjectAppMount host={projectHost} />} />
+        </Routes>
       </div>
     </div>
-
   );
 }
 
