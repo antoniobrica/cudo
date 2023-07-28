@@ -1,13 +1,19 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  Relation,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
 import ReferanceTypeEntity from './references.entity';
 import * as uuid from 'uuid';
 
-
 @Entity({ name: 'folder' })
-
 export class FolderEntity extends BaseEntity {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -18,7 +24,6 @@ export class FolderEntity extends BaseEntity {
   @Column({ unique: true })
   @Expose()
   folderTitle: string;
-
 
   @Expose()
   @CreateDateColumn()
@@ -42,8 +47,7 @@ export class FolderEntity extends BaseEntity {
 
   @Expose()
   @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.folder)
-  reference: ReferanceTypeEntity;
-
+  reference: Relation<ReferanceTypeEntity>;
 
   constructor(folderEntity: Partial<FolderEntity>) {
     super();
@@ -51,11 +55,10 @@ export class FolderEntity extends BaseEntity {
       Object.assign(
         this,
         plainToClass(FolderEntity, folderEntity, {
-          excludeExtraneousValues: true
+          excludeExtraneousValues: true,
         })
-      )
+      );
       this.folderID = this.folderID || uuid.v1();
-
     }
   }
 }

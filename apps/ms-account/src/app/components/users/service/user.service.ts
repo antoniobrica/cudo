@@ -19,6 +19,16 @@ export class UserService {
 
     async createUser(userDetails: UserInputDto, refFilter: ReferenceFilterParams) {
         const selectedReference = await this.referenceService.getReferenceById(refFilter);
+        // #region Check email with reference exist validation        
+        const userDetailList = await this.userRepository.find({ where: { email: userDetails.email }, relations: ['references'] });
+        if (userDetailList) {
+            const userExistingAllReferences = userDetailList.map(({ references }) => references)
+            const userExistingAllReferenceIDs = userExistingAllReferences.map((company) => company[0].referenceID)
+            if (userExistingAllReferenceIDs.includes(refFilter.referenceID)) {
+                throw new HttpException('Company already exist with this email', HttpStatus.FOUND);
+            }
+        }
+        // #endregion
         const newUser = new UsersEntity({ ...userDetails });
         newUser.references = [selectedReference];
         const newReferance = await this.userRepository.create(newUser);

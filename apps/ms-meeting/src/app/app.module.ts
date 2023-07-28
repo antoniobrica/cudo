@@ -6,6 +6,7 @@ import * as path from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ComponentsModule } from './components/components.module';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 // import { I18nModule, I18nJsonParser } from 'nestjs-i18n';
 
 @Module({
@@ -19,8 +20,9 @@ import { ComponentsModule } from './components/components.module';
     //     watch: true,
     //   },
     // }),
-    GraphQLModule.forRoot({
-      context: ({ req, connection }) => connection ? { req: connection.context } : { req },
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      context: ({ req, connection }) => (connection ? { req: connection.context } : { req }),
       autoSchemaFile: true,
     }),
     ComponentsModule,
@@ -31,4 +33,4 @@ import { ComponentsModule } from './components/components.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

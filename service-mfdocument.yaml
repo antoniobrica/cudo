@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mfdocument
+spec:
+  selector:
+    app: mfdocument
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 6010
+  type: LoadBalancer

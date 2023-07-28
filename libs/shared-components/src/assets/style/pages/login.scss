@@ -90,6 +90,10 @@
     .welcome {
       font-size: 16px;
       text-transform: uppercase;
+      font-weight: 500;
+      position: relative;
+      margin-top: 10px !important;
+      display: inline-block;
     }
   }
   .agree-checkbox {
@@ -108,6 +112,13 @@
   }
   .ui.form .field {
     margin: 0 0 3rem 0;
+    .ui.grid {
+      .column {
+        .field {
+          margin: 0;
+        }
+      }
+    }
     @media (max-width:#{$x-small}) {
       margin: 0 0 2rem 0;
     }
@@ -255,4 +266,107 @@
 .img-src {
   margin-right: 4%;
   float: left;
+}
+
+
+// new changes
+.field.login-user.email-filled {
+  @include flex(flex);
+  @include align-items(center);
+  .img-src {
+    margin-right: 15px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+  .ui.input {
+    input {
+      border: none;
+      font-size: 18px;
+      background: none;
+      color: #707070;
+      padding: 0 5px;
+    }
+  }
+  i {
+    font-size: 16px;
+    color: #718898;
+    margin-right: 5px;
+  }
+  span.email-text {
+    font-size: 18px;
+    background: none;
+    color: #707070;
+    width: 100%;
+  }
+}
+.field.form-dropdown {
+  .ui.dropdown {
+    min-height: 55px;
+    font-size: 16px;
+    padding: 0 25px;
+    .text {
+      height: 55px;
+      font-size: 16px;
+      margin: 0;
+      padding: 10px 0;
+      line-height: 35px;
+    }
+  }
+}
+.field.login-password {
+  .ui.input {
+    input {
+      height: 55px;
+      font-size: 16px;
+      padding: 0 25px;
+    }
+  }
+  input {
+    height: 55px;
+    font-size: 16px;
+    padding: 0 25px;
+  }
+  i {
+    font-size: 16px;
+    color: #A2A3B0;
+    margin-right: 2px;
+  }
+}
+
+a.form-link {
+  font-weight: 500;
+  &:hover {
+    color: #2D62ED;
+  }
+}
+
+.center-form-link {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0 0 0;
+  a.form-link {
+    font-weight: 500;
+    &:hover {
+      color: #2D62ED;
+    }
+  }
+}
+.register-con {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  #registration-password {
+    .main-outer-area {
+      display: block;
+      .ln-form-outer {
+        top: 0;
+        width: 100%;
+        max-width: 100%;
+        .form-header {
+          margin: 1rem 0 3rem;
+        }
+      }
+    }
+  }
 }

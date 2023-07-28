@@ -2,7 +2,7 @@
 import React from 'react';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
-import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
+import { ApolloProvider as ApolloHooksProvider } from '@apollo/client'
 import Bkp from '../bkp/bkp';
 
 /* eslint-disable-next-line */
@@ -13,7 +13,7 @@ const client = new ApolloClient({
 /* eslint-disable-next-line */
 export interface BkpIndexProps {
   parentBKPSelect
-  bkp
+  bkp?: any
 }
 
 export function BkpIndex(props: BkpIndexProps) {

@@ -24,7 +24,17 @@ export class StructureService {
       const manager = getManager();
       let parentStructure;
       if (createStructureInput.parentStructureName) {
-        parentStructure = new Structure();
+        const isExist = await manager.getTreeRepository(Structure).findOne({
+          where: {
+            structureName: createStructureInput.parentStructureName,
+            referenceID: referenceFilter.referenceID,
+            referenceType: referenceFilter.referenceType
+          }
+        });
+        if (isExist) {
+          throw new HttpException('Parent Structure Already Exist', HttpStatus.CONFLICT);
+        }
+        parentStructure = new Structure({});
         parentStructure.structureName = createStructureInput.parentStructureName;
         parentStructure.referenceID = referenceFilter.referenceID;
         parentStructure.referenceType = referenceFilter.referenceType;
@@ -35,7 +45,7 @@ export class StructureService {
       }
       let childStructure;
       if (createStructureInput.childStructureName) {
-        childStructure = new Structure();
+        childStructure = new Structure({});
         childStructure.structureName = createStructureInput.childStructureName;
         childStructure.parent = parentStructure;
         childStructure.referenceID = referenceFilter.referenceID;
@@ -43,7 +53,7 @@ export class StructureService {
         await manager.save(childStructure);
       }
       const trees = await manager.getTreeRepository(Structure).findDescendantsTree(parentStructure);
-      console.log(JSON.stringify(trees))
+     
       return trees;
     } catch (error) {
       return error;
@@ -52,10 +62,9 @@ export class StructureService {
 
   public async updateStructure(updateStructure: UpdateStructureInput, referenceFilter: ReferenceFilterParams): Promise<Structure> {
     const manager = getManager();
-    let parentStructure;
-    if (updateStructure.parentStructureID) {
-      parentStructure = new Structure();
-      parentStructure.id = updateStructure.parentStructureID;
+    const parentStructure = await manager.getTreeRepository(Structure).findOne({ where: { structureID: updateStructure.parentStructureID } });
+    if (parentStructure) {
+      parentStructure.structureID = updateStructure.parentStructureID;
       parentStructure.referenceID = referenceFilter.referenceID;
       parentStructure.referenceType = referenceFilter.referenceType;
     }
@@ -64,7 +73,7 @@ export class StructureService {
     }
     let childStructure;
     if (updateStructure.childStructureName) {
-      childStructure = new Structure();
+      childStructure = new Structure({});
       childStructure.structureName = updateStructure.childStructureName;
       childStructure.parent = parentStructure;
       childStructure.referenceID = referenceFilter.referenceID;
@@ -72,7 +81,7 @@ export class StructureService {
       await manager.save(childStructure);
     }
     const trees = await manager.getTreeRepository(Structure).findDescendantsTree(parentStructure);
-    console.log(JSON.stringify(trees))
+   
     return trees;
   }
 
@@ -84,19 +93,32 @@ export class StructureService {
 
   public async findStructureChilds(structureFilterArgs: StructureFilterArgs): Promise<Structure> {
     const manager = getManager();
-    const filterStructure = new Structure();
-    filterStructure.id = structureFilterArgs.structureID;
+    const filterStructure = await manager.getTreeRepository(Structure).findOne({ where: { structureID: structureFilterArgs.structureID } });
     const trees = await manager.getTreeRepository(Structure).findDescendantsTree(filterStructure);
-    console.log(trees)
+   
     return trees;
   }
 
   // public async deleteStructure(updateStructure: UpdateStructureInput, referenceFilter: ReferenceFilterParams): Promise<Structure> {
   //   const manager = getManager();
-  //   const filterStructure = new Structure();
-  //   filterStructure.id = updateStructure.parentStructureID;
-  //   const a = await manager.getTreeRepository(Structure).remove(filterStructure);
-  //   console.log(a);
+  //   const filterStructure = await manager.getTreeRepository(Structure).findOne({ where: { structureID: updateStructure.parentStructureID } });
+  //   const removedChield_clouser = await manager.createQueryBuilder().delete()
+  //     .from('structure_closure')
+  //     .where("id_ancestor = :id", { id: filterStructure.id })
+  //     .execute();
+  //   const childs = await manager.getTreeRepository(Structure).find({ where: { parent: updateStructure.parentStructureID } });
+  //   childs.forEach(async element => {
+  //     await manager.createQueryBuilder().delete()
+  //       .from('structure_closure')
+  //       .where("id_ancestor = :id", { id: element.id })
+  //       .execute();
+  //     const removedChield = await manager.createQueryBuilder().delete()
+  //       .from('structure')
+  //       .where("parentId = :id", { id: element.id })
+  //       .execute();
+  //   });
+  //   const a = await manager.getTreeRepository(Structure).delete({ structureID: updateStructure.parentStructureID });
+  
   //   const trees = await manager.getTreeRepository(Structure).findDescendantsTree(filterStructure);
   //   return trees;
   // }

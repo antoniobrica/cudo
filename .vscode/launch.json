@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug ms-account",
+      "type": "pwa-node",
+      "request": "launch",
+      "runtimeExecutable": "nx",
+      "runtimeArgs": ["serve", "ms-account", "--inspect"],
+      "port": 9229,
+      "localRoot": "${workspaceFolder}/apps/ms-account",
+      "remoteRoot": "/",
+      "protocol": "inspector",
+      "skipFiles": ["<node_internals>/**, node_modules/**"]
+    }
+  ]
+}

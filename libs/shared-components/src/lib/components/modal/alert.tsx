@@ -17,7 +17,8 @@ export interface AlertProps {
   confirm?,
   taskData?,
   cancel?,
-  taskStatus?
+  taskStatus?,
+  name?
 }
 export const ModalAlert = (props: AlertProps) => {
   const [state, dispatch] = React.useReducer(exampleReducer, {

@@ -5,10 +5,10 @@ import { AppService } from './app.service';
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {
-    console.log()
+    console.log('welcome to ms-account app controller');
   }
 
-  @Get()
+  @Get("health-check")
   getData() {
     return this.appService.getData();
   }

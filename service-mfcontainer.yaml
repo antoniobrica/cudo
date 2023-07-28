@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mfcontainer
+spec:
+  selector:
+    app: mfcontainer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 6002
+  type: LoadBalancer

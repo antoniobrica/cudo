@@ -1,0 +1,15 @@
+# Use official Node.js LTS image
+FROM node:lts
+
+# Set the working directory
+WORKDIR /app
+
+# Copy package.json and createDB.js
+COPY package*.json ./
+COPY createDB.js .
+
+# Install the required dependencies
+RUN npm install
+
+# Run the createDB.js script
+CMD ["node", "createDB.js"]
