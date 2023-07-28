@@ -9,15 +9,15 @@ export class TaskDetailsInput {
     @Field(type => TaskBasicDetailsInput)
     taskBasics?: TaskBasicDetailsInput;
 
-    @Field(type => [PeopleParams], { description: `Task Followers` })
+    @Field(type => [PeopleParams], { nullable:true, description: `Task Followers` })
     followers?: PeopleParams[];
 
     @Field(type => [PeopleParams], { description: `Task Assignees` })
     assignees?: PeopleParams[];
 
-    @Field(type => [TaskFileParams], { description: `Task Files` })
+    @Field(type => [TaskFileParams], { nullable:true, description: `Task Files` })
     files?: TaskFileParams[];
 
-    @Field(type => [SubTaskParams], { description: `SubTask for a Task` })
+    @Field(type => [SubTaskParams], { nullable:true, description: `SubTask for a Task` })
     subtasks?: SubTaskParams[];
 }

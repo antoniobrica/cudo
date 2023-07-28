@@ -5,26 +5,25 @@ import { Form, Select } from 'semantic-ui-react';
 import { useBkpQuery, useFolderQuery } from '../../services/useRequest';
 
 import './bkp.module.scss';
+import { useTranslation } from 'react-i18next';
 
 /* eslint-disable-next-line */
 export interface BkpProps {
-  parentBKPSelect,
-  bkp
+  parentBKPSelect?,
+  bkp?
 }
 
 export function Bkp(props: BkpProps) {
   const [items, setItems] = React.useState([])
   const [items1, setItems1] = React.useState([])
   const [items2, setItems2] = React.useState([])
-
-
   const [BKPID, setBKPID] = React.useState("")
-
+  const {t} = useTranslation()
   const { loading, error, data } = useBkpQuery(GET_BKP);
   const { loading: folderL, error: folderE, data: FolderD } = useFolderQuery(GET_FOLDER)
   React.useEffect(() => {
     if (data && FolderD) {
-      console.log('FolderD', FolderD);
+     
       const bkps = data.Bkp.map(({ bkpTitle, bkpID }) => ({ key: bkpID, value: bkpTitle, text: bkpID + " - " + bkpTitle }))
       setItems(data.Bkp.map(({ bkpTitle, bkpID }) => ({ key: bkpID, value: bkpTitle, text: bkpID + " - " + bkpTitle })));
       const arr = FolderD.Folders.map(({ folderTitle, folderID }) => ({ key: folderID, value: folderTitle, text: folderTitle }))
@@ -41,8 +40,7 @@ export function Bkp(props: BkpProps) {
 
   // React.useEffect(()=>{
   //   if(FolderD){
-  //     console.log('FolderD',FolderD);
-
+ 
   //       const arr = FolderD.Folders.map(({ folderTitle, folderID }) => ({ key: folderID, value: folderTitle, text: folderTitle }))
   //       setItems1(arr);
   //       if(items){
@@ -55,7 +53,7 @@ export function Bkp(props: BkpProps) {
   // }, [FolderD]);
 
   const onBkp = (event, data) => {
-    console.log('data==', data)
+   
     const bkpID = { BKPID: '', BKPIDTitle: '', isFolder: false };
     for (let i = 0; i <= items.length; i++) {
       if (items[i]?.value === data.value) {
@@ -90,11 +88,12 @@ export function Bkp(props: BkpProps) {
 
   return (
     <Form.Field>
-      <label>Select BKP   </label>
-      <Select placeholder='Select' className="small"
+      <label>{t("common.select_bkp")}   </label>
+      <Select name='bkp' placeholder={t("common.select")} className="small"
         options={items2}
         value={BKPID}
         onChange={onBkp}
+        clearable
       />
 
     </Form.Field>

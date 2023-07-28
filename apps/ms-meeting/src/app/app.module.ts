@@ -10,18 +10,11 @@ import { ComponentsModule } from './components/components.module';
 
 @Module({
   imports: [
-    // I18nModule.forRoot({
-    //   fallbackLanguage: 'en',
-    //   parser: I18nJsonParser,
-    //   parserOptions: {
-    //     path: path.join(__dirname, '/assets/i18n/'),
-    //     // add this to enable live translations
-    //     watch: true,
-    //   },
-    // }),
-    GraphQLModule.forRoot({
-      context: ({ req, connection }) => connection ? { req: connection.context } : { req },
-      autoSchemaFile: true,
+    GraphQLModule.forRootAsync({
+      useFactory: () => ({
+        autoSchemaFile: true,
+        path: "/api/ms-meeting/graphql"
+      }),
     }),
     ComponentsModule,
     TypeOrmModule.forRootAsync({

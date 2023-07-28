@@ -6,7 +6,6 @@ import "./app.module.scss";
 import { environment } from "../environments/environment";
 import { Email } from './login/login'
 import { Menubar, UserProfileView } from '@cudo/shared-components';
-import '../../../../libs/shared-components/src/style/index.scss';
 import { SessionProvider } from "./services/session";
 import { Callback } from "./containers/Callback";
 import { Settings } from "./containers/Settings";
@@ -28,12 +27,14 @@ import MfProjectAppMount from "./mf-project-app-mount/mf-project-app-mount";
 
 import { useTranslation } from 'react-i18next';
 import { initI18n } from "@cudo/mf-core";
+import TestModel from "./test-model/test-model";
 const defaultHistory = createBrowserHistory();
 
 const defaultLanguage = 'en-GB';
 const supportedLanguages = [defaultLanguage, 'en-GB'];
 initI18n('./assets/i18n/{{lng}}.json', defaultLanguage);
 function App() {
+
   const { url, path } = useRouteMatch();
   const history = useHistory();
   return (
@@ -53,10 +54,10 @@ function App() {
           <Route path={config.routes.recovery.path} component={Recover} />
           <Route path={config.routes.registration.path} component={UserRegistration} />
           <Route path={config.routes.error.path} component={Error} />
+          <Route path={config.routes.testmodal.path} component={TestModel} />
         </Switch>
       </SessionProvider>
     </div>
-
   )
 }
 // const App = ({ children }: any) => (

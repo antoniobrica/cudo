@@ -8,16 +8,17 @@ import { ApolloProvider } from '@apollo/client';
 import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
 import Bkp from '../bkp/bkp';
 import Phase from '../phase/phase';
-
+import { MS_SERVICE_URL } from '@cudo/mf-core'
 /* eslint-disable-next-line */
 const client = new ApolloClient({
-  uri: 'http://localhost:5001/graphql',
+  uri: MS_SERVICE_URL['ms_account'].url,
   cache: new InMemoryCache()
 });
 /* eslint-disable-next-line */
 export interface PhaseIndexProps {
   parentPhaseSelect
   phaseName?
+  error?
 }
 
 export function PhaseIndex(props: PhaseIndexProps) {
@@ -27,7 +28,7 @@ export function PhaseIndex(props: PhaseIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <Phase phaseName={props.phaseName} parentPhaseSelect={onSelectPhase} />
+        <Phase phaseName={props.phaseName} parentPhaseSelect={onSelectPhase} error={props.error} />
       </ApolloHooksProvider>
     </ApolloProvider>
   );

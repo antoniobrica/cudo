@@ -21,8 +21,9 @@ function ModalEditViewMilestone() {
 
   return (
     <div id="navbar">
-      <Modal style={{height:'650px'}}
-        className="modal_media"
+      <Modal
+        className="modal_media  right-side--fixed-modal edit-milestone-modal"
+        closeIcon
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
@@ -31,6 +32,7 @@ function ModalEditViewMilestone() {
             Edit Milestone
           </Button>
         }
+        closeOnDimmerClick={false}
       >
         <Modal.Header>
           <h3> Edit Milestone Details </h3>
@@ -82,6 +84,7 @@ function ModalEditViewMilestone() {
                     <Form.Field>
                       <label>Associate with work type</label>
                       <Select
+                       clearable
                         placeholder="Select"
                         className="small"
                         options={countryOptions}
@@ -96,6 +99,7 @@ function ModalEditViewMilestone() {
                     <Form.Field>
                       <label>Phase type</label>
                       <Select
+                       clearable
                         placeholder="Select"
                         className="small"
                         options={countryOptions}
@@ -112,15 +116,15 @@ function ModalEditViewMilestone() {
             content="Edit"
             onClick={() => setOpen(false)}
             positive
-            size="mini"
-            className="grey-btn"
+            size="small"
+            className="primary"
           />
           <Button
-            size="mini"
+            size="small"
             className="icon-border"
             onClick={() => setOpen(false)}
           >
-            X Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> Cancel
           </Button>
         </Modal.Actions>
       </Modal>

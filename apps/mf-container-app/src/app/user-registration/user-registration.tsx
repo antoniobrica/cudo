@@ -17,7 +17,9 @@ export function UserRegistration(props: UserRegistrationProps) {
   useEffect(() => {
     const request = initialiseRequest({ type: "register" }, { filterid: "flow" }) as Promise<any>
     request
-      .then(request => setRequestResponse(request))
+      .then(request1 => {
+        setRequestResponse(request1)
+      })
       .catch((error) => { console.log(error) })
   }, [setRequestResponse])
 
@@ -27,7 +29,7 @@ export function UserRegistration(props: UserRegistrationProps) {
   return (
 
     <div className="auth">
-      <div className="container">
+      <div className="register-con">
         <div id="registration-password">
           {messages && <KratosMessages messages={messages} />}
           {

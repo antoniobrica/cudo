@@ -19,27 +19,39 @@ export interface HomeProps { }
 export function Home(props: HomeProps) {
   const [input, setInput] = useState("");
   const [state, setState] = useState('');
+  const [pathByHistory, setPathByHistory] = useState('');
+  const [menuExpand, setMenuExpand] = useState(false)
+
   const data = "parrent"
   const history = useHistory()
   const location = useLocation();
   // const routeMatch = useRouteMatch();
   const { url, path } = useRouteMatch();
-  console.log('path==>', path);
-  
+
   useEffect(() => {
     if (!isAuthenticated()) ToEmail()
   }, [])
+
+
+
   const callbackFunction = (childData) => {
     switch (childData) {
       case 'logout':
         logout();
         break;
-
+      case 'project':
+        // goToProjectDashboard();
+        history.push('/home/project')
+        break;
       default:
         break;
     }
-    // history.push('/project')
   };
+  useEffect(() => {
+    if (history?.location?.pathname.includes('/home/project/')) {
+      setPathByHistory(history?.location?.pathname)
+    }
+  }, [])
   const edit = (childData) => {
     history.push(`/settings`);
   }
@@ -49,14 +61,21 @@ export function Home(props: HomeProps) {
   const update = (childData) => {
     history.push('/home');
   }
+
+  const onClickMenuExpand = () => {
+    setMenuExpand(!menuExpand)
+  }
+
   return (
-    <div>
-      <Menubar data={data} parentCallback={callbackFunction}></Menubar>
+    <div className={menuExpand ? "expand-main-menu" : "collapsed-main-menu"}>
+      <div>
+        <Menubar data={data} parentCallback={callbackFunction} mainMenuExpand={onClickMenuExpand} history={history}></Menubar>
+      </div>
       <div>
         <Switch>
           <Route exact path={`${path}/profile`} render={() => <UserProfile />} />
           <Route exact path={`${path}/settings`} render={() => <UserProfileEdit />} />
-          <Route exact path={`${path}/project`} render={() => <MfProjectAppMount host={projectHost} />} />
+          <Route exact path={pathByHistory ? pathByHistory : `${path}/project`} render={() => <MfProjectAppMount host={projectHost} history={history} />} />
         </Switch>
       </div>
     </div>

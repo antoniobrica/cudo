@@ -17,19 +17,11 @@ export default class BKPCostFilesEntity extends BaseEntity {
 
     @Column()
     @Expose()
-    fileURL: string;
+    uploadedFileID: string;
 
     @Column()
     @Expose()
-    fileTitle: string;
-
-    @Column({ nullable: true })
-    @Expose()
-    fileType: string;
-
-    @Column({ nullable: true })
-    @Expose()
-    fileVersion: string;
+    uploadedFileTitle: string;
 
     @Expose()
     @CreateDateColumn()

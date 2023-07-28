@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
-import '../../../style/index.scss';
+import './../../../assets/style/index.scss'
 import { Select, Input, Segment, Form, Grid, Image, Checkbox, Button, Icon } from 'semantic-ui-react'
-import logo from 'libs/shared-components/src/slider.png';
-import img from 'libs/shared-components/src/Shape 2.png';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 import { FormField, Message } from "@oryd/kratos-client"
+import { useTranslation } from 'react-i18next';
 
 export interface RegisterProps {
   action?
@@ -33,6 +33,7 @@ export function RegisterPage(props: RegisterProps) {
   const [country_code, setCountry_code] = useState({} as FormField);
   const [state_pin, setState_pin] = useState({} as FormField);
   const [country, setCountry] = useState({} as FormField);
+  const { t } = useTranslation()
   useEffect(() => {
     props?.fields?.map(field => {
       switch (field.name) {
@@ -88,9 +89,9 @@ export function RegisterPage(props: RegisterProps) {
           <Grid.Row  >
             <Grid.Column >
               <div className="ln-form-outer">
-                <img src={img} />
+                <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/Shape 2.png`} />
                 <div className="form-header">
-                  <h2 className="login">Register your account</h2>
+                  <h2 className="login">{t("register.register_title")}</h2>
                 </div>
                 <div className="form-inner">
                   {props.action &&
@@ -99,8 +100,8 @@ export function RegisterPage(props: RegisterProps) {
                         <Grid.Row>
                           <Grid.Column>
                             <Form.Field key={firstName?.name}>
-                              <label>First Name </label>
-                              <Input placeholder='Firstname' size='small' className="full-width" type={firstName?.type}
+                              <label>{t("register.first_name")} </label>
+                              <Input placeholder={t("register.first_name")} size='small' className="full-width" type={firstName?.type}
                                 name={firstName?.name}
                                 defaultValue={firstName?.value as any}
                                 {...firstName?.required} />
@@ -108,8 +109,8 @@ export function RegisterPage(props: RegisterProps) {
                           </Grid.Column>
                           <Grid.Column>
                             <Form.Field key={lastName?.name}>
-                              <label>Last Name </label>
-                              <Input placeholder='Last Name ' size='small' className="full-width" type={lastName?.type}
+                              <label>{t("register.last_name")} </label>
+                              <Input placeholder={t("register.last_name")} size='small' className="full-width" type={lastName?.type}
                                 name={lastName?.name}
                                 defaultValue={lastName?.value as any}
                                 {...lastName?.required} />
@@ -121,8 +122,8 @@ export function RegisterPage(props: RegisterProps) {
                         <Grid.Row>
                           <Grid.Column>
                             <Form.Field key={email?.name}>
-                              <label>Email Address</label>
-                              <Input placeholder='Email Address' size='small' className="full-width  " type={email?.type}
+                              <label>{t("register.email")}</label>
+                              <Input placeholder={t("register.email")} size='small' className="full-width  " type={email?.type}
                                 name={email?.name}
                                 defaultValue={email?.value as any}
                                 {...email?.required} />
@@ -130,20 +131,20 @@ export function RegisterPage(props: RegisterProps) {
                           </Grid.Column>
                           <Grid.Column>
                             <Form.Field>
-                              <label>Phone Number </label>
+                              <label>{t("register.phone")} </label>
                               <Grid columns={2}>
                                 <Grid.Row>
                                   <Grid.Column>
                                     <Form.Field key={country_code?.name}>
-                                      <Select placeholder='Select' className="small" options={countryOptions} type={country_code?.type}
+                                      <Select placeholder={t("common.select")} className="small" options={countryOptions} type={country_code?.type}
                                         name={country_code?.name}
                                         defaultValue={country_code?.value as any}
-                                        {...country_code?.required} />
+                                        {...country_code?.required} clearable />
                                     </Form.Field>
                                   </Grid.Column>
                                   <Grid.Column>
                                     <Form.Field key={phone_number?.name}>
-                                      <Input placeholder='Phone Number ' size='small' className="full-width" type={phone_number?.type}
+                                      <Input placeholder={t("register.phone")} size='small' className="full-width" type={phone_number?.type}
                                         name={phone_number?.name}
                                         defaultValue={phone_number?.value as any}
                                         {...phone_number?.required} />
@@ -159,8 +160,8 @@ export function RegisterPage(props: RegisterProps) {
                         <Grid.Row>
                           <Grid.Column>
                             <Form.Field key={password?.name}>
-                              <label>Password</label>
-                              <Input placeholder='Password' size='small' className="full-width  " type={password?.type}
+                              <label>{t("register.password")}</label>
+                              <Input placeholder={t("register.password")} size='small' className="full-width  " type={password?.type}
                                 name={password?.name}
                                 defaultValue={password?.value as any}
                                 {...password?.required} />
@@ -178,8 +179,8 @@ export function RegisterPage(props: RegisterProps) {
                         <Grid.Row>
                           <Grid.Column>
                             <Form.Field>
-                              <label>Company Name</label>
-                              <Input placeholder='Company Name' size='small' className="full-width  " type={company_name?.type}
+                              <label>{t("register.company_name")}</label>
+                              <Input placeholder={t("register.company_name")} size='small' className="full-width  " type={company_name?.type}
                                 name={company_name?.name}
                                 defaultValue={company_name?.value as any}
                                 {...company_name?.required} />
@@ -191,8 +192,8 @@ export function RegisterPage(props: RegisterProps) {
                         <Grid.Row>
                           <Grid.Column>
                             <Form.Field>
-                              <label>Address Line 1</label>
-                              <Input placeholder='Address Line 1 ' size='small' className="full-width" type={address_line_1?.type}
+                              <label>{t("register.address1")}</label>
+                              <Input placeholder={t("register.address1")} size='small' className="full-width" type={address_line_1?.type}
                                 name={address_line_1?.name}
                                 defaultValue={address_line_1?.value as any}
                                 {...address_line_1?.required} />
@@ -200,8 +201,8 @@ export function RegisterPage(props: RegisterProps) {
                           </Grid.Column>
                           <Grid.Column>
                             <Form.Field>
-                              <label>Address Line 2</label>
-                              <Input placeholder='Address Line 2' size='small' className="full-width" type={address_line_2?.type}
+                              <label>{t("register.address2")}</label>
+                              <Input placeholder={t("register.address2")} size='small' className="full-width" type={address_line_2?.type}
                                 name={address_line_2?.name}
                                 defaultValue={address_line_2?.value as any}
                                 {...address_line_2?.required} />
@@ -213,8 +214,8 @@ export function RegisterPage(props: RegisterProps) {
                         <Grid.Row>
                           <Grid.Column>
                             <Form.Field>
-                              <label>City</label>
-                              <Input placeholder='City ' size='small' className="full-width" type={city?.type}
+                              <label>{t("register.city")}</label>
+                              <Input placeholder={t("register.city")} size='small' className="full-width" type={city?.type}
                                 name={city?.name}
                                 defaultValue={city?.value as any}
                                 {...city?.required} />
@@ -231,8 +232,8 @@ export function RegisterPage(props: RegisterProps) {
                         </Grid.Column> */}
                           <Grid.Column>
                             <Form.Field>
-                              <label>Zip</label>
-                              <Input placeholder='Zip' size='small' className="full-width" type={state_pin?.type}
+                              <label>{t("register.zip")}</label>
+                              <Input placeholder={t("register.zip")} size='small' className="full-width" type={state_pin?.type}
                                 name={state_pin?.name}
                                 defaultValue={state_pin?.value as any}
                                 {...state_pin?.required} />
@@ -240,19 +241,22 @@ export function RegisterPage(props: RegisterProps) {
                           </Grid.Column>
                           <Grid.Column>
                             <Form.Field>
-                              <label>Country</label>
-                              <Select placeholder='Select' className="small" options={countryOptions} type={state_pin?.type}
+                              <label>{t("register.country")}</label>
+                              <Select placeholder={t("common.select")} className="small" options={countryOptions} type={state_pin?.type}
                                 name={state_pin?.name}
                                 defaultValue={state_pin?.value as any}
-                                {...state_pin?.required} />
+                                {...state_pin?.required} clearable />
                             </Form.Field>
                           </Grid.Column>
                         </Grid.Row>
                       </Grid>
-                      <button type="submit" className="ui large button grey-btn btn-large">Register <i aria-hidden="true" className="arrow right icon"></i></button>
+                      <button type="submit" className="ui large button primary btn-large">{t("register.submit_register")} <i aria-hidden="true" className="arrow right icon"></i></button>
                     </Form>
                   }</div>
-                <button onClick={props.login} className="ui large button grey-btn btn-large">Login <i aria-hidden="true" className="arrow right icon"></i></button>
+                {/* <button onClick={props.login} className="ui large button grey-btn btn-large">Login <i aria-hidden="true" className="arrow right icon"></i></button> */}
+                <div className="center-form-link">
+                  <a href='#' onClick={props.login} className="form-link">{t("login.back_to_login_link")}</a>
+                </div>
               </div>
             </Grid.Column>
           </Grid.Row>

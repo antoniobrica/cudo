@@ -20,12 +20,11 @@ import loggerMiddleware from './middlewares/logger.middleware';
     //     watch: true,
     //   },
     // }),
-    GraphQLModule.forRoot({
-      context: ({ req, connection }) => connection ? { req: connection.context } : { req },
-      autoSchemaFile: true,
-      buildSchemaOptions: {
-        fieldMiddleware: [loggerMiddleware],
-      },
+    GraphQLModule.forRootAsync({
+      useFactory: () => ({
+        autoSchemaFile: true,
+        path: "/api/ms-account/graphql"
+      }),
     }),
     ComponentsModule,
     TypeOrmModule.forRootAsync({

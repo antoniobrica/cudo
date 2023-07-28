@@ -18,19 +18,21 @@ export function LoginPassword(props: LoginPasswordProps) {
   };
   const [email, setEmail] = useState('');
   const [requestResponse, setRequestResponse] = useState<LoginFlow>()
-
+   
   useEffect(() => {
     // Need to implement using redux
     setEmail(localStorage.getItem('email'));
     const request = initialiseRequest({ type: "login" }, { filterid: "flow" }) as Promise<LoginFlow>
     request
-      .then(request => setRequestResponse(request))
+      .then(request => {
+        setRequestResponse(request);
+      })
       .catch((error) => {
         console.log(error);
       })
   }, [setRequestResponse, history])
 
-  const messages = requestResponse?.messages
+  const messages = requestResponse?.methods?.password?.config?.messages
   const form = requestResponse?.methods?.password?.config
   return (
     <div>
