@@ -6,8 +6,7 @@ import ReferanceTypeEntity from '../../entities/reference-type.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([ReferanceTypeEntity])],
-  providers: [ReferenceResolver, ReferenceService
-  ],
-  exports: [ReferenceService, ReferenceResolver]
+  providers: [ReferenceResolver, ReferenceService],
+  exports: [ReferenceService, ReferenceResolver],
 })
-export class ReferenceModule { }
+export class ReferenceModule {}

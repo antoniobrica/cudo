@@ -1,14 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
+import React, { Suspense } from 'react';
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
-import 'semantic-ui-css/semantic.min.css'
-import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
-import * as serviceWorker from "./serviceWorker";
-import "./SubscriberWidgetElement";
+import 'semantic-ui-css/semantic.min.css';
+import * as serviceWorker from './serviceWorker';
+import './SubscriberWidgetElement';
 import App from './app/app';
+import { Dimmer, Loader } from 'semantic-ui-react';
+
+const LazyLoading = () => (
+  <Dimmer active inverted>
+    <Loader inverted>Loading</Loader>
+  </Dimmer>
+);
 
 declare global {
   interface Window {
@@ -18,41 +23,21 @@ declare global {
 }
 const client = new ApolloClient({
   uri: 'http://localhost:5005/graphql',
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
 
+const rootElement = document.getElementById('root');
 
-window.renderProjectApp = (containerId, history) => {
-  ReactDOM.render(
-    <BrowserRouter>
-      <ApolloProvider client={client}>
-        <ApolloHooksProvider client={client as any}>
-          <App />
-        </ApolloHooksProvider>
-      </ApolloProvider>
-    </BrowserRouter>,
-    document.getElementById(containerId)
-  );
-  serviceWorker.unregister();
-};
-window.unmountProjectApp = (containerId) => {
-  ReactDOM.unmountComponentAtNode(document.getElementById(containerId));
-};
-
-if (!document.getElementById("ProjectApp-container")) {
-  // ReactDOM.render(<App />, document.getElementById("root"));
-  ReactDOM.render(
-    // <React.StrictMode>
+if (rootElement) {
+  const root = createRoot(rootElement);
+  root.render(
+    <Suspense fallback={<LazyLoading />}>
       <BrowserRouter>
         <ApolloProvider client={client}>
-          <ApolloHooksProvider client={client as any}>
-            <App />
-          </ApolloHooksProvider>
+          <App />
         </ApolloProvider>
       </BrowserRouter>
-    // </React.StrictMode>
-    ,
-    document.getElementById("root")
+    </Suspense>
   );
-  serviceWorker.unregister();
 }
+serviceWorker.unregister();

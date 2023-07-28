@@ -1,14 +1,23 @@
-import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, ManyToOne, ObjectIdColumn, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { Field, Int, ObjectType } from "@nestjs/graphql";
+import {
+  BaseEntity,
+  BeforeInsert,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  ObjectIdColumn,
+  PrimaryColumn,
+  PrimaryGeneratedColumn,
+  Relation,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Expose, plainToClass } from 'class-transformer';
 import * as uuid from 'uuid';
 import ReferanceTypeEntity from './references.entity';
 
-
 @Entity({ name: 'bkp' })
-
 export class BkpEntity extends BaseEntity {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -19,7 +28,6 @@ export class BkpEntity extends BaseEntity {
   @Column()
   @Expose()
   bkpTitle: string;
-
 
   @Expose()
   @CreateDateColumn()
@@ -43,8 +51,7 @@ export class BkpEntity extends BaseEntity {
 
   @Expose()
   @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.bkp)
-  reference: ReferanceTypeEntity;
-
+  reference: Relation<ReferanceTypeEntity>;
 
   constructor(bkpEntity: Partial<BkpEntity>) {
     super();
@@ -52,9 +59,9 @@ export class BkpEntity extends BaseEntity {
       Object.assign(
         this,
         plainToClass(BkpEntity, bkpEntity, {
-          excludeExtraneousValues: true
+          excludeExtraneousValues: true,
         })
-      )
+      );
       // this.createdAt = this.createdAt || new Date(new Date().toUTCString());
       // this.updatedAt = new Date(new Date().toUTCString());
     }

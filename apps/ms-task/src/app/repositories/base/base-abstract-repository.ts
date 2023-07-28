@@ -1,8 +1,9 @@
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, Repository, FindOneOptions } from 'typeorm';
 import { BaseInterfaceRepository } from './base-interface-repository.interface';
 
 export abstract class BaseAbstractRepository<T>
-  implements BaseInterfaceRepository<T> {
+  implements BaseInterfaceRepository<T>
+{
   private entity: Repository<T>;
 
   protected constructor(entity: Repository<T>) {
@@ -14,7 +15,8 @@ export abstract class BaseAbstractRepository<T>
   }
 
   public async findOneById(id: number): Promise<T> {
-    return await this.entity.findOne(id);
+    const where: FindOneOptions<T> = { id } as unknown as FindOneOptions<T>;
+    return await this.entity.findOne(where);
   }
 
   public async findByCondition(filterCondition: any): Promise<T> {

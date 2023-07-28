@@ -15,13 +15,13 @@ These capabilities include generating applications, libraries, etc as well as th
 Below are our core plugins:
 
 - [React](https://reactjs.org)
-  - `npm install --save-dev @nrwl/react`
+  - `npm install --save-dev @nx/react`
 - [Nest](https://nestjs.com)
-  - `npm install --save-dev @nrwl/nest`
+  - `npm install --save-dev @nx/nest`
 
 ## Generate an application
 
-Run `nx g @nrwl/react:app my-app` to generate an application.
+Run `nx g @nx/react:app my-app` to generate an application.
 
 > You can use any of the plugins above to generate applications as well.
 
@@ -29,7 +29,7 @@ When using Nx, you can create multiple applications and libraries in the same wo
 
 ## Generate a library
 
-Run `nx g @nrwl/react:lib my-lib` to generate a library.
+Run `nx g @nx/react:lib my-lib` to generate a library.
 
 > You can also use any of the plugins above to generate libraries as well.
 
@@ -41,7 +41,7 @@ Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The 
 
 ## Code scaffolding
 
-Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
+Run `nx g @nx/react:component my-component --project=my-app` to generate a new component.
 
 ## Build
 
@@ -75,7 +75,7 @@ npm install -g nx
 
 ### To Generate react shared component
 
-nx generate @nrwl/react:library shared-components
+nx generate @nx/react:library shared-components
 
 ### To install dev storybook
 
@@ -83,7 +83,7 @@ npm install --dev @nrwl/storybook
 
 ### To Integrate storybook with shared-component lib
 
-nx g @nrwl/react:storybook-configuration shared-components
+nx g @nx/react:storybook-configuration shared-components
 
 ### To create leftmenu component in shared-component lib
 
@@ -129,23 +129,26 @@ ex. nx run ms-project:migration-run --mode=development
 nx run {projectName}:migration-revert --mode={mode}
 ex. nx run ms-project:migration-revert --mode=development
 
-
 ## To Run Ory Kratos
+
 Change 192.168.0.31 to 'your-local-ip' in following files 1: apps\mf-container-app\src\app\config\kratos.tsx
 2: deploy\docker-compose-ory\.kratos-config\kratos.yml
 3: deploy\docker-compose-ory\.nginx\nginx.conf
 
-
- docker-compose -f .\deploy\docker-compose-ory\quickstart.yml -f .\deploy\docker-compose-ory\docker-compose-nginx.yml up --build
+docker-compose -f .\deploy\docker-compose-ory\quickstart.yml -f .\deploy\docker-compose-ory\docker-compose-nginx.yml up --build
 
 ### To Run Container
+
 nx run mf-container-app:serve --host 0.0.0.0
 
-
 ## Build Process
- nx run-many --target=build --projects='ms-account,ms-document,ms-project,ms-task' --with-deps --generatePackageJson=true --configuration=production
+
+nx run-many --target=build --projects='ms-account,ms-document,ms-project,ms-task' --with-deps --generatePackageJson=true --configuration=production
 
 ### Install Dependancy
+
 npm i apollo-server-express @nestjs/platform-express mssql
+
 ### Run production build dist/apps/ms-{domain_name}
+
 set "NODE_ENV=production" && set "PORT={port_number}" && node main.js

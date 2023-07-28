@@ -35,7 +35,7 @@ export class InvitationTemplateResolver {
 
   @Mutation(() => [InvitationTemplateModel])
   async deleteInvitationTemplate(
-      @Args('CatagoryDeleteInput') DeleteInput: UpdateInvitationTemplate
+      @Args('DeleteInput') DeleteInput: UpdateInvitationTemplate
   ) {
       return this.invitationService.deleteInvitationTemplateByID(DeleteInput);
   }
