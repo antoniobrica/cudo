@@ -2,6 +2,8 @@ import { Expose, plainToClass } from 'class-transformer';
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToMany } from 'typeorm';
 import * as uuid from 'uuid';
 import SessionEntity from './session.entity';
+import MeetingEntity from './meeting.entity';
+
 /**
  * 
  */
@@ -46,6 +48,10 @@ export default class MembersEntity extends BaseEntity {
     @Expose()
     @ManyToMany(() => SessionEntity, tasksEntity => tasksEntity.members)
     tasks: SessionEntity[];
+
+    @Expose()
+    @ManyToMany(() => MeetingEntity, meetingEntity => meetingEntity.members)
+    meetings: MeetingEntity[];
 
     constructor(membersEntity: Partial<MembersEntity>) {
         super();

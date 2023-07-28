@@ -38,7 +38,8 @@ export const initialiseRequest = ({ type }: { type: "login" | "login1" | "regist
       if (status !== 200) return reject(data)
       resolve(data)
     }).catch(error => {
-      return window.location.href = endpoint
+      reject(error)
+      // return window.location.href = endpoint
     })
   })
 }

@@ -1,18 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useLayoutEffect, useState } from "react";
+
+const check = (host, callback) => {
+    fetch(host, {
+    method: "GET",
+  })
+    .then(() => callback(true))
+    .catch(err => callback(false))
+}
 
 function MicroFrontend({ name, host, history }) {
-
-  useEffect(() => {
+  
+  const [shouldReturnMain, setShouldReturnMain] = useState(undefined)
+  useLayoutEffect(() => {
     const scriptId = `render${name}`;
 
     const renderMicroFrontend = () => {
-      console.log(window[`render${name}`])
-      window[`render${name}`](`${name}-container`, history);
+      window[`render${name}`](`${name}-container`, history);      
     };
-
+    
     if (document.getElementById(scriptId)) {
-
-      renderMicroFrontend();
+      renderMicroFrontend();      
       return;
     }
     const main = "main.js";
@@ -23,13 +30,42 @@ function MicroFrontend({ name, host, history }) {
     script.src = `${host}/${main}`;
     script.onload = () => {
       renderMicroFrontend();
+      setShouldReturnMain(true)
+
     };
-    document.head.appendChild(script);
+    // script.addEventListener("error", () => {
+    //   setShouldReturnMain(false)
+    //   console.log('--script load error-----')
+
+    // })
+
+    // script.onError = () => {
+    //     setShouldReturnMain(false)
+    //     console.log('--script load error-----')
+
+    // }
+  
+    check(host, (isServerRunning) => {
+      if (isServerRunning) {
+        document.head.appendChild(script);
+        setShouldReturnMain(true)
+      } else {
+        setShouldReturnMain(false)
+
+      }
+    })
+
     return () => {
       window[`unmount${name}`] && window[`unmount${name}`](`${name}-container`);
     };
-  });
-  return <main id={`${name}-container`} />;
+  }, []);
+ 
+  if (shouldReturnMain === undefined) {
+    return null
+  }
+  return shouldReturnMain ? <main id={`${name}-container`} /> : <div style={{ height: "230px", width: "230px", padding: "200px", background: "#ccc" }}>
+    {name} service unavailable!!
+  </div>;
 }
 
 MicroFrontend.defaultProps = {

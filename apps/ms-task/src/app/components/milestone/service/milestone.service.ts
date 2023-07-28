@@ -1,17 +1,16 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MileStoneEntity } from '../../../entities/milestone.entity';
 import TaskFileEntity from '../../../entities/task-file.entity';
-import { WorkTypeEntity } from '../../../entities/workType.entity';
+import { TaskErrorTypeEnum } from '../../../enums/task-error-type.enum';
+import TaskCustomError from '../../../exceptions/taskCustomError.execption';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { Pagination, PaginationOptionsInterface } from '../../paginate';
 import { ReferenceService } from '../../reference/service/reference.service';
 import MileStoneFilterParam from '../dto/args/milestone.filter';
 import { MilestoneDetailsInput } from '../dto/input/milestone-details.input';
 import { MileStoneDetailsUpdateInput } from '../dto/input/milestone-update.input';
-import MileStoneNotFoundException from '../exceptions/milestoneNotFound.exception';
-
 
 @Injectable()
 export class MileStoneService {
@@ -24,6 +23,26 @@ export class MileStoneService {
     ) { }
     public async create(milestoneDetailsInput: MilestoneDetailsInput, referenceFilter: ReferenceFilterParams): Promise<MileStoneEntity> {
         try {
+            // handling client input errors
+            let errorType:number;
+            
+            if(!milestoneDetailsInput.milestoneBasics.dueDate){
+                errorType = TaskErrorTypeEnum.NO_DUE_DATE
+            }
+            if(!milestoneDetailsInput.milestoneBasics.phaseID){
+                errorType = TaskErrorTypeEnum.NO_PHASE
+            }
+            if(!milestoneDetailsInput.milestoneBasics.worktypeID){
+                errorType= TaskErrorTypeEnum.NO_PLANNING_WORKTYPE
+            }
+            if(!milestoneDetailsInput.milestoneBasics.milestoneTitle){
+                errorType = TaskErrorTypeEnum.NO_PLANNING_TITLE
+            }
+            
+            if(errorType){
+                throw new TaskCustomError(errorType)
+            }
+
             const milestoneDetails = new MileStoneEntity({ ...milestoneDetailsInput.milestoneBasics });
             milestoneDetails.files = [];
             const {  files } = milestoneDetailsInput;
@@ -65,7 +84,7 @@ export class MileStoneService {
         if (milestone) {
             return milestone;
         }
-        throw new MileStoneNotFoundException(milestone.milestoneID);
+        throw new TaskCustomError(TaskErrorTypeEnum.PLANNING_NOT_EXITST);
     }
 
     async deleteMileStone(mileFilter: MileStoneFilterParam) {
@@ -74,7 +93,7 @@ export class MileStoneService {
         if (deleteResponse) {
             return deleteResponse;
         }
-        throw new MileStoneNotFoundException(mileFilter.milestoneID);
+        throw new TaskCustomError(TaskErrorTypeEnum.PLANNING_NOT_EXITST);
     }
 
     public async updateMileStoneByID(createMileStoneInput: MileStoneDetailsUpdateInput): Promise<MileStoneEntity[]> {
@@ -84,7 +103,27 @@ export class MileStoneService {
             relations: ['reference', 'files']
         });
         if (milestoneDetails.length <= 0)
-            throw new HttpException('MileStone Not Found', HttpStatus.NOT_FOUND);
+        throw new TaskCustomError(TaskErrorTypeEnum.PLANNING_NOT_EXITST);
+
+        // handling client input errors
+        let errorType:number;
+            
+        if(!createMileStoneInput.milestoneBasics.dueDate){
+            errorType = TaskErrorTypeEnum.NO_DUE_DATE
+        }
+        // if(!createMileStoneInput.milestoneBasics.phaseID){
+        //     errorType = TaskErrorTypeEnum.NO_PHASE
+        // }
+        if(!createMileStoneInput.milestoneBasics.worktypeID){
+            errorType= TaskErrorTypeEnum.NO_PLANNING_WORKTYPE
+        }
+        if(!createMileStoneInput.milestoneBasics.milestoneTitle){
+            errorType = TaskErrorTypeEnum.NO_PLANNING_TITLE
+        }
+        if(errorType){
+            throw new TaskCustomError(errorType)
+        }
+
         const milestoneDetail = milestoneDetails[0];
         milestoneDetail.files = [];
        

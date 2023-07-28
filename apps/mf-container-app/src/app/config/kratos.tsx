@@ -1,7 +1,9 @@
-export const BASE_URL = "http://192.168.0.31:4455"
-export const KRATOS_BROWSER_URL = "http://192.168.0.31:4455/.ory/kratos/public"
-export const KRATOS_PUBLIC_URL = "http://192.168.0.31:4455/.ory/kratos/public"
-export const KRATOS_ADMIN_URL = "http://192.168.0.31:4434"
+import { MS_SERVICE_URL } from "@cudo/mf-core"
+
+export const BASE_URL = MS_SERVICE_URL["kratos_BASE_URL"].url
+export const KRATOS_BROWSER_URL = MS_SERVICE_URL["kratos_KRATOS_BROWSER_URL"].url
+export const KRATOS_PUBLIC_URL = MS_SERVICE_URL["kratos_KRATOS_PUBLIC_URL"].url
+export const KRATOS_ADMIN_URL = MS_SERVICE_URL["kratos_KRATOS_ADMIN_URL"].url
 
 export default {
   kratos: {

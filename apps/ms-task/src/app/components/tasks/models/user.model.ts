@@ -5,6 +5,9 @@ import { ReferenceModel } from '../../reference/model/reference.model';
 export class UserModel {
 
   @Field({ nullable: true, description: `User ID` })
+  taskID?: string;
+
+  @Field({ nullable: true, description: `User ID` })
   userID?: string;
 
   @Field({ nullable: true, description: `User Name` })

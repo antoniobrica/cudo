@@ -1,5 +1,14 @@
 {
   "version": 2,
+  "cli": { "defaultCollection": "@nrwl/react" },
+  "defaultProject": "mf-container-app",
+  "generators": {
+    "@nrwl/react": {
+      "application": { "style": "scss", "linter": "eslint", "babel": true },
+      "component": { "style": "scss" },
+      "library": { "style": "scss", "linter": "eslint" }
+    }
+  },
   "projects": {
     "mf-container-app": {
       "root": "apps/mf-container-app",
@@ -55,13 +64,9 @@
         },
         "serve": {
           "executor": "@nrwl/web:dev-server",
-          "options": {
-            "buildTarget": "mf-container-app:build"
-          },
+          "options": { "buildTarget": "mf-container-app:build" },
           "configurations": {
-            "production": {
-              "buildTarget": "mf-container-app:build:production"
-            }
+            "production": { "buildTarget": "mf-container-app:build:production" }
           }
         },
         "lint": {
@@ -160,13 +165,9 @@
         },
         "serve": {
           "executor": "@nrwl/web:dev-server",
-          "options": {
-            "buildTarget": "mf-account-app:build"
-          },
+          "options": { "buildTarget": "mf-account-app:build" },
           "configurations": {
-            "production": {
-              "buildTarget": "mf-account-app:build:production"
-            }
+            "production": { "buildTarget": "mf-account-app:build:production" }
           }
         },
         "lint": {
@@ -188,30 +189,18 @@
           "options": {
             "uiFramework": "@storybook/react",
             "port": 4400,
-            "config": {
-              "configFolder": "apps/mf-account-app/.storybook"
-            }
+            "config": { "configFolder": "apps/mf-account-app/.storybook" }
           },
-          "configurations": {
-            "ci": {
-              "quiet": true
-            }
-          }
+          "configurations": { "ci": { "quiet": true } }
         },
         "build-storybook": {
           "executor": "@nrwl/storybook:build",
           "options": {
             "uiFramework": "@storybook/react",
             "outputPath": "dist/storybook/mf-account-app",
-            "config": {
-              "configFolder": "apps/mf-account-app/.storybook"
-            }
+            "config": { "configFolder": "apps/mf-account-app/.storybook" }
           },
-          "configurations": {
-            "ci": {
-              "quiet": true
-            }
-          }
+          "configurations": { "ci": { "quiet": true } }
         }
       }
     },
@@ -272,15 +261,11 @@
         },
         "serve": {
           "executor": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "ms-account:build"
-          }
+          "options": { "buildTarget": "ms-account:build" }
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/ms-account/**/*.ts"]
-          }
+          "options": { "lintFilePatterns": ["apps/ms-account/**/*.ts"] }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
@@ -346,13 +331,9 @@
         },
         "serve": {
           "executor": "@nrwl/web:dev-server",
-          "options": {
-            "buildTarget": "mf-project-app:build"
-          },
+          "options": { "buildTarget": "mf-project-app:build" },
           "configurations": {
-            "production": {
-              "buildTarget": "mf-project-app:build:production"
-            }
+            "production": { "buildTarget": "mf-project-app:build:production" }
           }
         },
         "lint": {
@@ -374,30 +355,18 @@
           "options": {
             "uiFramework": "@storybook/react",
             "port": 4400,
-            "config": {
-              "configFolder": "apps/mf-project-app/.storybook"
-            }
+            "config": { "configFolder": "apps/mf-project-app/.storybook" }
           },
-          "configurations": {
-            "ci": {
-              "quiet": true
-            }
-          }
+          "configurations": { "ci": { "quiet": true } }
         },
         "build-storybook": {
           "executor": "@nrwl/storybook:build",
           "options": {
             "uiFramework": "@storybook/react",
             "outputPath": "dist/storybook/mf-project-app",
-            "config": {
-              "configFolder": "apps/mf-project-app/.storybook"
-            }
+            "config": { "configFolder": "apps/mf-project-app/.storybook" }
           },
-          "configurations": {
-            "ci": {
-              "quiet": true
-            }
-          }
+          "configurations": { "ci": { "quiet": true } }
         }
       }
     },
@@ -459,15 +428,11 @@
         },
         "serve": {
           "executor": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "ms-project:build"
-          }
+          "options": { "buildTarget": "ms-project:build" }
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/ms-project/**/*.ts"]
-          }
+          "options": { "lintFilePatterns": ["apps/ms-project/**/*.ts"] }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
@@ -516,9 +481,7 @@
       "targets": {
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/ui/**/*.{ts,tsx,js,jsx}"]
-          }
+          "options": { "lintFilePatterns": ["libs/ui/**/*.{ts,tsx,js,jsx}"] }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
@@ -537,9 +500,7 @@
       "targets": {
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/shared/**/*.ts"]
-          }
+          "options": { "lintFilePatterns": ["libs/shared/**/*.ts"] }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
@@ -558,9 +519,7 @@
       "targets": {
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/data/**/*.ts"]
-          }
+          "options": { "lintFilePatterns": ["libs/data/**/*.ts"] }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
@@ -613,15 +572,11 @@
         },
         "serve": {
           "executor": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "ms-task:build"
-          }
+          "options": { "buildTarget": "ms-task:build" }
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/ms-task/**/*.ts"]
-          }
+          "options": { "lintFilePatterns": ["apps/ms-task/**/*.ts"] }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
@@ -694,15 +649,11 @@
         },
         "serve": {
           "executor": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "ms-tender:build"
-          }
+          "options": { "buildTarget": "ms-tender:build" }
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/ms-tender/**/*.ts"]
-          }
+          "options": { "lintFilePatterns": ["apps/ms-tender/**/*.ts"] }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
@@ -745,15 +696,11 @@
         },
         "serve": {
           "executor": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "ms-cost:build"
-          }
+          "options": { "buildTarget": "ms-cost:build" }
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/ms-cost/**/*.ts"]
-          }
+          "options": { "lintFilePatterns": ["apps/ms-cost/**/*.ts"] }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
@@ -796,15 +743,11 @@
         },
         "serve": {
           "executor": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "ms-meeting:build"
-          }
+          "options": { "buildTarget": "ms-meeting:build" }
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/ms-meeting/**/*.ts"]
-          }
+          "options": { "lintFilePatterns": ["apps/ms-meeting/**/*.ts"] }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
@@ -847,15 +790,11 @@
         },
         "serve": {
           "executor": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "ms-document:build"
-          }
+          "options": { "buildTarget": "ms-document:build" }
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/ms-document/**/*.ts"]
-          }
+          "options": { "lintFilePatterns": ["apps/ms-document/**/*.ts"] }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
@@ -898,15 +837,11 @@
         },
         "serve": {
           "executor": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "ms-protocol:build"
-          }
+          "options": { "buildTarget": "ms-protocol:build" }
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/ms-protocol/**/*.ts"]
-          }
+          "options": { "lintFilePatterns": ["apps/ms-protocol/**/*.ts"] }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
@@ -972,13 +907,9 @@
         },
         "serve": {
           "executor": "@nrwl/web:dev-server",
-          "options": {
-            "buildTarget": "mf-task-app:build"
-          },
+          "options": { "buildTarget": "mf-task-app:build" },
           "configurations": {
-            "production": {
-              "buildTarget": "mf-task-app:build:production"
-            }
+            "production": { "buildTarget": "mf-task-app:build:production" }
           }
         },
         "lint": {
@@ -1000,30 +931,18 @@
           "options": {
             "uiFramework": "@storybook/react",
             "port": 4400,
-            "config": {
-              "configFolder": "apps/mf-task-app/.storybook"
-            }
+            "config": { "configFolder": "apps/mf-task-app/.storybook" }
           },
-          "configurations": {
-            "ci": {
-              "quiet": true
-            }
-          }
+          "configurations": { "ci": { "quiet": true } }
         },
         "build-storybook": {
           "executor": "@nrwl/storybook:build",
           "options": {
             "uiFramework": "@storybook/react",
             "outputPath": "dist/storybook/mf-task-app",
-            "config": {
-              "configFolder": "apps/mf-task-app/.storybook"
-            }
+            "config": { "configFolder": "apps/mf-task-app/.storybook" }
           },
-          "configurations": {
-            "ci": {
-              "quiet": true
-            }
-          }
+          "configurations": { "ci": { "quiet": true } }
         }
       }
     },
@@ -1040,9 +959,7 @@
             "devServerTarget": "mf-task-app:serve"
           },
           "configurations": {
-            "production": {
-              "devServerTarget": "mf-task-app:serve:production"
-            }
+            "production": { "devServerTarget": "mf-task-app:serve:production" }
           }
         },
         "lint": {
@@ -1107,13 +1024,9 @@
         },
         "serve": {
           "executor": "@nrwl/web:dev-server",
-          "options": {
-            "buildTarget": "mf-tender-app:build"
-          },
+          "options": { "buildTarget": "mf-tender-app:build" },
           "configurations": {
-            "production": {
-              "buildTarget": "mf-tender-app:build:production"
-            }
+            "production": { "buildTarget": "mf-tender-app:build:production" }
           }
         },
         "lint": {
@@ -1135,30 +1048,18 @@
           "options": {
             "uiFramework": "@storybook/react",
             "port": 4400,
-            "config": {
-              "configFolder": "apps/mf-tender-app/.storybook"
-            }
+            "config": { "configFolder": "apps/mf-tender-app/.storybook" }
           },
-          "configurations": {
-            "ci": {
-              "quiet": true
-            }
-          }
+          "configurations": { "ci": { "quiet": true } }
         },
         "build-storybook": {
           "executor": "@nrwl/storybook:build",
           "options": {
             "uiFramework": "@storybook/react",
             "outputPath": "dist/storybook/mf-tender-app",
-            "config": {
-              "configFolder": "apps/mf-tender-app/.storybook"
-            }
+            "config": { "configFolder": "apps/mf-tender-app/.storybook" }
           },
-          "configurations": {
-            "ci": {
-              "quiet": true
-            }
-          }
+          "configurations": { "ci": { "quiet": true } }
         }
       }
     },
@@ -1242,13 +1143,9 @@
         },
         "serve": {
           "executor": "@nrwl/web:dev-server",
-          "options": {
-            "buildTarget": "mf-cost-app:build"
-          },
+          "options": { "buildTarget": "mf-cost-app:build" },
           "configurations": {
-            "production": {
-              "buildTarget": "mf-cost-app:build:production"
-            }
+            "production": { "buildTarget": "mf-cost-app:build:production" }
           }
         },
         "lint": {
@@ -1270,30 +1167,18 @@
           "options": {
             "uiFramework": "@storybook/react",
             "port": 4400,
-            "config": {
-              "configFolder": "apps/mf-cost-app/.storybook"
-            }
+            "config": { "configFolder": "apps/mf-cost-app/.storybook" }
           },
-          "configurations": {
-            "ci": {
-              "quiet": true
-            }
-          }
+          "configurations": { "ci": { "quiet": true } }
         },
         "build-storybook": {
           "executor": "@nrwl/storybook:build",
           "options": {
             "uiFramework": "@storybook/react",
             "outputPath": "dist/storybook/mf-cost-app",
-            "config": {
-              "configFolder": "apps/mf-cost-app/.storybook"
-            }
+            "config": { "configFolder": "apps/mf-cost-app/.storybook" }
           },
-          "configurations": {
-            "ci": {
-              "quiet": true
-            }
-          }
+          "configurations": { "ci": { "quiet": true } }
         }
       }
     },
@@ -1310,9 +1195,7 @@
             "devServerTarget": "mf-cost-app:serve"
           },
           "configurations": {
-            "production": {
-              "devServerTarget": "mf-cost-app:serve:production"
-            }
+            "production": { "devServerTarget": "mf-cost-app:serve:production" }
           }
         },
         "lint": {
@@ -1377,13 +1260,9 @@
         },
         "serve": {
           "executor": "@nrwl/web:dev-server",
-          "options": {
-            "buildTarget": "mf-meeting-app:build"
-          },
+          "options": { "buildTarget": "mf-meeting-app:build" },
           "configurations": {
-            "production": {
-              "buildTarget": "mf-meeting-app:build:production"
-            }
+            "production": { "buildTarget": "mf-meeting-app:build:production" }
           }
         },
         "lint": {
@@ -1405,30 +1284,18 @@
           "options": {
             "uiFramework": "@storybook/react",
             "port": 4400,
-            "config": {
-              "configFolder": "apps/mf-meeting-app/.storybook"
-            }
+            "config": { "configFolder": "apps/mf-meeting-app/.storybook" }
           },
-          "configurations": {
-            "ci": {
-              "quiet": true
-            }
-          }
+          "configurations": { "ci": { "quiet": true } }
         },
         "build-storybook": {
           "executor": "@nrwl/storybook:build",
           "options": {
             "uiFramework": "@storybook/react",
             "outputPath": "dist/storybook/mf-meeting-app",
-            "config": {
-              "configFolder": "apps/mf-meeting-app/.storybook"
-            }
+            "config": { "configFolder": "apps/mf-meeting-app/.storybook" }
           },
-          "configurations": {
-            "ci": {
-              "quiet": true
-            }
-          }
+          "configurations": { "ci": { "quiet": true } }
         }
       }
     },
@@ -1465,9 +1332,7 @@
       "targets": {
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/interfaces/**/*.ts"]
-          }
+          "options": { "lintFilePatterns": ["libs/interfaces/**/*.ts"] }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
@@ -1517,9 +1382,7 @@
       "targets": {
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/ms-core/**/*.ts"]
-          }
+          "options": { "lintFilePatterns": ["libs/ms-core/**/*.ts"] }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
@@ -1555,30 +1418,18 @@
           "options": {
             "uiFramework": "@storybook/react",
             "port": 4400,
-            "config": {
-              "configFolder": "libs/shared-components/.storybook"
-            }
+            "config": { "configFolder": "libs/shared-components/.storybook" }
           },
-          "configurations": {
-            "ci": {
-              "quiet": true
-            }
-          }
+          "configurations": { "ci": { "quiet": true } }
         },
         "build-storybook": {
           "executor": "@nrwl/storybook:build",
           "options": {
             "uiFramework": "@storybook/react",
             "outputPath": "dist/storybook/shared-components",
-            "config": {
-              "configFolder": "libs/shared-components/.storybook"
-            }
+            "config": { "configFolder": "libs/shared-components/.storybook" }
           },
-          "configurations": {
-            "ci": {
-              "quiet": true
-            }
-          }
+          "configurations": { "ci": { "quiet": true } }
         }
       }
     },
@@ -1595,9 +1446,7 @@
             "devServerTarget": "shared-components:storybook"
           },
           "configurations": {
-            "ci": {
-              "devServerTarget": "shared-components:storybook:ci"
-            }
+            "ci": { "devServerTarget": "shared-components:storybook:ci" }
           }
         },
         "lint": {
@@ -1624,7 +1473,16 @@
             "tsConfig": "apps/ui-design/tsconfig.app.json",
             "assets": [
               "apps/ui-design/src/favicon.ico",
-              "apps/ui-design/src/assets"
+              "apps/ui-design/src/assets",
+              {
+
+                "input": "libs/shared-components/src/assets",
+
+                "glob": "**/*",
+
+                "output": "assets"
+
+              }
             ],
             "styles": ["apps/ui-design/src/styles.scss"],
             "scripts": [],
@@ -1657,13 +1515,9 @@
         },
         "serve": {
           "executor": "@nrwl/web:dev-server",
-          "options": {
-            "buildTarget": "ui-design:build"
-          },
+          "options": { "buildTarget": "ui-design:build" },
           "configurations": {
-            "production": {
-              "buildTarget": "ui-design:build:production"
-            }
+            "production": { "buildTarget": "ui-design:build:production" }
           }
         },
         "lint": {
@@ -1695,16 +1549,12 @@
             "devServerTarget": "ui-design:serve"
           },
           "configurations": {
-            "production": {
-              "devServerTarget": "ui-design:serve:production"
-            }
+            "production": { "devServerTarget": "ui-design:serve:production" }
           }
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/ui-design-e2e/**/*.{js,ts}"]
-          }
+          "options": { "lintFilePatterns": ["apps/ui-design-e2e/**/*.{js,ts}"] }
         }
       }
     },
@@ -1825,13 +1675,9 @@
         },
         "serve": {
           "executor": "@nrwl/web:dev-server",
-          "options": {
-            "buildTarget": "mf-document-app:build"
-          },
+          "options": { "buildTarget": "mf-document-app:build" },
           "configurations": {
-            "production": {
-              "buildTarget": "mf-document-app:build:production"
-            }
+            "production": { "buildTarget": "mf-document-app:build:production" }
           }
         },
         "lint": {
@@ -1896,26 +1742,27 @@
           }
         }
       }
-    }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/react"
-  },
-  "generators": {
-    "@nrwl/react": {
-      "application": {
-        "style": "scss",
-        "linter": "eslint",
-        "babel": true
-      },
-      "component": {
-        "style": "scss"
-      },
-      "library": {
-        "style": "scss",
-        "linter": "eslint"
+    },
+    "mf-project-lib": {
+      "root": "libs/mf-project-lib",
+      "sourceRoot": "libs/mf-project-lib/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/mf-project-lib/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/mf-project-lib"],
+          "options": {
+            "jestConfig": "libs/mf-project-lib/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
       }
     }
-  },
-  "defaultProject": "mf-container-app"
+  }
 }

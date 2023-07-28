@@ -13,7 +13,7 @@
 // const client = new ApolloClient({
 //   cache: new InMemoryCache(),
 //   link: new HttpLink({
-//     uri: 'http://localhost:3333/graphql',
+//     uri: 'http://192.168.0.31:3333/graphql',
 //   }),
 // });
 // const App = () => (
@@ -47,6 +47,7 @@ function Header() {
   return (
     <div className="banner">
       <h1 className="banner-title"> Welcome mf-tender-app</h1>
+
     </div>
   );
 }

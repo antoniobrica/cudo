@@ -1,45 +1,29 @@
 import React from 'react';
 
-import '../../../style/index.scss';
-import { Select, Input, Segment, Form, Grid, Image, Checkbox, Button, Icon } from 'semantic-ui-react'
-import logo from 'libs/shared-components/src/slider.png';
-import img from 'libs/shared-components/src/Shape 2.png';
-import img3 from 'libs/shared-components/src/green_tick.png';
-import img4 from 'libs/shared-components/src/company1.png';
+import './../../../assets/style/index.scss'
+import { Select, Input, Segment, Form, Grid, Image, Checkbox, Button, Icon, Dropdown } from 'semantic-ui-react'
+import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { useTranslation } from 'react-i18next';
 
 /* eslint-disable-next-line */
 export interface LoginDropProps {
   login?
   email?
+  companies?
+  selectedCompany?
 }
 
 export function Logindrop(props: LoginDropProps) {
-  const countryOptions = [
-    { key: 'af', value: 'af', text: 'Afghanistan' },
-    { key: 'ax', value: 'ax', text: 'Aland Islands' },
-    { key: 'al', value: 'al', text: 'Albania' },
-  ]
+  const {t} = useTranslation()
   const handleLogin = () => {
     props.login();
   }
   const description = [
 
   ]
-  const friendOptions = [
-    {
-      key: 'Company 1',
-      text: 'Company 1',
-      value: 'Company 1',
-      image: img4,
-    },
-    {
-      key: 'Company 2',
-      text: 'Company 2',
-      value: 'Company 2',
-      image: img4,
-    },
-
-  ]
+  const handleOnChange = (e, data) => {
+    props.selectedCompany(data.value);
+  }
   return (
     <div className=" ">
       <div className="main-outer-area">
@@ -48,30 +32,39 @@ export function Logindrop(props: LoginDropProps) {
             <Grid.Column>
               <Segment>
                 <div className="ln-form-outer">
-                  <img src={img} />
+                  <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/Shape 2.png`} />
                   <div className="form-header">
-                    <span className="welcome">Welcome Back</span>
-                    <h2 className="login">Select your company</h2>
+                    <span className="welcome">{t("login.greet")}</span>
+                    <h2 className="login">{t("login.logindrop_title")}</h2>
                   </div>
                   <div className="form-inner">
                     <Form>
-                      <Form.Field className="login-user">
-                        <label>  <span><img src={img3} className="img-src" /> </span> <span>{props.email}  </span><span className="float-area">
-                          <i className="ms-Icon ms-Icon--Accounts" aria-hidden="true"></i> </span> </label>
+                      <Form.Field className="login-user email-filled">
+                          <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/green_tick.png`} className="img-src" />
+                          <span className="email-text">{props.email}</span>
+                          <i className="ms-Icon ms-Icon--Accounts" aria-hidden="true"></i>
                       </Form.Field>
-                      <Form.Field>
-                        <Select placeholder='Select Company' options={friendOptions} defaultValue={friendOptions[0].value} className="full-width" />
+                      <Form.Field className="form-dropdown">
+                        <Dropdown
+                          placeholder={t("login.dropdown_placeholder")}
+                          fluid
+                          selection
+                          options={props?.companies}
+                          onChange={handleOnChange}
+                          size="small"
+                        />
+                        {/* <Select placeholder='Select Company' options={props?.companies} defaultValue={props?.companies[0]?.value} className="full-width" /> */}
                       </Form.Field>
-                      <Button onClick={handleLogin} size='large' className="grey-btn btn-large">Continue <Icon name='arrow right' />   </Button>
-                      <span> <br /> <a href="/auth/registration" className="blue_color"> Register with us</a>  </span>
-                      <span className="float_right ">   <a href="/recovery" className="blue_color"> Forgot Password ?</a>  </span>
+                      <Button onClick={handleLogin} size='large' className="primary btn-large">{t("common.continue")} <Icon name='arrow right' />   </Button>
+                      <span> <br /> <a href="/auth/registration" className="blue_color form-link"> {t("login.register_link")}</a>  </span>
+                      <span className="float_right ">   <a href="/recovery" className="blue_color form-link"> {t("login.forgot_password_link")} ?</a>  </span>
                     </Form>
                   </div>
                 </div>
               </Segment>
             </Grid.Column>
             <Grid.Column>
-              <img src={logo} className="massive" />
+              <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/slider.png`} className="massive" />
             </Grid.Column>
           </Grid.Row>
         </Grid>
