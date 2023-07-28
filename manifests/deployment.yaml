@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cudoflow
+  labels:
+    app: cudoflow
+  namespace: namespace-workflow-1690571750936
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cudoflow
+  template:
+    metadata:
+      labels:
+        app: cudoflow
+    spec:
+      containers:
+        - name: cudoflow
+          image: cudoacr.azurecr.io/image-workflow-1690571750936:latest
+          ports:
+            - containerPort: 3000
