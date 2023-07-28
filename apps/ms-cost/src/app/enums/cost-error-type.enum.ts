@@ -1,0 +1,9 @@
+export enum CostErrorTypeEnum {
+    RECORD_ALREADY_EXIST ,
+    RECORD_NOT_EXIST ,
+    RECORD_NOT_ADDED ,
+    PROJECT_NOT_FOUND,
+    NO_REFERANCE_TYPE,
+    NO_TITLE,    
+    INTERNAL_SERVER_ERROR
+}

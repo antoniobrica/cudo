@@ -8,6 +8,7 @@ import {
 } from 'typeorm'
 
 import config from '../../config.orm'
+import { environment } from '../../environments/environment'
 // import { logger } from '../../common'
 
 @Injectable()
@@ -28,7 +29,9 @@ export class TypeOrmService implements TypeOrmOptionsFactory {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
 			keepConnectionAlive: true,
-			logging: true
+			logging: true,
+			retryAttempts: environment.DATABASE_RETRY_ATTEMPTS,
+			retryDelay: environment.DATABASE_RETRY_DELAY
 		}
 		return options
 	}

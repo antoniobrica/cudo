@@ -36,6 +36,9 @@ export class SessionModel {
   @Field({ nullable: true, description: `protocol title` })
   protocolTitle?: string;
 
+  @Field({ nullable: true, description: `This is for session title` })
+  isDeleted?: Boolean;
+
   @Field({ description: `session updated at` })
   updatedAt?: Date;
 

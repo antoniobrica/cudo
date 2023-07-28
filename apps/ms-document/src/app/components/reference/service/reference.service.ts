@@ -2,10 +2,11 @@ import {  Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, MoreThan, Repository } from 'typeorm';
 import ReferanceTypeEntity from '../../../entities/reference-type.entity';
+import { FileErrorTypeEnum } from '../../../enum/file-error-type.enum';
+import FileCustomError from '../../../exceptions/fileCustomError.exception';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceInputDto } from '../dto/input/reference.input.dto';
 import { ReferenceUpdateInputDto } from '../dto/input/reference.upate.input.dto';
-import ProjectNotFoundException from '../exceptions/projectNotFound.exception';
 
 @Injectable()
 export class ReferenceService {
@@ -50,7 +51,8 @@ export class ReferenceService {
         if (reference) {
             return reference;
         }
-        throw new ProjectNotFoundException(refFilter.referenceID);
+        throw new FileCustomError(FileErrorTypeEnum.PROJECT_NOT_FOUND)
+
     }
 
 
@@ -62,16 +64,16 @@ export class ReferenceService {
             const updatedPost = await this.referancesRepository.findOne(reference.id);
             return updatedPost;
         }
-        throw new ProjectNotFoundException(refFilter.referenceID);
+        throw new FileCustomError(FileErrorTypeEnum.PROJECT_NOT_FOUND)
     }
 
     async deleteReference(refFilter: ReferenceFilterParams) {
-        const { id } = await this.referancesRepository.findOne({ where: { ...refFilter } });
+        const { id } = await this.getReferenceById(refFilter)
         const deleteResponse = await this.referancesRepository.delete(id);
         if (deleteResponse) {
             return deleteResponse;
         }
-        throw new ProjectNotFoundException(refFilter.referenceID);
+        throw new FileCustomError(FileErrorTypeEnum.PROJECT_NOT_FOUND)
     }
 
 }

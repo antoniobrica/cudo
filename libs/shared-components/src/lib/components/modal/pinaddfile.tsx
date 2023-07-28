@@ -1,281 +1,174 @@
- 
-import React from 'react';
-import { Button,  Modal,  Grid, Image, Segment,Form,Input,TextArea,Select,Checkbox} from 'semantic-ui-react';
-// import SampleModal from './sample-modal';
-import img2 from 'libs/shared-components/src/people_1.png';
 
-import img3 from 'libs/shared-components/src/check_grey.png'; 
-import img4 from 'libs/shared-components/src/dots.png';
-import img6 from 'libs/shared-components/src/dotss.png';
-import img7 from 'libs/shared-components/src/Image 3.png';
+import React from 'react';
+import { Button, Modal, Grid, Image, Segment, Form, Input, TextArea, Select, Checkbox, Dropdown } from 'semantic-ui-react';
+// import SampleModal from './sample-modal';
+
+// import Canvas from './canvas';
+import CanvasImage from './canvasimage';
+
+import { useHistory } from 'react-router';
+import axios from 'axios';
+import { CreateFileTaskIndex, PinTaskListIndex } from '@cudo/mf-task-lib';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { useTranslation } from 'react-i18next';
+
+// import ImageMarker, { Marker } from 'react-image-marker';
+// import CanvasMarker from './canvasmarker';
 
 
 function exampleReducer(state, action) {
-    switch (action.type) {
-      case 'close':
-        return { open: false }
-      case 'open':
-        return { open: true, size: action.size }
-      default:
-        throw new Error('Unsupported action...')
+  switch (action.type) {
+    case 'close':
+      return { open: false }
+    case 'open':
+      return { open: true, size: action.size }
+    default:
+      throw new Error('Unsupported action...')
+  }
+
+}
+
+export interface AddPinProps {
+  isOpen?,
+  cancel?,
+  filesData?,
+  dowloadFilesData?,
+  onSuccess?,
+  savePin?,
+
+}
+export const AddPinFile = (props: AddPinProps) => {
+  const [open, setOpen] = React.useState(false);
+  const [allowToCreateNewPin, setAllowToCreateNewPin] = React.useState(false);
+  const [fileData, setFileData] = React.useState(null);
+  const [pinTasks, setPinTasks] = React.useState([]);
+  const [isPinCreated, setIsPinCreated] = React.useState<boolean>(false);
+  const [cord, setCord] = React.useState(null);
+  const [imgUrl, setimgUrl] = React.useState('');
+  const [fileId, setFileId] = React.useState('');
+  const [saveNewPinOnCanvase, setSaveNewPinOnCanvase] = React.useState(false);
+  const [pinSavedOnCanvase, setPinSavedOnCanvase] = React.useState(false);
+
+  const { t } = useTranslation();
+
+  // const [markers, setMarkers] = React.useState<Marker[]>([{ top: 10, left: 50 }, { top: 20, left: 70 }, { top: 30, left: 75 }, { top: 35, left: 80 }])
+
+  React.useEffect(() => {
+    console.log("--pinaddfile-1-New Pin created ", isPinCreated);
+    setAllowToCreateNewPin(false);
+  }, [isPinCreated])
+
+  const close = () => {
+    setOpen(false)
+    props.cancel(false)
+  }
+
+  const openM = () => {
+    setOpen(true)
+  }
+
+  React.useEffect(() => {
+    if (props.isOpen) {
+      setOpen(props.isOpen)
     }
-    
+  }, [props.isOpen]);
+
+  React.useEffect(() => {
+    if (props.filesData) {
+      console.log('--pinaddfile-2-filesData==', props.filesData);
+      setFileId(props.filesData.uploadedFileID)
+      setFileData(props.filesData)
+    }
+  }, [props.filesData])
+
+  React.useEffect(() => {
+    if (props.dowloadFilesData) {
+      // const tempPdfFilePath = `${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/sample_mk.pdf`
+      console.log('--pinaddfile-3-dowloadFilesData-s', props.dowloadFilesData);
+      for (let i = 0; i < props.dowloadFilesData.length; i++) {
+        if (props.dowloadFilesData[i].filename == props.filesData.fileTitle) {
+          console.log('--pinaddfile-4-uploadedfileid', props.dowloadFilesData[i]);
+          setimgUrl(props.dowloadFilesData[i].url);
+          // setimgUrl(tempPdfFilePath);
+        }
+      }
+    }
+  }, [props.dowloadFilesData])
+
+  const getCoardinates = (data) => {
+    console.log('--pinaddfile-5-getCoardinates', data);
+    setCord(data);
   }
-  
-  const countryOptions = [
-    { key: 'af', value: 'af', text: 'Afghanistan' },
-    { key: 'ax', value: 'ax', text: 'Aland Islands' },
-     
-  ]
-  const ModalExampleSize = () => {
-    const [state, dispatch] = React.useReducer(exampleReducer, {
-      open: false,
-      size: undefined,
-    })
-    const { open, size } = state
-  
-    return (
-         <>
-       <div id="navbar">
-         
-        <Button  size='mini' className="grey-btn" onClick={() => dispatch({ type: 'open', size: 'fullscreen' })}>
-           Pin File
-        </Button>
-  
-        <Modal
-          size={size}
-          open={open}
-          onClose={() => dispatch({ type: 'close' })} style={{marginLeft:'30px'}}
-        >
-          <Modal.Header>File_name.cad</Modal.Header>
-          <Modal.Content>
+  const onSuccess = async () => {
+    console.log('--pinaddfile-6-onSuccess');
+    setAllowToCreateNewPin(false);
+    setIsPinCreated(false);
+  }
+  const changePinTask = () => {
+    console.log('--pinaddfile-7-changePinTask');
+    setAllowToCreateNewPin(true);
+  }
+  const taskClose = () => {
+    setAllowToCreateNewPin(false);
+    setIsPinCreated(false);
+  }
+  return (
+    <div >
+      <Modal className="pin-add-file"
+        closeIcon
+        size={'fullscreen'}
+        onClose={close}
+        onOpen={openM}
+        open={open}
+        closeOnDimmerClick={false}
+      >
+        <Modal.Header>
+          <h3>
+            {props.filesData?.fileTitle}
+          </h3>
+          <span>
+            <a href=""><i className="ms-Icon ms-Icon--ZoomOut" aria-hidden="true"></i></a>
+            <a href=""><i className="ms-Icon ms-Icon--ZoomIn" aria-hidden="true"></i></a>
+            <a href=""><i className="ms-Icon ms-Icon--Rotate90CounterClockwise" aria-hidden="true"></i></a>
+            <a href=""><i className="ms-Icon ms-Icon--Rotate90Clockwise" aria-hidden="true"></i></a>
+          </span>
+        </Modal.Header>
+        <Modal.Content>
           <Form>
-          <Grid stackable columns={2}>
-    <Grid.Column>
-      <Segment> 
-      <img src={img7}  className=" fluid " /> 
+            <div className="left-side-image-canvas">
+              <CanvasImage
+                pinSaved={setPinSavedOnCanvase}
+                savePin={saveNewPinOnCanvase}
+                imgUrl={imgUrl}
+                coardinates={getCoardinates}
+                fileId={fileId}
+                allowToCreateNewPin={allowToCreateNewPin}
+                isPinCreated={isPinCreated}
+                setIsPinCreated={setIsPinCreated}
+              ></CanvasImage>  
+              
+            </div>
 
-      </Segment>
-    </Grid.Column>
-    <Grid.Column>
-        <div style={{background: '#F1F5F8', padding: '10px'}}>
-         <Form.Field>
-      <label>Task Title <span className="danger">*</span></label>
-      <Input placeholder='Swtichboard Fitting' size='small' className="full-width" type="text" />
-    </Form.Field>
-    <Form.Field>
-      <label>Description </label>
-      <TextArea placeholder='type here...' />
-    </Form.Field>
-    <Form.Field>
-      <label>Assoicate with work type  </label>
-      <Select placeholder='Select' className="small" options={countryOptions} />
-      </Form.Field>
-      <Form.Field>
-      <label>Select phase  </label>
-      <Select placeholder='Select' className="small" options={countryOptions} />
-      </Form.Field>
-      <Form.Field>
-      <label>Select BKP  </label>
-      <Select placeholder='Select' className="small" options={countryOptions} />
-      </Form.Field>
-      <Form.Field>
-      <label>Assignee <span className="danger">*</span></label>
-      <Select placeholder='Select' className="small" options={countryOptions} />
-      </Form.Field>
-      <Grid columns={2}>
-<Grid.Row>
-  <Grid.Column>
-    <Form.Field>
-      <label>Followers </label>
-      <Select placeholder='Select' className="small" options={countryOptions} />
-            
-    </Form.Field>
-  </Grid.Column>
+            <div className="right-side-file-details">
+              <div className="add-pin-mark-field">
+                {!isPinCreated ?
+                  <Form.Field className="pin-add-field">
+                    <button className="ui mini button pinbutton" onClick={changePinTask}>{t('pin_mask.pin_mark_task')}</button>
+                    <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/grey_pin.png`} className="pinadd" />
+                  </Form.Field>
+                  :
+                  <CreateFileTaskIndex pinsaved={pinSavedOnCanvase} savePin={setSaveNewPinOnCanvase} close={taskClose} onSuccess={onSuccess} cord={cord} fileData={fileData}></CreateFileTaskIndex>
+                }
+                {!isPinCreated ?
+                  <PinTaskListIndex filesData={fileData} cord={cord}></PinTaskListIndex> : null}
+              </div>
+            </div>
+          </Form>
+        </Modal.Content>
 
-  <Grid.Column>
-    <Form.Field>
-    <div className="event">
-                        <div className="label-green label-spacer" style={{width: '30px',height: '30px',padding: '6px 0px 0px 8px'}}>
-                           <span className="white-text">AB</span>
-                            </div>
-                            <div className="label-purple label-spacer" style={{width: '30px',height: '30px',padding: '6px 0px 0px 8px'}}>
-                           <span className="white-text ">RJ</span>
-                            </div>
-                            
-                       </div>      
-    </Form.Field>
-  </Grid.Column>
-</Grid.Row>
-</Grid>
-<Form.Field>
-<Checkbox label='send notification to assignee/followers for the task' />
-      </Form.Field>
-<Form.Field>
-<Grid columns={2}>
-<Grid.Row>
-  <Grid.Column>
-    <Form.Field>
-      <label>Start Date </label>
-      <Input   size='small' className="full-width" type="date" />     
-    </Form.Field>
-  </Grid.Column>
+      </Modal>
+    </div >
+  )
+}
 
-  <Grid.Column>
-    <Form.Field>
-    <label>End Date </label>
-    <Input   size='small' className="full-width" type="date" /> 
-    </Form.Field>
-  </Grid.Column>
-</Grid.Row>
-</Grid>
-</Form.Field>
-<Form.Field>  
-    <label>Estimated Dates </label>
-      <Select placeholder='Select' className="small" options={countryOptions} />
-     
-      </Form.Field>
-      <Form.Field>
-       
-              <Button
-          content="Submit" 
-          onClick={() => dispatch({ type: 'close' })}
-          positive
-          size='mini' className="grey-btn"
-        />
-        <Button size='mini' className="icon-border" onClick={() => dispatch({ type: 'close' })}>
-        X  Cancel
-        </Button>
-          
-      </Form.Field>
-      </div>
-      <Form.Field>
-       
-        <div className="card1 card-custom gutter-b" style={{border: '1px solid #ddd'}}>
-
-<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-												 
-													<div className="d-flex align-items-center  py-2">
-													  <span> <img src={img4}  className="  mr-10 " />  </span>
-													 
-                                                     <span>  <img src={img3}  className=" mr-2 mr-10 " />   </span>
-                                                     <span className="font-weight-bold mb-0 mr-10  ">This is task name here</span>
-														 
-													</div>
-													 
-													<div className="symbol-group symbol-hover py-2 text-right">
-													   <div className="symbol symbol-30">
-                                                       
-                                                        <img src={img2}  />
-                                                    
-														</div>
-                                                       
-													</div> 
-                                                    
-												</div>
-                                                <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-                                                <div className="d-flex align-items-center  py-2">
-													  <span className="  mr-10 " >    </span>
-													 
-                                                     <span  className=" mr-2 mr-10 " >   </span>
-                                                     <span style={{color:'#718898'}}  className="font-weight-bold mb-0 mr-10  ">Starts Tomorrow ↦ Due Fri Aug 28th</span>
-														 
-													</div>
-
-                                                </div>
-                                                 
-<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-												 
-<div className="d-flex align-items-center  py-2">
-                                                <span className=" mr-2 mr-10 li_area"></span>
-                                                   <span className=" mr-2 mr-10 li_area">  <i className="ms-Icon ms-Icon--LocationDot " aria-hidden="true" style={{color:'#D0D8DF'}}></i>Tender</span>
-                                                    <span className=" mr-2 mr-10 li_area">  <i className="ms-Icon ms-Icon--LocationDot " aria-hidden="true" style={{color:'#D0D8DF'}}></i>Paint Work</span>
-                                                 </div>
-                                                  
-                                                 <div className="symbol-group symbol-hover py-2 text-right">
-                                                    <div className="symbol symbol-30">
-                                                    
-                                                     <img src={img6}  />
-                                                 
-                                                     </div>
-                                                    
-                                                 </div> 
-                                                 
-                                             </div>
-                                              
-                                               
-        </div> 
- 
-
-      </Form.Field>
-      <Form.Field>
-       
-       <div className="card1 card-custom gutter-b" style={{border: '1px solid #ddd'}}>
-
-<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-                                                
-                                                   <div className="d-flex align-items-center  py-2">
-                                                     <span> <img src={img4}  className="  mr-10 " />  </span>
-                                                    
-                                                    <span>  <img src={img3}  className=" mr-2 mr-10 " />   </span>
-                                                    <span className="font-weight-bold mb-0 mr-10  ">This is task name here</span>
-                                                        
-                                                   </div>
-                                                    
-                                                   <div className="symbol-group symbol-hover py-2 text-right">
-                                                      <div className="symbol symbol-30">
-                                                      
-                                                       <img src={img2}  />
-                                                   
-                                                       </div>
-                                                      
-                                                   </div> 
-                                                   
-                                               </div>
-                                               <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-                                               <div className="d-flex align-items-center  py-2">
-                                                     <span className="  mr-10 " >    </span>
-                                                    
-                                                    <span  className=" mr-2 mr-10 " >   </span>
-                                                    <span style={{color:'#718898'}}  className="font-weight-bold mb-0 mr-10  ">Starts Tomorrow ↦ Due Fri Aug 28th</span>
-                                                        
-                                                   </div>
-
-                                               </div>
-                                                
-<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-                                                
-                                                <div className="d-flex align-items-center  py-2">
-                                                <span className=" mr-2 mr-10 li_area"></span>
-                                                   <span className=" mr-2 mr-10 li_area">  <i className="ms-Icon ms-Icon--LocationDot " aria-hidden="true" style={{color:'#D0D8DF'}}></i>Tender</span>
-                                                    <span className=" mr-2 mr-10 li_area">  <i className="ms-Icon ms-Icon--LocationDot " aria-hidden="true" style={{color:'#D0D8DF'}}></i>Paint Work</span>
-                                                 </div>
-                                                 
-                                                <div className="symbol-group symbol-hover py-2 text-right">
-                                                   <div className="symbol symbol-30">
-                                                      <img src={img6}  />
-                                                
-                                                    </div>
-                                                   
-                                                </div> 
-                                                
-                                            </div>
-                                             
-                                              
-       </div> 
-
-
-     </Form.Field>
-    </Grid.Column>
-
-  </Grid>
-  </Form>
-          </Modal.Content>
-          
-        </Modal>
-        </div>
-      </>
-    )
-  }
-  
-  export default ModalExampleSize
+export default AddPinFile
