@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cudoflow
+  namespace: namespace-workflow-1690571750936
+spec:
+  type: LoadBalancer
+  selector:
+    app: cudoflow
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
