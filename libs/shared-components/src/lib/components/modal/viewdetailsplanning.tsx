@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Button,
   Header,
@@ -6,8 +7,10 @@ import {
   Input,
   Form,
   Grid,
+  Dropdown,
   Select,
   TextArea,
+  FormButton,
 } from 'semantic-ui-react';
 import LoaderPage from '../loader/loader';
 // import SampleModal from './sample-modal';
@@ -16,6 +19,8 @@ export interface PlanningProps {
   cancel?,
   milestoneDataById?,
   loading?
+  edit?
+  delete?
 }
 export function ModalViewPlanning(props: PlanningProps) {
 
@@ -25,8 +30,8 @@ export function ModalViewPlanning(props: PlanningProps) {
   ];
 
   const [open, setOpen] = React.useState(false);
+  const {t} = useTranslation()
   React.useEffect(() => {
-    console.log('loading', props.loading);
     if (props.openPlanningDetail) {
       setOpen(props.openPlanningDetail);
     }
@@ -41,19 +46,35 @@ export function ModalViewPlanning(props: PlanningProps) {
   if (props.loading) return <LoaderPage />;
   return (
     <div id="navbar">
-      <Modal style={{height:'650px'}}
-        className="modal_media"
-        onClose={() => setOpen(false)}
+      <Modal className="modal_media right-side--fixed-modal view-milestone-modal"
+        closeIcon
+        onClose={cancel}
         onOpen={openf}
         open={open}
-        trigger={
-          <Button size="mini" className="grey-btn">
-            View Milestone
-          </Button>
-        }
-      >
+        // trigger={
+        //   <Button size="mini" className="grey-btn">
+        //     {t("project_tab_menu.planning.view_milestone")}
+        //   </Button>
+        // }
+        closeOnDimmerClick={false}>
         <Modal.Header>
-          <h3>View Milestone Details </h3>
+          <h3 className="header-w-icon d-flex align-item-center"><i className="ms-Icon ms-Icon--Completed" aria-hidden="true"></i> {t("project_tab_menu.planning.view_milestone_details")}
+            <div className="symbol symbol-30 d-flex">
+              <span className="dropdown-action">
+                <Dropdown icon='ellipsis horizontal' floating labeled>
+                  <Dropdown.Menu className="dropdowncomplete">
+                    <Dropdown.Item
+                      onClick={() => props.edit(props.milestoneDataById)}
+                      icon="pencil" text="Edit" />
+                    <Dropdown.Item
+                      onClick={() => props.delete(props.milestoneDataById)}
+                      icon="trash alternate outline"
+                      text="Delete" />
+                  </Dropdown.Menu>
+                </Dropdown>
+              </span>
+            </div>
+          </h3>
         </Modal.Header>
         <Modal.Content body>
           <div>
@@ -61,15 +82,15 @@ export function ModalViewPlanning(props: PlanningProps) {
               <Grid columns={2}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
-                      <label>Milestone Title</label>
-                      <span>{props?.milestoneDataById?.MileStoneByID.milestoneTitle}</span>
+                    <Form.Field className="filled-fields">
+                      <label>{t("project_tab_menu.planning.milestone_title")}</label>
+                      <span>{props?.milestoneDataById?.milestoneTitle}</span>
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
-                    <Form.Field>
-                      <label>Due Date</label>
-                      <span>{props?.milestoneDataById?.MileStoneByID.dueDate}</span>
+                    <Form.Field className="filled-fields">
+                      <label>{t("common.due_date")}</label>
+                      <span>{props?.milestoneDataById?.dueDate}</span>
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -78,9 +99,9 @@ export function ModalViewPlanning(props: PlanningProps) {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
-                      <label>Description </label>
-                      <span>{props?.milestoneDataById?.MileStoneByID.description}
+                    <Form.Field className="filled-fields">
+                      <label>{t("common.desc")} </label>
+                      <span>{props?.milestoneDataById?.description}
                       </span>
                     </Form.Field>
                   </Grid.Column>
@@ -89,9 +110,9 @@ export function ModalViewPlanning(props: PlanningProps) {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
-                      <label>Associate with work type</label>
-                      <span>{props?.milestoneDataById?.MileStoneByID.worktypeName} </span>
+                    <Form.Field className="filled-fields">
+                      <label>{t("project_tab_menu.task.work_type")}</label>
+                      <span>{props?.milestoneDataById?.worktypeName} </span>
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -99,9 +120,9 @@ export function ModalViewPlanning(props: PlanningProps) {
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
-                      <label>Phase type</label>
-                      <span>{props?.milestoneDataById?.MileStoneByID.phaseName} </span>
+                    <Form.Field className="filled-fields">
+                      <label>{t("project_tab_menu.planning.phase_type")}</label>
+                      <span>{props?.milestoneDataById?.phaseName} </span>
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -109,22 +130,22 @@ export function ModalViewPlanning(props: PlanningProps) {
             </Form>
           </div>
         </Modal.Content>
-        <Modal.Actions>
+        {/* <Modal.Actions>
           <Button
-            content="Ok"
+            content={t("common.ok")}
             onClick={cancel}
             positive
-            size="mini"
-            className="grey-btn"
+            size="small"
+            className="primary"
           />
           <Button
-            size="mini"
+            size="small"
             className="icon-border"
             onClick={cancel}
           >
-            X Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> {t("common.cancel")}
           </Button>
-        </Modal.Actions>
+        </Modal.Actions> */}
       </Modal>
     </div>
   );

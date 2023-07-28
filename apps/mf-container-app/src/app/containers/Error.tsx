@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { initialiseRequest } from "../services/kratos"
-import { KratosMessages } from "../components/KratosMessages"
-import { KratosForm } from "../components/KratosForm"
+// import { KratosMessages } from "../components/KratosMessages"
+// import { KratosForm } from "../components/KratosForm"
 import { register } from "../services/auth"
 import config from "../config/kratos"
 

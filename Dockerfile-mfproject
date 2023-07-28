@@ -1,15 +1,27 @@
-FROM node:14.15-alpine
+FROM node:lts-alpine3.16
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
-COPY workspace*.json ./
+COPY /apps/mf-project-app/project.json ./
 COPY cypress*.json ./
-RUN npm install
+
+# Install Python3 and create a symlink to `python`
+RUN apk update \
+&& apk add --no-cache python3 build-base \
+&& ln -s /usr/bin/python3 /usr/bin/python
+
+# Install npm dependencies
+RUN npm ci
+
+# Install Nx CLI globally
+RUN npm install -g nx
+
+# Copy the rest of the application files
 COPY . .
-#RUN npm run build ms-task
-#CMD ["node", "dist/main"]
-#RUN nohup npm start ms-task > stdout.txt 2> stderr.txt &
-EXPOSE 5007
-CMD ["npm", "run","nx","serve","mf-project-app","--host0.0.0.0"]
+
+# Expose the port that the application will run on
+EXPOSE 6006
+
+CMD ["npm", "run","nx","serve","mf-project-app","0.0.0.0"]
 

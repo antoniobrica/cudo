@@ -28,9 +28,14 @@ interface AlertProps {
   openAlertF?,
   taskData?,
   cancel?,
-  taskStatus?,
-  editTaskData
+  taskStatus?
+  id?
+  editTask?
+  editTaskData?
+  editTaskLoading?
+  updatedTaskData?
 }
+
 export const ModalTaskEdit = (props: AlertProps) => {
 
   const [open, setOpen] = React.useState(false);

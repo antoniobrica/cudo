@@ -1,4 +1,4 @@
-import { DocumentNode, useQuery, useMutation } from "@apollo/react-hooks";
+import { DocumentNode, useQuery, useMutation } from "@apollo/client";
 import { FileMutation, IFiles, IToken } from "../interfaces/document";
 
 export function useTokenQuery(gqlQuery: DocumentNode) {

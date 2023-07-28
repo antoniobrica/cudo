@@ -1,37 +1,12 @@
-const WebpackNotifierPlugin = require('webpack-notifier');
-const nrwlConfig = require('@nrwl/react/plugins/webpack.js'); // require the main @nrwl/react/plugins/webpack configuration function.
-const path = require('path');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin;
+const { composePlugins, withNx } = require('@nx/webpack');
+const { withReact } = require('@nx/react');
+const { withModuleFederation } = require('@nx/react/module-federation');
 
-module.exports = (config, context) => {
-  nrwlConfig(config); // first call it so that it @nrwl/react plugin adds its configs,
+const baseConfig = require('./module-federation.config');
 
-  // then override your config.
-  config.optimization.runtimeChunk = false;
-  config.optimization.splitChunks = {
-    cacheGroups: {
-      default: false,
-    },
-  };
-  return {
-    ...config,
-    devServer: {
-      ...config.devServer,
-      port: 6009,
-    },
-    plugins: [
-      ...config.plugins,
-      new WebpackNotifierPlugin({ title: 'Frontend Project build completed' }),
-      // new BundleAnalyzerPlugin(),
-    ],
-    output: {
-      ...config.output,
-      library: 'mfProducts',
-      libraryTarget: 'window',
-    },
-    optimization: {
-      minimize: false,
-    },
-  };
+const config = {
+  ...baseConfig,
 };
+
+// Nx plugins for webpack to build config object from Nx options and context.
+module.exports = composePlugins(withNx(), withReact(), withModuleFederation(config));

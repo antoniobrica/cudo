@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mfaccount
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mfaccount
+  template:
+    metadata:
+      labels:
+        app: mfaccount
+    spec:
+      containers:
+      - name: mfaccount
+        image: cudoacr.azurecr.io/mfaccount:v1
+        ports:
+        - containerPort: 6001
+      imagePullSecrets:
+      - name: acr-auth

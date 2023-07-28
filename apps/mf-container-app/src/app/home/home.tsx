@@ -1,66 +1,95 @@
-import { Menubar } from '@cudo/shared-components';
 import React, { useEffect, useState } from 'react';
-import { Switch, Route, Link, useHistory, useRouteMatch, Redirect, useLocation } from "react-router-dom";
+import Menubar from '@shared-components/lib/components/menu';
+import { Route, Link, useLocation, useNavigate, Routes, useMatch } from 'react-router-dom';
 import { environment } from '../../environments/environment';
 import { Settings } from '../containers/Settings';
 import { MfProjectAppMount } from '../mf-project-app-mount/mf-project-app-mount';
 import { isAuthenticated, logout, ToEmail } from '../services/auth';
 import { UserProfileEdit } from '../user-profile-edit/user-profile-edit';
 import { UserProfile } from '../user-profile/user-profile';
-import { UserRegistration } from '../user-registration/user-registration';
+// import { UserRegistration } from '../user-registration/user-registration';
 
 import './home.module.scss';
-const {
-  REACT_APP_PROJECT_HOST: projectHost,
-} = environment;
+import { useAppSelector } from '../hooks';
+const { REACT_APP_PROJECT_HOST: projectHost } = environment;
 /* eslint-disable-next-line */
-export interface HomeProps { }
+export interface HomeProps {}
 
 export function Home(props: HomeProps) {
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
   const [state, setState] = useState('');
-  const data = "parrent"
-  const history = useHistory()
+  const [pathByHistory, setPathByHistory] = useState('');
+  const [menuExpand, setMenuExpand] = useState(false);
+
+  const data = 'parrent';
+  const navigate = useNavigate();
   const location = useLocation();
+
+  const match = useMatch('*');
+  const { pathname } = match;
   // const routeMatch = useRouteMatch();
-  const { url, path } = useRouteMatch();
-  console.log('path==>', path);
-  
-  useEffect(() => {
-    if (!isAuthenticated()) ToEmail()
-  }, [])
+  // const { url, path } = useRouteMatch();
+
+  // useEffect(() => {
+  //   if (!isAuthenticated()) ToEmail();
+  // }, []);
+
   const callbackFunction = (childData) => {
     switch (childData) {
       case 'logout':
         logout();
         break;
-
+      case 'project':
+        // goToProjectDashboard();
+        navigate('/home/project');
+        break;
       default:
         break;
     }
-    // history.push('/project')
   };
+  useEffect(() => {
+    if (location?.pathname.includes('/home/project/')) {
+      setPathByHistory(location?.pathname);
+    }
+  }, []);
   const edit = (childData) => {
-    history.push(`/settings`);
-  }
+    navigate(`/settings`);
+  };
   const cancel = (childData) => {
-    history.push('/home');
-  }
+    navigate('/home');
+  };
   const update = (childData) => {
-    history.push('/home');
-  }
-  return (
-    <div>
-      <Menubar data={data} parentCallback={callbackFunction}></Menubar>
-      <div>
-        <Switch>
-          <Route exact path={`${path}/profile`} render={() => <UserProfile />} />
-          <Route exact path={`${path}/settings`} render={() => <UserProfileEdit />} />
-          <Route exact path={`${path}/project`} render={() => <MfProjectAppMount host={projectHost} />} />
-        </Switch>
-      </div>
-    </div>
+    navigate('/home');
+  };
 
+  const onClickMenuExpand = () => {
+    setMenuExpand(!menuExpand);
+  };
+
+  const { information } = useAppSelector((state) => state.user);
+
+  return (
+    <div className={menuExpand ? 'expand-main-menu' : 'collapsed-main-menu'}>
+      <div>
+        <Menubar
+          data={data}
+          parentCallback={callbackFunction}
+          mainMenuExpand={onClickMenuExpand}
+          history={navigate}
+          username={information?.userName ?? 'Fahim Arif'}
+        ></Menubar>
+      </div>
+      {/* <div>
+        <Routes>
+          <Route path={`/profile`} element={<UserProfile />} />
+          <Route path={`/settings`} element={<UserProfileEdit />} />
+          <Route
+            path={pathByHistory ? pathByHistory : `${pathname}/project`}
+            element={<MfProjectAppMount host={projectHost} history={navigate} />}
+          />
+        </Routes>
+      </div> */}
+    </div>
   );
 }
 

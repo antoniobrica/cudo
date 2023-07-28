@@ -301,6 +301,8 @@
 
 .h5heading{
     color: #000;
+    margin-top: -5px;
+    margin-bottom: 12px;
 }
 .daysarea{
     background-color: #FAFAFA;
@@ -358,4 +360,11 @@
     height: 24px;
     width: 24px;
     font-size: 10px; 
+}
+
+.ui.multiple.dropdown > .label{
+    // background: none;
+    box-shadow: none;
+    position: relative;
+    top: -17px;
 }

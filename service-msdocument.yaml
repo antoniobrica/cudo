@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-document
+spec:
+  selector:
+    app: ms-document
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5003
+  type: LoadBalancer
