@@ -1,13 +1,19 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  Relation,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
 import ReferanceTypeEntity from './references.entity';
 import * as uuid from 'uuid';
 
-
 @Entity({ name: 'protocolTemplate' })
-
 export class ProtocolEntity extends BaseEntity {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -18,7 +24,6 @@ export class ProtocolEntity extends BaseEntity {
   @Column()
   @Expose()
   protocolTemplateTitle: string;
-
 
   @Expose()
   @CreateDateColumn()
@@ -42,8 +47,7 @@ export class ProtocolEntity extends BaseEntity {
 
   @Expose()
   @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.folder)
-  reference: ReferanceTypeEntity;
-
+  reference: Relation<ReferanceTypeEntity>;
 
   constructor(protocolEntity: Partial<ProtocolEntity>) {
     super();
@@ -51,11 +55,10 @@ export class ProtocolEntity extends BaseEntity {
       Object.assign(
         this,
         plainToClass(ProtocolEntity, protocolEntity, {
-          excludeExtraneousValues: true
+          excludeExtraneousValues: true,
         })
-      )
+      );
       this.protocolTemplateID = this.protocolTemplateID || uuid.v1();
-
     }
   }
 }

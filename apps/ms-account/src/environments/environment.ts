@@ -1,16 +1,17 @@
 export const environment = {
     NODE_ENV:'development',
-    PORT:5008,
+    PORT:5001,
     SERVER_TIMEOUT:1080000,
-    DATABASE_HOST: '127.0.0.1',
+    DATABASE_HOST: 'mssql',
     DATABASE_PORT:1433,
     DATABASE_USERNAME:'sa',
-    DATABASE_PASSWORD:'Welcome@1',
+    DATABASE_PASSWORD:'YourStrong!Password',
     DATABASE_NAME:'accounts',
     DATABASE_TYPE:'mssql',
     DATABASE_CONNECTION_TIME_OUT:150000,
     DATABASE_ACQUIRE_TIME_OUT:150000,
     DATABASE_CONNECTION_LIMIT:20
+  };
   // production: false,
   // SERVER_TIMEOUT: 1080000,
   // DATABASE_HOST: '192.168.0.31',
@@ -26,4 +27,3 @@ export const environment = {
   // AZURE_CLIENT_ID: 'bd2a6ffd-726f-4b43-b66a-a4fb53028b51',
   // AZURE_CLIENT_SECRET: '-s_f6YGclWR7WY-n504R_-5uGHY93saPgI',
   // VAULT_NAME: 'cudo-devvault-01'
-};

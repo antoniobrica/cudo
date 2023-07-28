@@ -1,0 +1,115 @@
+{
+  "name": "mf-cost-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/mf-cost-app/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/mf-cost-app",
+        "index": "apps/mf-cost-app/src/index.html",
+        "main": "apps/mf-cost-app/src/main.tsx",
+        "polyfills": "apps/mf-cost-app/src/polyfills.ts",
+        "tsConfig": "apps/mf-cost-app/tsconfig.app.json",
+        "assets": [
+          "apps/mf-cost-app/src/favicon.ico",
+          "apps/mf-cost-app/src/assets",
+          {
+            "input": "libs/shared-components/src/assets",
+            "glob": "**/*",
+            "output": "assets"
+          }
+        ],
+        "styles": ["apps/mf-cost-app/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "apps/mf-cost-app/webpack.config.js"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/mf-cost-app/src/environments/environment.ts",
+              "with": "apps/mf-cost-app/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "extractCss": true,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "options": {
+        "buildTarget": "mf-cost-app:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "mf-cost-app:build:production"
+        },
+        "development": {
+          "buildTarget": "mf-cost-app:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/mf-cost-app/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/mf-cost-app"],
+      "options": {
+        "jestConfig": "apps/mf-cost-app/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "storybook": {
+      "executor": "@nrwl/storybook:storybook",
+      "options": {
+        "uiFramework": "@storybook/react",
+        "port": 4400,
+        "config": {
+          "configFolder": "apps/mf-cost-app/.storybook"
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@nrwl/storybook:build",
+      "options": {
+        "uiFramework": "@storybook/react",
+        "outputPath": "dist/storybook/mf-cost-app",
+        "config": {
+          "configFolder": "apps/mf-cost-app/.storybook"
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,13 +1,19 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  Relation,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
 import * as uuid from 'uuid';
 import ReferanceTypeEntity from './references.entity';
 
-
 @Entity({ name: 'phase' })
-
 export class PhaseEntity extends BaseEntity {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -18,7 +24,6 @@ export class PhaseEntity extends BaseEntity {
   @Column()
   @Expose()
   phaseTitle: string;
-
 
   @Expose()
   @CreateDateColumn()
@@ -42,8 +47,7 @@ export class PhaseEntity extends BaseEntity {
 
   @Expose()
   @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.phase)
-  reference: ReferanceTypeEntity;
-
+  reference: Relation<ReferanceTypeEntity>;
 
   constructor(phaseEntity: Partial<PhaseEntity>) {
     super();
@@ -51,9 +55,9 @@ export class PhaseEntity extends BaseEntity {
       Object.assign(
         this,
         plainToClass(PhaseEntity, phaseEntity, {
-          excludeExtraneousValues: true
+          excludeExtraneousValues: true,
         })
-      )
+      );
       this.phaseID = this.phaseID || uuid.v1();
       // this.createdAt = this.createdAt || new Date(new Date().toUTCString());
       // this.updatedAt = new Date(new Date().toUTCString());

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { initialiseRequest } from "../services/kratos"
-import { KratosMessages } from "../components/KratosMessages"
-import { KratosForm } from "../components/KratosForm"
+// import { KratosMessages } from "../components/KratosMessages"
+// import { KratosForm } from "../components/KratosForm"
 import { Header } from "../components/Header"
 
 export const Verify = () => {
@@ -21,13 +21,13 @@ export const Verify = () => {
       <Header />
       <div className="container">
         <h4>Resend verification code</h4>
-        {messages && <KratosMessages messages={messages} />}
+        {/* {messages && <KratosMessages messages={messages} />}
         {form &&
           <KratosForm
             submitLabel="Resend verification code"
             action={form.action}
             fields={form.fields}
-            messages={form.messages} />}
+            messages={form.messages} />} */}
       </div>
     </div>
   )

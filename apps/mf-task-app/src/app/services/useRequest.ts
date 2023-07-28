@@ -1,4 +1,4 @@
-import { DocumentNode, useQuery, useMutation } from "@apollo/react-hooks";
+import { DocumentNode, useQuery, useMutation } from "@apollo/client";
 import { ITodos, TaskMutation, ITask, ITasks, TaskUpdateMutation } from "../interfaces/task";
 
 export function useTaskQuery(gqlQuery: DocumentNode, variable) {

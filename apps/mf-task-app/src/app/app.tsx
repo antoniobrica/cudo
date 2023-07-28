@@ -4,9 +4,8 @@ import Tasks from '../components/tasks/tasks';
 export function App() {
   return (
     <div>
-    <Tasks/>
+      <Tasks />
     </div>
-       
   );
 }
 

@@ -2,6 +2,13 @@
 .github
 .vscode
 # Node Files #
-node_modules
+ms-account/node_modules
 npm-debug.log
 npm-debug.log.*
+
+#
+
+.dockerignore
+.docker/*
+node_modules
+dist

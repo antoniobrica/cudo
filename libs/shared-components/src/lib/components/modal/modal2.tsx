@@ -1,4 +1,4 @@
-import { radios } from '@storybook/addon-knobs';
+
 import React from 'react';
 import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';

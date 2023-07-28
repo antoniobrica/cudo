@@ -1,37 +1,19 @@
-const WebpackNotifierPlugin = require('webpack-notifier');
-const nrwlConfig = require('@nrwl/react/plugins/webpack.js'); // require the main @nrwl/react/plugins/webpack configuration function.
-const path = require('path');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin;
+const { composePlugins, withNx } = require('@nrwl/webpack');
+const { withReact } = require('@nrwl/react');
 
-module.exports = (config, context) => {
-  nrwlConfig(config); // first call it so that it @nrwl/react plugin adds its configs,
+// Nx plugins for webpack.
+module.exports = composePlugins(withNx(), withReact(), (config) => {
+  // Update the webpack config as needed here.
+  // e.g. `config.plugins.push(new MyPlugin())`
 
-  // then override your config.
-  config.optimization.runtimeChunk = false;
-  config.optimization.splitChunks = {
-    cacheGroups: {
-      default: false,
-    },
-  };
-  return {
+  const newConfig = {
     ...config,
     devServer: {
       ...config.devServer,
-      port: 6009,
-    },
-    plugins: [
-      ...config.plugins,
-      new WebpackNotifierPlugin({ title: 'Frontend Project build completed' }),
-      // new BundleAnalyzerPlugin(),
-    ],
-    output: {
-      ...config.output,
-      library: 'mfProducts',
-      libraryTarget: 'window',
-    },
-    optimization: {
-      minimize: false,
+      port: 6005,
+      host: '0.0.0.0',
     },
   };
-};
+
+  return newConfig;
+});

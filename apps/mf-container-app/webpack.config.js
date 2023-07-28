@@ -1,25 +1,25 @@
-const WebpackNotifierPlugin = require('webpack-notifier');
-const nrwlConfig = require('@nrwl/react/plugins/webpack.js'); // require the main @nrwl/react/plugins/webpack configuration function.
+const { composePlugins, withNx } = require('@nrwl/webpack');
+const { withReact } = require('@nrwl/react');
 
-module.exports = (config, context) => {
-  nrwlConfig(config); // first call it so that it @nrwl/react plugin adds its configs,
+// Nx plugins for webpack.
+module.exports = composePlugins(withNx(), withReact(), (config) => {
+  // Update the webpack config as needed here.
+  // e.g. `config.plugins.push(new MyPlugin())`
 
-  // then override your config.
-  config.optimization.runtimeChunk = false;
-  config.optimization.splitChunks = {
-    cacheGroups: {
-      default: false,
-    },
-  };
-  return {
+  const newConfig = {
     ...config,
     devServer: {
       ...config.devServer,
+      host: '0.0.0.0',
       port: 6002,
     },
-    plugins: [
-      ...config.plugins,
-      new WebpackNotifierPlugin({ title: 'Frontend Project build completed' }),
-    ],
+    resolve: {
+      ...config.resolve,
+      fallback: {
+        ...config.resolve.fallback,
+        url: require.resolve('url/'),
+      },
+    },
   };
-};
+  return newConfig;
+});

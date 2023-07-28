@@ -1,4 +1,4 @@
-import { DocumentNode, useQuery, useMutation } from "@apollo/react-hooks";
+import { DocumentNode, useQuery, useMutation } from "@apollo/client";
 import { IMileStoneModel, IMileStones, MilestoneMutation } from "../interfaces/task";
 
 export function useMilestonesQuery(gqlQuery: DocumentNode) {
