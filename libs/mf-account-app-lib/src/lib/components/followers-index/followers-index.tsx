@@ -6,14 +6,15 @@ import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
 import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
 import Followers from '../followers/followers';
-
+import { MS_SERVICE_URL } from '@cudo/mf-core'
 /* eslint-disable-next-line */
 const client = new ApolloClient({
-  uri: 'http://localhost:5001/graphql',
+  uri: MS_SERVICE_URL['ms_account'].url,
   cache: new InMemoryCache()
 });
 export interface FollowersIndexProps {
-  parentFollowersSelect
+  parentFollowersSelect,
+  followers?,
 }
 
 export function FollowersIndex(props: FollowersIndexProps) {
@@ -23,7 +24,7 @@ export function FollowersIndex(props: FollowersIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <Followers parentFollowersSelect={onSelectF} />
+        <Followers followers={props.followers} parentFollowersSelect={onSelectF} />
       </ApolloHooksProvider>
     </ApolloProvider>
   );

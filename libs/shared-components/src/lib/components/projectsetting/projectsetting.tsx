@@ -1,17 +1,36 @@
 import React from 'react';
 
-import '../../../style/index.scss';
+import './../../../assets/style/index.scss'
 import { Tab, Grid, Accordion, Table, Form } from 'semantic-ui-react'
-import img4 from 'libs/shared-components/src/Burj-Khalifa.png';
-import img5 from 'libs/shared-components/src/edit.png';
-import img1 from 'libs/shared-components/src/green_people.png';
-import img2 from 'libs/shared-components/src/online4.png';
-import img3 from 'libs/shared-components/src/online3.png';
-import img6 from 'libs/shared-components/src/online2.png';
-import img7 from 'libs/shared-components/src/online1.png';
 
-import img8 from 'libs/shared-components/src/Ellipse.png';
-import img9 from 'libs/shared-components/src/task_file.png';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
+
+// import img4 from 'libs/shared-components/src/Burj-Khalifa.png';
+const img4 = `${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/Burj-Khalifa.png`;
+
+// import img5 from 'libs/shared-components/src/edit.png';
+const img5 = `${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/edit.png`;
+
+// import img1 from 'libs/shared-components/src/green_people.png';
+const img1 = `${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/green_people.png`;
+
+// import img2 from 'libs/shared-components/src/online4.png';
+const img2 = `${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/online4.png`;
+
+// import img3 from 'libs/shared-components/src/online3.png';
+const img3 = `${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/online3.png`;
+
+// import img6 from 'libs/shared-components/src/online2.png';
+const img6 = `${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/online2.png`;
+
+// import img7 from 'libs/shared-components/src/online1.png';
+const img7 = `${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/online1.png`;
+
+// import img8 from 'libs/shared-components/src/Ellipse.png';
+const img8 = `${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/Ellipse.png`;
+
+// import img9 from 'libs/shared-components/src/task_file.png';
+const img9 = `${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/task_file.png`;
 
 
 
@@ -313,8 +332,8 @@ export function ProjectSetting(props: TabsProps) {
   ]
 
   return (
-    <div className="app-content-body-dash navbar-collapse box-shadow bg-white-only" style={{ background: '#e6e6e6' }}>
-      <div>
+    <div className="app-content-body-dash navbar-collapse bg-white-only" style={{ background: '#e6e6e6' }}>
+      <div className="main-page-heading">
         <span className="preliminary-font">Project Setting</span>
       </div>
 

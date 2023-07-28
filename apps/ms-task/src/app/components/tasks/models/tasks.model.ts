@@ -11,6 +11,9 @@ export class TasksModel {
   @Field({ nullable: true, description: `This is for title taskID` })
   taskID?: string;
 
+  @Field({ nullable: true, description: `This is for project tasks ID` })
+  sequenceNumber?: number;
+
   @Field({ nullable: true, description: `This is for title task title` })
   taskTitle?: string;
 
@@ -44,8 +47,50 @@ export class TasksModel {
   @Field({ nullable: true, description: `Task Status` })
   status?: string;
 
+  @Field({ nullable: true, description: `Task Deleted or not` })
+  isDeleted?: Boolean;
+
   @Field({ nullable: true, description: `Description of task` })
   description?: string;
+
+  @Field({ nullable: true, description: ` file ID`  })
+  fileID?: string;
+
+  @Field({ nullable: true, description: ` file Name`  })
+  fileName?: string;
+
+  @Field({ nullable: true, description: ` Project workType ID`  })
+  projectWorktypeID?: string;
+
+  @Field({ nullable: true, description: ` Project workType `  })
+  projectWorktype?: string;
+
+  @Field({ nullable: true, description: ` Project workType Name`  })
+  projectWorktypeName?: string;
+
+  @Field({ nullable: true, description: ` Task ParentID`  })
+  taskTypeID?: string;
+
+  // @Field({ nullable: true, description: ` Task ParentID`  })
+  // taskTypeParentID?: string;
+
+  // @Field({ nullable: true, description: ` Task ChileID`  })
+  // taskTypeChildID?: string;
+
+  @Field({ nullable: true, description: `Description of task` })
+  taskType?: string;
+
+
+  @Field({ nullable: true, description: ` Task Type Name`  })
+  taskTypeName?: string;
+
+
+  @Field({ nullable: true, description: ` work Type ParentID`  })
+  workTypeID?: string;
+
+
+  @Field({ nullable: true, description: ` work Type Name `  })
+  workTypeName?: string;
 
   @Field({ description: `Task updated at` })
   updatedAt?: Date;

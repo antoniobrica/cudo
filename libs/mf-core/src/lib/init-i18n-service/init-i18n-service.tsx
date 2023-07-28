@@ -23,6 +23,7 @@ function getCurrentLanguage(): string {
 }
 
 function changeLanguage(language: string) {
+  console.log("Language changed")
   return i18n.changeLanguage(language);
 }
 

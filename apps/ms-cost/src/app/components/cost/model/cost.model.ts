@@ -17,6 +17,9 @@ export class CostModel {
   @Field({ nullable: true, description: `Project Structure name (House)` })
   structureName: string;
 
+  @Field({ nullable: true, description: `Is cost for the project deleted ?` })
+  isDeleted: string;
+
   @Field({ nullable: true, description: `Created At` })
   createdAt?: Date;
 

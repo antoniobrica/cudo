@@ -1,127 +1,160 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux'
+import { projectAction } from '../../redux/actions'
 
 import './project-info.module.scss';
 import { GET_TODOS, GET_PROJECTS } from "../../graphql/graphql";
 import { useTodoQuery, useProjectQuery } from "../../services/useRequest";
 import { ITodo, IProject } from "../../interfaces/project";
 import Modal from 'react-modal';
-import { Card, Icon, Form, Grid } from 'semantic-ui-react'
+import { Card, Icon, Form, Grid, Button, Dropdown, Label } from 'semantic-ui-react'
 import { useHistory } from "react-router";
-import '../../../../../../libs/shared-components/src/style/index.scss';
-import { LoaderPage } from "@cudo/shared-components"
+import { useLocation } from "react-router-dom";
+import { LoaderPage, LazyLoading } from "@cudo/shared-components"
+import ReactQuill, { Quill } from 'react-quill';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
 
 import ModalExampleModal from '../modal/modal'
+import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { useTranslation } from 'react-i18next';
 
 /* eslint-disable-next-line */
-export interface ProjectInfoProps { }
+export interface ProjectInfoProps {
+  companyId?
+}
 
 export function ProjectInfo(props: ProjectInfoProps) {
-  const { loading, error, data } = useProjectQuery(GET_PROJECTS);
-  const [openForm, setopenForm] = React.useState(false);
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  const notify = () => toast("This is Warning Message");
+
+  const { companyId } = props
+  const { loading, error, data } = useProjectQuery(GET_PROJECTS, { variables: { companyId }, });
+  const [openForm, setopenForm] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const {t} = useTranslation()
+
+  if (loading) return <LazyLoading />;
 
   const history = useHistory();
-  if (loading) return <LoaderPage />;
-  if (error) return <h1>Something went wrong!</h1>;
+  const location = useLocation()
+  // console.log('---Project--projectInfo--location--mk--', location, '---history---', history)
+  // @ts-ignore
+  const projectId = location?.state?.projectId ? location?.state?.projectId : null
+  // console.log('--Project--projectInfo-useEffect-----refreshed projectId-from history-location-state---', projectId);
+
+  //  useEffect(() => {
+  //   if (projectId) {
+  //     console.log('--Project--projectInfo-useEffect-----refreshed projectId-from history-location-state---', projectId);
+  //     openProject(projectId)
+  //   }
+  //  }, [projectId])
 
   const addProject = () => {
     setopenForm(!openForm);
   }
 
-  const openTask = (project) => {
-    console.log('task open==>', history)
-    history.push(`/home/project/${project.projectId}`);
+  const dispatch = useDispatch()
+
+  const openProject = (projectId) => {
+    // console.log('---Project detail open==>', history)
+    dispatch({ type: projectAction.SELECT_PROJECT_ID, payload: projectId })
+    // console.log('---Project detail history push-----------')
+    history.push(`/home/project/${projectId}`);
   }
+
+  dispatch({ type: projectAction.SELECT_PROJECT_ID, payload: null })
+  dispatch({ type: projectAction.SELECT_COMPANY_ID, payload: localStorage.getItem('selectedCompany') })
+
   function openModal() {
     setIsOpen(true);
   }
-  const refresh =(data)=>{
-    console.log('refresh is called', data); 
 
-    
+  const refresh = (data) => {
+    // console.log('refresh is called', data);
   }
+
+  if (error) return (
+    <div style={{ marginLeft: 900 }} >
+      <ModalExampleModal onSuccess={refresh}></ModalExampleModal>
+    </div>
+  );
   return (
     <div>
       {/* <h1>Projects</h1> */}
-      <div>
+      {/* <div>
         <ModalExampleModal onSuccess={refresh}></ModalExampleModal>
-      </div>
+      </div> */}
 
-      <div className="app-content-body body_cards_area">
-        <div>
-          <h2 className="project">All Projects</h2>
-          <span className="total">Total {data.projects.length} project added</span>
+      <div className="app-content-body body_cards_area project-listing-page">
+        <div className="dashboard-header">
+
+          {/* <div>
+            <button onClick={notify}>Notify!</button>
+            <ToastContainer className="success" position="top-right" autoClose={5000} hideProgressBar={true} closeOnClick pauseOnFocusLoss pauseOnHover />
+          </div> */}
+          <h3>{t("project_list.header.header_title")} <span className="total">{t("project_list.header.header_line.total")} {data.projects.length} {t("project_list.header.header_line.project_added")}</span></h3>
+          <ModalExampleModal onSuccess={refresh}></ModalExampleModal>
         </div>
 
         <Form>
-          <Grid columns={4}>
-
-            <Grid.Row>
-              {data.projects.map((project: IProject, i) => (
-                <Grid.Column className="card-margin" key={i} onClick={() => openTask(project)}>
-                  <Card>
-                    <div className="ui card">
-                      <div className="content">
-                        <div className="description"><img src="" alt="Logo"></img>
-                          <span className="summary"><span className="dot">...</span>
-                          </span>
-                        </div>
-                        {project.projectName ? <div className="header font-header">
-                          {project.projectName}</div> : <div className="header font-header">
-                          NA</div>}
-
-                        {project.client ? <div className="description">{project.client}</div> :
-                          <div className="description">NA</div>}
-
-                        <div className="data-built">Type of building
-            <span className="summary">{project.buildingType}
-
-                          </span>
-                        </div>
-
-                        {/* <div className="data-built">Level of building
-            <span className="summary">3rd
-                
-                </span>
-            </div> */}
-
+          <div className="project-listing-cards">
+            <ul>
+              {data?.projects?.map((project: IProject, i) => {
+                const { projectId, projectName, client, buildingType, description } = project
+                // const shortDescription = description.length > 94 ? description.substring(0, 94) + '...' : description
+                return (
+                  <li key={projectId} >
+                    <div className="project-logo-action">
+                      <div className="project-logo">
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/default-logo.png`} alt="Logo" />
                       </div>
-                      <div className="content">
-                        <div className="data-built">
-                          {project.description ?
-                            <p>{project.description}
-                            </p> :
-                            <p>NA</p>}
 
-                        </div>
-                        <div className="event">
-                          <div className="label-green label-spacer">
-                            <span className="white-text">AB</span>
-                          </div>
-                          <div className="label-purple label-spacer">
-                            <span className="white-text ">RJ</span>
-                          </div>
-                          <div className="label-blue label-spacer">
-                            <span className="white-text">JB</span>
-                          </div>
+                      <div className="project-action">
+                        <div className="symbol symbol-30 d-flex">
+                          <span className="dropdown-action">
+                            <Dropdown icon='ellipsis horizontal' floating labeled>
+                              <Dropdown.Menu className="dropdowncomplete">
+                                <Dropdown.Item icon='setting' text={t("project_list.project_card.manage_project")} />
+                                <Dropdown.Item icon='tasks' text={t("project_list.project_card.view_activity")} />
+                                <Dropdown.Item icon='archive' text={t("project_list.project_card.archive")} />
+                                <Dropdown.Item icon='trash alternate outline' text={t("common.delete")} />
+                              </Dropdown.Menu>
+                            </Dropdown>
+                          </span>
                         </div>
                       </div>
                     </div>
 
-                  </Card>
+                    <div className="project-name">
+                      <h4 onClick={() => openProject(projectId)}>{projectName ? projectName : 'NA'} <span>{client ? client : 'NA'}</span></h4>
+                    </div>
 
-                </Grid.Column>
-              ))}
-            </Grid.Row>
+                    <div className="project-info">
+                      <p>{t("project_list.add_new_project.building_type_lable")} <span>{buildingType}</span></p>
+                      {/* <p>Level of building <span>3rd</span></p> */}
+                    </div>
 
-          </Grid>
-
+                    <div className="project-description">
+                      {/* <p>{shortDescription ? shortDescription : 'NA'}</p> */}
+                      <p><ReactQuill id="txtDescription" readOnly={true} value={description} modules={{ toolbar: null }} /></p>
+                      {/* <div className="project-members">
+                        <Label circular color="orange">AK</Label>
+                        <Label circular color="violet">AM</Label>
+                        <Label circular color="brown">VN</Label>
+                      </div> */}
+                    </div>
+                  </li>
+                )
+              }
+              )}
+            </ul>
+          </div>
         </Form>
-
       </div>
-
 
       <div style={{ flexDirection: 'row', display: 'flex', flexWrap: "wrap" }}>
         {/* {data.getProjects.map((project: IProject) => (
@@ -131,5 +164,8 @@ export function ProjectInfo(props: ProjectInfoProps) {
     </div>
   );
 }
+const mapStateToProps = state => ({
+  companyId: state.app.selectedCompany.selectedCompanyId
+})
 
-export default ProjectInfo;
+export default connect(mapStateToProps)(ProjectInfo)

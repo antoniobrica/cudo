@@ -2,12 +2,14 @@ import { Expose, plainToClass } from 'class-transformer';
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, ManyToMany, UpdateDateColumn } from 'typeorm';
 import * as uuid from 'uuid';
 import { BkpEntity } from './bkp.entity';
+import { BkpHierarchyEntity } from './bkphierarchy.entity';
 import { FileTypeEntity } from './file-type.entity';
 import { FileEntity } from './file.entity';
 import { FileStructureEntity } from './filestructure.entity';
 import { FolderEntity } from './folder.entity';
 import { PhaseEntity } from './phase.entity';
 import UsersEntity from './users.entity';
+import { WorkTypeEntity } from './workType.entity';
 
 /**
  * 
@@ -81,6 +83,14 @@ export default class ReferanceTypeEntity extends BaseEntity {
     @Expose()
     @OneToMany(() => FileEntity, (file: FileEntity) => file.reference)
     file: FileEntity[];
+
+    @Expose()
+    @OneToMany(() => WorkTypeEntity, (worktype: WorkTypeEntity) => worktype.reference)
+    worktype: WorkTypeEntity[];
+
+    @Expose()
+    @OneToMany(() => BkpHierarchyEntity, (file: BkpHierarchyEntity) => file.references)
+    bkphierarchy: BkpHierarchyEntity[];
 
     constructor(referanceTypeEntity: Partial<ReferanceTypeEntity>) {
         super();

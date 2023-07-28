@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+
 export const GET_TASKS = gql`
 query Tasks($referenceID: String!) 
 {
@@ -6,43 +7,53 @@ query Tasks($referenceID: String!)
     referenceType: PROJECTTYPE
     referenceID: $referenceID
   }){
-    taskID
-    taskTitle
-    startDate
-    endDate
-    estimatedDays
-    sendNotification
-    saveTaskAsTemplate
-    BKPID
-    BKPTitle
-    phaseID
-    description
-    phaseName
-    status
-    updatedAt
-    createdAt
-    updatedBy
-    createdBy
-  reference{
-  referenceID
+    results{
+      taskID
+      taskTitle
+      startDate
+      endDate
+      estimatedDays
+      sendNotification
+      saveTaskAsTemplate
+      BKPID
+      BKPTitle
+      phaseID
+      description
+      phaseName
+      status
+      updatedAt
+      createdAt
+      updatedBy
+      createdBy
+      taskTypeID
+      fileID
+      taskType
+      workTypeID
+      workTypeName
+      sequenceNumber
+      reference{
+        referenceID
+      }
+      assignees{
+        userID
+        userName
+      }
+      files{fileID,fileName,fileUrl} 
+      followers{
+        userID
+        userName
+      }
+      subtasks{subtaskID, subtaskTitle, status,isDeleted}
   }
-  assignees{
-  userID
-  userName
-  }
-  followers{
-  userID
-  }
-  }
+    } 
   }
 `;
-
 
 export const ADD_TASK = gql`
 mutation CreateTask(
   $taskTitle: String!, 
-  $startDate: DateTime!,
-  $endDate: DateTime!,
+  $startDate: DateTime,
+  $endDate: DateTime,
   $estimatedDays: String!,
   $sendNotification: Boolean!,
   $BKPID: String!,
@@ -52,7 +63,15 @@ mutation CreateTask(
   $phaseName: String!,
   $referenceID: String!,
   $description: String!,
+  $fileID: String! 
+  $fileName: String!
+  $taskTypeID: String!,
+  $workTypeID: String!
+  $workTypeName: String!
   $files: [TaskFileParams!]!
+  $subtasks: [SubTaskParams!]!
+  $assignees: [PeopleParams!]!
+  $followers: [PeopleParams!]!
   ){ 
     createTask(
       referenceFilter: {
@@ -73,27 +92,69 @@ mutation CreateTask(
       phaseName: $phaseName,
       status: INPROGRESS,
       description: $description
+     fileID : $fileID
+     fileName:$fileName
+     taskTypeID:$taskTypeID
+     taskType:PROTOCOL
+     workTypeID: $workTypeID
+     workTypeName:$workTypeName
         }
-      assignees:[{userID:"2",userName:"Ashutosh"},{userID:"3",userName:"Ashutosh"}]
-      followers:[{userID:"1",userName:"Ashutosh"}]
+      assignees: $assignees
+      followers: $followers
       files: $files,
-      subtasks: []
+      subtasks: $subtasks
    }){
-    taskTitle
-    startDate
-    endDate
+#     taskTitle
+#     startDate
+#     endDate
+#     workTypeID
+# workTypeName
+      taskID
+      taskTitle
+      startDate
+      endDate
+      estimatedDays
+      sendNotification
+      saveTaskAsTemplate
+      BKPID
+      BKPTitle
+      phaseID
+      description
+      phaseName
+      status
+      updatedAt
+      createdAt
+      updatedBy
+      createdBy
+      taskTypeID
+      fileID
+      taskType
+      workTypeID
+      workTypeName
+      sequenceNumber
+      reference{
+        referenceID
+      }
+      assignees{
+        userID
+        userName
+      }
+      files{fileID,fileName,fileUrl} 
+      followers{
+        userID
+        userName
+      }
+      subtasks{subtaskID, subtaskTitle, status,isDeleted}
   }
 }`;
-
-
 
 export const UPDATE_TASK = gql`
 mutation UpdateTask(
   $taskID: String!,    
   $status: TASKSTATUS!,
   $taskTitle: String!,
-  $startDate: DateTime!,
-  $endDate: DateTime!,
+  $startDate: DateTime,
+  $endDate: DateTime,
   $estimatedDays: String!,
   $sendNotification: Boolean!,
   $BKPID: String!,
@@ -102,7 +163,12 @@ mutation UpdateTask(
   $phaseID: String!
   $phaseName: String!
   $description: String!
+  $workTypeID: String!
+  $workTypeName: String!
   $files: [TaskFileParams!]!
+  $subtasks: [SubTaskParams!]!
+  $assignees: [PeopleParams!]!
+  $followers: [PeopleParams!]!
   ){ 
     updateTask(
         taskDetailsUpdate: {
@@ -119,18 +185,55 @@ mutation UpdateTask(
           saveTaskAsTemplate: $saveTaskAsTemplate,
           phaseID: $phaseID,
           phaseName: $phaseName,
-          description: $description
+          description: $description,
+          workTypeID: $workTypeID
+          workTypeName:$workTypeName
         }
-      assignees:[{userID:"2",userName:"Ashutosh"},{userID:"3",userName:"Ashutosh"}]
-      followers:[{userID:"1",userName:"Ashutosh"}]
+      assignees: $assignees
+      followers: $followers
       files: $files
-      subtasks: []
+      subtasks: $subtasks
 
    }){
-    taskID
-    status    
+      taskID
+      taskTitle
+      startDate
+      endDate
+      estimatedDays
+      sendNotification
+      saveTaskAsTemplate
+      BKPID
+      BKPTitle
+      phaseID
+      description
+      phaseName
+      status
+      updatedAt
+      createdAt
+      updatedBy
+      createdBy
+      taskTypeID
+      fileID
+      taskType
+      workTypeID
+      workTypeName
+      sequenceNumber
+      reference{
+        referenceID
+      }
+      assignees{
+        userID
+        userName
+      }
+      files{fileID,fileName,fileUrl} 
+      followers{
+        userID
+        userName
+      }
+      subtasks{subtaskID, subtaskTitle, status,isDeleted}
   }
 }`;
+
 export const DELETE_TASK = gql`
 mutation DeleteTask(
   $taskID: String!,    
@@ -143,6 +246,132 @@ mutation DeleteTask(
       taskID
     }
 }`;
-//dummy data
 
+// Added for Sub task
+export const UPDATE_TASK_STATUS = gql`
+mutation UpdateTask(
+  $taskID: String!,    
+  $status: TASKSTATUS!,
+){ 
+    updateTask(
+        taskDetailsUpdate: {
+        taskBasics:{
+          taskID: $taskID,
+          status: $status          
+        }      
+   }){
+    taskID
+    status    
+  }
+}`;
+
+// export const ADD_SUBTASK = gql`
+// mutation UpdateTask(
+//   $taskID: String!,    
+//   $subtaskTitle: String!
+//   $status: TASKSTATUS!
+// ) { 
+//   updateTask(
+//     taskDetailsUpdate: {
+//       taskBasics: {
+//         taskID: $taskID
+//       }
+//       subtasks: [       
+//         { subtaskTitle:$subtaskTitle, status:$status }       
+//       ]
+//     }
+//   ) {
+//       results{
+//         taskID
+//         taskTitle
+//         startDate
+//         endDate
+//         estimatedDays
+//         sendNotification
+//         saveTaskAsTemplate
+//         BKPID
+//         BKPTitle
+//         phaseID
+//         description
+//         phaseName
+//         status
+//         updatedAt
+//         createdAt
+//         updatedBy
+//         createdBy
+//         taskTypeID
+//         fileID
+//         taskType
+//         reference{
+//           referenceID
+//         }
+//         assignees{
+//           userID
+//           userName
+//         }
+//         files{fileID,fileName,fileUrl} 
+//         followers{
+//           userID
+//           userName
+//         }
+//         subtasks{subtaskID, subtaskTitle, status,isDeleted}
+//       }
+//     }
+// }`;
+
+export const UPDATE_SUBTASK_STATUS = gql`
+mutation UpdateSubTask(
+  $subtaskID: String!,    
+  $status: TASKSTATUS!  
+  ){ 
+  updateSubTask(
+    subTaskDetail: {
+      status:$status
+    }
+    subTaskFilter:{
+      subtaskID:$subtaskID
+     }    
+  ) {
+    subtaskID
+    subtaskTitle
+    status
+    isDeleted
+  }
+}`;
+
+export const UPDATE_SUBTASK = gql`
+mutation UpdateSubTask(
+    $subtaskID: String!,    
+    $subtaskTitle: String!  
+  ){ 
+    updateSubTask(
+      subTaskDetail: {
+        subtaskTitle:$subtaskTitle
+      }
+      subTaskFilter:{
+        subtaskID:$subtaskID
+      }    
+    ) {
+      subtaskID
+      subtaskTitle
+      status
+      isDeleted
+    }
+}`;
+
+export const DELETE_SUBTASK = gql`
+mutation DeleteSubTask(
+  $subtaskID: String!
+  ){ 
+    deleteSubTask(
+      subtaskDeleteInput:{
+        subtaskID:$subtaskID
+      }    
+  ) {
+    subtaskID
+    subtaskTitle
+    status
+    isDeleted
+  }
+}`;
 
