@@ -1,14 +1,2 @@
-.git
-.github
-.vscode
-# Node Files #
-ms-account/node_modules
-npm-debug.log
-npm-debug.log.*
-
-#
-
-.dockerignore
-.docker/*
-node_modules
-dist
+Dockerfile
+charts/
