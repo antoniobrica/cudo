@@ -301,15 +301,20 @@
 
 .h5heading{
     color: #000;
+    margin-top: -5px;
+    margin-bottom: 12px;
 }
 .daysarea{
-    background-color: #FAFAFA;
+ 
+    background-color: #F1F3F5;
     font-size: 12px;
-    padding: 6px
+    padding: 6px;
+    color: #718898;
+    
 }
 .time{
     padding: 6px;
-    background: blue;
+    background: #2D62ED;
     color: #fff;
     font-size: 12px;
 }
@@ -358,4 +363,15 @@
     height: 24px;
     width: 24px;
     font-size: 10px; 
+}
+.ui.selection.dropdown{
+    min-height: 4rem !important;
+}
+
+.ui.multiple.dropdown > .label{
+    background: none;
+   
+    box-shadow: none;
+    position: relative;
+    top: -17px;
 }

@@ -1,0 +1,11 @@
+FROM node:14.15-alpine
+WORKDIR /usr/src/app
+COPY package.json ./
+RUN npm install
+RUN npm i apollo-server-express @nestjs/platform-express mssql
+COPY . .
+EXPOSE 80
+ENV NODE_ENV=production
+ENV PORT=80
+CMD ["node" , "main.js"]
+

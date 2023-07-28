@@ -13,7 +13,7 @@
 // const client = new ApolloClient({
 //   cache: new InMemoryCache(),
 //   link: new HttpLink({
-//     uri: 'http://localhost:3333/graphql',
+//     uri: 'http://192.168.1.38:3333/graphql',
 //   }),
 // });
 // const App = () => (

@@ -6,10 +6,10 @@ interface ServerData {
   header: string
 }
 
-const call = method => async (url, { body, query, headers }:any = {}) => {
+const call = method => async (url, { body, query, headers }: any = {}) => {
   const response = await axios({
     method,
-    baseURL: `http://localhost:3003${url}`,
+    baseURL: `http://192.168.1.38:3003${url}`,
     data: body,
     headers,
     params: query

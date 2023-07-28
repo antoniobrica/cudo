@@ -6,7 +6,8 @@ import './file-type.module.scss';
 
 /* eslint-disable-next-line */
 export interface FileTypeProps {
-  parentFileTypeSelect
+  parentFileTypeSelect?
+  fileTypeName
 }
 
 export function FileType(props: FileTypeProps) {
@@ -19,6 +20,11 @@ export function FileType(props: FileTypeProps) {
       setItems(data.FileTypes.map(({ fileTypeTitle, fileTypeID }) => ({ key: fileTypeID, value: fileTypeTitle, text: fileTypeTitle })));
     }
   }, [data]);
+  React.useEffect(() => {
+    if (props.fileTypeName) {
+      setFileType(props.fileTypeName)
+    }
+  }, [props.fileTypeName])
 
   const onFile = (event, data) => {
     const file = { fileTypeID: '', fileTypeTitle: '' };

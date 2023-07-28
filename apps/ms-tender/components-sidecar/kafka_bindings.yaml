@@ -5,16 +5,16 @@ metadata:
 spec:
   type: bindings.kafka
   metadata:
-  # Kafka broker connection setting
-  - name: brokers
-    value: localhost:9092
-  # consumer configuration: topic and consumer group
-  - name: topics
-    value: sample
-  - name: consumerGroup
-    value: group1
-  # publisher configuration: topic
-  - name: publishTopic
-    value: sample
-  - name: authRequired
-    value: "false"
+    # Kafka broker connection setting
+    - name: brokers
+      value: 192.168.1.38:9092
+    # consumer configuration: topic and consumer group
+    - name: topics
+      value: sample
+    - name: consumerGroup
+      value: group1
+    # publisher configuration: topic
+    - name: publishTopic
+      value: sample
+    - name: authRequired
+      value: "false"

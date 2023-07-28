@@ -1,12 +1,13 @@
 import React from 'react';
 
 import styles from './app.module.scss';
+import AddSession from './add-session/add-session';
 
 
 export function App() {
   return (
-    <div className={styles.app}>
-      <div>Meeting app</div>
+    <div>
+      <AddSession />
     </div>
   );
 }

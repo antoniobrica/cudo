@@ -1,9 +1,10 @@
 import { Expose, plainToClass } from "class-transformer";
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn, Tree, TreeChildren, TreeParent, UpdateDateColumn } from "typeorm";
 import * as uuid from 'uuid';
-
+import FileReferencesEntity from "./fileReference.entity";
 
 @Entity({ name: 'files' })
+@Tree("closure-table")
 export class FileParamEntity extends BaseEntity {
 
     @PrimaryGeneratedColumn()
@@ -11,15 +12,15 @@ export class FileParamEntity extends BaseEntity {
 
     @Expose()
     @Column({ unique: true })
-    fileID: string;
+    uploadedFileID: string;
 
     @Column()
     @Expose()
     fileURL: string;
 
-    // @Expose()
-    // @Column({ nullable: true })
-    // generateFileName?: boolean;
+    @Expose()
+    @Column({ nullable: true })
+    parentFileID?: string;
 
     @Column()
     @Expose()
@@ -31,7 +32,50 @@ export class FileParamEntity extends BaseEntity {
 
     @Column({ nullable: true })
     @Expose()
-    fileVersion: string;
+    fileVersion: number;
+
+    @TreeChildren()
+    children: FileParamEntity[];
+
+    @TreeParent()
+    parent: FileParamEntity;
+
+    @Expose()
+    @CreateDateColumn()
+    createdAt?: Date;
+
+    @Expose()
+    @Column({ nullable: true })
+    createdBy?: string;
+
+    @Expose()
+    @UpdateDateColumn()
+    updatedAt?: Date;
+
+    @Expose()
+    @Column({ nullable: true })
+    updatedBy?: string;
+
+    @Expose()
+    @Column({ nullable: true })
+    isDeleted?: boolean;
+
+    @Expose()
+    @Column({ nullable: true })
+    referenceID: string;
+
+    @Expose()
+    @Column({ nullable: true })
+    referenceType: string;
+
+    @Expose()
+    @Column({ nullable: true })
+    referenceTitle: string;
+
+    @Expose()
+    @ManyToMany(type => FileReferencesEntity, { cascade: true })
+    @JoinTable()
+    fileReferences: FileReferencesEntity[];
 
     constructor(fileParamEntity: Partial<FileParamEntity>) {
         super();
@@ -42,7 +86,8 @@ export class FileParamEntity extends BaseEntity {
                     excludeExtraneousValues: true
                 })
             )
-            this.fileID = this.fileID || uuid.v1();
+            this.uploadedFileID = this.uploadedFileID || uuid.v1();
         }
     }
+
 }

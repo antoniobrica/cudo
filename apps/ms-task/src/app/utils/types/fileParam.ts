@@ -2,13 +2,11 @@ import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
 class TaskFileParams {
-  @Field({ description: `User ID` })
-  fileID?: string;
 
-  @Field({ description: `User Name` })
+  @Field({ description: `File Name` })
   fileName?: string;
 
-  @Field({ description: `User Name` })
+  @Field({ description: `File Image URL` })
   fileUrl?: string;
 }
 

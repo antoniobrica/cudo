@@ -3,10 +3,9 @@
 
 export const environment = {
   production: false,
-  EACT_APP_COST_HOST: "http://localhost:6004",
-  REACT_APP_MEETING_HOST: "http://localhost:6005",
-  API_URL:'http://localhost:5005/graphql',
-  REACT_APP_TASK_HOST: "http://localhost:6009",
-  REACT_APP_DOCUMENT_HOST: "http://localhost:6010",
-
+  EACT_APP_COST_HOST: "http://192.168.1.38:6004",
+  REACT_APP_MEETING_HOST: "http://192.168.1.38:6005",
+  API_URL: 'http://cudo-ms-project.softobiz.net/graphql',
+  REACT_APP_TASK_HOST: "http://192.168.1.38:6009",
+  REACT_APP_DOCUMENT_HOST: "http://192.168.1.38:6010",
 };

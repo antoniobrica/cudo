@@ -8,7 +8,7 @@ import AddFolder from '../add-folder/add-folder';
 
 /* eslint-disable-next-line */
 const client = new ApolloClient({
-  uri: 'http://localhost:5001/graphql',
+  uri: 'http://cudo-ms-account.softobiz.net/graphql',
   cache: new InMemoryCache()
 });
 export interface AddFolderIndexProps {
@@ -18,13 +18,13 @@ export interface AddFolderIndexProps {
 }
 
 export function AddFolderIndex(props: AddFolderIndexProps) {
-  
+
   return (
     <ApolloProvider client={client}>
-    <ApolloHooksProvider client={client as any}>
-      <AddFolder open={props.open} cancel={props.cancel} folderData={props.folderData}/>
-    </ApolloHooksProvider>
-  </ApolloProvider>
+      <ApolloHooksProvider client={client as any}>
+        <AddFolder open={props.open} cancel={props.cancel} folderData={props.folderData} />
+      </ApolloHooksProvider>
+    </ApolloProvider>
   );
 }
 

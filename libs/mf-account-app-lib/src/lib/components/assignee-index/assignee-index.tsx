@@ -9,12 +9,13 @@ import Assignee from '../assignee/assignee';
 
 /* eslint-disable-next-line */
 const client = new ApolloClient({
-  uri: 'http://localhost:5001/graphql',
+  uri: 'http://cudo-ms-account.softobiz.net/graphql',
   cache: new InMemoryCache()
 });
 /* eslint-disable-next-line */
 export interface AssigneeIndexProps {
-  parentAsigneeSelect
+  parentAsigneeSelect,
+  name?
 }
 
 export function AssigneeIndex(props: AssigneeIndexProps) {
@@ -24,7 +25,7 @@ export function AssigneeIndex(props: AssigneeIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <Assignee parentBKPSelect={onSelectAsignee} />
+        <Assignee parentBKPSelect={onSelectAsignee} name={props.name} />
       </ApolloHooksProvider>
     </ApolloProvider>
   );

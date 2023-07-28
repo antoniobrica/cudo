@@ -47,6 +47,24 @@ export class TasksModel {
   @Field({ nullable: true, description: `Description of task` })
   description?: string;
 
+  @Field({ nullable: true, description: ` Task ParentID`  })
+  fileID?: string;
+
+  @Field({ nullable: true, description: ` Task ParentID`  })
+  fileName?: string;
+
+  @Field({ nullable: true, description: ` Task ParentID`  })
+  taskTypeID?: string;
+
+  // @Field({ nullable: true, description: ` Task ParentID`  })
+  // taskTypeParentID?: string;
+
+  // @Field({ nullable: true, description: ` Task ChileID`  })
+  // taskTypeChildID?: string;
+
+  @Field({ nullable: true, description: `Description of task` })
+  taskType?: string;
+
   @Field({ description: `Task updated at` })
   updatedAt?: Date;
 

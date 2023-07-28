@@ -37,7 +37,7 @@ Libraries are sharable across libraries and applications. They can be imported f
 
 ## Development server
 
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+Run `nx serve my-app` for a dev server. Navigate to http://192.168.1.38:4200/. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
@@ -131,7 +131,7 @@ ex. nx run ms-project:migration-revert --mode=development
 
 
 ## To Run Ory Kratos
-Change 192.168.0.31 to 'your-local-ip' in following files 1: apps\mf-container-app\src\app\config\kratos.tsx
+Change 192.168.1.38 to 'your-local-ip' in following files 1: apps\mf-container-app\src\app\config\kratos.tsx
 2: deploy\docker-compose-ory\.kratos-config\kratos.yml
 3: deploy\docker-compose-ory\.nginx\nginx.conf
 
@@ -140,7 +140,9 @@ Change 192.168.0.31 to 'your-local-ip' in following files 1: apps\mf-container-a
 
 ### To Run Container
 nx run mf-container-app:serve --host 0.0.0.0
-
+nx run mf-project-app:serve --host 0.0.0.0
+nx run mf-document-app:serve --host 0.0.0.0
+nx run mf-task-app:serve --host 0.0.0.0
 
 ## Build Process
  nx run-many --target=build --projects='ms-account,ms-document,ms-project,ms-task' --with-deps --generatePackageJson=true --configuration=production
@@ -149,3 +151,30 @@ nx run mf-container-app:serve --host 0.0.0.0
 npm i apollo-server-express @nestjs/platform-express mssql
 ### Run production build dist/apps/ms-{domain_name}
 set "NODE_ENV=production" && set "PORT={port_number}" && node main.js
+
+
+# Developing Microservices - Node and Docker
+
+
+### Build and Run the App
+
+## Build the images:
+
+
+docker-compose build
+
+
+# Run all the services frontend and Api:
+
+
+docker-compose up -d
+
+
+# Run the individual micro-services:
+
+docker-compose up service-name
+docker-compose up ms-task
+
+### Run the front-end:
+
+docker-compose -f docker-compose-frontend.yaml up -d

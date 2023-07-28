@@ -4,8 +4,9 @@
 .textt {
   background: #f2f6fe;
   color: #2d62ed;
-  font-size: 1.2rem;
-  padding: 4px;
+  font-size: 12px;
+  padding: 1px 3px 1px 3px;
+  border-radius: 3px;
 }
 .pb-3,
 .py-3 {
@@ -221,20 +222,21 @@
 }
 
 .planningbelow {
-  margin-bottom: 10px;
+  margin-bottom: 25px;
   font-size: 18px;
   font-weight: 500;
+  margin-top: -39px;
 }
 .headingactive {
   color: #000;
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 500;
   margin-top: 10px;
 }
 
 .alltask {
   color: black;
-  margin-top: -42px !important;
+  margin-top: 2px !important;
   font-size: 18px;
 }
 .textt2 {
@@ -244,7 +246,99 @@
   padding: 2px;
 }
 
-.taskmargin {
-  margin-top: 20px !important;
-  margin-bottom: 20px !important;
+.sessiontext {
+  color: #718898;
+  font-size: 1.2rem;
+  font-weight: normal;
+}
+.pinkbackground {
+  background-color: #ffe8e6;
+}
+.marginestimate {
+  margin-left: 770px;
+}
+
+.dotlinearea {
+  font-size: 15px;
+}
+.button.ui.mini.button.pinbutton {
+  height: 4rem;
+  background: #fff;
+  color: #bfbebe;
+  box-shadow: none;
+  border: 1px solid #d0d8df;
+  width: 100%;
+  font-size: 12px;
+  text-align: left;
+}
+.pinadd {
+  position: relative;
+  top: 50%;
+  left: 93%;
+  transform: translate(-50%, -132%);
+  -ms-transform: translate(-50%, -132%);
+}
+.colorback {
+  background: #f9f8ff;
+}
+
+.pin_area {
+  display: flex;
+  margin-right: 281px;
+  float: right;
+  margin-top: -19px;
+}
+.button.icon i.dropdown.icon {
+  display: none;
+}
+.ui.small.input.full-width.inputfieldarea.bordernone input[type='search'] {
+  border: none !important;
+  margin-top: -14px;
+  margin-left: 13px;
+}
+.ql-container.ql-snow {
+  height: 100px;
+}
+.planing-module{
+    
+  padding: 20px;
+  position: relative;
+  top: -34px;
+}
+.data-built{
+  padding: 20px;
+  font-size: 12px;
+  color: #718898;
+  font-weight: 500;
+}
+.data-built.sub-area {
+  position: relative;
+  top: -39px;
+}
+.description.days-area{
+  padding: 20px;
+    position: relative;
+    top: -42px;
+    left: -2px;
+}
+
+.para-data{
+  position: relative;
+  top: -81px;
+}
+.data-built.top-level{
+  position: relative;
+    margin-top: -96px;
+}
+.ui.button.grey-btn:hover{
+      background: #0000ff;
+    color: #ffffff;
+}
+.ui.active.visible.floating.dropdown.button.icon i.add.icon{
+  color: #777A89;
+}
+
+.ui.active.visible.floating.dropdown.button.icon i.pin.icon{
+  color: #777A89;
+
 }

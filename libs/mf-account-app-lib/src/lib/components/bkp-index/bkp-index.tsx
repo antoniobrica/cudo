@@ -7,7 +7,7 @@ import Bkp from '../bkp/bkp';
 
 /* eslint-disable-next-line */
 const client = new ApolloClient({
-  uri: 'http://localhost:5001/graphql',
+  uri: 'http://cudo-ms-account.softobiz.net/graphql',
   cache: new InMemoryCache()
 });
 /* eslint-disable-next-line */

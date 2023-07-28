@@ -10,11 +10,10 @@ import img5 from 'libs/shared-components/src/file_1.png';
 import img6 from 'libs/shared-components/src/file_2.png';
 import ProgressBar from 'libs/shared-components/src/lib/components/progress_bar/progressbar';
 import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex, FileTypeIndex, FileStructureIndex, AddFolderIndex } from "@cudo/mf-account-app-lib"
-import { UploadsViewStateContext, SharedViewStateContext, DownloadsViewStateContext } from 'apps/mf-document-app/src/azure-storage/contexts/viewStateContext';
+import { UploadsViewStateContext, SharedViewStateContext, DownloadsViewStateContext } from './../../../azure-storage/contexts/viewStateContext';
 import { BlobItem } from '@azure/storage-blob';
 import { tap } from 'rxjs/operators';
-import { BlobItemUpload, BlobItemDownload } from 'apps/mf-document-app/src/azure-storage/types/azure-storage';
-import '../../../../../../libs/shared-components/src/style/index.scss';
+import { BlobItemUpload, BlobItemDownload } from './../../../azure-storage/types/azure-storage';
 
 import { LoaderPage } from "@cudo/shared-components"
 import { useFileMutation } from '../../services/useRequest';
@@ -43,7 +42,7 @@ export function FileSetting(props: FileProps) {
   const [phaseName, setPhasesName] = React.useState("");
   const [phaseID, setPhasesID] = React.useState("");
   const [folderName, setfolderName] = React.useState("");
-
+  const [directory, setDirectory] = React.useState("");
 
 
 
@@ -102,14 +101,15 @@ export function FileSetting(props: FileProps) {
     setisFolder(data.isFolder)
     if (data.isFolder) {
       setfolderName(data.folderTitle)
+      setDirectory(data.folderTitle)
       console.log('folderName', folderName);
     }
     else {
       setBKPIDTitle(data.BKPIDTitle)
+      setDirectory(data.BKPIDTitle)
+
       setBKPID(data.BKPID)
     }
-    console.log('folderName2', folderName);
-
   }
   const setFileStructureChange = (data) => {
     // setfileStructureID()
@@ -152,26 +152,43 @@ export function FileSetting(props: FileProps) {
 
     // setFileList(fileArr);
   }
-
+  enum fileType {
+    IMAGE = "IMAGE",
+    PDF = "PDF",
+    BIM = "BIM"
+  }
   const handleSaveFile = () => {
     setOpen(false);
-    addFile({
-      variables: {
-        fileTypeName, folderName, people, BKPIDTitle, files, phaseName, fileTypeID, phaseID, structureTitle, structureID, isFolder, isEveryOneAllowed: false, BKPID
-      },
-      update: (
-        cache,
-        data
-      ) => {
-        const cacheData = cache.readQuery({ query: GET_FILES }) as IFiles;
-        cache.writeQuery({
-          query: GET_FILES,
-          data: {
-            tasks: [...cacheData.File, data?.createFile]
-          }
-        });
-      }
-    });
+    files.map((file, i) => {
+      console.log('file==', file);
+      addFile({
+        variables: {
+          directory,
+          fileURL: file.fileURL,
+          fileTitle: file.fileTitle,
+          fileType: file.fileType === "image/png" ? fileType.IMAGE : fileType.PDF,
+          fileVersion: 1,
+          fileTypeName, people, BKPIDTitle,
+          phaseName, fileTypeID, phaseID,
+          structureTitle, structureID,
+          isFolder, isEveryOneAllowed: false,
+          BKPID
+        },
+        update: (
+          cache,
+          data
+        ) => {
+          const cacheData = cache.readQuery({ query: GET_FILES }) as IFiles;
+          cache.writeQuery({
+            query: GET_FILES,
+            data: {
+              tasks: [...cacheData.uploadedFiles, data['createFile']]
+            }
+          });
+        }
+      });
+    })
+
 
   };
 
@@ -336,7 +353,7 @@ export function FileSetting(props: FileProps) {
               <Grid columns={3}>
                 <Grid.Row>
                   <Grid.Column>
-                    <BkpIndex parentBKPSelect={setBKPIDChange}></BkpIndex>
+                    <BkpIndex bkp={BKPID} parentBKPSelect={setBKPIDChange}></BkpIndex>
                     <Form.Field>
                       <a className="anchor-color" onClick={folderOpen}>+ Add New</a>
                     </Form.Field>
@@ -349,7 +366,7 @@ export function FileSetting(props: FileProps) {
                     <FileTypeIndex parentFileTypeSelect={setFileTypeChange} />
                   </Grid.Column>
                   <Grid.Column>
-                    <FileStructureIndex parentFileStructureSelect={setFileStructureChange} />
+                    <FileStructureIndex structureTitle={structureTitle} parentFileStructureSelect={setFileStructureChange} />
                     {/* <Form.Field>
                       <label>File structure</label>
                       <Select placeholder='Select' className="small" options={fileOptions} />
@@ -386,7 +403,7 @@ export function FileSetting(props: FileProps) {
                   <Grid columns={1} >
                     <Grid.Row>
                       <Grid.Column>
-                        <AssigneeIndex parentAsigneeSelect={setAsignee} />
+                        <AssigneeIndex parentAsigneeSelect={setAsignee} name="Select people" />
                       </Grid.Column>
                     </Grid.Row>
                   </Grid>
