@@ -1,0 +1,476 @@
+.app-content-body-dash {
+  .work-tabs {
+    &.ui-tabs {
+      .ui.secondary.menu {
+        background: none;
+        padding: 0;
+        border: none;
+        a.item {
+          padding-left: 0;
+          padding-right: 0;
+          margin-right: 20px;
+          font-size: 15px;
+        }
+      }
+      .ui.tab {
+        margin-top: 15px;
+        .ui.card {
+          background: none;
+          .accordion {
+            padding: 0;
+            background: none;
+            .title {
+              background: #fff;
+              box-shadow: 0px 1px 2px #00000014;
+              border: none;
+              margin-bottom: 5px;
+              font-size: 14px;
+              font-weight: 600;
+              color: #1B1B40;
+              &.active {
+                box-shadow: none;
+                margin-bottom: 0;
+              }
+            }
+            .content {
+              box-shadow: 0px 1px 2px #00000014;
+              margin-bottom: 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.file-name-extension {
+  color: #1b1b40;
+  font-size: 15px;
+  font-weight: 500;
+}
+.field.filled-fields span {
+  font-size: 14px;
+}
+
+
+// files scss
+
+.all-files-con {
+  .multiple-files-box {
+    background: #fff;
+    box-shadow: 0px 1px 2px #00000014;
+    margin-bottom: 10px;
+    padding: 15px;
+    .multiple-files-header {
+      @include flex(flex);
+      @include justify-content(space-between);
+      .files-arrows {
+        i {
+          color: #1B1B40;
+          font-weight: 600;
+          cursor: pointer;
+          @include transition(all .25s);
+        }
+      }
+    }
+    .single-file-box {
+      background: none;
+      box-shadow: none;
+    }
+    .multiple-files-listing {
+      margin-top: 15px;
+      padding-left: 15px;
+      display: none;
+      border-top: 1px solid #efefef;
+      padding-top: 8px;
+      .single-files-list {
+        @include flex(flex);
+        @include justify-content(space-between);
+        padding: 10px;
+        border-bottom: 1px solid #efefef;
+        &:last-child {
+          border: none;
+        }
+      }
+    }
+    &.expand {
+      .multiple-files-listing {
+        display: block;
+      }
+      .multiple-files-header { 
+          .files-arrows {
+            i {
+              transform: rotate(180deg);
+            }
+          }
+      }
+    }
+  }
+  .single-file-box {
+    background: #fff;
+    box-shadow: 0px 1px 2px #00000014;
+    margin-bottom: 10px;
+    padding: 15px;
+    .single-files-list {
+      @include flex(flex);
+      @include justify-content(space-between);
+    }
+  }
+  .files-left-area {
+    @include flex(flex);
+    @include align-items(center);
+    h3 {
+      margin: 0 20px;
+      color: #1B1B40;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    span {
+      color: #718898;
+      font-size: 12px;
+      @include flex(flex);
+      @include align-items(center);
+      margin-right: 15px;
+      cursor: pointer;
+      i {
+        margin-right: 7px;
+      }
+    }
+  }
+  .files-right-area {
+    @include flex(flex);
+    @include align-items(center);
+    a {
+      margin: 0 7px;
+      i {
+        color: #718898;
+      }
+    }
+    span {
+      margin-left: 7px;
+      position: relative;
+      top: -5px;
+      i {
+        color: #718898;
+      }
+    }
+  }
+}
+
+// View details popup
+.ui.modals {
+  .ui.modal.pin-add-file {
+    margin: 0;
+    width: 100% !important;
+    padding: 0 !important;
+    transform: inherit;
+    left: 0 !important;
+    top: 0;
+    height: 100%;
+    > i {
+      color: #9A9EA1;
+      border: 1px solid #9A9EA1;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 0;
+      width: 20px;
+      height: 20px;
+      top: 18px;
+      right: 15px;
+    }
+    .header {
+      @include flex(flex);
+      @include align-items(center);
+      @include justify-content(space-between);
+      padding-right: 7.25rem;
+      h3 {
+        font-size: 20px;
+      }
+      span {
+        @include flex(flex);
+        a {
+          margin: 0 5px;
+          color: #718898;
+        }
+      }
+    }
+    .content {
+      margin: 0;
+      padding: 0;
+      background: #F9F8FF;
+      .left-side-image-canvas {
+        width: calc(100% - 385px);
+        padding: 20px;
+        height: calc(100% - 60px);
+        .outsideWrapper {
+          .insideWrapper {
+            height: 100%;
+            background: #E3E3E4;
+            @include flex(flex);
+            @include align-items(center);
+            @include justify-content(center);
+            position: relative;
+            overflow: hidden;
+          }
+        }
+      }
+      .right-side-file-details {
+        width: 385px;
+        position: fixed;
+        right: 0;
+        top: 61px;
+        z-index: 1;
+        background: #fff;
+        height: calc(100% - 61px);
+        box-shadow: -1px 0px 0px #0000001a;
+        overflow-y: auto;
+        .add-pin-mark-field {
+          .field.pin-add-field {
+            background: #F1F5F8;
+            padding: 20px;
+            margin: 0;
+            img.pinadd {
+              position: absolute;
+              top: 32px;
+              right: 35px;
+              transform: inherit;
+              left: inherit;
+              width: 15px;
+            }
+          }
+          .add-pin-area-form {
+            background: #F1F5F8;
+            padding: 20px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.pin-task-completed-card {
+  @include flex(flex);
+  padding: 15px 0;
+  border-bottom: 1px solid #E0E6EB;
+  margin: 0 15px 7px;
+  img {
+    width: 16px;
+    height: 17px;
+    margin-right: 10px;
+  }
+  .pin-task-description-box {
+    width: 100%;
+    .task-full-details {
+      @include flex(flex);
+      @include justify-content(space-between);
+      .pin-task-info {
+        h3 {
+          font-size: 13px;
+          font-weight: 500;
+          @include flex(flex);
+          @include align-items(center);
+          i {
+            color: #9FB5C5;
+            margin-right: 10px;
+            font-size: 18px;
+          }
+        }
+        p {
+          font-size: 13px;
+          color: #718898;
+        }
+      }
+      .user-img {
+        img {
+          border-radius: 50%;
+          width: 22px;
+          height: 22px;
+          margin: 0;
+        }
+      }
+    }
+    .added-task-listing {
+      @include flex(flex);
+      @include align-items(center);
+      @include justify-content(space-between);
+      ul {
+        @include flex(flex);
+        padding: 0 0 0 16px;
+        margin: 10px 0 0 0;
+        li {
+          color: #718898;
+          font-size: 13px;
+          margin-right: 30px;
+          &::marker {
+            color: #D0D8DF;
+          }
+        }
+      }
+    }
+  }
+}
+
+// view file detail popup
+.ui.modals .ui.modal.view-pin-detail-popup {
+  margin: 0;
+  width: 100% !important;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  height: 100%;
+  background: none;
+  overflow: hidden;
+  i.close.icon {
+    right: 475px;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    line-height: 20px;
+  }
+  .content {
+    height: 100%;
+    background: none;
+    form {
+      height: 100%;
+      .view-pin-detail-popup {
+        width: calc(100% - 460px);
+        background: none;
+        height: 100%;
+        .left-side-detail-file {
+          height: 100%;
+          @include flex(flex);
+          @include align-items(center);
+          @include flex-direction(column);
+          @include justify-content(center);
+        }
+      }
+    }
+  }
+  .right-side-file-information {
+    position: fixed;
+    right: 0;
+    background: #fff;
+    top: 0;
+    width: 460px;
+    padding: 20px;
+    height: 100%;
+    overflow-y: auto;
+    .header {
+      > h3 {
+        font-size: 20px;
+        border-bottom: 1px solid #0000001A;
+        margin: 0 -20px 15px;
+        padding: 0 20px 15px;
+      }
+    }
+    .file-versioning-box {
+      label {
+        font-weight: 600;
+      }
+      .file-version-list {
+        @include flex(flex);
+        @include align-items(center);
+        @include justify-content(space-between);
+        border-bottom: 1px solid #F1F5F8;
+        padding: 15px 0;
+        &:last-child {
+          border-bottom: none;
+        }
+        .version-wise-files {
+          @include flex(flex);
+          span {
+            font-size: 13px;
+            color: #718898;
+            margin-right: 5px;
+          }
+          h3 {
+            font-size: 13px;
+            font-weight: 500;
+            @include flex(flex);
+            @include  flex-direction(column);
+            margin: 0;
+            span {
+              color: #9FB5C5;
+              font-size: 12px;
+              font-weight: 400;
+              margin-top: 5px;
+            }
+          }
+        }
+        i {
+          font-size: 18px;
+          color: #718898;
+        }
+      }
+    }
+    .completed-task-list {
+      .pin-task-completed-card {
+        margin: 0 0 7px;
+        &:last-child {
+          border-bottom: none;
+        }
+        .pin-task-description-box {
+          .added-task-listing {
+            p {
+              font-size: 13px;
+              margin: 2px 0 0 0;
+              color: #718898;
+            }
+          }
+          a.add-new-task-link {
+            color: #718898;
+            font-size: 13px;
+            margin-top: 15px;
+            display: inline-block;
+          }
+        }
+      }
+    }
+    .comments-con {
+      .comments-section {
+        display: flex;
+        border-bottom: 1px solid #F1F5F8;
+        padding: 15px 0;
+        &:last-child {
+          border-bottom: none;
+        }
+        .comment-user-img {
+          margin-right: 15px;
+          img {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            overflow: hidden;
+            min-width: 38px;
+            min-height: 38px;
+          }
+        }
+        .comment-info {
+          h3 {
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            span {
+              color: #718898;
+              font-weight: 400;
+            }
+          }
+          p {
+            font-size: 13px;
+          }
+        }
+      }
+    }
+  }
+}
+

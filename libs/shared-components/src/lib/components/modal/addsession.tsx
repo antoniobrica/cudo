@@ -1,56 +1,199 @@
-import React from 'react';
-import {
-  Button,
-  Checkbox,
-  Modal,
-  Tab,
-  Table,
-  Input,
-  Form,
-  Grid,
-  Image,
-  Select,
-  TextArea,
-} from 'semantic-ui-react';
-// import SampleModal from './sample-modal';
-import { Dropdown } from 'semantic-ui-react';
+import React, { useState, useEffect } from 'react';
+import { Button, Modal, Input, Form, Grid, Select, Dropdown } from 'semantic-ui-react';
+import { MeetingCategoryIndex, SessionInvitationIndex, SessionProtocolIndex, FollowersIndex, AssigneeIndex, AdminsIndex, MembersIndex } from '@cudo/mf-account-app-lib';
+import { useTranslation } from 'react-i18next';
 
-import img2 from 'libs/shared-components/src/avatar_1.png';
-import img3 from 'libs/shared-components/src/avatar_2.png';
-import img4 from 'libs/shared-components/src/avatar_3.png';
+export interface SessionProps {
+  workTypes?
+  createSession?
+  openAddSession?
+  cancel?
+}
 
-function ModalSession() {
-  const countryOptions = [
-    { key: 'af', value: 'af', text: 'Afghanistan' },
-    { key: 'ax', value: 'ax', text: 'Aland Islands' },
-    { key: 'az', value: 'az', flag: 'az', text: 'Azerbaijan' },
-    { key: 'bs', value: 'bs', flag: 'bs', text: 'Bahamas' },
-    { key: 'bh', value: 'bh', flag: 'bh', text: 'Bahrain' },
-    { key: 'bd', value: 'bd', flag: 'bd', text: 'Bangladesh' },
-    { key: 'bb', value: 'bb', flag: 'bb', text: 'Barbados' },
-    { key: 'by', value: 'by', flag: 'by', text: 'Belarus' },
-    { key: 'be', value: 'be', flag: 'be', text: 'Belgium' },
-    { key: 'bz', value: 'bz', flag: 'bz', text: 'Belize' },
-    { key: 'bj', value: 'bj', flag: 'bj', text: 'Benin' },
-  ];
+interface AddSessionErrors {
+  workTypeError?: string,
+  titleError?: string,
+  categoryError?: string,
+  adminsError?: string,
+  membersError?: string,
+  invitationTemplateError?: string,
+  protocolTemplateError?: string,
+}
 
-  const [open, setOpen] = React.useState(false);
+export function ModalAddSession(props: SessionProps) {
+
+  const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const [sessionTitle, setSessionTitle] = useState("");
+  const [workType, setworkType] = useState(null)
+  const [workTypeD, setworkTypeD] = useState(null)
+  const [workTypeData, setworkTypeData] = useState('')
+  const [worktypeID, setworktypeID] = useState("")
+  const [worktypeName, setworktypeName] = useState("")
+  const [catagory, setCatagory] = useState(null);
+  const [protocol, setProtocol] = useState(null);
+  const [invitation, setInvitation] = useState(null);
+  const [admins, setAdmins] = useState<any>([]);
+  const [members, setMembers] = useState<any>([]);
+
+  const [errors, setErrors] = useState<AddSessionErrors>({})
+
+  useEffect(() => {
+    if (props.workTypes) {
+      setworkType(props.workTypes.map(({ workTypeName, projectWorkTypeID }) => ({ key: projectWorkTypeID, value: workTypeName, text: workTypeName, id: projectWorkTypeID })));
+
+    }
+  }, [props.workTypes]);
+
+  useEffect(() => {
+    if (props.openAddSession) {
+      setOpen(true);
+    }
+  }, [props.openAddSession])
+
+  const openSessionAddPopup = () => {
+    setOpen(true)
+    props.openAddSession(true)
+  }
+
+  const onSessionTitleChange = (e) => {
+    setSessionTitle(e.target.value)
+    setErrors({ ...errors, titleError: "" })
+  }
+  const onMworkType = (event, data) => {
+    const workT = {
+      worktypeID: '',
+      worktypeName: ''
+    };
+    for (let i = 0; i < props?.workTypes?.length; i++) {
+      if (props.workTypes[i]?.workTypeName === data.value) {
+        workT.worktypeID = props.workTypes[i].projectWorkTypeID;
+        workT.worktypeName = data.value;
+        setworktypeName(workT.worktypeName);
+        setworktypeID(workT.worktypeID);
+        setworkTypeD(workT)
+      }
+    }
+    setworkTypeData(data.value)
+    setErrors({ ...errors, workTypeError: "" })
+  }
+  const parentCatagorySelect = (data) => {
+    setCatagory(data)
+    setErrors({ ...errors, categoryError: "" })
+  }
+  const parentSessionSelect = (data) => {
+    setProtocol(data)
+    setErrors({ ...errors, protocolTemplateError: "" })
+  }
+  const parentInvitationSelect = (data) => {
+    setInvitation(data)
+    setErrors({ ...errors, invitationTemplateError: "" })
+  }
+  const onAdmins = (data) => {
+    setAdmins(data);
+    setErrors({ ...errors, adminsError: "" })
+  }
+  const onMembers = (data) => {
+    setMembers(data)
+    setErrors({ ...errors, membersError: "" })
+  }
+  const validation = () => {
+    let errorResponse: AddSessionErrors = {}
+
+    if (!workTypeD) {
+      errorResponse.workTypeError = t('common.errors.worktype_error')
+    }
+    if (!sessionTitle) {
+      errorResponse.titleError = t('project_tab_menu.meeting.errors.title_error')
+    }
+    if (!catagory) {
+      errorResponse.categoryError = t('project_tab_menu.meeting.errors.category_error')
+    }
+    if (!admins.length) {
+      errorResponse.adminsError = t('project_tab_menu.meeting.errors.admins_error')
+    }
+    if (!members.length) {
+      errorResponse.membersError = t('project_tab_menu.meeting.errors.members_error')
+    }
+    if (!invitation) {
+      errorResponse.invitationTemplateError = t('project_tab_menu.meeting.errors.invitation_template_error')
+    }
+    if (!protocol) {
+      errorResponse.protocolTemplateError = t('project_tab_menu.meeting.errors.protocol_template_error')
+    }
+
+    return errorResponse
+  }
+  const createSession = () => {
+    const validationResult = validation()
+    if (Object.keys(validationResult).length > 0) {
+      setErrors(validationResult)
+      return false
+    }
+
+    const adminList = admins?.map((item, index) => {
+      return { adminID: item.userID, adminName: item.userName, image: "" }
+    })
+
+    const memberList = members?.map((item, index) => {
+      return { memberID: item.userID, memberName: item.userName, image: "" }
+    })
+
+    const data = {
+      sessionTitle: sessionTitle,
+      meetingCategoryID: catagory.meetingCatagoryID,
+      meetingCategoryTitle: catagory.meetingCatagoryTitle,
+      protocolID: protocol.protocolTemplateID,
+      protocolTitle: protocol.protocolTemplateTitle,
+      invitationID: invitation.invitationTemplateID,
+      invitationTitle: invitation.invitationTemplateTitle,
+      worktypeID: workTypeD.worktypeID,
+      worktypeTitle: workTypeD.worktypeName,
+      admins: adminList,
+      members: memberList
+    }
+
+    props.createSession(data);
+
+    setOpen(false);
+    resetAddData();
+    props.cancel(true)
+  }
+
+  const cancel = () => {
+    setOpen(false)
+    props.cancel(true)
+    resetAddData()
+  }
+
+  const resetAddData = () => {
+    setSessionTitle("")
+    setworkTypeD(null)
+    setCatagory(null)
+    setInvitation(null)
+    setProtocol(null)
+    setAdmins([])
+    setMembers([])
+    setErrors({})
+  }
 
   return (
-    <div id="navbar">
+    <div style={{ marginLeft: 900 }} >
       <Modal
-        className="modal_media"
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
+        className="modal_media right-side--fixed-modal add-session-modal"
+        closeIcon
+        onClose={cancel}
+        onOpen={openSessionAddPopup}
         open={open}
-        trigger={
-          <Button size="mini" className="grey-btn">
-            + Add New Session{' '}
-          </Button>
-        }
+        // trigger={
+        //   <Button size="small" className="primary">
+        //     + Add New Session{' '}
+        //   </Button>
+        // }
+        closeOnDimmerClick={false}
       >
         <Modal.Header>
-          <h3>Add sessions </h3>
+          <h3>{t("project_tab_menu.meeting.add_session")} </h3>
         </Modal.Header>
         <Modal.Content body>
           <div>
@@ -60,14 +203,18 @@ function ModalSession() {
                   <Grid.Column>
                     <Form.Field>
                       <label>
-                        Name <span className="danger">*</span>
+                        {t("project_tab_menu.meeting.name")} <span className="danger">*</span>
                       </label>
                       <Input
-                        placeholder="Team onboarding"
+                        placeholder={t("project_tab_menu.meeting.session_title")}
                         size="small"
                         className="full-width"
                         type="text"
+                        value={sessionTitle}
+                        onChange={onSessionTitleChange}
+                        error={errors.titleError && !sessionTitle}
                       />
+                      {errors?.titleError && !sessionTitle ? <span className="error-message">{errors.titleError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -76,23 +223,24 @@ function ModalSession() {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Work Type</label>
+                      <label>{t("project_list.add_new_project.worktype")}<span className="danger">*</span></label>
                       <Select
-                        placeholder="Select"
+                        clearable
+                        placeholder={t("common.select")}
                         className="small"
-                        options={countryOptions}
+                        value={workTypeData}
+                        options={workType}
+                        onChange={onMworkType}
+                        error={errors?.workTypeError && !workTypeData?.length}
                       />
+                      {errors?.workTypeError && !workTypeData?.length ? <span className="error-message">{errors.workTypeError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
 
                   <Grid.Column>
                     <Form.Field>
-                      <label>Category</label>
-                      <Select
-                        placeholder="Select"
-                        className="small"
-                        options={countryOptions}
-                      />
+                      <MeetingCategoryIndex parentCatagorySelect={parentCatagorySelect} error={errors?.categoryError && !catagory?.length}></MeetingCategoryIndex>
+                      {errors?.categoryError && !catagory?.length ? <span className="error-message">{errors.categoryError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -102,147 +250,68 @@ function ModalSession() {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Admin</label>
-
-                      <Dropdown
-                        className="small_drop"
-                        clearable
-                        fluid
-                        multiple
-                        search
-                        selection
-                        options={countryOptions}
-                        placeholder="Select Country"
-                      />
+                      <AdminsIndex admins={[]} parentAdminsSelect={onAdmins} error={errors?.adminsError && !admins?.length} />
+                      {errors?.adminsError && !admins?.length ? <span className="error-message">{errors.adminsError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
+                <div className="followers-label-area">
+                  <Form.Field>
+                    <div className="event top-event follower-listing-labels">
+                      {admins?.map((p, id) => {
+                        const name = p.userName.split(" ").map((n) => n[0]).join("");
+                        return (
+                          <div className="label-light-purple-circle label-spacer" key={id}>
+                            <span className="white-text">{name}</span>
+                          </div>
+                        )
+                      })
+                      }
+                    </div>
+                  </Form.Field>
+                </div>
               </Grid>
 
-              <Grid columns={5}>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Form.Field>
-                      <div className="below_area">
-                        <img src={img2} className="avatar" />
-                        <span className="span_name">Barthelemy Chalvet</span>
-                        <i
-                          className="ms-Icon ms-Icon--CalculatorMultiply right_float"
-                          aria-hidden="true"
-                        ></i>
-                      </div>
-                    </Form.Field>
-                  </Grid.Column>
-
-                  <Grid.Column>
-                    <Form.Field>
-                      <div className="below_area">
-                        <img src={img3} className="avatar" />
-                        <span className="span_name">Barthelemy Chalvet</span>
-                        <i
-                          className="ms-Icon ms-Icon--CalculatorMultiply right_float"
-                          aria-hidden="true"
-                        ></i>
-                      </div>
-                    </Form.Field>
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Form.Field>
-                      <div className="below_area">
-                        <img src={img4} className="avatar" />
-                        <span className="span_name">Barthelemy Chalvet</span>
-                        <i
-                          className="ms-Icon ms-Icon--CalculatorMultiply right_float"
-                          aria-hidden="true"
-                        ></i>
-                      </div>
-                    </Form.Field>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Members</label>
-
-                      <Dropdown
-                        className="small_drop"
-                        clearable
-                        fluid
-                        multiple
-                        search
-                        selection
-                        options={countryOptions}
-                        placeholder="Select Country"
-                      />
+                      <label>Members<span className="danger">*</span></label>
+                      <MembersIndex members={[]} parentMembersSelect={onMembers} error={errors?.membersError && !members.length} />
+                      {errors?.membersError && !members.length ? <span className="error-message">{errors.membersError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
+                <div className="followers-label-area">
+                  <Form.Field>
+                    <div className="event top-event follower-listing-labels">
+                      {members?.map((p, id) => {
+                        const name = p.userName.split(" ").map((n) => n[0]).join("");
+                        return (
+                          <div className="label-light-purple-circle label-spacer" key={id}>
+                            <span className="white-text">{name}</span>
+                          </div>
+                        )
+                      })
+                      }
+                    </div>
+                  </Form.Field>
+                </div>
               </Grid>
 
-              <Grid columns={5}>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Form.Field>
-                      <div className="below_area">
-                        <img src={img2} className="avatar" />
-                        <span className="span_name">Barthelemy Chalvet</span>
-                        <i
-                          className="ms-Icon ms-Icon--CalculatorMultiply right_float"
-                          aria-hidden="true"
-                        ></i>
-                      </div>
-                    </Form.Field>
-                  </Grid.Column>
-
-                  <Grid.Column>
-                    <Form.Field>
-                      <div className="below_area">
-                        <img src={img3} className="avatar" />
-                        <span className="span_name">Barthelemy Chalvet</span>
-                        <i
-                          className="ms-Icon ms-Icon--CalculatorMultiply right_float"
-                          aria-hidden="true"
-                        ></i>
-                      </div>
-                    </Form.Field>
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Form.Field>
-                      <div className="below_area">
-                        <img src={img4} className="avatar" />
-                        <span className="span_name">Barthelemy Chalvet</span>
-                        <i
-                          className="ms-Icon ms-Icon--CalculatorMultiply right_float"
-                          aria-hidden="true"
-                        ></i>
-                      </div>
-                    </Form.Field>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
               <Grid columns={2}>
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Template for invitation</label>
-                      <Select
-                        placeholder="Select"
-                        className="small"
-                        options={countryOptions}
-                      />
+                      <SessionInvitationIndex parentInvitationSelect={parentInvitationSelect} error={errors?.invitationTemplateError && !invitation?.length} />
+                      {errors?.invitationTemplateError && !invitation?.length ? <span className="error-message">{errors.invitationTemplateError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
 
                   <Grid.Column>
                     <Form.Field>
-                      <label>Template for protocol</label>
-                      <Select
-                        placeholder="Select"
-                        className="small"
-                        options={countryOptions}
-                      />
+                      <SessionProtocolIndex parentSessionSelect={parentSessionSelect} error={errors?.protocolTemplateError && !protocol?.length} />
+                      {errors?.protocolTemplateError && !protocol?.length ? <span className="error-message">{errors.protocolTemplateError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -252,18 +321,18 @@ function ModalSession() {
         </Modal.Content>
         <Modal.Actions>
           <Button
-            content="Submit"
-            onClick={() => setOpen(false)}
+            content={t("common.submit")}
+            onClick={createSession}
             positive
-            size="mini"
-            className="grey-btn"
+            size="small"
+            className="primary"
           />
           <Button
-            size="mini"
+            size="small"
             className="icon-border"
-            onClick={() => setOpen(false)}
+            onClick={cancel}
           >
-            X Cancel
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i> {t("common.cancel")}
           </Button>
         </Modal.Actions>
       </Modal>
@@ -271,4 +340,4 @@ function ModalSession() {
   );
 }
 
-export default ModalSession;
+export default ModalAddSession;

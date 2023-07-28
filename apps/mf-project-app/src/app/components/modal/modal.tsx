@@ -9,10 +9,13 @@ import { ADD_PROJECT, GET_BUILDINGTYPES, GET_CLIENT_COMPANY, GET_PRINTING_COMPAN
 import { ModalExamplePrinting, ModalExampleCompany } from '@cudo/shared-components'
 import WorkType from '../../work-type/work-type';
 import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
+import ReactQuill, { Quill } from 'react-quill';
+import { TEXT_MAXLENGTHS } from '@cudo/mf-core'
+import { useTranslation } from 'react-i18next';
 
 export interface ProjectInfoProps {
   onSuccess
- }
+}
 export function ModalExampleModal(props: ProjectInfoProps) {
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
 
@@ -50,12 +53,30 @@ export function ModalExampleModal(props: ProjectInfoProps) {
 
   ]
 
+  const companyTypeOptions = [
+    { key: 'clientCompany', value: 'client', text: 'Client' },
+    { key: 'printingCompany', value: 'printing', text: 'Printing' },
+  ]
+
+  const emailTypeOptions = [
+    { key: 'officeEmail', value: 'office', text: 'Office' },
+    { key: 'homeEmail', value: 'home', text: 'Home' },
+    { key: 'otherEmail', value: 'other', text: 'Other' },
+  ]
+
+  const phoneTypeOptions = [
+    { key: 'officePhone', value: 'office', text: 'Office' },
+    { key: 'homePhone', value: 'home', text: 'Home' },
+    { key: 'otherPhone', value: 'other', text: 'Other' },
+  ]
+
+
   const [open, setOpen] = React.useState(false)
   const [projectName, setProjectName] = React.useState("")
   const [projectNum, setProjectNum] = React.useState(0)
   const [client, setClient] = React.useState("")
   const [buildingType, setBuildingType] = React.useState("")
-  const [printingCom, setPrintingCom] = React.useState("")
+  const [printing, setPrinting] = React.useState("")
   const [workType, setWorkType] = React.useState("")
   const [estCost, setEstCost] = React.useState(null)
   const [adressLine1, setAdressLine1] = React.useState("")
@@ -66,23 +87,30 @@ export function ModalExampleModal(props: ProjectInfoProps) {
   const [country, setCountry] = React.useState("")
   const [description, setDescription] = React.useState("")
   const [items, setItems] = React.useState([{ key: 'add_new', value: 'add_new', text: '+ add new' }]);
-  const [printingCompany, setPrintingCompany] = React.useState([]);
+  const [printingCompanies, setPrintingCompany] = React.useState([]);
   const [clientCompanies, setClientCompany] = React.useState([])
   const [buildingTypes, setBuildingTypes] = React.useState([])
   const [addWorkTypes, setAddWorkTypes] = React.useState(1)
   const [secondOpen, setSecondOpen] = React.useState(false)
   const [projectWorkEstimates, setProjectWorkEstimates] = React.useState(null)
+
+  const [companyCountry, setCompanyCountry] = React.useState(null)
+  const {t} = useTranslation()
+
   // const [addProject] = useProjectMutation(ADD_PROJECT);
-  const [addProject, { data }] = useMutation(ADD_PROJECT, 
-  {
-    refetchQueries: [
-      { query: GET_PROJECTS }
-    ]
-  }
-)
+
+  const [validationErrors, setValidationErrors] = React.useState(null)
+
+  const [addProject, { data }] = useMutation(ADD_PROJECT,
+    {
+      refetchQueries: [
+        { query: GET_PROJECTS }
+      ]
+    }
+  )
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
   const { loading: worktypeLoading, error, data: worktypeData } = useWorkTypesQuery(GET_WORKTYPES);
-  const { loading: companyLoading, data: printingCompanyData } = useCompanyQuery(GET_PRINTING_COMPANY);
+  const { loading: companyLoading, data: printingCompany } = useCompanyQuery(GET_PRINTING_COMPANY);
   const { loading: clientLoading, data: clientCompany } = useCompanyQuery(GET_CLIENT_COMPANY);
   const { loading: buildingTypesloading, data: buildingTypesData } = useBuildingTypesQuery(GET_BUILDINGTYPES);
 
@@ -92,6 +120,18 @@ export function ModalExampleModal(props: ProjectInfoProps) {
     }
   }, [worktypeData]);
 
+  // React.useEffect(() => {
+  //   console.log('---worktypeData?.workTypes---', worktypeData?.workTypes)
+  //   console.log('---projectWorkEstimates---', projectWorkEstimates)
+  //   if (worktypeData?.workTypes?.length >= projectWorkEstimates?.length) {
+  //     const usedWorkTypeIDs = projectWorkEstimates.map((item) => item.workTypeID)
+  //     // console.log('---usedWorkTypeIDs---', usedWorkTypeIDs)
+  //     const availableWorkTypes = worktypeData.workTypes.filter((item) => !usedWorkTypeIDs.includes(item.workTypeID))
+  //     console.log('---availableWorkTypes---', availableWorkTypes)
+  //     setItems(availableWorkTypes.map(({ name, workTypeID }) => ({ key: name, value: name, text: name, id: workTypeID })));
+  //   }
+  // }, [worktypeData, projectWorkEstimates]);
+
   React.useEffect(() => {
     if (buildingTypesData) {
       setBuildingTypes(buildingTypesData.buildingTypes.map(({ name }) => ({ key: name, value: name, text: name })));
@@ -99,16 +139,23 @@ export function ModalExampleModal(props: ProjectInfoProps) {
   }, [buildingTypesData]);
 
   React.useEffect(() => {
-    if (printingCompanyData) {
-      setPrintingCompany(printingCompanyData.company.map(({ companyName }) => ({ key: companyName, value: companyName, text: companyName })));
+    if (printingCompany) {
+      setPrintingCompany(printingCompany.company.map(({ companyName }) => ({ key: companyName, value: companyName, text: companyName })));
     }
-  }, [printingCompanyData]);
+  }, [printingCompany]);
 
   React.useEffect(() => {
     if (clientCompany) {
       setClientCompany(clientCompany.company.map(({ companyName }) => ({ key: companyName, value: companyName, text: companyName })));
     }
   }, [clientCompany]);
+
+  React.useEffect(() => {
+    if (validationErrors?.length > 0) {
+      console.log('----validation errors----', validationErrors)
+      alert(validationErrors)
+    }
+  }, [validationErrors])
 
   const onprojectNameChange = e => {
     setProjectName(e.target.value)
@@ -119,26 +166,27 @@ export function ModalExampleModal(props: ProjectInfoProps) {
   }
   const onprojectClient = (event, data) => {
     setClient(data.value)
-    if (data.value == 'click') {
-      return (
-        <div>
-          <ModalExampleCompany></ModalExampleCompany><br />
-        </div>)
-    }
+    // if (data.value == 'click') {
+    //   return (
+    //     <div>
+    //       <ModalExampleCompany></ModalExampleCompany><br />
+    //     </div>)
+    // }
   }
   const onBuildingType = (event, data) => {
     setBuildingType(data.value)
   }
 
-  const onPrintingCom = (event, data) => {
-    if (data.value == 'add') {
-      return (
-        <ModalExamplePrinting />
-      )
-    }
-    else {
-      setPrintingCom(data.value)
-    }
+  const onProjectPrinting = (event, data) => {
+    setPrinting(data.value)
+    // if (data.value == 'add') {
+    //   return (
+    //     <ModalExamplePrinting />
+    //   )
+    // }
+    // else {
+    //   setPrintingCom(data.value)
+    // }
 
   }
 
@@ -155,7 +203,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
     setAdressLine1(e.target.value);
   }
   const onAdressLine2 = e => {
-    setProjectName(e.target.value)
+    setAdressLine2(e.target.value)
   }
   const onCity = e => {
     setCity(e.target.value)
@@ -163,57 +211,115 @@ export function ModalExampleModal(props: ProjectInfoProps) {
   const onState = e => {
     setState(e.target.value)
   }
-
   const onZip = e => {
-    setZip(e.target.vale)
+    setZip(e.target.value)
   }
   const onCountry = (data) => {
-    setCountry(data.value)
+    setCountry(data)
   }
-  const onDescription = e => {
-    setDescription(e.target.value)
+  const onDescription = (html) => {
+    // console.log('---onDescription---e---', event, html)
+    // if(html.length > 10){
+      // event.preventDefault()
+      setDescription(html)
+    // }
   }
+  // const onKeyPresDescription = (e) => {
+  //   console.log('--onKeyPresDescription--', e)
+  //   if (e.getLength().length > 10 && e.key !== 'Backspace') {
+  //     e.preventDefault();
+  //   }
+  // }
 
   const addWorkType = () => {
     setAddWorkTypes(prevCount => prevCount + 1);
   }
   const moreWorkTypes = (data) => {
-    const worktypesArr = [];
-    for (let i = 0; i < data.length ; i++) {
-      console.log('data',data[i])
-      worktypeData.workTypes.map(d => {
-        if (d.name == data[i].workTypeName) {
-         console.log('workTypeName----',d.workTypeID );
-         data[i].workTypeID= d.workTypeID;
-        }
-      })
+    
+      console.log('----moreWorkTypes---', data)
+      const worktypesArr = [];
+      for (let i = 0; i < data.length; i++) {
+        // console.log('data', data[i])
+        worktypeData.workTypes.map(d => {
+          if (d.name == data[i].workTypeName) {
+            // console.log('workTypeName----', d.workTypeID);
+            data[i].workTypeID = d.workTypeID;
+          }
+        })
+      }
+      console.log('worktypes==>', data)
+
+      setProjectWorkEstimates(data);
+    
+  }
+
+  const validation = () => {
+    let response = true
+    const errorMessages = []
+    if (!projectName) {
+      response = false
+      errorMessages.push(t("common.errors.no_project_name"))
     }
-    console.log('worktypes==>',data)
+    if (!projectNum) {
+      response = false
+      errorMessages.push(t("common.errors.no_project_number"))
+    }
+    if (!client) {
+      errorMessages.push(t("common.errors.no_client_company"))
+    }
+    if (!buildingType) {
+      response = false
+      errorMessages.push(t("common.errors.no_building_type"))
+    }
 
-    setProjectWorkEstimates(data);
-
+    if (!response) {
+      return errorMessages
+    }
+    return []
   }
   const handleSaveProject = () => {
+    const validationResponse = validation()
+    if (validationResponse?.length > 0) {
+      setValidationErrors(validationResponse)
+      return false
+    }
+    console.log('-----country----', country)
+    // console.log('-----printing----', printing)
     setOpen(false);
     addProject({
       variables: {
-        projectName, projectNum, client, buildingType,
-        printingCom, description, projectWorkEstimates
+        // projectName, projectNum, client, buildingType,
+        // printingCom, description, projectWorkEstimates
+
+        projectName,
+        projectNum,
+        client,
+        buildingType,
+        printingCompany:printing,
+        description,
+        projectWorkEstimates,
+        addressLineOne: adressLine1,
+        addressLineTwo: adressLine2,
+        city,
+        state,
+        zip,
+        country,
+        createdBy: 'dev'
       },
       update: (
         cache,
-         data
+        data
       ) => {
         const cacheData = cache.readQuery({ query: GET_PROJECTS }) as IProjects;
-        console.log('data--', data)
+        console.log('---after add project data--', data)
         cache.writeQuery({
           query: GET_PROJECTS,
           data: {
-            getProjects: [...cacheData.projects, data?.createProject]
+            getProjects: [...cacheData.projects, data['createProject']]
           }
         });
-        console.log('data==',data);
-        
+        console.log('data==', data);
+
         props.onSuccess(data);
       }
     });
@@ -222,37 +328,37 @@ export function ModalExampleModal(props: ProjectInfoProps) {
 
   const panes = [
     {
-      menuItem: 'Information',
+      menuItem: t("project_list.add_new_project.info"),
       render: () => <Tab.Pane attached={false}>
         {/* <SampleModal/> */}
-        <div className="content">
-          <div className="description">Upload Client logo</div>
-          <Button className="secondary_btn" size='mini' primary>Click to upload</Button>
-          <p className="paragraph">Click the upload button to upload the client logo</p>
+        <div className="content upload-client-logo">
+          <div className="description">{t("project_list.add_new_project.upload_logo_title")} <span>{t("project_list.add_new_project.upload_logo_line")}</span></div>
+          <Button className="secondary_btn" size='small' primary>{t("project_list.add_new_project.upload_logo_button")}</Button>
         </div>
-        <div>
 
-          <Header className="header" >Project Information</Header>
-        </div>
+        <Header className="header">{t("project_list.add_new_project.projet_info")}</Header>
         <Form >
           <Grid columns={2}>
             <Grid.Row>
               <Grid.Column>
+                {/* <Form.Field error> */}
                 <Form.Field>
-                  <label>What's the Project Name? <span className="danger">*</span></label>
+                  <label>{t("project_list.add_new_project.project_name_label")}? <span className="danger">*</span></label>
                   <Input
-                    placeholder='Default'
+                    placeholder={t("project_list.add_new_project.default")}
                     size='small' className="full-width"
                     type="text" id="projectName"
                     value={projectName}
                     onChange={onprojectNameChange}
+                    maxLength={TEXT_MAXLENGTHS["project_name"]?.maxLength}
                   />
+                  {/* <span className="error-message">There is some error</span> */}
                 </Form.Field>
               </Grid.Column>
 
               <Grid.Column>
                 <Form.Field>
-                  <label>Internal Project Number  <span className="danger">*</span></label>
+                  <label>{t("project_list.add_new_project.project_number_label")}  <span className="danger">*</span></label>
                   <Input
                     placeholder='Default' size='small'
                     className="full-width" type="number"
@@ -268,24 +374,26 @@ export function ModalExampleModal(props: ProjectInfoProps) {
             <Grid.Row>
               <Grid.Column>
                 <Form.Field>
-                  <label>Client <span className="danger">*</span></label>
-                  <Select placeholder='Select' className="small"
+                  <label>{t("project_list.add_new_project.client_label")} <span className="danger">*</span></label>
+                  <Select placeholder={t("common.select")} className="small"
                     options={clientCompanies}
                     value={client}
                     onChange={onprojectClient}
+                    clearable
                   />
                 </Form.Field>
                 <Form.Field>
-                  <a className="anchor-color" onClick={() => setSecondOpen(true)}>+ Add New</a>
+                  <a className="anchor-color" onClick={() => setSecondOpen(true)}>+ {t("common.add_new_button")}</a>
                 </Form.Field>
               </Grid.Column>
 
               <Grid.Column>
                 <Form.Field>
-                  <label>Type of building <span className="danger">*</span></label>
-                  <Select placeholder='Select' className="small" options={buildingTypes}
+                  <label>{t("project_list.add_new_project.building_type_lable")} <span className="danger">*</span></label>
+                  <Select placeholder={t("common.select")} className="small" options={buildingTypes}
                     value={buildingType}
                     onChange={onBuildingType}
+                    clearable
                   />
                 </Form.Field>
               </Grid.Column>
@@ -295,25 +403,24 @@ export function ModalExampleModal(props: ProjectInfoProps) {
             <Grid.Row>
               <Grid.Column>
                 <Form.Field>
-                  <label>Printing Company </label>
-                  <Select placeholder='Select' className="small" options={printingCompany}
-                    value={printingCom}
-                    onChange={onPrintingCom}
+                  <label>{t("project_list.add_new_project.printing_company")} </label>
+                  <Select placeholder={t("common.select")} className="small" options={printingCompanies}
+                    value={printing}
+                    onChange={onProjectPrinting}
+                    clearable
                   />
                 </Form.Field>
                 <Form.Field>
-                  <a className="anchor-color" onClick={() => setSecondOpen(true)}>+ Add New</a>
+                  <a className="anchor-color" onClick={() => setSecondOpen(true)}>+ {t("common.add_new_button")}</a>
                 </Form.Field>
               </Grid.Column>
             </Grid.Row>
           </Grid>
-
         </Form>
-        <div>
-          <Header className="header" >Manage work type and estimated cost</Header>
-        </div>
+
+        <Header className="header" >{t("project_list.add_new_project.worktype_header")}</Header>
         <WorkType worktypes={items} workTypeData={moreWorkTypes} />
-        <Table>
+        {/*  <Table>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Work Type</Table.HeaderCell>
@@ -322,7 +429,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {/* {
+            {
           [...Array(addWorkTypes)].map((k,i)=>  
 <Table.Row key={i}>
               <Table.Cell>
@@ -331,7 +438,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                     <Grid.Row>
                       <Grid.Column>
                         <Form.Field>
-                          <Select placeholder='Select' className="small" options={items}
+                          <Select placeholder={t("common.select")} className="small" options={items}
                             value={workType}
                             onChange={onWorkType}
                           />
@@ -370,7 +477,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
         
         )
         }          */}
-            {/* <Table.Row>
+        {/* <Table.Row>
               <Table.Cell>
                 <a onClick={addWorkType}>+ Add more </a>
 
@@ -379,33 +486,35 @@ export function ModalExampleModal(props: ProjectInfoProps) {
               <Table.Cell>
 
               </Table.Cell>
-            </Table.Row> */}
+            </Table.Row>
           </Table.Body>
-        </Table>
+        </Table> */}
 
         <div>
-          <Header className="header" >Address Information</Header>
+          <Header className="header" >{t("project_list.add_new_project.address_info")}</Header>
         </div>
         <Form>
           <Grid columns={2}>
             <Grid.Row>
               <Grid.Column>
                 <Form.Field>
-                  <label>Address Line 1  </label>
+                  <label>{t("register.address1")}  </label>
                   <Input
-                    placeholder='Default' size='small' className="full-width" type="text"
+                    placeholder={t("project_list.add_new_project.default")} size='small' className="full-width" type="text"
                     value={adressLine1}
                     onChange={onAdressLine1}
+                    maxLength={TEXT_MAXLENGTHS["address_line_1"]?.maxLength}
                   />
                 </Form.Field>
               </Grid.Column>
               <Grid.Column>
                 <Form.Field>
-                  <label>Address Line 2   </label>
+                  <label>{t("register.address2")}   </label>
                   <Input
-                    placeholder='Default' size='small' className="full-width" type="text"
+                    placeholder={t("project_list.add_new_project.default")} size='small' className="full-width" type="text"
                     value={adressLine2}
                     onChange={onAdressLine2}
+                    maxLength={TEXT_MAXLENGTHS["address_line_2"]?.maxLength}
                   />
                 </Form.Field>
               </Grid.Column>
@@ -415,32 +524,35 @@ export function ModalExampleModal(props: ProjectInfoProps) {
             <Grid.Row>
               <Grid.Column>
                 <Form.Field>
-                  <label>City</label>
+                  <label>{t("register.city")}</label>
                   <Input
-                    placeholder='Default' size='small' className="full-width" type="text"
+                    placeholder={t("project_list.add_new_project.default")} size='small' className="full-width" type="text"
                     value={city}
                     onChange={onCity}
+                    maxLength={TEXT_MAXLENGTHS["city"]?.maxLength}
                   />
                 </Form.Field>
               </Grid.Column>
 
               <Grid.Column>
                 <Form.Field>
-                  <label>State</label>
+                  <label>{t("project_list.add_new_project.state")}</label>
                   <Input
-                    placeholder='Default' size='small' className="full-width" type="text"
+                    placeholder={t("project_list.add_new_project.default")} size='small' className="full-width" type="text"
                     value={state}
                     onChange={onState}
+                    maxLength={TEXT_MAXLENGTHS["state"]?.maxLength}
                   />
                 </Form.Field>
               </Grid.Column>
               <Grid.Column>
                 <Form.Field>
-                  <label>Zip</label>
+                  <label>{t("register.zip")}</label>
                   <Input
-                    placeholder='Default' size='small' className="full-width" type="text"
+                    placeholder={t("project_list.add_new_project.default")} size='small' className="full-width" type="text"
                     value={zip}
                     onChange={onZip}
+                    maxLength={TEXT_MAXLENGTHS["zip"]?.maxLength}
                   />
                 </Form.Field>
               </Grid.Column>
@@ -448,7 +560,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                 {/* <Form.Field>
                   <label>Country</label>
                   <Select
-                    placeholder='Select' className="small" options={countryOptions}
+                    placeholder={t("common.select")} className="small" options={countryOptions}
                     value={country}
                     onChange={onCountry}
                   />
@@ -461,10 +573,30 @@ export function ModalExampleModal(props: ProjectInfoProps) {
             <Grid.Row>
               <Grid.Column>
                 <Form.Field>
-                  <label>Description </label>
-                  <TextArea placeholder='Tell us more'
+                  <label>{t("common.desc")} </label>
+                  {/* <TextArea placeholder='Tell us more'
                     value={description}
                     onChange={onDescription}
+                  /> */}
+                  <ReactQuill
+                    value={description}
+                    modules={{
+                      toolbar: {
+                        container: [
+                          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                          ['bold', 'italic', 'underline'],
+                          // [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                          [{ 'align': [] }],
+                          // ['link', 'image'],
+                          ['clean'],
+                          [{ 'color': [] }]
+                        ]
+                      }
+                    }}
+                    placeholder={t("common.tell_us_more")}
+                    onChange={(content, delta, source, editor) => onDescription(content)}
+                    // onKeyDown={onKeyPresDescription}
+                    id="txtDescription"
                   />
                 </Form.Field>
               </Grid.Column>
@@ -481,23 +613,29 @@ export function ModalExampleModal(props: ProjectInfoProps) {
       </Tab.Pane>,
     },
     {
-      menuItem: 'People',
+      menuItem: t("project_list.add_new_project.people"),
       render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane>
     }
 
   ]
 
+  const onChangeCompanyCountry = (data) => {
+    setCompanyCountry(data.value)
+  }
 
 
   return (
-    <div id="navbar">
-      <Modal className="modal_media"
+    <div className="add-project-area">
+      {/* <div id="navbar"> */}
+      <Modal className="modal_media right-side--fixed-modal add-new-project-modal"
+        closeIcon
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button size='mini' className="grey-btn">+ Add New</Button>}
+        trigger={<Button size='small' className="primary"><i className="ms-Icon ms-font-xl ms-Icon--Add ms-fontColor-themePrimary"></i> {t("common.add_new_button")}</Button>}
+        closeOnDimmerClick={false}
       >
-        <Modal.Header><h3>Add New Project </h3></Modal.Header>
+        <Modal.Header><h3>{t("project_list.add_new_project.title")} </h3></Modal.Header>
         <Modal.Content body>
 
           <div>
@@ -524,20 +662,22 @@ export function ModalExampleModal(props: ProjectInfoProps) {
         </Button>
 
         </Modal.Actions> */}
-        <Modal
+        <Modal className="right-side--fixed-modal add-new-project-modal"
+          closeIcon
           onClose={() => setSecondOpen(false)}
           open={secondOpen}
           size='small'
+          closeOnDimmerClick={false}
         >
 
-          <Modal.Header><h3>Add Company</h3></Modal.Header>
+          <Modal.Header><h3>{t("project_list.add_new_project.add_company_title")}</h3></Modal.Header>
           <Modal.Content body>
 
             <div>
               <div className="content">
-                <div className="description">Upload Client logo  <span className="danger">*</span></div>
-                <Button className="secondary_btn" size='mini' primary>Click to upload</Button>
-                <p className="paragraph">Click the upload button to upload the client logo</p>
+                <div className="description">{t("project_list.add_new_project.upload_logo_title")}  <span className="danger">*</span></div>
+                <Button className="secondary_btn" size='mini' primary>{t("project_list.add_new_project.upload_logo_button")} </Button>
+                <p className="paragraph">{t("project_list.add_new_project.upload_logo_line")}</p>
               </div>
 
               <Form>
@@ -545,7 +685,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <label>What's the Company name? <span className="danger">*</span></label>
+                        <label>{t("project_list.add_new_project.company_name_label")}? <span className="danger">*</span></label>
                         <Input placeholder='Al Hamra Company' size='small' className="full-width" type="text" />
                       </Form.Field>
                     </Grid.Column>
@@ -557,8 +697,8 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <label>Company Name </label>
-                        <Select placeholder='Select' className="small" options={countryOptions} />
+                        <label>{t("project_list.add_new_project.company_type_label")} </label>
+                        <Select placeholder={t("common.select")} className="small" options={companyTypeOptions}  clearable />
 
                       </Form.Field>
                     </Grid.Column>
@@ -570,15 +710,15 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <label>Email </label>
-                        <Input placeholder='Email' size='small' className="full-width" type="text" />
+                        <label>{t("project_list.add_new_project.email")} </label>
+                        <Input placeholder={t("project_list.add_new_project.email")} size='small' className="full-width" type="text" />
                       </Form.Field>
                     </Grid.Column>
 
                     <Grid.Column>
                       <Form.Field>
-                        <label>Type  </label>
-                        <Select placeholder='Select' className="small" options={countryOptions} />
+                        <label>{t("common.type")}  </label>
+                        <Select placeholder={t("common.select")} className="small" options={emailTypeOptions} clearable />
 
                       </Form.Field>
                     </Grid.Column>
@@ -588,7 +728,7 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <a href="" className="anchor-color">+ Add New</a>
+                        <a href="" className="anchor-color">+ {t("common.add_new_button")}</a>
                       </Form.Field>
                     </Grid.Column>
 
@@ -601,20 +741,20 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                   <Grid.Row>
                     <Grid.Column >
                       <Form.Field >
-                        <label>Phone </label>
+                        <label>{t("project_list.add_new_project.phone")} </label>
                         <Grid columns={2} className="form-field">
                           <Grid.Row>
                             <Grid.Column>
                               <Form.Field>
-                                <Select placeholder='Select' className="small" options={countryOptions} />
+                                <Select placeholder={t("common.select")} className="small" options={countryOptions} clearable />
                               </Form.Field>
                               <Form.Field>
-                                <a href="" className="anchor-color">+ Add New</a>
+                                <a href="" className="anchor-color">+ {t("common.add_new_button")}</a>
                               </Form.Field>
                             </Grid.Column>
                             <Grid.Column>
                               <Form.Field>
-                                <Select placeholder='Select' className="small" options={countryOptions} />
+                                <Select placeholder={t("common.select")} className="small" options={countryOptions} clearable />
                               </Form.Field>
 
                             </Grid.Column>
@@ -626,8 +766,8 @@ export function ModalExampleModal(props: ProjectInfoProps) {
 
                     <Grid.Column  >
                       <Form.Field>
-                        <label>Type  </label>
-                        <Select placeholder='Select' className="small" options={countryOptions} />
+                        <label>{t("common.type")}  </label>
+                        <Select placeholder={t("common.select")} className="small" options={phoneTypeOptions} clearable />
                       </Form.Field>
                     </Grid.Column>
                   </Grid.Row>
@@ -636,8 +776,8 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <label>Address Line 1</label>
-                        <Input placeholder='Address Line 1' size='small' className="full-width" type="text" />
+                        <label>{t("register.address1")}</label>
+                        <Input placeholder={t("register.address1")} size='small' className="full-width" type="text" />
                       </Form.Field>
                     </Grid.Column>
 
@@ -648,8 +788,8 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <label>Address Line 2</label>
-                        <Input placeholder='Address Line 2' size='small' className="full-width" type="text" />
+                        <label>{t("register.address2")} </label>
+                        <Input placeholder={t("register.address2")} size='small' className="full-width" type="text" />
                       </Form.Field>
                     </Grid.Column>
 
@@ -661,22 +801,26 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                   <Grid.Row>
                     <Grid.Column>
                       <Form.Field>
-                        <label>City  </label>
-                        <Input placeholder='City' size='small' className="full-width" type="text" />
+                        <label>{t("register.city")}  </label>
+                        <Input placeholder={t("register.city")} size='small' className="full-width" type="text" />
 
                       </Form.Field>
                     </Grid.Column>
                     <Grid.Column>
                       <Form.Field>
-                        <label>State Pin </label>
-                        <Input placeholder='State Pin' size='small' className="full-width" type="text" />
+                        <label>{t("project_list.add_new_project.state_pin")} </label>
+                        <Input placeholder={t("project_list.add_new_project.state_pin")} size='small' className="full-width" type="text" />
 
                       </Form.Field>
                     </Grid.Column>
                     <Grid.Column>
                       <Form.Field>
-                        <label>Country  </label>
-                        <Select placeholder='Select' className="small" options={countryOptions} />
+                        {/*<label>Country  </label>
+                         <Select placeholder={t("common.select")} className="small" 
+                            options={countryOptions}  
+                            value={client}
+                            onChange={onprojectClient}/> */}
+                        <MfAccountAppLib parentCallback={onChangeCompanyCountry} />
 
                       </Form.Field>
                     </Grid.Column>
@@ -687,14 +831,14 @@ export function ModalExampleModal(props: ProjectInfoProps) {
                 </Grid>
               </Form>
               <Button
-                content="Add Company"
+                content={t("project_list.add_new_project.add_comapany_button")}
                 onClick={() => setOpen(false)}
                 positive
-                size='mini' className="grey-btn"
+                size='small' className="primary"
               />
-              <Button size='mini' className="icon-border" onClick={() => setSecondOpen(false)}>
-                X  Cancel
-        </Button>
+              <Button size='small' className="icon-border" onClick={() => setSecondOpen(false)}>
+                <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply ms-fontColor-themePrimary"></i> {t("common.cancel")}
+              </Button>
 
 
 
@@ -712,14 +856,14 @@ export function ModalExampleModal(props: ProjectInfoProps) {
         </Modal>
         <Modal.Actions>
           <Button
-            content="Click to continue"
+            content={t("project_list.add_new_project.submit")}
             onClick={handleSaveProject}
             positive
-            size='mini' className="grey-btn"
+            size='small' className="primary"
           />
-          <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
-            X  Cancel
-        </Button>
+          <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply ms-fontColor-themePrimary"></i>  {t("common.cancel")}
+          </Button>
 
         </Modal.Actions>
       </Modal>

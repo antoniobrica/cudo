@@ -1,7 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { Session } from "inspector";
 import { Repository } from "typeorm";
 import AdminEntity from "../../../entities/admin.entity";
+import MeetingEntity from "../../../entities/meeting.entity";
 import MembersEntity from "../../../entities/members.entity";
 import SessionEntity from "../../../entities/session.entity";
 import ReferenceFilterParams from "../../../utils/types/referenceFilterParams";
@@ -23,31 +25,50 @@ export class SessionService {
         private adminRepository: Repository<AdminEntity>,
         @InjectRepository(MembersEntity)
         private membersRepo: Repository<MembersEntity>,
+        @InjectRepository(MeetingEntity)
+        private meetingRepository: Repository<MeetingEntity>,
         private referenceService: ReferenceService
     ) { }
 
     public async create(createInput: SessionDetailsInput, referenceFilter: ReferenceFilterParams): Promise<SessionEntity> {
         try {
-            const { admins,sessionBasics, members } = createInput;
+            const { admins, sessionBasics, members } = createInput;
             const sessionDetails = new SessionEntity({ ...sessionBasics });
-            sessionDetails.admins = [];
-            sessionDetails.members = [];
-  
-            if (admins)
-                for (let index = 0; index < admins.length; index++) {
-                    const adminsentity = new AdminEntity(admins[index])
-                    const newAdmin = await this.adminRepository.create({ ...adminsentity });
-                    const savedAdmin = await this.adminRepository.save(newAdmin);
-                    sessionDetails.admins.push(savedAdmin)
-                }
 
-            if (members)
-            for (let index = 0; index < members.length; index++) {
-                const membersentity = new MembersEntity(members[index])
-                const newMembers = await this.membersRepo.create({ ...membersentity });
-                const savedFollower = await this.membersRepo.save(newMembers);
-                sessionDetails.members.push(savedFollower)
+            if (admins) {
+                for (let index = 0; index < admins.length; index++) {
+                    let relationAddAdmin = await this.adminRepository.findOne({ where: { adminID: admins[index].adminID } });
+                    if (!relationAddAdmin) {
+                        const adminsEntity = new AdminEntity(admins[index])
+                        const newAdmin = await this.adminRepository.create({ ...adminsEntity });
+                        relationAddAdmin = await this.adminRepository.save(newAdmin);
+                    }
+
+                    if (index === 0) {
+                        sessionDetails.admins = [relationAddAdmin]
+                    } else {
+                        sessionDetails.admins.push(relationAddAdmin)
+                    }
+                }
             }
+
+            if (members) {
+                for (let index = 0; index < members.length; index++) {
+                    let relationAddMember = await this.membersRepo.findOne({ where: { memberID: members[index].memberID } });
+                    if (!relationAddMember) {
+                        const membersEntity = new MembersEntity(members[index])
+                        const newMember = await this.membersRepo.create({ ...membersEntity });
+                        relationAddMember = await this.membersRepo.save(newMember);
+                    }
+
+                    if (index === 0) {
+                        sessionDetails.members = [relationAddMember]
+                    } else {
+                        sessionDetails.members.push(relationAddMember)
+                    }
+                }
+            }
+
 
             const selectedReference = await this.referenceService.getReferenceById(referenceFilter)
             const newSession = await this.sessionRepository.create({
@@ -56,13 +77,13 @@ export class SessionService {
             });
             await this.sessionRepository.save(newSession);
             return newSession;
-        }   catch (error) {
+        } catch (error) {
             return error;
         }
     }
 
     async getSessionID(sessionFilter: SessionFilterParam) {
-        const session = await this.sessionRepository.findOne({ where: { ...sessionFilter }, relations: ['members','admins'] });
+        const session = await this.sessionRepository.findOne({ where: { ...sessionFilter }, relations: ['members', 'admins'] });
         if (session) {
             return session;
         }
@@ -76,53 +97,73 @@ export class SessionService {
 
         const selectedReference = await this.referenceService.getReferenceById(refFilter)
 
-        
-        const [results, total] = await this.sessionRepository.findAndCount({ where: {
-            "reference": {
-                id: selectedReference.id
-            }
-        },
-        relations:['reference','admins','members'],
-        take: options.limit,
-        skip: options.page * options.limit,
+
+        const [results, total] = await this.sessionRepository.findAndCount({
+            where: {
+                "reference": {
+                    id: selectedReference.id
+                },
+                isDeleted:false
+            },
+            relations: ['reference', 'admins', 'members'],
+            take: options.limit,
+            skip: options.page * options.limit,
         }
-        );            
-        const pagination =  new Pagination({
+        );
+        const pagination = new Pagination({
             results,
             total,
-        });      
+        });
         return pagination
     }
 
     public async findAllSessions(): Promise<SessionEntity[]> {
-        return await this.sessionRepository.find({relations:['reference','admins','members']});
-      }
-    public async updateSessionByID(createInput: SessionDetailsUpdateInput): Promise<SessionEntity[]> {
-        const { sessionBasics, admins, members } = createInput;
-        const sessionDetails = await this.sessionRepository.find({
+        return await this.sessionRepository.find({ where: { 'isDeleted': false, }, relations: ['reference', 'admins', 'members'] });
+    }
+
+    public async updateSessionById(sessionUpdateInput: SessionDetailsUpdateInput): Promise<SessionEntity> {
+        const { sessionBasics, admins, members } = sessionUpdateInput;
+        const sessionDetail = await this.sessionRepository.findOne({
             where: { sessionID: sessionBasics.sessionID },
             relations: ['reference', 'admins', 'members']
         });
-        if (sessionDetails.length <= 0)
-            throw new HttpException('Session Not Found', HttpStatus.NOT_FOUND);
-        const sessionDetail = sessionDetails[0];
-        sessionDetail.admins = [];
-        sessionDetail.members = [];
-        
-        if (admins)
+        if (!sessionDetail) {
+            throw new HttpException('Session with the sessionID not found', HttpStatus.NOT_FOUND);
+        }
+
+        if (admins) {
             for (let index = 0; index < admins.length; index++) {
-                const adminsentity = new AdminEntity(admins[index])
-                const newAdmin = await this.adminRepository.create({ ...adminsentity });
-                const savedAdmin = await this.adminRepository.save(newAdmin);
-                sessionDetail.admins.push(savedAdmin)
+                let relationAddAdmin = await this.adminRepository.findOne({ where: { adminID: admins[index].adminID } });
+                if (!relationAddAdmin) {
+                    const adminsEntity = new AdminEntity(admins[index])
+                    const newAdmin = await this.adminRepository.create({ ...adminsEntity });
+                    relationAddAdmin = await this.adminRepository.save(newAdmin);
+                }
+
+                if (index === 0) {
+                    sessionDetail.admins = [relationAddAdmin]
+                } else {
+                    sessionDetail.admins.push(relationAddAdmin)
+                }
             }
-        if (members)
+        }
+
+        if (members) {
             for (let index = 0; index < members.length; index++) {
-                const membersentity = new MembersEntity(members[index])
-                const newmembers = await this.membersRepo.create({ ...membersentity });
-                const savedFollower = await this.membersRepo.save(newmembers);
-                sessionDetail.members.push(savedFollower)
+                let relationAddMember = await this.membersRepo.findOne({ where: { memberID: members[index].memberID } });
+                if (!relationAddMember) {
+                    const membersEntity = new MembersEntity(members[index])
+                    const newMember = await this.membersRepo.create({ ...membersEntity });
+                    relationAddMember = await this.membersRepo.save(newMember);
+                }
+
+                if (index === 0) {
+                    sessionDetail.members = [relationAddMember]
+                } else {
+                    sessionDetail.members.push(relationAddMember)
+                }
             }
+        }
 
         sessionBasics.sessionTitle ? sessionDetail.sessionTitle = sessionBasics.sessionTitle : null;
         sessionBasics.worktypeID ? sessionDetail.worktypeID = sessionBasics.worktypeID : null;
@@ -134,23 +175,34 @@ export class SessionService {
         sessionBasics.protocolID ? sessionDetail.protocolID = sessionBasics.protocolID : null;
         sessionBasics.protocolTitle ? sessionDetail.protocolTitle = sessionBasics.protocolTitle : null;
         sessionBasics.sessionID ? sessionDetail.sessionID = sessionBasics.sessionID : null;
+        // sessionBasics.updatedBy ? sessionDetail.updatedBy = sessionBasics.updatedBy : null;
+        // sessionBasics.updatedAt ? sessionDetail.updatedAt = sessionBasics.updatedAt : null;
         await this.sessionRepository.save(sessionDetail);
-        const sessions = await this.sessionRepository.find({
+        const sessionUpdatedDetail = await this.sessionRepository.findOne({
             where: { sessionID: sessionBasics.sessionID },
             relations: ['reference', 'admins', 'members']
         });
-        return sessions;
+        return sessionUpdatedDetail;
     }
 
+    public async deleteSession(sessionDeleteInput: SessionDeleteInput): Promise<SessionEntity> {
+        const session = await this.sessionRepository.findOne({ where: { sessionID: sessionDeleteInput.sessionID } });
+        if (session) {
+            // #region session wise meetings delete            
+            const meetingList = await this.meetingRepository.find({ where: { sessionId: session.sessionID } })
+            if (meetingList?.length) {
+                const meetingIds = meetingList.map(({ id }) => id)
+                if (meetingIds) {
+                    const meetingIsDeleted = !(session.isDeleted)
+                    await this.meetingRepository.update(meetingIds, { isDeleted: meetingIsDeleted })
+                }
+            }
+            // #endregion
+            session.isDeleted = !(session.isDeleted)
+            const updatedPost = await session.save()
+            return updatedPost
+        }
 
-    public async deleteSessionByID(sessionDeleteInput: SessionDeleteInput): Promise<SessionEntity[]> {
-        const { sessionID } = sessionDeleteInput;
-        const sessioneDetails = await this.sessionRepository.delete({ sessionID: sessionID });
-        console.log(sessioneDetails)
-        const sessions = await this.sessionRepository.find({
-            where: { sessionID: sessionID },
-            relations: ['reference', 'admins', 'members']
-        });
-        return sessions;
+        throw new HttpException('session with sessionId not found', HttpStatus.NOT_FOUND);
     }
 }

@@ -7,7 +7,7 @@ export class ProjectWorkTypeModel {
   @Field()
   projectWorkTypeID: string;
 
-  @Field()
+  @Field({ nullable: true })
   workTypeName?: string;
 
   @Field({ nullable: true })

@@ -7,8 +7,17 @@ export interface ITaskUpdate {
   taskID?: string;
   status: string;
 }
+export interface IPeople {
+  userID: string,
+  userName: string,
+  imageUrl: string
+}
+export interface IPeoples {
+  peoples: IPeoples[];
+}
 export interface ITask {
   taskID: string
+  sequenceNumber: number
   taskTitle: string
   startDate: string
   endDate: string
@@ -25,13 +34,24 @@ export interface ITask {
   createdAt: string
   updatedBy: string
   createdBy: string
+  fileID: string
+  fileName: string
+  taskTypeID: string
+  taskType: string
+  workTypeID: string
+  workTypeName: string
+  subtasks: ISubTask[]
 }
 export interface ITodos {
   getTodos: ITodo[];
 }
 
+export interface ITaskResults {
+  results: ITask[];
+}
+
 export interface ITasks {
-  tasks: ITask[];
+  tasks: ITaskResults;
 }
 
 export interface TaskMutation {
@@ -41,3 +61,22 @@ export interface TaskUpdateMutation {
   addTask: ITaskUpdate;
 }
 
+
+export interface ISubTask {
+  subtaskID: string
+  subtaskTitle: string
+  status: string
+  isDeleted: boolean
+}
+export interface ISubTaskUpdate {
+  subtaskID?: string;
+  status: string;
+}
+export interface SubTaskUpdateMutation {
+  updateSubTask: ISubTaskUpdate;
+}
+
+
+export interface IUpdateTask {
+  updateTask: ITask[];
+}

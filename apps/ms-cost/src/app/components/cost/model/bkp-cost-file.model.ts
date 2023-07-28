@@ -11,16 +11,10 @@ export class bkpCostFileModel {
   bkpCostFileID: string;
 
   @Field({ nullable: true, description: `File URL` })
-  fileURL: string;
+  uploadedFileID: string;
 
   @Field({ nullable: true, description: `File title` })
-  fileTitle: string;
-
-  @Field({ nullable: true, description: `File type` })
-  fileType: string;
-
-  @Field({ nullable: true, description: `File version` })
-  fileVersion: string;
+  uploadedFileTitle: string;
 
   @Field({ nullable: true, description: `Created at` })
   createdAt?: Date;

@@ -1,14 +1,46 @@
-import React from 'react';
-
-import '../../../style/index.scss';
-import { Tab, Dropdown } from 'semantic-ui-react';
-import img from 'libs/shared-components/src/user.png';
-import img3 from 'libs/shared-components/src/calendar.png';
+import React, { useState } from 'react';
+import moment from 'moment'
+import './../../../assets/style/index.scss'
+import { Tab, Dropdown, Button, Icon, Modal, Grid, Form } from 'semantic-ui-react';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { useTranslation } from 'react-i18next';
 
 /* eslint-disable-next-line */
-export interface TabsProps {}
+export interface InvitationTabProps {
+  sessionId?
+  invitations?
+  addInvitationClick?
+  sessionDetail?
+  selectedInvitationId?
+  viewInvitation?
+  editInvitation?
+  deleteInvitation?
+  addProtocolClick?
+  protocols?
+}
 
-export function InvitationTab(props: TabsProps) {
+export function InvitationTab(props: InvitationTabProps) {
+
+  const { t } = useTranslation()
+
+  const onClickAddInvitation = () => {
+    props.addInvitationClick(true)
+  }
+  const onClickAddProtocol = () => {
+    props.addProtocolClick()
+  }
+  const onClickViewInvitation = (meetingId) => {
+    props.viewInvitation(meetingId)
+  }
+
+  const onClickEditInvitation = (meetingId) => {
+    props.editInvitation(meetingId)
+  }
+
+  const onClickDeleteInvitation = (meetingId) => {
+    props.deleteInvitation(meetingId)
+  }
+
   const panes = [
     {
       menuItem: {
@@ -18,125 +50,80 @@ export function InvitationTab(props: TabsProps) {
       },
       render: () => (
         <Tab.Pane attached={false}>
+          <Button size="small" className="primary tabs-button-right" onClick={onClickAddInvitation}>
+            <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> Add Invitation
+          </Button>
           <div className="ui-tabs">
-            <div className="card1 card-custom gutter-b">
-              <div
-                className="card-body d-flex align-items-center justify-content-between flex-wrap py-3"
-                style={{ width: '80%' }}
-              >
-                <div className="d-flex align-items-center  py-2">
-                  <img src={img3} style={{ width: '30px' }} />
-                  <span className="font-weight-bold mb-0 mr-10">
-                    &nbsp; 10 Aug, 2020
-                    <br />
-                    &nbsp; This is invitation title
-                  </span>
+            {props?.invitations?.map((item) => {
+              const { meetingId, meetingTitle, meetingDate, meetingStartTime, meetingEndTime, meetingDuration, members, meetingFiles } = item
+              const formattedMeetingDate = moment(meetingDate).format('DD MMM, YYYY')
+              const formattedMeetingStartTime = moment(meetingStartTime).format('hh:mm A')
+              const formattedMeetingEndTime = moment(meetingEndTime).format('hh:mm A')
 
-                  <span
-                    className="font-weight-bold mb-0 mr-10"
-                    style={{ marginTop: '-21px' }}
-                  >
-                    <i
-                      className="ms-Icon ms-Icon--Clock"
-                      aria-hidden="true"
-                    ></i>
-                    11:00 AM - 11:45 AM
-                  </span>
-                  <span className="textt2" style={{ marginTop: '-21px' }}>
-                    45 min
-                  </span>
-                  <div className="d-flex mr-3" style={{ marginTop: '-21px' }}>
-                    <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
-                      <div className="navi-item mr-2">
-                        <a className="navi-link">
-                          <span className="navi-text">
-                            {' '}
-                            <i
-                              className="ms-Icon ms-Icon--Link"
-                              aria-hidden="true"
-                            ></i>
-                            Protocol here{' '}
+              return (
+                <div id={meetingId} className="card1 card-custom gutter-b">
+                  <div
+                    className="card-body d-flex align-items-center justify-content-between flex-wrap invitation-list-card">
+                    <div className="d-flex align-items-center invitaiton-info-left">
+                      <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/calendar.png`} />
+                      <div className="invitation-date-time">
+                        <div className="timing-details">
+                          <span className="invitation-date-time">
+                            {/* 10 Aug, 2020 */}
+                            {formattedMeetingDate}
                           </span>
-                        </a>
+                          <span className="invitaiton-time-left">
+                            <i className="ms-Icon ms-Icon--Clock" aria-hidden="true"></i>
+                            {/* 11:00 AM - 11:45 AM */}
+                            {`${formattedMeetingStartTime} - ${formattedMeetingEndTime}`}
+                          </span>
+                          <span className="invitation-minutes">
+                            {meetingDuration}
+                          </span>
+                          <a href="" className="protocol-text">
+                            {' '}
+                            <i className="ms-Icon ms-Icon--Link" aria-hidden="true"></i>
+                            Protocol here{' '}
+                          </a>
+                        </div>
+                        <div className="invitation-title">
+                          {meetingTitle}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="session-actions-con">
+                      <div className="session-attach-dropdown tasks-action-area">
+                        {/* <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} /> */}
+                        {members.map(({ memberID, image, memberName }) => {
+                          return (<img key={memberID} src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} title={`Member-${memberName}`} alt={image} />)
+                        })
+                        }
+                        <span className="session-attachements">
+                          <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>
+                          {meetingFiles?.length}
+                        </span>
+                        <div className="symbol-group symbol-hover py-2" >
+                          <div className="symbol symbol-30 d-flex">
+                            <span className="dropdown-action">
+                              <Dropdown icon='ellipsis horizontal' pointing='right'>
+                                <Dropdown.Menu>
+                                  <Dropdown.Item icon="eye" text="View detail" onClick={() => onClickViewInvitation(meetingId)} />
+                                  <Dropdown.Item icon="pencil" text="Edit" onClick={() => onClickEditInvitation(meetingId)} />
+                                  <Dropdown.Item icon="trash alternate outline" text="Delete" onClick={() => onClickDeleteInvitation(meetingId)} />
+                                </Dropdown.Menu>
+                              </Dropdown>
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+              )
+            })
+            }
 
-                <div className="symbol-group symbol-hover py-2">
-                  <div className="symbol symbol-30">
-                    <img src={img} />
-                    <span className="font-weight-bold mb-0 mr-10">
-                      {' '}
-                      <i
-                        className="ms-Icon ms-Icon--Attach"
-                        aria-hidden="true"
-                      ></i>
-                      3
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="card1 card-custom gutter-b">
-              <div
-                className="card-body d-flex align-items-center justify-content-between flex-wrap py-3"
-                style={{ width: '80%' }}
-              >
-                <div className="d-flex align-items-center  py-2">
-                  <img src={img3} style={{ width: '30px' }} />
-                  <span className="font-weight-bold mb-0 mr-10">
-                    &nbsp; 10 Aug, 2020
-                    <br />
-                    &nbsp; This is invitation title
-                  </span>
-
-                  <span
-                    className="font-weight-bold mb-0 mr-10"
-                    style={{ marginTop: '-21px' }}
-                  >
-                    <i
-                      className="ms-Icon ms-Icon--Clock"
-                      aria-hidden="true"
-                    ></i>
-                    11:00 AM - 11:45 AM
-                  </span>
-                  <span className="textt2" style={{ marginTop: '-21px' }}>
-                    45 min
-                  </span>
-                  <div className="d-flex mr-3" style={{ marginTop: '-21px' }}>
-                    <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
-                      <div className="navi-item mr-2">
-                        <a className="navi-link">
-                          <span className="navi-text">
-                            {' '}
-                            <i
-                              className="ms-Icon ms-Icon--Link"
-                              aria-hidden="true"
-                            ></i>
-                            Protocol here{' '}
-                          </span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="symbol-group symbol-hover py-2">
-                  <div className="symbol symbol-30">
-                    <img src={img} />
-                    <span className="font-weight-bold mb-0 mr-10">
-                      {' '}
-                      <i
-                        className="ms-Icon ms-Icon--Attach"
-                        aria-hidden="true"
-                      ></i>
-                      3
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </Tab.Pane>
       ),
@@ -144,155 +131,132 @@ export function InvitationTab(props: TabsProps) {
     {
       menuItem: {
         key: 'Protocols',
-        icon: 'keyboard outline',
+        icon: 'newspaper outline',
         content: 'Protocols',
       },
+      
       render: () => (
-        <Tab.Pane attached={false}>
-          <div className="ui-tabs">
-            <div className="card1 card-custom gutter-b">
-              <div
-                className="card-body d-flex align-items-center justify-content-between flex-wrap py-3"
-                style={{ width: '80%' }}
-              >
-                <div className="d-flex align-items-center  py-2">
-                  <img src={img3} style={{ width: '30px' }} />
-                  <span className="font-weight-bold mb-0 mr-10">
-                    &nbsp; 10 Aug, 2020
-                    <br />
-                    &nbsp; This is invitation title
-                  </span>
-                  <span className="textt2" style={{ marginTop: '-21px' }}>
-                    45 min
-                  </span>       
-                  <span
-                    className="font-weight-bold mb-0 mr-10"
-                    style={{ marginTop: '-21px' }}
-                  >
-                    &nbsp;
-                    <i
-                      className="ms-Icon ms-Icon--Clock"
-                      aria-hidden="true"                                                             
-                    ></i>
-                    11:00 AM - 11:45 AM
-                  </span>
+        
 
-                  <div className="d-flex mr-3" style={{ marginTop: '-21px' }}>
-                    <div className="navi navi-hover navi-active navi-link-rounded navi-bold d-flex flex-row">
-                      <div className="navi-item mr-2">
-                        <a className="navi-link">
-                          <span className="navi-text">
-                            {' '}
-                            <i
-                              className="ms-Icon ms-Icon--Link"
-                              aria-hidden="true"
-                            ></i>
-                            2 invitations{' '}
+         props.protocols.length ? (
+        <Tab.Pane attached={false}>
+          <Button
+            size="small"
+            className="primary tabs-button-right"
+            onClick={onClickAddProtocol}
+          >
+            <i className="ms-Icon ms-font-xl ms-Icon--Add"></i> Add Protocol
+          </Button>
+          <div className="ui-tabs">
+            {props?.protocols?.map((item) => {
+              console.log("%%%%%%%%%%%%%%%%%%%%%%", item)
+              const { protocolId, protocolTitle, protocolDate, protocolStartTime, protocolEndTime, protocolDuration, protocolFiles } = item
+
+              const formattedProtocolDate = moment(protocolDate).format('DD MMM, YYYY')
+              const formattedProtocolStartTime = moment(protocolStartTime).format('hh:mm A')
+              const formattedProtocolEndTime = moment(protocolEndTime).format('hh:mm A')
+
+              return (
+                <div className="card1 card-custom gutter-b">
+                  <div
+                    className="card-body d-flex align-items-center justify-content-between flex-wrap invitation-list-card">
+                    <div className="d-flex align-items-center invitaiton-info-left">
+                      <Icon name="newspaper outline" />
+                      <div className="invitation-date-time">
+                        <div className="timing-details">
+                          <span className="invitation-date-time">
+                            {/* 10 Aug, 2020 */}
+                            {formattedProtocolDate}
+                            <span className="draft-label">Draft</span>
                           </span>
-                        </a>
+                          <span className="invitaiton-time-left">
+                            <i className="ms-Icon ms-Icon--Clock" aria-hidden="true"></i>
+                            {/* 11:00 AM - 11:45 AM */}
+                            {`${formattedProtocolStartTime} - ${formattedProtocolEndTime}`}
+                          </span>
+                          <span className="invitation-minutes">
+                            {/* 45 min */}
+                            {protocolDuration}
+                          </span>
+                          <a href="" className="protocol-text">
+                            {' '}
+                            <i className="ms-Icon ms-Icon--Link" aria-hidden="true"></i>
+                            Meetings here
+                          </a>
+                        </div>
+                        <div className="invitation-title">
+                          {/* This is Invitation title */}
+                          {protocolTitle}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="session-actions-con">
+                      <div className="session-attach-dropdown tasks-action-area">
+                        <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/user.png`} />
+                        <span className="session-attachements">
+                          <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>
+                          3
+                        </span>
+                        <div className="symbol-group symbol-hover py-2" >
+                          <div className="symbol symbol-30 d-flex">
+                            <span className="dropdown-action">
+                              <Dropdown icon='ellipsis horizontal' pointing='right'>
+                                <Dropdown.Menu>
+                                  <Dropdown.Item icon="eye" text="View detail" />
+                                  <Dropdown.Item icon="pencil" text="Edit" />
+                                  <Dropdown.Item
+                                    icon="trash alternate outline"
+                                    text="Delete"
+                                  />
+                                </Dropdown.Menu>
+                              </Dropdown>
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-
-                <div className="symbol-group symbol-hover py-2">
-                  <div className="symbol symbol-30">
-                    <img src={img} />
-                    <span className="mr-2">
-                      <Dropdown text="...">
-                        <Dropdown.Menu className="dropdowncomplete">
-                          <Dropdown.Item icon="eye" text="View detail" />
-                          <Dropdown.Item icon="play" text="Publish" />
-
-                          <Dropdown.Item
-                            icon="trash alternate outline"
-                            text="Delete"
-                          />
-                          <Dropdown.Item
-                            icon="check circle outline"
-                            text="Export"
-                          />
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="card1 card-custom gutter-b">
-              <div
-                className="card-body d-flex align-items-center justify-content-between flex-wrap py-3"
-                style={{ width: '80%' }}
-              >
-                <div className="d-flex align-items-center  py-2">
-                  <img src={img3} style={{ width: '30px' }} />
-                  <span className="font-weight-bold mb-0 mr-10">
-                    &nbsp; 10 Aug, 2020
-                    <br />
-                    &nbsp; This is invitation title
-                  </span>
-                  <span className="textt2" style={{ marginTop: '-21px' }}>
-                    Published
-                  </span>
-                  <span
-                    className="font-weight-bold mb-0 mr-10"
-                    style={{ marginTop: '-21px' }}
-                  >
-                    <i
-                      className="ms-Icon ms-Icon--Clock"
-                      aria-hidden="true"
-                    ></i>
-                    &nbsp; 11:00 AM - 11:45 AM
-                  </span>
-                </div>
-
-                <div className="symbol-group symbol-hover py-2">
-                  <div className="symbol symbol-30">
-                    <img src={img} />
-                    <span className="mr-2">
-                      <Dropdown text="...">
-                        <Dropdown.Menu className="dropdowncomplete">
-                          <Dropdown.Item icon="eye" text="View detail" />
-                          <Dropdown.Item icon="play" text="Publish" />
-
-                          <Dropdown.Item
-                            icon="trash alternate outline"
-                            text="Delete"
-                          />
-                          <Dropdown.Item
-                            icon="check circle outline"
-                            text="Export"
-                          />
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
+              )
+            })}
           </div>
-        </Tab.Pane>
+        </Tab.Pane>) : (
+        <div className="no-data-found-info">
+                      {/* <img src={img8} className="image_center"></img> */}
+                      <img src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/default_area.png`} />
+
+                      <h3>{t("common.data_not_found")}</h3>
+                      <p>{t("project_tab_menu.meeting.no_protocol_data_found_desc")}</p>
+                      <Button size="small" className="primary" onClick={onClickAddProtocol} >
+                          + {t("project_tab_menu.meeting.add_new_protocol")}
+                      </Button>
+                      </div>
+      )
       ),
     },
   ];
 
   return (
-    <div className="app-content-body-dash navbar-collapse box-shadow">
-      <div>
-        <i className="ms-Icon ms-Icon--Back" aria-hidden="true"></i>{' '}
-        <span className="">Invitation</span> /{' '}
-        <span className="preliminary-font">Protocol</span>
-        <br />{' '}
-        <span style={{ fontSize: '10px' }}>
-          <strong>Bulider Meeting</strong>- Project begining sessions
-        </span>
-      </div>
+    <div>
+      <div className="tabs-main-info-container invitation-tab">
+        <div className="invitation-header">
+          <i className="ms-Icon ms-Icon--Back" aria-hidden="true"></i>{' '}
+          <span className="">Invitation</span> /{' '}
+          <span className="preliminary-font">Protocol</span>
+          <br />{' '}
+          <span className="invitation-sub-heading">
+            {/* <strong>Bulider Meeting -</strong>Project begining sessions */}
+            <strong>{props?.sessionDetail?.SessionByID?.meetingCategoryTitle} - </strong>{props?.sessionDetail?.SessionByID?.sessionTitle}
+          </span>
+        </div>
 
-      <Tab
-        className="ui-tabs"
-        menu={{ secondary: true, pointing: true }}
-        panes={panes}
-      />
+        <Tab
+          className="ui-tabs work-tabs invitation-listing"
+          menu={{ secondary: true, pointing: true }}
+          panes={panes}
+        />
+      </div>
     </div>
   );
 }

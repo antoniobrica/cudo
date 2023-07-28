@@ -1,7 +1,6 @@
-import React, { Suspense, useState } from 'react';
-
+import React, { lazy, Suspense, useState } from 'react';
+import { LazyLoading } from '@cudo/shared-components'
 import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch, useHistory, useLocation } from "react-router-dom";
-import ProjectInfo from './components/project-info/project-info';
 
 import { initI18n } from '@cudo/mf-core';
 import { Loading } from '@cudo/ui'
@@ -9,9 +8,20 @@ import { TestComponent } from './test-component/test-component';
 import { createBrowserHistory } from "history";
 import MicroFrontend from "../MicroFrontend";
 import { environment } from '../environments/environment';
-import TabMenu from './components/tab-menu/tab-menu';
 
-const defaultLanguage = 'de-DE';
+import TabMenu from './components/tab-menu/tab-menu';
+import ProjectInfo from './components/project-info/project-info';
+
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+
+import config from './redux/store'
+
+
+// const TabMenu = lazy(() => import('./components/tab-menu/tab-menu'))
+// const ProjectInfo = lazy(() => import('./components/project-info/project-info'))
+
+const defaultLanguage = 'en-GB';
 const supportedLanguages = [defaultLanguage, 'en-GB'];
 initI18n('./assets/i18n/{{lng}}.json', defaultLanguage);
 
@@ -81,18 +91,24 @@ function loadApp() {
   );
 }
 
+const { store, persistor } = config()
+
 function App() {
   const history = useHistory()
   const location = useLocation();
   const { url, path } = useRouteMatch();
-  console.log('path-project-app',history.location.pathname)
+  // console.log('---Project--app--history---', history)
   return (
-    <Router>
-      <Switch>
-        <Route exact path={`${history.location.pathname}/:projectId`} render={() => <TabMenu />} />
-        <Route exact path={`${history.location.pathname}`}  render={() => <ProjectInfo />}/>
-      </Switch>
-      </Router>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <Router>
+          <Switch>
+            <Route exact path={`${history.location.pathname}/:projectId`} render={() => <TabMenu />} />
+            <Route exact path={`${history.location.pathname}`} render={() => <ProjectInfo />} />
+          </Switch>
+        </Router>
+      </PersistGate>
+    </Provider>
   );
 }
 

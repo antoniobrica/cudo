@@ -5,9 +5,11 @@ import { KratosForm } from "../components/KratosForm"
 import { Header } from "../components/Header"
 import { Button, Icon } from "semantic-ui-react"
 import { login, ToEmail } from "../services/auth"
+import { useTranslation } from "react-i18next"
 
 export const Recover = () => {
   const [requestResponse, setRequestResponse] = useState<any>()
+  const {t} = useTranslation()
 
   useEffect(() => {
     const request = initialiseRequest({ type: "recover" }, { filterid: "flow" }) as Promise<any>
@@ -20,15 +22,13 @@ export const Recover = () => {
   const messages = requestResponse?.messages
 
   return (
-    <div className="content">
+    <div>
       {/* <Header /> */}
-      <div className="container">
-        <h4>Recover Your Account</h4>
-
+      <div>
         {messages && <KratosMessages messages={messages} />}
         {form &&
           <KratosForm
-            submitLabel="Send recovery link"
+            submitLabel={t("login.kratos_form_title")}
             action={form.action}
             fields={form.fields}
             messages={form.messages} />}

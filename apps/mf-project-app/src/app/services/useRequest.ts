@@ -5,13 +5,13 @@ export function useTodoQuery(gqlQuery: DocumentNode) {
   const { loading, error, data } = useQuery<ITodos>(gqlQuery);
   return { loading, error, data };
 }
-export function useProjectQuery(gqlQuery: DocumentNode) {
-  const { loading, error, data } = useQuery<IProjects>(gqlQuery);
+export function useProjectQuery(gqlQuery: DocumentNode, variable) {
+  const { loading, error, data } = useQuery<IProjects>(gqlQuery, variable);
   return { loading, error, data };
 }
 export function useProjectByIdQuery(gqlQuery: DocumentNode) {
-  const {loading, error, data } = useQuery<IProject>(gqlQuery);
-  return { loading, error, data }; 
+  const { loading, error, data } = useQuery<IProject>(gqlQuery);
+  return { loading, error, data };
 }
 export function useWorkTypesQuery(gqlQuery: DocumentNode) {
   const { loading, error, data } = useQuery<IWorkTypes>(gqlQuery);

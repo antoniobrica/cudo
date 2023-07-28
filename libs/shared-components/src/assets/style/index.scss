@@ -20,6 +20,7 @@
 @import "layout/form";
 @import "layout/fields";
 @import "layout/table";
+@import "layout/filesTab";
 @import "components/buttons";
 @import "components/tabs";
 @import "components/rating";
@@ -30,5 +31,9 @@
 @import "layout/sidebar";
 @import "layout/modal"; 
 @import "layout/message"; 
-@import "layout/task"; 
+@import "layout/task";
+@import "layout/costTab";
+@import "layout/meetingTab";
+@import "layout/projectListing";
+@import "layout/planningTab";
 // Global

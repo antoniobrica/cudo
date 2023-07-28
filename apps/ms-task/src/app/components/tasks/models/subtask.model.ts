@@ -5,6 +5,9 @@ import { Field, ObjectType } from '@nestjs/graphql';
 export class SubTaskModel {
 
   @Field({ nullable: true, description: `This is for subtaskID` })
+  taskID?: string;
+
+  @Field({ nullable: true, description: `This is for subtaskID` })
   subtaskID?: string;
 
   @Field({ nullable: true, description: `This is for  subtask title` })
@@ -12,5 +15,9 @@ export class SubTaskModel {
 
   @Field({ nullable: true, description: `This is for  subtask title` })
   status?: string;
+
+  @Field({ nullable: true, description: `Task Deleted or not` })
+  isDeleted?: Boolean;
+
 
 }
