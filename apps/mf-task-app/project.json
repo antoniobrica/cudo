@@ -1,0 +1,105 @@
+{
+  "name": "mf-task-app",
+  "$schema": "../../node_modules/nx/schemas/task-schema.json",
+  "sourceRoot": "apps/mf-task-app/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/mf-task-app",
+        "index": "apps/mf-task-app/src/index.html",
+        "baseHref": "/",
+        "main": "apps/mf-task-app/src/main.ts",
+        "tsConfig": "apps/mf-task-app/tsconfig.app.json",
+        "assets": ["apps/mf-task-app/src/favicon.ico", "apps/mf-task-app/src/assets"],
+        "styles": [],
+        "scripts": [],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/mf-task-app/webpack.config.js"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/mf-task-app/src/environments/environment.ts",
+              "with": "apps/mf-task-app/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "webpackConfig": "apps/mf-task-app/webpack.config.prod.js"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/react:module-federation-dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "mf-task-app:build",
+        "hmr": true,
+        "port": 4003
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "mf-task-app:build:development"
+        },
+        "production": {
+          "buildTarget": "mf-task-app:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/mf-task-app/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "mf-task-app:build",
+        "port": 4003
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "mf-task-app:build:development"
+        },
+        "production": {
+          "buildTarget": "mf-task-app:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/mf-task-app/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}

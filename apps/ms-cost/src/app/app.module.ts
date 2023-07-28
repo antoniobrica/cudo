@@ -4,8 +4,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ComponentsModule } from './components/components.module';
-import { SecretService } from '@cudo/ms-core'
+import { SecretService } from '@cudo/ms-core';
 import { TypeOrmService } from '../config/typeorm/type-orm.service';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 // import { I18nModule, I18nJsonParser } from 'nestjs-i18n';
 
 @Module({
@@ -19,8 +20,9 @@ import { TypeOrmService } from '../config/typeorm/type-orm.service';
     //     watch: true,
     //   },
     // }),
-    GraphQLModule.forRoot({
-      context: ({ req, connection }) => connection ? { req: connection.context } : { req },
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      context: ({ req, connection }) => (connection ? { req: connection.context } : { req }),
       autoSchemaFile: true,
     }),
     ComponentsModule,
@@ -31,4 +33,4 @@ import { TypeOrmService } from '../config/typeorm/type-orm.service';
   controllers: [AppController],
   providers: [AppService, SecretService],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,20 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import useStyles from './style';
 import Product from '../product/product';
 
-
 const ProductList = ({ products, isProductsLoading, isCartLoading, handleAddToCart }) => {
-  const classes = useStyles();
-
-  if (isProductsLoading || isCartLoading) return <Typography>Loading...</Typography>
-  if (!products || !products.length) return <Typography>No products</Typography>
+  if (isProductsLoading || isCartLoading) return <Typography>Loading...</Typography>;
+  if (!products || !products.length) return <Typography>No products</Typography>;
   return (
-    <div >
-      <Grid container spacing={2} alignItems='flex-start'>
-        {products.map(product => (
+    <div>
+      <Grid container spacing={2} alignItems="flex-start">
+        {products.map((product) => (
           <Grid item xs={6} md={3} key={product.id}>
             <Product
               id={product.id}
@@ -32,7 +29,7 @@ const ProductList = ({ products, isProductsLoading, isCartLoading, handleAddToCa
 
 ProductList.propTypes = {
   isLoading: PropTypes.bool,
-  products: PropTypes.array
+  products: PropTypes.array,
 };
 
 export default ProductList;

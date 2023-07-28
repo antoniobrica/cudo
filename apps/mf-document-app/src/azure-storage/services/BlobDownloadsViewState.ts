@@ -116,11 +116,11 @@ export class BlobDownloadsViewStateService {
         switchMap(res =>
           from(res.blobBody ? res.blobBody : Promise.resolve({})).pipe(
             map(body => {
-              let link = document.createElement("a");
+              const link = document.createElement("a");
               link.target = "_blank"
-              link.href = window.URL.createObjectURL(body);
+              link.href = window.URL.createObjectURL(body as Blob);
               link.click();
-              return window.URL.createObjectURL(body)
+              return window.URL.createObjectURL(body as Blob)
             })
           )
         )
@@ -138,7 +138,7 @@ export class BlobDownloadsViewStateService {
               // link.target = "_blank"
               // link.href = window.URL.createObjectURL(body);
               // link.click();
-              return window.URL.createObjectURL(body)
+              return window.URL.createObjectURL(body as Blob)
             })
           )
         )

@@ -1,157 +1,55 @@
 {
-  "npmScope": "cudo",
-  "affected": {
-    "defaultBase": "master"
-  },
-  "implicitDependencies": {
-    "workspace.json": "*",
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
-    },
-    "tsconfig.base.json": "*",
-    "tslint.json": "*",
-    ".eslintrc.json": "*",
-    "nx.json": "*"
-  },
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
+      "runner": "nx-cloud",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e",
-          "build-storybook"
-        ]
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "accessToken": "MTJlZTJkMWYtMmEyNy00YWNjLTgyZDAtYmNiZDI2OGNjOWU4fHJlYWQtd3JpdGU="
       }
     }
   },
-  "projects": {
-    "mf-container-app": {
-      "tags": []
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     },
-    "mf-container-app-e2e": {
-      "tags": [],
-      "implicitDependencies": ["mf-container-app"]
+    "e2e": {
+      "inputs": ["default", "^production"]
     },
-    "mf-account-app": {
-      "tags": []
+    "lint": {
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json", "{workspaceRoot}/.eslintignore"]
     },
-    "mf-account-app-e2e": {
-      "tags": [],
-      "implicitDependencies": ["mf-account-app"]
-    },
-    "ms-account": {
-      "tags": []
-    },
-    "mf-project-app": {
-      "tags": []
-    },
-    "mf-project-app-e2e": {
-      "tags": [],
-      "implicitDependencies": ["mf-project-app"]
-    },
-    "ms-project": {
-      "tags": []
-    },
-    "ui": {
-      "tags": []
-    },
-    "shared": {
-      "tags": []
-    },
-    "data": {
-      "tags": []
-    },
-    "ms-task": {
-      "tags": []
-    },
-    "ms-tender": {
-      "tags": []
-    },
-    "ms-cost": {
-      "tags": []
-    },
-    "ms-meeting": {
-      "tags": []
-    },
-    "ms-document": {
-      "tags": []
-    },
-    "ms-protocol": {
-      "tags": []
-    },
-    "mf-task-app": {
-      "tags": []
-    },
-    "mf-task-app-e2e": {
-      "tags": [],
-      "implicitDependencies": ["mf-task-app"]
-    },
-    "mf-tender-app": {
-      "tags": []
-    },
-    "mf-tender-app-e2e": {
-      "tags": [],
-      "implicitDependencies": ["mf-tender-app"]
-    },
-    "mf-cost-app": {
-      "tags": []
-    },
-    "mf-cost-app-e2e": {
-      "tags": [],
-      "implicitDependencies": ["mf-cost-app"]
-    },
-    "mf-meeting-app": {
-      "tags": []
-    },
-    "mf-meeting-app-e2e": {
-      "tags": [],
-      "implicitDependencies": ["mf-meeting-app"]
-    },
-    "interfaces": {
-      "tags": []
-    },
-    "data-access": {
-      "tags": []
-    },
-    "ms-core": {
-      "tags": []
-    },
-    "shared-components": {
-      "tags": []
-    },
-    "shared-components-e2e": {
-      "tags": [],
-      "implicitDependencies": ["shared-components"]
-    },
-    "ui-design": {
-      "tags": []
-    },
-    "ui-design-e2e": {
-      "tags": [],
-      "implicitDependencies": ["ui-design"]
-    },
-    "mf-core": {
-      "tags": []
-    },
-    "mf-account-app-lib": {
-      "tags": []
-    },
-    "mf-document-lib": {
-      "tags": []
-    },
-    "mf-document-app": {
-      "tags": []
-    },
-    "mf-document-app-e2e": {
-      "tags": [],
-      "implicitDependencies": ["mf-document-app"]
-    },
-    "mf-task-lib": {
-      "tags": []
+    "test": {
+      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+    }
+  },
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "production": [
+      "default",
+      "!{projectRoot}/.eslintrc.json",
+      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/jest.config.[jt]s"
+    ],
+    "sharedGlobals": ["{workspaceRoot}/babel.config.json"]
+  },
+  "generators": {
+    "@nx/react": {
+      "application": {
+        "style": "@emotion/styled",
+        "linter": "eslint",
+        "bundler": "webpack",
+        "babel": true
+      },
+      "component": {
+        "style": "@emotion/styled"
+      },
+      "library": {
+        "style": "@emotion/styled",
+        "linter": "eslint"
+      }
     }
   }
 }

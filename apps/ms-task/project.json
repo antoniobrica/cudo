@@ -1,0 +1,83 @@
+{
+  "name": "ms-task",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/ms-task/src",
+  "projectType": "application",
+  "prefix": "ms-task",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/ms-task",
+        "main": "apps/ms-task/src/main.ts",
+        "tsConfig": "apps/ms-task/tsconfig.app.json",
+        "assets": ["apps/ms-task/src/assets"],
+        "target": "node",
+        "compiler": "tsc"
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/ms-task/src/environments/environment.ts",
+              "with": "apps/ms-task/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/node:node",
+      "options": {
+        "buildTarget": "ms-task:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/ms-task/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/ms-task"],
+      "options": {
+        "jestConfig": "apps/ms-task/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "migration-generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "node --require ts-node/register ../../node_modules/typeorm/cli.js migration:generate -n {args.name} -c {args.mode}"
+        ],
+        "cwd": "apps/ms-task",
+        "parallel": false
+      }
+    },
+    "migration-run": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["node --require ts-node/register ../../node_modules/typeorm/cli.js migration:run -c {args.mode}"],
+        "cwd": "apps/ms-task",
+        "parallel": false
+      }
+    },
+    "migration-revert": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "node --require ts-node/register ../../node_modules/typeorm/cli.js migration:revert -c {args.mode}"
+        ],
+        "cwd": "apps/ms-task",
+        "parallel": false
+      }
+    }
+  },
+  "tags": []
+}
