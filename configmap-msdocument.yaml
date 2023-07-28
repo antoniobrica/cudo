@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ms-document-config
+data:
+  NODE_ENV: 'development'
+  PORT: '5003'
+  SERVER_TIMEOUT: '1080000'
+  DATABASE_HOST: 'cudosqlserver.database.windows.net'
+  DATABASE_PORT: '1433'
+  DATABASE_USERNAME: 'adminsql'
+  DATABASE_PASSWORD: 'Test1234.'
+  DATABASE_NAME: 'cudosql'
+  DATABASE_TYPE: 'mssql'
+  DATABASE_CONNECTION_TIME_OUT: '150000'
+  DATABASE_ACQUIRE_TIME_OUT: '150000'
+  DATABASE_CONNECTION_LIMIT: '20'

@@ -1,0 +1,115 @@
+{
+  "name": "mf-meeting-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/mf-meeting-app/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/web:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/mf-meeting-app",
+        "index": "apps/mf-meeting-app/src/index.html",
+        "main": "apps/mf-meeting-app/src/main.tsx",
+        "polyfills": "apps/mf-meeting-app/src/polyfills.ts",
+        "tsConfig": "apps/mf-meeting-app/tsconfig.app.json",
+        "assets": [
+          "apps/mf-meeting-app/src/favicon.ico",
+          "apps/mf-meeting-app/src/assets",
+          {
+            "input": "libs/shared-components/src/assets",
+            "glob": "**/*",
+            "output": "assets"
+          }
+        ],
+        "styles": ["apps/mf-meeting-app/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "apps/mf-meeting-app/webpack.config.js"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/mf-meeting-app/src/environments/environment.ts",
+              "with": "apps/mf-meeting-app/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "extractCss": true,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/webpack:dev-server",
+      "options": {
+        "buildTarget": "mf-meeting-app:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "mf-meeting-app:build:production"
+        },
+        "development": {
+          "buildTarget": "mf-meeting-app:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/mf-meeting-app/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/mf-meeting-app"],
+      "options": {
+        "jestConfig": "apps/mf-meeting-app/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "storybook": {
+      "executor": "@nrwl/storybook:storybook",
+      "options": {
+        "uiFramework": "@storybook/react",
+        "port": 4400,
+        "config": {
+          "configFolder": "apps/mf-meeting-app/.storybook"
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@nrwl/storybook:build",
+      "options": {
+        "uiFramework": "@storybook/react",
+        "outputPath": "dist/storybook/mf-meeting-app",
+        "config": {
+          "configFolder": "apps/mf-meeting-app/.storybook"
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    }
+  },
+  "tags": []
+}

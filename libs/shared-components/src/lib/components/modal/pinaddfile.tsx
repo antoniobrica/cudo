@@ -1,281 +1,286 @@
- 
 import React from 'react';
-import { Button,  Modal,  Grid, Image, Segment,Form,Input,TextArea,Select,Checkbox} from 'semantic-ui-react';
-// import SampleModal from './sample-modal';
-import img2 from 'libs/shared-components/src/people_1.png';
+import {
+  Button,
+  Modal,
+  Grid,
+  Image,
+  Segment,
+  Form,
+  Input,
+  TextArea,
+  Select,
+  Checkbox,
+  Dropdown,
+} from 'semantic-ui-react';
 
-import img3 from 'libs/shared-components/src/check_grey.png'; 
-import img4 from 'libs/shared-components/src/dots.png';
-import img6 from 'libs/shared-components/src/dotss.png';
-import img7 from 'libs/shared-components/src/Image 3.png';
-
+// import Canvas from './canvas';
+import CanvasImage from './canvasimage';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { CreateFileTaskIndex } from '../../../../../mf-task-lib/src/lib/components/create-file-task-index/create-file-task-index';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { PinTaskListIndex } from '../../../../../mf-task-lib/src/lib/components/pin-task-list-index/pin-task-list-index';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
+import { useTranslation } from 'react-i18next';
+import { ToastContainer, toast } from 'react-toastify';
 
 function exampleReducer(state, action) {
-    switch (action.type) {
-      case 'close':
-        return { open: false }
-      case 'open':
-        return { open: true, size: action.size }
+  switch (action.type) {
+    case 'close':
+      return { open: false };
+    case 'open':
+      return { open: true, size: action.size };
+    default:
+      throw new Error('Unsupported action...');
+  }
+}
+
+export interface AddPinProps {
+  isOpen?;
+  cancel?;
+  filesData?;
+  dowloadFilesData?;
+  onSuccess?;
+  savePin?;
+  isVersionSelected?;
+}
+export const AddPinFile = (props: AddPinProps) => {
+  const [open, setOpen] = React.useState(false);
+  const [allowToCreateNewPin, setAllowToCreateNewPin] = React.useState(false);
+  const [fileData, setFileData] = React.useState(null);
+  const [pinTasks, setPinTasks] = React.useState([]);
+  const [isPinCreated, setIsPinCreated] = React.useState<boolean>(false);
+  const [cord, setCord] = React.useState(null);
+  const [imgUrl, setimgUrl] = React.useState('');
+  const [fileId, setFileId] = React.useState('');
+  const [saveNewPinOnCanvase, setSaveNewPinOnCanvase] = React.useState(false);
+  const [pinSavedOnCanvase, setPinSavedOnCanvase] = React.useState(false);
+  const [activeErrorClass, setActiveErrorClass] = React.useState(false);
+  const [taskErrors, setTaskErrors] = React.useState('');
+  const [hoveredTaskTypeID, setHoveredTaskTypeID] = React.useState(null);
+
+  // set sucess value to toaster function
+  const getTaskToasterMessage = (data) => {
+    setActiveErrorClass(false);
+    toast(data);
+  };
+
+  // set error value to task error for toaster function
+  const getTaskErrorMessage = (data) => {
+    setActiveErrorClass(true);
+
+    let errorExeptionMessage: string;
+    switch (data) {
+      case 7001:
+        errorExeptionMessage = t('toaster.error.task.task_already_exists');
+        break;
+      case 7002:
+        errorExeptionMessage = t('toaster.error.task.task_not_found');
+        break;
+      case 7003:
+        errorExeptionMessage = t('toaster.error.task.task_not_created');
+        break;
+      case 7004:
+        errorExeptionMessage = t('toaster.error.task.no_title');
+        break;
+      case 7005:
+        errorExeptionMessage = t('toaster.error.task.no_worktype');
+        break;
+      case 7006:
+        errorExeptionMessage = t('toaster.error.planning.no_phase');
+        break;
+      case 7007:
+        errorExeptionMessage = t('toaster.error.task.no_assignee');
+        break;
+      case 7008:
+        errorExeptionMessage = t('toaster.error.task.wrong_date');
+        break;
+      case 7009:
+        errorExeptionMessage = t('toaster.error.planning.due_date');
+        break;
+      case 7010:
+        errorExeptionMessage = t('toaster.error.task.no_referance');
+        break;
+      case 7011:
+        errorExeptionMessage = t('toaster.error.task.subtask_not_found');
+        break;
+      case 7012:
+        errorExeptionMessage = t('toaster.error.task.no_subtask_title');
+        break;
+      case 500:
+        errorExeptionMessage = t('toaster.error.task.internal_server_error');
+        break;
       default:
-        throw new Error('Unsupported action...')
+        errorExeptionMessage = '';
     }
-    
-  }
-  
-  const countryOptions = [
-    { key: 'af', value: 'af', text: 'Afghanistan' },
-    { key: 'ax', value: 'ax', text: 'Aland Islands' },
-     
-  ]
-  const ModalExampleSize = () => {
-    const [state, dispatch] = React.useReducer(exampleReducer, {
-      open: false,
-      size: undefined,
-    })
-    const { open, size } = state
-  
-    return (
-         <>
-       <div id="navbar">
-         
-        <Button  size='mini' className="grey-btn" onClick={() => dispatch({ type: 'open', size: 'fullscreen' })}>
-           Pin File
-        </Button>
-  
-        <Modal
-          size={size}
-          open={open}
-          onClose={() => dispatch({ type: 'close' })} style={{marginLeft:'30px'}}
-        >
-          <Modal.Header>File_name.cad</Modal.Header>
-          <Modal.Content>
-          <Form>
-          <Grid stackable columns={2}>
-    <Grid.Column>
-      <Segment> 
-      <img src={img7}  className=" fluid " /> 
+    setTaskErrors(errorExeptionMessage);
+  };
 
-      </Segment>
-    </Grid.Column>
-    <Grid.Column>
-        <div style={{background: '#F1F5F8', padding: '10px'}}>
-         <Form.Field>
-      <label>Task Title <span className="danger">*</span></label>
-      <Input placeholder='Swtichboard Fitting' size='small' className="full-width" type="text" />
-    </Form.Field>
-    <Form.Field>
-      <label>Description </label>
-      <TextArea placeholder='type here...' />
-    </Form.Field>
-    <Form.Field>
-      <label>Assoicate with work type  </label>
-      <Select placeholder='Select' className="small" options={countryOptions} />
-      </Form.Field>
-      <Form.Field>
-      <label>Select phase  </label>
-      <Select placeholder='Select' className="small" options={countryOptions} />
-      </Form.Field>
-      <Form.Field>
-      <label>Select BKP  </label>
-      <Select placeholder='Select' className="small" options={countryOptions} />
-      </Form.Field>
-      <Form.Field>
-      <label>Assignee <span className="danger">*</span></label>
-      <Select placeholder='Select' className="small" options={countryOptions} />
-      </Form.Field>
-      <Grid columns={2}>
-<Grid.Row>
-  <Grid.Column>
-    <Form.Field>
-      <label>Followers </label>
-      <Select placeholder='Select' className="small" options={countryOptions} />
-            
-    </Form.Field>
-  </Grid.Column>
+  // set error message to toaster
+  React.useEffect(() => {
+    if (taskErrors) {
+      toast(taskErrors);
+    }
+  }, [taskErrors]);
 
-  <Grid.Column>
-    <Form.Field>
-    <div className="event">
-                        <div className="label-green label-spacer" style={{width: '30px',height: '30px',padding: '6px 0px 0px 8px'}}>
-                           <span className="white-text">AB</span>
-                            </div>
-                            <div className="label-purple label-spacer" style={{width: '30px',height: '30px',padding: '6px 0px 0px 8px'}}>
-                           <span className="white-text ">RJ</span>
-                            </div>
-                            
-                       </div>      
-    </Form.Field>
-  </Grid.Column>
-</Grid.Row>
-</Grid>
-<Form.Field>
-<Checkbox label='send notification to assignee/followers for the task' />
-      </Form.Field>
-<Form.Field>
-<Grid columns={2}>
-<Grid.Row>
-  <Grid.Column>
-    <Form.Field>
-      <label>Start Date </label>
-      <Input   size='small' className="full-width" type="date" />     
-    </Form.Field>
-  </Grid.Column>
+  const { t } = useTranslation();
 
-  <Grid.Column>
-    <Form.Field>
-    <label>End Date </label>
-    <Input   size='small' className="full-width" type="date" /> 
-    </Form.Field>
-  </Grid.Column>
-</Grid.Row>
-</Grid>
-</Form.Field>
-<Form.Field>  
-    <label>Estimated Dates </label>
-      <Select placeholder='Select' className="small" options={countryOptions} />
-     
-      </Form.Field>
-      <Form.Field>
-       
-              <Button
-          content="Submit" 
-          onClick={() => dispatch({ type: 'close' })}
-          positive
-          size='mini' className="grey-btn"
+  React.useEffect(() => {
+    setAllowToCreateNewPin(false);
+  }, [isPinCreated]);
+
+  const close = () => {
+    setOpen(false);
+    props.cancel(false);
+  };
+
+  const openM = () => {
+    setOpen(true);
+  };
+  React.useEffect(() => {
+    if (props.isOpen) {
+      setOpen(props.isOpen);
+    }
+  }, [props.isOpen]);
+
+  React.useEffect(() => {
+    if (props.filesData) {
+      setFileId(props.filesData.uploadedFileID);
+      setFileData(props.filesData);
+    }
+  }, [props.filesData]);
+
+  React.useEffect(() => {
+    if (props.dowloadFilesData) {
+      for (let i = 0; i < props.dowloadFilesData.length; i++) {
+        if (props.dowloadFilesData[i].filename == props.filesData.fileTitle) {
+          setimgUrl(props.dowloadFilesData[i].url);
+        }
+      }
+    }
+  }, [props.dowloadFilesData]);
+
+  const getCoardinates = (data) => {
+    setCord(data);
+  };
+  const onSuccess = async () => {
+    setAllowToCreateNewPin(false);
+    setIsPinCreated(false);
+  };
+  const changePinTask = () => {
+    setAllowToCreateNewPin(true);
+  };
+  const taskClose = () => {
+    setAllowToCreateNewPin(false);
+    setIsPinCreated(false);
+  };
+
+  const getActivePinWiseTaskCount = () => {
+    //
+  };
+
+  const getTaskHovered = (taskTypeID) => {
+    setHoveredTaskTypeID(taskTypeID);
+  };
+
+  return (
+    <div>
+      <Modal
+        className="pin-add-file"
+        closeIcon
+        size={'fullscreen'}
+        onClose={close}
+        onOpen={openM}
+        open={open}
+        closeOnDimmerClick={false}
+      >
+        <ToastContainer
+          className={`${activeErrorClass ? 'error' : 'success'}`}
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={true}
+          closeOnClick
+          pauseOnFocusLoss
+          pauseOnHover
         />
-        <Button size='mini' className="icon-border" onClick={() => dispatch({ type: 'close' })}>
-        X  Cancel
-        </Button>
-          
-      </Form.Field>
-      </div>
-      <Form.Field>
-       
-        <div className="card1 card-custom gutter-b" style={{border: '1px solid #ddd'}}>
+        <Modal.Header>
+          <h3>{props.filesData?.fileTitle}</h3>
+          <span>
+            <a href="">
+              <i className="ms-Icon ms-Icon--ZoomOut" aria-hidden="true"></i>
+            </a>
+            <a href="">
+              <i className="ms-Icon ms-Icon--ZoomIn" aria-hidden="true"></i>
+            </a>
+            <a href="">
+              <i className="ms-Icon ms-Icon--Rotate90CounterClockwise" aria-hidden="true"></i>
+            </a>
+            <a href="">
+              <i className="ms-Icon ms-Icon--Rotate90Clockwise" aria-hidden="true"></i>
+            </a>
+          </span>
+        </Modal.Header>
+        <Modal.Content>
+          <Form>
+            <div className="left-side-image-canvas">
+              <CanvasImage
+                pinSaved={setPinSavedOnCanvase}
+                savePin={saveNewPinOnCanvase}
+                imgUrl={imgUrl}
+                coardinates={getCoardinates}
+                fileId={fileId}
+                allowToCreateNewPin={allowToCreateNewPin}
+                isPinCreated={isPinCreated}
+                setIsPinCreated={setIsPinCreated}
+                hoveredTaskTypeID={hoveredTaskTypeID}
+                parentWisePinFetch={false}
+                parentFileId={props?.filesData?.parentUploadedFileID}
+                isVersionSelected={props?.isVersionSelected}
+                showCompletedPins={false}
+              ></CanvasImage>
+            </div>
 
-<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-												 
-													<div className="d-flex align-items-center  py-2">
-													  <span> <img src={img4}  className="  mr-10 " />  </span>
-													 
-                                                     <span>  <img src={img3}  className=" mr-2 mr-10 " />   </span>
-                                                     <span className="font-weight-bold mb-0 mr-10  ">This is task name here</span>
-														 
-													</div>
-													 
-													<div className="symbol-group symbol-hover py-2 text-right">
-													   <div className="symbol symbol-30">
-                                                       
-                                                        <img src={img2}  />
-                                                    
-														</div>
-                                                       
-													</div> 
-                                                    
-												</div>
-                                                <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-                                                <div className="d-flex align-items-center  py-2">
-													  <span className="  mr-10 " >    </span>
-													 
-                                                     <span  className=" mr-2 mr-10 " >   </span>
-                                                     <span style={{color:'#718898'}}  className="font-weight-bold mb-0 mr-10  ">Starts Tomorrow ↦ Due Fri Aug 28th</span>
-														 
-													</div>
+            <div className="right-side-file-details">
+              <div className="add-pin-mark-field">
+                {!isPinCreated ? (
+                  <Form.Field className="pin-add-field">
+                    <button className="ui mini button pinbutton" onClick={changePinTask}>
+                      {t('pin_mask.pin_mark_task')}
+                    </button>
+                    <img
+                      src={`${MS_SERVICE_URL['ASSETS_CDN_URL'].url}/assets/images/grey_pin.png`}
+                      className="pinadd"
+                    />
+                  </Form.Field>
+                ) : (
+                  <CreateFileTaskIndex
+                    pinsaved={pinSavedOnCanvase}
+                    savePin={setSaveNewPinOnCanvase}
+                    close={taskClose}
+                    onSuccess={onSuccess}
+                    cord={cord}
+                    fileData={fileData}
+                    getTaskToasterMessage={getTaskToasterMessage}
+                    getTaskErrorMessage={getTaskErrorMessage}
+                    isVersionSelected={props?.isVersionSelected}
+                  />
+                )}
+                {!isPinCreated ? (
+                  <PinTaskListIndex
+                    filesData={fileData}
+                    cord={cord}
+                    pinCount={getActivePinWiseTaskCount}
+                    taskHovered={getTaskHovered}
+                    parentWiseTaskFetch={false}
+                    isVersionSelected={props?.isVersionSelected}
+                  ></PinTaskListIndex>
+                ) : null}
+              </div>
+            </div>
+          </Form>
+        </Modal.Content>
+      </Modal>
+    </div>
+  );
+};
 
-                                                </div>
-                                                 
-<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-												 
-<div className="d-flex align-items-center  py-2">
-                                                <span className=" mr-2 mr-10 li_area"></span>
-                                                   <span className=" mr-2 mr-10 li_area">  <i className="ms-Icon ms-Icon--LocationDot " aria-hidden="true" style={{color:'#D0D8DF'}}></i>Tender</span>
-                                                    <span className=" mr-2 mr-10 li_area">  <i className="ms-Icon ms-Icon--LocationDot " aria-hidden="true" style={{color:'#D0D8DF'}}></i>Paint Work</span>
-                                                 </div>
-                                                  
-                                                 <div className="symbol-group symbol-hover py-2 text-right">
-                                                    <div className="symbol symbol-30">
-                                                    
-                                                     <img src={img6}  />
-                                                 
-                                                     </div>
-                                                    
-                                                 </div> 
-                                                 
-                                             </div>
-                                              
-                                               
-        </div> 
- 
-
-      </Form.Field>
-      <Form.Field>
-       
-       <div className="card1 card-custom gutter-b" style={{border: '1px solid #ddd'}}>
-
-<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-                                                
-                                                   <div className="d-flex align-items-center  py-2">
-                                                     <span> <img src={img4}  className="  mr-10 " />  </span>
-                                                    
-                                                    <span>  <img src={img3}  className=" mr-2 mr-10 " />   </span>
-                                                    <span className="font-weight-bold mb-0 mr-10  ">This is task name here</span>
-                                                        
-                                                   </div>
-                                                    
-                                                   <div className="symbol-group symbol-hover py-2 text-right">
-                                                      <div className="symbol symbol-30">
-                                                      
-                                                       <img src={img2}  />
-                                                   
-                                                       </div>
-                                                      
-                                                   </div> 
-                                                   
-                                               </div>
-                                               <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-                                               <div className="d-flex align-items-center  py-2">
-                                                     <span className="  mr-10 " >    </span>
-                                                    
-                                                    <span  className=" mr-2 mr-10 " >   </span>
-                                                    <span style={{color:'#718898'}}  className="font-weight-bold mb-0 mr-10  ">Starts Tomorrow ↦ Due Fri Aug 28th</span>
-                                                        
-                                                   </div>
-
-                                               </div>
-                                                
-<div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
-                                                
-                                                <div className="d-flex align-items-center  py-2">
-                                                <span className=" mr-2 mr-10 li_area"></span>
-                                                   <span className=" mr-2 mr-10 li_area">  <i className="ms-Icon ms-Icon--LocationDot " aria-hidden="true" style={{color:'#D0D8DF'}}></i>Tender</span>
-                                                    <span className=" mr-2 mr-10 li_area">  <i className="ms-Icon ms-Icon--LocationDot " aria-hidden="true" style={{color:'#D0D8DF'}}></i>Paint Work</span>
-                                                 </div>
-                                                 
-                                                <div className="symbol-group symbol-hover py-2 text-right">
-                                                   <div className="symbol symbol-30">
-                                                      <img src={img6}  />
-                                                
-                                                    </div>
-                                                   
-                                                </div> 
-                                                
-                                            </div>
-                                             
-                                              
-       </div> 
-
-
-     </Form.Field>
-    </Grid.Column>
-
-  </Grid>
-  </Form>
-          </Modal.Content>
-          
-        </Modal>
-        </div>
-      </>
-    )
-  }
-  
-  export default ModalExampleSize
+export default AddPinFile;

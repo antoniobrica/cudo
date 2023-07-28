@@ -8,21 +8,33 @@ export const GET_COUNTRY = gql`
   }
 `;
 
-export const GET_USERS= gql`
+export const GET_USERS = gql`
 {
-  users(userID:"1") {
-  userID
-  userName
-  references {
-  referenceID
-  referenceType
-  }
-  }
+  userByEmail( 
+    email:"vipin11july1995@gmail.com",
+  ) { 
+     userID
+     userName
+     email
+  } 
   }
 `;
+// titleFilter: { bkpTitle: "bkp2" }
+//     referenceFilter: {
+//       referenceType: COMPANY
+//       referenceID: "dapr"
+//     }
 
-export const GET_BKP = gql`{
-    Bkp(referenceFilter:{referenceType:COMPANY,referenceID:"3"})
+export const GET_BKP = gql`
+query Bkp($referenceID:String!,$referenceType:ReferenceType!,$bkpTitle:String!,$bkpId:String!)
+{
+  Bkp(
+    titleFilter: { bkpTitle: $bkpTitle,bkpId:$bkpId }
+    referenceFilter: {
+      referenceType: $referenceType
+      referenceID: $referenceID
+    }
+  )
    {
     bkpID
     bkpTitle
@@ -30,88 +42,230 @@ export const GET_BKP = gql`{
   
 }`
 
-export const GET_FOLDER = gql`{
-  Folders(referenceFilter: { referenceID: "dapr", referenceType: COMPANY }) { 
+export const CREATE_BKP_COSTS = gql`
+mutation CreateBKpCost(
+  $referenceID: String!
+  $referenceType: ReferenceType!
+  $addLayerTwoBkpHierarchy: AddLayerTwoBkpHierarchyInput!
+  ) {
+    createBkpCost(
+      referenceFilter: {
+        referenceType: $referenceType
+        referenceID: $referenceID
+      }
+      addLayerTwoBkpHierarchy:$addLayerTwoBkpHierarchy
+    ) {
+      bkpCostID
+      BKPID
+      BKPTitle
+      structureID
+      structureName
+      children {
+        bkpCostID
+        BKPID
+        BKPTitle
+        bkpChildrenLayerTwo {
+          bkpCostID
+          BKPID
+          BKPTitle
+          itemPrice
+          itemQuantity
+          itemTotalPrice
+          description
+        }
+      }
+    }
+  }
+`
+
+export const GET_BKP_HIERARCHIES = gql`
+query GetBkps($referenceID:String!,$referenceType:ReferenceType!)
+{
+  getBkps(
+    refFilter:{referenceType:$referenceType,referenceID:$referenceID}
+  )
+  {
+    bkpCostID
+    BKPID
+    BKPTitle
+    structureID
+    structureName
+    children {
+      bkpCostID
+      BKPID
+      BKPTitle
+      bkpChildrenLayerTwo {
+        bkpCostID
+        BKPID
+        BKPTitle
+        itemPrice
+        itemQuantity
+        itemTotalPrice
+        description
+      }
+    }
+  }
+}
+`
+
+export const DELETE_BKP_COST = gql`
+mutation DeleteBkp(
+  $bkpCostID:String!
+) {
+  deleteBkp(
+    bkpDeleteInput :{
+      bkpCostID:$bkpCostID
+    }
+  ) {
+    BKPID
+    BKPTitle
+    bkpCostID
+  }
+}
+
+`
+export const UPDATE_BKP_COST = gql`
+mutation UpdateBkpCost(
+  $bkpCostID:String!
+  $BKPTitle:String!
+  $itemPrice:Float!
+  $itemQuantity:Float!
+  $itemTotalPrice:Float!
+  $description:String!
+) {
+  updateBkpCost(
+    updateBKPLayerTwo :{
+      bkpCostID: $bkpCostID
+      BKPTitle: $BKPTitle
+      description: $description
+      itemPrice: $itemPrice
+      itemTotalPrice: $itemTotalPrice
+      itemQuantity: $itemQuantity
+    }
+  ) {
+    BKPID
+    BKPTitle
+    description
+    itemPrice
+    itemQuantity
+    itemTotalPrice
+  }
+}
+
+`
+
+export const GET_FOLDER = gql`
+query Folders($referenceID:String!,$referenceType:ReferenceType!,$folderTitle:String!)
+{
+  Folders(
+    referenceFilter: { referenceType: $referenceType, referenceID: $referenceID }
+    titleFilter: {folderTitle:$folderTitle}
+  ) { 
     folderTitle 
     folderID 
   } 
 
 }`
 
-export const GET_FILE_TYPE = gql`{
-    FileTypes(referenceFilter: { referenceType: COMPANY, referenceID: "3" }
+export const GET_FILE_TYPE = gql`
+query FileTypes($companyId: String!)
+{
+  FileTypes(referenceFilter: { referenceType: COMPANY, referenceID: $companyId }
   ){
-      fileTypeID                      
-      fileTypeTitle
-      
-    }
-}`
-export const GET_FILE_STRUCTURE = gql`{
-  FileStructure(referenceFilter: { referenceType: COMPANY, referenceID: "3" }
-  ){
-      fileStructureID
-      fileStructureTitle
-      
-    }
-}`
-
-export const GET_PHASE = gql`{
-  Phase(referenceFilter:{referenceType:COMPANY,referenceID:"3"})
- {
-  id
-phaseTitle
+    fileTypeID                      
+    fileTypeTitle      
   }
-
 }`
+export const GET_FILE_STRUCTURE = gql`
+query FileStructure($companyId: String!)
+{
+  FileStructure(referenceFilter: { referenceType: COMPANY, referenceID: $companyId }
+  ){
+    fileStructureID
+    fileStructureTitle      
+  }
+}`
+
+export const GET_STRUCTURE = gql`{
+  structureRoots(referenceFilter: {referenceType:COMPANY,referenceID:"Sftobiz_1234" }) {
+    structureID
+    referenceID
+    referenceType
+    structureName
+    }
+}`
+
+export const GET_PHASE = gql`
+query Phase($companyId: String!)
+{
+  Phase(referenceFilter:{referenceType:COMPANY,referenceID:$companyId})
+  {
+    id
+    phaseTitle
+  }  
+}`
+
+export const GET_CATAGORIES = gql`{
+  MeetingCatagories( 
+    referenceFilter: { referenceID: "Sftobiz_1234", referenceType: COMPANY } 
+  ) { 
+    meetingCatagoryID 
+    meetingCatagoryTitle 
+  } 
+}`
+
+export const GET_PROTOCOL = gql`{
+  ProtocoleTemplates( 
+    referenceFilter: { referenceID: "Sftobiz_1234", referenceType: COMPANY } 
+  ) { 
+    protocolTemplateID 
+    protocolTemplateTitle 
+
+  } 
+}`
+
+export const GET_INVITATION = gql`{
+  invitationTemplates( 
+    referenceFilter: { referenceID: "dapr", referenceType: COMPANY } 
+  ) { 
+    invitationTemplateID 
+    invitationTemplateTitle 
+
+  } 
+}`
+
+
+
 export const ADD_FOLDER = gql`
 mutation CreateFolder(
+  $referenceID:String!,
   $folderTitle: String!, 
   ){ 
     createFolder( 
-      referenceFilter: { referenceID: "dapr", referenceType: COMPANY } 
-      folderDetails: { folderID: "4", folderTitle:  $folderTitle } 
+      referenceFilter: { referenceID: $referenceID, referenceType: COMPANY } 
+      folderDetails: {folderTitle:  $folderTitle } 
     ) { 
       folderID 
       folderTitle 
     } 
 }`;
 
-
-export const ADD_TASK = gql`
-mutation CreateTask(
-  $taskTitle: String!, 
-  $startDate: DateTime!,
-  $endDate: DateTime!,
-  $estimatedDays: String!,
-  $sendNotification: String!,
-  $BKPID: String!,
-  $saveTaskAsTemplate: String!,
-  $phasesID: String!,
-  $status: String!,
+export const GET_REFERENCES = gql`
+query references(
+  $referenceID: String!, 
+  $referenceType: ReferenceType!,
   ){ 
-    createTask(
-      referenceFilter:{
-        referenceID: "Sftobiz_1234"
-        referenceType: "project"
-        projectID: "33"
-        companyID: "click"
-        },
-      taskDetails: {
-      taskTitle: $taskTitle,
-      startDate: $startDate, 
-      endDate: $endDate,
-      estimatedDays: $estimatedDays,
-      sendNotification: $sendNotification,
-      BKPID: $BKPID,
-      saveTaskAsTemplate: $saveTaskAsTemplate,
-      phasesID: $phasesID,
-      status: $status,
-   }){
-    taskTitle
-  }
+    references( 
+      referenceFilter: { referenceID: $referenceID, referenceType:$referenceType } 
+    ) { 
+      users{
+      userID
+      userName
+      imageUrl
+      email
+    }
+    } 
 }`;
-
-
 
 //dummy data
 

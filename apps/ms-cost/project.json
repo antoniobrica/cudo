@@ -1,0 +1,55 @@
+{
+  "name": "ms-cost",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/ms-cost/src",
+  "projectType": "application",
+  "prefix": "ms-cost",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/ms-cost",
+        "main": "apps/ms-cost/src/main.ts",
+        "tsConfig": "apps/ms-cost/tsconfig.app.json",
+        "assets": ["apps/ms-cost/src/assets"],
+        "target": "node",
+        "compiler": "tsc"
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/ms-cost/src/environments/environment.ts",
+              "with": "apps/ms-cost/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/node:node",
+      "options": {
+        "buildTarget": "ms-cost:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/ms-cost/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/ms-cost"],
+      "options": {
+        "jestConfig": "apps/ms-cost/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
