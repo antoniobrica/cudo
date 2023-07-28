@@ -8,6 +8,9 @@ import CostFilterParams from '../../../utils/types/costFilterParams';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { ReferenceService } from '../../reference/service/reference.service';
 import { CreateCostInput } from '../dto/create-cost.input';
+import { BKPcostDeleteInput } from '../dto/delete-BKPCost.input';
+import { CostDeleteInput } from '../dto/delete-cost.input';
+import { UpdateBkpCostBasicInput } from '../dto/update-bkp-cost.input';
 
 
 @Injectable()
@@ -60,7 +63,7 @@ export class CostService {
       where: {
         "references": {
           id: selectedReference.id
-        }
+        }, 'isDeleted': false,
       }, relations: ['BKPCosts', 'BKPCosts.bkpCostFiles']
 
     });
@@ -80,4 +83,49 @@ export class CostService {
     });
 
   }
+
+  public async deleteCost(costDeleteInput: CostDeleteInput): Promise<CostEntity> {
+    const cost = await this.costRepository.findOne({ where: { costID: costDeleteInput.costID } });
+    if (cost) {
+      cost.isDeleted = !(cost.isDeleted)
+      const updatedPost = await cost.save()
+      return updatedPost
+    }
+    throw new HttpException('cost with costId Not Found', HttpStatus.NOT_FOUND);
+  }
+
+  public async deleteBKPCost(bkpCostDeleteInput: BKPcostDeleteInput): Promise<BKPCostEntity> {
+    const bkpCost = await this.BKPCostRepository.findOne({ where: { bkpCostID: bkpCostDeleteInput.bkpCostID } });
+    if (bkpCost) {
+      bkpCost.isDeleted = !(bkpCost.isDeleted)
+      const updatedPost = await bkpCost.save()
+      return updatedPost
+    }
+    throw new HttpException('cost with costId Not Found', HttpStatus.NOT_FOUND);
+  }
+
+
+  public async updateBKPCostID(updateBkpCostBasicInput: UpdateBkpCostBasicInput): Promise<BKPCostEntity[]> {
+    const bkpCostDetails = await this.BKPCostRepository.find({
+      where: { bkpCostID: updateBkpCostBasicInput.bkpCostID }
+      // relations: ['reference', 'files']
+    });
+    if (bkpCostDetails.length <= 0)
+      throw new HttpException('bkpCostDetails Not Found', HttpStatus.NOT_FOUND);
+    const bkpCostDetail = bkpCostDetails[0];
+    updateBkpCostBasicInput.BKPTitle ? bkpCostDetail.BKPTitle = updateBkpCostBasicInput.BKPTitle : null;
+    updateBkpCostBasicInput.description ? bkpCostDetail.description = updateBkpCostBasicInput.description : null;
+    updateBkpCostBasicInput.itemPrice ? bkpCostDetail.itemPrice = updateBkpCostBasicInput.itemPrice : null;
+    updateBkpCostBasicInput.itemQuantity ? bkpCostDetail.itemQuantity = updateBkpCostBasicInput.itemQuantity : null;
+
+    await this.BKPCostRepository.save(bkpCostDetail);
+    const bkpCostUpdated = await this.BKPCostRepository.find({
+      where: { bkpCostID: updateBkpCostBasicInput.bkpCostID }
+      // relations: ['reference', 'files']
+    });
+    return bkpCostUpdated;
+  }
+
+
+
 }

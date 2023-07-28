@@ -1,4 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, Checkbox,   Modal,   Input, Form, Grid,  Select } from 'semantic-ui-react';
 import { ADD_FOLDER, GET_FOLDER } from '../../graphql/graphql';
 import { IFolder } from '../../interfaces/task';
@@ -17,7 +18,7 @@ export function AddFolder(props: AddFolderProps) {
   
    const [folderTitle, setfolderTitle] = React.useState("");
    const [addFolder] = useAddFolderMutation(ADD_FOLDER);
-
+  const {t} = useTranslation()
    const [open, setOpen] = React.useState(false);
    const [folderName, setfolderName] = React.useState("");
  
@@ -80,8 +81,9 @@ export function AddFolder(props: AddFolderProps) {
       onOpen={() => setOpen(true)}
       open={open}
       trigger={<Button size='mini' className="grey-btn"> Add Folder</Button> }
+      closeOnDimmerClick={false}
     >
-      <Modal.Header><h3>Add new folder </h3></Modal.Header>
+      <Modal.Header><h3>{t("project_tab_menu.files.add_new_folder")} </h3></Modal.Header>
       <Modal.Content body>
         
         <div>
@@ -93,8 +95,8 @@ export function AddFolder(props: AddFolderProps) {
 <Grid.Row>
   <Grid.Column>
     <Form.Field>
-    <label>Folder name</label>
-    <Input  placeholder='Enter folder name here...' size='small' className="full-width" type="text" 
+    <label>{t("project_tab_menu.files.folder_name")}</label>
+    <Input  placeholder={t("project_tab_menu.files.folder_name_placeholder")} size='small' className="full-width" type="text" 
     value={folderTitle}
     onChange={onfolderTitle}
   />
@@ -110,13 +112,13 @@ export function AddFolder(props: AddFolderProps) {
       </Modal.Content>
       <Modal.Actions>
       <Button
-          content="Submit" 
+          content={t("common.submit")} 
           onClick={handleSaveFile}
           positive
-          size='mini' className="grey-btn"
+          size='small' className="primary"
         />
-        <Button size='mini' className="icon-border" onClick={cancel}>
-        X  Cancel
+        <Button size='small' className="icon-border" onClick={cancel}>
+        <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i>  {t("common.cancel")}
         </Button>
         
       </Modal.Actions>

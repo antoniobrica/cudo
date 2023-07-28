@@ -86,12 +86,15 @@ input,
             display: none;
         }
         &.small {
-            min-height: 4.6rem;
+            min-height: 4.3rem !important;
             @media (max-width:#{$large-desktop-up}) {
                 min-height: 4rem;
             }
             .text {
                 padding-top: 0.5rem;
+                min-height: 1.7rem !important;
+                height: auto !important;
+                margin: 0.65rem 0;
                 @media (max-width:#{$large-desktop-up}) {
                     padding-top: 0.2rem;
                 }
@@ -105,6 +108,9 @@ input,
         }
         .default.text {
             color: color("grey", "lighten-2");
+            // height: 38px;
+            // line-height: 38px;
+            // padding: 0;
         }
         &.style-2 {
             .dropdown.icon {
@@ -125,6 +131,21 @@ input,
             @media (max-width:#{$x-small}) {}
             &:before {
                 content: 'keyboard_arrow_down';
+            }
+            &.clear.icon{
+                display: inline-block;
+                -webkit-font-smoothing: antialiased;
+                font-style: normal;
+                font-weight: normal;
+                font-family: FabricMDL2Icons;
+                font-size: 12px;
+                top: 9px;
+                font-weight: 600;
+                right: 16px;
+                opacity: 1;
+                &:before {
+                    content: "\E711";
+                }
             }
         }
         &:focus {
@@ -360,8 +381,8 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-    -webkit-text-fill-color: $inputSelectTextColor;
-    -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+    -webkit-text-fill-color: #000;
+     -webkit-box-shadow: 0 0 0px 1000px #fff inset;
     transition: background-color 5000s ease-in-out 0s;
 }
 
@@ -395,7 +416,7 @@ select:-webkit-autofill:focus {
         
         box-shadow: $none;
         transition: color .1s ease, border-color .1s ease;
-        height: 6rem;
+        // height: 6rem;
         border: 1px solid #D0D8DF;
         font-weight: 400;
         width: 100%;
@@ -420,7 +441,7 @@ select:-webkit-autofill:focus {
             &[type=text],
             &[type=time],
             &[type=url] {
-                height: 4.6rem;
+                height: 4rem;
                 @media (max-width:#{$large-desktop-up}) {
                     height: 4rem;
                 }
@@ -481,7 +502,7 @@ select:-webkit-autofill:focus {
                 &.dropdown {
                     &>.dropdown {
                         &.icon {
-                            color: color("blue", "base");
+                            color: #718898;
                         }
                     }
                 }
@@ -490,7 +511,7 @@ select:-webkit-autofill:focus {
     }
     &.fluid {
         &.dropdown>.dropdown.icon {
-            color: color("blue", "base");
+            color: #718898;
         }
     }
 }
@@ -510,4 +531,35 @@ select:-webkit-autofill:focus {
 
 .ui.form div.disabled.field {
     opacity: .7;
+}
+
+span.error-message {
+    bottom: -16px;
+    left: 0;
+    position: absolute;
+    font-size: 1.2rem;
+    color: #F96666;
+    font-weight: 400;
+}
+
+.ui.form .field .ui.error input:not([type]), 
+.ui.form .field .ui.error input[type=date], 
+.ui.form .field .ui.error input[type=datetime-local], 
+.ui.form .field .ui.error input[type=email], 
+.ui.form .field .ui.error input[type=file], 
+.ui.form .field .ui.error input[type=number], 
+.ui.form .field .ui.error input[type=password], 
+.ui.form .field .ui.error input[type=search], 
+.ui.form .field .ui.error input[type=tel], 
+.ui.form .field .ui.error input[type=text], 
+.ui.form .field .ui.error input[type=time], 
+.ui.form .field .ui.error input[type=url] {
+    background: #fff !important;
+    border-color: #F96666;
+}
+
+.ui.form .ui.small input[type=time], 
+.ui.form .ui.small input[type=date] {
+    height: 4.3rem;
+    line-height: 1.814286rem;
 }

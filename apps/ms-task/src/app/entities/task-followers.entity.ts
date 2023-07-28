@@ -12,6 +12,10 @@ export default class TaskFllowersEntity extends BaseEntity {
     id: number;
 
     @Expose()
+    @Column({nullable: true})
+    taskID: string;
+
+    @Expose()
     @Column()
     userID: string;
 

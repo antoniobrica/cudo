@@ -1,18 +1,32 @@
 import React from 'react';
-import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea } from 'semantic-ui-react';
+import { Button, Header, Modal, Tab, Table, Input, Form, Grid, Image, Select, TextArea, Checkbox } from 'semantic-ui-react';
 import { radios } from '@storybook/addon-knobs';
-import { ITask, ITasks, TaskMutation } from "../../interfaces/task";
+import { IPeople, IPeoples, ITask, ITasks, TaskMutation } from "../../interfaces/task";
 import { useTaskMutation } from '../../services/useRequest';
 import { ApolloCache, FetchResult, useMutation } from '@apollo/client';
 import { ADD_TASK, GET_TASKS } from "../../graphql/graphql";
-import '../../../../../../libs/shared-components/src/style/index.scss';
 import './create-task.module.scss';
+import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import moment, { calendarFormat } from 'moment';
-import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex } from "@cudo/mf-account-app-lib"
+import { FollowersIndex, AssigneeIndex, BkpsIndex, PhaseIndex } from "@cudo/mf-account-app-lib"
 import { useHistory } from 'react-router';
+import { start } from 'repl';
+import { useTranslation } from 'react-i18next';
 /* eslint-disable-next-line */
 export interface CreateTaskProps {
-  onSuccess?
+  onSuccess?,
+  workTypes?,
+  isNewTask?,
+  cancel?
+
+}
+
+interface AddTaskErrors {
+  titleError?: string,
+  workTypeError?: string,
+  assigneeError?: string,
+  dateError?: string
 }
 
 export function CreateTask(props: CreateTaskProps) {
@@ -20,7 +34,7 @@ export function CreateTask(props: CreateTaskProps) {
     { key: 'af', value: 'af', text: 'Afghanistan' },
     { key: 'ax', value: 'ax', text: 'Aland Islands' },
   ]
-
+  let quillObj: any;
   const phaseOptions = [
     { key: 'Phase_1', value: 'Phase_1', text: 'Phase 1' },
     { key: 'Phase_2', value: 'Phase_2', text: 'Phase 2' },
@@ -46,25 +60,48 @@ export function CreateTask(props: CreateTaskProps) {
   const [saveTaskAsTemplate, setSaveTaskAsTemplate] = React.useState("")
   const [phaseID, setPhasesID] = React.useState("")
   const [status, setStatus] = React.useState("")
-  const [followers, setfollowers] = React.useState("")
   const [phaseName, setPhasesName] = React.useState("");
   const [BKPTitle, setBKPIDTitle] = React.useState("");
   const [files, setFileList] = React.useState<any>([]);
   const [description, setDescription] = React.useState("")
 
+  const [workType, setworkType] = React.useState(null)
+  const [workTypeD, setworkTypeD] = React.useState(null)
+  const [workTypeData, setworkTypeData] = React.useState('')
+  const [workTypeID, setworktypeID] = React.useState("")
+  const [workTypeName, setworktypeName] = React.useState("")
+  const [assignees, setAssignees] = React.useState<any>([]);
+  const [followers, setfollowers] = React.useState<any>([]);
+  const [date, setDate] = React.useState(null)
+  const { t } = useTranslation();
   const history = useHistory();
   const res = history.location.pathname.split("/");
   const referenceID = res[3].toString();
   // const [addTask] = useTaskMutation(ADD_TASK, {
   //   variables: { referenceID },
   // });
+  const [errors, setErrors] = React.useState<AddTaskErrors>({})
 
-  const [addTask, { data }] = useMutation(ADD_TASK, 
+  React.useEffect(() => {
+    if (props.isNewTask) {
+      setOpen(props.isNewTask)
+    }
+  }, [props.isNewTask])
+  const [addTask, { data }] = useMutation(ADD_TASK,
     {
       refetchQueries: [
-        {query: GET_TASKS, variables: { referenceID }}
+        { query: GET_TASKS, variables: { referenceID } }
       ],
-      variables: { referenceID },
+      // variables: {
+      //   taskTitle, startDate, endDate, estimatedDays,
+      //   sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
+      //   fileID,
+      //   fileName,
+      //   taskTypeID,
+      //   files,
+      //   description, referenceID,
+
+      // },
     }
   )
 
@@ -72,14 +109,27 @@ export function CreateTask(props: CreateTaskProps) {
     setTaskTitle(e.target.value)
   }
   const onStartDateChange = e => {
+    setDate(e.target.value)
     const date = moment.utc(moment(e.target.value).utc()).format();
+    console.log('====================================');
+    console.log('date', date);
+    console.log('====================================');
     setStartDate(e.target.value)
   }
   const onEndDateChange = e => {
-    const date = moment.utc(moment(e.target.value).utc()).format();
+    // const date = moment.utc(moment(e.target.value).utc()).format();
+    const date1 = new Date(e.target.value)
+    const date2 = new Date(date)
+    const Difference_In_Time = date1.getTime() - date2.getTime();
+
+    // To calculate the no. of days between two dates
+    const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
     setEndDate(e.target.value);
+    setEstimatedDays(Difference_In_Days.toString())
   }
   const onsetEstimatedDays = (event, data) => {
+    // To calculate the time difference of two dates
+
     setEstimatedDays(data.value)
   }
 
@@ -88,7 +138,10 @@ export function CreateTask(props: CreateTaskProps) {
   }
 
   const onFollowers = (data) => {
-    setfollowers(data.value);
+    console.log('====================================');
+    console.log('followers', data);
+    console.log('====================================');
+    setfollowers(data)
   }
   const setBKPIDChange = (data) => {
     setBKPIDTitle(data.BKPIDTitle)
@@ -96,6 +149,11 @@ export function CreateTask(props: CreateTaskProps) {
     console.log('bkp==>', data);
   }
   const setAsignee = (data) => {
+    console.log('assignee', data)
+
+    const ppl = []
+    ppl.push(data)
+    setAssignees(ppl)
     // setAsignis(data)
   }
 
@@ -112,15 +170,122 @@ export function CreateTask(props: CreateTaskProps) {
     setStatus(e.target.value)
   }
 
+  React.useEffect(() => {
+    if (props.workTypes) {
+      console.log('worktypes', props.workTypes);
+      setworkType(props.workTypes.map(({ workTypeName, projectWorkTypeID }) => ({ key: projectWorkTypeID, value: workTypeName, text: workTypeName, id: projectWorkTypeID })));
+
+    }
+  }, [props.workTypes]);
+  const onMworkType = (event, data) => {
+    const workT = {
+      worktypeID: '',
+      worktypeName: ''
+    };
+    for (let i = 0; i < props.workTypes.length; i++) {
+      if (props.workTypes[i]?.workTypeName === data.value) {
+        console.log('props.worktypes[i]', props.workTypes[i]);
+        workT.worktypeID = props.workTypes[i].projectWorkTypeID;
+        workT.worktypeName = data.value;
+        setworktypeName(workT.worktypeName);
+        setworktypeID(workT.worktypeID);
+        setworkTypeD(workT)
+      }
+    }
+    setworkTypeData(data.value)
+
+    console.log('worktypeName-', workTypeD);
+  }
+
+
+  const onDescriptionChange = (e) => {
+    console.log('des=>', e);
+    setDescription(e);
+  }
+  const cancel = () => {
+    setOpen(false)
+    props.cancel(false)
+    resetAddData()
+  }
+
+  const resetAddData = () => {
+    setTaskTitle('')
+    setStartDate('')
+    setEndDate('')
+    setDescription('')
+    setEstimatedDays('')
+    setAsignee([])
+    setfollowers([])
+    setEendNotification(false)
+    setBKPID('')
+    setSaveTaskAsTemplate('')
+    setPhasesID('')
+    setStatus('')
+    setPhasesName('')
+    setPhasesID('')
+    setBKPIDTitle('')
+    setworkTypeD(null)
+    setworktypeName('')
+    setworktypeID('')
+    setworkType(null)
+    setworkTypeData('')
+    setDate(null)
+    setErrors({})
+
+  }
+
+  const validation = () => {
+    const foundErrors: AddTaskErrors = {}
+    if (!taskTitle) {
+      foundErrors.titleError = t("common.errors.title_error")
+    }
+    if (!workTypeID) {
+      foundErrors.workTypeError = t("common.errors.worktype_error")
+    }
+    if (!assignees.length) {
+      foundErrors.assigneeError = t("common.errors.assignee_error")
+    }
+    if (startDate > endDate) {
+      foundErrors.dateError = t("common.errors.date_error")
+    }
+    return foundErrors
+  }
+
   const handleSaveTask = () => {
-    setOpen(false);
+    const validationResult = validation()
+    if (Object.keys(validationResult).length > 0) {
+      setErrors(validationResult)
+      return false
+    }
+    // setOpen(false);
+    console.log('====================================');
+    console.log('assignee', assignees);
+    console.log('followes', followers);
+    console.log('====================================');
+    cancel();
+    const variables = {
+      taskTitle, estimatedDays,
+      sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
+      fileID: "",
+      fileName: "$fileName",
+      taskTypeID: "$taskTypeID",
+      files,
+      assignees,
+      followers,
+      description,
+      subtasks: [],
+      referenceID,
+      workTypeID,
+      workTypeName
+    }
+    if (startDate) {
+      variables['startDate'] = startDate
+    }
+    if (startDate) {
+      variables['endDate'] = endDate
+    }
     addTask({
-      variables: {
-        taskTitle, startDate, endDate, estimatedDays,
-        sendNotification, BKPID, saveTaskAsTemplate, phaseID, phaseName, BKPTitle,
-        files,
-        description,
-      },
+      variables,
       update: (
         cache,
         { data: { addTask } }: FetchResult<TaskMutation>
@@ -129,7 +294,7 @@ export function CreateTask(props: CreateTaskProps) {
         cache.writeQuery({
           query: GET_TASKS,
           data: {
-            tasksD: [...cacheData.tasks, addTask]
+            tasksD: [...cacheData.tasks.results, addTask]
           },
           variables: { referenceID },
         });
@@ -137,20 +302,18 @@ export function CreateTask(props: CreateTaskProps) {
     });
 
   };
-  const onDescriptionChange = e => {
-    console.log('des=>', e.target.value);
-    setDescription(e.target.value);
-  }
-
 
   return (
     <div >
-      <Modal className="modal_media" style={{ width: '800px', marginLeft: '155px' }}
-        onClose={() => setOpen(false)}
+      <Modal className="modal_media right-side--fixed-modal add-new-task-modal"
+        closeIcon
+        onClose={cancel}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button size='mini' className="grey-btn taskmargin">+ Add  New Task</Button>}      >
-        <Modal.Header><h3>Add New Task </h3></Modal.Header>
+        // trigger={<Button size='mini' className="grey-btn taskmargin">+ Add  New Task</Button>} 
+        closeOnDimmerClick={false}
+      >
+        <Modal.Header><h3>{t("project_tab_menu.task.add_new_task")} </h3></Modal.Header>
         <Modal.Content body>
           <div>
             <Form>
@@ -158,10 +321,13 @@ export function CreateTask(props: CreateTaskProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Task Title <span className="danger">*</span></label>
-                      <Input placeholder='Task title' size='small' className="full-width" type="text"
+                      <label>{t("project_tab_menu.task.task_title")} <span className="danger">*</span></label>
+                      <Input placeholder={t("project_tab_menu.task.task_title")} size='small' className="full-width" type="text"
                         value={taskTitle}
-                        onChange={onTaskTitleChange} />
+                        onChange={onTaskTitleChange}
+                        error={errors?.titleError && !taskTitle}
+                      />
+                      {errors?.titleError && !taskTitle ? <span className="error-message">{errors.titleError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -170,10 +336,29 @@ export function CreateTask(props: CreateTaskProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Description </label>
-                      <TextArea placeholder='Tell us more'
+                      <label>{t("common.desc")} </label>
+                      {/* <TextArea placeholder='Tell us more'
                         value={description}
-                        onChange={onDescriptionChange} />
+                        onChange={onDescriptionChange} /> */}
+                      <ReactQuill
+                        value={description}
+                        modules={{
+                          toolbar: {
+                            container: [
+                              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                              ['bold', 'italic', 'underline'],
+                              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                              [{ 'align': [] }],
+                              ['link', 'image'],
+                              ['clean'],
+                              [{ 'color': [] }]
+                            ]
+                          }
+                        }}
+                        placeholder={t("common.desc_placeholder")}
+                        onChange={(content, delta, source, editor) => onDescriptionChange(content)}
+                        id="txtDescription"
+                      />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -182,8 +367,19 @@ export function CreateTask(props: CreateTaskProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Associate with work type <span className="danger">*</span></label>
-                      <Select placeholder='Select' className="small" options={workTypes} />
+                      <label>{t("project_tab_menu.task.work_type")} <span className="danger">*</span></label>
+                      {/* <Select placeholder='Select' className="small" options={workTypes} /> */}
+                      <Select
+                        placeholder={t("common.select")}
+                        className="small"
+                        value={workTypeData}
+                        options={workType}
+                        onChange={onMworkType}
+                        selection
+                        clearable
+                        error={errors?.workTypeError && !workTypeID}
+                      />
+                      {errors?.workTypeError && !workTypeID ? <span className="error-message">{errors.workTypeError}</span> : null}
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -191,47 +387,59 @@ export function CreateTask(props: CreateTaskProps) {
               <Grid columns={2}>
                 <Grid.Row>
                   <Grid.Column>
-                    <PhaseIndex parentPhaseSelect={onsetPhasesID} />
+                    <Form.Field>
+                      <label>{t("common.select_phase")} </label>
+                      <PhaseIndex parentPhaseSelect={onsetPhasesID} />
+                    </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
-                    <BkpIndex parentBKPSelect={setBKPIDChange} />
+                    <BkpsIndex bkp={''} parentBKPSelect={setBKPIDChange} />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
               <Grid columns={1}>
                 <Grid.Row>
                   <Grid.Column>
-                    <AssigneeIndex parentAsigneeSelect={setAsignee} />
+                    <AssigneeIndex assignees={[]} parentAsigneeSelect={setAsignee} name="Assignee" error={errors?.assigneeError && !assignees.length} />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
-              <Grid columns={2}>
+              <Grid>
                 <Grid.Row>
                   <Grid.Column>
-                    <FollowersIndex parentFollowersSelect={onFollowers} />
+                    <FollowersIndex followers={[]} parentFollowersSelect={onFollowers} />
                   </Grid.Column>
-                  <Grid.Column>
-                    <Form.Field>
-                      <div className="event top-event">
-                        <div className="label-light-purple-circle label-spacer">
-                          <span className="white-text">AB</span>
-                        </div>
-                        <div className="label-light-black-circle label-spacer">
-                          <span className="white-text ">RJ</span>
-                        </div>
-                        <div className="label-light-blue-circle label-spacer">
-                          <span className="white-text">JB</span>
-                        </div>
+                </Grid.Row>
+                <div className="followers-label-area">
+                  <Form.Field>
+                    <div className="event top-event follower-listing-labels">
+                      {followers.map((p, id) => {
+                        const name = p.userName.split(" ").map((n) => n[0]).join("");
+                        //   "FirstName LastName".split(" ").map((n)=>n[0]).join(".");
+                        return (
+                          <div className="label-light-purple-circle label-spacer" key={id}>
+                            <span className="white-text">{name}</span>
+                          </div>
+                        )
+                      })
+                      }
+
+                      {/* <div className="label-light-black-circle label-spacer">
+                        <span className="white-text ">RJ</span>
                       </div>
-                    </Form.Field>
-                  </Grid.Column>
-                </Grid.Row>
+                      <div className="label-light-blue-circle label-spacer">
+                        <span className="white-text">JB</span>
+                      </div> */}
+                    </div>
+                  </Form.Field>
+                </div>
               </Grid>
+
               <Grid columns={3}>
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Start Date  </label>
+                      <label>{t("common.start_date")} </label>
                       {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
                       <Input placeholder='Default' size='small' className="full-width"
                         type="date"
@@ -239,12 +447,14 @@ export function CreateTask(props: CreateTaskProps) {
                         onChange={onStartDateChange}
                       />
                     </Form.Field>
+                    {errors?.dateError && (startDate > endDate) ? <span className="error-message">{errors.dateError}</span> : null}
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
-                      <label>End Date </label>
+                      <label>{t("common.end_date")} </label>
                       {/* <Input icon='calendar alternate outline' placeholder='Electrical work' size='small' className="full-width" type="text" /> */}
                       <Input placeholder='Default' size='small' className="full-width" type="date"
+                        defaultValue={startDate}
                         value={endDate}
                         onChange={onEndDateChange}
                       />
@@ -252,12 +462,13 @@ export function CreateTask(props: CreateTaskProps) {
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Estimated Days  </label>
-                      <Input placeholder='Enter days' className="small"
+                      <label>{t("common.estimated_days")}  </label>
+                      <Input placeholder={t("project_tab_menu.task.enter_days")} className="small"
                         value={estimatedDays}
                         onChange={onsetEstimatedDays}
                       />
                     </Form.Field>
+                  
                   </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
@@ -267,26 +478,27 @@ export function CreateTask(props: CreateTaskProps) {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Task Configuration  </label>
-                      <div className="content">
-                        <p className="paragraph">Send notification to assignee/followers for the task</p></div>
+                      <label>{t("common.task_configuration")}   </label>
+                      <div className="content configuration-toggle">
+                        <p className="paragraph task-configuration">{t("common.notification_for_task")} <Checkbox toggle className="task-toggle" /></p></div>
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
             </Form>
-            <Button
-              content="Submit"
-              onClick={handleSaveTask}
-              positive
-              size='mini' className="grey-btn"
-            />
-            <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
-              X  Cancel
-        </Button>
+
           </div>
         </Modal.Content>
         <Modal.Actions>
+          <Button
+            content={t("common.submit")}
+            onClick={handleSaveTask}
+            positive
+            size='small' className="primary"
+          />
+          <Button size='small' className="icon-border" onClick={cancel}>
+            <i className="ms-Icon ms-font-xl ms-Icon--CalculatorMultiply"></i>  {t("common.cancel")}
+          </Button>
         </Modal.Actions>
       </Modal>
     </div>
