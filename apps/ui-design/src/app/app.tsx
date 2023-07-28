@@ -66,13 +66,13 @@ export function App() {
       <ModalExampleModal2></ModalExampleModal2><br />
       <ModalExampleCompany></ModalExampleCompany><br />
       <ModalExamplePrinting></ModalExamplePrinting><br />
-      <ListExampleFloated></ListExampleFloated><br /><br />
+      {/* <ListExampleFloated></ListExampleFloated><br /><br /> */}
       <ModalAddPrint></ModalAddPrint><br />
       <ModalAddFile></ModalAddFile><br />
-      <FileStructure></FileStructure><br />
-      <ModalExampleSize></ModalExampleSize><br />
+      {/* <FileStructure></FileStructure><br /> */}
+      {/* <ModalExampleSize></ModalExampleSize><br /> */}
       <UploadNewVersion></UploadNewVersion><br />
-      <AddNewFolder></AddNewFolder><br />
+      {/* <AddNewFolder></AddNewFolder><br /> */}
       <AddNewPeople></AddNewPeople><br />
       <PeopleList></PeopleList><br />
       <ModalDelete></ModalDelete><br />

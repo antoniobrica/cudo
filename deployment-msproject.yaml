@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-project
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ms-project
+  template:
+    metadata:
+      labels:
+        app: ms-project
+    spec:
+      containers:
+      - name: ms-project
+        image: cudoacr.azurecr.io/ms-project:v1
+        ports:
+        - containerPort: 5005
+        envFrom:
+        - configMapRef:
+            name: ms-project-config
+      imagePullSecrets:
+      - name: acr-auth

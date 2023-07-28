@@ -1,6 +1,7 @@
 import React from 'react';
 
-import '../../../style/index.scss';
+import './../../../assets/style/index.scss';
+// import '../../../style/index.scss';
 import { Tab, Dropdown } from 'semantic-ui-react';
 import img from 'libs/shared-components/src/user.png';
 import img3 from 'libs/shared-components/src/calendar.png';
@@ -32,14 +33,8 @@ export function InvitationTab(props: TabsProps) {
                     &nbsp; This is invitation title
                   </span>
 
-                  <span
-                    className="font-weight-bold mb-0 mr-10"
-                    style={{ marginTop: '-21px' }}
-                  >
-                    <i
-                      className="ms-Icon ms-Icon--Clock"
-                      aria-hidden="true"
-                    ></i>
+                  <span className="font-weight-bold mb-0 mr-10" style={{ marginTop: '-21px' }}>
+                    <i className="ms-Icon ms-Icon--Clock" aria-hidden="true"></i>
                     11:00 AM - 11:45 AM
                   </span>
                   <span className="textt2" style={{ marginTop: '-21px' }}>
@@ -51,10 +46,7 @@ export function InvitationTab(props: TabsProps) {
                         <a className="navi-link">
                           <span className="navi-text">
                             {' '}
-                            <i
-                              className="ms-Icon ms-Icon--Link"
-                              aria-hidden="true"
-                            ></i>
+                            <i className="ms-Icon ms-Icon--Link" aria-hidden="true"></i>
                             Protocol here{' '}
                           </span>
                         </a>
@@ -68,11 +60,7 @@ export function InvitationTab(props: TabsProps) {
                     <img src={img} />
                     <span className="font-weight-bold mb-0 mr-10">
                       {' '}
-                      <i
-                        className="ms-Icon ms-Icon--Attach"
-                        aria-hidden="true"
-                      ></i>
-                      3
+                      <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>3
                     </span>
                   </div>
                 </div>
@@ -91,14 +79,8 @@ export function InvitationTab(props: TabsProps) {
                     &nbsp; This is invitation title
                   </span>
 
-                  <span
-                    className="font-weight-bold mb-0 mr-10"
-                    style={{ marginTop: '-21px' }}
-                  >
-                    <i
-                      className="ms-Icon ms-Icon--Clock"
-                      aria-hidden="true"
-                    ></i>
+                  <span className="font-weight-bold mb-0 mr-10" style={{ marginTop: '-21px' }}>
+                    <i className="ms-Icon ms-Icon--Clock" aria-hidden="true"></i>
                     11:00 AM - 11:45 AM
                   </span>
                   <span className="textt2" style={{ marginTop: '-21px' }}>
@@ -110,10 +92,7 @@ export function InvitationTab(props: TabsProps) {
                         <a className="navi-link">
                           <span className="navi-text">
                             {' '}
-                            <i
-                              className="ms-Icon ms-Icon--Link"
-                              aria-hidden="true"
-                            ></i>
+                            <i className="ms-Icon ms-Icon--Link" aria-hidden="true"></i>
                             Protocol here{' '}
                           </span>
                         </a>
@@ -127,11 +106,7 @@ export function InvitationTab(props: TabsProps) {
                     <img src={img} />
                     <span className="font-weight-bold mb-0 mr-10">
                       {' '}
-                      <i
-                        className="ms-Icon ms-Icon--Attach"
-                        aria-hidden="true"
-                      ></i>
-                      3
+                      <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>3
                     </span>
                   </div>
                 </div>
@@ -164,16 +139,10 @@ export function InvitationTab(props: TabsProps) {
                   </span>
                   <span className="textt2" style={{ marginTop: '-21px' }}>
                     45 min
-                  </span>       
-                  <span
-                    className="font-weight-bold mb-0 mr-10"
-                    style={{ marginTop: '-21px' }}
-                  >
+                  </span>
+                  <span className="font-weight-bold mb-0 mr-10" style={{ marginTop: '-21px' }}>
                     &nbsp;
-                    <i
-                      className="ms-Icon ms-Icon--Clock"
-                      aria-hidden="true"                                                             
-                    ></i>
+                    <i className="ms-Icon ms-Icon--Clock" aria-hidden="true"></i>
                     11:00 AM - 11:45 AM
                   </span>
 
@@ -183,11 +152,7 @@ export function InvitationTab(props: TabsProps) {
                         <a className="navi-link">
                           <span className="navi-text">
                             {' '}
-                            <i
-                              className="ms-Icon ms-Icon--Link"
-                              aria-hidden="true"
-                            ></i>
-                            2 invitations{' '}
+                            <i className="ms-Icon ms-Icon--Link" aria-hidden="true"></i>2 invitations{' '}
                           </span>
                         </a>
                       </div>
@@ -204,14 +169,8 @@ export function InvitationTab(props: TabsProps) {
                           <Dropdown.Item icon="eye" text="View detail" />
                           <Dropdown.Item icon="play" text="Publish" />
 
-                          <Dropdown.Item
-                            icon="trash alternate outline"
-                            text="Delete"
-                          />
-                          <Dropdown.Item
-                            icon="check circle outline"
-                            text="Export"
-                          />
+                          <Dropdown.Item icon="trash alternate outline" text="Delete" />
+                          <Dropdown.Item icon="check circle outline" text="Export" />
                         </Dropdown.Menu>
                       </Dropdown>
                     </span>
@@ -234,14 +193,8 @@ export function InvitationTab(props: TabsProps) {
                   <span className="textt2" style={{ marginTop: '-21px' }}>
                     Published
                   </span>
-                  <span
-                    className="font-weight-bold mb-0 mr-10"
-                    style={{ marginTop: '-21px' }}
-                  >
-                    <i
-                      className="ms-Icon ms-Icon--Clock"
-                      aria-hidden="true"
-                    ></i>
+                  <span className="font-weight-bold mb-0 mr-10" style={{ marginTop: '-21px' }}>
+                    <i className="ms-Icon ms-Icon--Clock" aria-hidden="true"></i>
                     &nbsp; 11:00 AM - 11:45 AM
                   </span>
                 </div>
@@ -255,14 +208,8 @@ export function InvitationTab(props: TabsProps) {
                           <Dropdown.Item icon="eye" text="View detail" />
                           <Dropdown.Item icon="play" text="Publish" />
 
-                          <Dropdown.Item
-                            icon="trash alternate outline"
-                            text="Delete"
-                          />
-                          <Dropdown.Item
-                            icon="check circle outline"
-                            text="Export"
-                          />
+                          <Dropdown.Item icon="trash alternate outline" text="Delete" />
+                          <Dropdown.Item icon="check circle outline" text="Export" />
                         </Dropdown.Menu>
                       </Dropdown>
                     </span>
@@ -279,8 +226,7 @@ export function InvitationTab(props: TabsProps) {
   return (
     <div className="app-content-body-dash navbar-collapse box-shadow">
       <div>
-        <i className="ms-Icon ms-Icon--Back" aria-hidden="true"></i>{' '}
-        <span className="">Invitation</span> /{' '}
+        <i className="ms-Icon ms-Icon--Back" aria-hidden="true"></i> <span className="">Invitation</span> /{' '}
         <span className="preliminary-font">Protocol</span>
         <br />{' '}
         <span style={{ fontSize: '10px' }}>
@@ -288,11 +234,7 @@ export function InvitationTab(props: TabsProps) {
         </span>
       </div>
 
-      <Tab
-        className="ui-tabs"
-        menu={{ secondary: true, pointing: true }}
-        panes={panes}
-      />
+      <Tab className="ui-tabs" menu={{ secondary: true, pointing: true }} panes={panes} />
     </div>
   );
 }

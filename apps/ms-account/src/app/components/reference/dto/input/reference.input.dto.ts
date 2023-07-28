@@ -17,14 +17,4 @@ export class ReferenceInputDto {
 
     @Field({ description: `ReferenceID imageUrl` })
     imageUrl: string;
-
-    @Field({ description: `This is for title task title` })
-    createdBy?: string;
-
-    @Field({ description: `This is for title task title` })
-    updatedBy?: string;
-
-    @Field({ description: `This is for title task title` })
-    isDeleted?: boolean;
-
 }

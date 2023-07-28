@@ -1,0 +1,29 @@
+{
+  "name": "mf-container-app-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/mf-container-app-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/mf-container-app-e2e/cypress.json",
+        "tsConfig": "apps/mf-container-app-e2e/tsconfig.e2e.json",
+        "devServerTarget": "mf-container-app:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "mf-container-app:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/mf-container-app-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["mf-container-app"]
+}

@@ -1,13 +1,19 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  Relation,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
 import ReferanceTypeEntity from './references.entity';
 import * as uuid from 'uuid';
 
-
 @Entity({ name: 'meetingCatagory' })
-
 export class MeetingCatagoryEntity extends BaseEntity {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -18,7 +24,6 @@ export class MeetingCatagoryEntity extends BaseEntity {
   @Column()
   @Expose()
   meetingCatagoryTitle: string;
-
 
   @Expose()
   @CreateDateColumn()
@@ -42,8 +47,7 @@ export class MeetingCatagoryEntity extends BaseEntity {
 
   @Expose()
   @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.folder)
-  reference: ReferanceTypeEntity;
-
+  reference: Relation<ReferanceTypeEntity>;
 
   constructor(meetingCatagoryEntity: Partial<MeetingCatagoryEntity>) {
     super();
@@ -51,11 +55,10 @@ export class MeetingCatagoryEntity extends BaseEntity {
       Object.assign(
         this,
         plainToClass(MeetingCatagoryEntity, meetingCatagoryEntity, {
-          excludeExtraneousValues: true
+          excludeExtraneousValues: true,
         })
-      )
+      );
       this.meetingCatagoryID = this.meetingCatagoryID || uuid.v1();
-
     }
   }
 }

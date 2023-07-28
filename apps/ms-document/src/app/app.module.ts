@@ -6,12 +6,14 @@ import * as path from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ComponentsModule } from './components/components.module';
-import { SecretService } from '@cudo/ms-core'
+import { SecretService } from '@cudo/ms-core';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 @Module({
   imports: [
-    GraphQLModule.forRoot({
-      context: ({ req, connection }) => connection ? { req: connection.context } : { req },
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      context: ({ req, connection }) => (connection ? { req: connection.context } : { req }),
       autoSchemaFile: true,
     }),
     ComponentsModule,
@@ -22,4 +24,4 @@ import { SecretService } from '@cudo/ms-core'
   controllers: [AppController],
   providers: [AppService, SecretService],
 })
-export class AppModule { }
+export class AppModule {}

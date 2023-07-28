@@ -44,7 +44,7 @@ export class BlobDeletesViewStateService {
   private mapDeleteResponse = (
     filename: string,
     options: BlobContainerRequest
-  ): OperatorFunction<BlobDeleteResponse, BlobItem> => source =>
+  ): OperatorFunction<BlobDeleteResponse, any> => source =>
     source.pipe(
       map(() => ({
         filename,

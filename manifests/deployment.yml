@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: cudo 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cudo
+  template:
+    metadata:
+      labels:
+        app: cudo 
+    spec:
+      containers:
+        - name: cudo 
+          image: cudoacr.azurecr.io/cudo
+          ports:
+          - containerPort: 80

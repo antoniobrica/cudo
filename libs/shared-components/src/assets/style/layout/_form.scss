@@ -1,7 +1,7 @@
 .field {
     label {
         display: $display-block;
-        color: #000000;
+        color: #1B1B40;
         font-weight: $font-medium;
         font-size: 1.5rem;
         margin-bottom: 5px;
@@ -116,10 +116,12 @@
     input:checked~ {
         .box:after,
         label:after {
-            content: '\f26b';
+            content: "\E8FB";
             display: inline-block;
-            font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
-            font-size: inherit;
+            font-family: FabricMDL2Icons;
+            width: 17px;
+            height: 17px;
+            font-size: 13px;
             text-rendering: auto;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -127,6 +129,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            font-weight: 600;
         }
     }
 }

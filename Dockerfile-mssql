@@ -1,0 +1,40 @@
+# # # Start from the SQL Server image
+# # FROM mcr.microsoft.com/mssql/server:2022-latest
+
+# # # Install curl, software-properties-common and apt-transport-https
+# # RUN apt-get update && apt-get install -y curl software-properties-common apt-transport-https
+
+# # # Add the Microsoft SQL Server Ubuntu repository
+# # RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+# # RUN curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list > /etc/apt/sources.list.d/msprod.list
+
+# # # Install mssql-tools
+# # RUN apt-get update && ACCEPT_EULA=Y apt-get install -y mssql-tools
+# # Start from the SQL Server image
+# FROM mcr.microsoft.com/mssql/server:2022-latest
+
+# # Switch to root user
+# USER root
+
+# # Install curl, software-properties-common and apt-transport-https
+# RUN apt-get update && apt-get install -y curl software-properties-common apt-transport-https
+
+# # Add the Microsoft SQL Server Ubuntu repository
+# RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+# RUN curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list > /etc/apt/sources.list.d/msprod.list
+
+# # Install mssql-tools
+# RUN apt-get update && ACCEPT_EULA=Y apt-get install -y mssql-tools
+
+# # Switch back to mssql user
+# USER mssql
+
+FROM mcr.microsoft.com/azure-sql-edge
+# RUN apt-get update && apt-get install -y curl gnupg
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+RUN curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list
+RUN apt-get update && ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools unixodbc-dev
+RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+RUN /bin/bash -c "source ~/.bashrc"
+RUN apt-get -y install python3-pip
+RUN pip3 install mssql-cli

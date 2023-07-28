@@ -1,10 +1,11 @@
-import { HttpService, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Constants } from '@cudo/ms-core';
 import { Itask } from '../interfaces/tender.interface';
+import { HttpService } from '@nestjs/axios';
 
 @Injectable()
 export class TaskService {
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService) {}
   async findAll(): Promise<Itask[]> {
     return new Promise<Itask[]>((resolve) => {
       resolve([
