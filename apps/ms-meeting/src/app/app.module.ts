@@ -22,6 +22,8 @@ import { ComponentsModule } from './components/components.module';
     GraphQLModule.forRoot({
       context: ({ req, connection }) => connection ? { req: connection.context } : { req },
       autoSchemaFile: true,
+      // debug:false,
+      // formatError: (error) => { return new GraphQLError(error.originalError.message || error.message)}      
     }),
     ComponentsModule,
     TypeOrmModule.forRootAsync({

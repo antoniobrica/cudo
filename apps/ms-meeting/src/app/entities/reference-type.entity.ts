@@ -2,6 +2,7 @@ import { Expose, plainToClass } from 'class-transformer';
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import * as uuid from 'uuid';
 import SessionEntity from './session.entity';
+// import MeetingEntity from './meeting.entity';
 
 /**
  * 
@@ -48,6 +49,10 @@ export default class ReferanceTypeEntity extends BaseEntity {
     @Expose()
     @OneToMany(() => SessionEntity, (session: SessionEntity) => session.reference)
     sessions: SessionEntity[];
+
+    // @Expose()
+    // @OneToMany(() => MeetingEntity, (meeting: MeetingEntity) => meeting.reference)
+    // meetings: MeetingEntity[];
 
     constructor(referanceTypeEntity: Partial<ReferanceTypeEntity>) {
         super();

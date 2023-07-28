@@ -9,9 +9,9 @@ import { SubTaskEntity } from './subtask.entity';
 
 @Entity({
   name: 'tasks',
-  orderBy: {
-    createdAt: 'ASC'
-  }
+  // orderBy: {
+  //   createdAt: 'ASC'
+  // }
 })
 export class TasksEntity extends BaseEntity {
 
@@ -21,6 +21,10 @@ export class TasksEntity extends BaseEntity {
   @Expose()
   @Column({ unique: true })
   taskID: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  sequenceNumber?: number;
 
   @Expose()
   @Column({ nullable: true })
@@ -83,13 +87,60 @@ export class TasksEntity extends BaseEntity {
   updatedBy?: string;
 
   @Expose()
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: false })
   isDeleted?: boolean;
+
+  @Expose()
+  @Column({ nullable: true })
+  fileID?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  fileName?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  projectWorktypeID?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  projectWorktype?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  projectWorktypeName?: string;
 
   @Expose()
   @Column({ nullable: true })
   status?: string;
 
+  @Expose()
+  @Column({ nullable: true })
+  taskTypeID?: string;
+
+  // @Expose()
+  // @Column({ nullable: true })
+  // taskTypeParentID?: string;
+
+  // @Expose()
+  // @Column({ nullable: true })
+  // taskTypeChildID?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  taskType?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  taskTypeName?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  workTypeID?: string;
+
+  @Expose()
+  @Column({ nullable: true })
+  workTypeName?: string;
 
   @ManyToOne(() => ReferanceTypeEntity, (reference: ReferanceTypeEntity) => reference.tasks)
   reference: ReferanceTypeEntity;
@@ -114,7 +165,7 @@ export class TasksEntity extends BaseEntity {
 
   @Expose()
   // n:n relation with TaskAssigneessEntity
-  @ManyToMany(type => SubTaskEntity, { cascade: true })
+  @ManyToMany(type => SubTaskEntity, (subtasks: ReferanceTypeEntity) => subtasks.tasks,)
   @JoinTable()
   subtasks: SubTaskEntity[];
 

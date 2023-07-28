@@ -6,10 +6,11 @@ import SessionEntity from '../../entities/session.entity';
 import { ReferenceModule } from '../reference/reference.module';
 import { SessionResolver } from './resolver/session.resolver';
 import { SessionService } from './service/session.service';
+import MeetingEntity from '../../entities/meeting.entity';
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([SessionEntity, AdminEntity,MembersEntity]), ReferenceModule],
+  imports: [TypeOrmModule.forFeature([SessionEntity, AdminEntity,MembersEntity, MeetingEntity]), ReferenceModule],
   providers: [SessionResolver, SessionService],
   // exports: [SessionService]
 })

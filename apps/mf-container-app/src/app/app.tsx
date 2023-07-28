@@ -6,7 +6,6 @@ import "./app.module.scss";
 import { environment } from "../environments/environment";
 import { Email } from './login/login'
 import { Menubar, UserProfileView } from '@cudo/shared-components';
-import '../../../../libs/shared-components/src/style/index.scss';
 import { SessionProvider } from "./services/session";
 import { Callback } from "./containers/Callback";
 import { Settings } from "./containers/Settings";

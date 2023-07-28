@@ -22,6 +22,7 @@ export function ModalExamplePrinting() {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={<Button size='mini' className="grey-btn">  Printing Company</Button>}
+        closeOnDimmerClick={false}
       >
         <Modal.Header><h3>Add Printing Company</h3></Modal.Header>
         <Modal.Content body>
@@ -58,7 +59,7 @@ export function ModalExamplePrinting() {
                   <Grid.Column>
                     <Form.Field>
                       <label>Type  </label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select  clearable placeholder='Select' className="small" options={countryOptions} />
 
                     </Form.Field>
                   </Grid.Column>
@@ -86,7 +87,7 @@ export function ModalExamplePrinting() {
                         <Grid.Row>
                           <Grid.Column>
                             <Form.Field>
-                              <Select placeholder='Select' className="small" options={countryOptions} />
+                              <Select  clearable placeholder='Select' className="small" options={countryOptions} />
                             </Form.Field>
                             <Form.Field>
                               <a href="" className="anchor-color">+ Add New</a>
@@ -94,7 +95,7 @@ export function ModalExamplePrinting() {
                           </Grid.Column>
                           <Grid.Column>
                             <Form.Field>
-                              <Select placeholder='Select' className="small" options={countryOptions} />
+                              <Select  clearable placeholder='Select' className="small" options={countryOptions} />
                             </Form.Field>
 
                           </Grid.Column>
@@ -107,7 +108,7 @@ export function ModalExamplePrinting() {
                   <Grid.Column  >
                     <Form.Field>
                       <label>Type  </label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select  clearable placeholder='Select' className="small" options={countryOptions} />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -156,7 +157,7 @@ export function ModalExamplePrinting() {
                   <Grid.Column>
                     <Form.Field>
                       <label>Country  </label>
-                      <Select placeholder='Select' className="small" options={countryOptions} />
+                      <Select  clearable placeholder='Select' className="small" options={countryOptions} />
 
                     </Form.Field>
                   </Grid.Column>
@@ -180,9 +181,9 @@ export function ModalExamplePrinting() {
             content="Add Company"
             onClick={() => setOpen(false)}
             positive
-            size='mini' className="grey-btn"
+            size='small' className="primary"
           />
-          <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+          <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
             X  Cancel
         </Button>
 

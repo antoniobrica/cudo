@@ -58,7 +58,7 @@ function PremissionPeople() {
   </Grid.Column>
   <Grid.Column>
     <Form.Field>
-    <Select placeholder='Select' className="small" options={countryOptions} />
+    <Select clearable placeholder='Select' className="small" options={countryOptions} />
             
     </Form.Field>
   </Grid.Column>
@@ -102,6 +102,7 @@ function PremissionPeople() {
       onOpen={() => setOpen(true)}
       open={open}
       trigger={<Button size='mini' className="grey-btn">User Permission</Button> }
+      closeOnDimmerClick={false}
     >
       <Modal.Header><h3>User Project Permissions </h3></Modal.Header>
       <Modal.Content body>
@@ -121,14 +122,14 @@ function PremissionPeople() {
       <Modal.Actions>
      
         <div>
-        <Button size='mini' className="icon-border" onClick={() => setOpen(false)}>
+        <Button size='small' className="icon-border" onClick={() => setOpen(false)}>
         X  Cancel
         </Button>
       <Button
           content="Submit" 
           onClick={() => setOpen(false)}
           positive
-          size='mini' className="grey-btn"
+          size='small' className="primary"
         />
 
         </div>

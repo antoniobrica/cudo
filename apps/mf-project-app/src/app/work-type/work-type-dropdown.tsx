@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Form,  Select } from 'semantic-ui-react';
 
 export interface WorktypeDropdownProps {
@@ -10,6 +11,7 @@ export interface WorktypeDropdownProps {
 export function WorkTypeDropdown(props: WorktypeDropdownProps) {
   const [items, setItems] = React.useState([])
   const [workType, setworkType] = React.useState(null) 
+  const {t} = useTranslation()
  
   const onMworkType = (event, data) => {
    console.log('events',data);
@@ -23,10 +25,11 @@ export function WorkTypeDropdown(props: WorktypeDropdownProps) {
 
   return (
     <Form.Field>
-    <Select placeholder='Select' className="small" 
+    <Select placeholder={t("common.select")} className="small" 
       options={props.data}
       value={workType}
       onChange={onMworkType}
+      clearable
     />
   </Form.Field>
   );
