@@ -7,7 +7,7 @@ import { useFileStructureQuery } from '../../services/useRequest';
 
 /* eslint-disable-next-line */
 export interface FileStructureProps {
-  parentFileStructureSelect
+  parentFileStructureSelect?
 }
 
 export function FileStructure(props: FileStructureProps) {

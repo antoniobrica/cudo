@@ -3,4 +3,5 @@
 
 export const environment = {
   production: false,
+  MS_TASK_API_URL: 'http://192.168.0.31:5007/graphql'
 };

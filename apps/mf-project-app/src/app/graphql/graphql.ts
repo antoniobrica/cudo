@@ -48,7 +48,7 @@ query ProjectById($projectId: String!)
       projectWorkTypes{
         workTypeName
         projectWorkTypeID
-              workTypeName
+         workTypeName
         estimatedCost
         }
       description

@@ -7,7 +7,6 @@ import { ITodo, IProject } from "../../interfaces/project";
 import Modal from 'react-modal';
 import { Card, Icon, Form, Grid } from 'semantic-ui-react'
 import { useHistory } from "react-router";
-import '../../../../../../libs/shared-components/src/style/index.scss';
 import { LoaderPage } from "@cudo/shared-components"
 
 //import ModalExampleModal from 'libs/shared-components/src/lib/components/modal/modal';
@@ -24,7 +23,6 @@ export function ProjectInfo(props: ProjectInfoProps) {
 
   const history = useHistory();
   if (loading) return <LoaderPage />;
-  if (error) return <h1>Something went wrong!</h1>;
 
   const addProject = () => {
     setopenForm(!openForm);
@@ -37,11 +35,17 @@ export function ProjectInfo(props: ProjectInfoProps) {
   function openModal() {
     setIsOpen(true);
   }
-  const refresh =(data)=>{
-    console.log('refresh is called', data); 
+  const refresh = (data) => {
+    console.log('refresh is called', data);
 
-    
+
   }
+
+  if (error) return (
+    <div style={{ marginLeft: 900 }} >
+      <ModalExampleModal onSuccess={refresh}></ModalExampleModal>
+    </div>
+  );
   return (
     <div>
       {/* <h1>Projects</h1> */}

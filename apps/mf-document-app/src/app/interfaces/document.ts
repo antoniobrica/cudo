@@ -3,6 +3,9 @@ export interface IToken {
 }
 export interface IFile {
   isFolder: boolean
+  uploadedFileID: string
+  directory: string
+  parentUploadedFileID: string
   projectFileID: string
   BKPID: string
   BKPIDTitle: string
@@ -18,24 +21,33 @@ export interface IFile {
   updatedBy: string
   createdBy: string
   isEveryOneAllowed: Boolean
-  files: [IFileParam]
+  fileURL: string
+  fileTitle: string
+  fileType: string
+  fileVersion: number
   people: [IPeople]
+  children: [IFileParam]
 }
 export interface IFileParam {
   fileURL: string
   fileTitle: string
   fileType: string
   fileVersion: string
+  isEveryOneAllowed: boolean
+  fileTypeName: string
+  fileTypeID: string,
+  uploadedFileID: string
 }
+
 export interface IPeople {
   userID: string
   userName: string
 }
 export interface IPeoples {
-  people:IPeople[]
+  people: IPeople[]
 }
 export interface IFiles {
-  File: IFile[];
+  uploadedFiles: IFile[];
 }
 
 export interface FileMutation {
