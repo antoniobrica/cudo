@@ -1,0 +1,33 @@
+{
+  "name": "data",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/data/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/data/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/data"],
+      "options": {
+        "jestConfig": "libs/data/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "npx graphql-codegen --config libs/data/codegen.yml"
+          }
+        ]
+      }
+    }
+  },
+  "tags": []
+}

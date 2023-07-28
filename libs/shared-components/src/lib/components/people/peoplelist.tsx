@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../../style/index.scss';
+import '../../../assets/style/index.scss';
 import { Segment, Table } from 'semantic-ui-react'
 
 import img4 from 'libs/shared-components/src/NoPath.png';

@@ -19,6 +19,8 @@ interface AlertProps {
   taskData?,
   cancel?,
   taskStatus?
+  id?
+  editTask?
 }
 
 export const ModalViewTask = (props: AlertProps) => {

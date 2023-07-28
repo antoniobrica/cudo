@@ -1,100 +1,129 @@
-import React, { Suspense, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
+// import { LazyLoading } from '@cudo/shared-components'
+import { BrowserRouter as Router, Route, Link, useLocation, Routes, useParams, useNavigate } from 'react-router-dom';
 
-import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch, useHistory, useLocation } from "react-router-dom";
+// import { Loading } from '@cudo/ui'
+// import { TestComponent } from './test-component/test-component';
+// import MicroFrontend from "../MicroFrontend";
+// import { environment } from '../environments/environment';
+
+import TabMenu from './components/tab-menu/tab-menu';
 import ProjectInfo from './components/project-info/project-info';
 
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+
+import config from './redux/store';
 import { initI18n } from '@cudo/mf-core';
-import { Loading } from '@cudo/ui'
-import { TestComponent } from './test-component/test-component';
-import { createBrowserHistory } from "history";
-import MicroFrontend from "../MicroFrontend";
-import { environment } from '../environments/environment';
-import TabMenu from './components/tab-menu/tab-menu';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { LazyLoading } from '@cudo/shared-components';
 
-const defaultLanguage = 'de-DE';
+const defaultLanguage = 'en-GB';
 const supportedLanguages = [defaultLanguage, 'en-GB'];
-initI18n('./assets/i18n/{{lng}}.json', defaultLanguage);
+initI18n('./assets/i18n/en-GB.json', defaultLanguage);
 
-const defaultHistory = createBrowserHistory();
+// const TabMenu = lazy(() => import('./components/tab-menu/tab-menu'))
+// const ProjectInfo = lazy(() => import('./components/project-info/project-info'))
 
-const {
-  EACT_APP_COST_HOST: costHost,
-  REACT_APP_MEETING_HOST: meetingHost,
-  REACT_APP_TASK_HOST: taskHost,
-} = environment;
+// const defaultLanguage = 'en-GB';
+// const supportedLanguages = [defaultLanguage, 'en-GB'];
+// initI18n('./assets/i18n/en-GB.json', defaultLanguage);
+// import something from './assets/i18n/en-GB.json';
+// const {
+//   EACT_APP_COST_HOST: costHost,
+//   REACT_APP_MEETING_HOST: meetingHost,
+//   REACT_APP_TASK_HOST: taskHost,
+// } = environment;
 
+// function Header() {
+//   return (
+//     <div className="banner">
+//       <h1 className="banner-title"> Welcome project</h1>
+//     </div>
+//   );
+// }
 
-function Header() {
-  return (
-    <div className="banner">
-      <h1 className="banner-title"> Welcome project</h1>
-    </div>
-  );
-}
+// function MeetingApp(history: any) {
+//   return (
+//     <MicroFrontend history={history} host={meetingHost} name="MeetingApp" />
+//   );
+// }
 
-function MeetingApp(history: any) {
-  return (
-    <MicroFrontend history={history} host={meetingHost} name="MeetingApp" />
-  );
-}
+// function CostApp(history: any) {
+//   return (
+//     <MicroFrontend history={history} host={costHost} name="CostApp" />
+//   );
+// }
 
-function CostApp(history: any) {
-  return (
-    <MicroFrontend history={history} host={costHost} name="CostApp" />
-  );
-}
+// function TaskApp(history: any) {
+//   return (
+//     <MicroFrontend history={history} host={taskHost} name="TaskApp" />
+//   );
+// }
 
-function TaskApp(history: any) {
-  return (
-    <MicroFrontend history={history} host={taskHost} name="TaskApp" />
-  );
-}
+// function Home({ history }) {
+//   const [input, setInput] = useState("");
 
-function Home({ history }) {
-  const [input, setInput] = useState("");
+//   return (
+//     <div>
+//       <Header />
+//       <div className="home">
+//         <div className="content">
+//           <div className="meetingClass">
+//             <TaskApp></TaskApp>
+//           </div>
+//         </div>
+//         <div className="content">
+//           <div className="costClass">
+//             <CostApp></CostApp>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
 
-  return (
-    <div>
-      <Header />
-      <div className="home">
-        <div className="content">
-          <div className="meetingClass">
-            <TaskApp></TaskApp>
-          </div>
-        </div>
-        <div className="content">
-          <div className="costClass">
-            <CostApp></CostApp>
-          </div>
-        </div>
+//   );
+// }
 
-      </div>
-    </div>
-  );
-}
+// function loadApp() {
+//   return (
+//     <div>
+//       <ProjectInfo ></ProjectInfo>
+//     </div>
+//   );
+// }
 
-function loadApp() {
-  return (
-    <div>
-      <ProjectInfo ></ProjectInfo>
-    </div>
-  );
-}
+const { store, persistor } = config();
 
 function App() {
-  const history = useHistory()
+  const navigate = useNavigate();
   const location = useLocation();
-  const { url, path } = useRouteMatch();
-  console.log('path-project-app',history.location.pathname)
+
+  useEffect(() => {
+    if (location.pathname.includes('/home/project/')) {
+      navigate(location.pathname);
+    }
+  }, []);
+
+  const client = new ApolloClient({
+    uri: 'http://20.199.178.58:5005/graphql',
+    // uri: 'http://localhost:5005/graphql',
+    cache: new InMemoryCache(),
+  });
+
   return (
-    <Router>
-      <Switch>
-        <Route exact path={`${history.location.pathname}/:projectId`} render={() => <TabMenu />} />
-        <Route exact path={`${history.location.pathname}`}  render={() => <ProjectInfo />}/>
-      </Switch>
-      </Router>
+    <ApolloProvider client={client}>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          {/* <TabMenu /> */}
+          {/* <Routes>
+            <Route path="/home" element={<ProjectInfo />} />
+          </Routes> */}
+          <ProjectInfo />
+        </PersistGate>
+      </Provider>
+    </ApolloProvider>
   );
 }
 
 export default App;
-
+// modifying for shared component build */

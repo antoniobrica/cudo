@@ -23,7 +23,7 @@ export class ProjectModel {
   buildingType?: string;
 
   @Field({ nullable: true })
-  printingCom?: string;
+  printingCompany?: string;
 
   @Field({ nullable: true })
   description?: string;
@@ -41,6 +41,24 @@ export class ProjectModel {
 
   @Field({ nullable: true })
   updatedBy?: string;
+
+  @Field({ nullable: true })
+  addressLineOne?: string;
+
+  @Field({nullable: true })
+  addressLineTwo?: string;
+
+  @Field({ nullable: true })
+  city?: string;
+
+  @Field({ nullable: true  })
+  state?: string;
+
+  @Field({ nullable: true  })
+  zip?: string;
+
+  @Field({ nullable: true  })
+  country?: string;
 
   @Field()
   reference?: ReferenceModel

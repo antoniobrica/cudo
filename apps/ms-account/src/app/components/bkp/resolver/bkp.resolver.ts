@@ -1,6 +1,8 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { BkpEntity } from '../../../entities/bkp.entity';
 import { FolderEntity } from '../../../entities/folder.entity';
+import BkpTitleFilterParams from '../../../utils/types/bkpTitleFilterParams';
+import FolderTitleFilterParams from '../../../utils/types/folderTitleFilterParams';
 import ReferenceFilterParams from '../../../utils/types/referenceFilterParams';
 import { FolderModel } from '../../folder/model/folder.model';
 import { FolderService } from '../../folder/service/folder.service';
@@ -16,9 +18,17 @@ export class BkpResolver {
     private readonly folderService: FolderService) { }
 
   @Query(() => [BkpModel], { nullable: true })
-  async Bkp(@Args("referenceFilter") referenceFilter: ReferenceFilterParams): Promise<BkpEntity[]> {
-    return await this.bkpService.findAllBkp(referenceFilter)
+  async Bkp(
+    @Args("referenceFilter") referenceFilter: ReferenceFilterParams,
+    @Args('titleFilter') titleFilter: BkpTitleFilterParams): Promise<BkpEntity[]> {
+    return await this.bkpService.findAllBkp(referenceFilter, titleFilter)
   }
+
+  // @Query(() => [BkpModel], { nullable: true })
+  // async bkpByTitle(@Args('referenceFilter') referenceFilter: ReferenceFilterParams,
+  //   @Args('titleFilter') titleFilter: BkpTitleFilterParams) {
+  //   return await this.bkpService.filterAllBkpByTitle(referenceFilter, titleFilter)
+  // }
 
   @Mutation(() => BkpModel)
   async createBkp(
@@ -37,8 +47,11 @@ export class BkpResolver {
   }
 
   @Query(() => [FolderModel], { nullable: true })
-  async BkpFolders(@Args("referenceFilter") referenceFilter: ReferenceFilterParams): Promise<FolderEntity[]> {
-    return await this.folderService.findAllFolder(referenceFilter)
+  async BkpFolders(
+    @Args("referenceFilter") referenceFilter: ReferenceFilterParams,
+    @Args("titleFilter") titleFilter:FolderTitleFilterParams
+    ): Promise<FolderEntity[]> {
+    return await this.folderService.findAllFolder(referenceFilter,titleFilter)
   }
 
 }

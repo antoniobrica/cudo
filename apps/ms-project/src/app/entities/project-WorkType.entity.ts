@@ -1,14 +1,20 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  Relation,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
 import * as uuid from 'uuid';
 import { WorkTypeEntity } from './work-type.entity';
 import { ProjectEntity } from './project.entity';
 
-
 @Entity({ name: 'projectWorkTypes' })
-
 export class ProjectWorkTypeEntity extends BaseEntity {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -30,19 +36,19 @@ export class ProjectWorkTypeEntity extends BaseEntity {
 
   @Expose()
   @CreateDateColumn()
-  createdAt: Date
+  createdAt: Date;
 
   @Expose()
   @UpdateDateColumn()
-  updatedAt: Date
+  updatedAt: Date;
 
   @Expose()
   @ManyToOne(() => WorkTypeEntity, (work: WorkTypeEntity) => work.projectWorkTypes)
-  workType: WorkTypeEntity;
+  workType: Relation<WorkTypeEntity>;
 
   @Expose()
   @ManyToOne(() => ProjectEntity, (project: ProjectEntity) => project.projectWorkTypes)
-  project: ProjectEntity[];
+  project: Relation<ProjectEntity>[];
 
   constructor(proejctWorkTypeEntity: Partial<ProjectWorkTypeEntity>) {
     super();
@@ -50,11 +56,10 @@ export class ProjectWorkTypeEntity extends BaseEntity {
       Object.assign(
         this,
         plainToClass(ProjectWorkTypeEntity, proejctWorkTypeEntity, {
-          excludeExtraneousValues: true
+          excludeExtraneousValues: true,
         })
-      )
+      );
       this.projectWorkTypeID = this.projectWorkTypeID || uuid.v1();
     }
-
   }
 }

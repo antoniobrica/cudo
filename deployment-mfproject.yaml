@@ -1,0 +1,27 @@
+FROM node:lts-alpine3.16
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+COPY cudo-ch/Cudo/Cudo/apps/mf-project-app/project.json
+COPY cypress*.json ./
+
+# Install Python3 and create a symlink to `python`
+RUN apk update \
+&& apk add --no-cache python3 build-base \
+&& ln -s /usr/bin/python3 /usr/bin/python
+
+# Install npm dependencies
+RUN npm ci
+
+# Install Nx CLI globally
+RUN npm install -g nx
+
+# Copy the rest of the application files
+COPY . .
+
+# Expose the port that the application will run on
+EXPOSE 6006
+
+CMD ["npm", "run","nx","serve","mf-project-app","0.0.0.0"]
+

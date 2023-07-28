@@ -1,27 +1,32 @@
-import React, { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
-import { LoginFlow } from "@oryd/kratos-client"
-import { initialiseRequest } from "../services/kratos"
-import { KratosMessages } from "../components/KratosMessages"
-import { KratosForm } from "../components/KratosForm"
-import { register } from "../services/auth"
-import config from "../config/kratos"
-import { Button } from "semantic-ui-react"
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+// import { LoginFlow } from "@oryd/kratos-client"
+import { initialiseRequest } from '../services/kratos';
+// import { KratosMessages } from "../components/KratosMessages"
+// import { KratosForm } from "../components/KratosForm"
+import { register } from '../services/auth';
+import config from '../config/kratos';
+import { Button } from 'semantic-ui-react';
+
+type LoginFlow = {
+  messages: any;
+  methods: any;
+};
 
 export const Login = () => {
-  const [requestResponse, setRequestResponse] = useState<LoginFlow>()
+  const [requestResponse, setRequestResponse] = useState<LoginFlow>();
 
   useEffect(() => {
-    const request = initialiseRequest({ type: "login" }, { filterid: "flow" }) as Promise<LoginFlow>
+    const request = initialiseRequest({ type: 'login' }, { filterid: 'flow' }) as Promise<LoginFlow>;
     request
-      .then(request => setRequestResponse(request))
+      .then((request) => setRequestResponse(request))
       .catch((error) => {
         console.log(error);
-      })
-  }, [setRequestResponse])
+      });
+  }, [setRequestResponse]);
 
-  const messages = requestResponse?.messages
-  const form = requestResponse?.methods?.password?.config
+  const messages = requestResponse?.messages;
+  const form = requestResponse?.methods?.password?.config;
 
   return (
     <div className="main-outer-area">
@@ -41,15 +46,12 @@ export const Login = () => {
         </div>
 
         <div id="login-password">
-          {messages && <KratosMessages messages={messages} />}
-          {form &&
-            <KratosForm
-              submitLabel="Sign in"
-              action={form.action}
-              fields={form.fields}
-              messages={form.messages} />}
+          {/* {messages && <KratosMessages messages={messages} />}
+          {form && (
+            <KratosForm submitLabel="Sign in" action={form.action} fields={form.fields} messages={form.messages} />
+          )} */}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
