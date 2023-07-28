@@ -41,25 +41,28 @@
   padding: 0 0 0 3px;
 }
 .label-light-purple-circle {
-  width: 6%;
-  height: 22px;
+  width: 8%;
+  height: 26px;
   border-radius: 500rem;
   background-color: #6fc968;
-  padding: 3px 0px 0px 5px;
+  padding: 6px 0px 0px 6px;
+  font-size: 11px;
 }
 .label-light-black-circle {
-  width: 6%;
-  height: 22px;
+  width: 8%;
+  height: 26px;
   border-radius: 500rem;
   background-color: #1b1b40;
-  padding: 3px 0px 0px 5px;
+  padding: 6px 0px 0px 6px;
+  font-size: 11px;
 }
 .label-light-blue-circle {
-  width: 6%;
-  height: 22px;
+  width: 8%;
+  height: 26px;
   border-radius: 500rem;
   background-color: #2d62ed;
-  padding: 3px 0px 0px 5px;
+  padding: 6px 0px 0px 6px;
+  font-size: 11px;
 }
 .event.top-event {
   margin-top: 31px;
@@ -69,13 +72,13 @@
   margin-top: 1.78575em;
 }
 .dot {
-  height: 25px;
-  width: 25px;
+  height: 30px;
+  width: 30px;
   background-color: #f1f5ff;
   border-radius: 50%;
   display: inline-block;
   color: #2d62ed;
-  padding: 0 6px 0 6px;
+  padding: 0 12px 0 8px;
 }
 
 .event {
@@ -341,10 +344,13 @@
       margin: 0 0 0 0.5rem;
     }
   }
-  .action-btn {
-    .button {
-      margin: 0 0 0.8rem 0;
-      padding: 0 0.5rem;
+
+  .app-content-body {
+    margin-left: 290px;
+    top: -120px;
+
+    .project {
+      color: #1b1b40;
     }
   }
 }
@@ -401,7 +407,7 @@
   margin-bottom: 20px;
 }
 .width_card {
-  width: 80%;
+  width: 100%;
 }
 .ui.progress .bar {
   background: #2d62ed;
@@ -419,4 +425,32 @@
 
 .blue_color {
   color: #2d62ed;
+}
+.ui_width {
+  width: 288px !important;
+}
+.content.paddingcontent {
+  padding: 25px !important;
+}
+
+.paddingarea {
+  margin-top: 25px;
+}
+.noborder {
+  border-top: none !important;
+}
+.data_area {
+  margin-top: -35px;
+  padding: 15px;
+}
+.data_pad {
+  margin-top: -15px;
+  padding: 15px;
+}
+.data_field {
+  padding: 15px;
+  margin-top: -30px;
+}
+.details {
+  padding: 15px;
 }

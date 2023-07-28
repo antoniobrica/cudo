@@ -12,7 +12,7 @@ import { MfAccountAppLib } from '@cudo/mf-account-app-lib';
 
 export interface ProjectInfoProps {
   onSuccess
- }
+}
 export function ModalExampleModal(props: ProjectInfoProps) {
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
 
@@ -73,13 +73,13 @@ export function ModalExampleModal(props: ProjectInfoProps) {
   const [secondOpen, setSecondOpen] = React.useState(false)
   const [projectWorkEstimates, setProjectWorkEstimates] = React.useState(null)
   // const [addProject] = useProjectMutation(ADD_PROJECT);
-  const [addProject, { data }] = useMutation(ADD_PROJECT, 
-  {
-    refetchQueries: [
-      { query: GET_PROJECTS }
-    ]
-  }
-)
+  const [addProject, { data }] = useMutation(ADD_PROJECT,
+    {
+      refetchQueries: [
+        { query: GET_PROJECTS }
+      ]
+    }
+  )
   // const { loading, error, data } = useProjectQuery(GET_PROJECTS);
   const { loading: worktypeLoading, error, data: worktypeData } = useWorkTypesQuery(GET_WORKTYPES);
   const { loading: companyLoading, data: printingCompanyData } = useCompanyQuery(GET_PRINTING_COMPANY);
@@ -179,16 +179,16 @@ export function ModalExampleModal(props: ProjectInfoProps) {
   }
   const moreWorkTypes = (data) => {
     const worktypesArr = [];
-    for (let i = 0; i < data.length ; i++) {
-      console.log('data',data[i])
+    for (let i = 0; i < data.length; i++) {
+      console.log('data', data[i])
       worktypeData.workTypes.map(d => {
         if (d.name == data[i].workTypeName) {
-         console.log('workTypeName----',d.workTypeID );
-         data[i].workTypeID= d.workTypeID;
+          console.log('workTypeName----', d.workTypeID);
+          data[i].workTypeID = d.workTypeID;
         }
       })
     }
-    console.log('worktypes==>',data)
+    console.log('worktypes==>', data)
 
     setProjectWorkEstimates(data);
 
@@ -202,18 +202,18 @@ export function ModalExampleModal(props: ProjectInfoProps) {
       },
       update: (
         cache,
-         data
+        data
       ) => {
         const cacheData = cache.readQuery({ query: GET_PROJECTS }) as IProjects;
         console.log('data--', data)
         cache.writeQuery({
           query: GET_PROJECTS,
           data: {
-            getProjects: [...cacheData.projects, data?.createProject]
+            getProjects: [...cacheData.projects, data['createProject']]
           }
         });
-        console.log('data==',data);
-        
+        console.log('data==', data);
+
         props.onSuccess(data);
       }
     });

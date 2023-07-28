@@ -2,7 +2,6 @@ import { ArgsType, Field } from "@nestjs/graphql";
 
 @ArgsType()
 export class FileFilterArgs {
-
-    @Field({ description: `file ID` })
-    fileTitle?: string;
+    @Field({ nullable: true, description: `Uploaded file ID` })
+    uploadedFileID?: string;
 }

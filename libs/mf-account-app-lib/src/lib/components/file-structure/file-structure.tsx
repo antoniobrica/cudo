@@ -7,7 +7,8 @@ import { useFileStructureQuery } from '../../services/useRequest';
 
 /* eslint-disable-next-line */
 export interface FileStructureProps {
-  parentFileStructureSelect
+  parentFileStructureSelect?
+  structureTitle?
 }
 
 export function FileStructure(props: FileStructureProps) {
@@ -15,6 +16,11 @@ export function FileStructure(props: FileStructureProps) {
   const [fileStructure, setFileStructureTitle] = React.useState("")
 
   const { loading, error, data } = useFileStructureQuery(GET_FILE_STRUCTURE);
+  React.useEffect(() => {
+    if (props.structureTitle) {
+      setFileStructureTitle(props.structureTitle)
+    }
+  }, [props.structureTitle])
   React.useEffect(() => {
     if (data) {
       setItems(data.FileStructure.map(({ fileStructureTitle, fileStructureID }) => ({ key: fileStructureID, value: fileStructureTitle, text: fileStructureTitle })));

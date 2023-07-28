@@ -9,6 +9,7 @@ import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
 import * as serviceWorker from "./serviceWorker";
 import "./SubscriberWidgetElement";
 import App from './app/app';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 declare global {
   interface Window {
@@ -17,7 +18,7 @@ declare global {
   }
 }
 const client = new ApolloClient({
-  uri: 'http://localhost:5005/graphql',
+  uri: MS_SERVICE_URL['ms_project'].url,
   cache: new InMemoryCache()
 });
 
@@ -43,13 +44,13 @@ if (!document.getElementById("ProjectApp-container")) {
   // ReactDOM.render(<App />, document.getElementById("root"));
   ReactDOM.render(
     // <React.StrictMode>
-      <BrowserRouter>
-        <ApolloProvider client={client}>
-          <ApolloHooksProvider client={client as any}>
-            <App />
-          </ApolloHooksProvider>
-        </ApolloProvider>
-      </BrowserRouter>
+    <BrowserRouter>
+      <ApolloProvider client={client}>
+        <ApolloHooksProvider client={client as any}>
+          <App />
+        </ApolloHooksProvider>
+      </ApolloProvider>
+    </BrowserRouter>
     // </React.StrictMode>
     ,
     document.getElementById("root")

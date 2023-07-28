@@ -11,14 +11,42 @@ export interface IUser {
   userID: string
   userName: string
 }
+
+export interface ICatagory {
+  meetingCatagoryID: string
+  meetingCatagoryTitle: string
+}
+
+export interface ICatagories {
+  MeetingCatagories: ICatagory[];
+}
+
+export interface IPotocol {
+  protocolTemplateID: string
+  protocolTemplateTitle: string
+}
+
+export interface IProtocols {
+  ProtocoleTemplates: IPotocol[];
+}
+
+export interface IInvitation {
+  invitationTemplateID: string
+  invitationTemplateTitle: string
+}
+
+export interface IInvitations {
+  invitationTemplates: IInvitation[];
+}
+
 export interface IBkp {
   bkpID: string
   bkpTitle: string
 }
 
 export interface IFolder {
-  folderTitle : string
-  folderID : string
+  folderTitle: string
+  folderID: string
 }
 
 export interface IFileType {
@@ -31,8 +59,14 @@ export interface IFileStructure {
   fileStructureTitle: string
 }
 
+export interface IStructure {
+  structureID: string
+  referenceID: string
+  referenceType: string
+  structureName: string
+}
 
-export interface IPhase{
+export interface IPhase {
   id: string
   phaseTitle: string
 }
@@ -54,6 +88,9 @@ export interface IFileTypes {
 export interface IFileStructures {
   FileStructure: IFileStructure[];
 }
+export interface IStructures {
+  structureRoots: IStructure[];
+}
 export interface IUsers {
-  users: IUser[];
+  userByEmail: IUser[];
 }

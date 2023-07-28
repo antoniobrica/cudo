@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../../style/index.scss';
+import './../../../assets/style/index.scss'
 import { Header, Icon, Image, Menu, Segment, Sidebar, Button, Popup } from 'semantic-ui-react'
 import { NavLink, useRouteMatch } from 'react-router-dom';
 /* eslint-disable-next-line */

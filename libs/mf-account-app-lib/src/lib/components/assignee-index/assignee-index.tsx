@@ -6,15 +6,17 @@ import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
 import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
 import Assignee from '../assignee/assignee';
+import { MS_SERVICE_URL } from '@cudo/mf-core';
 
 /* eslint-disable-next-line */
 const client = new ApolloClient({
-  uri: 'http://localhost:5001/graphql',
+  uri: MS_SERVICE_URL['ms_account'].url,
   cache: new InMemoryCache()
 });
 /* eslint-disable-next-line */
 export interface AssigneeIndexProps {
-  parentAsigneeSelect
+  parentAsigneeSelect,
+  name?
 }
 
 export function AssigneeIndex(props: AssigneeIndexProps) {
@@ -24,7 +26,7 @@ export function AssigneeIndex(props: AssigneeIndexProps) {
   return (
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client as any}>
-        <Assignee parentBKPSelect={onSelectAsignee} />
+        <Assignee parentBKPSelect={onSelectAsignee} name={props.name} />
       </ApolloHooksProvider>
     </ApolloProvider>
   );

@@ -221,9 +221,10 @@
 }
 
 .planningbelow {
-  margin-bottom: 10px;
+  margin-bottom: 25px;
   font-size: 18px;
   font-weight: 500;
+  margin-top: -39px;
 }
 .headingactive {
   color: #000;
@@ -234,7 +235,7 @@
 
 .alltask {
   color: black;
-  margin-top: -42px !important;
+  margin-top: 2px !important;
   font-size: 18px;
 }
 .textt2 {
@@ -244,7 +245,90 @@
   padding: 2px;
 }
 
-.taskmargin {
-  margin-top: 20px !important;
-  margin-bottom: 20px !important;
+.sessiontext {
+  color: #718898;
+  font-size: 1.2rem;
+  font-weight: normal;
+}
+.pinkbackground {
+  background-color: #ffe8e6;
+}
+.marginestimate {
+  margin-left: 770px;
+}
+
+.dotlinearea {
+  font-size: 15px;
+}
+.button.ui.mini.button.pinbutton {
+  height: 4rem;
+  background: #fff;
+  color: #bfbebe;
+  box-shadow: none;
+  border: 1px solid #d0d8df;
+  width: 100%;
+  font-size: 12px;
+  text-align: left;
+}
+.pinadd {
+  position: relative;
+  top: 50%;
+  left: 93%;
+  transform: translate(-50%, -132%);
+  -ms-transform: translate(-50%, -132%);
+}
+.colorback {
+  background: #f9f8ff;
+}
+
+.pin_area {
+  display: flex;
+  margin-right: 281px;
+  float: right;
+  margin-top: -19px;
+}
+.button.icon i.dropdown.icon {
+  display: none;
+}
+.ui.small.input.full-width.inputfieldarea.bordernone input[type='search'] {
+  border: none !important;
+  margin-top: -14px;
+  margin-left: 13px;
+}
+.ql-container.ql-snow {
+  height: 100px;
+}
+.mr-14{
+  margin-left: 140px !important;
+}
+.searchwhite{
+  position: relative;
+   top: 11px;
+    z-index: 9;
+}
+.ui.button.grey-btn:hover{
+  background: #2d62ed;
+}
+i.add.icon, i.pin.icon{
+  color: #abb8c4;
+}
+.text{
+  font-size: 12px;
+}
+.content.active{
+  background: #fff;
+}
+canvas.coveringCanvas{
+  position: relative;
+  left: 1px;
+}
+
+.ui.multiple.dropdown > .label {
+  font-size: 1.2rem;
+  
+}
+
+.ui.multiple.dropdown > .label {
+ 
+  top: -14px;
 }

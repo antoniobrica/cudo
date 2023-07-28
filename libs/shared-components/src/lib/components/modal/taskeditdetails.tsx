@@ -12,6 +12,8 @@ import {
 } from 'semantic-ui-react';
 // import SampleModal from './sample-modal';
 import { FollowersIndex, AssigneeIndex, BkpIndex, PhaseIndex } from "@cudo/mf-account-app-lib";
+import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 function exampleReducer(state, action) {
   switch (action.type) {
@@ -29,7 +31,7 @@ interface AlertProps {
   taskData?,
   cancel?,
   taskStatus?,
-  editTaskData
+  editTaskData?
 }
 export const ModalTaskEdit = (props: AlertProps) => {
 
@@ -56,7 +58,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
 
   React.useEffect(() => {
     if (props.taskData) {
-      const date = new Date(props.taskData.startDate).toLocaleDateString();
+      const date = new Date(props.taskData.startDate).toLocaleString();
       console.log('date', date);
       setStartDate(date);
       setTaskTitle(props.taskData.taskTitle);
@@ -117,8 +119,8 @@ export const ModalTaskEdit = (props: AlertProps) => {
     setPhasesName(data.phaseName)
   }
   const onDescriptionChange = e => {
-    console.log('des=>', e.target.value);
-    setDescription(e.target.value);
+    console.log('des=>', e);
+    setDescription(e);
   }
 
   const editTask = () => {
@@ -151,7 +153,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
 
   return (
     <div id="navbar">
-      <Modal
+      <Modal style={{ width: '670px', marginLeft: '345px' }}
         className="modal_media"
         onClose={cancel}
         onOpen={openf}
@@ -193,9 +195,28 @@ export const ModalTaskEdit = (props: AlertProps) => {
                   <Grid.Column>
                     <Form.Field>
                       <label>Description </label>
-                      <TextArea placeholder="Tell us more"
+                      {/* <TextArea placeholder="Tell us more"
                         value={description}
-                        onChange={onDescriptionChange} />
+                        onChange={onDescriptionChange} /> */}
+                      <ReactQuill
+                        value={description}
+                        modules={{
+                          toolbar: {
+                            container: [
+                              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                              ['bold', 'italic', 'underline'],
+                              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                              [{ 'align': [] }],
+                              ['link', 'image'],
+                              ['clean'],
+                              [{ 'color': [] }]
+                            ],
+                          }
+                        }}
+                        placeholder="Add a description"
+                        onChange={(content, delta, source, editor) => onDescriptionChange(content)}
+                        id="txtDescription"
+                      />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -254,7 +275,7 @@ export const ModalTaskEdit = (props: AlertProps) => {
                         type="text"
                       />
                     </Form.Field> */}
-                    <AssigneeIndex parentAsigneeSelect={setAsignee} />
+                    <AssigneeIndex parentAsigneeSelect={setAsignee} name="Assignee" />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>

@@ -11,10 +11,10 @@
 // opt-in, read https://bit.ly/CRA-PWA
 
 const isLocalhost = Boolean(
-    window.location.hostname === 'localhost' ||
-    // [::1] is the IPv6 localhost address.
+    window.location.hostname === '192.168.0.31' ||
+    // [::1] is the IPv6 192.168.0.31 address.
     window.location.hostname === '[::1]' ||
-    // 127.0.0.0/8 are considered localhost for IPv4.
+    // 127.0.0.0/8 are considered 192.168.0.31 for IPv4.
     window.location.hostname.match(
         /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
     )
@@ -35,16 +35,16 @@ export function register(config) {
             const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 
             if (isLocalhost) {
-                // This is running on localhost. Let's check if a service worker still exists or not.
+                // This is running on 192.168.0.31. Let's check if a service worker still exists or not.
                 checkValidServiceWorker(swUrl, config);
 
-                // Add some additional logging to localhost, pointing developers to the
+                // Add some additional logging to 192.168.0.31, pointing developers to the
                 // service worker/PWA documentation.
                 navigator.serviceWorker.ready.then(() => {
                     console.log("navigator serviceWorker ready ")
                 });
             } else {
-                // Is not localhost. Just register service worker
+                // Is not 192.168.0.31. Just register service worker
                 registerValidSW(swUrl, config);
             }
         });

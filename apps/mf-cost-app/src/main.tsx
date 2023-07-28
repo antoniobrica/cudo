@@ -1,11 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import 'semantic-ui-css/semantic.min.css'
 import { BrowserRouter } from 'react-router-dom';
 import * as serviceWorker from "./serviceWorker";
 import App from './app/app';
 import "./SubscriberWidgetElement";
 
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client';
+import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
+import { environment } from './environments/environment';
 declare global {
   interface Window {
     renderCostApp: any;
@@ -13,14 +17,19 @@ declare global {
   }
 }
 
-
+const client = new ApolloClient({
+  uri: environment.API_URL,
+  cache: new InMemoryCache()
+});
 window.renderCostApp = (containerId, history) => {
   ReactDOM.render(
-    <React.StrictMode>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </React.StrictMode>,
+    <BrowserRouter>
+      <ApolloProvider client={client}>
+        <ApolloHooksProvider client={client as any}>
+          <App />
+        </ApolloHooksProvider>
+      </ApolloProvider>
+    </BrowserRouter>,
     document.getElementById(containerId)
   );
   serviceWorker.unregister();
@@ -33,11 +42,13 @@ window.unmountMeetingApp = (containerId) => {
 if (!document.getElementById("CostApp-container")) {
   // ReactDOM.render(<App />, document.getElementById("root"));
   ReactDOM.render(
-    <React.StrictMode>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </React.StrictMode>,
+    <BrowserRouter>
+      <ApolloProvider client={client}>
+        <ApolloHooksProvider client={client as any}>
+          <App />
+        </ApolloHooksProvider>
+      </ApolloProvider>
+    </BrowserRouter>,
     document.getElementById("root")
   );
   serviceWorker.unregister();
