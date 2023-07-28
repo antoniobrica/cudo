@@ -9,10 +9,9 @@ env:
     AZURE_CONTAINER_REGISTRY: cudoacr
     CLUSTER_NAME: cudoaks
     CLUSTER_RESOURCE_GROUP: cudo
-    CONTAINER_NAME: image-workflow-1690571750936
+    CONTAINER_NAME: mfcontainer
     DEPLOYMENT_MANIFEST_PATH: |
-        manifests/deployment.yaml
-        manifests/service.yaml
+        ./manifests/deployment.yaml
 jobs:
     buildImage:
         permissions:
@@ -28,7 +27,7 @@ jobs:
                 subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
                 tenant-id: ${{ secrets.AZURE_TENANT_ID }}
             - name: Build and push image to ACR
-              run: az acr build --image ${{ env.CONTAINER_NAME }}:${{ github.sha }} --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.ACR_RESOURCE_GROUP }} -f Dockerfile ./
+              run: az acr build --image ${{ env.CONTAINER_NAME }}:${{ github.sha }} --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.ACR_RESOURCE_GROUP }} -f ./Dockerfile-mfcontainer ./
     deploy:
         permissions:
             actions: read
@@ -62,4 +61,4 @@ jobs:
                 action: deploy
                 images: ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
                 manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
-                namespace: namespace-workflow-1690571750936
+                namespace: cudospace
